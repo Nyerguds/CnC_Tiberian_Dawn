@@ -52,9 +52,9 @@
 //#include	<wwlib32.h>
 #include	<limits.h>
 #include	<errno.h>
-#include	<windows.h>
-//#include	<algo.h>
 
+#ifdef WIN32
+#include	<windows.h>
 #define	NULL_HANDLE		INVALID_HANDLE_VALUE
 #define	HANDLE_TYPE		HANDLE
 #else

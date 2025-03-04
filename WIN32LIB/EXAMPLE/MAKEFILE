@@ -111,7 +111,7 @@ C_CMD	  	= wcc386
 CPP_CMD	  	= wpp386
 LIB_CMD	  	= wlib
 LINK_CMD  	= wlink
-ASM_CMD	  	= tasm
+ASM_CMD	  	= msdos tasm
 
 #---------------------------------------------------------------------------
 # Include & library paths

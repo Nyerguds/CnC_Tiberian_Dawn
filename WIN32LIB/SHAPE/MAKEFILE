@@ -117,7 +117,7 @@ C_CMD	  	= wcc386
 CPP_CMD	  	= wpp386
 LIB_CMD	  	= wlib
 LINK_CMD  	= wlink
-ASM_CMD	  	= tasm
+ASM_CMD	  	= msdos tasm
 
 #---------------------------------------------------------------------------
 # Include & library paths
@@ -165,10 +165,10 @@ all:	$(LIB_DIR)\$(PROJ_NAME).lib .SYMBOLIC
 # All headers & source files are copied into WWFLAT\SRCDEBUG, for debugging
 #---------------------------------------------------------------------------
 $(LIB_DIR)\$(PROJ_NAME).lib: $(OBJECTS) objects.lbc
-	 copy *.h   $(%WIN32LIB)\include
-	 copy *.inc $(%WIN32LIB)\include
-	 copy *.cpp $(%WIN32LIB)\srcdebug
-	 copy *.asm $(%WIN32LIB)\srcdebug
+	-copy *.h   $(%WIN32LIB)\include
+	-copy *.inc $(%WIN32LIB)\include
+	-copy *.cpp $(%WIN32LIB)\srcdebug
+	-copy *.asm $(%WIN32LIB)\srcdebug
 	$(LIB_CMD) $(LIB_CFG) $^@ @objects.lbc
 
 #---------------------------------------------------------------------------
@@ -185,7 +185,7 @@ objects.lbc : $(OBJECTS)
 test:
 	mkdir test
 	cd test
-	copy $(%WWVCS)\$(PROJ_NAME)\test\vcs.cfg
+	-copy $(%WWVCS)\$(PROJ_NAME)\test\vcs.cfg
 	update
 	wmake
 	cd ..
