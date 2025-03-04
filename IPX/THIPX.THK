@@ -1,0 +1,86 @@
+
+enablemapdirect3216 = true;
+
+typedef	int	BOOL;
+typedef	int	INT;
+
+
+typedef	struct tag_network_number {
+		unsigned char   bytes[4];
+}network_number;
+
+typedef struct tag_physical_node {
+		unsigned char   bytes[6];
+}physical_node;
+
+typedef struct tag_send_address_struct{
+	unsigned char	address[6];
+}send_address_struct;
+
+typedef struct tag_send_buffer_struct{
+	unsigned char	buffer[512];
+}send_buffer_struct;
+
+typedef struct tag_get_buffer_struct{
+	unsigned char	get_buffer[1024];
+}get_buffer_struct;
+
+
+
+
+BOOL _IPX_Initialise(void)
+{
+}
+
+
+INT  _IPX_Open_Socket95(INT)
+{
+}
+
+INT  _IPX_Close_Socket95(INT)
+{
+}
+
+INT  _IPX_Get_Connection_Number95(void)
+{
+}
+
+
+INT _IPX_Send_Packet95(send_address_struct *address, send_buffer_struct *buffer, INT, network_number *net, physical_node* node)
+{
+	address	= input;
+	buffer	= input;
+	net	= input;
+	node	= input;
+}
+
+INT _IPX_Broadcast_Packet95(send_buffer_struct *buffer, INT)
+{
+	buffer	= input;
+}
+
+INT _IPX_Get_Local_Target95(network_number *netnum, physical_node *node, short, send_address_struct *address)
+{
+	netnum	= input;
+	node	= input;
+	address	= output;
+}
+
+
+INT _IPX_Start_Listening95(void)
+{
+}
+
+INT _IPX_Shut_Down95(void)
+{
+}
+
+
+
+INT _IPX_Get_Outstanding_Buffer95(get_buffer_struct *buffer)
+{
+	buffer	= output;
+}
+
+
+

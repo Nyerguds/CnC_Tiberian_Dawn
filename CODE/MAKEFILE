@@ -449,7 +449,7 @@ conquer.lnk : makefile
 	%append $^@ library $(WWFLAT)\lib\win32lib.lib
 	%append $^@ library $(VQDIR)\lib\vqa32wp.lib
 	%append $^@ library $(VQDIR)\lib\vqm32wp.lib
-	%append $^@ library ipx\wwipx32.lib
+	%append $^@ library ..\ipx\wwipx32.lib
 
 
 

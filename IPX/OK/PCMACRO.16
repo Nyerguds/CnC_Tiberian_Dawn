@@ -1,0 +1,1091 @@
+;
+;	Command & Conquer Red Alert(tm)
+;	Copyright 2025 Electronic Arts Inc.
+;
+;	This program is free software: you can redistribute it and/or modify
+;	it under the terms of the GNU General Public License as published by
+;	the Free Software Foundation, either version 3 of the License, or
+;	(at your option) any later version.
+;
+;	This program is distributed in the hope that it will be useful,
+;	but WITHOUT ANY WARRANTY; without even the implied warranty of
+;	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;	GNU General Public License for more details.
+;
+;	You should have received a copy of the GNU General Public License
+;	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;
+
+;$e:\ifil\pcmacro.inc
+;- 16-5-1991 at 10:55:13 by mike
+;- 16-5-1991 at 08:30:30 by mike
+;- 3-5-1991 at 15:39:52 by mike
+
+
+	SUBTTL PCMACRO.INC
+	.xlist
+
+
+fmulscan_size	 MACRO	e0,e1
+	IFDEF	TANDY
+	.err
+	ENDIF
+	IFDEF	CGA
+	.err
+	ENDIF
+	IFDEF	EGA
+	m8	e0   				;; scan size = 40 for vga & ega
+	mov	e1,e0
+	m4	e0
+	add	e0,e1	
+	ENDIF
+	ENDM
+
+;.commo	MACRO
+;	ENDM
+
+;.commf	MACRO
+;	ENDM
+
+setpal	MACRO 	e0
+	push	si
+	mov	si,OFFSET e0
+	call	set_pallette
+	pop	si
+	ENDM
+		
+
+
+
+
+
+waitvbl	MACRO
+	call	wait_vbl
+	ENDM
+
+
+swapscr	MACRO
+	call	swap_scr
+	ENDM
+
+setscad	MACRO
+	IFDEF	TANDY
+	mov	ax,0b800h	;;setup screen address 
+	ENDIF
+	IFDEF	CGA
+	mov	ax,0b800h
+	ENDIF
+	IFDEF	EGA
+	push	ds
+	mov	ax,_DATA
+	mov	ds,ax
+	mov	ax,screen_seg
+	pop	ds
+	ENDIF
+	mov	es,ax
+	ENDM
+
+reswordscr	macro
+	stosw				;;movsw
+	endm
+
+;;		      x	 y
+getscreen	MACRO e0,e1
+	IFIDN <e1>,<ax>
+	%out	"CANT USED AX AS SECOND ARGUMENT"
+	.err
+	endif
+
+	IFIDN <e1>,<di>
+	%out	"CANT USED DI AS SECOND ARGUMENT"
+	.err
+	endif
+		       
+	IFDIF <e1>,<di>
+	mov	di,e1
+	endif
+	m2	di
+	mov	di,screenvtb[di]
+
+	IFDIF <e0>,<ax>
+	mov	ax,e0
+	endif
+
+	IFDEF	EGA
+	di8	ax
+	ENDIF
+	IFDEF	TANDY
+	shr	ax,1
+	ENDIF
+	IFDEF	CGA
+	shr	ax,1
+	shr	ax,1
+	shr	ax,1
+	shr	ax,1
+	ENDIF
+	add	di,ax
+	IFDEF	TANDY
+	and	di,1fffh
+	ENDIF
+	ENDM
+
+getscreen_no MACRO
+	mov	ax,d1
+	sal	ax,1
+	mov	di,ax
+	mov	ax,screenvtb[di]
+	mov	di,ax
+	mov	ax,scadd
+	add	di,ax
+	mov	ax,d0
+	IFDEF	EGA
+	di8	ax
+	ENDIF
+	IFDEF	TANDY
+	shr	ax,1
+	ENDIF
+	IFDEF	CGA
+	shr	ax,1
+	shr	ax,1
+	shr	ax,1
+	shr	ax,1
+	ENDIF
+	add	di,ax
+	ENDM
+
+
+
+
+
+
+mult	macro	e0,e1
+	if	( e1 EQ 2 )
+	m2	e0
+	exitm
+	endif
+
+	if	( e1 EQ 4 )
+	m4	e0
+	exitm
+	endif
+
+	if	( e1 EQ 8 )
+	m8	e0
+	exitm
+	endif
+
+	if	( e1 EQ 16 )
+	m16	e0
+	exitm
+	endif
+
+	%out	"CANT USE THIS MACRO WITH THIS VALUE"
+	.err
+	endm
+
+
+
+m2	macro	e0
+	shl	e0,1
+	endm
+
+m4	macro	e0
+	m2	e0
+	m2	e0
+	endm
+
+m8	macro	e0
+	m4	e0
+	m2	e0
+	endm
+
+m16	macro	e0
+	m8	e0
+	m2	e0
+	endm
+
+m32	macro	e0
+	m16	e0
+	m2	e0
+	endm
+
+m64	macro	e0
+	m32	e0
+	m2	e0
+	endm
+
+m128	macro	e0
+	m64	e0
+	m2	e0
+	endm
+
+di2	macro	e0
+	shr	e0,1
+	endm
+
+di4	macro	e0
+	di2	e0
+	di2	e0
+	endm
+
+di8	macro	e0
+	di4	e0
+	di2	e0
+	endm
+
+di16	macro	e0
+	di8	e0
+	di2	e0
+	endm
+
+di32	macro	e0
+	di16	e0
+	di2	e0
+	endm
+
+deca	macro	e0
+	mov	ax,e0
+	dec	ax
+	mov	e0,ax
+	endm
+
+decb	macro	e0
+	mov	al,e0
+	dec	al
+	mov	e0,al
+	endm
+
+inca	macro	e0
+	mov	ax,e0
+	inc	ax
+	mov	e0,ax
+	endm
+
+incb	macro	e0
+	mov	al,e0
+	inc	al
+	mov	e0,al
+	endm
+
+clrw	macro	e0
+	mov	WORD PTR e0,0
+	endm
+
+clrb	macro	e0
+	mov	BYTE PTR e0,0
+	endm
+
+clr	macro	e0
+	mov	e0,0
+	endm
+
+
+	
+
+mova	macro	e1,e2
+	.ERRIDN	<e1>,<WORD>
+	.ERRIDN <e1>,<BYTE>
+	.ERRIDN <e1>,<OFFSET>
+	.ERRIDN	<e2>,<WORD>
+	.ERRIDN <e2>,<BYTE>
+	.ERRIDN <e2>,<OFFSET>
+	mov	ax,e2
+	mov	e1,ax
+	endm
+
+movb	macro	e1,e2
+	.ERRIDN	<e1>,<WORD>
+	.ERRIDN <e1>,<BYTE>
+	.ERRIDN <e1>,<OFFSET>
+	.ERRIDN	<e2>,<WORD>
+	.ERRIDN <e2>,<BYTE>
+	.ERRIDN <e2>,<OFFSET>
+	mov	al,e2
+	mov	e1,al
+	endm
+
+btstb	macro	e1,e2
+	IFIDN <e1>,<al>
+	test	e1,1 SHL e2
+	EXITM
+	ENDIF
+	IFIDN <e1>,<ah>
+	test	e1,1 SHL e2
+	EXITM
+	ENDIF
+	IFIDN <e1>,<bl>
+	test	e1,1 SHL e2
+	EXITM
+	ENDIF
+	IFIDN <e1>,<bh>
+	test	e1,1 SHL e2
+	EXITM
+	ENDIF
+	IFIDN <e1>,<cl>
+	test	e1,1 SHL e2
+	EXITM
+	ENDIF
+	IFIDN <e1>,<ch>
+	test	e1,1 SHL e2
+	EXITM
+	ENDIF
+	IFIDN <e1>,<dl>
+	test	e1,1 SHL e2
+	EXITM
+	ENDIF
+	IFIDN <e1>,<dh>
+	test	e1,1 SHL e2
+	EXITM
+	ENDIF
+        test    BYTE PTR e1,1 SHL e2
+	endm
+
+
+
+saveall	macro
+	save	ax,bx,cx,dx,bp,si,di,es,ds
+	endm
+
+restall	macro
+	restore	ax,bx,cx,dx,bp,si,di,es,ds
+	endm
+
+save	macro	r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13,r14
+	IFNB	<r0>
+	push	r0
+	save	r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13,r14
+	ENDIF
+	endm
+
+restore	macro	r0,r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13,r14
+	IFNB	<r14>
+	pop	r14
+	ENDIF
+	IFNB	<r13>
+	pop	r13
+	ENDIF
+	IFNB	<r12>
+	pop	r12
+	ENDIF
+	IFNB	<r11>
+	pop	r11
+	ENDIF
+	IFNB	<r10>
+	pop	r10
+	ENDIF
+	IFNB	<r9>
+	pop	r9
+	ENDIF
+	IFNB	<r8>
+	pop	r8
+	ENDIF
+	IFNB	<r7>
+	pop	r7
+	ENDIF
+	IFNB	<r6>
+	pop	r6
+	ENDIF
+	IFNB	<r5>
+	pop	r5
+	ENDIF
+	IFNB	<r4>
+	pop	r4
+	ENDIF
+	IFNB	<r3>
+	pop	r3
+	ENDIF
+	IFNB	<r2>
+	pop	r2
+	ENDIF
+	IFNB	<r1>
+	pop	r1
+	ENDIF
+	IFNB	<r0>
+	pop	r0
+	ENDIF
+	endm
+
+bhi	macro	lab
+	ja	lab
+	endm
+
+bls	macro	lab
+	jbe	lab
+	endm
+
+bcc	macro	lab
+	jnc	lab
+	endm
+
+bcs	macro	lab
+	jc	lab
+	endm	
+
+bhs	macro	lab
+	jnc	lab
+	endm
+
+blo	macro	lab
+	jc	lab
+	endm
+
+bne	macro	lab
+	jne	lab
+	endm
+
+beq	macro	lab
+	je	lab
+	endm
+
+bpl	macro	lab
+	jns	lab
+	endm
+
+bmi	macro	lab
+	js	lab
+	endm
+
+bge	macro	lab
+	jge	lab
+	endm
+
+blt	macro	lab
+	jl	lab
+	endm
+
+bgt	macro	lab
+	jg	lab
+	endm
+
+ble	macro	lab
+	jle	lab
+	endm
+
+bra	macro	lab
+	jmp	lab
+	endm
+
+
+bhis	macro	lab
+	ja	lab
+	endm
+
+blss	macro	lab
+	jbe	lab
+	endm
+
+bccs	macro	lab
+	jnc	lab
+	endm
+
+bcss	macro	lab
+	jc	lab
+	endm	
+
+bnes	macro	lab
+	jne	lab
+	endm
+
+beqs	macro	lab
+	je	lab
+	endm
+
+bpls	macro	lab
+	jns	lab
+	endm
+
+bmis	macro	lab
+	js	lab
+	endm
+
+bges	macro	lab
+	jge	lab
+	endm
+
+blts	macro	lab
+	jl	lab
+	endm
+
+bgts	macro	lab
+	jg	lab
+	endm
+
+bles	macro	lab
+	jle	lab
+	endm
+
+bras	macro	lab
+	jmp	lab
+	endm
+
+
+tstb	macro	e1
+
+	IFIDN <e1>,<al>
+	or	e1,e1
+	EXITM
+	ENDIF
+	IFIDN <e1>,<bp>
+	or	e1,e1
+	EXITM
+	ENDIF
+	IFIDN <e1>,<ah>
+	or	e1,e1
+	EXITM
+	ENDIF
+	IFIDN <e1>,<bl>
+	or	e1,e1
+	EXITM
+	ENDIF
+	IFIDN <e1>,<bh>
+	or	e1,e1
+	EXITM
+	ENDIF
+	IFIDN <e1>,<cl>
+	or	e1,e1
+	EXITM
+	ENDIF
+	IFIDN <e1>,<ch>
+	or	e1,e1
+	EXITM
+	ENDIF
+	IFIDN <e1>,<dl>
+	or	e1,e1
+	EXITM
+	ENDIF
+	IFIDN <e1>,<dh>
+	or	e1,e1
+	EXITM
+	ENDIF
+	cmp	BYTE PTR e1,0
+	endm
+
+	
+tstw	macro	e1
+	IFIDN	<e1>,<ax>
+	or	e1,e1
+	EXITM
+	ENDIF
+	IFIDN	<e1>,<bx>
+	or	e1,e1
+	EXITM
+	ENDIF
+	IFIDN	<e1>,<cx>
+	or	e1,e1
+	EXITM
+	ENDIF
+	IFIDN	<e1>,<dx>
+	or	e1,e1
+	EXITM
+	ENDIF
+
+	IFIDN	<e1>,<bp>
+	or	e1,e1
+	EXITM
+	ENDIF
+
+	IFIDN	<e1>,<si>
+	or	e1,e1
+	EXITM
+	ENDIF
+
+	IFIDN	<e1>,<di>
+	or	e1,e1
+	EXITM
+	ENDIF
+	cmp	WORD PTR e1,0
+	endm
+
+
+
+tst	macro	e1
+	IFIDN	<e1>,<ax>
+	or	e1,e1
+	EXITM
+	ENDIF
+	IFIDN	<e1>,<bx>
+	or	e1,e1
+	EXITM
+	ENDIF
+	IFIDN	<e1>,<cx>
+	or	e1,e1
+	EXITM
+	ENDIF
+	IFIDN	<e1>,<dx>
+	or	e1,e1
+	EXITM
+	ENDIF
+
+	IFIDN	<e1>,<bp>
+	or	e1,e1
+	EXITM
+	ENDIF
+
+	IFIDN	<e1>,<si>
+	or	e1,e1
+	EXITM
+	ENDIF
+
+	IFIDN	<e1>,<di>
+	or	e1,e1
+	EXITM
+	ENDIF
+
+	IFIDN	<e1>,<al>
+	or	e1,e1
+	EXITM
+	ENDIF
+	IFIDN	<e1>,<bl>
+	or	e1,e1
+	EXITM
+	ENDIF
+	IFIDN	<e1>,<cl>
+	or	e1,e1
+	EXITM
+	ENDIF
+	IFIDN	<e1>,<dl>
+	or	e1,e1
+	EXITM
+	ENDIF
+
+	IFIDN	<e1>,<ah>
+	or	e1,e1
+	EXITM
+	ENDIF
+	IFIDN	<e1>,<bh>
+	or	e1,e1
+	EXITM
+	ENDIF
+	IFIDN	<e1>,<ch>
+	or	e1,e1
+	EXITM
+	ENDIF
+	IFIDN	<e1>,<dh>
+	or	e1,e1
+	EXITM
+	ENDIF
+
+	cmp	e1,0
+	endm
+
+
+clear	macro	first
+	xor	first,first
+	endm
+
+rts	macro
+	ret
+	endm
+
+
+bclrb	macro	e1,e2
+	btstb	e1,e2
+	pushf
+
+	bclrb_sub	e1,e2
+	popf
+	endm
+
+bclrb_sub macro e1,e2
+	IFIDN <e1>,<al>
+	and	e1,NOT ( 1 SHL e2 )
+	EXITM
+	ENDIF
+	IFIDN <e1>,<bp>
+	and	e1,NOT ( 1 SHL e2 )
+	EXITM
+	ENDIF
+	IFIDN <e1>,<ah>
+	and	e1,NOT ( 1 SHL e2 )
+	EXITM
+	ENDIF
+	IFIDN <e1>,<bl>
+	and	e1,NOT ( 1 SHL e2 )
+	EXITM
+	ENDIF
+	IFIDN <e1>,<bh>
+	and	e1,NOT ( 1 SHL e2 )
+	EXITM
+	ENDIF
+	IFIDN <e1>,<cl>
+	and	e1,NOT ( 1 SHL e2 )
+	EXITM
+	ENDIF
+	IFIDN <e1>,<ch>
+	and	e1,NOT ( 1 SHL e2 )
+	EXITM
+	ENDIF
+	IFIDN <e1>,<dl>
+	and	e1,NOT ( 1 SHL e2 )
+	EXITM
+	ENDIF
+	IFIDN <e1>,<dh>
+	and	e1,NOT ( 1 SHL e2 )
+	EXITM
+	ENDIF
+	and	BYTE PTR e1,NOT ( 1 SHL e2 )
+	endm
+
+
+
+bsetb	macro	e1,e2
+	btstb	e1,e2
+	pushf
+	or	BYTE PTR e1,1 SHL e2
+	popf
+	endm
+
+
+bchgb	macro	e1,e2
+	btstb	e1,e2
+	pushf
+	xor	BYTE PTR e1,1 SHL e2
+	popf
+	endm
+
+
+
+mov_b	macro	label,label2
+	mov	byte ptr label,byte ptr label2
+	endm
+
+
+
+mov_w	macro	label,label2
+	mov	word ptr label,word ptr label2
+	endm
+
+
+
+mov_d	macro	label,label2
+	mov	dword ptr label,dword ptr label2
+	endm
+
+
+cmp_b	macro	label,label2
+	cmp	byte ptr label,byte ptr label2
+	endm
+
+cmp_w	macro	label,label2
+	cmp	word ptr label,word ptr label2
+	endm
+
+cmp_d	macro	label,label2
+	cmp	dword ptr label,dword ptr label2
+	endm
+
+
+
+add_b	macro	label,label2
+	add	byte ptr label,byte ptr label2
+	endm
+
+add_w	macro	label,label2
+	add	word ptr label,word ptr label2
+	endm
+
+add_d	macro	label,label2
+	add	dword ptr label,dword ptr label2
+	endm
+
+
+
+sub_b	macro	label,label2
+	sub	byte ptr label,byte ptr label2
+	endm
+
+sub_w	macro	label,label2
+	sub	word ptr label,word ptr label2
+	endm
+
+sub_d	macro	label,label2
+	sub	dword ptr label,dword ptr label2
+	endm
+
+
+
+
+
+or_b	macro	label,label2
+	or	byte ptr label,byte ptr label2
+	endm
+
+or_w	macro	label,label2
+	or	word ptr label,word ptr label2
+	endm
+
+or_d	macro	label,label2
+	or	dword ptr label,dword ptr label2
+	endm
+
+
+
+
+
+
+
+xor_b	macro	label,label2
+	xor	byte ptr label,byte ptr label2
+	endm
+
+xor_w	macro	label,label2
+	xor	word ptr label,word ptr label2
+	endm
+
+xor_d	macro	label,label2
+	xor	dword ptr label,dword ptr label2
+	endm
+
+
+
+
+
+
+
+
+eor_b	macro	label,label2
+	xor	byte ptr label,byte ptr label2
+	endm
+
+eor_w	macro	label,label2
+	xor	word ptr label,word ptr label2
+	endm
+
+eor_d	macro	label,label2
+	xor	dword ptr label,dword ptr label2
+	endm
+
+
+
+
+and_b	macro	label,label2
+	and	byte ptr label,byte ptr label2
+	endm
+
+and_w	macro	label,label2
+	and	word ptr label,word ptr label2
+	endm
+
+and_d	macro	label,label2
+	and	dword ptr label,dword ptr label2
+	endm
+
+
+
+
+
+test_b	macro	label,label2
+	test	byte ptr label,byte ptr label2
+	endm
+
+test_w	macro	label,label2
+	test	word ptr label,word ptr label2
+	endm
+
+test_d	macro	label,label2
+	test	dword ptr label,dword ptr label2
+	endm
+
+
+
+
+
+
+
+shr_b	macro	label,label2
+	shr	byte ptr label,label2
+	endm
+
+shr_w	macro	label,label2
+	shr	word ptr label,label2
+	endm
+
+shr_d	macro	label,label2
+	shr	dword ptr label,label2
+	endm
+
+ 
+
+shl_b	macro	label,label2
+	shl	byte ptr label,label2
+	endm
+
+shl_w	macro	label,label2
+	shl	word ptr label,label2
+	endm
+
+shl_d	macro	label,label2
+	shl	dword ptr label,label2
+	endm
+
+
+
+
+sar_b	macro	label,label2
+	sar	byte ptr label,label2
+	endm
+
+sar_w	macro	label,label2
+	sar	word ptr label,label2
+	endm
+
+sar_d	macro	label,label2
+	sar	dword ptr label,label2
+	endm
+
+
+
+
+
+sal_b	macro	label,label2
+	sal	byte ptr label,label2
+	endm
+
+sal_w	macro	label,label2
+	sal	word ptr label,label2
+	endm
+
+sal_d	macro	label,label2
+	sal	dword ptr label,label2
+	endm
+
+
+
+inc_b	macro	label
+	inc	byte ptr label
+	endm
+
+inc_w	macro	label
+	inc	word ptr label
+	endm
+
+inc_d	macro	label
+	inc	dword ptr label
+	endm
+
+
+
+
+dec_b	macro	label
+	dec	byte ptr label
+	endm
+
+dec_w	macro	label
+	dec	word ptr label
+	endm
+
+dec_d	macro	label
+	dec	dword ptr label
+	endm
+
+
+
+
+
+movzx_b	macro	label,label2
+	movzx	label,byte ptr label2
+	endm
+
+
+movzx_w	macro	label,label2
+	movzx	label,word ptr label2
+	endm
+   
+
+movsx_b	macro	label,label2
+	movsx	label,byte ptr label2
+	endm
+
+
+movsx_w	macro	label,label2
+	movsx	label,word ptr label2
+	endm
+   
+
+
+
+mul_b	macro	label
+	mul	byte ptr label
+	endm
+
+
+mul_w	macro	label
+	mul	word ptr label
+	endm
+
+
+div_b	macro	label
+	div	byte ptr label
+	endm
+
+
+div_w	macro	label
+	div	word ptr label
+	endm
+
+
+idiv_b	macro	label
+	idiv	byte ptr label
+	endm
+
+
+idiv_w	macro	label
+	idiv	word ptr label
+	endm
+
+
+
+
+tst_b	macro	label
+	cmp	byte ptr label,0
+	endm
+
+tst_w	macro	label
+	cmp	word ptr label,0
+	endm
+
+tst_d	macro	label
+	cmp	dword ptr label,0
+	endm
+
+
+
+
+
+
+
+not_b	macro	label
+	not	byte ptr label
+	endm
+
+not_w	macro	label
+	not	word ptr label
+	endm
+
+not_d	macro	label
+	not	dword ptr label
+	endm
+
+
+
+
+neg_b	macro	label
+	neg	byte ptr label
+	endm
+
+neg_w	macro	label
+	neg	word ptr label
+	endm
+
+neg_d	macro	label
+	neg	dword ptr label
+	endm
+
+
+
+
+
+  	.list
+
+
+

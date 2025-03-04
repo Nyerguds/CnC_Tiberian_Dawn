@@ -63,8 +63,6 @@ WMAKE
 cd ..
 
 
-cd code
-
 echo Compiling IPX
 
 cd ipx
@@ -75,7 +73,11 @@ cd ..
 
 echo Compiling Game
 
+cd code
+
 WMAKE WIN32=1
+
+cd ..
 
 :: manual linking to avoid a link path corruption issue
 ::%UTILS%\nwlink name ra95.exe @win95.lnk
