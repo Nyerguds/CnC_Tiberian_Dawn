@@ -1,0 +1,67 @@
+/*
+**	Command & Conquer Red Alert(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/***************************************************************************
+ **     C O N F I D E N T I A L --- W E S T W O O D   S T U D I O S       **
+ ***************************************************************************
+ *                                                                         *
+ *                 Project Name : Virtual Monopoly                         *
+ *                                                                         *
+ *                    File Name : DEBUG.RC                                 *
+ *                                                                         *
+ *                   Programmer : Michael Legg                             *
+ *                                                                         *
+ *                   Start Date : February 9, 1995                         *
+ *                                                                         *
+ *                  Last Update : May 30, 1995   [ML]                      *
+ *                                                                         *
+ *-------------------------------------------------------------------------*
+ * Functions:                                                              *
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+#include "defines.h"
+#include "debug.rh"
+
+#if( RIG_ROLL_FOR_PLAYTEST )
+
+DebugDiceDlgBox DIALOG 152, 52, 109, 85
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Deciding Next Roll..."
+FONT 8, "MS Sans Serif"
+{
+ PUSHBUTTON "Ready to roll...", IDOK, 18, 59, 72, 16
+ EDITTEXT DIE_EDIT1, 57, 15, 25, 12
+ EDITTEXT DIE_EDIT2, 57, 35, 25, 12
+ LTEXT "Bone #2", -1, 26, 36, 29, 8
+ LTEXT "Bone #1", -1, 26, 18, 29, 9
+}
+
+#endif
+
+#if( DEBUG_CODE )
+
+DebugSetCashDlgBox DIALOG 152, 52, 106, 64
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Set Player's Cash"
+FONT 8, "MS Sans Serif"
+{
+ DEFPUSHBUTTON "OK", IDOK, 31, 39, 43, 13
+ EDITTEXT CASH_EDIT1, 32, 15, 41, 12
+}
+
+#endif
+

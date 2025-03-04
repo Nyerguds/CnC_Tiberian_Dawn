@@ -1,0 +1,267 @@
+#
+#	Command & Conquer Red Alert(tm)
+#	Copyright 2025 Electronic Arts Inc.
+#
+#	This program is free software: you can redistribute it and/or modify
+#	it under the terms of the GNU General Public License as published by
+#	the Free Software Foundation, either version 3 of the License, or
+#	(at your option) any later version.
+#
+#	This program is distributed in the hope that it will be useful,
+#	but WITHOUT ANY WARRANTY; without even the implied warranty of
+#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#	GNU General Public License for more details.
+#
+#	You should have received a copy of the GNU General Public License
+#	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+#***************************************************************************
+#**     C O N F I D E N T I A L --- W E S T W O O D   S T U D I O S       **
+#***************************************************************************
+#*                                                                         *
+#*                 Project Name : Westwood Library .LIB makefile	   		*
+#*                                                                         *
+#*                    File Name : MAKEFILE                                 *
+#*                                                                         *
+#*                   Programmer : Julio R. Jerez			   					*
+#*                                                                         *
+#*                   Start Date : Jan 26, 1995                           	*
+#*                                                                         *
+#*                                                                         *
+#*-------------------------------------------------------------------------*
+#*                                                                         *
+#* Required environment variables:					   								*
+#* WIN32LIB		= your root WWFLAT path					   							*
+#* WIN32VCS		= root directory for wwlib version control archive	   		*
+#* COMPILER		= your Watcom installation path				   					*
+#*									   															*
+#* Required changes to makefile:					   									*
+#* LIBS		= list of all component libraries			   						*
+#*									   															*
+#* NOTE: For this makefile to work, each library directory MUST have the   *
+#*	same name as its library.					   										*
+#*									   															*
+#* "make install" installs the library on your drive			   				*
+#* "make update" updates all source files in your slice			   			*
+#*									   															*
+#*	To install or update just one library you may type:		   				*
+#*		 "make -DLIBS=misc.lib install"				   								*
+#*									   															*
+#***************************************************************************
+
+#---------------------------------------------------------------------------
+# Verify user's environment
+#---------------------------------------------------------------------------
+!ifndef WIN32LIB
+!error WIN32LIB Environment var not configured.
+!endif
+
+!ifndef WIN32VCS
+!error WIN32VCS Environment var not configured.
+!endif
+
+!ifndef COMPILER
+!error COMPILER Environment var not configured.
+!endif
+
+
+#===========================================================================
+# User-defined section: list each library in this macro
+#	NOTE: These are some order dependencies:
+#	1. The directory MISC must always be made first.
+#	2. The directory VIDEO must be made before the SYSTEM directory.
+#===========================================================================
+LIB_NAME    = win32lib
+LIB_DIR     = $(WIN32LIB)\lib
+!include $(WIN32LIB)\\project.cfg
+
+#---------------------------------------------------------------------------
+# LIBS macro: a list of all component libraries
+#	"make LIBS=xxxx.lib [target]" makes/installs/updates only that library
+#---------------------------------------------------------------------------
+
+LIBS = 			\
+					audio.lib		\
+					dipthong.lib	\
+					drawbuff.lib	\
+					font.lib    	\
+					iff.lib	    	\
+					keyboard.lib	\
+					mem.lib	    	\
+					misc.lib    	\
+					mono.lib    	\
+					palette.lib    	\
+					rawfile.lib		\
+					tile.lib 		\
+					timer.lib 		\
+					ww_win.lib 		\
+					wsa.lib
+
+LIB_INSTALL = 	\
+					audio.ins		\
+					dipthong.ins	\
+					drawbuff.ins	\
+					font.ins    	\
+					iff.ins	    	\
+					keyboard.ins	\
+					mem.ins	    	\
+					misc.ins    	\
+					mono.ins    	\
+					palette.ins    	\
+					rawfile.ins		\
+					tile.ins 		\
+					timer.ins 		\
+					ww_win.ins 		\
+					wsa.ins
+
+LIB_UPDATE = 	\
+					audio.upd		\
+					dipthong.upd	\
+					drawbuff.upd	\
+					font.upd    	\
+					iff.upd	    	\
+					keyboard.upd	\
+					mem.upd	    	\
+					misc.upd    	\
+					mono.upd    	\
+					palette.upd    	\
+					rawfile.upd		\
+					tile.upd 		\
+					timer.upd 		\
+					ww_win.upd 		\
+					wsa.upd
+
+#===========================================================================
+# Pre-defined section: there should be little need to modify this section.
+#===========================================================================
+#---------------------------------------------------------------------------
+# Path macros: one path for each file type.
+#	These paths are used to tell make where to find/put each file type.
+#---------------------------------------------------------------------------
+.path.lib	=	$(WIN32LIB)\\lib
+
+
+#---------------------------------------------------------------------------
+# Tools/commands
+# LIB_CMD:	library command
+# LIB_CFG:	library configuration file
+# VCS_UPDATE:	version control update command; this command should update
+# 		all relevant files in a given directory with read-only
+#		copies from the archive
+#---------------------------------------------------------------------------
+LIB_CMD		= tlib
+VCS_UPDATE	= update
+
+#---------------------------------------------------------------------------
+# Default target
+#---------------------------------------------------------------------------
+all:	$(LIB_NAME).lib
+
+#---------------------------------------------------------------------------
+# Build the library
+# The original library is deleted by the librarian
+# Lib objects & -+ commands are constructed by substituting within the
+# $^@ macro (which expands to all target dependents, separated with
+# spaces)
+# Tlib's cfg file is not invoked as a response file.
+# All headers & source files are copied into WWFLAT\SRCDEBUG, for debugging
+#---------------------------------------------------------------------------
+$(LIB_NAME).lib: $(LIBS)
+	del $<
+	$(LIB_CMD) $< $(LIB_CFG)  @&&|
+ +$(WIN32LIB)\\lib\\audio.lib			&
++$(WIN32LIB)\\lib\\dipthong.lib		&
++$(WIN32LIB)\\lib\\drawbuff.lib		&
++$(WIN32LIB)\\lib\\font.lib 			&
++$(WIN32LIB)\\lib\\iff.lib	    		&
++$(WIN32LIB)\\lib\\keyboard.lib		&
++$(WIN32LIB)\\lib\\mem.lib	    		&
++$(WIN32LIB)\\lib\\misc.lib    		&
++$(WIN32LIB)\\lib\\mono.lib    		&
++$(WIN32LIB)\\lib\\palette.lib    		&
++$(WIN32LIB)\\lib\\rawfile.lib    	&
++$(WIN32LIB)\\lib\\tile.lib 			&
++$(WIN32LIB)\\lib\\timer.lib 			&
++$(WIN32LIB)\\lib\\ww_win.lib 		&
++$(WIN32LIB)\\lib\\wsa.lib
+|
+
+#---------------------------------------------------------------------------
+# This construct tells make how to make all component libraries
+# The commands get executed for every item in the macro.
+#	The macro $: extracts only the directory name from the macro item.
+#---------------------------------------------------------------------------
+$(LIBS):
+	echo Making $^&...
+	cd $^&
+	make
+	cd ..
+
+#---------------------------------------------------------------------------
+# "make install" installs the library on your drive
+#---------------------------------------------------------------------------
+install:  install_dirs $(LIB_INSTALL) .SYMBOLIC
+	echo Compiling library...
+ 	wmake
+	echo Library installation complete.
+
+#---------------------------------------------------------------------------
+# At installation time, this target makes all non-library directories
+#	This is a dependency for 'install'
+#---------------------------------------------------------------------------
+install_dirs: .SYMBOLIC
+	echo Making directories...
+	mkdir example
+	mkdir include
+	mkdir lib
+	mkdir srcdebug
+	mkdir tools
+	cd tools
+	copy $(%WWVCS)\tools\vcs.cfg
+	$(VCS_UPDATE)
+	cd..
+	copy $(%WWVCS)\vcs.cfg
+	$(VCS_UPDATE)
+	cd example
+	copy $(%WWVCS)\example\vcs.cfg
+	$(VCS_UPDATE)
+	cd ..
+
+
+#---------------------------------------------------------------------------
+# This target installs all library directories
+#	This is a dependency for 'install'
+#---------------------------------------------------------------------------
+$(LIB_INSTALL):	.SYMBOLIC
+	echo Installing $^&...
+	md $^&
+	cd $^&
+	copy $(%WWVCS)\$^&\vcs.cfg
+	$(VCS_UPDATE)
+	copy *.h ..\include
+	copy *.inc ..\include
+	cd ..
+
+
+
+
+
+#---------------------------------------------------------------------------
+# "make update" updates all source files in your slice
+#---------------------------------------------------------------------------
+update: $(LIB_UPDATE) .SYMBOLIC
+	echo Library updated.
+
+
+#---------------------------------------------------------------------------
+# This target updates all library directories
+#	This is a dependency for 'updates'
+#---------------------------------------------------------------------------
+$(LIB_UPDATE): .SYMBOLIC
+	echo Updating $^&...
+	cd $^&
+	$(VCS_UPDATE)
+	copy *.h ..\include
+	copy *.inc ..\include
+	cd ..

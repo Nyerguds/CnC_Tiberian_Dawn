@@ -1,0 +1,217 @@
+#
+#	Command & Conquer Red Alert(tm)
+#	Copyright 2025 Electronic Arts Inc.
+#
+#	This program is free software: you can redistribute it and/or modify
+#	it under the terms of the GNU General Public License as published by
+#	the Free Software Foundation, either version 3 of the License, or
+#	(at your option) any later version.
+#
+#	This program is distributed in the hope that it will be useful,
+#	but WITHOUT ANY WARRANTY; without even the implied warranty of
+#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#	GNU General Public License for more details.
+#
+#	You should have received a copy of the GNU General Public License
+#	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+#****************************************************************************
+#
+#        C O N F I D E N T I A L --- W E S T W O O D   S T U D I O S
+#
+#----------------------------------------------------------------------------
+#
+# PROJECT
+#     VPlay32 - VQA player (32-bit protected mode)
+#
+# FILE
+#     Makefile
+#
+# PROGRAMMER
+#     Denzil E. Long, Jr.
+#      
+# DATE
+#     February 9, 1995
+#
+# ENVIROMENT
+#     PRJ    = Root projects path
+#     PRJVCS = Root path for projects version control archive
+#     BCDIR  = Root Borland installation path
+#     TNTDIR = Root Pharlap TNT-DOS Extender path
+#
+#****************************************************************************
+
+#----------------------------------------------------------------------------
+# VERIFY ENVIROMENT
+#----------------------------------------------------------------------------
+
+!if !$d(PRJ) || !$d(PRJVCS) || !$d(BCDIR) || !$d(TNTDIR)
+!error Environment not configured.
+!endif
+
+.AUTODEPEND
+
+#----------------------------------------------------------------------------
+# PROJECT DEPENDENT MACROS
+#----------------------------------------------------------------------------
+
+PRJNAME	= vplaytnt
+PRJDIR  = $(PRJ)\VPLAY32
+
+OBJECTS = \
+	obj\plyvqa32.obj \
+
+PRJLIBS = \
+	vqa32bp.lib \
+	vqm32bp.lib \
+	
+#----------------------------------------------------------------------------
+# PATH MACROS
+#----------------------------------------------------------------------------
+
+!if $d(LIB)
+LIBPATH = $(PRJ)\LIB;$(LIB)
+!else
+LIBPATH = $(PRJ)\LIB;$(TNTDIR)\LIB;$(BCDIR)\LIB
+!endif
+
+!if $d(INCLUDE)
+INCLUDEPATH	= $(PRJ)\INCLUDE;$(INCLUDE)
+!else
+INCLUDEPATH	= $(PRJ)\INCLUDE;$(TNTDIR)\INCLUDE;$(BCDIR)\INCLUDE
+!endif
+
+.path.asm	= $(PRJDIR)
+.path.c		= $(PRJDIR)
+.path.cpp	= $(PRJDIR)
+.path.h		= $(PRJDIR)
+.path.def	= $(PRJDIR)
+.path.exe	= $(PRJDIR)
+.path.obj	= $(PRJDIR)\OBJ
+.path.sym	= $(PRJDIR)\OBJ
+.path.map = $(PRJDIR)\OBJ
+.path.lib	= $(PRJ)\LIB
+
+#----------------------------------------------------------------------------
+# TOOLS, COMMANDS AND CONFIGURATIONS
+#----------------------------------------------------------------------------
+
+CC_CMD   = bcc32
+ASM_CMD  = tasm32
+LINK_CMD = tlink32
+LIB_CMD  = tlib
+TNT_CMD  = cfig386
+
+CC_CFG    = bcc32.cfg
+ASM_CFG   = tasm32.cfg
+LINK_CFG  = tlink32.cfg
+LIB_CFG   = tlib.cfg
+CFG_FILES = $(CC_CFG) $(ASM_CFG) $(LINK_CFG) $(LIB_CFG)
+TNT_FLAGS = -minreal 256
+
+#----------------------------------------------------------------------------
+# DEFAULT TARGET
+#----------------------------------------------------------------------------
+
+all: $(PRJNAME).exe
+
+#----------------------------------------------------------------------------
+# IMPLICIT RULES
+#----------------------------------------------------------------------------
+
+.c.obj:
+	$(CC_CMD) -P- -n$(.path.obj) {$< }
+
+.cpp.obj:
+	$(CC_CMD) -P -n$(.path.obj) {$< }
+
+.asm.obj:
+	$(ASM_CMD) @$(ASM_CFG) $<,$(.path.obj)\$&
+
+#----------------------------------------------------------------------------
+# BUILD THE APPLICATION
+#----------------------------------------------------------------------------
+
+$(PRJNAME).exe: $(OBJECTS) $(PRJLIBS) $(PRJNAME).def
+	$(LINK_CMD) @&&| 
+c0x32.obj+
+$(OBJECTS)
+$(.path.exe)\$(PRJNAME).exe	 
+$(.path.map)\$(PRJNAME).map
+$(PRJLIBS)+
+dos32.lib+
+dosx32.lib+
+errno.lib+
+import32.lib+
+cw32.lib
+$(.path.def)\$(PRJNAME).def
+|
+
+	$(TNT_CMD) $(PRJNAME) $(TNT_FLAGS)
+
+#----------------------------------------------------------------------------
+# ALL OBJECTS DEPEND ON THE CONFIGURATION FILES
+#----------------------------------------------------------------------------
+
+$(OBJECTS):	$(CFG_FILES)
+
+#----------------------------------------------------------------------------
+# COMPILER CONFIGURATION
+#----------------------------------------------------------------------------
+
+$(CC_CFG): makefile
+	copy &&|
+-c
+-3
+-d
+-H=$(.path.sym)\headers.sym
+-wpro
+-weas
+-wpre
+-I$(INCLUDEPATH)
+-DPHARLAP_TNT=1
+#-v
+| $(CC_CFG)
+ 
+#----------------------------------------------------------------------------
+# ASSEMBLER CONFIGURATION
+#----------------------------------------------------------------------------
+
+$(ASM_CFG): makefile
+	copy &&|
+/la
+/t
+/m
+/w+
+/jJUMPS
+/ml
+/p
+/z
+/i$(PRJ)\INCLUDE
+/zi
+| $(ASM_CFG)
+
+#----------------------------------------------------------------------------
+# LINKER CONFIGURATION
+#----------------------------------------------------------------------------
+
+$(LINK_CFG): makefile
+	copy &&|
+/c
+/m
+/Gm
+-L$(LIBPATH)
+-v
+| $(LINK_CFG)
+
+#----------------------------------------------------------------------------
+# LIBRARIAN CONFIGURATION
+#----------------------------------------------------------------------------
+
+$(LIB_CFG):	makefile
+	copy &&|
+/C /E
+| $(LIB_CFG)
+
+

@@ -1,0 +1,200 @@
+#
+#	Command & Conquer Red Alert(tm)
+#	Copyright 2025 Electronic Arts Inc.
+#
+#	This program is free software: you can redistribute it and/or modify
+#	it under the terms of the GNU General Public License as published by
+#	the Free Software Foundation, either version 3 of the License, or
+#	(at your option) any later version.
+#
+#	This program is distributed in the hope that it will be useful,
+#	but WITHOUT ANY WARRANTY; without even the implied warranty of
+#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#	GNU General Public License for more details.
+#
+#	You should have received a copy of the GNU General Public License
+#	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+#***************************************************************************
+#**     C O N F I D E N T I A L --- W E S T W O O D   S T U D I O S       **
+#***************************************************************************
+#*                                                                         *
+#*                 Project Name : Blade Runner							   		 *
+#*                                                                         *
+#*                    File Name : MAKEFILE                                 *
+#*                                                                         *
+#*                   Programmer : Mike Grayford			   					 *
+#*                                                                         *
+#*                   Start Date : Nov 14, 1995  	                   		 *
+#*                                                                         *
+#*                  Last Update : 			                   					 *
+#*                                                                         *
+#*-------------------------------------------------------------------------*
+#*                                                                         *
+#* Required environment variables:					   								 *
+#* WIN32LIB	= the root of the WW library			   						 	 *
+#* WIN32VCS	= root directory for WW library version control archive	 	 *
+#* COMPILER	= your Watcom installation path				   				 	 *
+#*                                                                         *
+#*									   														 *
+#* Required changes to makefile:					   								 *
+#* PROJ_NAME	= name of the executable program you're building 	   		 *
+#* PROJ_LIBS	= Westwood libraries to link your EXE to 	           			 *
+#* OBJECTS	= list of objects in your current working directory	   		 *
+#*                                                                         *
+#* Optional changes to makefile:					   								 *
+#* PROJ_DIR	= full pathname of your working directory		   				 *
+#* .xxx:	= full pathname where various file types live		   			 *
+#*                                                                         *
+#***************************************************************************
+
+#---------------------------------------------------------------------------
+# Verify user's environment
+#---------------------------------------------------------------------------
+!ifndef %WIN32LIB
+!error WIN32LIB Environment var not configured.
+!endif
+
+!ifndef %WIN32VCS
+!error WIN32VCS Environment var not configured.
+!endif
+
+!ifndef %WATCOM
+!error WATCOM Environment var not configured.
+!endif
+
+
+#===========================================================================
+# User-defined section: the user should tailor this section for each project
+#===========================================================================
+#---------------------------------------------------------------------------
+# PROJ_NAME = library name
+# PROJ_DIR = directory containing source & objects
+#---------------------------------------------------------------------------
+PROJ_NAME	= VQAVIEW
+PROJ_DIR	= $(%BLADE)\VQA\VQAVIEW
+LIB_DIR		= $(%WIN32LIB)\LIB
+VQA_LIB_DIR = $(%BLADE)\VQA\LIB
+
+!include $(%WIN32LIB)\project.cfg
+
+#---------------------------------------------------------------------------
+# Project-dependent variables
+#---------------------------------------------------------------------------
+OBJECTS =	&
+	gametime.obj	&
+	main.obj			&
+	mainwind.obj	&
+	monochrm.obj	&
+	movies.obj		&
+	pal.obj			&
+	vq.obj			&
+	wm.obj		&
+	interpal.obj
+
+RESOURCES = &
+	dialogs.res		&
+	menus.res
+
+PROJ_LIBS = &
+	drawbuff.lib	&
+	mem.lib			&
+	misc.lib			&
+	rawfile.lib
+
+VQA_LIBS = &
+	vqa32wp.lib		&
+	vqm32wp.lib
+
+
+#---------------------------------------------------------------------------
+# Path macros: one path for each file type.
+#	These paths are used to tell make where to find/put each file type.
+#---------------------------------------------------------------------------
+
+.EXTENSIONS: .res .rc
+
+.asm:	$(PROJ_DIR)
+.c:   	$(PROJ_DIR)
+.cpp:	$(PROJ_DIR)
+.h:   	$(PROJ_DIR)
+.obj:	$(PROJ_DIR)
+.lib:	$(%WIN32LIB)\lib;$(VQA_LIB_DIR)
+.exe:	$(PROJ_DIR)
+.rc:		$(PROJ_DIR)
+.res:	$(PROJ_DIR)
+
+
+#---------------------------------------------------------------------------
+# Tools/commands
+#---------------------------------------------------------------------------
+C_CMD	  	= wcc386
+CPP_CMD	  	= wpp386
+LIB_CMD	  	= wlib
+LINK_CMD  	= wlink
+ASM_CMD	  	= tasm
+RC_CMD		= wrc
+
+#---------------------------------------------------------------------------
+# Include & library paths
+# If LIB & INCLUDE are already defined, they are used in addition to the
+# WWLIB32 lib & include; otherwise, they're constructed from
+# BCDIR
+#---------------------------------------------------------------------------
+
+LIBPATH	  	= $(%WIN32LIB)\LIB;$(%WATCOM)\LIB386\NT;$(BLADE)\VQA\LIB
+INCLUDEPATH	= $(PROJ_DIR);$(%WIN32LIB)\INCLUDE;$(%WATCOM)\H;$(PROJ_DIR)\..;$(PROJ_DIR)\..\VQA32
+
+#---------------------------------------------------------------------------
+# Implicit rules
+# Compiler:
+# 	($< = full dependent with path)
+# Assembler:
+# 	output obj's are constructed from .obj: & the $& macro
+# 	($< = full dependent with path)
+# 	tasm's cfg file is not invoked as a response file.
+#---------------------------------------------------------------------------
+
+.c.obj:	$(%WIN32LIB)\project.cfg .AUTODEPEND
+	$(C_CMD) $(CC_CFG) $<
+
+.cpp.obj: $(%WIN32LIB)\project.cfg .AUTODEPEND
+	$(CPP_CMD) -db $(CC_CFG) /i=$(INCLUDEPATH) $<
+
+.asm.obj: $(%WIN32LIB)\project.cfg
+	$(ASM_CMD) $(ASM_CFG) $<
+
+.rc.res:
+	$(RC_CMD) /r $<
+
+#---------------------------------------------------------------------------
+# Default target
+#---------------------------------------------------------------------------
+all:	$(PROJ_NAME).exe
+
+#---------------------------------------------------------------------------
+# Build the EXE
+#---------------------------------------------------------------------------
+$(PROJ_NAME).exe: $(OBJECTS) $(PROJ_NAME).lnk $(PROJ_LIBS) $(VQA_LIBS) $(RESOURCES)
+	 $(LINK_CMD) $(LINK_CFG) name $^@ @$(PROJ_NAME).lnk
+	 for %index in ($(RESOURCES)) do $(RC_CMD) -t %index $(PROJ_NAME).exe
+
+
+#$(PROJ_LIBS):
+#	echo updating base library $^@
+#	cd ..
+#	wmake
+#	cd $(PROJ_DIR)
+
+
+$(PROJ_NAME).lnk : $(OBJECTS) makefile
+       %create $^@
+       for %index in ($(OBJECTS))  do %append $^@ file %index
+       for %index in ($(PROJ_LIBS)) do %append $^@ library $(LIB_DIR)\%index
+			%append $^@ library $(LIB_DIR)\ddraw.lib
+			%append $^@ library $(LIB_DIR)\dsound.lib
+       for %index in ($(VQA_LIBS)) do %append $^@ library $(VQA_LIB_DIR)\%index
+
+#**************************** End of makefile ******************************
+

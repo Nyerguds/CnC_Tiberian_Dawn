@@ -1,0 +1,1087 @@
+/*
+**	Command & Conquer Red Alert(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/***********************************************************************************************
+ ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               ***
+ ***********************************************************************************************
+ *                                                                                             *
+ *                 Project Name : GraphicBufferClass Test Program                              *
+ *                                                                                             *
+ *                    File Name : DRAWTEST.CPP                                                 *
+ *                                                                                             *
+ *                   Programmer : Steve Tall                                                   *
+ *                                                                                             *
+ *                   Start Date : September 25, 1995                                           *
+ *                                                                                             *
+ *                  Last Update : September 27, 1995 [ST]                                      *
+ *                                                                                             *
+ *---------------------------------------------------------------------------------------------*
+ * Functions:                                                                                  *
+ *  WinMain 		-- Program entry point                                                     *
+ *  Set_Mode		-- Set up direct draw system                                               *
+ *  WndProc			-- Callback procedure for main window                                      *
+ *  Font_Test		-- Test GVPC::Print                                                        *
+ *  Rect_Test		-- Test GVPC::Draw_Rect and GVPC::Draw_Line                                *
+ *  Clear_Test		-- Test GVPC::Clear                                                        *
+ *  Pixel_Test		-- Test GVPC::Put_Pixel                                                    *
+ *  Read_Pixel_Test	-- Test GVPC::Read_Pixel                                                   *
+ *  Scale_Test		-- Test GVPC::Scale                                                        *
+ *  Blit_Test1		-- Test GVPC::Blit from video mem to video mem                             *
+ *  Blit_Test1		-- Test GVPC::Blit from system mem to video mem                            *
+ *  Fill_Rect_Test	-- Test GVPC::Fill_Rect                                                    *
+ *  Remap_Test		-- Test GVPC::Remap                                                        *
+ *  Quad_Test		-- Test GVPC::Fill_Quad                                                    *
+ *  Copy_Test		-- Test GVPC::To_Buffer and BufferClass::To_Page                           *
+ *  Test_All		-- Calls the other tests                                                   *
+ *                                                                                             *
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+
+
+
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <windowsx.h>
+#include "..\gbuffer.h"
+#include <ddraw.h>
+#include <font.h>
+#include <tile.h>
+#include <file.h>
+
+
+#define NAME "DRAWBUFF test"
+#define TITLE "DRAWBUFF library test"
+
+
+void Test_All (void);
+
+//
+// Misc globals for testing
+//
+int				Test=0;						// Number of test currently in progress
+BOOL			AllDone;					// Flag that we should exit
+
+int				x1,y1,x2,y2;				// Coordinates for rectangle drawing
+
+int				BlitXAdd;					//
+int				BlitXDir;                   // Vars for blit testing
+int				BlitYAdd;                   //
+int				BlitYDir;                   //
+
+int				BlitStretchX;				//
+int				BlitStretchY;               // Vars for scale testing
+int				BlitStretchXAdd;            //
+int				BlitStretchYAdd;            //
+
+char			RemapTable[256];			// Table for colour remap testing
+
+int				FontPrintX;					// Vars for test font printing
+int				FontPrintY;					//
+
+int				StampX;						//
+int				StampY;                     // Vars for moving the stamp test icon around
+int				StampXDir;                  //   the screen
+int				StampYDir;                  //
+
+#define	MAX_TESTS 	13						// Number of tests we have defined
+#define	MODE_WIDTH	640						// Width in pixels of required video mode
+#define	MODE_HEIGHT	400						// Height in pixels of required video mode
+
+GraphicBufferClass	*ScreenBuffer=NULL;		// Global pointer to screen GraphicBufferClass
+GraphicBufferClass	*BackBuffer=NULL;		// Global pointer to a back buffer
+
+void 	*IconPointer;						// Global pointer to our test icons
+
+PALETTEENTRY			pe[256];			// DD Palette entries
+unsigned char			Palette[256*3];		// Place to load palette to
+extern LPDIRECTDRAWPALETTE	PalettePtr;				// Pointer to direct draw palette object
+
+//
+// Prototypes
+//
+long FAR PASCAL _export WndProc (HWND, UINT, UINT, LONG) ;
+void Set_Video_Mode(HWND hwnd, int w, int h, int bits_per_pixel);
+void Reset_Video_Mode(void);
+
+
+//
+// Externs
+//
+extern	LPDIRECTDRAW	DirectDrawObject;
+extern	HWND			MainWindow;
+
+/***********************************************************************************************
+ * WinMain -- Program entry point                                                              *
+ *                                                                                             *
+ *                                                                                             *
+ *                                                                                             *
+ * INPUT:    Standard Windows startup parameters                                               *
+ *                                                                                             *
+ * OUTPUT:   msg.wParam                                                                        *
+ *                                                                                             *
+ * WARNINGS: None                                                                              *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *    9/27/95 1:28PM ST : Created                                                              *
+ *=============================================================================================*/
+
+int PASCAL WinMain (HANDLE hInstance, HANDLE hPrevInstance,
+						  LPSTR lpszCmdParam, int nCmdShow)
+{
+	static char 	szAppName[] = "HelloWin" ;
+	HWND        	hwnd ;
+	MSG         	msg ;
+	WNDCLASS    	wndclass ;
+	int				i,j,k;
+
+
+	//
+	// Register the window class
+	//
+
+	if (!hPrevInstance)
+		{
+		wndclass.style         = CS_HREDRAW | CS_VREDRAW ;
+		wndclass.lpfnWndProc   = WndProc ;
+		wndclass.cbClsExtra    = 0 ;
+		wndclass.cbWndExtra    = 0 ;
+		wndclass.hInstance     = hInstance ;
+		wndclass.hIcon         = LoadIcon (hInstance, IDI_APPLICATION) ;
+		wndclass.hCursor       = LoadCursor (NULL, IDC_ARROW) ;
+		wndclass.hbrBackground = NULL;
+		wndclass.lpszMenuName  = NULL;
+		wndclass.lpszClassName = NAME;
+
+		RegisterClass (&wndclass) ;
+	}
+
+
+	//
+	// Create our main window
+	//
+	hwnd = CreateWindowEx (
+							WS_EX_TOPMOST,
+							NAME,
+							TITLE,
+							WS_POPUP | WS_MAXIMIZE,
+							0,
+							0,
+							MODE_WIDTH,
+							MODE_HEIGHT,
+							NULL,
+							NULL,
+							hInstance,
+							NULL );
+
+	ShowWindow (hwnd, nCmdShow) ;
+	UpdateWindow (hwnd) ;
+	SetFocus (hwnd);
+	MainWindow=hwnd;			//Save the handle to our main window
+								// (Dangerous  if Windoze can change the handle)
+
+
+
+	//
+	// Allocate space for the icons and load them
+	//
+	IconPointer=malloc (20000);
+	Load_File ( "bridge3.des" , IconPointer  );
+
+	//
+	// Load the desert palette
+	//
+	Load_File ( "desert.pal" , Palette );
+	k=0;
+	for( j=0 ; j<768 ; j+=3 )
+	{
+		pe[k].peRed = Palette[j];
+		pe[k].peGreen = Palette[j+1];
+		pe[k].peBlue = Palette[j+2];
+		k++;
+	}
+
+
+	//
+	// Initialise global stuff required for the tests
+	//
+
+	// Force load of font
+	FontPtr=NULL;
+
+
+	// Set the video mode
+	Set_Video_Mode( MainWindow , MODE_WIDTH , MODE_HEIGHT , 8 );
+
+	//
+	// Init the stuff for drawing rectangles
+	//
+	x1=0;
+	y1=0;
+	x2=319;
+	y2=199;
+
+
+	//
+	// Init the stamp test variables
+	//
+
+	StampX=100;
+	StampY=100;
+	StampXDir=1;
+    StampYDir=1;
+
+	//
+	// Create the GraphicBufferClass that will be the screen buffer
+	//
+	ScreenBuffer = new GraphicBufferClass ( MODE_WIDTH , MODE_HEIGHT , (GBC_Enum)(GBC_VIDEOMEM | GBC_VISIBLE));
+
+
+	//
+	// Set the palette
+	//
+	DirectDrawObject->CreatePalette( DDPCAPS_8BIT | DDPCAPS_ALLOW256, &pe[0] , &PalettePtr ,NULL);
+	ScreenBuffer->Get_Graphic_Buffer()->Get_DD_Surface()->SetPalette( PalettePtr );
+	PalettePtr->SetEntries( DDPSETPAL_VSYNC , 0 , 256 , &pe[0] );
+
+
+	//
+	// Set up the remap table for the Buffer_Remap test
+	//
+	for ( i=0 ; i<256 ; i++ ){
+		RemapTable[i]=255-i;
+	}
+
+
+	//
+	// Get rid of the windows cursor
+	//
+	ShowCursor (FALSE);
+
+	AllDone = FALSE;
+
+	//
+	// Windows message loop
+	//
+	while ( ! AllDone ){
+
+		Test_All();			// Perform a test
+
+		if( PeekMessage( &msg, NULL, 0, 0, PM_NOREMOVE ) ){
+			if( !GetMessage( &msg, NULL, 0, 0 ) ){
+				return msg.wParam;
+			}
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+
+	}
+
+	return msg.wParam;
+}
+
+
+
+
+#ifdef cuts		//this is now in a seperate file
+/***********************************************************************************************
+ * Set_Mode -- temporary replacement for library set mode function                             *
+ *                                                                                             *
+ *                                                                                             *
+ *                                                                                             *
+ * INPUT:    int - mode width                                                                  *
+ *           int - mode height                                                                 *
+ *           int - bits per pixel                                                              *
+ *                                                                                             *
+ * OUTPUT:   Nothing                                                                           *
+ *                                                                                             *
+ * WARNINGS: None                                                                              *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *    9/27/95 1:51PM ST : Created                                                              *
+ *=============================================================================================*/
+
+void Set_Mode ( int width , int height , int bpp )
+{
+
+	//
+	// Setup the direct draw system by
+	//	1. Creating the DirectDraw object
+	//	2. Setting the cooperative level to exclusive so we own the screen
+	//	3. Setting the video mode
+	//
+
+	if ( DirectDrawObject == NULL ){
+
+		// Create the direct draw object
+		DirectDrawCreate ( NULL , &DirectDrawObject , NULL);
+
+		// Set the cooperative level
+		DirectDrawObject->SetCooperativeLevel ( MainWindow , DDSCL_EXCLUSIVE
+																	| DDSCL_FULLSCREEN
+																	| DDSCL_ALLOWMODEX );
+		// Set the required display mode with 8 bits per pixel
+		DirectDrawObject->SetDisplayMode ( width , height , bpp );
+	}
+
+}
+#endif	//cuts
+
+
+/***********************************************************************************************
+ * WndProc -- windows message callback                                                         *
+ *                                                                                             *
+ *   Pilfered from a windows example program - HELLOWIN.C                                      *
+ *                                                                                             *
+ *                                                                                             *
+ * INPUT:    Standard Windoze callback parameters                                              *
+ *                                                                                             *
+ * OUTPUT:   long                                                                              *
+ *                                                                                             *
+ * WARNINGS: None                                                                              *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *    9/27/95 1:39PM ST : Pilfered                                                             *
+ *=============================================================================================*/
+
+long FAR PASCAL _export WndProc (HWND hwnd, UINT message, UINT wParam,
+														  LONG lParam)
+ {
+
+	switch (message){
+
+
+		case WM_KEYDOWN:
+
+			switch ( wParam ){
+
+				case VK_SPACE:
+					Test++;
+					if ( Test>=MAX_TESTS ) {
+						Test=0;
+					}
+					if ( BackBuffer ){
+						delete BackBuffer;
+						BackBuffer=NULL;
+					}
+					break;
+			}
+			break;
+
+
+		case WM_DESTROY:
+			//
+			// Tidy up
+			//
+
+			if ( BackBuffer ) {
+				delete BackBuffer;
+			}
+			delete ScreenBuffer;
+
+			if ( DirectDrawObject ){
+				Reset_Video_Mode();
+			}
+
+			AllDone = TRUE;
+			PostQuitMessage (0) ;
+			return(0);
+	}
+
+	return DefWindowProc (hwnd, message, wParam, lParam) ;
+}
+
+
+
+
+
+
+/***********************************************************************************************
+ * Font_Test -- test the font print member of the GBC                                          *
+ *                                                                                             *
+ *                                                                                             *
+ *                                                                                             *
+ * INPUT:    Nothing                                                                           *
+ *                                                                                             *
+ * OUTPUT:   Nothing                                                                           *
+ *                                                                                             *
+ * WARNINGS: None                                                                              *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *    9/27/95 3:29PM ST : Created                                                              *
+ *=============================================================================================*/
+void Font_Test ( void )
+{
+	const char	font_name[]={"font.fnt"};
+
+	if ( !FontPtr ){
+		FontPtr = Load_Font ( &font_name[0] );
+		FontXSpacing=0;
+		FontYSpacing=0;
+		FontPrintX=0;
+		FontPrintY=0;
+	}
+
+	if ( FontPtr ){
+		ScreenBuffer->Print ( "Hello Windoze" , FontPrintX , FontPrintY ,255 , 0);
+	}
+
+	if ( FontPrintX<550 ){
+		FontPrintX+=8;
+	}
+
+	if ( FontPrintY<380 ){
+		FontPrintY+=8;
+	}
+
+
+}
+
+
+
+/***********************************************************************************************
+ * Rect_Test -- test the rectangle and line functions of the GBC                               *
+ *                                                                                             *
+ *                                                                                             *
+ *                                                                                             *
+ * INPUT:    Nothing                                                                           *
+ *                                                                                             *
+ * OUTPUT:   Nothing                                                                           *
+ *                                                                                             *
+ * WARNINGS: None                                                                              *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *    9/25/95 3:03PM ST : Created                                                              *
+ *=============================================================================================*/
+
+void Rect_Test ( GraphicBufferClass *screen_buffer )
+{
+
+	screen_buffer->Draw_Rect ( x1 , y1 , x2 , y2 , 255 );
+	if ( x1<90 ){
+		x1+=2;
+	}
+
+	if ( y1<90 ){
+		y1+=2;
+	}
+
+	if ( x2>230 ){
+		x2-=2;
+	}
+
+	if ( y2>110 ){
+		y2-=2;
+	}
+
+}
+
+
+
+
+/***********************************************************************************************
+ * Clear_Test -- test the clear function of the GraphicBufferClass                             *
+ *                                                                                             *
+ *                                                                                             *
+ *                                                                                             *
+ * INPUT:    Nothing                                                                           *
+ *                                                                                             *
+ * OUTPUT:   Nothing                                                                           *
+ *                                                                                             *
+ * WARNINGS: None                                                                              *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *    9/25/95 3:05PM ST : Created                                                              *
+ *=============================================================================================*/
+
+void Clear_Test ( void )
+{
+
+	x1=0;
+	y1=0;
+	x2=319;
+	y2=199;
+
+	FontPrintX=0;
+	FontPrintY=0;
+
+	ScreenBuffer->Clear ( rand()&255 );
+}
+
+
+
+
+
+/***********************************************************************************************
+ * Stamp_Test -- test the Draw_Stamp member of GraphicBufferClass                              *
+ *                                                                                             *
+ *                                                                                             *
+ *                                                                                             *
+ * INPUT:    Nothing                                                                           *
+ *                                                                                             *
+ * OUTPUT:   Nothing                                                                           *
+ *                                                                                             *
+ * WARNINGS: None                                                                              *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *    9/28/95 6:02PM ST : Created                                                              *
+ *=============================================================================================*/
+void Stamp_Test ( void )
+{
+	int		x;
+	int		y;
+	int		icon=0;
+
+	//
+	// Use stacking locks to speed things up
+	//
+	ScreenBuffer->Lock();
+
+	for	( y=0 ; y<5*24 ; y+=24 ){
+
+		for ( x=0 ; x<6*24 ; x+=24 ){
+
+			ScreenBuffer->Draw_Stamp( IconPointer, icon++ , x+StampX, y+StampY, NULL );
+
+		}
+	}
+
+    ScreenBuffer->Unlock();
+
+	StampX+=StampXDir;
+	StampY+=StampYDir;
+
+	if ( StampX>640-6*24 || StampX<1 ){
+		StampXDir=-StampXDir;
+	}
+
+	if ( StampY>400-6*24 || StampY<1 ){
+		StampYDir=-StampYDir;
+	}
+
+}
+
+
+
+/***********************************************************************************************
+ * Pixel_Test -- test the GVPclass put_pixel member                                            *
+ *                                                                                             *
+ *                                                                                             *
+ *                                                                                             *
+ * INPUT:    Nothing                                                                           *
+ *                                                                                             *
+ * OUTPUT:   Nothing                                                                           *
+ *                                                                                             *
+ * WARNINGS: None                                                                              *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *    9/25/95 5:29PM ST : Created                                                              *
+ *=============================================================================================*/
+void Pixel_Test ( void )
+{
+	ScreenBuffer->Put_Pixel ( rand() & 511 , rand() & 255 , rand () &255 );
+
+}
+
+
+
+
+
+
+
+
+
+
+/***********************************************************************************************
+ * Read_Pixel_Test -- test the GVPclass Read_Pixel member                                      *
+ *                                                                                             *
+ *                                                                                             *
+ *                                                                                             *
+ * INPUT:    Nothing                                                                           *
+ *                                                                                             *
+ * OUTPUT:   Nothing                                                                           *
+ *                                                                                             *
+ * WARNINGS: None                                                                              *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *    9/26/95 4:51PM ST : Created                                                              *
+ *=============================================================================================*/
+void Read_Pixel_Test ( void )
+{
+
+	int		i;
+	int		colour;
+	int		pixel_x;
+	int		pixel_y;
+
+	if ( !BackBuffer ) {
+
+		BackBuffer = new GraphicBufferClass(640,400, GBC_VIDEOMEM );
+
+		BackBuffer->Clear( 0 );
+		ScreenBuffer->Clear ( 0 );
+
+		x1=0;
+		y1=0;
+		x2=319;
+		y2=199;
+
+		for ( i=0 ; i<50 ; i++ ) {
+			Rect_Test ( BackBuffer );
+		}
+
+	}
+
+
+	//
+	// Use the stacking lock feature to lock the surfaces once only and
+	// then draw 10 pixels
+	//
+
+	ScreenBuffer->Lock();
+	BackBuffer->Lock();
+
+	for ( i=0 ; i<10 ; i++ ){
+
+		pixel_x = rand() &511;
+		pixel_y = rand() &255;
+
+		colour=BackBuffer->Get_Pixel ( pixel_x , pixel_y );
+
+		ScreenBuffer->Put_Pixel ( pixel_x , pixel_y , colour );
+	}
+
+	BackBuffer->Unlock();
+	ScreenBuffer->Unlock();
+
+}
+
+
+
+/***********************************************************************************************
+ * Scale_Test -- test the GVPclass scale member                                                *
+ *                                                                                             *
+ *                                                                                             *
+ *                                                                                             *
+ * INPUT:    Nothing                                                                           *
+ *                                                                                             *
+ * OUTPUT:   Nothing                                                                           *
+ *                                                                                             *
+ * WARNINGS: None                                                                              *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *    9/26/95 10:27AM ST : Created                                                             *
+ *=============================================================================================*/
+void Scale_Test ( void )
+{
+
+	int		i;
+
+	if ( !BackBuffer ) {
+
+		BackBuffer = new GraphicBufferClass(640, 400);
+
+		BackBuffer->Clear( 0 );
+
+		x1=0;
+		y1=0;
+		x2=319;
+		y2=199;
+
+		for ( i=0 ; i<50 ; i++ ) {
+			Rect_Test ( BackBuffer );
+		}
+
+		BlitStretchX=0;
+		BlitStretchY=0;
+		BlitStretchXAdd=1;
+		BlitStretchYAdd=1;
+	}
+
+	BackBuffer->Scale ( *ScreenBuffer , 0 , 0 , 10 , 10
+						,320 , 200 , 320+BlitStretchX , 200+BlitStretchY );
+
+	BlitStretchX += BlitStretchXAdd;
+	BlitStretchY += BlitStretchYAdd;
+
+	if ( (BlitStretchX == 100) || (BlitStretchX==-100) ){
+		BlitStretchXAdd=-BlitStretchXAdd;
+	}
+
+	if ( (BlitStretchY == 100) || (BlitStretchY==-100) ){
+		BlitStretchYAdd=-BlitStretchYAdd;
+	}
+
+
+
+
+}
+
+
+
+/***********************************************************************************************
+ * Blit_Test1 -- test the blit member of the GraphicBufferClass                                *
+ *                                                                                             *
+ *    Blits from video memory to video memory                                                  *
+ *                                                                                             *
+ *                                                                                             *
+ * INPUT:    Nothing                                                                           *
+ *                                                                                             *
+ * OUTPUT:   Nothing                                                                           *
+ *                                                                                             *
+ * WARNINGS: None                                                                              *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *    9/25/95 5:39PM ST : Created                                                              *
+ *=============================================================================================*/
+void Blit_Test1 ( void )
+{
+
+	int	i;
+
+	if ( !BackBuffer ) {
+		BackBuffer = new GraphicBufferClass(640, 400, GBC_VIDEOMEM);
+
+		BackBuffer->Clear( 0 );
+
+		x1=0;
+		y1=0;
+		x2=319;
+		y2=199;
+
+		for ( i=0 ; i<50 ; i++ ) {
+			Rect_Test ( BackBuffer );
+		}
+
+		BlitXAdd=0;
+		BlitXDir=1;
+		BlitYAdd=0;
+		BlitYDir=1;
+	}
+
+
+	BackBuffer->Blit ( *ScreenBuffer , 0 , 0 , BlitXAdd , BlitYAdd , 320 , 200 , (BOOL) FALSE );
+
+	BlitXAdd+=BlitXDir;
+
+	if ( (BlitXAdd == 0) || (BlitXAdd == 320 )){
+		BlitXDir=-BlitXDir;
+	}
+
+
+	BlitYAdd+=BlitYDir;
+
+	if ( (BlitYAdd == 0) || (BlitYAdd == 200 )){
+		BlitYDir=-BlitYDir;
+	}
+
+
+}
+
+
+
+
+
+/***********************************************************************************************
+ * Blit_Test2 -- test the blit member of the GraphicBufferClass                                *
+ *                                                                                             *
+ *    Blits from system memory to video memory                                                 *
+ *                                                                                             *
+ *                                                                                             *
+ * INPUT:    Nothing                                                                           *
+ *                                                                                             *
+ * OUTPUT:   Nothing                                                                           *
+ *                                                                                             *
+ * WARNINGS: None                                                                              *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *    9/27/95 9:36AM ST : Created                                                              *
+ *=============================================================================================*/
+void Blit_Test2 ( void )
+{
+
+	int	i;
+
+	if ( !BackBuffer ) {
+		BackBuffer = new GraphicBufferClass(640, 400);
+
+		BackBuffer->Clear( 0 );
+
+		x1=0;
+		y1=0;
+		x2=319;
+		y2=199;
+
+		for ( i=0 ; i<50 ; i++ ) {
+			Rect_Test ( BackBuffer );
+		}
+
+		BlitXAdd=0;
+		BlitXDir=1;
+		BlitYAdd=0;
+		BlitYDir=1;
+	}
+
+
+	BackBuffer->Blit ( *ScreenBuffer , 0 , 0 , BlitXAdd , BlitYAdd , 320 , 200 , (BOOL) FALSE );
+
+	BlitXAdd+=BlitXDir;
+
+	if ( (BlitXAdd == 0) || (BlitXAdd == 320 )){
+		BlitXDir=-BlitXDir;
+	}
+
+
+	BlitYAdd+=BlitYDir;
+
+	if ( (BlitYAdd == 0) || (BlitYAdd == 200 )){
+		BlitYDir=-BlitYDir;
+	}
+
+
+}
+
+
+
+
+
+/***********************************************************************************************
+ * Fill_Rect_Test -- test the GraphicBufferClass fill rectangle member                         *
+ *                                                                                             *
+ *                                                                                             *
+ *                                                                                             *
+ * INPUT:    Nothing                                                                           *
+ *                                                                                             *
+ * OUTPUT:   Nothing                                                                           *
+ *                                                                                             *
+ * WARNINGS: None                                                                              *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *    9/26/95 5:23PM ST : Created                                                              *
+ *=============================================================================================*/
+void Fill_Rect_Test ( void )
+{
+
+	int		x1;
+	int		y1;
+	int		x2;
+	int		y2;
+
+	x1= rand()&511;
+	x2= rand()&511;
+	y1= rand()&255;
+	y2= rand()&255;
+
+	ScreenBuffer->Fill_Rect ( min ( x1,x2 ) , min ( y1,y2) , max ( x1,x2 ) , max ( y1,y2 ) , rand()&255 );
+
+
+}
+
+
+
+
+
+/***********************************************************************************************
+ * Remap_Test -- test the Remap member of GraphicsBufferClass                                  *
+ *                                                                                             *
+ *                                                                                             *
+ *                                                                                             *
+ * INPUT:    Nothing                                                                           *
+ *                                                                                             *
+ * OUTPUT:   Nothing                                                                           *
+ *                                                                                             *
+ * WARNINGS: None                                                                              *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *    9/26/95 6:26PM ST : Created                                                              *
+ *=============================================================================================*/
+void Remap_Test ( void )
+{
+	ScreenBuffer->Remap ( 20 , 20 , 580 , 350 , &RemapTable[0] );
+}
+
+
+
+
+
+
+
+
+/***********************************************************************************************
+ * Quad_Test -- test the quad fill member of GraphicBufferClass                                *
+ *                                                                                             *
+ *                                                                                             *
+ *                                                                                             *
+ * INPUT:    Nothing                                                                           *
+ *                                                                                             *
+ * OUTPUT:   Nothing                                                                           *
+ *                                                                                             *
+ * WARNINGS: None                                                                              *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *    9/27/95 11:12AM ST : Created                                                             *
+ *=============================================================================================*/
+
+void Quad_Test ( void )
+{
+	char	span_buff[500000];	//Dont know how big this should be so its *BIG*
+	int		colour;
+	int		x0;
+	int		x1;
+	int		x2;
+	int		x3;
+	int		y0;
+	int		y1;
+	int		y2;
+	int		y3;
+
+	x0 = rand() & 255;
+	x1 = rand() & 255+320;
+	x2 = rand() & 255+320;
+	x3 = rand() & 255;
+
+	y0 = rand() & 127;
+	y1 = rand() & 127;
+	y2 = rand() & 127+250;
+	y3 = rand() & 127+250;
+
+	colour= rand()&255;
+
+	ScreenBuffer->Fill_Quad ( span_buff , x0,y0,x1,y1,x2,y2,x3,y3,colour);
+
+}
+
+
+
+
+
+
+/***********************************************************************************************
+ * Copy_Test - test the To_Buffer member of GraphicsBufferClass                                *
+ *                                                                                             *
+ *                                                                                             *
+ *                                                                                             *
+ * INPUT:    Nothing                                                                           *
+ *                                                                                             *
+ * OUTPUT:   Nothing                                                                           *
+ *                                                                                             *
+ * WARNINGS: None                                                                              *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *    9/27/95 11:36AM ST : Created                                                             *
+ *=============================================================================================*/
+void Copy_Test ( void )
+{
+
+	BufferClass	*buffer;
+	char		*buffer_ptr;
+
+
+	buffer = new BufferClass (640*400);
+
+	ScreenBuffer->To_Buffer(buffer);
+
+	buffer_ptr = (char*)buffer->Get_Buffer();
+	memcpy ( buffer_ptr , buffer_ptr+4 , 640*400-4 );
+
+	buffer->To_Page ( *ScreenBuffer );
+
+    delete buffer;
+
+}
+
+
+
+
+
+
+/***********************************************************************************************
+ * Test_All -- perform tests on GraphicsBufferClass                                            *
+ *                                                                                             *
+ *                                                                                             *
+ *                                                                                             *
+ * INPUT:    Nothing                                                                           *
+ *                                                                                             *
+ * OUTPUT:   Nothing                                                                           *
+ *                                                                                             *
+ * WARNINGS: None                                                                              *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *    9/25/95 2:53PM ST : Created                                                              *
+ *=============================================================================================*/
+
+void Test_All ( void )
+
+{
+
+	switch ( Test ){
+
+		case 0:
+			Clear_Test();
+			break;
+
+		case 1:
+			Rect_Test( ScreenBuffer );
+			break;
+
+		case 2:
+			Pixel_Test();
+			break;
+
+		case 3:
+			Blit_Test1();
+			break;
+
+		case 4:
+			Blit_Test2();
+			break;
+
+		case 5:
+			Scale_Test();
+			break;
+
+		case 6:
+			Read_Pixel_Test();
+			break;
+
+		case 7:
+			Fill_Rect_Test();
+			break;
+
+		case 8:
+			Remap_Test();
+			break;
+
+		case 9:
+			Quad_Test();
+			break;
+
+		case 10:
+			Copy_Test();
+			break;
+
+		case 11:
+			Font_Test();
+			break;
+
+		case 12:
+			Stamp_Test();
+			break;
+
+	}
+
+}

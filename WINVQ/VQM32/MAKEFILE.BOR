@@ -1,0 +1,234 @@
+#
+#	Command & Conquer Red Alert(tm)
+#	Copyright 2025 Electronic Arts Inc.
+#
+#	This program is free software: you can redistribute it and/or modify
+#	it under the terms of the GNU General Public License as published by
+#	the Free Software Foundation, either version 3 of the License, or
+#	(at your option) any later version.
+#
+#	This program is distributed in the hope that it will be useful,
+#	but WITHOUT ANY WARRANTY; without even the implied warranty of
+#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#	GNU General Public License for more details.
+#
+#	You should have received a copy of the GNU General Public License
+#	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+#****************************************************************************
+#
+#       C O N F I D E N T I A L --- W E S T W O O D   S T U D I O S
+#
+#----------------------------------------------------------------------------
+#
+# PROJECT
+#     VQMisc32 library. (Borland/TNT)
+#
+# FILE
+#     makefile
+#
+# DESCRIPTION
+#     Makefile for generating VQMisc32 library.
+#
+# PROGRAMMER
+#     Denzil E. Long, Jr.
+# 
+# DATE
+#     Febuary 7, 1995
+#
+# ENVIROMENT
+#     PRJ    - Projects path.
+#     PRJVCS - Version control archive path.
+#     BCDIR  - Borland C installation path.
+#     TNTDIR - Pharlap/TNT installation path.
+#
+#****************************************************************************
+
+.AUTODEPEND
+
+#----------------------------------------------------------------------------
+# VERIFY ENVIROMENT
+#----------------------------------------------------------------------------
+
+!if !$d(PRJ) || !$d(PRJVCS) || !$d(BCDIR) || !$d(TNTDIR)
+!error Environment not configured.
+!endif
+
+#----------------------------------------------------------------------------
+# PROJECT DEPENDENT MACROS
+#----------------------------------------------------------------------------
+
+PRJNAME = VQM32BP
+PRJDIR  = $(PRJ)\VQM32
+
+OBJECTS = \
+	iff.obj \
+	profile.obj \
+	audzap.obj \
+	audunzap.obj \
+	targa.obj \
+	vertag.obj \
+	sortpal.obj \
+ 	palette.obj \
+	mono.obj \
+	lcwuncmp.obj \
+	lcwcomp.obj \
+	testvb.obj \
+	vb.obj \
+	mcgabuf.obj \
+	video.obj \
+	xmode.obj \
+	xmodepg.obj \
+	vesabuf.obj \
+	vesablit.obj \
+	vesavid.obj \
+	soscodec.obj \
+	drawchar.obj \
+	textprnt.obj \
+	font.obj \
+	chrwidth.obj \
+	mixfile.obj \
+	crc.obj \
+	fillrect.obj \
+	captoken.obj \
+	huffcmp.obj \
+	huffdcmp.obj \
+	mem.obj \
+	portio.obj \
+
+#----------------------------------------------------------------------------
+# PATH MACROS
+#----------------------------------------------------------------------------
+
+!if $d(LIB)
+LIBPATH = $(PRJ)\LIB;$(LIB)
+!else
+LIBPATH = $(PRJ)\LIB;$(TNTDIR)\LIB;$(BCDIR)\LIB
+!endif
+
+!if $d(INCLUDE)
+INCLUDEPATH = $(PRJ)\INCLUDE;$(INCLUDE)
+!else
+INCLUDEPATH = $(PRJ)\INCLUDE;$(TNTDIR)\INCLUDE;$(BCDIR)\INCLUDE
+!endif
+
+.path.asm = $(PRJDIR)
+.path.c   = $(PRJDIR)
+.path.cpp = $(PRJDIR)
+.path.h   = $(PRJDIR)
+.path.exe = $(PRJDIR)
+.path.obj = $(PRJDIR)\OBJ
+.path.sym = $(PRJDIR)\OBJ
+.path.lib = $(PRJ)\LIB
+
+#----------------------------------------------------------------------------
+# TOOLS, COMMANDS AND CONFIGURATIONS
+#----------------------------------------------------------------------------
+
+CC_CMD   = bcc32
+ASM_CMD  = tasm32
+LINK_CMD = tlink32
+LIB_CMD  = tlib
+
+CC_CFG    = bcc32.cfg
+ASM_CFG   = tasm32.cfg
+LINK_CFG  = tlink32.cfg
+LIB_CFG   = tlib.cfg
+CFG_FILES = $(CC_CFG) $(ASM_CFG) $(LINK_CFG) $(LIB_CFG)
+
+#----------------------------------------------------------------------------
+# DEFAULT TARGET
+#----------------------------------------------------------------------------
+
+all: $(PRJNAME).lib
+
+#----------------------------------------------------------------------------
+# IMPLICIT RULES
+#----------------------------------------------------------------------------
+
+.c.obj:
+  $(CC_CMD) -P- -n$(.path.obj) {$< }
+
+.cpp.obj:
+  $(CC_CMD) -P -n$(.path.obj) {$< }
+
+.asm.obj:
+  $(ASM_CMD) @$(ASM_CFG) $<,$(.path.obj)\$&
+
+#----------------------------------------------------------------------------
+# BUILD THE LIBRARY
+#----------------------------------------------------------------------------
+
+$(PRJNAME).lib: $(OBJECTS)
+	- @del $(.path.lib)\$(PRJNAME).lib >&NUL
+	$(LIB_CMD) $(.path.lib)\$(PRJNAME).lib @$(LIB_CFG) @&&|
+-+$(**: = -+)
+|
+	- @copy *.h $(PRJ)\INCLUDE\VQM32 >&NUL
+	- @copy *.i $(PRJ)\INCLUDE\VQM32 >&NUL
+
+#----------------------------------------------------------------------------
+# ALL OBJECTS DEPEND ON THE CONFIGURATION FILES
+#----------------------------------------------------------------------------
+
+$(OBJECTS): $(CFG_FILES)
+
+#----------------------------------------------------------------------------
+# COMPILER CONFIGURATION
+#----------------------------------------------------------------------------
+
+$(CC_CFG): makefile
+	copy &&|
+-c
+-3
+-d
+-H=$(.path.sym)\headers.sym
+-wpro
+-weas
+-wpre
+-I$(INCLUDEPATH)
+-DPHARLAP_TNT=1
+#-v
+| $(CC_CFG)
+ 
+#----------------------------------------------------------------------------
+# ASSEMBLER CONFIGURATION
+#----------------------------------------------------------------------------
+
+$(ASM_CFG): makefile
+	copy &&|
+/t
+/m
+/w+
+/jJUMPS
+/ml
+/p
+/z
+/i$(PRJ)\INCLUDE
+/zi
+/dPHARLAP_TNT=1
+| $(ASM_CFG)
+
+#----------------------------------------------------------------------------
+# LINKER CONFIGURATION
+#----------------------------------------------------------------------------
+
+$(LINK_CFG): makefile
+	copy &&|
+/c
+/m
+/Gm
+-L$(LIBPATH)
+-v
+| $(LINK_CFG)
+
+#----------------------------------------------------------------------------
+# LIBRARIAN CONFIGURATION
+#----------------------------------------------------------------------------
+
+$(LIB_CFG):	makefile
+	copy &&|
+/C /E
+| $(LIB_CFG)
+

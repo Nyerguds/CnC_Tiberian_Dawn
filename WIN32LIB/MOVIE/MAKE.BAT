@@ -1,0 +1,2 @@
+SET WATCOM=D:\RADVD\SOURCE\WAT11
+..\..\code\wmake
