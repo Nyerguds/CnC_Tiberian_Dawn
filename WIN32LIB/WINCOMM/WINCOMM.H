@@ -68,7 +68,7 @@ typedef enum WinCommDialMethodType {
 ** !!!!!! THIS MUST BE  A POWER OF 2 !!!!!!
 **
 */
-#define SIZE_OF_WINDOWS_SERIAL_BUFFER 2048
+#define SIZE_OF_WINDOWS_SERIAL_BUFFER 2048 * 4
 
 
 

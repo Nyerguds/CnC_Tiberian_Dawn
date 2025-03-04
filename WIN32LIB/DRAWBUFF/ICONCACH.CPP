@@ -447,16 +447,22 @@ BOOL IconCacheClass::Cache_It (void *icon_ptr)
 		}
 
 	}
+	if (!CacheSurface){
+		return(FALSE);
+	}
 
 	/*
 	** Make sure the surface we created isnt really in system memory
 	*/
 	if (DD_OK != CacheSurface->GetCaps(&surface_capabilities)){
+		CacheSurface->Release();
+		CacheSurface = NULL;
 		return(FALSE);
 	}
 
 	if ((DDSCAPS_SYSTEMMEMORY & surface_capabilities.dwCaps) == DDSCAPS_SYSTEMMEMORY){
 		CacheSurface->Release();
+		CacheSurface = NULL;
 		return(FALSE);
 	}
 

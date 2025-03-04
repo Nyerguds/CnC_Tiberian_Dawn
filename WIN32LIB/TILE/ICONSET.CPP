@@ -181,7 +181,7 @@ void *  Load_Icon_Set(char const *filename, void *iconsetptr, long buffsize)
 				idata->Height = (short)(((short)sinf.Height)<<3);
 				idata->Allocated = (short)allocated;
 				idata->Icons = (unsigned char *)iconsetptr + sizeof(IControl_Type);
-				idata->Map = (unsigned char *) (idata->Icons + size);
+				idata->Map = idata->Icons + size;
 					idata->TransFlag = sizeof(IControl_Type) + size + mapsize;
 				idata->Size = buffsize;
 

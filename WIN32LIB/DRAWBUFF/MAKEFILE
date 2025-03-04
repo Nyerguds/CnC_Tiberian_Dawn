@@ -99,6 +99,7 @@ OBJECTS = 			&
 	tobuff.obj 		&
 	topage.obj		&
 	txtprnt.obj 	&
+	texfill.obj 	&
 	iconcach.obj	&
 	stmpcach.obj
 

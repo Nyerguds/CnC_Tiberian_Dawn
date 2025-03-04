@@ -88,6 +88,7 @@ LIBS = 			&
 					misc.lib    	&
 					mono.lib    	&
 					palette.lib 	&
+					rawfile.lib 	&
 					shape.lib		&
 					tile.lib 		&
 					timer.lib 		&

@@ -150,7 +150,7 @@ class RawFileClass : public FileClass
 
 		RawFileClass(char const *filename);
 		RawFileClass(void);
-		RawFileClass (RawFileClass const & f);
+		//RawFileClass (RawFileClass const & f);
 		RawFileClass & operator = (RawFileClass const & f);
 		virtual ~RawFileClass(void) {if (Allocated && Filename) free((char *)Filename);};
 
@@ -168,8 +168,8 @@ class RawFileClass : public FileClass
 		virtual long Write(void const *buffer, long size);
 		virtual void Close(void);
 		virtual void Error(int error, int canretry = false, char const * filename=NULL);
-
-		HANDLE_TYPE Get_File_Handle(void) { return (Handle); };
+		virtual void Set_Buffer_Size(int size);
+		virtual HANDLE_TYPE Get_File_Handle(void) { return (Handle); };
 
 	protected:
 

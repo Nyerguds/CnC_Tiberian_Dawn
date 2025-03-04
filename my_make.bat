@@ -62,9 +62,18 @@ WMAKE
 
 cd ..
 
-echo Compiling Game
 
 cd code
+
+echo Compiling IPX
+
+cd ipx
+
+WMAKE
+
+cd ..
+
+echo Compiling Game
 
 WMAKE WIN32=1
 

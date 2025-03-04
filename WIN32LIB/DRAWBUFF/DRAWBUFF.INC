@@ -82,6 +82,9 @@ GLOBAL C Buffer_Remap      		:NEAR
 ; Externs from STAMP.ASM module of the DRAWBUFF library
 GLOBAL C Buffer_Draw_Stamp 		:NEAR
 
+; Externs from TEXFILL.ASM module of the DRAWBUFF library
+GLOBAL C Buffer_Texture_Fill_Rect 		:NEAR
+
 GLOBAL C get_clip	 	   : NEAR
 
 struc  RECTANGLE

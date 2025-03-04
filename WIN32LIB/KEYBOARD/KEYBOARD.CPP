@@ -319,7 +319,7 @@ void WWKeyboardClass::Message_Handler(HWND , UINT message, UINT wParam, LONG lPa
 		case WM_KEYDOWN:
 			if ( wParam==VK_SCROLL ){
 				Stop_Execution();
-			} else {
+			} else if (!(lParam & (1<<30))) {
 				Put_Key_Message(wParam);
 			}
 			break;

@@ -274,7 +274,8 @@ class GraphicViewPortClass {
 		void Draw_Stamp(void const *icondata, int icon, int x_pixel, int y_pixel, void const *remap);
 		void Draw_Stamp(void const *icondata, int icon, int x_pixel, int y_pixel, void const *remap, int clip_window);
 
-		void Texture_Fill_Rect (int xpos, int ypos, int width, int height, void const *shape_pointer, int source_width, int source_height);
+		VOID Texture_Fill_Rect(int xpos, int ypos, int width, int height,
+								void *shape, int shape_width, int shape_height);
 
 //	This doesnt seem to exist anywhere?? - Steve T 9/26/95 6:05PM
 //		VOID Grey_Out_Region(int x, int y, int width, int height, int color);
@@ -1062,7 +1063,7 @@ inline void GraphicViewPortClass::Draw_Stamp(void const * icondata, int icon, in
 {
 	int	cache_index=-1;
 
-   int drewit = 0;
+   //int drewit = 0;
 	if (IconCacheAllowed){
 		if (IsDirectDraw){
 			if (!remap){
@@ -1072,24 +1073,24 @@ inline void GraphicViewPortClass::Draw_Stamp(void const * icondata, int icon, in
 			if (cache_index != -1){
 				if (CachedIcons[cache_index].Get_Is_Cached()  ){
 					CachedIcons[cache_index].Draw_It (GraphicBuff->Get_DD_Surface() , x_pixel, y_pixel,
-																WindowList[clip_window][WINDOWX] + XPos,
+																WindowList[clip_window][WINDOWX] << 3 + XPos,
 																WindowList[clip_window][WINDOWY] +YPos,
-																WindowList[clip_window][WINDOWWIDTH],
+																WindowList[clip_window][WINDOWWIDTH] << 3,
 																WindowList[clip_window][WINDOWHEIGHT]);
 					CachedIconsDrawn++;
-               drewit = 1;
+               return;//drewit = 1;
 				}
 			}
 		}
 	}
 
 
-   if (drewit == 0) {
+   //if (drewit == 0) {
 		if (Lock()){
 			UnCachedIconsDrawn++;
-			Buffer_Draw_Stamp_Clip(this, icondata, icon, x_pixel, y_pixel, remap, WindowList[clip_window][WINDOWX], WindowList[clip_window][WINDOWY], WindowList[clip_window][WINDOWWIDTH], WindowList[clip_window][WINDOWHEIGHT]);
+			Buffer_Draw_Stamp_Clip(this, icondata, icon, x_pixel, y_pixel, remap, WindowList[clip_window][WINDOWX] << 3, WindowList[clip_window][WINDOWY], WindowList[clip_window][WINDOWWIDTH] << 3, WindowList[clip_window][WINDOWHEIGHT]);
 		}
-   }
+   //}
 	Unlock();
 }
 
@@ -1207,6 +1208,16 @@ inline VOID GraphicViewPortClass::Fill_Quad(VOID *span_buff, int x0, int y0, int
 	}
 	Unlock();
 }
+
+
+inline VOID GraphicViewPortClass::Texture_Fill_Rect(int x0, int y0, int x1, int y1, void *shape, int shape_width, int shape_height)
+{
+	if (Lock()){
+        Buffer_Texture_Fill_Rect(this, x0, y0, x1, y1, shape, shape_width, shape_height);
+		Unlock();
+    }
+}
+
 
 /***************************************************************************
  * GVPC::REMAP -- Short form to remap an entire graphic view port          *
