@@ -12,9 +12,9 @@ NOTES:
 - Various missing h/cpp files can be found in Remasters repo
 - high res vqa is broken currently cause vqa lib code is outdated,
 	its likely they kept only a lib up to date, not whole source dir
+- mmx code should probably be removed entirely
 
 TODO:
 - solve ipxproto ebn dependency or eliminate ipxproto all togther
 - investigate getting TASM32 4.0 working
-- find solution for mmx.inc
 - find solution to compiling wwipx
