@@ -140,7 +140,7 @@ CC_CFG += /zq									# Operate quietly.
 #CC_CFG += -bt=NT /i=q:\include -j -os -zz -W3 -d1 /5 -s -fh=c:\projects\code\conquer.pch
 #CC_CFG += -bt=NT /i=q:\include -j -otexan -ol+ -zz -W3 -d1 /5 -s -fh=c:\projects\code\conquer.pch
 #CC_CFG += -bt=NT /i=q:\include -zq -j -zz -W3 -d1 /5 -s -fh=c:\projects\code\conquer.pch
-CC_CFG += -bt=NT /i=q:\include  -j -W3 -zz -d1 -otxan -ol+ /5 -s -fh=d:\projects\ccgold\code\conquer.pch
+CC_CFG += -bt=NT /i=q:\include  -j -W3 -zz -d1 -otxan -ol+ /5 -s -fh=$(%CODEDIR)\obj\conquer.pch
 #CC_CFG += -bt=NT /i=q:\include -j -W3 -zz -d2 -od /5 -s -fh=c:\projects\code\conquer.pch
 #CC_CFG += -bt=95 /i=q:\include -j -W3 -hc -od -d3 /4 -s
 #CC_CFG += -bt=NT /i=q:\include -j -W3 -d1 -orilt /4 -s -fh=c:\projects\code\conquer.pch -fhq
@@ -156,7 +156,7 @@ ASM_CFG += /ml									# Case sensitivity on code.
 #ASM_CFG += /zi								# Full debugging information.
 
 
-VCT_CFG += -bt=NT /i=q:\include -j -W3 -zz -d2 -od /5 -s -fh=d:\projects\ccgold\code\conquer.pch
+VCT_CFG += -bt=NT /i=q:\include -j -W3 -zz -d2 -od /5 -s -fh=$(%CODEDIR)\conquer.pch
 
 
 #---------------------------------------------------------------------------
@@ -187,7 +187,7 @@ VCT_CFG += -bt=NT /i=q:\include -j -W3 -zz -d2 -od /5 -s -fh=d:\projects\ccgold\
 !ifdef %NETWORK
 	f:\projects\c&c95\slaves\NETEXEC /v f:\projects\c&c95\slaves\$(%NETWHO)a $^&
 !else
-	tasm $(ASM_CFG) $<, $(%WWOBJ)obj\$^.
+	msdos tasm $(ASM_CFG) $<, $(%WWOBJ)obj\$^.
 !endif
 
 
@@ -465,7 +465,7 @@ cd: .SYMBOLIC
 # The MMX stuff requires MASM 6.11d so it needs its own rule
 #
 obj\mmx.obj: mmx.asm mmx.inc
-	d:\masm611\bin\ml /I. /c /Cx /Zd /Cp /Flmmx.txt /Sc /Foobj\mmx.obj mmx.asm
+	$(%MASM)\ml /I. /c /Cx /Zd /Cp /Flmmx.txt /Sc /Foobj\mmx.obj mmx.asm
 
 
 

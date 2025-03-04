@@ -141,39 +141,6 @@
 #include "iconcach.h"
 
 
-
-#ifndef FUNCTION_H
-
-#pragma off (unreferenced)
-
-#ifndef BITMAPCLASS
-#define BITMAPCLASS
-class BitmapClass
-{
-	public:
-		BitmapClass(int w, int h, unsigned char * data) :
-			Width(w), Height(h), Data(data) {};
-
-		int Width;
-		int Height;
-		unsigned char * Data;
-};
-
-class TPoint2D
-{
-	public:
-		TPoint2D(int xx, int yy) : x(xx), y(yy) {};
-		TPoint2D(void) : x(0), y(0) {};
-
-		int x;
-		int y;
-};
-#endif
-
-#pragma on (unreferenced)
-#endif
-
-
 //////////////////////////////////////////////////////////////////////////
 //
 // Defines for direct draw
@@ -307,6 +274,8 @@ class GraphicViewPortClass {
 		void Draw_Stamp(void const *icondata, int icon, int x_pixel, int y_pixel, void const *remap);
 		void Draw_Stamp(void const *icondata, int icon, int x_pixel, int y_pixel, void const *remap, int clip_window);
 
+		void Texture_Fill_Rect (int xpos, int ypos, int width, int height, void const *shape_pointer, int source_width, int source_height);
+
 //	This doesnt seem to exist anywhere?? - Steve T 9/26/95 6:05PM
 //		VOID Grey_Out_Region(int x, int y, int width, int height, int color);
 
@@ -372,8 +341,6 @@ class GraphicBufferClass : public GraphicViewPortClass, public BufferClass {
 		void GraphicBufferClass::Attach_DD_Surface (GraphicBufferClass * attach_buffer);
 		BOOL Lock(void);
 		BOOL Unlock(void);
-
-		void Scale_Rotate(BitmapClass &bmp,TPoint2D const &pt,long scale,unsigned char angle);
 
 		// Member to get a pointer to a direct draw surface
 		LPDIRECTDRAWSURFACE Get_DD_Surface ( void );

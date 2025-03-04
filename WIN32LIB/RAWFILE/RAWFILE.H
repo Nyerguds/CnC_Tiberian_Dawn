@@ -41,10 +41,12 @@
 #ifndef RAWFILE_H
 #define RAWFILE_H
 
+#ifndef WIN32
 #define WIN32 1
 #ifndef _WIN32 // Denzil 6/2/98 Watcom 11.0 complains without this check
 #define _WIN32
 #endif // _WIN32
+#endif
 #include <windows.h>
 
 //#include	<wwlib32.h>
@@ -52,6 +54,14 @@
 #include	<errno.h>
 #include	<windows.h>
 //#include	<algo.h>
+
+#define	NULL_HANDLE		INVALID_HANDLE_VALUE
+#define	HANDLE_TYPE		HANDLE
+#else
+#define	NULL_HANDLE		-1
+#define	HANDLE_TYPE		int
+#endif
+
 #include	"wwfile.h"
 
 #ifdef NEVER
@@ -113,6 +123,10 @@
 	EUCLEAN,				// not used
 #endif
 
+#ifndef WWERROR
+#define WWERROR	-1
+#endif
+
 /*
 **	This is the definition of the raw file class. It is derived from the abstract base FileClass
 **	and handles the interface to the low level DOS routines. This is the first class in the
@@ -154,8 +168,8 @@ class RawFileClass : public FileClass
 		virtual long Write(void const *buffer, long size);
 		virtual void Close(void);
 		virtual void Error(int error, int canretry = false, char const * filename=NULL);
-		virtual void Set_Buffer_Size(int size);
 
+		HANDLE_TYPE Get_File_Handle(void) { return (Handle); };
 
 	protected:
 
@@ -170,7 +184,7 @@ class RawFileClass : public FileClass
 		/*
 		**	This is the low level DOS handle. A -1 indicates an empty condition.
 		*/
-		int Handle;
+		HANDLE_TYPE Handle;
 
 		/*
 		**	This points to the filename as a NULL terminated string. It may point to either a
@@ -228,7 +242,7 @@ inline char const * RawFileClass::File_Name(void) const
  *=============================================================================================*/
 inline RawFileClass::RawFileClass(void) : Filename(0)
 {
-	Handle = -1;
+	Handle = INVALID_HANDLE_VALUE;
 	Allocated = false;
 }
 
@@ -249,7 +263,7 @@ inline RawFileClass::RawFileClass(void) : Filename(0)
  *=============================================================================================*/
 inline int RawFileClass::Is_Open(void) const
 {
-	return (Handle != -1);
+	return (Handle != INVALID_HANDLE_VALUE);
 }
 
 #endif
