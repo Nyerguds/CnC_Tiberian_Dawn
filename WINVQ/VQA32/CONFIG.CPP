@@ -78,7 +78,7 @@ static VQAConfig _defaultconfig = {
 	MCGA,
 
 	/* VBIBit: Vertical blank bit polarity. */
-	-1,
+	0, // was -1 but this no longer works on modern systems
 
 	/* ImageBuf: Pointer to image buffer to draw into. */
 	NULL,

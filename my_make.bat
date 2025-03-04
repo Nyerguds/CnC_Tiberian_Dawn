@@ -37,23 +37,23 @@ md WIN32LIB\LIB
 ::copy /Y %IPX%\IPXREAL.IBN .\OBJ\WIN32\
 
 
-::echo Compiling VQA
-::
-::cd winvq
-::
-::cd vqm32
-::
-::WMAKE
-::
-::cd ..
-::
-::cd vqa32
-::
-::WMAKE
-::
-::cd ..
-::cd ..
-::
+echo Compiling VQA
+
+cd winvq
+
+cd vqm32
+
+WMAKE
+
+cd ..
+
+cd vqa32
+
+WMAKE
+
+cd ..
+cd ..
+
 echo Compiling WWLIB
 
 cd win32lib

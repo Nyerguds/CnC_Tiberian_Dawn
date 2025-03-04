@@ -1,0 +1,19 @@
+Seems to compile but a lot needs to be figured out to get this to be
+consistently compileable
+edit my_make.bat in root dir with your paths
+
+NEEDED:
+- Watcom 10.6
+- http://takeda-toshiya.my.coocan.jp/msdos/ for invoking 16 bit TASM
+- TASM32 from 4.1 to run on modern Windows, if that doesn't work try even newer, TASM (16 bit must remain 4.0)
+
+NOTES:
+- WMAKE copy directive is broken, replaced with -copy forces it to use system's
+- Various missing h/cpp files can be found in Remasters repo
+- high res vqa is broken currently cause vqa lib code is outdated,
+	its likely they kept only a lib up to date, not whole source dir
+
+TODO:
+- solve ipxproto ebn dependency or eliminate ipxproto all togther
+- investigate getting TASM32 4.0 working
+- find solution for mmx.inc

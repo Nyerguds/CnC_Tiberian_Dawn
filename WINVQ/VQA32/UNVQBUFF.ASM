@@ -780,17 +780,13 @@ SKIP_PTR	EQU	8000h
    	ARG	bufwidth:DWORD
 
    	LOCAL	data_end:DWORD
-   	LOCAL	cb_offset:DWORD
       	LOCAL	edi_startval:DWORD
       	LOCAL	rowoffset:DWORD
+      	LOCAL	entries:DWORD
 
       ;----------------------------------------------------------------------------
       ;	Initialize
       ;----------------------------------------------------------------------------
-
-      	mov	eax,[codebook]		;Adjust the codebook address so
-      	sub	eax,4		; that the pointer offsets will
-      	mov	[cb_offset],eax	; point directly at the codeword.
 
       	mov	eax,[bufwidth]		;Compute the offset to the next
       	shl	eax,2		; row of blocks
@@ -799,7 +795,7 @@ SKIP_PTR	EQU	8000h
       	mov	esi,[pointers]
       	mov	eax,[numrows]		;Compute the end address of the
       	mul	[blocksperrow]		; pointer data.
-      	shl	eax,1
+      	mov	[entries],eax
       	add	eax,esi
       	mov	[data_end],eax
 
@@ -820,16 +816,19 @@ SKIP_PTR	EQU	8000h
       	mov	ecx,[blocksperrow]	;Number of blocks in a line
 
       ??Not_finished_a_line:
-      	sub	ebx,ebx
-      	mov	bx,[WORD PTR esi]	;Get the codebook pointer value
-      	add	esi,2		; then advance to the next one.
+      	mov	eax,[entries]
+      	xor	ebx,ebx
+      	mov	bh,[esi + eax]	;Get the codebook pointer value
+      	mov	bl,[esi]
+      	inc	esi		; then advance to the next one.
 
-      	or	bx,bx		;Is it a one color block?
-      	js	short ??One_color
+      	cmp	bh,0FFh		;Is it a one color block?
+      	je	short ??One_color
 
       ;	Draw multi-color block
 
-      	add	ebx,[cb_offset]	;Codeword address
+      	shl	ebx,4
+      	add	ebx,[codebook]	;Codeword address
       	mov	eax,[ebx]		;Read 1st row of codeword
       	mov	edx,[ebx+4]		;Read 2nd row of codeword
 
@@ -885,27 +884,29 @@ SKIP_PTR	EQU	8000h
 ;	Draw 1-color block
 
 ??One_color:
-	cmp	bx,SKIP_PTR		;Is this a skip block?
-	jne	??Draw_One_Color
-
-	add	edi,4		;Move to next dest block position
-	dec	ecx		;More blocks for this row?
-	jnz	short ??Not_finished_a_line
-	jmp	??Next_row
+;	cmp	bx,SKIP_PTR		;Is this a skip block?
+;	jne	??Draw_One_Color
+;
+;	add	edi,4		;Move to next dest block position
+;	dec	ecx		;More blocks for this row?
+;	jnz	short ??Not_finished_a_line
+;	jmp	??Next_row
 
 ??Draw_One_Color:
-	not	bx		;NOT pointer value to get color
+;	not	bx		;NOct color
 	mov	bh,bl		;Duplicate color through the
 	mov	ax,bx		; entire dword register.
 	rol	eax,16
 	mov	ax,bx
-	mov	ebx,[bufwidth]
+;	mov	ebx,[bufwidth]
 
 	IF	PHARLAP_TNT
 	mov	[es:edi],eax		;Write 1st row to dest
+	mov	ebx,[bufwidth]
 	mov	[es:edi+ebx],eax	;Write 2nd row to dest
 	ELSE
 	mov	[edi],eax		;Write 1st row to dest
+	mov	ebx,[bufwidth]
 	mov	[edi+ebx],eax		;Write 2nd row to dest
    	ENDIF
 
