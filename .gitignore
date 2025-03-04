@@ -14,3 +14,4 @@
 /win32lib/include/
 *.lbc
 *.err
+*.res
