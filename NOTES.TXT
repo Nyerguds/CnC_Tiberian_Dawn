@@ -17,4 +17,4 @@ NOTES:
 TODO:
 - solve ipxproto ebn dependency or eliminate ipxproto all togther
 - investigate getting TASM32 4.0 working
-- find solution to compiling wwipx
+- verify wwipx compile solution
