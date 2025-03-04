@@ -465,7 +465,7 @@ cd: .SYMBOLIC
 # The MMX stuff requires MASM 6.11d so it needs its own rule
 #
 obj\mmx.obj: mmx.asm mmx.inc
-	$(%MASM)\ml /I. /c /Cx /Zd /Cp /Flmmx.txt /Sc /Foobj\mmx.obj mmx.asm
+	$(%MASM)\ml /I. /c /Cx /Zd /Cp /Sc /Foobj\mmx.obj mmx.asm
 
 
 
