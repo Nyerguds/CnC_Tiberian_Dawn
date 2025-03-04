@@ -1,0 +1,16 @@
+*.obj
+*.lib
+*.lnk
+*.bak
+*.rsp
+*.map
+*.exe
+*.ibn
+*.dll
+*.lst
+*.pch
+/dxsdk/
+/win32lib/srcdebug/
+/win32lib/include/
+*.lbc
+*.err
