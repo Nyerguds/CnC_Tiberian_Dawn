@@ -270,10 +270,12 @@ bool OverlayClass::Mark(MarkType mark)
 						/*
 						**	Don't show the squish unless the gross flag is active.
 						*/
-						if (!Special.IsGross && Class->Type != OVERLAY_SQUISH) {
-							cellptr->Overlay = Class->Type;
-							cellptr->OverlayData = 0;
-						}
+						// Nyerguds's TUC Quick Fix Patch v1.02: squish
+						// Disable check here, add it in the infantry crush logic.
+						//if (!Special.IsGross || Class->Type != OVERLAY_SQUISH) {
+						cellptr->Overlay = Class->Type;
+						cellptr->OverlayData = 0;
+						//}
 						cellptr->Redraw_Objects();
 						if (Class->Land == LAND_TIBERIUM) {
 							cellptr->OverlayData = 1;

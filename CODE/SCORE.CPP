@@ -608,8 +608,11 @@ void ScoreClass::Presentation(void)
 		sprintf(inter_pal,"SNODPAL1.PAL");
 	}
 
-
-	if (Special.IsJurassic && AreThingiesEnabled) return;
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Always skip score screen if nonstandard house is played.
+	if ((house != HOUSE_GOOD && house != HOUSE_BAD) || (Special.IsJurassic && AreThingiesEnabled)) {
+		return;
+	}
 
 	PseudoSeenBuff = new GraphicBufferClass(320,200,(void*)NULL);
 	TextPrintBuffer = new GraphicBufferClass(SeenBuff.Get_Width(), SeenBuff.Get_Height(), (void*)NULL);
@@ -672,7 +675,9 @@ void ScoreClass::Presentation(void)
 	NHarvested = (HouseClass::As_Pointer(HOUSE_BAD))->HarvestedCredits;
 
 	if (!leadership) leadership++;
-	leadership = Cardinal_To_Fixed(GKilled+GBKilled+leadership, leadership);
+	// Nyerguds's TUC Quick Fix Patch v1.03: nod-score-calc
+	// This used GDI values. Now it always uses the player ones.
+	leadership = Cardinal_To_Fixed(PlayerPtr->UnitsLost + PlayerPtr->BuildingsLost + leadership, leadership);
 	leadership = Fixed_To_Cardinal(100, leadership);
 	if (leadership > 100) leadership = 100;
 

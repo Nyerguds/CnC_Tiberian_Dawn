@@ -57,10 +57,10 @@ bool VideoBackBufferAllowed = true;
 void Check_From_WChat(char *wchat_name);
 bool SpawnedFromWChat = false;
 
-extern "C"{
-	bool __cdecl Detect_MMX_Availability(void);
-	void __cdecl Init_MMX(void);
-}
+//extern "C"{
+//	bool __cdecl Detect_MMX_Availability(void);
+//	void __cdecl Init_MMX(void);
+//}
 
 
 
@@ -294,10 +294,10 @@ int PASCAL WinMain ( HINSTANCE instance , HINSTANCE , char * command_line , int 
 		/*
 		** Check for existance of MMX support on the processor
 		*/
-		if (Detect_MMX_Availability()){
+		//if (Detect_MMX_Availability()){
 			//MessageBox(NULL, "MMX extensions detected - enabling MMX support.", "Command & Conquer",MB_ICONEXCLAMATION|MB_OK);
-			MMXAvailable = true;
-		}
+			//MMXAvailable = true;
+		//}
 
 		/*
 		** If there is loads of memory then use uncompressed shapes
@@ -479,10 +479,10 @@ int PASCAL WinMain ( HINSTANCE instance , HINSTANCE , char * command_line , int 
 			/*
 			** Initialise MMX support if its available
 			*/
-			CCDebugString ("C&C95 - Entering MMX detection.\n");
-			if (MMXAvailable){
-				Init_MMX();
-			}
+			//CCDebugString ("C&C95 - Entering MMX detection.\n");
+			//if (MMXAvailable){
+				//Init_MMX();
+			//}
 
 			CCDebugString ("C&C95 - Creating mouse class.\n");
 			WWMouse = new WWMouseClass(&SeenBuff, 32, 32);

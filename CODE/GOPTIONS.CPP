@@ -425,9 +425,14 @@ void GameOptionsClass::Process(void)
 					if (GameToPlay == GAME_NORMAL) {
 #ifdef JAPANESE
 						switch (CCMessageBox().Process(TXT_CONFIRM_EXIT, TXT_YES, TXT_NO, TXT_RESTART)) {
-#else
+#else // JAPANESE
+#ifdef GERMAN
+						// Nyerguds's TUC Quick Fix Patch v1.02: german-abort
+						switch (CCMessageBox().Process(TXT_CONFIRM_EXIT, TXT_ABORT, TXT_NO, TXT_RESTART)) {
+#else // GERMAN
 						switch (CCMessageBox().Process(TXT_CONFIRM_EXIT, TXT_ABORT, TXT_CANCEL, TXT_RESTART)) {
-#endif
+#endif // GERMAN
+#endif // JAPANESE
 							case 2:
 								display = true;
 								break;

@@ -1392,14 +1392,14 @@ int CellClass::Reduce_Tiberium(int levels)
 {
 	Validate();
 	int reducer = 0;
-
+	// Nyerguds's TUC Quick Fix Patch v1.00: harvesting
 	if (levels && Land == LAND_TIBERIUM) {
-		if (OverlayData > levels) {
+		if (OverlayData >= levels) {
 			OverlayData -= levels;
 			reducer = levels;
 		} else {
 			Overlay = OVERLAY_NONE;
-			reducer = OverlayData;
+			reducer = OverlayData + 1;
 			OverlayData = 0;
 			Recalc_Attributes();
 		}
@@ -1898,8 +1898,10 @@ bool CellClass::Goodie_Check(FootClass * object)
 		if (steel) {
 			if (object->Owner() == HOUSE_BAD) {
 				object->House->Add_Nuke_Piece();
-				new AnimClass(ANIM_CRATE_EMPULSE, Cell_Coord());
 			}
+			// Nyerguds's TUC Quick Fix Patch v1.02: steelcrate-anim
+			// nuke piece logic is obsolete, so play anim for any House.
+			new AnimClass(ANIM_CRATE_EMPULSE, Cell_Coord());
 
 		} else {
 

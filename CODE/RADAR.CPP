@@ -186,7 +186,9 @@ void RadarClass::Init_Clear(void)
 	** If we have a valid map lets make sure that we set it correctly
 	*/
 	if (MapCellWidth || MapCellHeight) {
-		IsZoomed = false;
+		// Nyerguds's TUC Quick Fix Patch v1.02: minimap-zoom
+		// Zoom_Mode toggles the value, so start as true.
+		IsZoomed = true;
 		Zoom_Mode(Coord_Cell(Map.TacticalCoord));
 	}
 }
@@ -1441,6 +1443,10 @@ int RadarClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 					case ACTION_ENTER:
 					case ACTION_CAPTURE:
 					case ACTION_SABOTAGE:
+					// Nyerguds's TUC Quick Fix Patch v1.03: minimap-cursors
+					// Add two more allowed cases:
+					case ACTION_HARVEST:
+					case ACTION_GUARD_AREA:
 						break;
 
 					default:
@@ -1938,7 +1944,9 @@ void RadarClass::Draw_Names(void)
 		**	Print the player name, and the # of kills
 		*/
 		if (strlen(txt)) {
-			if (strlen(txt) > 9) {
+			// Nyerguds's TUC Quick Fix Patch v1.02: multi-name
+			// Don't abbreviate unless it EXCEEDS the maximum.
+			if (strlen(txt) > 10) {
 				txt[9] = '.';
 				txt[10] = '\0';
 			}

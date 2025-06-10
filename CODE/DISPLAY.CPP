@@ -1579,6 +1579,9 @@ bool DisplayClass::Map_Cell(CELL cell, HouseClass * house)
 
 		c = Adjacent_Cell(cell, dir);
 
+		// Nyerguds's TUC Quick Fix Patch v1.00: topofmap
+		if ((unsigned)c >= MAP_CELL_TOTAL) continue;
+		
 		if (c != cell && !(*this)[c].IsMapped) {
 			shadow = Cell_Shadow(c);
 
@@ -2602,14 +2605,17 @@ CELL DisplayClass::Calculated_Cell(SourceType dir, HousesType house)
 void DisplayClass::Select_These(COORDINATE coord1, COORDINATE coord2)
 {
 	COORDINATE tcoord = TacticalCoord;	//Cell_Coord(TacticalCell) & 0xFF00FF00L;
-
-	coord1 = Coord_Add(tcoord, coord1);
-	coord2 = Coord_Add(tcoord, coord2);
-	int x1 = Coord_X(coord1);
-	int x2 = Coord_X(coord2);
-	int y1 = Coord_Y(coord1);
-	int y2 = Coord_Y(coord2);
-
+	// I have a personal dislike for Coord_Add from seeing it in asm. It's way too bloated for a macro -Nyerguds
+	//coord1 = Coord_Add(tcoord, coord1);
+	//coord2 = Coord_Add(tcoord, coord2);
+	
+	int tx = Coord_X(tcoord);
+	int ty = Coord_Y(tcoord);
+	int x1 = Coord_X(coord1) + tx;
+	int y1 = Coord_Y(coord1) + ty;
+	int x2 = Coord_X(coord2) + tx;
+	int y2 = Coord_Y(coord2) + ty;
+	
 	/*
 	**	Ensure that coordinate number one represents the upper left corner
 	**	and coordinate number two represents the lower right corner.
@@ -2624,13 +2630,33 @@ void DisplayClass::Select_These(COORDINATE coord1, COORDINATE coord2)
 		y1 = y2;
 		y2 = temp;
 	}
+	// Nyerguds's TUC Quick Fix Patch v1.03: select-box-aircraft
+	// Only unselect if Shift is not selected.
+	if (!Keyboard::Down(KN_LSHIFT) && !Keyboard::Down(KN_RSHIFT)) {
+		Unselect_All();
+	}
+
+	AllowVoice = true;
+	
+	// Nyerguds's TUC Quick Fix Patch v1.03: select-box-aircraft
+	// Select air units in the air. Compensate for the fact they are shown higher up than their real coordinates.
+	for (int air_index = 0; air_index < Aircraft.Count(); air_index++) {
+		AircraftClass * aircraft = Aircraft.Ptr(air_index);
+		COORDINATE acoord = aircraft->Center_Coord();
+		int x = Coord_X(acoord);
+		int y = Coord_Y(acoord) - Pixel_To_Lepton(aircraft->Altitude);
+		if (aircraft->Owner() == PlayerPtr->Class->House && aircraft->Class_Of().IsSelectable
+				&& x >= x1 && x <= x2 && y >= y1 && y <= y2) {
+			if (aircraft->Select()) {
+				AllowVoice = false;
+			}
+		}
+	}
 
 	/*
 	**	Sweep through all ground layer objects and select the ones within the
 	**	bounding box.
-	*/
-	Unselect_All();
-	AllowVoice = true;
+	*/	
 	for (int index = 0; index < Layer[LAYER_GROUND].Count(); index++) {
 		ObjectClass * obj = Layer[LAYER_GROUND][index];
 		COORDINATE ocoord = obj->Center_Coord();

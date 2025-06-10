@@ -42,20 +42,23 @@ class ThemeClass
 {
 	private:
 		static char const *  Theme_File_Name(ThemeType theme);
+		static char const *  Theme_File_Name(ThemeType theme, bool variation);
 
 		int Current;			// Handle to current score.
 		ThemeType Score;		// Score number currently being played.
 		ThemeType Pending;	// Score to play next.
 
 		typedef struct {
-			char const * Name;	// Filename of score.
+			char const * Name;		// Filename of score.
 			int Fullname;			// Text number for full score name.
 			int Scenario;			// Scenario when it first becomes available.
 			int Duration;			// Duration of theme in seconds.
+			int VariationDuration;		// Duration of the variation of this theme. // Nyerguds's TUC Quick Fix Patch v1.03: var-music-length
 			bool Normal;			// Allowed in normal game play?
-			bool Variation;		// Is there a variation to the score?
+			bool Variation;			// Is there a variation to the score?
 			bool Repeat;			// Always repeat this score?
-			bool Available;		// Is the score available?
+			bool Available;			// Is the score available?
+			int VariationAvailable;		// Is the variation of this score available? // Nyerguds's TUC Quick Fix Patch v1.03: var-music-length
 		} ThemeControl;
 
 		static ThemeControl _themes[THEME_COUNT];

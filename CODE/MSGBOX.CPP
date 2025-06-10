@@ -41,11 +41,10 @@
 #include	"msgbox.h"
 #include "gadget.h"
 
-#ifdef JAPANESE
+// Nyerguds's TUC Quick Fix Patch v1.04: unlocked cps briefings
 CCMessageBox::CCMessageBox(int caption, bool pict) : Caption(caption), IsPicture(pict)
 {
 }
-#endif
 
 /***********************************************************************************************
  * CCMessageBox::Process -- pops up a message with yes/no, etc                                   *
@@ -141,23 +140,14 @@ int CCMessageBox::Process(const char *msg, const char *b1txt, const char *b2txt,
 	int width;
 	int height;
 
-#ifdef JAPANESE
 	if(IsPicture) {
 		width = 90;
 		height = 140 - 60;
 	} else
-#endif
 	Format_Window_String(buffer, 255 * factor, width, height);
 
-//BG #ifdef JAPANESE
-//BG 	if(!IsPicture) {
-//BG #else
 	width = MAX(width, 50 * factor);
 	width += 40 * factor;
-//BG #endif
-//BG #ifdef JAPANESE
-//BG 	}
-//BG #endif
 	height += (numbuttons == 0) ? (30 * factor) : (60 * factor);
 
 	int x = (SeenBuff.Get_Width() - width) / 2;
@@ -217,22 +207,18 @@ int CCMessageBox::Process(const char *msg, const char *b1txt, const char *b2txt,
 		SeenBuff.To_Buffer(x, y, width, height, back, width * height);
 	}
 	//display = TRUE;
-#ifdef JAPANESE
 	if(IsPicture) {
 		Load_Uncompress(CCFileClass(msg), SysMemPage, SysMemPage);
 		SysMemPage.Blit(SeenBuff, 160, 100);
 	} else {
-#endif
-	Dialog_Box(x, y, width, height);
-	Draw_Caption(Caption, x, y, width);
-
-	/*
-	**	Draw the caption.
-	*/
-	Fancy_Text_Print(buffer, x + (20*factor), y + (25*factor), CC_GREEN, TBLACK, TPF_6PT_GRAD|TPF_USE_GRAD_PAL|TPF_NOSHADOW);
-#ifdef JAPANESE
+		Dialog_Box(x, y, width, height);
+		Draw_Caption(Caption, x, y, width);
+	
+		/*
+		**	Draw the caption.
+		*/
+		Fancy_Text_Print(buffer, x + (20*factor), y + (25*factor), CC_GREEN, TBLACK, TPF_6PT_GRAD|TPF_USE_GRAD_PAL|TPF_NOSHADOW);
 	}
-#endif
 	/*
 	**	Redraw the buttons.
 	*/
@@ -264,12 +250,10 @@ int CCMessageBox::Process(const char *msg, const char *b1txt, const char *b2txt,
 
 				Hide_Mouse();
 
-#ifdef JAPANESE
 				if(IsPicture) {
 					Load_Uncompress(CCFileClass(msg), SysMemPage, SysMemPage);
 					SysMemPage.Blit(SeenBuff, 160, 100);
 				} else {
-#endif
 					Dialog_Box(x, y, width, height);
 					Draw_Caption(Caption, x, y, width);
 
@@ -277,9 +261,7 @@ int CCMessageBox::Process(const char *msg, const char *b1txt, const char *b2txt,
 					**	Draw the caption.
 					*/
 					Fancy_Text_Print(buffer, x + (20 * factor), y + (25 * factor), CC_GREEN, TBLACK, TPF_6PT_GRAD|TPF_USE_GRAD_PAL|TPF_NOSHADOW);
-#ifdef JAPANESE
 				}
-#endif
 				/*
 				**	Redraw the buttons.
 				*/

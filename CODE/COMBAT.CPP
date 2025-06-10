@@ -78,9 +78,12 @@ int Modify_Damage(int damage, WarheadType warhead, ArmorType armor, int distance
 	if (Special.IsInert || !damage || warhead == WARHEAD_NONE) return(0);
 
 	WarheadTypeClass const * whead = &Warheads[warhead];
-
-	damage = Fixed_To_Cardinal(damage, whead->Modifier[armor]);
-
+	// Nyerguds's TUC Quick Fix Patch v1.03: warheads
+	// Treat 255 as 100%
+	int modifier = whead->Modifier[armor];
+	if (modifier != 255) {
+		damage = Fixed_To_Cardinal(damage, modifier);
+	}
 	/*
 	**	Reduce damage according to the distance from the impact point.
 	*/

@@ -345,6 +345,29 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 	HouseClass::Read_INI(buffer);
 	Call_Back();
 
+	// Nyerguds's TUC Quick Fix Patch v1.00: mpcols (elaborate version)
+	if (GameToPlay == GAME_NORMAL) {
+		/*
+		**	Reset multiplayer houses to their default colors and radar colors,
+		**	in case they are used in the scenario. This fixes the fact their
+		**	default radar colors are gray.
+		*/
+		HouseClass *p;
+		p = HouseClass::As_Pointer(HOUSE_MULTI1);
+		p->Init_Data(REMAP_AQUA, HOUSE_MULTI1, p->InitialCredits);
+		p = HouseClass::As_Pointer(HOUSE_MULTI2);
+		p->Init_Data(REMAP_ORANGE, HOUSE_MULTI2, p->InitialCredits);
+		p = HouseClass::As_Pointer(HOUSE_MULTI3);
+		p->Init_Data(REMAP_GREEN, HOUSE_MULTI3, p->InitialCredits);
+		p = HouseClass::As_Pointer(HOUSE_MULTI4);
+		p->Init_Data(REMAP_BLUE, HOUSE_MULTI4, p->InitialCredits);
+		p = HouseClass::As_Pointer(HOUSE_MULTI5);
+		p->Init_Data(REMAP_YELLOW, HOUSE_MULTI5, p->InitialCredits);
+		p = HouseClass::As_Pointer(HOUSE_MULTI6);
+		p->Init_Data(REMAP_RED, HOUSE_MULTI6, p->InitialCredits);
+	}
+	Call_Back();
+
 	/*
 	**	Assign PlayerPtr by reading the player's house from the INI;
 	**	Must be done before any TechnoClass objects are created.

@@ -393,7 +393,10 @@ void Interpolate_2X_Scale( GraphicBufferClass *source, GraphicViewPortClass *des
 	/*
 	** Call the appropriate assembly language copy routine
 	*/
-#if (1)
+
+#ifdef TUC_Build
+        Asm_Interpolate_Line_Double( src_ptr , dest_ptr , source->Get_Height() , src_width , dest_width);
+#else
 	switch (CopyType){
 		case 0:
 			Asm_Interpolate ( src_ptr , dest_ptr , source->Get_Height() , src_width , dest_width);

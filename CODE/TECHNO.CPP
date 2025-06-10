@@ -81,6 +81,7 @@
  *   TechnoClass::Record_The_Kill -- Records the death of this object.                         *
  *   TechnoClass::Remap_Table -- Fetches the appropriate remap table to use.                   *
  *   TechnoClass::Response_Attack -- Handles the voice response when given attack order.       *
+ *   TechnoClass::Response_Sabotage -- Handles the voice response when given sabotage order.   * 
  *   TechnoClass::Response_Move -- Handles the voice repsonse to a movement request.           *
  *   TechnoClass::Response_Select -- Handles the voice response when selected.                 *
  *   TechnoClass::Revealed -- Handles revealing an object to the house specified.              *
@@ -510,7 +511,8 @@ bool TechnoClass::Revealed(HouseClass * house)
 		**	An enemy object that is discovered will go into hunt mode if
 		**	its current mission is to ambush.
 		*/
-		if (!house->IsHuman && Mission == MISSION_AMBUSH) {
+		// Nyerguds's TUC Quick Fix Patch v1.03: ambush
+		if (!House->IsHuman && Mission == MISSION_AMBUSH) {
 			Assign_Mission(MISSION_HUNT);
 		}
 
@@ -2134,7 +2136,10 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
 void TechnoClass::Player_Assign_Mission(MissionType mission, TARGET target, TARGET destination)
 {
 	if (AllowVoice) {
-		if (mission == MISSION_ATTACK) {
+		// Nyerguds's TUC Quick Fix Patch v1.02: commando-voice
+        	if (mission == MISSION_SABOTAGE) {
+			Response_Sabotage();
+	        } else if (mission == MISSION_ATTACK) {
 			Response_Attack();
 		} else {
 			Response_Move();
@@ -2176,6 +2181,11 @@ ActionType TechnoClass::What_Action(ObjectClass * object) const
 		bool altdown = (Keyboard::Down(KN_LALT) || Keyboard::Down(KN_RALT));
 		bool ctrldown = (Keyboard::Down(KN_LCTRL) || Keyboard::Down(KN_RCTRL));
 		bool shiftdown = (Keyboard::Down(KN_LSHIFT) || Keyboard::Down(KN_RSHIFT));
+
+		// Nyerguds's TUC Quick Fix Patch v1.03: aircraft-no-area-guard
+		if (What_Am_I() == RTTI_AIRCRAFT && ctrldown && altdown) {
+			return ACTION_NONE;
+		}
 
 		/*
 		**	Special guard area mission is possible if both the control and the
@@ -2255,6 +2265,11 @@ ActionType TechnoClass::What_Action(CELL cell) const
 	bool shiftdown = Keyboard::Down(KN_LSHIFT) || Keyboard::Down(KN_RSHIFT);
 	bool altdown = (Keyboard::Down(KN_LALT) || Keyboard::Down(KN_RALT));
 
+	// Nyerguds's TUC Quick Fix Patch v1.03: aircraft-no-area-guard
+	if (What_Am_I() == RTTI_AIRCRAFT && ctrldown && altdown) {
+		return ACTION_SELECT;
+	}
+
 	/*
 	**	Disable recognizing the <CTRL> key forced fire option when dealing with buildings.
 	*/
@@ -2274,7 +2289,9 @@ ActionType TechnoClass::What_Action(CELL cell) const
 
 	if (IsOwnedByPlayer && Techno_Type_Class()->Primary != WEAPON_NONE && (ctrldown || (optr && optr->IsLegalTarget))) {
 		WarheadTypeClass const * whead = &Warheads[BulletTypeClass::As_Reference(Weapons[Techno_Type_Class()->Primary].Fires).Warhead];
-		if (!optr || (optr->IsWall && (whead->IsWallDestroyer || (whead->IsWoodDestroyer && optr->IsWooden)))) {
+		// Nyerguds's TUC Quick Fix Patch v1.02: overlay-force-fire
+		// Allow force-fire on overlay.
+		if (!optr || ctrldown || (optr->IsWall && (whead->IsWallDestroyer || (whead->IsWoodDestroyer && optr->IsWooden)))) {
 			if (Can_Player_Move() || In_Range(::As_Target(cell), 0)) {
 				return(ACTION_ATTACK);
 			}
@@ -3649,6 +3666,26 @@ void TechnoClass::Response_Attack(void)
 {
 }
 
+
+
+/***********************************************************************************************
+ * TechnoClass::Response_Sabotage -- Handles the voice response when given sabotage order.     *
+ *                                                                                             *
+ *    This routine is called when a voice response to a sabotage order is desired. This        *
+ *    routine should be overridden for any object that actually has a voice response.          *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   This can generate an audio response.                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   08/06/2025 MM : Created as part of Nyerguds's TUC Quick Fix Patch v1.02                   *
+ *=============================================================================================*/
+void TechnoClass::Response_Sabotage(void)
+{
+}
 
 /***********************************************************************************************
  * TechnoClass::Target_Something_Nearby -- Handles finding and assigning a nearby target.      *

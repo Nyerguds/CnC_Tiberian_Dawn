@@ -423,7 +423,7 @@ static InfantryTypeClass const E5(
 	true,							// Has crawling animation frames?
 	false,						// Is this a civlian?
 	false,						// Always use the given name for the infantry?
-	true,							// Is this a "fraidycat" run-away type infantry?
+	false,							// Is this a "fraidycat" run-away type infantry? // Nyerguds's TUC Quick Fix Patch v1.01: chemwarrior
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
 	-1,							// Number of shots it has (default).
@@ -433,7 +433,7 @@ static InfantryTypeClass const E5(
 	70,							// Strength of infantry (in damage points).
 	1,								// Sight range.
 	300,							// Cost of infantry (in credits).
-	99,							// Scenario when they first appear.
+	98,							// Scenario when they first appear. // Nyerguds's TUC Quick Fix Patch v1.01: chemwarrior
 	80,10,						// Risk/Reward of this infantry unit.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -477,7 +477,7 @@ int EngineerDos[DO_COUNT][3]={
 	146,	8,	0,					// DO_GUN_DEATH
 	154,	8,	0,					// DO_EXPLOSION_DEATH
 	162,	8,	0,					// DO_EXPLOSION2_DEATH
-	162,	12,0,					// DO_GRENADE_DEATH
+	170,	12,0,					// DO_GRENADE_DEATH // Nyerguds's TUC Quick Fix Patch v1.01: engineer-sequence
 	182,	18,0,					// DO_FIRE_DEATH
 	200,	3,	3,					// DO_GESTURE1
 	224,	3,	3,					// DO_SALUTE1
@@ -2147,7 +2147,8 @@ BuildingClass * InfantryTypeClass::Who_Can_Build_Me(bool intheory, bool legal, H
  *=============================================================================================*/
 int InfantryTypeClass::Full_Name(void) const
 {
-	if (Debug_Map || !IsNominal || Special.IsNamed || Type == INFANTRY_C10 || Type == INFANTRY_DELPHI || Type == INFANTRY_MOEBIUS) {
+	// Nyerguds's TUC Quick Fix Patch v1.02: chan-name
+	if (Debug_Map || !IsNominal || Special.IsNamed || Type == INFANTRY_C10 || Type == INFANTRY_DELPHI || Type == INFANTRY_MOEBIUS || Type == INFANTRY_CHAN) {
 		return(TechnoTypeClass::Full_Name());
 	}
 	return(TXT_CIVILIAN);

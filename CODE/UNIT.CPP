@@ -485,7 +485,9 @@ void UnitClass::AI(void)
 	/*
 	** for Jurassic objects, animate them if they're walking
 	*/
-	if (Class->IsPieceOfEight && Special.IsJurassic && AreThingiesEnabled) {
+	// Nyerguds's TUC Quick Fix Patch v1.00: funpark
+	// Remove Jurassic requirement for walker units.
+	if (Class->IsPieceOfEight) { // && Special.IsJurassic && AreThingiesEnabled) {
 		// Only animate if they're walking
 		if (IsDriving || IsFiring) {
 			if (!Fetch_Rate()) {
@@ -1530,6 +1532,10 @@ bool UnitClass::Try_To_Deploy(void)
 			Mark(MARK_UP);
 			BuildingClass * building = new BuildingClass(STRUCT_CONST, House->Class->House);
 			if (building) {
+				// Nyerguds's TUC Quick Fix Patch v1.00: deploy
+				// Prevents the Construction Yard from adding its used power twice in Unlimbo
+				building->Assign_Mission(MISSION_CONSTRUCTION);
+				building->Commence();
 				if (building->Unlimbo(Adjacent_Cell(Coord, FACING_NW))) {
 
 					/*

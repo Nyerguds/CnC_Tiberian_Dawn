@@ -949,7 +949,7 @@ static UnitTypeClass const UnitMLRS(
 		false,			// Is there an associated firing animation?
 		true,				// Must the turret be in a locked down position while moving?
 		true,				// Does it lay tracks while moving?
-		false,			// Is this a gigundo-rotund-enormous unit?
+		true,			// Is this a gigundo-rotund-enormous unit? // Nyerguds's TUC Quick Fix Patch v1.02: rocketlauncher
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
@@ -1604,13 +1604,14 @@ void UnitTypeClass::One_Time(void)
 		/*
 		**	Fetch a pointer to the unit's shape data.
 		*/
-		if (!uclass.IsPieceOfEight || (Special.IsJurassic && AreThingiesEnabled) ) {
-			_makepath(fullname, NULL, NULL, uclass.IniName, ".SHP");
-			ptr = MixFileClass::Retrieve(fullname);
-		} else {
-			ptr = NULL;
-		}
-
+		// Nyerguds's TUC Quick Fix Patch v1.00: funpark
+		// Remove Jurassic requirement for walker units.
+		//if (!uclass.IsPieceOfEight || (Special.IsJurassic && AreThingiesEnabled) ) {
+		_makepath(fullname, NULL, NULL, uclass.IniName, ".SHP");
+		ptr = MixFileClass::Retrieve(fullname);
+		//} else {
+		//	ptr = NULL;
+		//}
 		((void const *&)uclass.ImageData) = ptr;
 		if (ptr) {
 

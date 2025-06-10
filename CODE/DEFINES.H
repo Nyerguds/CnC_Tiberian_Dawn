@@ -39,6 +39,12 @@
 
 
 /**********************************************************************
+**	If defined, no CD checks will ever be done for this version.
+*/
+#define TUC_Build
+
+
+/**********************************************************************
 **	If defined, then the advanced balancing features will be enabled
 **	for this version.
 */
@@ -57,7 +63,7 @@
 **  Define this to allow play of the bonus missions for the Gateway
 **  bundle deal.
 */
-#define BONUS_MISSIONS
+//#define BONUS_MISSIONS
 
 
 /**********************************************************************
@@ -80,7 +86,7 @@
 **	This define enables the full set of cheat keys and special
 **	command line options.
 */
-#define CHEAT_KEYS
+//#define CHEAT_KEYS
 
 
 /**********************************************************************
@@ -172,6 +178,9 @@
 //#define	GERMAN	1
 //#define	FRENCH	1
 //#define	JAPANESE	1
+
+// Enable this to load the map screen strings from the strings file instead of using the hardcoded ones.
+//#define EXPANDED_STRINGS 1
 
 #define	FOREIGN_VERSION_NUMBER	6
 

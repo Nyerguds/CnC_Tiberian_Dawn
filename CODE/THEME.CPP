@@ -57,45 +57,51 @@
 /*
 **	These are the actual filename list for the theme sample files.
 */
+// Nyerguds's TUC Quick Fix Patch v1.03: var-music-length
+// Introduces specific properties for the length and availability of the variations of themes, and
+// enabled the tracks "AIRSTRIK", "80MX226M", "DIE", "VALKYRIE", and disables the "Loop" status on "VALKYRIE".
+// Also enables the Variation on JUSTDOIT, NOMERCY and STOPTHEM, with their added variation length, since
+// they exist on the soundtrack and could be added.
 ThemeClass::ThemeControl ThemeClass::_themes[THEME_COUNT] = {
-	{"AIRSTRIK",	TXT_THEME_AIRSTRIKE,	0,		200,	false,	false,false,true},
-	{"80MX226M",	TXT_THEME_80MX,		0,		248,	false,	false,false,true},
-	{"CHRG226M",	TXT_THEME_CHRG,		0,		256,	true,		false,false,true},
-	{"CREP226M",	TXT_THEME_CREP,		0,		222,	true,		false,false,true},
-	{"DRIL226M",	TXT_THEME_DRIL,		0,		272,	true,		false,false,true},
-	{"DRON226M",	TXT_THEME_DRON,		0,		275,	true,		false,false,true},
-	{"FIST226M",	TXT_THEME_FIST,		0,		212,	true,		false,false,true},
-	{"RECN226M",	TXT_THEME_RECON,		0,		261,	true,		false,false,true},
-	{"VOIC226M",	TXT_THEME_VOICE,		0,		306,	true,		false,false,true},
-	{"HEAVYG",		TXT_THEME_HEAVYG,		0,		180,	true,		false,false,true},
-	{"J1",			TXT_THEME_J1,			4,		187,	true,		false,false,true},
-//	{"J1",			TXT_THEME_J1,			4,		187,	false,	false,false,true},
-	{"JDI_V2",		TXT_THEME_JDI_V2,		5,		183,	true,		false,false,true},
-	{"RADIO",		TXT_THEME_RADIO,		6,		183,	true,		false,false,true},
-	{"RAIN",			TXT_THEME_RAIN,		7,		156,	true,		false,false,true},
-	{"AOI",			TXT_THEME_AOI,			0,		168,	true,		true,	false,true},
-	{"CCTHANG",		TXT_THEME_CCTHANG,	12,	193,	true,		false,false,true},
-	{"DIE",			TXT_THEME_DIE,			11,	162,	false,	false,false,true},
-	{"FWP",			TXT_THEME_FWP,			10,	53,	true,		false,false,true},
-	{"IND",			TXT_THEME_IND,			1,		175,	true,		false,false,true},
-	{"IND2",			TXT_THEME_IND2,		1,		38,	true,		false,false,true},
-	{"JUSTDOIT",	TXT_THEME_JUSTDOIT,	9,		142,	true,		false,false,true},
-	{"LINEFIRE",	TXT_THEME_LINEFIRE,	8,		125,	true,		false,false,true},
-	{"MARCH",		TXT_THEME_MARCH,		7,		157,	true,		false,false,true},
-	{"TARGET",		TXT_THEME_TARGET,		0,		173,	true,		false,false,true},
-	{"NOMERCY",		TXT_THEME_NOMERCY,	2,		204,	true,		false,false,true},
-	{"OTP",			TXT_THEME_OTP,			3,		182,	true,		false,false,true},
-	{"PRP",			TXT_THEME_PRP,			4,		211,	true,		false,false,true},
-	{"ROUT",			TXT_THEME_ROUT,		12,	121,	false,	true,	false,true},
-	{"HEART",		TXT_THEME_HEART,		5,		206,	false,	true,	false,true},
-	{"STOPTHEM",	TXT_THEME_STOPTHEM,	0,		190,	true,		false,false,true},
-	{"TROUBLE",		TXT_THEME_TROUBLE,	6,		191,	true,		true,	false,true},
-	{"WARFARE",		TXT_THEME_WARFARE,	0,		182,	true,		false,false,true},
-	{"BEFEARED",	TXT_THEME_BEFEARED,	13,	164,	false,	true,	false,true},
-	{"I_AM",			TXT_THEME_IAM,			6,		161,	false,	false,false,true},
-	{"WIN1",			TXT_THEME_WIN1,		0,		41,	false,	true,	true,true},
-	{"MAP1",			TXT_THEME_WIN1,		0,		61,	false,	false,true,true},
-	{"VALKYRIE",	TXT_THEME_VALK,		0,		306,	false,	false,true,true},
+//	Name,		Fullname,		Scen,	Dur,	VarDur,	Normal,	Var,	Rept,	Avlb,	VarAvl
+	{"AIRSTRIK",	TXT_THEME_AIRSTRIKE,	0,	200,	0,	true,	false,	false,	true,	false},
+	{"80MX226M",	TXT_THEME_80MX,		0,	248,	0,	true,	false,	false,	true,	false},
+	{"CHRG226M",	TXT_THEME_CHRG,		0,	256,	0,	true,	false,	false,	true,	false},
+	{"CREP226M",	TXT_THEME_CREP,		0,	222,	0,	true,	false,	false,	true,	false},
+	{"DRIL226M",	TXT_THEME_DRIL,		0,	272,	0,	true,	false,	false,	true,	false},
+	{"DRON226M",	TXT_THEME_DRON,		0,	275,	0,	true,	false,	false,	true,	false},
+	{"FIST226M",	TXT_THEME_FIST,		0,	212,	0,	true,	false,	false,	true,	false},
+	{"RECN226M",	TXT_THEME_RECON,	0,	261,	0,	true,	false,	false,	true,	false},
+	{"VOIC226M",	TXT_THEME_VOICE,	0,	306,	0,	true,	false,	false,	true,	false},
+	{"HEAVYG",	TXT_THEME_HEAVYG,	0,	180,	0,	true,	false,	false,	true,	false},
+//	{"J1",		TXT_THEME_J1,		4,	187,	0,	false,	false,	false,	true,	false},
+	{"J1",		TXT_THEME_J1,		4,	187,	0,	true,	false,	false,	true,	false},
+	{"JDI_V2",	TXT_THEME_JDI_V2,	5,	183,	0,	true,	false,	false,	true,	false},
+	{"RADIO",	TXT_THEME_RADIO,	6,	183,	0,	true,	false,	false,	true,	false},
+	{"RAIN",	TXT_THEME_RAIN,		7,	156,	0,	true,	false,	false,	true,	false},
+	{"AOI",		TXT_THEME_AOI,		0,	168,	172,	true,	true,	false,	true,	false},
+	{"CCTHANG",	TXT_THEME_CCTHANG,	12,	193,	0,	true,	false,	false,	true,	false},
+	{"DIE",		TXT_THEME_DIE,		11,	162,	0,	true,	false,	false,	true,	false},
+	{"FWP",		TXT_THEME_FWP,		10,	53,	0,	true,	false,	false,	true,	false},
+	{"IND",		TXT_THEME_IND,		1,	175,	0,	true,	false,	false,	true,	false},
+	{"IND2",	TXT_THEME_IND2,		1,	38,	0,	true,	false,	false,	true,	false},
+	{"JUSTDOIT",	TXT_THEME_JUSTDOIT,	9,	142,	144,	true,	true,	false,	true,	false},
+	{"LINEFIRE",	TXT_THEME_LINEFIRE,	8,	125,	0,	true,	false,	false,	true,	false},
+	{"MARCH",	TXT_THEME_MARCH,	7,	157,	0,	true,	false,	false,	true,	false},
+	{"TARGET",	TXT_THEME_TARGET,	0,	173,	0,	true,	false,	false,	true,	false},
+	{"NOMERCY",	TXT_THEME_NOMERCY,	2,	204,	197,	true,	true,	false,	true,	false},
+	{"OTP",		TXT_THEME_OTP,		3,	182,	0,	true,	false,	false,	true,	false},
+	{"PRP",		TXT_THEME_PRP,		4,	211,	0,	true,	false,	false,	true,	false},
+	{"ROUT",	TXT_THEME_ROUT,		12,	0,	121,	false,	true,	false,	true,	false},
+	{"HEART",	TXT_THEME_HEART,	5,	0,	206,	false,	true,	false,	true,	false},
+	{"STOPTHEM",	TXT_THEME_STOPTHEM,	0,	190,	189,	true,	true,	false,	true,	false},
+	{"TROUBLE",	TXT_THEME_TROUBLE,	6,	191,	132,	true,	true,	false,	true,	false},
+	{"WARFARE",	TXT_THEME_WARFARE,	0,	182,	0,	true,	false,	false,	true,	false},
+	{"BEFEARED",	TXT_THEME_BEFEARED,	13,	164,	101,	true,	true,	false,	true,	false},
+	{"I_AM",	TXT_THEME_IAM,		6,	161,	0,	true,	false,	false,	true,	false},
+	{"WIN1",	TXT_THEME_WIN1,		0,	41,	56,	false,	true,	true,	true,	false},
+	{"MAP1",	TXT_THEME_WIN1,		0,	61,	0,	false,	false,	true,	true,	false},
+	{"VALKYRIE",	TXT_THEME_VALK,		0,	306,	0,	true,	false,	false,	true,	false},
 };
 
 
@@ -353,14 +359,34 @@ int ThemeClass::Play_Song(ThemeType theme)
  *=============================================================================================*/
 char const * ThemeClass::Theme_File_Name(ThemeType theme)
 {
+	// Nyerguds's TUC Quick Fix Patch v1.03: var-music-length
+	return Theme_File_Name(theme, _themes[theme].VariationAvailable);
+}
+
+
+/***********************************************************************************************
+ * ThemeClass::Theme_File_Name -- Constructs a filename for the specified theme.               *
+ *                                                                                             *
+ *    This routine will construct (into a static buffer) a filename that matches the theme     *
+ *    number specified. This constructed filename is returned as a pointer. The filename will  *
+ *    remain valid until the next call to this routine.                                        *
+ *                                                                                             *
+ * INPUT:   theme -- The theme number to convert to a filename.                                *
+ *          variation -- whether to get the normal filename, or the one for the variation      *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the constructed filename for the specified theme number. *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/12/2025 MM  : Created overload with specific argument for getting the variation.       *
+ *=============================================================================================*/
+char const * ThemeClass::Theme_File_Name(ThemeType theme, bool variation)
+{
 	static char name[_MAX_FNAME+_MAX_EXT];
 
-	if (_themes[theme].Variation && Special.IsVariation) {
+	if (variation) {
 		_makepath(name, NULL, NULL, _themes[theme].Name, ".VAR");
-		CCFileClass file(name);
-		if (file.Is_Available()) {
-			return((char const *)(&name[0]));
-		}
 	}
 	_makepath(name, NULL, NULL, _themes[theme].Name, ".AUD");
 	return((char const *)(&name[0]));
@@ -382,11 +408,17 @@ char const * ThemeClass::Theme_File_Name(ThemeType theme)
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   01/16/1995 JLB : Created.                                                                 *
+ *   06/12/2025 MM  : Added specific variation version.                                        * 
  *=============================================================================================*/
 int ThemeClass::Track_Length(ThemeType theme)
 {
+	// Nyerguds's TUC Quick Fix Patch v1.03: var-music-length
 	if ((unsigned)theme < THEME_COUNT) {
-		return(_themes[theme].Duration);
+		if (Special.IsVariation && _themes[theme].VariationAvailable) {
+			return _themes[theme].VariationDuration;
+	 	} else {
+			return _themes[theme].Duration;
+		}
 	}
 	return(0);
 }
@@ -548,15 +580,26 @@ ThemeType ThemeClass::From_Name(char const * name)
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   01/04/1996 JLB : Created.                                                                 *
+ *   06/12/2025 MM  : Added specific variation scan.                                           * 
  *=============================================================================================*/
 void ThemeClass::Scan(void)
 {
+	// Nyerguds's TUC Quick Fix Patch v1.03: var-music-length
 	for (ThemeType theme = THEME_FIRST; theme < THEME_COUNT; theme++) {
+		if (Special.IsVariation && _themes[theme].Variation && CCFileClass(Theme_File_Name(theme, true)).Is_Available()) {
+			_themes[theme].Available = true;
+			_themes[theme].VariationAvailable = true;
+		} else {
+			_themes[theme].Available = CCFileClass(Theme_File_Name(theme, false)).Is_Available();
+			_themes[theme].VariationAvailable = false;
+		}
+	}
+//	for (ThemeType theme = THEME_FIRST; theme < THEME_COUNT; theme++) {
 //		if (theme == THEME_J1 && !Special.IsJurassic) {
 //			_themes[theme].Available = false;
 //		} else {
-			_themes[theme].Available = CCFileClass(Theme_File_Name(theme)).Is_Available();
+//			_themes[theme].Available = CCFileClass(Theme_File_Name(theme)).Is_Available();
 //		}
-	}
+//	}
 }
 

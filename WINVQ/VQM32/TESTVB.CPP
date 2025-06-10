@@ -71,6 +71,10 @@
 
 long TestVBIBit(void)
 {
+	return (1);
+#ifdef  OBSOLETE
+	// Ancient CRT stuff?
+	
 	static struct timeb mytime;
 	long          curtime;
 	long          endtime;
@@ -98,6 +102,7 @@ long TestVBIBit(void)
 	}
 
 	return (high > low);
+#endif
 }
 
 

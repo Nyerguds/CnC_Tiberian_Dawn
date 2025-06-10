@@ -189,8 +189,8 @@ BFPredTable	DW	1, 3, 2, 5, 2, 3, 4, 1
 		global	C IsTheaterShape:dword
 		global	C Single_Line_Trans_Entry:near
 		global	C Next_Line:near
-		global	C MMX_Done:near
-		global	C MMXAvailable:dword
+;		global	C MMX_Done:near
+;		global	C MMXAvailable:dword
 		global	EndNewShapeJumpTable:byte
 		global	NewShapeJumpTable:dword
 
@@ -1541,11 +1541,11 @@ USE	BF_Predator_Ghost_Fading_Trans
 
 ??real_out:
 
-	cmp	[MMXAvailable],0
-	jz	??no_mmx_cleanup
-	call	MMX_Done
+;	cmp	[MMXAvailable],0
+;	jz	??no_mmx_cleanup
+;	call	MMX_Done
 
-??no_mmx_cleanup:
+; ??no_mmx_cleanup:
 	epilogue
 
 	ret
@@ -3187,7 +3187,13 @@ BF_Predator:
 	; get length of the 32 groups of instructions
 
 	lea	ecx , [ ??predator_reference - ??predator_line ]
+	; Nyerguds's TUC Quick Fix Patch v1.00: stealth
+	dec	edx
+	jnz	??pr_boundary_ok
+	epilogue
+	ret
 
+	??pr_boundary_ok:
 	shr	ebx , 5				; width / 32
 	shr	ecx , 5				; length of instructions / 32
 	and	eax , 01fh			; mod of width / 32
@@ -3269,7 +3275,13 @@ BF_Predator_Trans:
 	; get length of the 32 groups of instructions
 
 	lea	ecx , [ ??predator_t_reference - ??predator_t_line ]
+	; Nyerguds's TUC Quick Fix Patch v1.00: stealth
+	dec	edx
+	jnz	??pr_t_boundary_ok
+	epilogue
+	ret
 
+	??pr_t_boundary_ok:
 	shr	ebx , 5				; width / 32
 	shr	ecx , 5				; length of instructions / 32
 	and	eax , 01fh			; mod of width / 32
@@ -3350,7 +3362,13 @@ BF_Predator_Ghost:
 	; get length of the 32 groups of instructions
 
 	lea	ecx , [ ??predator_g_reference - ??predator_g_line ]
+	; Nyerguds's TUC Quick Fix Patch v1.00: stealth
+	dec	edx
+	jnz	??pr_g_boundary_ok
+	epilogue
+	ret
 
+	??pr_g_boundary_ok:
 	shr	ebx , 5				; width / 32
 	shr	ecx , 5				; length of instructions / 32
 	and	eax , 01fh			; mod of width / 32
@@ -3440,7 +3458,13 @@ BF_Predator_Ghost_Trans:
 	; get length of the 32 groups of instructions
 
 	lea	ecx , [ ??predator_g_t_reference - ??predator_g_t_line ]
+	; Nyerguds's TUC Quick Fix Patch v1.00: stealth
+	dec	edx
+	jnz	??pr_g_t_boundary_ok
+	epilogue
+	ret
 
+	??pr_g_t_boundary_ok:
 	shr	ebx , 5				; width / 32
 	shr	ecx , 5				; length of instructions / 32
 	and	eax , 01fh			; mod of width / 32
@@ -3536,7 +3560,13 @@ BF_Predator_Fading:
 	; get length of the 32 groups of instructions
 
 	lea	ecx , [ ??predator_f_reference - ??predator_f_line ]
+	; Nyerguds's TUC Quick Fix Patch v1.00: stealth
+	dec	edx
+	jnz	??pr_f_boundary_ok
+	epilogue
+	ret
 
+	??pr_f_boundary_ok:
 	shr	ebx , 5				; width / 32
 	shr	ecx , 5				; length of instructions / 32
 	and	eax , 01fh			; mod of width / 32
@@ -3625,7 +3655,13 @@ BF_Predator_Fading_Trans:
 	; get length of the 32 groups of instructions
 
 	lea	ecx , [ ??predator_f_t_reference - ??predator_f_t_line ]
+	; Nyerguds's TUC Quick Fix Patch v1.00: stealth
+	dec	edx
+	jnz	??pr_f_t_boundary_ok
+	epilogue
+	ret
 
+	??pr_f_t_boundary_ok:
 	shr	ebx , 5				; width / 32
 	shr	ecx , 5				; length of instructions / 32
 	and	eax , 01fh			; mod of width / 32
@@ -3720,7 +3756,13 @@ BF_Predator_Ghost_Fading:
 	; get length of the 32 groups of instructions
 
 	lea	ecx , [ ??predator_g_f_reference - ??predator_g_f_line ]
+	; Nyerguds's TUC Quick Fix Patch v1.00: stealth
+	dec	edx
+	jnz	??pr_g_f_boundary_ok
+	epilogue
+	ret
 
+	??pr_g_f_boundary_ok:
 	shr	ebx , 5				; width / 32
 	shr	ecx , 5				; length of instructions / 32
 	and	eax , 01fh			; mod of width / 32
@@ -3827,7 +3869,13 @@ BF_Predator_Ghost_Fading_Trans:
 	; get length of the 32 groups of instructions
 
 	lea	ecx , [ ??predator_g_f_t_reference - ??predator_g_f_t_line ]
+	; Nyerguds's TUC Quick Fix Patch v1.00: stealth
+	dec	edx
+	jnz	??pr_g_f_t_boundary_ok
+	epilogue
+	ret
 
+	??pr_g_f_t_boundary_ok:
 	shr	ebx , 5				; width / 32
 	shr	ecx , 5				; length of instructions / 32
 	and	eax , 01fh			; mod of width / 32

@@ -100,7 +100,8 @@ static struct {
 	{"NOPROB",		10,	IN_VAR},	// VOC_NO_PROB			"not a problem"
 	{"READY",		10,	IN_VAR},	// VOC_READY			"ready and waiting"
 	{"REPORT1",		10,	IN_VAR},	//	VOC_REPORT			"reporting"
-	{"RITWAWA",		10,	IN_VAR},	// VOC_RIGHT_AWAY		"right away sir"
+	// Nyerguds's TUC Quick Fix Patch v1.02: ritaway
+	{"RITAWAY",		10,	IN_VAR},	// VOC_RIGHT_AWAY		"right away sir"
 	{"ROGER",		10,	IN_VAR},	// VOC_ROGER			"roger"
 //	{"SIR1",			10,	IN_VAR},	//	VOC_SIR1				"sir?"
 //	{"SQUAD1",		10,	IN_VAR},	//	VOC_SQUAD1			"squad reporting"
@@ -153,7 +154,8 @@ static struct {
 	{"TONE16",		0, 	IN_JUV},	// VOC_DOWN				credits counting down
 	{"TONE2",		1, 	IN_JUV},	// VOC_TARGET			target sound
 	{"TONE5",		10,	IN_JUV},	// VOC_SONAR			sonar echo
-	{"TOSS",			1, 	IN_JUV},	// VOC_TOSS				air swish
+	// Nyerguds's TUC Quick Fix Patch v1.02: grenadesound
+	{"TOSS1",			1, 	IN_JUV},	// VOC_TOSS				air swish
 	{"TRANS1",		1, 	IN_JUV},	// VOC_CLOAK			stealth tank
 	{"TREEBRN1",	1, 	IN_JUV},	// VOC_BURN				burning crackle
 	{"TURRFIR5",	1, 	IN_JUV},	// VOC_TURRET			muffled gunfire

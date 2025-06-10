@@ -397,47 +397,91 @@ void Map_Selection(void)
 
 		switch (frame){
 			case 1:
+#if (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
 				Alloc_Object(new MultiStagePrintClass(Text_String (TXT_READING_IMAGE_DATA), 0,10,_othergreenpal));
+#else
+				Alloc_Object(new MultiStagePrintClass("READING IMAGE DATA", 0,10,_othergreenpal));
+#endif
 				break;
 
 			case 16:
+#if (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
 				TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width (Text_String (TXT_READING_IMAGE_DATA)), 2*(10 + 12), BLACK);
+#else
+				TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width ("READING IMAGE DATA"), 2*(10 + 12), BLACK);
+#endif
 				break;
 
 			case 17:
+#if (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
 				TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width (Text_String (TXT_READING_IMAGE_DATA)), 2*(10 + 12), TBLACK);
+				Alloc_Object(new MultiStagePrintClass(Text_String (TXT_ANALYZING), 0,10,_othergreenpal));
+#else
+				TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width ("READING IMAGE DATA"), 2*(10 + 12), TBLACK);
 				Alloc_Object(new MultiStagePrintClass("ANALYZING", 0,10,_othergreenpal));
+#endif
 				break;
 
 			case 33:
+#if (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
 				TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width (Text_String (TXT_ANALYZING)), 2*(10 + 12), BLACK);
+#else
+				TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width ("ANALYZING"), 2*(10 + 12), BLACK);
+#endif
 				break;
 
 			case 34:
+#if (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
 				TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width (Text_String (TXT_ANALYZING)), 2*(10 + 12), TBLACK);
 				Alloc_Object(new MultiStagePrintClass(Text_String (TXT_ENHANCING_IMAGE_DATA), 0,10,_othergreenpal));
+#else
+				TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width ("ANALYZING"), 2*(10 + 12), TBLACK);
+				Alloc_Object(new MultiStagePrintClass("ENHANCING IMAGE DATA", 0,10,_othergreenpal));
+#endif
 				break;
 
 			case 44:
+#if (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
 				TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width (Text_String (TXT_ENHANCING_IMAGE_DATA)), 2*(10 + 12), BLACK);
+#else
+				TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width ("ENHANCING IMAGE DATA"), 2*(10 + 12), BLACK);
+#endif
 				break;
 
 			case 45:
+#if (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
 				TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width (Text_String (TXT_ENHANCING_IMAGE_DATA)), 2*(10 + 12), TBLACK);
 				Alloc_Object(new MultiStagePrintClass(Text_String(TXT_ISOLATING_OPERATIONAL_THEATER), 0,10,_othergreenpal));
+#else
+				TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width ("ENHANCING IMAGE DATA"), 2*(10 + 12), TBLACK);
+				Alloc_Object(new MultiStagePrintClass("ISOLATING OPERATIONAL THEATER", 0,10,_othergreenpal));
+#endif
 				break;
 
 			case 70:
+#if (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
 				TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width (Text_String(TXT_ISOLATING_OPERATIONAL_THEATER)), 2*(10 + 12), BLACK);
+#else
+				TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width ("ISOLATING OPERATIONAL THEATER"), 2*(10 + 12), BLACK);
+#endif
 				break;
 
 			case 71:
+#if (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
 				TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width (Text_String(TXT_ISOLATING_OPERATIONAL_THEATER)), 2*(10 + 12), TBLACK);
 				Alloc_Object(new MultiStagePrintClass(Text_String (TXT_ESTABLISHING_TRADITIONAL_BOUNDARIES), 0,10,_othergreenpal));
+#else
+				TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width ("ISOLATING OPERATIONAL THEATER"), 2*(10 + 12), TBLACK);
+				Alloc_Object(new MultiStagePrintClass("ESTABLISHING TRADITIONAL BOUNDARIES", 0,10,_othergreenpal));
+#endif
 				break;
 
 			case 74:
+#if (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
 				Alloc_Object(new MultiStagePrintClass(Text_String (TXT_FOR_VISUAL_REFERENCE), 0,22,_othergreenpal));
+#else
+				Alloc_Object(new MultiStagePrintClass("FOR VISUAL REFERENCE", 0,22,_othergreenpal));
+#endif
 				break;
 		}
 
@@ -446,9 +490,17 @@ void Map_Selection(void)
 		Call_Back_Delay(/*Keyboard::Check() ? 0 :*/ 3);
 	}
 
+#if (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
 	TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width (Text_String (TXT_ESTABLISHING_TRADITIONAL_BOUNDARIES)), 2*(10 + 24), BLACK);
+#else
+	TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width ("ESTABLISHING TRADITIONAL BOUNDARIES"), 2*(10 + 24), BLACK);
+#endif
 	Call_Back_Delay (1);
+#if (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
 	TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width (Text_String (TXT_ESTABLISHING_TRADITIONAL_BOUNDARIES)), 2*(10 + 24), TBLACK);
+#else
+	TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width ("ESTABLISHING TRADITIONAL BOUNDARIES"), 2*(10 + 24), TBLACK);
+#endif
 	Call_Back_Delay (1);
 
 	Close_Animation(anim);
@@ -603,36 +655,61 @@ void Map_Selection(void)
 
 				case 23:
 					if (house == HOUSE_GOOD){
+#if (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
 						Alloc_Object(new MultiStagePrintClass (Text_String (TXT_ENHANCING_IMAGE), 0, 10, _othergreenpal));
+#else
+						Alloc_Object(new MultiStagePrintClass ("ENHANCING IMAGE", 0, 10, _othergreenpal));
+#endif  // (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
 					}else{
 #if (FRENCH)
 						Alloc_Object(new MultiStagePrintClass (Text_String (TXT_ENHANCING_IMAGE), 180, 10, _othergreenpal));
 #else
+#if (GERMAN | JAPANESE | EXPANDED_STRINGS)
 						Alloc_Object(new MultiStagePrintClass (Text_String (TXT_ENHANCING_IMAGE), 210, 10, _othergreenpal));
+#else
+						Alloc_Object(new MultiStagePrintClass ("ENHANCING IMAGE", 210, 10, _othergreenpal));
+#endif  // (GERMAN | JAPANESE | EXPANDED_STRINGS)
 #endif	//(FRENCH)
 					}
 
 
 				case 35:
 					if (house == HOUSE_GOOD){
+#if (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
 						TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width (Text_String (TXT_ENHANCING_IMAGE)), 2*(10 + 12), BLACK);
+#else
+						TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width ("ENHANCING IMAGE"), 2*(10 + 12), BLACK);
+#endif  // (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
+
 					}else{
 #if (FRENCH)
 						TextPrintBuffer->Fill_Rect (2*180, 2*10, 2*(180+String_Pixel_Width (Text_String (TXT_ENHANCING_IMAGE))), 2*(10 + 12), BLACK);
 #else
+#if (GERMAN | JAPANESE | EXPANDED_STRINGS)
 						TextPrintBuffer->Fill_Rect (2*210, 2*10, 2*(210+String_Pixel_Width (Text_String (TXT_ENHANCING_IMAGE))), 2*(10 + 12), BLACK);
+#else
+						TextPrintBuffer->Fill_Rect (2*210, 2*10, 2*(210+String_Pixel_Width ("ENHANCING IMAGE")), 2*(10 + 12), BLACK);
+#endif  // (GERMAN | JAPANESE | EXPANDED_STRINGS)
 #endif	//(FRENCH)
 					}
 					break;
 
 				case 36:
 					if (house == HOUSE_GOOD){
+#if (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
 						TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width (Text_String (TXT_ENHANCING_IMAGE)), 2*(10 + 12), TBLACK);
+#else
+						TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width ("ENHANCING IMAGE"), 2*(10 + 12), TBLACK);
+#endif  // (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
 					}else{
 #if (FRENCH)
 						TextPrintBuffer->Fill_Rect (2*180, 2*10, 2*(180+String_Pixel_Width (Text_String (TXT_ENHANCING_IMAGE))), 2*(10 + 12), TBLACK);
 #else
+#if (GERMAN | JAPANESE | EXPANDED_STRINGS)
 						TextPrintBuffer->Fill_Rect (2*210, 2*10, 2*(210+String_Pixel_Width (Text_String (TXT_ENHANCING_IMAGE))), 2*(10 + 12), TBLACK);
+#else
+						TextPrintBuffer->Fill_Rect (2*210, 2*10, 2*(210+String_Pixel_Width ("ENHANCING IMAGE")), 2*(10 + 12), TBLACK);
+#endif  // (GERMAN | JAPANESE | EXPANDED_STRINGS)
 #endif	//(FRENCH)
 					}
 					break;

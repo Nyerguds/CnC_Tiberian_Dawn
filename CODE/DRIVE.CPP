@@ -251,7 +251,6 @@ void DriveClass::Overrun_Square(CELL cell, bool threaten)
 			while (object) {
 				if (object->Class_Of().IsCrushable && !House->Is_Ally(object) && Distance(object->Center_Coord()) < 0x80) {
 					ObjectClass * next = object->Next;
-					crushed = true;
 
 					/*
 					** Record credit for the kill(s)
@@ -261,8 +260,12 @@ void DriveClass::Overrun_Square(CELL cell, bool threaten)
 					object->Mark(MARK_UP);
 					object->Limbo();
 					delete object;
-					new OverlayClass(OVERLAY_SQUISH, Coord_Cell(Coord));
-
+					// Nyerguds's TUC Quick Fix Patch v1.02: squish
+					// Check on IsGross here, and only place once.				
+					if (Special.IsGross && !crushed) {
+						new OverlayClass(OVERLAY_SQUISH, Coord_Cell(Coord));
+					}
+					crushed = true;
 					object = next;
 				} else {
 					object = object->Next;

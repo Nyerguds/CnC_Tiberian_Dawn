@@ -303,7 +303,10 @@ bool Init_Game(int , char *[])
 		CCFileClass::Set_Search_Drives(OverridePath);
 	}
 #endif
-
+#ifdef TUC_Build
+	CCFileClass::Set_Search_Drives(".");
+	RequiredCD = -2;
+#else
 	CCDebugString ("C&C95 - About to search for CD drives\n");
 	/*
 	**	Always try to look at the CD-ROM for data files.
@@ -369,6 +372,8 @@ bool Init_Game(int , char *[])
 		*/
 		RequiredCD = -2;
 	}
+#endif // TUC_Build
+
 #ifndef DEMO
 	CCDebugString ("C&C95 - About to register addon mixfiles\n");
 	/*
@@ -544,10 +549,6 @@ bool Init_Game(int , char *[])
 	MixFileClass::Cache("CONQUER.MIX");
 	if (SampleType != 0 && !Debug_Quiet) {
 		MixFileClass::Cache("SOUNDS.MIX");
-		if (Special.IsJuvenile) {
-			new MixFileClass("ZOUNDS.MIX");		// Cached.
-			MixFileClass::Cache("ZOUNDS.MIX");
-		}
 	}
 	Call_Back();
 #endif
@@ -650,6 +651,16 @@ bool Init_Game(int , char *[])
 	*/
 	Options.Load_Settings();
 
+	// Nyerguds's TUC Quick Fix Patch v1.02: zounds
+	// This only works once the settings have been loaded.
+	if (SampleType != 0 && !Debug_Quiet && Special.IsJuvenile) {
+		new MixFileClass("ZOUNDS.MIX");		// Cached.
+		MixFileClass::Cache("ZOUNDS.MIX");
+	}
+	// Nyerguds's TUC Quick Fix Patch v1.03: var-only-music
+	if (Special.IsVariation) {
+		ThemeClass::Scan();
+	}
 	return(true);
 }
 
@@ -720,29 +731,33 @@ void Check_From_WChat(char *wchat_name);
 
 bool Select_Game(bool fade)
 {
+	// Nyerguds's TUC Quick Fix Patch v1.00: menu
 	enum {
-		SEL_TIMEOUT = -1,				// main menu timeout--go into attract mode
+		SEL_TIMEOUT = -1,			// main menu timeout--go into attract mode
 #ifdef NEWMENU
-		SEL_NEW_SCENARIO,				// Expansion scenario to play.
-#endif
+		SEL_NEW_SCENARIO,			// Expansion scenario to play.
 		SEL_START_NEW_GAME,			// start a new game
 #ifdef BONUS_MISSIONS
 		SEL_BONUS_MISSIONS,
 #endif	//BONUS_MISSIONS
-		SEL_INTERNET,
-		SEL_LOAD_MISSION,				// load a saved game
-		SEL_MULTIPLAYER_GAME,		// play modem/null-modem/network game
-		SEL_INTRO,						// replay the intro
-		SEL_EXIT,						// exit to DOS
-		SEL_FAME,						// view the hall of fame
-		SEL_NONE,						// placeholder default value
+		SEL_LOAD_MISSION,
+		SEL_MULTIPLAYER_GAME,			// load a saved game
+		SEL_INTERNET,				// play modem/null-modem/network game
+#else
+		SEL_START_NEW_GAME,			// start a new game
+		SEL_LOAD_MISSION,
+		SEL_MULTIPLAYER_GAME,			// load a saved game
+#endif
+		SEL_INTRO,				// replay the intro
+		SEL_EXIT,				// exit to DOS
+		SEL_FAME,				// view the hall of fame
+		SEL_NONE,				// placeholder default value
 	};
-	bool gameloaded=false;			// Has the game been loaded from the menu?
-	int selection;						// the default selection
+	bool gameloaded=false;				// Has the game been loaded from the menu?
+	int selection;					// the default selection
 	bool process = true;				// false = break out of while loop
 	bool display = true;
 	CountDownTimerClass count;
-	int cd_index;
 
 	MEMORYSTATUS	mem_info;
 	mem_info.dwLength=sizeof(mem_info);
@@ -1012,7 +1027,7 @@ bool Select_Game(bool fade)
 					** Ensure that CD1 or CD2 is in the drive. These missions
 					** are not on the covert CD.
 					*/
-					cd_index = Get_CD_Index(CCFileClass::Get_CD_Drive(), 1*60);
+					int cd_index = Get_CD_Index(CCFileClass::Get_CD_Drive(), 1*60);
 					/*
 					** If cd_index == 2 then its a covert CD
 					*/

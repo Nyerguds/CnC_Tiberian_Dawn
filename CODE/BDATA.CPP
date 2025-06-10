@@ -749,7 +749,7 @@ static BuildingTypeClass const ClassHelipad(
 		true,			// Requires a bib dirt patch?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		true,		// Is it a factory type building? // Nyerguds's TUC Quick Fix Patch v1.00: helipad
 		true,			// Can this building be captured?
 		false,		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
@@ -974,7 +974,7 @@ static BuildingTypeClass const ClassPower(
 		false,		// Is it a factory type building?
 		true,			// Can this building be captured?
 		false,		// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		false,			// Simple (one frame) damage imagery? // Nyerguds's TUC Quick Fix Patch v1.02: damagestates
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
 		true,			// Is this a legal target for attack or move?
@@ -1030,7 +1030,7 @@ static BuildingTypeClass const ClassAdvancedPower(
 		false,		// Is it a factory type building?
 		true,			// Can this building be captured?
 		false,		// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		false,			// Simple (one frame) damage imagery? // Nyerguds's TUC Quick Fix Patch v1.02: damagestates
 		false,		// Is it invisible to radar?
 		true,			// Can the player select this?
 		true,			// Is this a legal target for attack or move?
@@ -1081,7 +1081,7 @@ static BuildingTypeClass const ClassHospital(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
-		false,		// Always use the given name for the building?
+		true,		// Always use the given name for the building? // Nyerguds's TUC Quick Fix Patch v1.02: hosp-name
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		true,			// Can this building be captured?
@@ -4887,7 +4887,8 @@ int BuildingTypeClass::Full_Name(void) const
 	if (::Scenario == 3 && Type == STRUCT_MISSION) {
 		return(TXT_PRISON);
 	}
-	if (!IsNominal || Special.IsNamed || IsWall || Debug_Map || Type == STRUCT_V23 || Type == STRUCT_V30 || Type == STRUCT_MISSION || Type == STRUCT_BIO_LAB) {
+	// Nyerguds's TUC Quick Fix Patch v1.02: hosp-name
+	if (!IsNominal || Special.IsNamed || IsWall || Debug_Map || Type == STRUCT_V23 || Type == STRUCT_V30 || Type == STRUCT_MISSION || Type == STRUCT_BIO_LAB || Type == STRUCT_HOSPITAL) {
 		return(TechnoTypeClass::Full_Name());
 	}
 	return(TXT_CIVILIAN_BUILDING);

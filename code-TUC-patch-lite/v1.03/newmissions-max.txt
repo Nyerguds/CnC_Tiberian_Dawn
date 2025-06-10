@@ -1,0 +1,55 @@
+; Fix for New Missions menu only going up to 98 (59 on the Japanese version)
+; instead of 99.
+
+; ===========================================================
+; Source code equivalent:
+; ===========================================================
+
+; EXPAND.CPP -> bool Expansion_Dialog(void)
+; At the start of the function, add this:
+;	#ifdef BONUS_MISSIONS
+;		int missions_below = 60;
+;	#else
+;		int missions_below = 100;
+;	#endif
+; In the two "for" loops later, which go over "index = 20; index < 60; index++"
+; replace the "60" by the new variable "missions_below".
+;
+; Note, in reality it can easily handle mission numbers up to 999, but this
+; would require additional bytes to implement in assembler.
+
+; ===========================================================
+; English
+; ===========================================================
+
+#eip=0043B4CE
+cmp     edi, 64h
+#eip=0043B654
+cmp     edi, 64h
+
+; ===========================================================
+; German
+; ===========================================================
+
+#eip=0043B653 ; 2BA53
+cmp     edi, 64h
+#eip=0043B7E4 ; 2BBE4
+cmp     edi, 64h
+
+; ===========================================================
+; French
+; ===========================================================
+
+#eip=0043B6B3 ; 2BAB3
+cmp     edi, 64h
+#eip=0043B839 ; 2BC39
+cmp     edi, 64h
+
+; ===========================================================
+; Japanese
+; ===========================================================
+
+#eip=0043B6B3 ; 2BAB3
+cmp     edi, 64h
+#eip=0043B839 ; 2BC39
+cmp     edi, 64h

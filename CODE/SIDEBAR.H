@@ -126,6 +126,9 @@ class SidebarClass: public PowerClass
 		bool  Sidebar_Click(KeyNumType & input, int x, int y);
 		void  Recalc(void);
 		bool  Factory_Link(int factory, RTTIType type, int id);
+		// Nyerguds's TUC Quick Fix Patch v1.02: mousewheel
+		// No longer private, so it can be called as Map->.
+		bool  Scroll(bool up, int column);
 
 		/*
 		**	File I/O.
@@ -386,7 +389,6 @@ class SidebarClass: public PowerClass
 		bool  Activate_Repair(int control);
 		bool  Activate_Upgrade(int control);
 		bool  Activate_Demolish(int control);
-		bool  Scroll(bool up, int column);
 		int  Which_Column(RTTIType type);
 
 		unsigned IsRepairActive:1;

@@ -83,7 +83,6 @@ bool Start_Scenario(char *root, bool briefing)
 		Play_Movie(BriefMovie);
 		Play_Movie(ActionMovie, TransitTheme);
 	}
-	Theme.Queue_Song(THEME_AOI);
 
 #else
 
@@ -102,20 +101,25 @@ bool Start_Scenario(char *root, bool briefing)
 			Play_Movie(BriefMovie);
 		}
 		Play_Movie(ActionMovie, TransitTheme);
-		if (TransitTheme == THEME_NONE) {
-			Theme.Queue_Song(THEME_AOI);
-		}
 	} else {
+#ifdef NEWMENU
+		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Allow into movie for Covert Ops (because why not?)
+		Play_Movie(IntroMovie);
 		Play_Movie(BriefMovie);
 		Play_Movie(ActionMovie, TransitTheme);
+#endif // NEWMENU
+	}
+#endif // DEMO
 
-#ifdef NEWMENU
-
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Always show brief screen if no briefing video is available.
+	if (GameToPlay == GAME_NORMAL) {
 		char buffer[25];
 		sprintf(buffer, "%s.VQA", BriefMovie);
 		CCFileClass file(buffer);
-
-		if (GameToPlay == GAME_NORMAL && !file.Is_Available()) {
+		
+		if (!file.Is_Available()) {
 			VisiblePage.Clear();
 			Set_Palette(GamePalette);
 //			Show_Mouse();
@@ -128,14 +132,14 @@ bool Start_Scenario(char *root, bool briefing)
 			Restate_Mission(ScenarioName, TXT_OK, TXT_NONE);
 			InMainLoop = oldinmain;
 //			Hide_Mouse();
-			if (TransitTheme == THEME_NONE) {
-				Theme.Queue_Song(THEME_AOI);
-			}
 		}
-
-#endif
 	}
-#endif
+
+	// Nyerguds's TUC Quick Fix Patch v1.00: always start the music.
+	// Keeping it disabled for multiplay until the randomizer desync is fixed though.
+	if (GameToPlay == GAME_NORMAL && TransitTheme == THEME_NONE) {
+		Theme.Queue_Song(THEME_AOI);
+	}
 
 	/*
 	** Set the options values, since the palette has been initialized by Read_Scenario
@@ -426,15 +430,15 @@ void Do_Win(void)
 
 #else
 
-#ifdef NEWMENU
-		if (Scenario >= 20) {
+		// Nyerguds's TUC Quick Fix Patch v1.00: funpark
+		// Makes the Funpark campaign end gracefully to the main menu instead of quitting the game.
+		if (Scenario >= 20 || (Special.IsJurassic && AreThingiesEnabled && Scenario == 5)) {
 			Keyboard::Clear();
 			Score.Presentation();
 			GameActive = false;
 			Show_Mouse();
 			return;
 		}
-#endif
 
 		if (PlayerPtr->Class->House == HOUSE_BAD && Scenario == 13) {
 			Nod_Ending();
@@ -455,11 +459,13 @@ void Do_Win(void)
 			return;
 		}
 
+		// Nyerguds's TUC Quick Fix Patch v1.00: funpark
+#ifdef OBSOLETE
 		if ( (Special.IsJurassic && AreThingiesEnabled) && Scenario == 5) {
 			Prog_End();
 			exit(0);
 		}
-
+#endif
 		if (!Special.IsJurassic || !AreThingiesEnabled) {
 			Keyboard::Clear();
 			InterpolationPaletteChanged = TRUE;
@@ -671,17 +677,9 @@ void Do_Restart(void)
  *=============================================================================================*/
 bool Restate_Mission(char const * name, int button1, int button2)
 {
+	bool hidden = Get_Mouse_State();
+	bool image_shown = false;
 	if (name) {
-#ifdef JAPANESE
-		char fname[14];
-		strcpy(fname, name);
-		strcat(fname,".CPS");
-
-		if(CCFileClass(fname).Is_Available()) {
-			CCMessageBox box(TXT_NONE, true);
-			return(box.Process(fname, button1, button2));
-		}
-#else
 		/*
 		**	Make sure that if there is no briefing movie, that the briefing text is
 		**	the only option available.
@@ -700,7 +698,23 @@ bool Restate_Mission(char const * name, int button1, int button2)
 			brief = false;
 		}
 #endif
+		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Always check for CPS. This has interesting modding opportunities.
+		char fname[14];
+		strcpy(fname, name);
+		strcat(fname,".CPS");
 
+		if(CCFileClass(fname).Is_Available()) {
+			image_shown = true;
+			if (hidden) Show_Mouse();
+			if (CCMessageBox(TXT_NONE, true).Process(fname, button1, button2)) {
+				if (hidden) Hide_Mouse();
+				return(true);
+			}
+			if (hidden) Hide_Mouse();
+			if (!brief) return(true);
+			return(false);
+		}
 		/*
 		**	If mission object text was found, then display it.
 		*/
@@ -710,7 +724,6 @@ bool Restate_Mission(char const * name, int button1, int button2)
 			strcpy(_buff, BriefingText);
 //			strcpy(_ShapeBuffer, BriefingText);
 
-			bool hidden = Get_Mouse_State();
 			if (hidden) Show_Mouse();
 
 			if (CCMessageBox(TXT_OBJECTIVE).Process(_buff, button1, button2)) {
@@ -721,7 +734,6 @@ bool Restate_Mission(char const * name, int button1, int button2)
 			if (!brief) return(true);
 			return(false);
 		}
-#endif
 	}
 	return(false);
 }

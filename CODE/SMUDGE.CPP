@@ -244,7 +244,13 @@ bool SmudgeClass::Mark(MarkType mark)
 									**	specified coordinate as possible.
 									*/
 									if (Class->IsCrater) {
-										cell->Smudge = (SmudgeType)(SMUDGE_CRATER1 + CellClass::Spot_Index(Coord));
+										// Nyerguds's TUC Quick Fix Patch v1.02: craters
+										// Only determine crater type from spot if it's SMUDGE_CRATER1, to allow others placed from ini.
+										if (Class->Type == SMUDGE_CRATER1) {
+											cell->Smudge = (SmudgeType)(SMUDGE_CRATER1 + CellClass::Spot_Index(Coord));
+										} else {
+											cell->Smudge = (SmudgeType)Class->Type;
+										}
 									} else {
 										cell->Smudge = Class->Type;
 									}

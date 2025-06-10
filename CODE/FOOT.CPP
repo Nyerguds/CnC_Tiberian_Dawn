@@ -1312,18 +1312,34 @@ void FootClass::Active_Click_With(ActionType action, ObjectClass * object)
  *=============================================================================================*/
 void FootClass::Active_Click_With(ActionType action, CELL cell)
 {
+	// Nyerguds's TUC Quick Fix Patch v1.04: targeted-guard-area
+	// These actions can give a movement flash.
+	switch (action) {
+		case ACTION_HARVEST:
+		case ACTION_MOVE:
+		case ACTION_GUARD_AREA:
+			if (AllowVoice) {
+				COORDINATE coord;
+				int x = Get_Mouse_X();
+				int y = Get_Mouse_Y();
+				if (Map.RadarClass::Click_In_Radar(x, y, false) == 1) {
+					coord = Cell_Coord(cell);
+					x = Coord_X(coord);
+					y = Coord_Y(coord);
+				} else {
+					coord = Map.Pixel_To_Coord(x, y);
+				}
+				OutList.Add(EventClass(ANIM_MOVE_FLASH, PlayerPtr->Class->House, coord));
+			}
+			break;
+	}
+
 	switch (action) {
 		case ACTION_HARVEST:
 			Player_Assign_Mission(MISSION_HARVEST, TARGET_NONE, ::As_Target(cell));
 			break;
 
 		case ACTION_MOVE:
-			if (AllowVoice) {
-				COORDINATE coord = Map.Pixel_To_Coord(Get_Mouse_X(), Get_Mouse_Y());
-				OutList.Add(EventClass(ANIM_MOVE_FLASH, PlayerPtr->Class->House, coord));
-			}
-			// Fall into next case.
-
 		case ACTION_NOMOVE:
 			if (What_Am_I() != RTTI_AIRCRAFT || Map[cell].IsVisible) {
 				Player_Assign_Mission(MISSION_MOVE, TARGET_NONE, ::As_Target(cell));
@@ -1332,6 +1348,11 @@ void FootClass::Active_Click_With(ActionType action, CELL cell)
 
 		case ACTION_ATTACK:
 			Player_Assign_Mission(MISSION_ATTACK, ::As_Target(cell));
+			break;
+
+		case ACTION_GUARD_AREA:
+			// Nyerguds's TUC Quick Fix Patch v1.03: targeted-guard-area
+			Player_Assign_Mission(MISSION_GUARD_AREA, ::As_Target(cell));
 			break;
 	}
 }

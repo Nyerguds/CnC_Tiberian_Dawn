@@ -634,7 +634,8 @@ void Keyboard_Process(KeyNumType &input)
 		case VK_8:
 		case VK_9:
 		case VK_0:
-			Handle_Team(KN_To_VK(plain) - VK_1, action);
+			// Nyerguds's TUC Quick Fix Patch v1.00: team-0
+			Handle_Team(KN_To_VK(plain) - VK_0, action);
 			break;
 
 		/*
@@ -645,8 +646,10 @@ void Keyboard_Process(KeyNumType &input)
 				for (int index = 0; index < CurrentObject.Count(); index++) {
 					ObjectClass const * tech = CurrentObject[index];
 
+					// Nyerguds's TUC Quick Fix Patch v1.03: building-stop-key
+					// Don't block Stop order on defense buildings unless it's building up or selling.
 					if (tech && (tech->Can_Player_Move() || (tech->Can_Player_Fire() &&
-							tech->What_Am_I() != RTTI_BUILDING))) {
+							(tech->What_Am_I() != RTTI_BUILDING || (((BuildingClass *)tech)->BState != BSTATE_CONSTRUCTION))))) {
 						OutList.Add(EventClass(EventClass::IDLE, tech->As_Target()));
 					}
 				}
@@ -3016,7 +3019,12 @@ void Handle_Team(int team, int action)
 		*/
 		case 3:
 		case 0:
-
+			// Nyerguds's TUC Quick Fix Patch v1.03: deselect-for-team
+			// The whole following check on the first selected item is unreliable nonsense, and the proper equivalent,
+			// namely a check looping through all team members, wouldn't be any more efficient than just calling the
+			// unselect in the first place. Additionally, this fails when a building is selected. So, just call it.
+			Unselect_All();
+#ifdef OBSOLETE
 			/*
 			**	If a non team member is currently selected, then deselect all objects
 			**	before selecting this team.
@@ -3032,6 +3040,7 @@ void Handle_Team(int team, int action)
 						break;
 				}
 			}
+#endif
 			for (index = 0; index < Units.Count(); index++) {
 				UnitClass * obj = Units.Ptr(index);
 				if (obj && !obj->IsInLimbo && obj->Group == team && obj->House == PlayerPtr) {
@@ -3591,14 +3600,16 @@ int Get_CD_Index (int cd_drive, int timeout)
  * HISTORY:                                                                                    *
  *   07/11/1995 JLB : Created.                                                                 *
  *   05/22/1996  ST : Handles multiple CD drives / CD changers                                 *
+ *   06/10/2025 MM  : nuked.                                                                   *
  *=============================================================================================*/
 bool Force_CD_Available(int cd)
 {
+#ifndef TUC_Build
 #ifndef DEMO
 	static int _last = -1;
 	int open_failed;
 	int file;
-#endif
+#endif // DEMO
 	static char _palette[768];
 	static char _hold[256];
 	static void *font;
@@ -3797,12 +3808,12 @@ bool Force_CD_Available(int cd)
 		ScoreMix = new MixFileClass("SCORES.MIX");
 		ThemeClass::Scan();
 	}
-#endif
+#endif // DEMO
 
 	if (theme_playing != THEME_NONE) {
 		Theme.Queue_Song(theme_playing);
 	}
-
+#endif // TUC_Build
 	return(true);
 }
 
@@ -3816,9 +3827,13 @@ bool Force_CD_Available(int cd)
  *                                                                         *
  * HISTORY:                                                                *
  *   08/11/1995 PWG : Created.                                             *
+ *   06/10/2025 MM  : nuked.                                               *
  *=========================================================================*/
 unsigned long Disk_Space_Available(void)
 {
+	// Nyerguds fix: not sure how to modernize, so it just always returns a gigabyte.
+	return(0x3FFFFFFF);
+#if (0)
 	struct diskfree_t diskdata;
 	unsigned drive;
 
@@ -3826,6 +3841,7 @@ unsigned long Disk_Space_Available(void)
 	_dos_getdiskfree(drive, &diskdata);
 
 	return(diskdata.avail_clusters * diskdata.sectors_per_cluster * diskdata.bytes_per_sector);
+#endif // TUC_Build
 }
 
 

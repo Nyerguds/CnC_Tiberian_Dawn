@@ -228,10 +228,13 @@ void Check_For_Focus_Loss(void)
 
 extern BOOL InMovie;
 
+#define WM_MOUSEWHEEL 0x20A
+
 long FAR PASCAL _export Windows_Procedure (HWND hwnd, UINT message, UINT wParam, LONG lParam)
 {
 
 	int	low_param = LOWORD(wParam);
+	bool up = false;
 
 	if (message == CCFocusMessage){
 		Start_Primary_Sound_Buffer(TRUE);
@@ -261,7 +264,14 @@ long FAR PASCAL _export Windows_Procedure (HWND hwnd, UINT message, UINT wParam,
 		case WM_RBUTTONDBLCLK:
 	 		Kbd.Message_Handler(hwnd, message, wParam, lParam);
 			return(0);
-
+		case WM_MOUSEWHEEL:
+			// Nyerguds's TUC Quick Fix Patch v1.02: mousewheel
+			// Not sure exactly how to get the delta out, but checking the highest bit works.
+			if ((wParam >> 31) == 0)
+				up = true;
+			Map.Scroll(up, 1);
+			Map.Scroll(up, 0);
+			return(0);
 		case WM_DESTROY:
 			CCDebugString ("C&C95 - WM_DESTROY message received.\n");
 			CCDebugString ("C&C95 - About to call Prog_End.\n");

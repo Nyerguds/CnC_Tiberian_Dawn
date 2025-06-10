@@ -848,6 +848,8 @@ void MapClass::Logic(void)
 				CellClass * newcell = &(*this)[cell];
 				if (newcell->Land_Type() == LAND_TIBERIUM && newcell->OverlayData < 12-1) {
 					newcell->OverlayData++;
+					// Nyerguds's TUC Quick Fix Patch v1.02: tiberium
+					newcell->Redraw_Objects();
 				}
 			}
 		}
@@ -867,8 +869,9 @@ void MapClass::Logic(void)
 					FacingType offset = Random_Pick(FACING_N, FACING_NW);
 					for (FacingType index = FACING_N; index < FACING_COUNT; index++) {
 						CellClass *newcell = &(*this)[cell].Adjacent_Cell(index+offset);
-
-						if (newcell && newcell->Cell_Object() == NULL && newcell->Land_Type() == LAND_CLEAR && newcell->Overlay == OVERLAY_NONE) {
+						// Nyerguds's TUC Quick Fix Patch v1.02: squish
+						// allow tiberium to replace OVERLAY_SQUISH
+						if (newcell && newcell->Cell_Object() == NULL && newcell->Land_Type() == LAND_CLEAR && (newcell->Overlay == OVERLAY_NONE || newcell->Overlay == OVERLAY_SQUISH)) {
 							bool found = false;
 
 							switch (newcell->TType) {
@@ -964,7 +967,9 @@ bool MapClass::Place_Random_Crate(void)
 		CELL cell = XY_Cell(MapCellX+x, MapCellY+y);
 
 		CellClass * ptr = &(*this)[cell];
-		if (ptr->Is_Generally_Clear() && ptr->Overlay == OVERLAY_NONE) {
+		// Nyerguds's TUC Quick Fix Patch v1.02: squish
+		// allow crates to replace OVERLAY_SQUISH
+		if (ptr->Is_Generally_Clear() && (ptr->Overlay == OVERLAY_NONE || ptr->Overlay == OVERLAY_SQUISH)) {
 			ptr->Overlay = OVERLAY_WOOD_CRATE;
 			ptr->OverlayData = 0;
 			ptr->Redraw_Objects();

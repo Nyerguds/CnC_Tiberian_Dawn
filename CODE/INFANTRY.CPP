@@ -64,8 +64,9 @@
  *   InfantryClass::Response_Attack -- Plays infantry audio response to attack order.          *
  *   InfantryClass::Response_Move -- Plays infantry response to movement order.                *
  *   InfantryClass::Response_Select -- Plays infantry audio response due to being selected.    *
+ *   InfantryClass::Response_Sabotage -- Plays infantry audio response to sabotage order.      *
  *   InfantryClass::Scatter -- Causes the infantry to scatter to nearby cell.                  *
- *   InfantryClass::Set_Occupy_Bit -- Sets the occupy bit cell and bit pos	                    *
+ *   InfantryClass::Set_Occupy_Bit -- Sets the occupy bit cell and bit pos                     *
  *   InfantryClass::Set_Primary_Facing -- Change infantry primary facing -- always and instantl*
  *   InfantryClass::Start_Driver -- Handles giving immediate destination and move orders.      *
  *   InfantryClass::Stop_Driver -- Stops the infantry from moving any further.                 *
@@ -2625,6 +2626,28 @@ void InfantryClass::Response_Attack(void)
 	}
 }
 
+/***********************************************************************************************
+ * InfantryClass::Response_Sabotage -- Plays infantry audio response to sabotage order.        *
+ *                                                                                             *
+ *    When the player gives an infantry unit the order to sabotage a building, this routine    *
+ *    handles the audio response by that unit.                                                 *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   08/06/2025 MM : Created as part of Nyerguds's TUC Quick Fix Patch v1.02                   *
+ *=============================================================================================*/
+void InfantryClass::Response_Sabotage(void)
+{
+    Validate();
+    if (*this == INFANTRY_RAMBO && AllowVoice) {
+        Sound_Effect(VOC_RAMBO_PRESENT, 0, Infantry.ID(this)+1);
+    }
+}
 
 /***********************************************************************************************
  * InfantryClass::Fire_Coord -- Calculates the origin point for projectiles fired.             *
@@ -2768,7 +2791,9 @@ int InfantryClass::Rearm_Delay(bool second) const
 void InfantryClass::Assign_Mission(MissionType order)
 {
 	Validate();
-	if (order == MISSION_SABOTAGE) {
+	// Nyerguds's TUC Quick Fix Patch v1.02: commando-voice
+	// Only yell bombing warning when not owned by this player.
+	if (order == MISSION_SABOTAGE && PlayerPtr->Class->House != Owner()) {
 		Sound_Effect(VOC_RAMBO_PRESENT, Coord);
 	}
 

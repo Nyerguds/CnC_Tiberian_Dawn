@@ -1985,9 +1985,11 @@ void AircraftClass::Active_Click_With(ActionType action, ObjectClass * object)
 			break;
 
 		default:
+			// Nyerguds's TUC Quick Fix Patch v1.03: aircraft-dock-unload
+			// This line should not be behind the whole switch-case.
+			FootClass::Active_Click_With(action, object);
 			break;
 	}
-	FootClass::Active_Click_With(action, object);
 }
 
 
@@ -2125,7 +2127,9 @@ ActionType AircraftClass::What_Action(CELL cell) const
 	Validate();
 	ActionType action = FootClass::What_Action(cell);
 
-	if (action == ACTION_MOVE && GameToPlay == GAME_NORMAL && !Map[cell].IsVisible) {
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Don't allow Move or Force-attack in the shroud in multiplay.
+	if ((action == ACTION_MOVE || action == ACTION_ATTACK) && !Map[cell].IsVisible) {
 		action = ACTION_NOMOVE;
 	}
 

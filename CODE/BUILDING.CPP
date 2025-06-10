@@ -587,7 +587,9 @@ void BuildingClass::Draw_It(int x, int y, WindowNumberType window)
 								/*
 								**	Presume that the damage stage is the end frame.
 								*/
-								shapenum = Get_Build_Frame_Count(shapefile) - 2;
+								 // Nyerguds's TUC Quick Fix Patch v1.02: damagestates
+								 // Use halfway frame, int-dividing off the collapse frame remainder.
+								shapenum = Get_Build_Frame_Count(shapefile) / 2;
 							}
 						}
 					}
@@ -775,19 +777,19 @@ BulletClass * BuildingClass::Fire_At(TARGET target, int which)
 
 	bullet = TechnoClass::Fire_At(target, which);
 	if (bullet) {
+	
+		// Nyerguds's TUC Quick Fix Patch v1.02: samsite-sound
+		/*
+		**	Flash the muzzle, play sound, and perform any firing animation.
+		*/
+		Sound_Effect(weapon->Sound, Coord);
+
 		if (*this == STRUCT_SAM) {
 			AnimClass *anim = new AnimClass((AnimType)(ANIM_SAM_N + Dir_Facing(PrimaryFacing.Current())), Center_Coord());
 			if (anim) {
 				anim->Attach_To(this);
 			}
-
 		} else {
-
-			/*
-			**	Flash the muzzle, play sound, and perform any firing animation.
-			*/
-			Sound_Effect(weapon->Sound, Coord);
-
 			if (weapon->Fires == BULLET_BULLET) {
 				new AnimClass((AnimType)(ANIM_GUN_N + Dir_Facing(PrimaryFacing.Current())), Fire_Coord(which));
 			} else {
@@ -1870,7 +1872,8 @@ void BuildingClass::Drop_Debris(TARGET source)
 		if (Random_Pick(0, 3) == 0) {
 			new SmudgeClass(Random_Pick(SMUDGE_SCORCH1, SMUDGE_SCORCH6), Cell_Coord(newcell));
 		} else {
-			new SmudgeClass(Random_Pick(SMUDGE_CRATER1, SMUDGE_CRATER6), Coord_Scatter(Cell_Coord(newcell), 0x0080, false));
+			// Nyerguds's TUC Quick Fix Patch v1.02: craters
+			new SmudgeClass(Random_Pick(SMUDGE_CRATER1, SMUDGE_CRATER6), Cell_Coord(newcell)); // Coord_Scatter(Cell_Coord(newcell), 0x0080, false));
 		}
 	}
 }

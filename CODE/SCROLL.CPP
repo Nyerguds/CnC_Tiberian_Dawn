@@ -102,7 +102,9 @@ void ScrollClass::AI(KeyNumType &input, int x, int y)
 		**	Special check to not scroll within the special no-scroll regions.
 		*/
 		bool noscroll = false;
-		if (Special.IsScrollMod && y == 0 && ((x > 3 && x < EVA_WIDTH) || (x > SeenBuff.Get_Width()-EVA_WIDTH && x < SeenBuff.Get_Width()-3))) {
+		// Nyerguds's TUC Quick Fix Patch v1.02: scrolling
+		// fix use of hardocded EVA_WIDTH over dynamically initialised Eva_Width.
+		if (Special.IsScrollMod && y == 0 && ((x > 3 && x < Eva_Width) || (x > SeenBuff.Get_Width()-Eva_Width && x < SeenBuff.Get_Width()-3))) {
 			noscroll = true;
 		}
 

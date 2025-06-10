@@ -116,7 +116,13 @@ bool Expansion_Dialog(void)
 	**	Add in all the expansion scenarios.
 	*/
 	char * sbuffer = (char*)_ShapeBuffer;
-	for (int index = 20; index < 60; index++) {
+	// Nyerguds's TUC Quick Fix Patch v1.03: newmissions-max (enhanced)
+	for (int index = 20; index < 100; index++) {
+#ifdef BONUS_MISSIONS
+		if (index >= 60 && index < 63)
+			continue;
+#endif // BONUS_MISSIONS
+
 		char buffer[128];
 		CCFileClass file;
 
@@ -138,7 +144,12 @@ bool Expansion_Dialog(void)
 		}
 	}
 
-	for (index = 20; index < 60; index++) {
+	// Nyerguds's TUC Quick Fix Patch v1.03: newmissions-max (enhanced)
+	for (index = 20; index < 100; index++) {
+#ifdef BONUS_MISSIONS
+		if (index >= 60 && index < 62)
+			continue;
+#endif // BONUS_MISSIONS
 		char buffer[128];
 		CCFileClass file;
 
@@ -236,16 +247,7 @@ bool Expansion_Dialog(void)
 	return(okval);
 }
 
-
-
-
-
-
-
-
-
-
-
+#ifdef BONUS_MISSIONS
 
 /***********************************************************************************************
  * Bonus_Dialog -- Asks the user which bonus mission he wants to play                          *
@@ -417,6 +419,6 @@ bool Bonus_Dialog(void)
 
 	return(okval);
 }
+#endif // BONUS_MISSIONS
 
-
-#endif
+#endif // NEWMENU

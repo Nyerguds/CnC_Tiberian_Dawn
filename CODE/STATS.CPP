@@ -130,7 +130,7 @@ extern unsigned long 	PlanetWestwoodGameID;
 extern HINSTANCE		ProgramInstance;
 extern unsigned long 	PlanetWestwoodStartTime;
 
-extern "C" char	CPUType;
+//extern "C" char	CPUType;
 
 
 bool			GameTimerInUse = false;
@@ -378,7 +378,8 @@ void Send_Statistics_Packet(void)
 		/*
 		** CPU type
 		*/
-		stats.Add_Field (FIELD_CPU_TYPE, (char)CPUType);
+		//stats.Add_Field (FIELD_CPU_TYPE, (char)CPUType);
+		stats.Add_Field (FIELD_CPU_TYPE, (char)0);
 
 		/*
 		** Memory

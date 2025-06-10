@@ -405,7 +405,7 @@ CWSTUB.EXE: CWSTUB.OBJ
 
 #############################################################################
 # Build the EXE
-conquer.exe: $(OBJECTS) obj\mmx.obj conquer.lnk $(WWFLAT)\lib\win32lib.lib $(VQDIR)\lib\vqa32wp.lib $(VQDIR)\lib\vqm32wp.lib
+conquer.exe: $(OBJECTS) conquer.lnk $(WWFLAT)\lib\win32lib.lib $(VQDIR)\lib\vqa32wp.lib $(VQDIR)\lib\vqm32wp.lib
 
 	 Echo "conquer.exe" linking phase.
 !ifdef %NETWORK
@@ -438,7 +438,7 @@ conquer.lnk : makefile
 #	%append $^@ debug all
 	%append $^@ debug all
 	for %index in ($(OBJECTS))  do %append $^@ file $(%WWOBJ)obj\%index
-	%append $^@ file $(%WWOBJ)obj\mmx.obj
+#	%append $^@ file $(%WWOBJ)obj\mmx.obj
 #	%append $^@ file $(%WWOBJ)obj\vector.obj
 #	for %index in ($(PROJ_LIBS)) do %append $^@ library $(WWFLAT)\lib\%index
 #	for %index in ($(VQ_LIBS)) do %append $^@ library ..\vq\lib\%index
@@ -464,8 +464,8 @@ cd: .SYMBOLIC
 #
 # The MMX stuff requires MASM 6.11d so it needs its own rule
 #
-obj\mmx.obj: mmx.asm mmx.inc
-	$(%MASM)\ml /I. /c /Cx /Zd /Cp /Sc /Foobj\mmx.obj mmx.asm
+# obj\mmx.obj: mmx.asm mmx.inc
+#	$(%MASM)\ml /I. /c /Cx /Zd /Cp /Sc /Foobj\mmx.obj mmx.asm
 
 
 

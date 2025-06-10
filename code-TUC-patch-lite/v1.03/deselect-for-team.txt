@@ -1,0 +1,51 @@
+; Fix for two bugs when selecting a team by pressing a number:
+; 1. If the last selected unit is part of the team, nothing will be deselected.
+; 2. Buildings are never deselected.
+; The whole logic of only checking the first item in the selected units list is
+; weird, naive, and pointless, and doing the check properly isn't any more
+; efficient than just deselecting them all from the start in the first place.
+
+; ===========================================================
+; Source code equivalent:
+; ===========================================================
+
+; CONQUER.CPP -> void Handle_Team(int team, int action)
+; Under the "case 0" label, replace the entire "if (CurrentObject.Count())"
+; block with just the call to "Unselect_All()".
+
+; ===========================================================
+; English
+; ===========================================================
+
+; Simply done by changing the case labels to jump straight to the call.
+#eip=0042DFBC ; 1E3BC
+dd 0042E00E
+#eip=0042DFC8 ; 1E3C8
+dd 0042E00E
+
+; ===========================================================
+; German
+; ===========================================================
+
+#eip=0042E064 ; 1E464
+dd 0042E0B6
+#eip=0042E070 ; 1E470
+dd 0042E0B6
+
+; ===========================================================
+; French
+; ===========================================================
+
+#eip=0042E024 ; 1E424
+dd 0042E076
+#eip=0042E030 ; 1E430
+dd 0042E076
+
+; ===========================================================
+; Japanese
+; ===========================================================
+
+#eip=0042E028 ; 1E428
+dd 0042E07A
+#eip=0042E034 ; 1E434
+dd 0042E07A

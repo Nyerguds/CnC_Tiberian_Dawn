@@ -1,0 +1,62 @@
+# Comparing files C&C95-de-orig.exe and C&C95-DE-TUC.EXE
+
+# Some header stuff
+00000091: 02 1E
+00000092: 03 06
+000000C2: 1F 22
+000000C8: 00 C2
+000000C9: 00 8A
+000000CA: 00 15
+000000FC: 00 66
+000000FD: 2A 44
+000000FE: 00 03
+00000109: 00 DE
+0000010A: 00 14
+0000010C: 00 30
+0000010D: 00 28
+00000260: 00 66
+00000261: 00 44
+00000262: 00 03
+00000269: 2A 46
+0000026A: 00 03
+# Force_CD_Available(int) always returns "ok" and exits.
+0001E9AC: 53 B8
+0001E9AD: 51 01
+0001E9AE: 52 00
+0001E9AF: 56 00
+0001E9B0: 57 00
+0001E9B1: 55 C3
+# Init_Game(): skip cd init and always use "." as CD drive.
+00044BE1: A1 40
+00044BE2: 3E 5A
+00044BE6: 0A F6
+00044BE7: CA 19
+00044BE8: FB FD
+00044BEA: 83 E9
+00044BEB: 3D 75
+00044BEC: EC 01
+00044BED: 76 00
+00044BEE: 53 00
+; void Interpolate_2X_Scale() - make 320x200 scenes always interpolate vertically
+0004A2CE: 83 EB
+0004A2CF: F8 21
+# long TestVBIBit(void) - some obsolete old hardware check got removed in VQA playing I think.
+000CE340: 53 B8
+000CE341: 51 01
+000CE342: 52 00
+000CE343: 56 00
+000CE344: 57 00
+000CE345: B8 C3
+# Icon change.
+0011981C: 60 90
+00119824: 0B 00
+00119825: C6 00
+00119826: 1D 00
+00119827: 33 00
+# ...truncated because it's not particularly interesting data.
+0011C1FB: 00 B8
+0011C1FC: A7 DC
+0011C1FD: 09 1B
+0011C1FE: 5C 97
+0011C1FF: 00 76
+FC: C&C95-DE-TUC.EXE longer than C&C95-de-orig.exe

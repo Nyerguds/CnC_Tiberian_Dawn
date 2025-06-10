@@ -181,10 +181,12 @@ extern long LParam;
 #include	"heap.h"
 #include	"ccfile.h"
 #include	"monoc.h"
-#include	"conquer.h"
 //#include	"debug.h"
 #include "special.h"
 #include	"defines.h"
+// Nyerguds 2025-06-10: This was put below "defines.h"
+// so it can use the language definitions.
+#include	"conquer.h"
 
 
 /*
