@@ -356,6 +356,7 @@ int ThemeClass::Play_Song(ThemeType theme)
  * HISTORY:                                                                                    *
  *   01/16/1995 JLB : Created.                                                                 *
  *   05/09/1995 JLB : Theme variation support.                                                 *
+ *   06/12/2025 MM  : Adapted to use VariationAvailable and leave the rest to the overload.    *
  *=============================================================================================*/
 char const * ThemeClass::Theme_File_Name(ThemeType theme)
 {

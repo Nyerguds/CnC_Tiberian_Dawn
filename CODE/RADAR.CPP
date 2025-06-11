@@ -1480,15 +1480,19 @@ int RadarClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 				**	The shape changes depending on what object the mouse is currently over and what
 				**	object is currently selected.
 				*/
-				if (flags & LEFTUP) {
-					Map.Mouse_Left_Up(shadow, object, action, true);
+				// Nyerguds's TUC Quick Fix Patch v1.04
+				// Update cursor while held down on minimap.
+				if ((flags & LEFTUP) || (flags & LEFTHELD)) {
+					Map.Mouse_Left_Up(shadow, object, action, true, true);
 				}
 
 				/*
 				**	Normal actions occur when the mouse button is released. The press event is
 				**	intercepted and possible rubber-band mode is flagged.
 				*/
-				if (flags & LEFTPRESS) {
+				// Nyerguds's TUC Quick Fix Patch v1.04
+				// Minimap now gives order on mouse release, for consistency with main map.
+				if (flags & LEFTRELEASE) {
 					Map.Mouse_Left_Release(cell, cellx, celly, object, action, true);
 				}
 

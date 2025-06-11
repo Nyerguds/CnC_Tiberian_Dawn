@@ -83,3 +83,9 @@ v1.04: (in progress)
 * EVA now announces when the player loses a building. The "DeathAnnounce" option now also works for buildings.
 * When "DeathAnnounce" is enabled, a destroyed unit or structure in singleplayer that is not GDI or Nod, and is not allied with the player, is now reported as destroyed "enemy".
 * EVA now announces when repairs have started on a building or unit.
+* Drag-selecting will now show the default cursor instead of keeping an incorrect cursor from where the drag started.
+* Drag-selecting will no longer pop up a tooltip of the thing the mouse was pressed down on.
+* The minimap now responds to clicks when the mouse is released, just like on the main map
+* The minimap will now update its cursor wheh holding down the mouse on it.
+* Singleplayer logic regarding difficulty and tooltips will no longer be affected by the multiplayer map numbers.
+* Fixed the fact the chance of an AI selling a building was affected by the mission number in Covert Ops missions. It is now affected by the set build level.

@@ -1120,14 +1120,22 @@ void BuildingClass::AI(void)
 		/*
 		**	Possibly start repair process if the building is below half strength.
 		*/
+		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Fix sellback chance becoming 100% for higher mission numbers in the New Missions list.
+		int scenario = Scenario;
+		if (GameToPlay != GAME_NORMAL) {
+			scenario = 20;
+		} else if (Scenario > 20) {
+			scenario = BuildLevel;
+		}
 		int ratio = 0x0040;
-		if (Scenario > 6) ratio = 0x0080;
-		if (Scenario > 10) ratio = 0x00C0;
+		if (scenario > 6) ratio = 0x0080;
+		if (scenario > 10) ratio = 0x00C0;
 		if (Class->IsRepairable && Health_Ratio() <= ratio) {
 			if (House->Available_Money() >= REPAIR_THRESHHOLD) {
 				Repair(1);
 			} else {
-				if (IsTickedOff && Scenario > 2 && Random_Pick(0, 50) < Scenario && !Trigger) {
+				if (IsTickedOff && scenario > 2 && Random_Pick(0, 50) < scenario && !Trigger) {
 					Sell_Back(1);
 				}
 			}

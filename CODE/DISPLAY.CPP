@@ -2780,7 +2780,8 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 		x = Get_Mouse_X();
 		y = Get_Mouse_Y();
 
-		if (x == 0 || y == 199 || x == 319) edge = true;
+		// This seems extremely outdated... -Nyer
+		//if (x == 0 || y == 199 || x == 319) edge = true;
 	}
 	COORDINATE coord = Map.Pixel_To_Coord(x, y);
 	CELL cell = Coord_Cell(coord);
@@ -2903,10 +2904,8 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 		**	The shape changes depending on what object the mouse is currently over and what
 		**	object is currently selected.
 		*/
-		if (!edge) {
-			if (flags & LEFTUP) {
-				Map.Mouse_Left_Up(shadow, object, action);
-			}
+		if (flags & LEFTUP) {
+			Map.Mouse_Left_Up(shadow, object, action, false);
 		}
 
 		/*
@@ -2923,7 +2922,7 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 		**	mode can be made. Rubber band mode starts when the mouse is
 		**	held down and moved a certain minimum distance.
 		*/
-		if (!edge && (flags & LEFTPRESS)) {
+		if (flags & LEFTPRESS) {
 			Map.Mouse_Left_Press(x, y);
 		}
 
@@ -2998,6 +2997,9 @@ void DisplayClass::Mouse_Right_Press(void)
  *          action   -- This is the action that the currently selected object (if any) will    *
  *                      perform if the left mouse button were clicked at this location.        *
  *                                                                                             *
+ *          held    -- The call to this function was done to update the cursor while the       *
+ *                     mouse is being held down. Only perform mouse cursor actions.            *
+ *                                                                                             *
  * OUTPUT:  none                                                                               *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
@@ -3006,10 +3008,11 @@ void DisplayClass::Mouse_Right_Press(void)
  *   02/24/1995 JLB : Created.                                                                 *
  *   07/05/1995 JLB : Removed pop up help text for shadow and terrain after #3.                *
  *=============================================================================================*/
-void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType action, bool wwsmall)
+void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType action, bool held, bool wwsmall)
 {
-	IsTentative = false;
-
+	if (!held) {
+		IsTentative = false;
+	}
 	/*
 	**	Don't allow selection of an object that is located in shadowed terrain.
 	**	In fact, just show the normal move cursor in order to keep the shadowed
@@ -3139,12 +3142,14 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
 				break;
 		}
 	}
-
+	if (held) {
+		return;
+	}
 	/*
 	**	Give a generic help message when over shadow terrain.
 	*/
 	if (shadow) {
-		if (Scenario < 4) {
+		if (Scenario < 4 && GameToPlay == GAME_NORMAL) {
 			Help_Text(TXT_SHADOW);
 		} else {
 			Help_Text(TXT_NONE);
@@ -3199,7 +3204,7 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
 				}
 			}
 
-			if (Scenario > 3 || object->What_Am_I() != RTTI_TERRAIN) {
+			if (Scenario > 3 || object->What_Am_I() != RTTI_TERRAIN || GameToPlay != GAME_NORMAL) {
 				Help_Text(text, -1, -1, color);
 			} else {
 				Help_Text(TXT_NONE);
@@ -3416,6 +3421,8 @@ void DisplayClass::Mouse_Left_Press(int x, int y)
 void DisplayClass::Mouse_Left_Held(int x, int y)
 {
 	if (IsRubberBand) {
+		Set_Default_Mouse(MOUSE_NORMAL, false);
+		Help_Text(TXT_NONE);
 		if (x != NewX || y != NewY) {
 			x = Bound(x, 0, Lepton_To_Pixel(TacLeptonWidth)-1);
 			y = Bound(y, 0, Lepton_To_Pixel(TacLeptonHeight)-1);
@@ -3440,6 +3447,8 @@ void DisplayClass::Mouse_Left_Held(int x, int y)
 			*/
 			if (ABS(x - BandX) > 4 || ABS(y - BandY) > 4) {
 				IsRubberBand = true;
+				Set_Default_Mouse(MOUSE_NORMAL, false);
+				Help_Text(TXT_NONE);
 				x = Bound(x, 0, Lepton_To_Pixel(TacLeptonWidth)-1);
 				y = Bound(y, 0, Lepton_To_Pixel(TacLeptonHeight)-1);
 				NewX = x;

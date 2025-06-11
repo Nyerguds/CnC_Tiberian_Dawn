@@ -77,44 +77,44 @@ bool Start_Scenario(char *root, bool briefing)
 	}
 	CCDebugString ("C&C95 - Scenario read OK.\n");
 
+	if (GameToPlay == GAME_NORMAL) {
 #ifdef DEMO
-
-	if (briefing) {
-		Play_Movie(BriefMovie);
-		Play_Movie(ActionMovie, TransitTheme);
-	}
+	
+		if (briefing) {
+			Play_Movie(BriefMovie);
+			Play_Movie(ActionMovie, TransitTheme);
+		}
 
 #else
-
-	/*
-	** Install some hacks around the movie playing to account for the choose-
-	** sides introduction.  We don't want an intro movie on scenario 1, and
-	** we don't want a briefing movie on GDI scenario 1.
-	*/
-	if (Scenario < 20 && (!Special.IsJurassic || !AreThingiesEnabled)) {
-		if (Scenario != 1 || Whom == HOUSE_GOOD) {
-			Play_Movie(IntroMovie);
-		}
-
-		if ((Scenario > 1 || Whom == HOUSE_BAD) && briefing) {
-			PreserveVQAScreen = (Scenario == 1);
-			Play_Movie(BriefMovie);
-		}
-		Play_Movie(ActionMovie, TransitTheme);
-	} else {
+	
+		/*
+		** Install some hacks around the movie playing to account for the choose-
+		** sides introduction.  We don't want an intro movie on scenario 1, and
+		** we don't want a briefing movie on GDI scenario 1.
+		*/
+		if (Scenario < 20 && (!Special.IsJurassic || !AreThingiesEnabled)) {
+			if (Scenario != 1 || Whom == HOUSE_GOOD) {
+				Play_Movie(IntroMovie);
+			}
+	
+			if ((Scenario > 1 || Whom == HOUSE_BAD) && briefing) {
+				PreserveVQAScreen = (Scenario == 1);
+				Play_Movie(BriefMovie);
+			}
+			Play_Movie(ActionMovie, TransitTheme);
+		} else {
 #ifdef NEWMENU
-		// Nyerguds's TUC Quick Fix Patch v1.04
-		// Allow into movie for Covert Ops (because why not?)
-		Play_Movie(IntroMovie);
-		Play_Movie(BriefMovie);
-		Play_Movie(ActionMovie, TransitTheme);
+			// Nyerguds's TUC Quick Fix Patch v1.04
+			// Allow into movie for Covert Ops (because why not?)
+			Play_Movie(IntroMovie);
+			Play_Movie(BriefMovie);
+			Play_Movie(ActionMovie, TransitTheme);
 #endif // NEWMENU
-	}
+		}
 #endif // DEMO
 
 	// Nyerguds's TUC Quick Fix Patch v1.04
 	// Always show brief screen if no briefing video is available.
-	if (GameToPlay == GAME_NORMAL) {
 		char buffer[25];
 		sprintf(buffer, "%s.VQA", BriefMovie);
 		CCFileClass file(buffer);
@@ -133,12 +133,12 @@ bool Start_Scenario(char *root, bool briefing)
 			InMainLoop = oldinmain;
 //			Hide_Mouse();
 		}
-	}
 
-	// Nyerguds's TUC Quick Fix Patch v1.00: always start the music.
-	// Keeping it disabled for multiplay until the randomizer desync is fixed though.
-	if (GameToPlay == GAME_NORMAL && TransitTheme == THEME_NONE) {
-		Theme.Queue_Song(THEME_AOI);
+		// Nyerguds's TUC Quick Fix Patch v1.00: always start the music.
+		// Keeping it disabled for multiplay until the randomizer desync is fixed though.
+		if (TransitTheme == THEME_NONE) {
+			Theme.Queue_Song(THEME_AOI);
+		}
 	}
 
 	/*

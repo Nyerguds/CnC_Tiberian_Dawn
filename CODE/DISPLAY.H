@@ -207,7 +207,7 @@ class DisplayClass: public MapClass
 	protected:
 		virtual void Mouse_Right_Press(void);
 		virtual void Mouse_Left_Press(int x, int y);
-		virtual void Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType action, bool wwsmall = false);
+		virtual void Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType action, bool held, bool wwsmall = false);
 		virtual void Mouse_Left_Held(int x, int y);
 		virtual void Mouse_Left_Release(CELL cell, int x, int y, ObjectClass * object, ActionType action, bool wwsmall = false);
 

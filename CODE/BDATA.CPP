@@ -4884,7 +4884,7 @@ int BuildingTypeClass::Max_Pips(void) const
  *=============================================================================================*/
 int BuildingTypeClass::Full_Name(void) const
 {
-	if (::Scenario == 3 && Type == STRUCT_MISSION) {
+	if (::Scenario == 3 && Type == STRUCT_MISSION && GameToPlay == GAME_NORMAL) {
 		return(TXT_PRISON);
 	}
 	// Nyerguds's TUC Quick Fix Patch v1.02: hosp-name

@@ -1312,7 +1312,7 @@ void FootClass::Active_Click_With(ActionType action, ObjectClass * object)
  *=============================================================================================*/
 void FootClass::Active_Click_With(ActionType action, CELL cell)
 {
-	// Nyerguds's TUC Quick Fix Patch v1.04: targeted-guard-area
+	// Nyerguds's TUC Quick Fix Patch v1.04
 	// These actions can give a movement flash.
 	switch (action) {
 		case ACTION_HARVEST:
@@ -1322,14 +1322,17 @@ void FootClass::Active_Click_With(ActionType action, CELL cell)
 				COORDINATE coord;
 				int x = Get_Mouse_X();
 				int y = Get_Mouse_Y();
-				if (Map.RadarClass::Click_In_Radar(x, y, false) == 1) {
+				int inradar = Map.RadarClass::Click_In_Radar(x, y, false);
+				if (inradar == 1) {
 					coord = Cell_Coord(cell);
 					x = Coord_X(coord);
 					y = Coord_Y(coord);
 				} else {
 					coord = Map.Pixel_To_Coord(x, y);
 				}
-				OutList.Add(EventClass(ANIM_MOVE_FLASH, PlayerPtr->Class->House, coord));
+				if (inradar != -1) {
+					OutList.Add(EventClass(ANIM_MOVE_FLASH, PlayerPtr->Class->House, coord));
+				}
 			}
 			break;
 	}
