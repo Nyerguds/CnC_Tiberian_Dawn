@@ -1771,34 +1771,42 @@ int FootClass::Rescue_Mission(TARGET tarcom)
  *=============================================================================================*/
 void FootClass::Death_Announcement(TechnoClass const * source) const
 {
-	if (IsDiscoveredByPlayer || IsOwnedByPlayer) {
-		if (!source || source->What_Am_I() != RTTI_INFANTRY || *((InfantryClass const *)source) != INFANTRY_RAMBO) {
-			if (What_Am_I() == RTTI_INFANTRY && ((InfantryTypeClass const &)Class_Of()).IsCivilian && !((InfantryClass *)this)->IsTechnician) {
-				if (Options.IsDeathAnnounce) Speak(VOX_DEAD_CIV);
-			} else {
-				if (House != PlayerPtr && GameToPlay != GAME_NORMAL) {
-					if (Options.IsDeathAnnounce) Speak(VOX_ENEMY_UNIT);
-				} else {
-					if (House == PlayerPtr || Options.IsDeathAnnounce) {
-						if (!Options.IsDeathAnnounce) {
-							Speak(VOX_UNIT_LOST);
-						} else {
-							switch (House->ActLike) {
-								case HOUSE_GOOD:
-									Speak(VOX_DEAD_GDI);
-									break;
+	if (!IsDiscoveredByPlayer && !IsOwnedByPlayer) {
+		return;
+	}
+	// Commando suppresses this for some reason?
+	if (source && source->What_Am_I() == RTTI_INFANTRY && *((InfantryClass const *)source) != INFANTRY_RAMBO) {
+		return;
+	}
+	if (!Options.IsDeathAnnounce) {
+		if (House == PlayerPtr) {
+			Speak(VOX_UNIT_LOST);
+		}
+	} else {
+		if (What_Am_I() == RTTI_INFANTRY && ((InfantryTypeClass const &)Class_Of()).IsCivilian && !((InfantryClass *)this)->IsTechnician) {
+			Speak(VOX_DEAD_CIV);
+			return;
+		}
+		bool enemy = !PlayerPtr->Is_Ally(this);
+		if (enemy && GameToPlay != GAME_NORMAL) {
+			Speak(VOX_ENEMY_UNIT);
+		} else {
+			switch (House->ActLike) {
+				case HOUSE_GOOD:
+					Speak(VOX_DEAD_GDI);
+					break;
 
-								case HOUSE_BAD:
-									Speak(VOX_DEAD_NOD);
-									break;
+				case HOUSE_BAD:
+					Speak(VOX_DEAD_NOD);
+					break;
 
-								default:
-									break;
-							}
-						}
+				default:
+					if (enemy) {
+						Speak(VOX_ENEMY_UNIT);
 					}
-				}
+					break;
 			}
+		
 		}
 	}
 }

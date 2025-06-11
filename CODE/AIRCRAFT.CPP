@@ -1975,21 +1975,10 @@ void AircraftClass::Debug_Dump(MonoClass *mono) const
 void AircraftClass::Active_Click_With(ActionType action, ObjectClass * object)
 {
 	Validate();
-	switch (action) {
-		case ACTION_ENTER:
-			Player_Assign_Mission(MISSION_ENTER, TARGET_NONE, object->As_Target());
-			break;
-
-		case ACTION_SELF:
-			Player_Assign_Mission(MISSION_UNLOAD, TARGET_NONE, TARGET_NONE);
-			break;
-
-		default:
-			// Nyerguds's TUC Quick Fix Patch v1.03: aircraft-dock-unload
-			// This line should not be behind the whole switch-case.
-			FootClass::Active_Click_With(action, object);
-			break;
-	}
+	// Nyerguds's TUC Quick Fix Patch v1.03: aircraft-dock-unload
+	// Nothing in this function was any different from the default behaviour, and, in fact
+	// the default behaviour always overrode the specific code here in the retail game.
+	FootClass::Active_Click_With(action, object);
 }
 
 

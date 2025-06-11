@@ -68,9 +68,18 @@ v1.03:
 
 v1.04: (in progress)
 
+* Allowed the Area Guard functions ("G" and [Ctrl]+[Alt]+Click) to be used on Harvesters to find nearby tiberium to harvest.
 * The game will no longer give occasional "insufficient disk space" errors.
-* If click orders given on the minimap are in the currently viewed area, a flash will be shown on the clicked cell.
+* Click orders given on the minimap will show a flash on the targeted cell in the main map view.
 * Missions where the player is neither GDI nor Nod will now always skip the score screen, to avoid a crash.
-* In the Japanese version, if a briefing image is not found, it will now revert to text briefing.
-* A CPS image with the filename of the mission file can now be used as briefing on all language versions.
+* Added "D" as Deploy/Unload hotkey. Note that this does not affect Transport Helicopters while they are in the air.
+* The Keyboard-given orders for Area Guard, Scatter and Deploy will now give unit responses.
+* Survivors from C4 explosions will no longer immediately shoot at the Commando at the moment they are spawned.
+* Fixed the bug where survivors from C4 explosions often never bothered pursuing the Commando.
+* In the Japanese version, if a briefing image is not found, it will now revert to (English) text briefing.
+* All language versions now support having a CPS-format image with the filename of a mission as briefing image.
 * Helicopters can no longer be given Move and Force-attack orders into the shroud in any situation.
+* Capturing a building will now refresh all of its cells on the radar to the new color.
+* EVA now announces when the player loses a building. The "DeathAnnounce" option now also works for buildings.
+* When "DeathAnnounce" is enabled, a destroyed unit or structure in singleplayer that is not GDI or Nod, and is not allied with the player, is now reported as destroyed "enemy".
+* EVA now announces when repairs have started on a building or unit.

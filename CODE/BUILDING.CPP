@@ -1426,6 +1426,7 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 
 		switch (res) {
 			case RESULT_DESTROYED:
+				Death_Announcement(source);
 
 				/*
 				**	Destroy all attached objects.
@@ -1768,7 +1769,7 @@ BuildingClass::~BuildingClass(void)
  *    This routine is called when a building is destroyed. It handles                          *
  *    placing the rubble down.                                                                 *
  *                                                                                             *
- * INPUT:   none                                                                               *
+ * INPUT:   source  -- The techno that sabotaged this building to cause it to die.             *
  *                                                                                             *
  * OUTPUT:  none                                                                               *
  *                                                                                             *
@@ -1835,7 +1836,14 @@ void BuildingClass::Drop_Debris(TARGET source)
 						i->Strength = Random_Pick(5, (int)i->Class->MaxStrength);
 						i->Scatter(0, true);
 						if (source != TARGET_NONE && !House->Is_Ally(As_Object(source))) {
-							i->Assign_Mission(MISSION_ATTACK);
+							// Nyerguds's TUC Quick Fix Patch v1.04
+							// If the death is the result of C4 exploding, make survivors dazed.
+							if (IsGoingToBlow) {
+								// Just enough to prevent that initial shot before the Scatter order takes hold.
+								i->Arm = 5;
+							}
+							// Seems to work a lot better than assigning them to attack the Commando.
+							i->Assign_Mission(MISSION_GUARD_AREA);
 							i->Assign_Target(source);
 						} else {
 							if (House->IsHuman) {
@@ -2649,6 +2657,9 @@ void BuildingClass::Repair(int control)
 		if (Strength == Class->MaxStrength) {
 			sound = VOC_SCOLD;
 		} else {
+			if (IsOwnedByPlayer) {
+				Speak(VOX_REPAIRING);
+			}
 			sound = VOC_BUTTON;
 			Clicked_As_Target();
 			IsWrenchVisible = true;
@@ -3206,20 +3217,24 @@ bool BuildingClass::Captured(HouseClass * newowner)
 {
 	Validate();
 	if (Class->IsCaptureable && newowner != House) {
-		switch (Owner()) {
-			case HOUSE_GOOD:
-				Speak(VOX_GDI_CAPTURED);
-				break;
+		// Only announce in singleplayer if the player has seen it, or if the player is involved.
+		if ((GameToPlay == GAME_NORMAL && IsDiscoveredByPlayer) || House == PlayerPtr || newowner == PlayerPtr) {
+			switch (House->ActLike) {
+				case HOUSE_GOOD:
+					Speak(VOX_GDI_CAPTURED);
+					break;
 
-			case HOUSE_BAD:
-				Speak(VOX_NOD_CAPTURED);
-				break;
+				case HOUSE_BAD:
+					Speak(VOX_NOD_CAPTURED);
+					break;
+			}
 		}
-
-		if (House == PlayerPtr) {
+		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Fix radar refresh for player
+		if (House == PlayerPtr || newowner == PlayerPtr) {
 			Map.PowerClass::IsToRedraw = true;
-			Map.Flag_To_Redraw(false);
 		}
+		Map.Flag_To_Redraw(true);
 
 		/*
 		** Add this building to the list of buildings captured this game. For internet stats purposes
@@ -4116,6 +4131,9 @@ int BuildingClass::Mission_Repair(void)
 
 				if (Transmit_Message(RADIO_NEED_TO_MOVE) == RADIO_ROGER) {
 					if (Contact_With_Whom()->Health_Ratio() < 0x0100 && Transmit_Message(RADIO_REPAIR) == RADIO_ROGER) {
+						if (IsOwnedByPlayer) {
+							Speak(VOX_REPAIRING);
+						}
 						Status = DURING;
 						Begin_Mode(BSTATE_ACTIVE);
 						IsReadyToCommence = false;
@@ -4471,27 +4489,32 @@ int BuildingClass::Pip_Count(void) const
 void BuildingClass::Death_Announcement(TechnoClass const * ) const
 {
 	Validate();
-	if (IsDiscoveredByPlayer || IsOwnedByPlayer) {
-		if (House != PlayerPtr && GameToPlay != GAME_NORMAL) {
-			if (Options.IsDeathAnnounce) Speak(VOX_ENEMY_STRUCTURE);
+	if (!IsDiscoveredByPlayer && !IsOwnedByPlayer) {
+		return;
+	}
+	if (!Options.IsDeathAnnounce) {
+		if (House == PlayerPtr) {
+			Speak(VOX_STRUCTURE_LOST);
+		}
+	} else {
+		bool enemy = !PlayerPtr->Is_Ally(this);
+		if (enemy && GameToPlay != GAME_NORMAL) {
+			Speak(VOX_ENEMY_STRUCTURE);
 		} else {
-			if (House == PlayerPtr || Options.IsDeathAnnounce) {
-				if (!Options.IsDeathAnnounce) {
-					Speak(VOX_STRUCTURE_LOST);
-				} else {
-					switch (House->ActLike) {
-						case HOUSE_GOOD:
-							Speak(VOX_GDI_STRUCTURE);
-							break;
+			switch (House->ActLike) {
+				case HOUSE_GOOD:
+					Speak(VOX_GDI_STRUCTURE);
+					break;
 
-						case HOUSE_BAD:
-							Speak(VOX_NOD_STRUCTURE);
-							break;
+				case HOUSE_BAD:
+					Speak(VOX_NOD_STRUCTURE);
+					break;
 
-						default:
-							break;
+				default:
+					if (enemy) {
+						Speak(VOX_ENEMY_STRUCTURE);
 					}
-				}
+					break;
 			}
 		}
 	}

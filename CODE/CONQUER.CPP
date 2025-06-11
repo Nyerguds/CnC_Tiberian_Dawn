@@ -661,28 +661,67 @@ void Keyboard_Process(KeyNumType &input)
 		*/
 		case VK_X:
 			if (CurrentObject.Count()) {
+				AllowVoice = true;
 				for (int index = 0; index < CurrentObject.Count(); index++) {
 					ObjectClass const * tech = CurrentObject[index];
-
-					if (tech && tech->Can_Player_Move()) {
+					if (tech && tech->Is_Techno() && tech->Can_Player_Move()) {
+						((TechnoClass *)tech)->Response_Move();
+						// Nyerguds's TUC Quick Fix Patch v1.04
+						// Give response on keyboard orders
+						AllowVoice = false;
 						OutList.Add(EventClass(EventClass::SCATTER, tech->As_Target()));
 					}
 				}
+				AllowVoice = true;
 			}
 			break;
 
+		/*
+		**	All applicable selected units will attempt to deploy themselves.
+		*/
+		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Add "D" as deploy key
+		case VK_D:
+			if (CurrentObject.Count()) {
+				AllowVoice = true;
+				for (int index = 0; index < CurrentObject.Count(); index++) {
+					ObjectClass const * tech = CurrentObject[index];
+					if (tech && tech->Is_Techno()) {
+						TechnoClass * techno = (TechnoClass *)tech;
+						// Only transporters and MCVs can deploy. Aircraft are blocked if they are currently
+						// in the air because this apparently makes them seek out a friendly building to land at.
+						if (((techno->Techno_Type_Class()->IsTransporter && techno->How_Many()) || (techno->What_Am_I() == RTTI_UNIT && *((UnitClass *)techno) == UNIT_MCV))
+							 && (techno->What_Am_I() != RTTI_AIRCRAFT || ((AircraftClass *)techno)->Altitude == 0)) {
+							techno->Response_Move();
+							AllowVoice = false;
+							OutList.Add(EventClass(tech->As_Target(), MISSION_UNLOAD));
+						}
+					}
+				}
+				AllowVoice = true;
+			}
+			break;
+			
 		/*
 		**	All selected units will attempt to go into guard area mode.
 		*/
 		case VK_G:
 			if (CurrentObject.Count()) {
+				AllowVoice = true;
 				for (int index = 0; index < CurrentObject.Count(); index++) {
 					ObjectClass const * tech = CurrentObject[index];
-
-					if (tech && tech->Can_Player_Move() && tech->Can_Player_Fire()) {
+					// Nyerguds's TUC Quick Fix Patch v1.04
+					// Allow Guard Area order on harvesters
+					if (tech && tech->Is_Techno() && tech->Can_Player_Move() && (tech->Can_Player_Fire() || (tech -> What_Am_I() == RTTI_UNIT && ((UnitClass *)tech)->Class->IsToHarvest))) {
+						// Nyerguds's TUC Quick Fix Patch v1.04
+						// Give response on keyboard orders. Use Response_Attack()
+						// because "moving out!" is weird when it makes them stop.
+						((TechnoClass *)tech)->Response_Attack();
+						AllowVoice = false;
 						OutList.Add(EventClass(tech->As_Target(), MISSION_GUARD_AREA));
 					}
 				}
+				AllowVoice = true;
 			}
 			break;
 

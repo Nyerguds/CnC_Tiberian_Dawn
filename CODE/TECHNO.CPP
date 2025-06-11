@@ -2184,7 +2184,7 @@ ActionType TechnoClass::What_Action(ObjectClass * object) const
 
 		// Nyerguds's TUC Quick Fix Patch v1.03: aircraft-no-area-guard
 		if (What_Am_I() == RTTI_AIRCRAFT && ctrldown && altdown) {
-			return ACTION_NONE;
+			return ACTION_SELECT;
 		}
 
 		/*
@@ -2267,7 +2267,7 @@ ActionType TechnoClass::What_Action(CELL cell) const
 
 	// Nyerguds's TUC Quick Fix Patch v1.03: aircraft-no-area-guard
 	if (What_Am_I() == RTTI_AIRCRAFT && ctrldown && altdown) {
-		return ACTION_SELECT;
+		return ACTION_NONE;
 	}
 
 	/*
@@ -2283,7 +2283,9 @@ ActionType TechnoClass::What_Action(CELL cell) const
 	**	Special guard area mission is possible if both the control and the
 	**	alt keys are held down.
 	*/
-	if (IsOwnedByPlayer && ctrldown && altdown && Can_Player_Move() && Can_Player_Fire()) {
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Allow Guard Area order on harvesters
+	if (IsOwnedByPlayer && ctrldown && altdown && Can_Player_Move() && (Can_Player_Fire() || (What_Am_I() == RTTI_UNIT && ((UnitClass *)this)->Class->IsToHarvest))) {
 		return(ACTION_GUARD_AREA);
 	}
 
