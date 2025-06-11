@@ -76,6 +76,14 @@ CDDIR=$(%CDDIR)
 VQDIR=$(%VQDIR)
 !endif
 
+!ifndef %DXSDK
+#DXSDK=c:\projects\c&c\code\dxsdk
+!error DXSDK must be set to the DirectX SDK root directory.
+!else
+DXSDK=$(%DXSDK)
+!endif
+
+
 #---------------------------------------------------------------------------
 # Path macros: one path for each file type.
 #  These paths are used to tell make where to find/put each file type.
@@ -443,8 +451,8 @@ conquer.lnk : makefile
 #	for %index in ($(PROJ_LIBS)) do %append $^@ library $(WWFLAT)\lib\%index
 #	for %index in ($(VQ_LIBS)) do %append $^@ library ..\vq\lib\%index
 #	for %index in ($(GCL_LIBS)) do %append $^@ library ..\gcl510\w10\%index
-	%append $^@ library ..\dxsdk\lib\ddraw.lib
-	%append $^@ library ..\dxsdk\lib\dsound.lib
+	%append $^@ library $(DXSDK)\lib\ddraw.lib
+	%append $^@ library $(DXSDK)\lib\dsound.lib
 	%append $^@ library $(WWFLAT)\lib\keyboard.lib
 	%append $^@ library $(WWFLAT)\lib\win32lib.lib
 	%append $^@ library $(VQDIR)\lib\vqa32wp.lib

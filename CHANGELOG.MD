@@ -1,3 +1,5 @@
+Note that the older versions of this project (up to v1.03) were released as edited binaries. They can be found in the 'files' section of the [Command & Conquer Unofficial Patch 1.06 project on ModDb](https://www.moddb.com/mods/command-conquer-unofficial-patch-106/). They are the entries indicated as "C&C95 TUC quick fix patch".
+
 v1.00:
 
 * Fixed the crash that happens when exploring at the top of the map with a unit with a large sight range.
@@ -64,7 +66,7 @@ v1.03:
 * Holding down the Shift key now allows adding units when making a drag-selection.
 * Drag-selecting can now select flying aircraft.
 
-v1.04:
+v1.04: (in progress)
 
 * The game will no longer give occasional "insufficient disk space" errors.
 * If click orders given on the minimap are in the currently viewed area, a flash will be shown on the clicked cell.

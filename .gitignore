@@ -1,1 +1,21 @@
+# Not sure about all the .lib files; some might be required, so it's not included here.
+# A lot of this is already filtered by all the old stuff being uppercase, though.
+**/*.dll
+**/*.err
+**/*.lnk
+**/*.lst
+**/*.map
+**/*.obj
+**/*.bak
+# Specific build result files
+CODE/OBJ
+CODE/*.res
+CODE/*.pch
+ipx/*.lib
+WIN32LIB/LIB
+WIN32LIB/**/*.lbc
+WINVQ/LIB/vq*.lib
+WINVQ/VQA32/O
+WINVQ/VQM32/O
+# Output folder
 RUN

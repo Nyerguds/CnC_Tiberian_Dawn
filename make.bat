@@ -20,6 +20,8 @@ SET TASM=%ROOT%TASM
 SET MASM=%ROOT%MASM611\BIN
 :: MS-DOS Player for Win32-x64 console
 SET DOSEMU=%ROOT%msdos
+:: DirectX 5 SDK
+SET DXSDK=%ROOT%DXSDK
 
 echo ==============================
 echo Define Westwood libraries
@@ -53,6 +55,8 @@ del /q /s WIN32LIB\*.obj 2>nul >nul
 del /q /s WIN32LIB\*.lbc 2>nul >nul
 if exist WIN32LIB\LIB\*.lib del /q WIN32LIB\LIB\*.lib 2>nul >nul
 if not exist WIN32LIB\LIB\. md WIN32LIB\LIB
+if not exist WIN32LIB\INCLUDE\. md WIN32LIB\INCLUDE
+if not exist WIN32LIB\SRCDEBUG\. md WIN32LIB\SRCDEBUG
 
 echo.
 echo ==============================

@@ -1,3 +1,0 @@
-See https://archive.org/details/idx5sdk
-The sdk can be unpacked from the installer using 7Zip, without installing
-Just make sure the folders "bin", "lib" and "inc" are present.
