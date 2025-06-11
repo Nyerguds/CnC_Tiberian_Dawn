@@ -1,18 +1,22 @@
 @echo off
 
 echo ===========================
-echo set main paths
+echo Set main paths
+:: Retrieve folder of the batch file, regardless of launch directory
 SET CCROOT=%~dp0
 SET ROOT=%~dp0..\
 SET PATH=C:\Windows\;C:\Windows\System32
 
 echo ===========================
 echo Set compilers and utilities
+:: Watcom 10.6
 SET WATCOM=%ROOT%WATCOM
+::TASM 4.0
 SET TASM=%ROOT%TASM
-SET UTILS=%ROOT%utils
-SET DOSEMU=%ROOT%msdos
+::MASM 6.11
 SET MASM=%ROOT%MASM611\BIN
+:: MS-DOS Player for Win32-x64 console
+SET DOSEMU=%ROOT%msdos
 
 echo ===========================
 echo Define Westwood libraries
@@ -74,7 +78,6 @@ cd ipx
 WMAKE
 cd ..
 
-:game
 echo.
 echo ==============
 echo Compiling Game
@@ -82,8 +85,5 @@ echo ==============
 cd code
 WMAKE WIN32=1
 cd ..
-
-:: manual linking to avoid a link path corruption issue
-::%UTILS%\nwlink name ra95.exe @win95.lnk
 
 pause
