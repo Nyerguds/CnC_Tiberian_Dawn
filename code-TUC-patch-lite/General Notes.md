@@ -1,6 +1,6 @@
 # C&C95 TUC Quick Fix Patch
 
-# General notes about this code
+General notes about this code
 
 ## 1. Context
 
