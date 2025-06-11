@@ -21,6 +21,12 @@ Download sources of compiler requirements:
 
 The paths to each of these are set in `make.bat`, and can be adapted there. Their currently set values are folders in the `..` folder relative to the location of `make.bat`. All of them are configured there in a way that their main folder is referenced, not the `bin` subfolder that is generally actually used. For the MS-DOS Player, the path of `msdos.exe` should simply be set there.
 
+## Compiling other languages
+
+The game is available in four languages; English, German, French, and Japanese. To build a different-language version, you need to edit `DEFINES.H` and find the lines that define values for `GERMAN`, `FRENCH` and `JAPANESE`. Uncomment _one_ of the lines to build the game for that language. **Never** uncomment more than one of them; this will inevitably cause problems and duplicate code.
+
+Obviously, the specific files for that language will be required. Each language has its own strings file (`conquer.eng` inside `cclocal.mix`) and videos (in `movies.mix`), and Japanese has some extra files (in `language.mix`) for its image-based briefing texts. The game is technically freeware, but the easiest way to get access to all these different-language files is probably [The Ultimate Collection on Steam](https://store.steampowered.com/bundle/39394/Command__Conquer_The_Ultimate_Collection/), which contains Command & Conquer in all four languages, and allows users to freely switch between the different-language releases in the game's Steam settings.
+
 ## Contributing
 
 Right now, I'm not really looking into making this a joint project. Specific bug reports and suggestions are always welcome though, but post them as issues.
