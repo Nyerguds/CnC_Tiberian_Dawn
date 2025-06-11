@@ -23,7 +23,7 @@ The paths to each of these are set in `make.bat`, and can be adapted there. Thei
 
 ## Compiling other languages
 
-The game is available in four languages; English, German, French, and Japanese. To build a different-language version, you need to edit `DEFINES.H` and find the lines that define values for `GERMAN`, `FRENCH` and `JAPANESE`. Uncomment _one_ of the lines to build the game for that language. **Never** uncomment more than one of them; this will inevitably cause problems and duplicate code.
+The game is available in four languages; English, German, French, and Japanese. To build a different-language version, you need to edit `CODE\DEFINES.H` and find the lines that define values for `GERMAN`, `FRENCH` and `JAPANESE`. Uncomment _one_ of the lines to build the game for that language. **Never** uncomment more than one of them; this will inevitably cause problems and duplicate code.
 
 Obviously, the specific files for that language will be required. Each language has its own strings file (`conquer.eng` inside `cclocal.mix`) and videos (in `movies.mix`), and Japanese has some extra files (in `language.mix`) for its image-based briefing texts. The game is technically freeware, but the easiest way to get access to all these different-language files is probably to get [Command & Conquer: The Ultimate Collection on Steam](https://store.steampowered.com/bundle/39394/Command__Conquer_The_Ultimate_Collection/), which contains Command & Conquer 1 in all four languages, and allows users to freely switch between the different-language releases in the game's Steam settings.
 
