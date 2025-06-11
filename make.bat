@@ -17,7 +17,7 @@ SET WATCOM=%ROOT%WATCOM
 :: TASM 4.0
 SET TASM=%ROOT%TASM
 :: MASM 6.11
-SET MASM=%ROOT%MASM611\BIN
+SET MASM=%ROOT%MASM611
 :: MS-DOS Player for Win32-x64 console
 SET DOSEMU=%ROOT%msdos
 :: DirectX 5 SDK
@@ -33,9 +33,9 @@ SET CODEDIR=%CCROOT%CODE
 SET CDDIR=%CCROOT%
 
 echo ==============================
-echo Set 3rd party libraries
+echo Set 3rd party libraries in path
 SET PATH=%WATCOM%\BINNT;%WATCOM%\BIN;%WATCOM%\BINW;%WATCOM%\H;%WATCOM%\H\NT;%PATH%
-SET PATH=%MASM%;%TASM%\BIN;%DOSEMU%;%PATH%
+SET PATH=%MASM%\BIN;%TASM%\BIN;%DOSEMU%;%PATH%
 echo ==============================
 
 echo.

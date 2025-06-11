@@ -19,6 +19,8 @@ Download sources of compiler requirements:
 * [MS-DOS Player](http://takeda-toshiya.my.coocan.jp/msdos/) for invoking 16 bit TASM
 * [DirectX 5 SDK](https://archive.org/details/idx5sdk)
 
+The paths to each of these are set in `make.bat`, and can be adapted there. Their currently set values are folders in the `..\\` folder relative to the location of `make.bat`. All of them are configured there in a way that their main folder is referenced, not the `bin` subfolder that is generally actually used. For the MS-DOS Player, the path of `msdos.exe` should simply be set there.
+
 ## Contributing
 
 Right now, I'm not really looking into making this a joint project. Specific bug reports and suggestions are always welcome though, but post them as issues.

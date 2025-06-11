@@ -26,8 +26,8 @@ thipx32.dll: thipx.thk thipx32c.cpp thmap32.asm thipx32.lnk
 	thunk Thipx.thk
 	rem fixthunk
 	wpp386 -i$(%WATCOM)\H\NT -i$(%WATCOM)\H -s -mf -3s -bt=nt -bd -zu -4 thipx32c.cpp
-	$(%MASM)\ml /DIS_32 /Zf /Fl /c /W3 /Fothipx32a.obj thipx.asm
-	$(%MASM)\ml /c /W3 thmap32.asm
+	$(%MASM)\bin\ml /DIS_32 /Zf /Fl /c /W3 /Fothipx32a.obj thipx.asm
+	$(%MASM)\bin\ml /c /W3 thmap32.asm
 	wlink @thipx32.lnk
 	wlib -c -n wwipx32.lib +thipx32.dll
 
@@ -35,9 +35,9 @@ thipx32.dll: thipx.thk thipx32c.cpp thmap32.asm thipx32.lnk
 # thipx16.dll: thipx.thk thipx16a.asm thipx16c.cpp thmap16.asm thipx16.lnk
 #	thunk Thipx.thk
 #	wpp -i$(%WATCOM)\H -ml -bd -zu -bt=windows -0 thipx16c.cpp
-#	$(%MASM)\ml /c /W3 ipx16a.asm
-#	$(%MASM)\ml /DIS_16 /c /W3 /Fothipx16a.obj thipx.asm
-#	$(%MASM)\ml /c /W3 thmap16.asm
+#	$(%MASM)\bin\ml /c /W3 ipx16a.asm
+#	$(%MASM)\bin\ml /DIS_16 /c /W3 /Fothipx16a.obj thipx.asm
+#	$(%MASM)\bin\ml /c /W3 thmap16.asm
 #	wlink @thipx16.lnk
 #	rc -40 thipx16.dll
 #	call setinc2.bat
