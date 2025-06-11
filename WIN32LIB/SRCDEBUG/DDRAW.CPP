@@ -486,14 +486,16 @@ BOOL Set_Video_Mode(HWND hwnd, int w, int h, int bits_per_pixel)
 		return(FALSE);
 	}
 
-	//
-	// Create a direct draw palette object
-	//
-	//MessageBox(MainWindow, "In Set_Video_Mode. About to call CreatePalette.","Note", MB_ICONEXCLAMATION|MB_OK);
-	result = DirectDrawObject->CreatePalette( DDPCAPS_8BIT | DDPCAPS_ALLOW256, &PaletteEntries[0] , &PalettePtr ,NULL);
-	Process_DD_Result(result, FALSE);
-	if (result != DD_OK){
-		return (FALSE);
+	if (bits_per_pixel == 8) {
+		//
+		// Create a direct draw palette object
+		//
+		//MessageBox(MainWindow, "In Set_Video_Mode. About to call CreatePalette.","Note", MB_ICONEXCLAMATION|MB_OK);
+		result = DirectDrawObject->CreatePalette( DDPCAPS_8BIT | DDPCAPS_ALLOW256, &PaletteEntries[0] , &PalettePtr ,NULL);
+		Process_DD_Result(result, FALSE);
+		if (result != DD_OK){
+			return (FALSE);
+		}
 	}
 
 	Check_Overlapped_Blit_Capability();
@@ -733,9 +735,10 @@ void Set_DD_Palette ( void *palette )
 
 		for( j=0 ; j<768 ; j+=3 )
 		{
-			PaletteEntries[k].peRed = (unsigned char)((*palette_get++)<<2);
-			PaletteEntries[k].peGreen = (unsigned char)((*palette_get++)<<2);
-			PaletteEntries[k].peBlue = (unsigned char)((*palette_get++)<<2);
+			PaletteEntries[k].peRed = (unsigned char)((palette_get[0])<<2);
+			PaletteEntries[k].peGreen = (unsigned char)((palette_get[1])<<2);
+			PaletteEntries[k].peBlue = (unsigned char)((palette_get[2])<<2);
+			palette_get+=3;
 			k++;
 		}
 

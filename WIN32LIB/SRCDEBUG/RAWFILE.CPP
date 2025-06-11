@@ -48,8 +48,8 @@
  *   RawFileClass::Write -- Writes the specified data to the buffer specified.                 *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
- #define	true	1
- #define	false	0
+// #define	true	1
+// #define	false	0
 
 #define	WIN32
 #define	_WIN32
@@ -317,7 +317,7 @@ void RawFileClass::Error(int error, int , char const *)
  *=============================================================================================*/
 RawFileClass::RawFileClass(char const *filename) : Filename(filename)
 {
-	Handle = -1;
+	Handle = NULL_HANDLE;
 	Allocated = false;
 }
 
@@ -449,18 +449,18 @@ int RawFileClass::Open(int rights)
 				break;
 
 			case READ:
-				Handle = (int)mmioOpen((char*)Filename, NULL, MMIO_READ);
-				//Handle = open(Filename, O_RDONLY|O_BINARY);
+				Handle = CreateFile(Filename, GENERIC_READ, FILE_SHARE_READ,
+											NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 				break;
 
 			case WRITE:
-				Handle = (int)mmioOpen((char*)Filename, NULL, MMIO_WRITE | MMIO_CREATE);
-				//Handle = open(Filename, O_WRONLY | O_CREAT | O_TRUNC | O_BINARY , S_IWRITE);
+				Handle = CreateFile(Filename, GENERIC_WRITE, 0,
+											NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 				break;
 
 			case READ|WRITE:
-				Handle = (int)mmioOpen((char*)Filename, NULL, MMIO_READWRITE);
-				//Handle = open(Filename, O_RDWR|O_CREAT|O_BINARY);
+				Handle = CreateFile(Filename, GENERIC_READ | GENERIC_WRITE, 0,
+											NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 				break;
 		}
 
@@ -469,7 +469,7 @@ int RawFileClass::Open(int rights)
 		**	For the case of the file cannot be found, then allow a retry. All other cases
 		**	are fatal.
 		*/
-		if (Handle == 0) {
+		if (Handle == NULL_HANDLE) {
 
 //			Error(errno, false, Filename);		//this kills windoze!!!!    ST - 9/28/95 5:33PM
 #ifdef NEVER
@@ -499,9 +499,9 @@ int RawFileClass::Open(int rights)
 
 void RawFileClass::Set_Buffer_Size (int size)
 {
-	if (Handle){
-		mmioSetBuffer((HMMIO)Handle, NULL, size, 0);
-	}
+	//if (Handle){
+	//	mmioSetBuffer((HMMIO)Handle, NULL, size, 0);
+	//}
 }
 
 
@@ -526,7 +526,7 @@ void RawFileClass::Set_Buffer_Size (int size)
  *=============================================================================================*/
 int RawFileClass::Is_Available(int forced)
 {
-	int	file;		// Working file handle.
+	HANDLE	file;		// Working file handle.
 	int	open_failed;
 	/*
 	**	If the file is already open, then is must have already passed the availability check.
@@ -552,15 +552,17 @@ int RawFileClass::Is_Available(int forced)
 	for (;;) {
 
 //		Hard_Error_Occured = 0;
-		file = open(Filename, O_RDONLY|O_BINARY);
-		open_failed = (file == -1);
+		file = CreateFile(Filename, GENERIC_READ, FILE_SHARE_READ,
+												NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+		open_failed = (file == NULL_HANDLE);
 
 		/*
 		**	If DOS reports that everything is just fine except that the file is not present,
 		**	then return with this fact. Any other case will fall through to the error handler
 		**	routine.
 		*/
-		if (open_failed && errno == ENOENT) return(false);
+		if (open_failed) return(false);
+
 
 		/*
 		** If we got an access error it could be because there is no cd in
@@ -594,7 +596,7 @@ int RawFileClass::Is_Available(int forced)
 	/*
 	**	Since the file could be opened, then close it and return that the file exists.
 	*/
-	if (close(file)) {
+	if (!CloseHandle(file)) {
 		Error(errno, false, Filename);
 	}
 	return(true);
@@ -629,7 +631,7 @@ void RawFileClass::Close(void)
 			**	Close the file. If there was an error in the close operation -- abort.
 			*/
 //			Hard_Error_Occured = 0;
-			if (mmioClose((HMMIO)Handle, 0)) {
+			if (!CloseHandle(Handle)) {
 
 				/*
 				**	By definition, this error can only be a bad file handle. This a fatal condition
@@ -653,7 +655,7 @@ void RawFileClass::Close(void)
 		/*
 		**	At this point the file must have been closed. Mark the file as empty and return.
 		*/
-		Handle = -1;
+		Handle = NULL_HANDLE;
 	}
 }
 
@@ -701,58 +703,8 @@ long RawFileClass::Read(void *buffer, long size)
 		opened = true;
 	}
 
-	/*
-	**	Read the file in convenient chunk sizes. When the actual number
-	**	of bytes read does not match the desired, then assume that the file
-	**	is exhausted and bail. This loop was adjusted to take into
-	**	consideration the fact that "read" returns a SIGNED value whereas
-	**	it takes an UNSIGNED value as the byte count.
-	*/
-	while (size) {
-		unsigned	desired;		// Bytes desired to be read this pass.
-		unsigned actual;		// Actual number of bytes read.
-
-		/*
-		**	Break the read request into chunks no bigger than the low level DOS read
-		**	can handle.
-		*/
-		desired = size;
-
-//		Hard_Error_Occured = 0;
-		readresult = 0;
-		actual = mmioRead((HMMIO)Handle, (char*)buffer, desired);
-		//actual = read(Handle, buffer, desired);
-		if (actual != desired) readresult = errno;
-
-		/*
-		**	If a hard error occurred, then assume that it is the case of the CD-ROM or
-		**	floppy media having been removed. Display the error and retry as directed.
-		*/
-//		if (Hard_Error_Occured) {
-//			Error(Hard_Error_Occured, true, Filename);
-//			continue;			// Not technically needed, but to be consistent...
-//		} else {
-
-			/*
-			**	If negative one is returned from the read operation, then this indicates
-			**	either a bad file number or invalid access. These are fatal conditions, so
-			**	display the error and then abort.
-			*/
-			if (readresult != 0) {
-				Error(errno, false, Filename);
-			}// else {
-
-				/*
-				**	No error occurred during the read. Adjust the pointers and size counters and
-				**	loop again if more data is needed to be read.
-				*/
-				buffer = (void *) ((long)buffer + actual);
-				bytesread += actual;
-				size -= actual;
-				if (actual != desired) break;		// No more data?
-			//}
-//		}
-	}
+	ReadFile(Handle, buffer, size, &(unsigned long&)readresult, NULL);
+	bytesread = readresult;
 
 	/*
 	**	Close the file if it was opened by this routine and return
@@ -799,56 +751,10 @@ long RawFileClass::Write(void const *buffer, long size)
 		opened = true;
 	}
 
-	/*
-	**	Write the data to the file in chunks no bigger than what the low level DOS write
-	**	can handle.
-	*/
-	while (size) {
-		unsigned	desired;		// Bytes desired to be write this pass.
-		unsigned actual;		// Actual number of bytes written.
-
-//		Hard_Error_Occured = 0;
-//		desired = (unsigned)MIN(size, Transfer_Block_Size());
-		desired = size;
-		writeresult = 0;
-		actual = mmioWrite((HMMIO)Handle, (char*)buffer, desired);
-		//actual = write(Handle, buffer, desired);
-		if (actual != desired) writeresult = errno;
-
-		/*
-		**	If a hard error occurred, then assume it is the case of the media being
-		**	removed. Print the error message an retry as directed.
-		*/
-//		if (Hard_Error_Occured) {
-//			Error(Hard_Error_Occured, true, Filename);
-//			continue;			// Not technically needed, but to be consistent...
-//		} else {
-
-			/*
-			**	If negative one is returned by the DOS read, then this indicates a bad file
-			**	handle or invalid access. Either condition is fatal -- display error condition
-			**	and abort.
-			*/
-			if (writeresult != 0) {
-				Error(errno, false, Filename);
-			} else {
-
-				/*
-				**	A successful write occurred. Update pointers and byte counter as appropriate.
-				*/
-				buffer = (void *)((long)buffer + actual);
-				bytesread += actual;
-				size -= actual;
-
-				/*
-				**	If the actual bytes written is less than requested, assume this is a case of
-				**	the disk being full. Consider this a fatal error condition.
-				*/
-				if (actual != desired) {
-					Error(ENOSPC, false, Filename);
-				}
-			}
-//		}
+	WriteFile(Handle, buffer, size, &(unsigned long&)writeresult, NULL);
+	bytesread = writeresult;
+	if (size != bytesread) {
+		Error(ENOSPC, false, Filename);
 	}
 
 	/*
@@ -896,37 +802,21 @@ long RawFileClass::Seek(long pos, int dir)
 		Error(EBADF, false, Filename);
 	}
 
-	/*
-	**	Keep trying to seek until a non-retry condition occurs.
-	*/
-	for (;;) {
+	switch (dir) {
+		case SEEK_SET:
+			dir = FILE_BEGIN;
+			break;
 
-		/*
-		**	Perform the low level seek on the file.
-		*/
-//		Hard_Error_Occured = 0;
-		pos = mmioSeek((HMMIO)Handle, pos, dir);
-		//pos = lseek(Handle, pos, dir);
+		case SEEK_CUR:
+			dir = FILE_CURRENT;
+			break;
 
-		/*
-		**	If a hard error occurred, then assume that it is the case of removed media. Display
-		**	error message and retry.
-		*/
-//		if (Hard_Error_Occured) {
-//			Error(Hard_Error_Occured, true, Filename);
-//			continue;
-//		} else {
-
-			/*
-			**	A negative one indicates a fatal error with the seek operation. Display error
-			**	condition and then abort.
-			*/
-			if (pos == -1) {
-				Error(errno, false, Filename);
-			}
-//		}
-		break;
+		case SEEK_END:
+			dir = FILE_END;
+			break;
 	}
+
+	pos = SetFilePointer(Handle, pos, NULL, dir);
 
 	/*
 	**	Return with the new position of the file. This will range between zero and the number of
@@ -955,40 +845,14 @@ long RawFileClass::Seek(long pos, int dir)
 long RawFileClass::Size(void)
 {
 	long	size = 0;
-	int	handle = 0;
 
 	/*
 	**	If the file is open, then proceed normally.
 	*/
 	if (Is_Open()) {
 
-		/*
-		**	Repetitively try to determine the file size until a fatal error condition or success
-		**	is achieved.
-		*/
-		for (;;) {
-//			Hard_Error_Occured = 0;
+		size = GetFileSize(Handle, NULL);
 
-			handle = open(Filename, O_RDONLY|O_BINARY);
-			if (handle > 0){
-				size = filelength(handle);
-				close(handle);
-			}
-
-			/*
-			**	If a hard error occurred, then assume it is the case of removed media. Display an
-			**	error condition and allow retry.
-			*/
-//			if (Hard_Error_Occured) {
-//				Error(Hard_Error_Occured, true, Filename);
-//				continue;
-//			} else {
-				if (size == -1) {
-					Error(errno, false, Filename);
-				}
-//			}
-			break;
-		}
 	} else {
 
 		/*

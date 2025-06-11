@@ -1,39 +1,27 @@
 
-# Command & Conquer
+# Command & Conquer Patch Project
 
-This repository includes source code for Command & Conquer. This release provides support to the [Steam Workshop](https://steamcommunity.com/workshop/browse/?appid=2229830) for the game.
+This repository contains buildable and source code for Command & Conquer: Tiberian Dawn; the original first Command & Conquer game. It was [provided by Electronic Arts](https://github.com/electronicarts/CnC_Tiberian_Dawn).
 
+This repository was forked from [a branch made by tomsons26](https://github.com/tomsons26/CnC_Tiberian_Dawn/tree/temp), in which he did out most of the work of figuring out exactly how to set this up to get it building.
 
-## Dependencies
+The purpose of the Command & Conquer patch project is to fix bugs in the game, and possibly port in some Quality-Of-Life features from the C&C: Remastered source code.
 
-If you wish to rebuild the source code and tools successfully you will need to find or write new replacements (or remove the code using them entirely) for the following libraries;
+## Compiling and Dependencies
 
-- DirectX 5 SDK
-- Greenleaf Communications Library (GCL)
-- Human Machine Interface (HMI) “Sound Operating System” (SOS)
+The main game needs the following compilers and tools to function correctly:
 
+Download sources of compiler requirements:
 
-
-## Compiling (Win32 Only)
-
-The current state of the source code does not fully compile and does not contain the core engine libraries (you can find these in the [Red Alert](https://github.com/electronicarts/CnC_Red_Alert) code repository) and will require some effort to restore it. If you wish to restore the original build environment, the following tools are required;
-
-- Watcom C/C++ (v10.6) for C/C++ source files
-- Borland Turbo Assembler (TASM v4.0) for assembly files
-- Microsoft Micro Assembler (MASM v6.11d) for assembly files
-
-To use the compiled binaries, you must own the game. The C&C Ultimate Collection is available for purchase on [EA App](https://www.ea.com/en-gb/games/command-and-conquer/command-and-conquer-the-ultimate-collection/buy/pc) or [Steam](https://store.steampowered.com/bundle/39394/Command__Conquer_The_Ultimate_Collection/).
-
+* [Watcom C/C++ (v10.6)](https://winworldpc.com/product/watcom-c-c/106) for C/C++ source files
+* [Borland Turbo Assembler (TASM v4.0)](https://winworldpc.com/product/turbo-assembler/4x) for assembly files
+* [Microsoft Micro Assembler (MASM v6.11d)](https://winworldpc.com/product/macro-assembler/6x) for assembly files
+* [MS-DOS Player](http://takeda-toshiya.my.coocan.jp/msdos/) for invoking 16 bit TASM
+* [DirectX 5 SDK](https://archive.org/details/idx5sdk)
 
 ## Contributing
 
-This repository will not be accepting contributions (pull requests, issues, etc). If you wish to create changes to the source code and encourage collaboration, please create a fork of the repository under your GitHub user/organization space.
-
-
-## Support
-
-This repository is for preservation purposes only and is archived without support. 
-
+Right now, I'm not really looking into making this a joint project. Specific bug reports and suggestions are always welcome though, but post them as issues.
 
 ## License
 

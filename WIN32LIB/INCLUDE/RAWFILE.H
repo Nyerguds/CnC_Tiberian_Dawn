@@ -52,8 +52,16 @@
 //#include	<wwlib32.h>
 #include	<limits.h>
 #include	<errno.h>
+
+#ifdef WIN32
 #include	<windows.h>
-//#include	<algo.h>
+#define	NULL_HANDLE		INVALID_HANDLE_VALUE
+#define	HANDLE_TYPE		HANDLE
+#else
+#define	NULL_HANDLE		-1
+#define	HANDLE_TYPE		int
+#endif
+
 #include	"wwfile.h"
 
 #ifdef NEVER
@@ -115,6 +123,10 @@
 	EUCLEAN,				// not used
 #endif
 
+#ifndef WWERROR
+#define WWERROR	-1
+#endif
+
 /*
 **	This is the definition of the raw file class. It is derived from the abstract base FileClass
 **	and handles the interface to the low level DOS routines. This is the first class in the
@@ -138,7 +150,7 @@ class RawFileClass : public FileClass
 
 		RawFileClass(char const *filename);
 		RawFileClass(void);
-		RawFileClass (RawFileClass const & f);
+		//RawFileClass (RawFileClass const & f);
 		RawFileClass & operator = (RawFileClass const & f);
 		virtual ~RawFileClass(void) {if (Allocated && Filename) free((char *)Filename);};
 
@@ -157,7 +169,7 @@ class RawFileClass : public FileClass
 		virtual void Close(void);
 		virtual void Error(int error, int canretry = false, char const * filename=NULL);
 		virtual void Set_Buffer_Size(int size);
-
+		virtual HANDLE_TYPE Get_File_Handle(void) { return (Handle); };
 
 	protected:
 
@@ -172,7 +184,7 @@ class RawFileClass : public FileClass
 		/*
 		**	This is the low level DOS handle. A -1 indicates an empty condition.
 		*/
-		int Handle;
+		HANDLE_TYPE Handle;
 
 		/*
 		**	This points to the filename as a NULL terminated string. It may point to either a
@@ -230,7 +242,7 @@ inline char const * RawFileClass::File_Name(void) const
  *=============================================================================================*/
 inline RawFileClass::RawFileClass(void) : Filename(0)
 {
-	Handle = -1;
+	Handle = INVALID_HANDLE_VALUE;
 	Allocated = false;
 }
 
@@ -251,7 +263,7 @@ inline RawFileClass::RawFileClass(void) : Filename(0)
  *=============================================================================================*/
 inline int RawFileClass::Is_Open(void) const
 {
-	return (Handle != -1);
+	return (Handle != INVALID_HANDLE_VALUE);
 }
 
 #endif

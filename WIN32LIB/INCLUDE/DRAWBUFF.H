@@ -48,6 +48,9 @@ extern "C" {
 	 BOOL __cdecl Linear_Scale_To_Linear(	void *, void *, int, int, int, int, int, int, int, int, BOOL, char *);
 
 	 LONG __cdecl Buffer_Print(void *thisptr, const char *str, int x, int y, int fcolor, int bcolor);
+     
+     void	__cdecl Buffer_Texture_Fill_Rect(	void *thisptr, int x0_pixel, int y0_pixel, int x1_pixel, int y1_pixel,
+                                            void * shape, int shape_width, int shape_height);
 
 	/*======================================================================*/
 	/* Externs for all of the graphic buffer class only functions				*/

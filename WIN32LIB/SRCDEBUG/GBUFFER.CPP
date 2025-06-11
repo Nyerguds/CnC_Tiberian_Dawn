@@ -81,10 +81,11 @@ BOOL 	AllowHardwareBlitFills = TRUE;
  * HISTORY:                                                                *
  *   05/09/1994 PWG : Created.                                             *
  *=========================================================================*/
-GraphicViewPortClass::GraphicViewPortClass(GraphicBufferClass *gbuffer, int x, int y, int w, int h) :
-	LockCount(0),
-	GraphicBuff(NULL)
+GraphicViewPortClass::GraphicViewPortClass(GraphicBufferClass *gbuffer, int x, int y, int w, int h)
 {
+	LockCount = 0;
+	GraphicBuff = NULL;
+	
 	Attach(gbuffer, x, y, w, h);
 }
 
