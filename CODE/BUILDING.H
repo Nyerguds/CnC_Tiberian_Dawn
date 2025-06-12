@@ -184,7 +184,7 @@ class BuildingClass : public TechnoClass
 		virtual InfantryType Crew_Type(void) const;
 		virtual int Pip_Count(void) const;
 		virtual bool Can_Player_Move(void) const {return(false);};
-		virtual ActionType What_Action(ObjectClass * target) const;
+		virtual ActionType What_Action(ObjectClass * object) const;
 		virtual ActionType What_Action(CELL cell) const;
 		virtual bool Can_Demolish(void) const;
 		virtual ObjectTypeClass const & Class_Of(void) const {return *Class;};

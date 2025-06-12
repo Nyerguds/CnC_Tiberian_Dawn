@@ -1253,6 +1253,9 @@ void FootClass::Active_Click_With(ActionType action, ObjectClass * object)
 			break;
 
 		case ACTION_SELF:
+		// Nyerguds's TUC Quick Fix Patch v1.04
+		// "NO_SELF" is purely visual; it will still allow the order so it can give its feedback.
+		case ACTION_NO_SELF:
 			Player_Assign_Mission(MISSION_UNLOAD);
 			break;
 

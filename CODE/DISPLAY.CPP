@@ -2821,7 +2821,37 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 		*/
 		if (CurrentObject.Count()) {
 			if (object) {
-				action = CurrentObject[0]->What_Action(object);
+				// Nyerguds's TUC Quick Fix Patch v1.04
+				// If shift is held over an object, ALWAYS switch to select toggle.
+				bool shift = Keyboard::Down(KN_LSHIFT) || Keyboard::Down(KN_RSHIFT);
+				bool alt = Keyboard::Down(KN_LALT) || Keyboard::Down(KN_RALT);
+				if (shift && object->Class_Of().IsSelectable) {
+					action = ACTION_TOGGLE_SELECT;
+				} else {
+					// Nyerguds's TUC Quick Fix Patch v1.04
+					// If a selected unit is targeted, execute from that one to test if it's a deployer.
+					// This has an exception for the Alt key, to allow other units a chance to enter it.
+					bool retest = true;
+					if (!alt && object->Is_Techno() && ((TechnoClass *)object)->IsOwnedByPlayer && object->IsSelected) {
+						action = object->What_Action(object);
+						// If the action returned something else than "none", or it's the same as the first object, abort.
+						if (action != ACTION_NONE) {
+							retest = false;
+						}
+					}
+					// A bit heavy perhaps, but the only way to find if anything can interact with it.
+					if (retest) {
+						for (int index = 0; index < CurrentObject.Count(); index++) {
+							ObjectClass * tobject = CurrentObject[index];
+							if (object == tobject)
+								continue;
+							action = tobject->What_Action(object);
+							// If a specific action was found, abort.
+							if (action != ACTION_NONE && (!alt || action != ACTION_MOVE))
+								break;
+						}					
+					}
+				}
 			} else {
 				action = CurrentObject[0]->What_Action(cell);
 			}
@@ -3113,6 +3143,13 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
 				Set_Default_Mouse(MOUSE_DEPLOY, wwsmall);
 				break;
 
+			// Nyerguds's TUC Quick Fix Patch v1.04
+			// Special case where self-targeting is acknowledged to be possible, but currently
+			// unavailable due to external circumstances. Used for the MCV in nondeployable area.
+			case ACTION_NO_SELF:
+				Set_Default_Mouse(MOUSE_NO, wwsmall);
+				break;
+
 			case ACTION_REPAIR:
 				Set_Default_Mouse(MOUSE_REPAIR, wwsmall);
 				break;
@@ -3252,125 +3289,150 @@ void DisplayClass::Mouse_Left_Release(CELL cell, int x, int y, ObjectClass * obj
 		} else {
 			Speak(VOX_DEPLOY);
 		}
+		return;
+	}
+	if (IsRubberBand) {
+		Refresh_Band();
+		Select_These(XYPixel_Coord(BandX, BandY), XYPixel_Coord(x, y));
 
-	} else {
-
-		if (IsRubberBand) {
-			Refresh_Band();
-			Select_These(XYPixel_Coord(BandX, BandY), XYPixel_Coord(x, y));
-
-			Set_Default_Mouse(MOUSE_NORMAL, wwsmall);
+		Set_Default_Mouse(MOUSE_NORMAL, wwsmall);
 #ifdef NEVER
-			if (CurrentObject.Count()) {
-				if (CurrentObject[0]->Can_Player_Fire()) {
-					Set_Default_Mouse(MOUSE_CAN_ATTACK, wwsmall);
-				} else {
-					Set_Default_Mouse(MOUSE_NORMAL, wwsmall);
-				}
+		if (CurrentObject.Count()) {
+			if (CurrentObject[0]->Can_Player_Fire()) {
+				Set_Default_Mouse(MOUSE_CAN_ATTACK, wwsmall);
 			} else {
 				Set_Default_Mouse(MOUSE_NORMAL, wwsmall);
 			}
-#endif
-
-			IsRubberBand = false;
-			IsTentative = false;
-			Map.DisplayClass::IsToRedraw = true;
-			Map.Flag_To_Redraw(false);
-
 		} else {
-
-			/*
-			**	Toggle the select state of the object.
-			*/
-			if (action == ACTION_TOGGLE_SELECT) {
-				if (!object || !CurrentObject.Count() || CurrentObject[0]->Owner() != PlayerPtr->Class->House) {
-					action = ACTION_SELECT;
-				} else {
-					if (object->IsSelected) {
-						object->Unselect();
-					} else {
-						object->Select();
-					}
-				}
-			}
-
-			/*
-			**	Selection of other object action.
-			*/
-			if (action == ACTION_SELECT || (action == ACTION_NONE && object && object->Class_Of().IsSelectable && !object->IsSelected)) {
-				Unselect_All();
-				object->Select();
-				Set_Default_Mouse(MOUSE_NORMAL, wwsmall);
-#ifdef NEVER
-				if (object->Can_Player_Fire()) {
-					Set_Default_Mouse(MOUSE_CAN_ATTACK, wwsmall);
-				} else {
-					Set_Default_Mouse(MOUSE_NORMAL, wwsmall);
-				}
+			Set_Default_Mouse(MOUSE_NORMAL, wwsmall);
+		}
 #endif
+
+		IsRubberBand = false;
+		IsTentative = false;
+		Map.DisplayClass::IsToRedraw = true;
+		Map.Flag_To_Redraw(false);
+		return;
+	}
+
+	/*
+	**	Toggle the select state of the object.
+	*/
+	if (action == ACTION_TOGGLE_SELECT) {
+		if (!object || !CurrentObject.Count() || CurrentObject[0]->Owner() != PlayerPtr->Class->House) {
+			action = ACTION_SELECT;
+		} else {
+			if (object->IsSelected) {
+				object->Unselect();
+			} else {
+				object->Select();
 			}
+		}
+		IsTentative = false;
+		return;
+	}
 
-			/*
-			**	If an action was detected as possible, then pass this action event
-			**	to all selected objects.
-			*/
-			if (action != ACTION_NONE && action != ACTION_SELECT) {
+	/*
+	**	Selection of other object action.
+	*/
+	if (action == ACTION_SELECT || (action == ACTION_NONE && object && object->Class_Of().IsSelectable && !object->IsSelected)) {
+		Unselect_All();
+		object->Select();
+		Set_Default_Mouse(MOUSE_NORMAL, wwsmall);
+#ifdef NEVER
+		if (object->Can_Player_Fire()) {
+			Set_Default_Mouse(MOUSE_CAN_ATTACK, wwsmall);
+		} else {
+			Set_Default_Mouse(MOUSE_NORMAL, wwsmall);
+		}
+#endif
+		IsTentative = false;
+		return;
+	}
 
-				/*
-				**	Pass the action to all the selected objects. But first, redetermine
-				**	what action that object should perform. This, seemingly redundant
-				**	process, is necessary since multiple objects could be selected and each
-				**	might perform a different action when the click occurs.
-				*/
-				bool doflash = true;
-				AllowVoice = true;
-				for (int index = 0; index < CurrentObject.Count(); index++) {
-					ObjectClass * tobject = CurrentObject[index];
-					if (object) {
-						tobject->Active_Click_With(tobject->What_Action(object), object);
-					} else {
-						tobject->Active_Click_With(tobject->What_Action(cell), cell);
-					}
-					AllowVoice = false;
-				}
-				AllowVoice = true;
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// This seems to have fixed the bug that a click action could
+	// occur after drawing a rubberband box for selecting.
+	if (action == ACTION_NONE || action == ACTION_SELECT || action == ACTION_TOGGLE_SELECT) {
+		return;
+	}
 
-				if (action == ACTION_REPAIR && object->What_Am_I() == RTTI_BUILDING) {
-					OutList.Add(EventClass(EventClass::REPAIR, object->As_Target()));
-				}
-				if (action == ACTION_SELL_UNIT && object) {
-					switch (object->What_Am_I()) {
-						case RTTI_AIRCRAFT:
-						case RTTI_UNIT:
-							OutList.Add(EventClass(EventClass::SELL, object->As_Target()));
-							break;
+	/*
+	**	If an action was detected as possible, then pass this action event
+	**	to all selected objects.
+	*/
 
-						default:
-							break;
-					}
-
-				}
-				if (action == ACTION_SELL) {
-					if (object) {
-						OutList.Add(EventClass(EventClass::SELL, object->As_Target()));
-					} else {
-						OutList.Add(EventClass(EventClass::SELL, ::As_Target(cell)));
-					}
-				}
-				if (action == ACTION_ION) {
-					OutList.Add(EventClass(EventClass::SPECIAL_PLACE, SPC_ION_CANNON, cell));
-				}
-				if (action == ACTION_NUKE_BOMB) {
-					OutList.Add(EventClass(EventClass::SPECIAL_PLACE, SPC_NUCLEAR_BOMB, cell));
-				}
-				if (action == ACTION_AIR_STRIKE) {
-					OutList.Add(EventClass(EventClass::SPECIAL_PLACE, SPC_AIR_STRIKE, cell));
-				}
-			}
-
-			IsTentative = false;
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// if the object under the cursor is in the selection, prioritize it, except if Alt is held down.
+	AllowVoice = true;
+	bool loopall = true;
+	bool alt = Keyboard::Down(KN_LALT) || Keyboard::Down(KN_RALT);
+	// Check if player clicked a deployable unit inside their selection. If so, deploy just that one thing.
+	if (!alt && object && object->IsSelected && object->Is_Techno() && ((TechnoClass *)object)->IsOwnedByPlayer) {
+		ActionType selfact = object->What_Action(object);
+		if (selfact == ACTION_SELF || selfact == ACTION_NO_SELF) {
+			object->Active_Click_With(selfact, object);
+			loopall = false;
 		}
 	}
+
+	/*
+	**	Pass the action to all the selected objects. But first, redetermine
+	**	what action that object should perform. This, seemingly redundant
+	**	process, is necessary since multiple objects could be selected and each
+	**	might perform a different action when the click occurs.
+	*/
+	// Disable loop through everything if the object under the cursor got a SELF order.
+	if (loopall) {
+		for (int index = 0; index < CurrentObject.Count(); index++) {
+			ObjectClass * tobject = CurrentObject[index];
+			if (object) {
+				ActionType selfact = tobject->What_Action(object);
+				// Suppress self-action in this context
+				if (selfact == ACTION_SELF || selfact == ACTION_NO_SELF) {
+					selfact = ACTION_NONE;
+				}
+				tobject->Active_Click_With(selfact, object);
+			} else {
+				tobject->Active_Click_With(tobject->What_Action(cell), cell);
+			}
+			AllowVoice = false;
+		}
+	}
+	AllowVoice = true;
+
+	if (action == ACTION_REPAIR && object->What_Am_I() == RTTI_BUILDING) {
+		OutList.Add(EventClass(EventClass::REPAIR, object->As_Target()));
+	}
+	if (action == ACTION_SELL_UNIT && object) {
+		switch (object->What_Am_I()) {
+			case RTTI_AIRCRAFT:
+			case RTTI_UNIT:
+				OutList.Add(EventClass(EventClass::SELL, object->As_Target()));
+				break;
+
+			default:
+				break;
+		}
+
+	}
+	if (action == ACTION_SELL) {
+		if (object) {
+			OutList.Add(EventClass(EventClass::SELL, object->As_Target()));
+		} else {
+			OutList.Add(EventClass(EventClass::SELL, ::As_Target(cell)));
+		}
+	}
+	if (action == ACTION_ION) {
+		OutList.Add(EventClass(EventClass::SPECIAL_PLACE, SPC_ION_CANNON, cell));
+	}
+	if (action == ACTION_NUKE_BOMB) {
+		OutList.Add(EventClass(EventClass::SPECIAL_PLACE, SPC_NUCLEAR_BOMB, cell));
+	}
+	if (action == ACTION_AIR_STRIKE) {
+		OutList.Add(EventClass(EventClass::SPECIAL_PLACE, SPC_AIR_STRIKE, cell));
+	}
+	IsTentative = false;
 }
 
 

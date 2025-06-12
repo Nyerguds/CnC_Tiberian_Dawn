@@ -2074,10 +2074,10 @@ void AircraftClass::Player_Assign_Mission(MissionType mission, TARGET target, TA
  * HISTORY:                                                                                    *
  *   06/19/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-ActionType AircraftClass::What_Action(ObjectClass * target) const
+ActionType AircraftClass::What_Action(ObjectClass * object) const
 {
 	Validate();
-	ActionType action = FootClass::What_Action(target);
+	ActionType action = FootClass::What_Action(object);
 
 	if (action == ACTION_SELF && !How_Many()) {
 		action = ACTION_NONE;
@@ -2087,7 +2087,12 @@ ActionType AircraftClass::What_Action(ObjectClass * target) const
 		action = ACTION_NONE;
 	}
 
-	if (IsOwnedByPlayer && House->Is_Ally(target) && target->What_Am_I() == RTTI_BUILDING && ((AircraftClass *)this)->Transmit_Message(RADIO_CAN_LOAD, (TechnoClass*)target) == RADIO_ROGER) {
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Don't allow ENTER to override Ctrl or Ctrl+Alt. Alt is still allowed to be overridden.
+	if (
+		action != ACTION_ATTACK && action != ACTION_GUARD_AREA && object->Is_Techno() && IsOwnedByPlayer &&
+		((TechnoClass const *)object)->House->Is_Ally(this) && object->What_Am_I() == RTTI_BUILDING &&
+		((AircraftClass *)this)->Transmit_Message(RADIO_CAN_LOAD, (TechnoClass*)object) == RADIO_ROGER) {
 		action = ACTION_ENTER;
 	}
 	return(action);
@@ -2750,7 +2755,9 @@ MoveType AircraftClass::Can_Enter_Cell(CELL cell, FacingType ) const
 		if (!cellptr->Is_Generally_Clear()) return(MOVE_NO);
 	}
 
-	if (GameToPlay == GAME_NORMAL && IsOwnedByPlayer && !cellptr->IsVisible) return(MOVE_NO);
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Do not allow aircraft to enter shroud in multiplay. It can be abused.
+	if (/*GameToPlay == GAME_NORMAL &&*/ IsOwnedByPlayer && !cellptr->IsVisible) return(MOVE_NO);
 
 	return(MOVE_OK);
 }
@@ -2788,7 +2795,9 @@ TARGET AircraftClass::Good_Fire_Location(TARGET target) const
 				COORDINATE newcoord = Coord_Move(tcoord, (DirType)face, r);
 				CELL newcell = Coord_Cell(newcoord);
 
-				if (Map.In_Radar(newcell) && (GameToPlay != GAME_NORMAL || Map[newcell].IsVisible) && Cell_Seems_Ok(newcell, true)) {
+				// Nyerguds's TUC Quick Fix Patch v1.04
+				// Do not allow aircraft to enter shroud in multiplay. It can be abused.
+				if (Map.In_Radar(newcell) && (/*GameToPlay != GAME_NORMAL ||*/ Map[newcell].IsVisible) && Cell_Seems_Ok(newcell, true)) {
 					int dist = Distance(newcoord);
 					if (bestval == -1 || dist < bestval) {
 						best2val = bestval;

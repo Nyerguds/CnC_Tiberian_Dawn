@@ -68,24 +68,28 @@ v1.03:
 
 v1.04: (in progress)
 
-* Allowed the Area Guard functions ("G" and [Ctrl]+[Alt]+Click) to be used on Harvesters to find nearby tiberium to harvest.
-* The game will no longer give occasional "insufficient disk space" errors.
+* Allowed the Area Guard functions ("G" and [Ctrl]+[Alt]+Click) to be used by Harvesters to find nearby tiberium to harvest.
+* The game will no longer give occasional "insufficient disk space" errors on startup.
 * Click orders given on the minimap will show a flash on the targeted cell in the main map view.
 * Missions where the player is neither GDI nor Nod will now always skip the score screen, to avoid a crash.
 * Added "D" as Deploy/Unload hotkey. Note that this does not affect Transport Helicopters while they are in the air.
-* The Keyboard-given orders for Area Guard, Scatter and Deploy will now give unit responses.
+* The keyboard-given orders for Area Guard, Scatter and Deploy will now give unit responses.
 * Survivors from C4 explosions will no longer immediately shoot at the Commando at the moment they are spawned.
 * Fixed the bug where survivors from C4 explosions often never bothered pursuing the Commando.
 * In the Japanese version, if a briefing image is not found, it will now revert to (English) text briefing.
 * All language versions now support having a CPS-format image with the filename of a mission as briefing image.
-* Helicopters can no longer be given Move and Force-attack orders into the shroud in any situation.
+* Helicopters can no longer be given Move and Force-attack orders into the shroud in multiplayer.
 * Capturing a building will now refresh all of its cells on the radar to the new color.
 * EVA now announces when the player loses a building. The "DeathAnnounce" option now also works for buildings.
 * When "DeathAnnounce" is enabled, a destroyed unit or structure in singleplayer that is not GDI or Nod, and is not allied with the player, is now reported as destroyed "enemy".
 * EVA now announces when repairs have started on a building or unit.
-* Drag-selecting will now show the default cursor instead of keeping an incorrect cursor from where the drag started.
+* Drag-selecting will now show the default cursor instead of keeping an incorrect cursor from where the drag action started.
 * Drag-selecting will no longer pop up a tooltip of the thing the mouse was pressed down on.
-* The minimap now responds to clicks when the mouse is released, just like on the main map
+* The minimap will now only respond to clicks at the moment the mouse is released, like how it works on the main map.
 * The minimap will now update its cursor wheh holding down the mouse on it.
-* Singleplayer logic regarding difficulty and tooltips will no longer be affected by the multiplayer map numbers.
-* Fixed the fact the chance of an AI selling a building was affected by the mission number in Covert Ops missions. It is now affected by the set build level.
+* The map number in multiplayer will no longer affect logic regarding difficulty and tooltips that is only meant for singleplayer.
+* Fixed the fact the chance of an AI selling a building was affected by the mission number in Covert Ops missions. It is now affected by the set build level, capped at 20.
+* Deploying units now works even if you have multiple units selected. This will not affect the other units in the selection.
+* To compensate for the deployment change causing you to be unable to load infantry into an APC that contains some units, you can hold [Alt] to force them inside.
+* When having infantry selected, you can now hold down shift and add an unloaded APC or Chinook to the selection without this getting overridden by the order to load into the transport.
+* An "Enter" cursor no longer overrides the [Ctrl] force-fire or [Ctrl]+[Alt] Guard Target cursors. It will still override [Alt] force-move though, since that's used to override transports' unloading.

@@ -519,6 +519,7 @@ typedef enum ActionType {
 	ACTION_NOMOVE,			// Special case for movable object, but illegal mouse position.
 	ACTION_ENTER,			// Special case for infantry->APC or vehicle->Repair facility.
 	ACTION_SELF,			// Self select special case.
+	ACTION_NO_SELF,			// Self select acknowledged but denied. // Nyerguds's TUC Quick Fix Patch v1.04
 	ACTION_ATTACK,			// Can attack or fire upon it in some fashion.
 	ACTION_HARVEST,		// Special harvest mode.
 	ACTION_SELECT,			// Would change selection to specified object.
@@ -1666,6 +1667,7 @@ typedef enum MouseType
 	MOUSE_NO_SW,
 	MOUSE_NO_W,
 	MOUSE_NO_NW,
+	MOUSE_NO,  // Nyerguds's TUC Quick Fix Patch v1.04; added as "can't deploy here" cursor.
 	MOUSE_NO_MOVE,
 	MOUSE_CAN_MOVE,
 	MOUSE_ENTER,

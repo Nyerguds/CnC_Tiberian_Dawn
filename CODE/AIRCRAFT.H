@@ -87,7 +87,7 @@ class AircraftClass : public FootClass, public FlyClass
 		virtual MoveType Can_Enter_Cell(CELL cell, FacingType facing=FACING_NONE) const;
 		virtual LayerType In_Which_Layer(void) const;
 		virtual ObjectTypeClass const & Class_Of(void) const {return *Class;};
-		virtual ActionType What_Action(ObjectClass * target) const;
+		virtual ActionType What_Action(ObjectClass * object) const;
 		virtual ActionType What_Action(CELL cell) const;
 		virtual DirType Desired_Load_Dir(ObjectClass * passenger, CELL & moveto) const;
 		virtual int Pip_Count(void) const;

@@ -340,6 +340,7 @@ MouseClass::MouseStruct MouseClass::MouseControl[MOUSE_COUNT] = {
 	{136,	1,		0,		-1,	0, 	13},	//	MOUSE_NO_W
 	{137,	1,		0,		-1,	0, 	0},	//	MOUSE_NO_NW
 
+	{9,	1,		0,		27,	15,	12},	//	MOUSE_NO // Nyerguds's TUC Quick Fix Patch v1.04
 	{11,	1,		0,		27,	15,	12},	//	MOUSE_NO_MOVE
 	{10,	1,		0,		26,	15,	12},	//	MOUSE_CAN_MOVE
 	{119,	3,		4,		148,	15,	12},	//	MOUSE_ENTER

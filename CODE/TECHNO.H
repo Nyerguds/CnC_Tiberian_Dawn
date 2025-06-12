@@ -216,7 +216,7 @@ class TechnoClass :	public RadioClass,
 		virtual int Risk(void) const;
 		virtual int Value(void) const;
 		virtual int Rearm_Delay(bool second=true) const;
-		virtual ActionType What_Action(ObjectClass * target) const;
+		virtual ActionType What_Action(ObjectClass * object) const;
 		virtual ActionType What_Action(CELL cell) const;
 		virtual int Tiberium_Load(void) const;
 		virtual DirType Desired_Load_Dir(ObjectClass * , CELL & moveto) const;

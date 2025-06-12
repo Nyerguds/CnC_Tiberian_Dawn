@@ -2174,7 +2174,9 @@ ActionType TechnoClass::What_Action(ObjectClass * object) const
 		**	object cannot do anything special with itself, then just return with
 		**	the no action flag.
 		*/
-		if (object == this && CurrentObject.Count() == 1 && House == PlayerPtr) {
+ 		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Don't disallow deploy just because more is selected. This is now checked afterwards.
+		if (object == this && /*CurrentObject.Count() == 1 &&*/ House == PlayerPtr) {
 			return(ACTION_SELF);
 		}
 
@@ -2217,7 +2219,6 @@ ActionType TechnoClass::What_Action(ObjectClass * object) const
 		/*
 		**	If firing is possible and legal, then return this action potential.
 		*/
-		bool control = Keyboard::Down(KN_LCTRL) || Keyboard::Down(KN_RCTRL);
 		if (IsOwnedByPlayer && (ctrldown || !House->Is_Ally(object)) && (ctrldown || object->Class_Of().IsLegalTarget || (Special.IsTreeTarget && object->What_Am_I() == RTTI_TERRAIN))) {
 			if (Can_Player_Move() || In_Range(object, 0)) {
 				return(ACTION_ATTACK);

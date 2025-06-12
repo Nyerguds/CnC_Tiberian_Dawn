@@ -3351,21 +3351,29 @@ ActionType UnitClass::What_Action(ObjectClass * object) const
 		} else {
 			((ObjectClass &)(*this)).Mark(MARK_UP);
 			if (!BuildingTypeClass::As_Reference(STRUCT_CONST).Legal_Placement(Coord_Cell(Adjacent_Cell(Center_Coord(), FACING_NW)))) {
-				action = ACTION_NONE;
+ 				// Nyerguds's TUC Quick Fix Patch v1.04
+				// Fun little "Cannot deploy here" cursor :)
+				action = ACTION_NO_SELF;
 			}
 			((ObjectClass &)(*this)).Mark(MARK_DOWN);
 		}
 	}
 
 	/*
-	**	Special return to friendly refinery action.
+	**	Special return to friendly dockable building action. Used for the refinery and repair facility.
 	*/
-	if (IsOwnedByPlayer && object->Is_Techno() && ((TechnoClass const *)object)->House->Is_Ally(this)) {
-		if (object->What_Am_I() == RTTI_BUILDING && ((UnitClass *)this)->Transmit_Message(RADIO_CAN_LOAD, (TechnoClass*)object) == RADIO_ROGER) {
-			action = ACTION_ENTER;
-		}
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Don't allow ENTER to override Ctrl or Ctrl+Alt. Alt is still allowed to be overridden.
+	if (
+		action != ACTION_ATTACK && action != ACTION_GUARD_AREA && object->Is_Techno() && IsOwnedByPlayer &&
+		((TechnoClass const *)object)->House->Is_Ally(this) && object->What_Am_I() == RTTI_BUILDING &&
+		((UnitClass *)this)->Transmit_Message(RADIO_CAN_LOAD, (TechnoClass*)object) == RADIO_ROGER) {
+		action = ACTION_ENTER;
 	}
 
+#ifdef OBSOLETE
+	// This never worked; the repair logic apparently always used the refinery logic above.
+	// This can easily be seen from the fact docking uses the Enter cursor, not Move.
 	/*
 	**	Special return to friendly repair factory action.
 	*/
@@ -3375,7 +3383,7 @@ ActionType UnitClass::What_Action(ObjectClass * object) const
 			action = ACTION_MOVE;
 		}
 	}
-
+#endif
 	return(action);
 }
 

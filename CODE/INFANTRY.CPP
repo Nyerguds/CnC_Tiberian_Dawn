@@ -2840,11 +2840,11 @@ ActionType InfantryClass::What_Action(ObjectClass * object) const
 	/*
 	**	Check to see if it can enter a transporter.
 	*/
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Don't allow ENTER to override Ctrl or Ctrl+Alt. Alt is still allowed to be overridden.
 	if (
-		House->Is_Ally(object) &&
-		IsOwnedByPlayer &&
-		object->Is_Techno() &&
-		IsOwnedByPlayer &&
+		action != ACTION_ATTACK && action != ACTION_GUARD_AREA &&
+		IsOwnedByPlayer && House->Is_Ally(object) && object->Is_Techno() &&
 		((InfantryClass *)this)->Transmit_Message(RADIO_CAN_LOAD, (TechnoClass*)object) == RADIO_ROGER) {
 //	if (object->Owner() == Owner() && object->What_Am_I() == RTTI_UNIT && ((UnitClass *)object)->Class->IsTransporter && ((UnitClass *)object)->How_Many() < 5) {
 		action = ACTION_ENTER;

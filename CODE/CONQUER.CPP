@@ -686,12 +686,14 @@ void Keyboard_Process(KeyNumType &input)
 				AllowVoice = true;
 				for (int index = 0; index < CurrentObject.Count(); index++) {
 					ObjectClass const * tech = CurrentObject[index];
-					if (tech && tech->Is_Techno()) {
+					// Block "deploy" on buildings since it just sets them Primary.
+					if (tech && tech->Is_Techno() && tech->Can_Player_Move()) {
 						TechnoClass * techno = (TechnoClass *)tech;
-						// Only transporters and MCVs can deploy. Aircraft are blocked if they are currently
-						// in the air because this apparently makes them seek out a friendly building to land at.
-						if (((techno->Techno_Type_Class()->IsTransporter && techno->How_Many()) || (techno->What_Am_I() == RTTI_UNIT && *((UnitClass *)techno) == UNIT_MCV))
-							 && (techno->What_Am_I() != RTTI_AIRCRAFT || ((AircraftClass *)techno)->Altitude == 0)) {
+						// Check if this object can deploy.
+						RTTIType whattype = techno->What_Am_I();
+						ActionType action = techno->What_Action(techno);
+						// Aircraft are blocked if they are currently in the air because this apparently makes them seek out a friendly building to land at.
+						if ((action == ACTION_SELF || action == ACTION_NO_SELF) && (whattype != RTTI_AIRCRAFT || ((AircraftClass *)techno)->Altitude == 0)) {
 							techno->Response_Move();
 							AllowVoice = false;
 							OutList.Add(EventClass(tech->As_Target(), MISSION_UNLOAD));
