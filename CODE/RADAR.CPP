@@ -338,17 +338,19 @@ void RadarClass::Draw_It(bool forced)
 	*/
 	if (!forced && !IsToRedraw && !FullRedraw) return;
 
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// -Make funpark campaign independent from Jurassic mode.
+	// -Simplified this logic to actually use House JP
 	static HousesType _house = HOUSE_NONE;
-	if (PlayerPtr->ActLike != _house) {
+	HousesType radarhouse = PlayerPtr->ActLike;
+	if (/*(Special.IsJurassic && AreThingiesEnabled) ||*/ ScenPlayer == SCEN_PLAYER_JP) {
+		radarhouse = HOUSE_JP;
+	}
+	if (radarhouse != _house) {
 		char name[_MAX_NAME + _MAX_EXT];
-
-		if (Special.IsJurassic && AreThingiesEnabled) {
-			strcpy(name, "RADAR.JP");
-		} else {
-			_makepath(name, NULL, NULL, "RADAR", HouseTypeClass::As_Reference(PlayerPtr->ActLike).Suffix);
-		}
+		_makepath(name, NULL, NULL, "RADAR", HouseTypeClass::As_Reference(radarhouse).Suffix);
 		RadarAnim = Hires_Retrieve(name);
-		_house = PlayerPtr->ActLike;
+		_house = radarhouse;
 	}
 
 	/*

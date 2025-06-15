@@ -11,8 +11,6 @@ The purpose of the Command & Conquer patch project is to fix bugs in the game, a
 
 The main game needs the following compilers and tools to function correctly:
 
-Download sources of compiler requirements:
-
 * [Watcom C/C++ (v10.6)](https://winworldpc.com/product/watcom-c-c/106) for C/C++ source files
 * [Borland Turbo Assembler (TASM v4.0)](https://winworldpc.com/product/turbo-assembler/4x) for assembly files
 * [Microsoft Micro Assembler (MASM v6.11d)](https://winworldpc.com/product/macro-assembler/6x) for assembly files

@@ -609,8 +609,8 @@ void ScoreClass::Presentation(void)
 	}
 
 	// Nyerguds's TUC Quick Fix Patch v1.04
-	// Always skip score screen if nonstandard house is played.
-	if ((house != HOUSE_GOOD && house != HOUSE_BAD) || (Special.IsJurassic && AreThingiesEnabled)) {
+	// Always skip score screen if nonstandard house is played, or playing Jurassic campaign.
+	if ((house != HOUSE_GOOD && house != HOUSE_BAD) || /*(Special.IsJurassic && AreThingiesEnabled) ||*/ ScenPlayer == SCEN_PLAYER_JP) {
 		return;
 	}
 

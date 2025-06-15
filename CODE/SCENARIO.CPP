@@ -92,12 +92,15 @@ bool Start_Scenario(char *root, bool briefing)
 		** sides introduction.  We don't want an intro movie on scenario 1, and
 		** we don't want a briefing movie on GDI scenario 1.
 		*/
-		if (Scenario < 20 && (!Special.IsJurassic || !AreThingiesEnabled)) {
-			if (Scenario != 1 || Whom == HOUSE_GOOD) {
+		// Nyerguds's TUC Quick Fix Patch v1.04
+		// -Consistently use ScenPlayer for scenario exceptions
+		// -Make funpark campaign independent from Jurassic mode.
+		if (Scenario < 20 && /*(!Special.IsJurassic || !AreThingiesEnabled) ||*/ ScenPlayer != SCEN_PLAYER_JP) {
+			if (Scenario != 1 || ScenPlayer == SCEN_PLAYER_GDI) {
 				Play_Movie(IntroMovie);
 			}
 	
-			if ((Scenario > 1 || Whom == HOUSE_BAD) && briefing) {
+			if ((Scenario > 1 || ScenPlayer == SCEN_PLAYER_NOD) && briefing) {
 				PreserveVQAScreen = (Scenario == 1);
 				Play_Movie(BriefMovie);
 			}
@@ -432,7 +435,7 @@ void Do_Win(void)
 
 		// Nyerguds's TUC Quick Fix Patch v1.00: funpark
 		// Makes the Funpark campaign end gracefully to the main menu instead of quitting the game.
-		if (Scenario >= 20 || (Special.IsJurassic && AreThingiesEnabled && Scenario == 5)) {
+		if (Scenario >= 20 || (ScenPlayer == SCEN_PLAYER_JP && Scenario == 5)) {
 			Keyboard::Clear();
 			Score.Presentation();
 			GameActive = false;
@@ -440,7 +443,7 @@ void Do_Win(void)
 			return;
 		}
 
-		if (PlayerPtr->Class->House == HOUSE_BAD && Scenario == 13) {
+		if (ScenPlayer == SCEN_PLAYER_NOD && Scenario == 13) {
 			Nod_Ending();
 			//Prog_End();
 			//exit(0);
@@ -449,7 +452,7 @@ void Do_Win(void)
 			GameActive = false;
 			return;
 		}
-		if (PlayerPtr->Class->House == HOUSE_GOOD && Scenario == 15) {
+		if (ScenPlayer == SCEN_PLAYER_GDI && Scenario == 15) {
 			GDI_Ending();
 			//Prog_End();
 			//exit(0);
@@ -466,21 +469,23 @@ void Do_Win(void)
 			exit(0);
 		}
 #endif
-		if (!Special.IsJurassic || !AreThingiesEnabled) {
-			Keyboard::Clear();
-			InterpolationPaletteChanged = TRUE;
-			InterpolationPalette = Palette;
-			Score.Presentation();
+		Keyboard::Clear();
+		InterpolationPaletteChanged = TRUE;
+		InterpolationPalette = Palette;
+		Score.Presentation();
 
-			/*
-			**	Skip scenario #7 if the airfield was blown up.
-			*/
-			if (Scenario == 6 && PlayerPtr->Class->House == HOUSE_GOOD && SabotagedType == STRUCT_AIRSTRIP) {
-				Scenario++;
-			}
-
+		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Consistently use ScenPlayer for scenario exceptions
+		/*
+		**	Skip scenario #7 if the airfield was blown up.
+		*/
+		if (Scenario == 6 && ScenPlayer == SCEN_PLAYER_GDI && SabotagedType == STRUCT_AIRSTRIP) {
+			Scenario++;
+		}
+		if (ScenPlayer == SCEN_PLAYER_GDI || ScenPlayer == SCEN_PLAYER_GDI) {
 			Map_Selection();
 		}
+		
 		Scenario++;
 #endif
 		Keyboard::Clear();

@@ -3186,7 +3186,9 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
 	**	Give a generic help message when over shadow terrain.
 	*/
 	if (shadow) {
-		if (Scenario < 4 && GameToPlay == GAME_NORMAL) {
+		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Consider secret campaign to be for advanced players; they don't need basic hints.
+		if (Scenario < 4 && GameToPlay == GAME_NORMAL && ScenPlayer != SCEN_PLAYER_JP) {
 			Help_Text(TXT_SHADOW);
 		} else {
 			Help_Text(TXT_NONE);
@@ -3240,8 +3242,9 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
 					}
 				}
 			}
-
-			if (Scenario > 3 || object->What_Am_I() != RTTI_TERRAIN || GameToPlay != GAME_NORMAL) {
+			// Nyerguds's TUC Quick Fix Patch v1.04
+			// Consider secret campaign to be for advanced players; they can see advanced hints.
+			if (Scenario > 3 || object->What_Am_I() != RTTI_TERRAIN || GameToPlay != GAME_NORMAL || ScenPlayer == SCEN_PLAYER_JP) {
 				Help_Text(text, -1, -1, color);
 			} else {
 				Help_Text(TXT_NONE);

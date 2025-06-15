@@ -102,7 +102,8 @@ void DriveClass::Do_Turn(DirType dir)
 			}
 		} else {
 			PrimaryFacing.Set_Desired(dir);
-			if (Special.IsJurassic && AreThingiesEnabled && What_Am_I() == RTTI_UNIT && ((UnitClass *)this)->Class->IsPieceOfEight) PrimaryFacing.Set_Current(dir);
+			// Nyerguds's TUC Quick Fix Patch v1.00: Funpark
+			if (/*Special.IsJurassic && AreThingiesEnabled &&*/ What_Am_I() == RTTI_UNIT && ((UnitClass *)this)->Class->IsPieceOfEight) PrimaryFacing.Set_Current(dir);
 		}
 	}
 }

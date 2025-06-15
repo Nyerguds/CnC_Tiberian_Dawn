@@ -1076,10 +1076,10 @@ bool Select_Game(bool fade)
 
 					Scenario = 1;
 					BuildLevel = 1;
-#else
+#else // not DEMO
 					Scenario = 1;
 					BuildLevel = 1;
-#endif
+#endif // DEMO
 					ScenPlayer = SCEN_PLAYER_GDI;
 					ScenDir = SCEN_DIR_EAST;
 					Whom = HOUSE_GOOD;
@@ -1087,8 +1087,12 @@ bool Select_Game(bool fade)
 #ifndef DEMO
 					Theme.Fade_Out();
 					Choose_Side();
-#endif
+#endif // not DEMO
 
+#ifdef OBSOLETE
+					// Nyerguds's TUC Quick Fix Patch v1.04
+					// Make funpark campaign independent from Jurassic mode.
+					// This is now handled in the intro screen.
 					/*
 					** If user is playing special mode, do NOT change Whom; leave it set to
 					** GDI or NOD.  Ini.cpp will set the player's ActLike to mirror the
@@ -1098,7 +1102,7 @@ bool Select_Game(bool fade)
 						ScenPlayer = SCEN_PLAYER_JP;
 						ScenDir = SCEN_DIR_EAST;
 					}
-
+#endif
 					GameToPlay = GAME_NORMAL;
 					process = false;
 					break;

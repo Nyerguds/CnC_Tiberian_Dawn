@@ -1797,7 +1797,9 @@ void BuildingClass::Drop_Debris(TARGET source)
 	**	Special case for Moebius to run from destroyed technology
 	**	building.
 	*/
-	if (GameToPlay == GAME_NORMAL && *this ==  STRUCT_MISSION && PlayerPtr->ActLike == HOUSE_BAD && Scenario == 10) {
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Consistently use ScenPlayer for scenario exceptions
+	if (GameToPlay == GAME_NORMAL && *this ==  STRUCT_MISSION && ScenPlayer == SCEN_PLAYER_NOD && Scenario == 10) {
 		InfantryClass * i = new InfantryClass(INFANTRY_CHAN, House->Class->House);
 
 		ScenarioInit++;

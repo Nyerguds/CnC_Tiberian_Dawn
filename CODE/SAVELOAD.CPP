@@ -132,11 +132,13 @@ bool Save_Game(int id,char *descr)
 	int i;
 	unsigned long version;
 	unsigned scenario;
-	HousesType house;
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Fix funpark campaign savegames
+	ScenarioPlayerType campaign;
 	char descr_buf[DESCRIP_MAX];
 
-	scenario = Scenario;								// get current scenario #
-	house = PlayerPtr->Class->House;				// get current house
+	scenario = Scenario;				// get current scenario #
+	campaign = ScenPlayer;				// get current campaign
 
 	/*
 	**	Generate the filename to save
@@ -152,7 +154,7 @@ bool Save_Game(int id,char *descr)
 	**	Open the file
 	*/
 	if (!file.Open(name, WRITE)) {
-		Decode_All_Pointers();
+		Decode_All_Pointers(campaign);
 		return(false);
 	}
 
@@ -178,7 +180,7 @@ bool Save_Game(int id,char *descr)
 		return(false);
 	}
 
-	if (file.Write(&house, sizeof(house)) != sizeof(house)) {
+	if (file.Write(&campaign, sizeof(campaign)) != sizeof(campaign)) {
 		file.Close();
 		return(false);
 	}
@@ -221,7 +223,7 @@ bool Save_Game(int id,char *descr)
 		!Factories.Save(file)) {
 		file.Close();
 
-		Decode_All_Pointers();
+		Decode_All_Pointers(campaign);
 
 		return(false);
 	}
@@ -232,14 +234,14 @@ bool Save_Game(int id,char *descr)
 	*/
 	if (!Logic.Save(file)) {
 		file.Close();
-		Decode_All_Pointers();
+		Decode_All_Pointers(campaign);
 		return(false);
 	}
 
 	for (i = 0; i < LAYER_COUNT; i++) {
 		if (!Map.Layer[i].Save(file)) {
 			file.Close();
-			Decode_All_Pointers();
+			Decode_All_Pointers(campaign);
 			return(false);
 		}
 	}
@@ -249,7 +251,7 @@ bool Save_Game(int id,char *descr)
 	*/
 	if (!Score.Save(file)) {
 		file.Close();
-		Decode_All_Pointers();
+		Decode_All_Pointers(campaign);
 		return(false);
 	}
 
@@ -258,7 +260,7 @@ bool Save_Game(int id,char *descr)
 	*/
 	if (!Base.Save(file)) {
 		file.Close();
-		Decode_All_Pointers();
+		Decode_All_Pointers(campaign);
 		return(false);
 	}
 
@@ -267,7 +269,7 @@ bool Save_Game(int id,char *descr)
 	*/
 	if (!Save_Misc_Values(file)) {
 		file.Close();
-		Decode_All_Pointers();
+		Decode_All_Pointers(campaign);
 		return(false);
 	}
 
@@ -276,7 +278,7 @@ bool Save_Game(int id,char *descr)
 	**	Close the file; we're done
 	*/
 	file.Close();
-	Decode_All_Pointers();
+	Decode_All_Pointers(campaign);
 
 	return(true);
 }
@@ -328,7 +330,7 @@ bool Load_Game(int id)
 	int i;
 	unsigned long version;
 	unsigned scenario;
-	HousesType house;
+	ScenarioPlayerType campaign;
 	char descr_buf[DESCRIP_MAX];
 
 	/*
@@ -356,7 +358,7 @@ bool Load_Game(int id)
 		return(false);
 	}
 
-	if (file.Read(&house, sizeof(house)) != sizeof(house)) {
+	if (file.Read(&campaign, sizeof(campaign)) != sizeof(campaign)) {
 		file.Close();
 		return(false);
 	}
@@ -394,20 +396,12 @@ bool Load_Game(int id)
 	**	loaded.
 	*/
 	if (RequiredCD != -2) {
-		if (scenario >= 20 && scenario <60 && GameToPlay == GAME_NORMAL) {
-			RequiredCD = 2;
-		} else {
-			if (scenario >= 60){
-				/*
-				** This is a gateway bonus scenario
-				*/
-				RequiredCD = -1;
-			}else{
-				if (house == HOUSE_GOOD) {
-					RequiredCD = 0;
-				} else {
-					RequiredCD = 1;
-				}
+		RequiredCD = -1;
+		if (scenario < 20 && GameToPlay == GAME_NORMAL) {
+			if (campaign == SCEN_PLAYER_GDI) {
+				RequiredCD = 0;
+			} else if (campaign == SCEN_PLAYER_NOD) {
+				RequiredCD = 1;
 			}
 		}
 	}
@@ -490,7 +484,7 @@ bool Load_Game(int id)
 	}
 
 	file.Close();
-	Decode_All_Pointers();
+	Decode_All_Pointers(campaign);
 	Map.Init_IO();
 	Map.Flag_To_Redraw(true);
 
@@ -778,7 +772,7 @@ void Code_All_Pointers(void)
 /***********************************************************************************************
  * Decode_All_Pointers -- Decodes all pointers.                                                *
  *                                                                                             *
- * INPUT:   none                                                                               *
+ * INPUT:   campaign -- The ScenarioPlayerType (campaign type) read from the savegame header   *
  *                                                                                             *
  * OUTPUT:  none                                                                               *
  *                                                                                             *
@@ -786,8 +780,9 @@ void Code_All_Pointers(void)
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   06/24/1995 BRR : Created.                                                                 *
+ *   06/15/2025 MM  : Adapted to pass on the campaign ID to fix campaign swapping bugs.        *
  *=============================================================================================*/
-void Decode_All_Pointers(void)
+void Decode_All_Pointers(ScenarioPlayerType campaign)
 {
 	int i;
 
@@ -842,7 +837,15 @@ void Decode_All_Pointers(void)
 	**	PlayerPtr.
 	*/
 	PlayerPtr = HouseClass::As_Pointer((HousesType)PlayerPtr);
-	Whom = PlayerPtr->Class->House;
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Set the player choice, not the player house. Needed for Funpark.
+	Whom = PlayerPtr->ActLike;
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Actually save and load campaign ID from the savegame's header, rather than this messy lookup from house type.
+	// The original code could cause a GDI mission inserted in the Nod campaign to make the player switch campaigns.
+	// Note that the Funpark check was wrong anyway; the player in these missions is Multi4, not JP.
+	ScenPlayer = campaign;
+#ifdef OBSOLETE	
 	switch (PlayerPtr->Class->House) {
 		case HOUSE_GOOD:
 			ScenPlayer = SCEN_PLAYER_GDI;
@@ -856,6 +859,7 @@ void Decode_All_Pointers(void)
 			ScenPlayer = SCEN_PLAYER_JP;
 			break;
 	}
+#endif
 	Check_Ptr(PlayerPtr,__FILE__,__LINE__);
 
 	Set_Scenario_Name(ScenarioName, Scenario, ScenPlayer, ScenDir, ScenVar);

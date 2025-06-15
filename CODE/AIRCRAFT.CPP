@@ -3293,7 +3293,9 @@ int AircraftClass::Mission_Guard(void)
 	**	Special case to force the GDI helicopter to be brain dead in the Nod
 	**	mission where it is supposed to be captured.
 	*/
-	if (GameToPlay == GAME_NORMAL && Scenario == 7 && House->Class->House == HOUSE_GOOD) {
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Consistently use ScenPlayer for scenario exceptions
+	if (GameToPlay == GAME_NORMAL && ScenPlayer == SCEN_PLAYER_NOD && Scenario == 7 && !House->IsHuman) {
 		return(TICKS_PER_SECOND*20);
 	}
 

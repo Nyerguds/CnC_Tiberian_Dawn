@@ -843,10 +843,13 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 				anim = ANIM_NAPALM3;
 			}
 
+			// Nyerguds's TUC Quick Fix Patch v1.04
+			// This is now simply linked to the death animations directly.
+#ifdef OBSOLETE
 			if (*this == UNIT_TRIC || *this == UNIT_TREX || *this == UNIT_RAPT || *this == UNIT_STEG) {
 				Sound_Effect(VOC_DINODIE1, Coord);
 			}
-
+#endif // OBSOLETE
 			new AnimClass(anim, Coord);
 
 			/*
@@ -3223,7 +3226,9 @@ void UnitClass::Response_Select(void)
 	};
 	VocType response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
 
-	if (*this == UNIT_TRIC || *this == UNIT_TREX || *this == UNIT_RAPT || *this == UNIT_STEG) {
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Added Visceroid to this, so it never responds with a human voice.
+	if (*this == UNIT_TRIC || *this == UNIT_TREX || *this == UNIT_RAPT || *this == UNIT_STEG || *this == UNIT_VICE) {
 		response = VOC_DINOYES;
 	}
 
@@ -3260,7 +3265,9 @@ void UnitClass::Response_Move(void)
 	};
 	VocType response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
 
-	if (*this == UNIT_TRIC || *this == UNIT_TREX || *this == UNIT_RAPT || *this == UNIT_STEG) {
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Added Visceroid to this, so it never responds with a human voice.
+	if (*this == UNIT_TRIC || *this == UNIT_TREX || *this == UNIT_RAPT || *this == UNIT_STEG || *this == UNIT_VICE) {
 		response = VOC_DINOMOUT;
 	}
 
@@ -3296,7 +3303,9 @@ void UnitClass::Response_Attack(void)
 	};
 	VocType response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
 
-	if (*this == UNIT_TRIC || *this == UNIT_TREX || *this == UNIT_RAPT || *this == UNIT_STEG) {
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Added Visceroid to this, so it never responds with a human voice.
+	if (*this == UNIT_TRIC || *this == UNIT_TREX || *this == UNIT_RAPT || *this == UNIT_STEG || *this == UNIT_VICE) {
 		response = VOC_DINOMOUT;
 	}
 

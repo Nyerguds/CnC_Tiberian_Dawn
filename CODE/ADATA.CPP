@@ -60,7 +60,7 @@ static AnimTypeClass const TricDie(
 	0,											// Ending frame of loop back.
 	20,										// Number of animation stages.
 	0,											// Number of times the animation loops.
-	VOC_NONE,								// Sound effect to play.
+	VOC_DINODIE1,								// Sound effect to play.
 	ANIM_NONE
 );
 
@@ -84,7 +84,7 @@ static AnimTypeClass const TRexDie(
 	0,											// Ending frame of loop back.
 	40,										// Number of animation stages.
 	0,											// Number of times the animation loops.
-	VOC_NONE,								// Sound effect to play.
+	VOC_DINODIE1,								// Sound effect to play.
 	ANIM_NONE
 );
 
@@ -108,7 +108,7 @@ static AnimTypeClass const StegDie(
 	0,											// Ending frame of loop back.
 	22,										// Number of animation stages.
 	0,											// Number of times the animation loops.
-	VOC_NONE,								// Sound effect to play.
+	VOC_DINODIE1,								// Sound effect to play.
 	ANIM_NONE
 );
 
@@ -132,7 +132,7 @@ static AnimTypeClass const RaptDie(
 	0,											// Ending frame of loop back.
 	40,										// Number of animation stages.
 	0,											// Number of times the animation loops.
-	VOC_NONE,								// Sound effect to play.
+	VOC_DINODIE1,								// Sound effect to play.
 	ANIM_NONE
 );
 

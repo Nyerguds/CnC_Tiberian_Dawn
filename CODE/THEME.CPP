@@ -504,16 +504,14 @@ bool ThemeClass::Is_Allowed(ThemeType index) const
 		return(false);
 	}
 #endif
-
-	return(
-		_themes[index].Available &&
-		(_themes[index].Normal ||
-//		(index == THEME_MAP1 && ScenarioInit) ||
-		((Special.IsVariation && _themes[index].Variation && index != THEME_WIN1) &&
-#ifndef DEMO
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Always block repeating themes from the playlist.
+	return (
+		_themes[index].Available && !_themes[index].Repeat &&
+#ifdef SCENARIO_MUSIC_UNLOCK
 		(GameToPlay != GAME_NORMAL || _themes[index].Scenario <= Scenario) &&
 #endif
-		(index != THEME_J1 || Special.IsJurassic))));
+		(_themes[index].Normal || (Special.IsVariation && _themes[index].Variation)));
 }
 
 

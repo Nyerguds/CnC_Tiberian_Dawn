@@ -236,28 +236,19 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 	** If we are not dealing with scenario 1, or a multi player scenario
 	** then make sure the correct disk is in the drive.
 	*/
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Allow nonstandard missions with any CD.
+	// Yes, not very useful with the TUC logic removing CD stuff, but I wanted this fixed :p
 	if (RequiredCD != -2) {
-		if (Scenario >= 20 && Scenario <60 && GameToPlay == GAME_NORMAL) {
-			RequiredCD = 2;
-		} else {
-			if (Scenario != 1) {
-				if (Scenario >=60){
-					RequiredCD = -1;
-				}else{
-					switch (ScenPlayer) {
-						case SCEN_PLAYER_GDI:
-							RequiredCD = 0;
-							break;
-						case SCEN_PLAYER_NOD:
-							RequiredCD = 1;
-							break;
-						default:
-							RequiredCD = -1;
-							break;
-					}
-				}
-			} else {
-				RequiredCD = -1;
+		RequiredCD = -1;
+		if (Scenario != 1 && Scenario < 20 && GameToPlay == GAME_NORMAL) {
+			switch (ScenPlayer) {
+				case SCEN_PLAYER_GDI:
+					RequiredCD = 0;
+					break;
+				case SCEN_PLAYER_NOD:
+					RequiredCD = 1;
+					break;
 			}
 		}
 	}
@@ -306,7 +297,7 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 	*/
 	if (GameToPlay == GAME_NORMAL) {
 #ifdef NEWMENU
-		if (Scenario <= 15) {
+		if (Scenario < 20) {
 			BuildLevel = Scenario;
 		} else {
 			BuildLevel = WWGetPrivateProfileInt("Basic", "BuildLevel", Scenario, buffer);
@@ -320,7 +311,9 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 	**	Jurassic scenarios are allowed to build the full multiplayer set
 	**	of objects.
 	*/
-	if (Special.IsJurassic && AreThingiesEnabled) {
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Make funpark campaign independent from Jurassic mode.
+	if (/*(Special.IsJurassic && AreThingiesEnabled) || */ ScenPlayer == SCEN_PLAYER_JP) {
 		BuildLevel = 98;
 	}
 
@@ -345,14 +338,13 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 	HouseClass::Read_INI(buffer);
 	Call_Back();
 
-	// Nyerguds's TUC Quick Fix Patch v1.00: mpcols (elaborate version)
 	if (GameToPlay == GAME_NORMAL) {
+		// Nyerguds's TUC Quick Fix Patch v1.00: mpcols (elaborate version)
 		/*
 		**	Reset multiplayer houses to their default colors and radar colors,
 		**	in case they are used in the scenario. This fixes the fact their
-		**	default radar colors are gray.
+		**	default radar colors are set to gray.
 		*/
-		HouseClass *p;
 		p = HouseClass::As_Pointer(HOUSE_MULTI1);
 		p->Init_Data(REMAP_AQUA, HOUSE_MULTI1, p->InitialCredits);
 		p = HouseClass::As_Pointer(HOUSE_MULTI2);
@@ -365,6 +357,18 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 		p->Init_Data(REMAP_YELLOW, HOUSE_MULTI5, p->InitialCredits);
 		p = HouseClass::As_Pointer(HOUSE_MULTI6);
 		p->Init_Data(REMAP_RED, HOUSE_MULTI6, p->InitialCredits);
+
+		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Make funpark campaign independent from Jurassic mode.
+		// Special color exceptions for House Special in dinosaur campaign.
+		p = HouseClass::As_Pointer(HOUSE_JP);
+		if (ScenPlayer == SCEN_PLAYER_JP) {
+			// Red radar colors with yellow remap
+			p->Init_Data(REMAP_RED, HOUSE_JP, p->InitialCredits);
+			p->RemapTable = RemapYellow;
+		} else {
+			p->Init_Data(REMAP_YELLOW, HOUSE_JP, p->InitialCredits);
+		}
 	}
 	Call_Back();
 
@@ -390,7 +394,9 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 		PlayerPtr->Credits += carryover;
 		PlayerPtr->InitialCredits += carryover;
 
-		if (Special.IsJurassic) {
+		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Make funpark campaign independent from Jurassic mode.
+		if (ScenPlayer == SCEN_PLAYER_JP) {
 			PlayerPtr->ActLike = Whom;
 		}
 	} else {

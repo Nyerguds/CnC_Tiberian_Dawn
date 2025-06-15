@@ -471,7 +471,9 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	/*
 	**	Multiplayer game uses a different legality check for building.
 	*/
-	if (GameToPlay != GAME_NORMAL || (Special.IsJurassic && AreThingiesEnabled)) {
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Make funpark campaign independent from Jurassic mode.
+	if (GameToPlay != GAME_NORMAL || /*(Special.IsJurassic && AreThingiesEnabled) ||*/ ScenPlayer == SCEN_PLAYER_JP) {
 		return((pre & flags) == pre && type->Level <= BuildLevel);
 	}
 

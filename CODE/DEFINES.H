@@ -60,6 +60,15 @@
 
 
 /**********************************************************************
+**	When this is active, music will gradually unlock throughout
+**	the campaign.
+*/
+#ifndef DEMO
+//#define SCENARIO_MUSIC_UNLOCK
+#endif
+
+
+/**********************************************************************
 **  Define this to allow play of the bonus missions for the Gateway
 **  bundle deal.
 */
@@ -67,7 +76,7 @@
 
 
 /**********************************************************************
-** Handle expansion scnearios as a set of single missions with all
+** Handle expansion scenarios as a set of single missions with all
 **	necessary information self contained within the mission file.
 */
 #ifndef DEMO

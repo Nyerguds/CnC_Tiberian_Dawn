@@ -286,6 +286,10 @@ HousesType HouseTypeClass::From_Name(char const *name)
  *=============================================================================================*/
 void HouseTypeClass::One_Time(void)
 {
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Make funpark campaign independent from Jurassic mode.
+	// Now handled in the scenario read.
+#ifdef OBSOLETE
 	/*
 	** Change the radar color for special units; otherwise, they'll be the same
 	** color as the player!
@@ -294,6 +298,7 @@ void HouseTypeClass::One_Time(void)
 		((unsigned char &)HouseJP.Color) = (unsigned char)COLOR_BAD;
 		((unsigned char &)HouseJP.BrightColor) = (unsigned char)COLOR_BRIGHT_BAD;
 	}
+#endif
 }
 
 
