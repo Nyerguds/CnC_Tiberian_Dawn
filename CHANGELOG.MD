@@ -93,6 +93,6 @@ v1.04: (in progress)
 * To compensate for the deployment change causing you to be unable to load infantry into an APC that contains some units, you can hold [Alt] to force them inside.
 * When having infantry selected, you can now hold down shift and add an unloaded APC or Chinook to the selection without this getting overridden by the order to load into the transport.
 * An "Enter" cursor no longer overrides the [Ctrl] force-fire or [Ctrl]+[Alt] Guard Target cursors. It will still override [Alt] force-move though, since that's used to override transports' unloading.
-* Fixed dinosaur campaign savegames forgetting their campaign.
-* Unlinked dinosaur campaign from the "Funpark" mode. All special "Funpark" logic is now only checked on the campaign ID. This also means dinosaur campaign savegames will function correctly without "Funpark" mode.
+* Fixed dinosaur campaign savegames forgetting their campaign, and the chosen side.
+* Unlinked dinosaur campaign from the "Funpark" mode. All special dinosaur campaign logic is now only checked on the campaign ID. This also means dinosaur campaign savegames will function correctly without "Funpark" mode.
 * Holding the [Shift] key on the "Select Transmission" screen while clicking the side will now go into the Funpark campaign.
