@@ -2384,7 +2384,7 @@ AnimTypeClass::AnimTypeClass(AnimType anim, char const *name, int size, int bigg
 	IsWhiteTrans = iswhitetrans;
 	LoopEnd = loopend;
 	LoopStart = loopstart;
-	Loops = (unsigned char)loops;
+	Loops = (unsigned char)MIN(0xFF, loops);
 	Size = size;
 	Sound = sound;
 	Stages = stages;

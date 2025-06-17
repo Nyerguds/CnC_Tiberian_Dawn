@@ -86,13 +86,18 @@ v1.04: (in progress)
 * Drag-selecting will now show the default cursor instead of keeping an incorrect cursor from where the drag action started.
 * Drag-selecting will no longer pop up a tooltip of the thing the mouse was pressed down on.
 * The minimap will now only respond to clicks at the moment the mouse is released, like how it works on the main map.
-* The minimap will now update its cursor wheh holding down the mouse on it.
+* The minimap will now update its cursor when holding down the left mouse button on it.
 * The map number in multiplayer will no longer affect logic regarding difficulty and tooltips that is only meant for singleplayer.
 * Fixed the fact the chance of an AI selling a building was affected by the mission number in Covert Ops missions. It is now affected by the set build level, capped at 20.
-* Deploying units now works even if you have multiple units selected. This will not affect the other units in the selection.
-* To compensate for the deployment change causing you to be unable to load infantry into an APC that contains some units, you can hold [Alt] to force them inside.
-* When having infantry selected, you can now hold down shift and add an unloaded APC or Chinook to the selection without this getting overridden by the order to load into the transport.
+* Deploying units by clicking on them now works even if you have multiple units selected. This will not affect the other units in the selection.
+* Since the deployment change makes it impossible to load passengers into a selected transport that already contains at least one passenger, you can now hold [Alt] to override the Deploy cursor to allow passengers to enter.
+* When having infantry selected, you can now hold down shift and add an unloaded transport to the selection without this getting overridden by the order to load into the transport.
 * An "Enter" cursor no longer overrides the [Ctrl] force-fire or [Ctrl]+[Alt] Guard Target cursors. It will still override [Alt] force-move though, since that's used to override transports' unloading.
 * Fixed dinosaur campaign savegames forgetting their campaign, and the chosen side.
 * Unlinked dinosaur campaign from the "Funpark" mode. All special dinosaur campaign logic is now only checked on the campaign ID. This also means dinosaur campaign savegames will function correctly without "Funpark" mode.
 * Holding the [Shift] key on the "Select Transmission" screen while clicking the side will now go into the Funpark campaign.
+* Oil Derricks preplaced on the map will now also have the flame spout animation of they're damaged below 50%.
+* The Oil Derrick and Flare animations are now truly endless, rather than stopping after 255 loops.
+* Fixed the bug that the special GDI ending unlock was re-locked if another building was destroyed after the Temple.
+* Fixed the special GDI ending unlock status not getting saved in savegames.
+* Fixed the bombing target in GDI mission 6 not getting saved in savegames.

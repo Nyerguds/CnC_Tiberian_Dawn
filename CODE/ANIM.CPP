@@ -51,7 +51,8 @@
  *   AnimClass::delete -- Returns an anim object back to the free pool.                        *
  *   AnimClass::new -- Allocates an anim object from the pool.                                 *
  *   AnimClass::~AnimClass -- Destructor for anim objects.                                     *
- *   AnimClass::Validate -- validates anim pointer															  *
+ *   AnimClass::Validate -- validates anim pointer                                             *
+ *   Has_Attached_Anim -- Tests if an object has specific animations attached to it.           *
  *   Shorten_Attached_Anims -- Reduces attached animation durations.                           *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
@@ -65,16 +66,16 @@ void * AnimClass::VTable;
 
 
 /***********************************************************************************************
- * AnimClass::Validate -- validates anim pointer															  *
+ * AnimClass::Validate -- validates anim pointer                                               *
  *                                                                                             *
  * INPUT:                                                                                      *
- *		none.																												  *
+ *		none.                                                                          *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *		1 = ok, 0 = error																								  *
+ *		1 = ok, 0 = error                                                              *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *		none.																												  *
+ *		none.                                                                          *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/09/1995 BRR : Created.                                                                 *
@@ -98,6 +99,40 @@ int AnimClass::Validate(void) const
 
 
 /***********************************************************************************************
+ * Has_Attached_Anim -- Checks if the object has an animation attached.                        *
+ *                                                                                             *
+ *    This routine is used to avoid duplicating animations that should only exist once. It     *
+ *    can also be used as a more accurate check instead of the cached IsAnimAttached member.   *
+ *                                                                                             *
+ * INPUT:   obj   -- Pointer to the object of which to check if it has attached animations.    *
+ *          animnum -- type of animation to look for. Use ANIM_NONE to disable filtering.      *
+ *          not_dying -- if true, animations with their loop count set to 0 are considered     *
+ *                       "dying" and ignored as valid matches since they will end soon.        *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/17/2025 MM  : Created.                                                                 *
+ *=============================================================================================*/
+bool Has_Attached_Anim(ObjectClass * obj, AnimType animnum, bool not_dying)
+{
+	if (obj && animnum != ANIM_NONE) {
+		for (int index = 0; index < Anims.Count(); index++) {
+			AnimClass & anim = *Anims.Ptr(index);
+			if (anim.Object == obj && (animnum == ANIM_NONE || anim == animnum)) {
+				if (anim.Loops == 0 && not_dying) {
+					continue;
+				}
+				return(true);
+			}
+		}
+	}
+	return(false);
+}
+
+/***********************************************************************************************
  * Shorten_Attached_Anims -- Reduces attached animation durations.                             *
  *                                                                                             *
  *    This routine is used to reduce the amount of time any attached animations will process.  *
@@ -108,6 +143,7 @@ int AnimClass::Validate(void) const
  *    animation will loop.                                                                     *
  *                                                                                             *
  * INPUT:   obj   -- Pointer to the object that all attached animations will be processed.     *
+ *          animnum -- type of animation to look for. ANIM_NONE disables filtering.            *
  *                                                                                             *
  * OUTPUT:  none                                                                               *
  *                                                                                             *
@@ -115,14 +151,14 @@ int AnimClass::Validate(void) const
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   12/11/1994 JLB : Created.                                                                 *
+ *   06/17/2025 MM  : Added filter and kill switch                                             *
  *=============================================================================================*/
-void Shorten_Attached_Anims(ObjectClass * obj)
+void Shorten_Attached_Anims(ObjectClass * obj, AnimType animnum)
 {
 	if (obj) {
 		for (int index = 0; index < Anims.Count(); index++) {
 			AnimClass & anim = *Anims.Ptr(index);
-
-			if (anim.Object == obj) {
+			if (anim.Object == obj && (animnum == ANIM_NONE || anim == animnum)) {
 				anim.Loops = 0;
 			}
 		}
@@ -566,7 +602,7 @@ AnimClass::AnimClass(AnimType animnum, COORDINATE coord, unsigned char timedelay
 	*/
 	Delay = timedelay;
 
-	Loops = (unsigned char)(MAX(loop, 1) * Class->Loops);
+	Loops = (unsigned char)MIN(0xFF, (MAX(loop, 1) * Class->Loops));
 	Loops = (unsigned char)MAX(Loops, 1);
 
 	IsToDelete = false;
@@ -757,7 +793,8 @@ void AnimClass::AI(void)
 				**	Determine if this animation should loop another time. If so, then start the loop
 				**	but if not, then proceed into the animation termination handler.
 				*/
-				if (Loops) Loops--;
+				// Loops set to 255 are considered eternal.
+				if (Loops && Class->Loops < 0xFF) Loops--;
 				if (Loops) {
 					Set_Stage(Class->LoopStart);
 				} else {

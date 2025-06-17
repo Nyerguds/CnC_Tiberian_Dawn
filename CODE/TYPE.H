@@ -129,7 +129,9 @@ class WarheadTypeClass
 		**	The warhead damage is reduced depending on the the type of armor the
 		**	defender has. This table is what gives weapons their "character".
 		*/
-		unsigned char Modifier[ARMOR_COUNT];
+		// Nyerguds's TUC Quick Fix Patch v1.03: warheads
+		// Allow 100% values in warheads.
+		unsigned Modifier[ARMOR_COUNT];
 };
 
 

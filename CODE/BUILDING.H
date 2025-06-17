@@ -273,6 +273,13 @@ class BuildingClass : public TechnoClass
 		#endif
 
 		/*
+		** Special extra stuff
+		*/
+		// Nyerguds's TUC Quick Fix Patch v1.04
+		void  Flame_Spout(void);
+		void  Flame_Out(void);
+		
+		/*
 		**	File I/O.
 		*/
 		static void  Read_INI(char *buffer);

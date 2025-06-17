@@ -314,7 +314,9 @@ extern void Fatal(char const *message, ...);
 /*
 **	ANIM.CPP
 */
-void Shorten_Attached_Anims(ObjectClass * obj);
+// Nyerguds's TUC Quick Fix Patch v1.04
+bool Has_Attached_Anim(ObjectClass * obj, AnimType animnum = ANIM_NONE, bool not_dying = false);
+void Shorten_Attached_Anims(ObjectClass * obj, AnimType animnum = ANIM_NONE);
 
 /*
 **	AUDIO.CPP

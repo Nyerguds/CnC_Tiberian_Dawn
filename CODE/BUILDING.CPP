@@ -1067,10 +1067,15 @@ void BuildingClass::AI(void)
 			if (House->Available_Money() >= cost) {
 				House->Spend_Money(cost);
 				Strength += step;
-
-				if (Strength >= Class->MaxStrength) {
-					Strength = Class->MaxStrength;
+				int max = Class->MaxStrength;
+				if (Strength >= max) {
+					Strength = max;
 					IsRepairing = false;
+				}
+				// Nyerguds's TUC Quick Fix Patch v1.04
+				// Allow oil derricks to stop their flame. Normally not used since it's not set as repairable.
+				if (*this == STRUCT_PUMP && Strength >= (max >> 1)) {
+					Flame_Out();
 				}
 			} else {
 				IsRepairing = false;
@@ -1481,19 +1486,17 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 				**	remembering of this fact. The finale uses this information to
 				**	play the correct movie.
 				*/
+				// Nyerguds's TUC Quick Fix Patch v1.04:
+				// Fixed temple ion cannon status resetting.
 				if (*this == STRUCT_TEMPLE && warhead == WARHEAD_PB) {
 					TempleIoned = true;
-				} else {
-					TempleIoned = false;
 				}
 				break;
 
 			case RESULT_HALF:
 				if (*this == STRUCT_PUMP) {
-					AnimClass *anim = new AnimClass(ANIM_OILFIELD_BURN, Coord_Add(Coord, 0x00400130L), 1);
-					if (anim) {
-						anim->Attach_To(this);
-					}
+					Flame_Out();
+					Flame_Spout();
 				}
 				// Fall into next case.
 
@@ -2963,9 +2966,15 @@ void BuildingClass::Read_INI(char *buffer)
 			b = new BuildingClass(classid, bhouse);
 			if (b) {
 				if (b->Unlimbo(Cell_Coord(cell), facing)) {
+					// Nyerguds's TUC Quick Fix Patch v1.04
+					// Oil Derricks placed down as damaged will have their flame spout animation.
+					bool belowhalf = strength < 0x80;
 					strength = MIN(strength, 0x100);
+					if (strength < 0x80 && classid == STRUCT_PUMP) {
+						b->Flame_Spout();
+					}
 					strength = Fixed_To_Cardinal(b->Class->MaxStrength, strength);
-					b->Strength = strength;
+					b->Strength = MAX(1, strength);
 					b->IsALemon = false;
 					b->Trigger = TriggerClass::As_Pointer(trigname);
 					if (b->Trigger) {
@@ -3431,6 +3440,54 @@ MoveType BuildingClass::Can_Enter_Cell(CELL cell, FacingType) const
 	return(Class->Legal_Placement(cell) ? MOVE_OK : MOVE_NO);
 }
 
+/***********************************************************************************************
+ * BuildingClass::Flame_Spout -- makes the oil derrick spawn the flame spout anim              *
+ *                                                                                             *
+ *    This routine is called if the Oil Derrick is supposed to catch on fire.                  *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/17/2025 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void BuildingClass::Flame_Spout(void)
+{
+	Validate();
+	if (*this == STRUCT_PUMP && !Has_Attached_Anim(this, ANIM_OILFIELD_BURN, true)) {
+		AnimClass *anim = new AnimClass(ANIM_OILFIELD_BURN, Coord_Add(Coord, 0x00400130L), 1);
+		if (anim) {
+			anim->Attach_To(this);
+		}
+	}
+}
+
+/***********************************************************************************************
+ * BuildingClass::Flame_Out -- Makes the oil derrick's flame spout anim vanish                 *
+ *                                                                                             *
+ *    This routine is called if the Oil Derrick is supposed to catch on fire.                  *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/17/2025 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void BuildingClass::Flame_Out(void)
+{
+	Validate();
+	if (*this == STRUCT_PUMP) {
+		// This instantly kills the animation. There's no point in letting the loop
+		// play out, since it doesn't have a graceful end point anyway.
+		Shorten_Attached_Anims(this, ANIM_OILFIELD_BURN);
+	}
+}
 
 /***********************************************************************************************
  * BuildingClass::Can_Demolish -- Can the player demolish (sell back) the building?            *

@@ -1337,6 +1337,11 @@ void HouseClass::AI(void)
 			continue;
 		}
 	}
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Allows looping evacuation triggers.
+	if (IsCivEvacuated) {
+		IsCivEvacuated = false;
+	}
 
 	/*
 	**	If a radar facility is not present, but the radar is active, then turn the radar off.

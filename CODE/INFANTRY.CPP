@@ -466,6 +466,9 @@ ResultType InfantryClass::Take_Damage(int & damage, int distance, WarheadType wa
 			case WARHEAD_SPORE:
 			case WARHEAD_HOLLOW_POINT:
 			case WARHEAD_SA:
+			// Nyerguds's TUC Quick Fix Patch v1.04
+			// Always have a default death anim
+			default:
 				Sound_Effect(sound, Coord);
 				Do_Action(DO_GUN_DEATH, true);
 				break;
