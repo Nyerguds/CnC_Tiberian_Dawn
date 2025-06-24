@@ -290,15 +290,6 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 	WWGetPrivateProfileString("Basic", "Lose", "x", LoseMovie, sizeof(LoseMovie), buffer);
 	WWGetPrivateProfileString("Basic", "Action", "x", ActionMovie, sizeof(ActionMovie), buffer);
 
-	// Nyerguds's TUC Quick Fix Patch v1.04:
-	// fixed temple ion cannon status getting reset / not getting saved in savegames.
-	// fixed Commando last bomb target getting reset / not getting saved in savegames.
-	/*
-	** Always clear these on mission start.
-	*/
-	TempleIoned = false;
-	SabotagedType = STRUCT_NONE;
-
 	/*
 	**	For single-player scenarios, 'BuildLevel' is the scenario number.
 	**	This must be set before any buildings are created (if a factory is created,

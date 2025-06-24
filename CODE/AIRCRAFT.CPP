@@ -1033,6 +1033,21 @@ int AircraftClass::Mission_Unload(void)
 						*/
 						if (!(House->ActiveBScan & STRUCTF_AIRSTRIP)) {
 							Assign_Mission(MISSION_RETREAT);
+						} else {
+							// Nyerguds's TUC Quick Fix Patch v1.04
+							// BScan is not 100% reliable due to civilian building V21
+							// overflowing to the same bit. Re-check actual list to be sure.
+							bool found = false;
+							for (int index = 0; index < Buildings.Count(); index++) {
+								building = Buildings.Ptr(index);
+								if (building && building->House == House && *building == STRUCT_AIRSTRIP) {
+									found = true;
+									break;
+								}
+							}
+							if (!found) {
+								Assign_Mission(MISSION_RETREAT);
+							}
 						}
 
 						/*
@@ -1144,7 +1159,18 @@ int AircraftClass::Mission_Unload(void)
 					Status = UNLOAD_PASSENGERS;
 				} else {
 					if (!Is_LZ_Clear(NavCom)) {
-						Assign_Destination(New_LZ(::As_Target(Waypoint[WAYPT_REINF])));
+						// Nyerguds's TUC Quick Fix Patch v1.04
+						// Fix DZ scan so the Unload key does not make flying helis go to WAYPT_REINF
+						TARGET newlz = New_LZ(NavCom);
+						if (!Is_LZ_Clear(newlz)) {
+							// Only use the waypoint if this unit is reinforced.
+							if (IsALoaner && Waypoint[WAYPT_REINF] != -1 && Map.In_Radar(Waypoint[WAYPT_REINF])) {
+								newlz = New_LZ(::As_Target(Waypoint[WAYPT_REINF]));
+							} else {
+								newlz = Good_LZ();
+							}
+						}
+						Assign_Destination(newlz);
 					} else {
 						if (Altitude == FLIGHT_LEVEL) {
 							Status = FLY_TO_LZ;
@@ -2360,6 +2386,9 @@ int AircraftClass::Mission_Attack(void)
 		**	Fly back to landing spot.
 		*/
 		case RETURN_TO_BASE:
+			// Nyerguds's TUC Quick Fix Patch v1.04
+			// Don't land on the helipad facing the direction of the last target.
+			Assign_Target(TARGET_NONE);
 			Assign_Destination(TARGET_NONE);
 			Enter_Idle_Mode();
 			break;

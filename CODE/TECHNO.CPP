@@ -1133,7 +1133,7 @@ bool TechnoClass::Evaluate_Object(ThreatType method, int mask, int range, Techno
 	if (range == 0 && !In_Range(object, 0) && !In_Range(object, 1)) return(false);
 
 	/*
-	**	If the object is not visible, then bail. Human controled units
+	**	If the object is not visible, then bail. Human controlled units
 	**	are always considered to be visible.
 	*/
 	if (!object->IsOwnedByPlayer && !object->IsDiscoveredByPlayer && GameToPlay == GAME_NORMAL && object->What_Am_I() != RTTI_AIRCRAFT) {
@@ -1405,6 +1405,10 @@ TARGET TechnoClass::Greatest_Threat(ThreatType method) const
 			mask |= (1 << RTTI_AIRCRAFT);
 		}
 
+		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Fixed "best target" logic by remembering "bestval".
+		// Not sure if it works though; it didn't when I did this in asm. Needs more testing.
+
 		/*
 		**	Radiate outward from the object's location, looking for the best
 		**	target.
@@ -1425,8 +1429,9 @@ TARGET TechnoClass::Greatest_Threat(ThreatType method) const
 				if ((Cell_Y(cell) - radius) >= Map.MapCellY) {
 					newcell = XY_Cell(Cell_X(cell) + x, Cell_Y(cell)-radius);
 					if (Evaluate_Cell(method, mask, newcell, range, &object, value)) {
-						if (bestval < value) {
+						if (value > bestval) {
 							bestobject = object;
+							bestval = value;
 						}
 					}
 				}
@@ -1434,8 +1439,9 @@ TARGET TechnoClass::Greatest_Threat(ThreatType method) const
 				if ((Cell_Y(cell) + radius) < (Map.MapCellY+Map.MapCellHeight)) {
 					newcell = XY_Cell(Cell_X(cell)+x, Cell_Y(cell)+radius);
 					if (Evaluate_Cell(method, mask, newcell, range, &object, value)) {
-						if (bestval < value) {
+						if (value > bestval) {
 							bestobject = object;
+							bestval = value;
 						}
 					}
 				}
@@ -1453,8 +1459,9 @@ TARGET TechnoClass::Greatest_Threat(ThreatType method) const
 				if ((Cell_X(cell) - radius) >= Map.MapCellX) {
 					newcell = XY_Cell(Cell_X(cell)-radius, Cell_Y(cell)+y);
 					if (Evaluate_Cell(method, mask, newcell, range, &object, value)) {
-						if (bestval < value) {
+						if (value > bestval) {
 							bestobject = object;
+							bestval = value;
 						}
 					}
 				}
@@ -1462,8 +1469,9 @@ TARGET TechnoClass::Greatest_Threat(ThreatType method) const
 				if ((Cell_X(cell) + radius) < (Map.MapCellX+Map.MapCellWidth)) {
 					newcell = XY_Cell(Cell_X(cell)+radius, Cell_Y(cell)+y);
 					if (Evaluate_Cell(method, mask, newcell, range, &object, value)) {
-						if (bestval < value) {
+						if (value > bestval) {
 							bestobject = object;
+							bestval = value;
 						}
 					}
 				}

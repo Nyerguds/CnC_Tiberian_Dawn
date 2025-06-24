@@ -1594,37 +1594,52 @@ RadioMessageType FootClass::Receive_Message(RadioClass * from, RadioMessageType 
  *=============================================================================================*/
 int FootClass::Mission_Enter(void)
 {
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Ported the remaster's multi-load logic.
 	/*
-	**	If radio contact has not yet been established with the transport, try to
-	**	establish contact now.
+	**	Find out who to coordinate with. If in radio contact, then this the transporter is
+	**	defined. If not in radio contact, then try the archive target value to see if that
+	**	is suitable.
 	*/
-	if (!In_Radio_Contact()) {
-		TechnoClass * techno = As_Techno(ArchiveTarget);
-		if (!techno) techno = As_Techno(NavCom);
-		if (techno) {
+	TechnoClass * contact = Contact_With_Whom();
+	if (contact == NULL) {
+		contact = As_Techno(ArchiveTarget);
+	}
+	if (contact == NULL) {
+		contact = As_Techno(NavCom);
+	}
 
+	/*
+	**	If in contact, then let the transporter handle the movement coordination.
+	*/
+	if (contact == NULL) {
+
+		/*
+		**	Since there is no potential object to enter, then abort this
+		**	mission with some default standby mission.
+		*/
+		if (MissionQueue == MISSION_NONE) {
 			/*
-			**	If the transport is already in radio contact, do nothing. Try to
-			**	establish radio contact later.
+			**	If this is a harvester, then return to harvesting.
+			**	Set a hacky target so we know to skip to the proper state.
 			*/
-			if (Transmit_Message(RADIO_HELLO, techno) != RADIO_ROGER) {
+			if (What_Am_I() == RTTI_UNIT && ((UnitClass*)this)->Class->IsToHarvest) {
+				Assign_Mission(MISSION_HARVEST);
+				Assign_Target(As_Target());
+				Assign_Destination(TARGET_NONE);
+			} else {
 				ArchiveTarget = TARGET_NONE;
 				Enter_Idle_Mode();
-			} else {
-				Assign_Destination(TARGET_NONE);
 			}
-		} else {
-			ArchiveTarget = TARGET_NONE;
-			Enter_Idle_Mode();
 		}
 
 	} else {
 
 		/*
-		**	Since radio contact exists with the transport, maintain a dialogue so that
-		**	the transport can give proper instructions to the passenger.
+		**	If the transport says to "bug off", then abort the enter mission. The transport may
+		**	likely say all is 'ok' with the "RADIO ROGER", then try again later.
 		*/
-		if (Transmit_Message(RADIO_DOCKING) != RADIO_ROGER) {
+		if (Transmit_Message(RADIO_DOCKING, contact) != RADIO_ROGER && !IsTethered) {
 			Transmit_Message(RADIO_OVER_OUT);
 			Enter_Idle_Mode();
 		}

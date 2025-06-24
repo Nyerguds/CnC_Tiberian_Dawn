@@ -2422,7 +2422,9 @@ TARGET InfantryClass::Greatest_Threat(ThreatType threat) const
 			if (*this != INFANTRY_E7) {
 				return(TARGET_NONE);
 			}
-			// fall into next case.
+			// Nyerguds's TUC Quick Fix Patch v1.04
+			// added break here; "fall into next case." causes it to check illegal index -1 in weapons list.
+			break;
 
 		/*
 		**	Dragon missile equiped soldiers are also assumed to carry a Stinger missile. As such,

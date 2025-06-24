@@ -482,7 +482,7 @@ void Do_Win(void)
 		if (Scenario == 6 && ScenPlayer == SCEN_PLAYER_GDI && SabotagedType == STRUCT_AIRSTRIP) {
 			Scenario++;
 		}
-		if (ScenPlayer == SCEN_PLAYER_GDI || ScenPlayer == SCEN_PLAYER_GDI) {
+		if (ScenPlayer == SCEN_PLAYER_GDI || ScenPlayer == SCEN_PLAYER_NOD) {
 			Map_Selection();
 		}
 		
@@ -490,7 +490,7 @@ void Do_Win(void)
 #endif
 		Keyboard::Clear();
 	}
-
+	StructType sabotaged = SabotagedType;
 	CarryOverMoney = PlayerPtr->Credits;
 
 	int pieces = PlayerPtr->NukePieces;
@@ -507,11 +507,11 @@ void Do_Win(void)
 	**	Destroy the building that was sabotaged in the previous scenario. This only
 	**	applies to GDI mission #7.
 	*/
-	if (SabotagedType != STRUCT_NONE && Scenario == 7 && PlayerPtr->Class->House == HOUSE_GOOD) {
+	if (sabotaged != STRUCT_NONE && Scenario == 7 && PlayerPtr->Class->House == HOUSE_GOOD) {
 		for (int index = 0; index < Buildings.Count(); index++) {
 			BuildingClass * building = Buildings.Ptr(index);
 
-			if (building && !building->IsInLimbo && building->House != PlayerPtr && building->Class->Type == SabotagedType) {
+			if (building && !building->IsInLimbo && building->House != PlayerPtr && building->Class->Type == sabotaged) {
 				building->Limbo();
 				delete building;
 				break;
@@ -524,12 +524,19 @@ void Do_Win(void)
 		for (index = 0; index < Base.Nodes.Count(); index++) {
 			BaseNodeClass * node = Base.Get_Node(index);
 
-			if (node && node->Type == SabotagedType) {
+			if (node && node->Type == sabotaged) {
 				Base.Nodes.Delete(index);
 				break;
 			}
 		}
 	}
+
+	// Nyerguds's TUC Quick Fix Patch v1.04:
+	// fixed temple ion cannon status lingering in memory / getting reset / not getting saved in savegames.
+	/*
+	** Always clear these on mission start.
+	*/
+	TempleIoned = false;
 	SabotagedType = STRUCT_NONE;
 
 	Map.Render();

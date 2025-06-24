@@ -626,10 +626,50 @@ RadioMessageType UnitClass::Receive_Message(RadioClass * from, RadioMessageType 
 		**	to the impatient unit.
 		*/
 		case RADIO_DOCKING:
-			if (Class->IsTransporter && *this == UNIT_APC && How_Many() < Class->Max_Passengers()) {
+			// Nyerguds's TUC Quick Fix Patch v1.04
+			// Ported the remaster's multi-load logic.
+			/*
+			**	Check for the case of a docking message arriving from a unit that does not
+			**	have formal radio contact established. This might be a unit that is standing
+			**	by. If this transport is free to proceed with normal docking operation, then
+			**	establish formal contact now. If the transport is completely full, then break
+			**	off contact. In all other cases, just tell the pending unit to stand by.
+			*/
+			if (Contact_With_Whom() != from) {
+
+				/*
+				**	Can't ever load up so tell the passenger to bug off.
+				*/
+				if (How_Many() >= Class->Max_Passengers()) {
+					return(RADIO_NEGATIVE);
+				}
+
+				/*
+				**	Establish contact and let the loading process proceed normally.
+				*/
+				if (!In_Radio_Contact()) {
+					Transmit_Message(RADIO_HELLO, from);
+				} else {
+
+					/*
+					**	This causes the potential passenger to think that all is ok and to
+					**	hold on for a bit.
+					*/
+					return(RADIO_ROGER);
+				}
+			}
+			// Nyerguds's TUC Quick Fix Patch v1.04
+			// Ported the remaster's logic to allow loading while busy attacking.
+			// Removed explicit check on APC.
+			if (Class->IsTransporter && How_Many() < Class->Max_Passengers()) {
 				TarComClass::Receive_Message(from, message, param);
 
-				if (!IsDriving && !IsRotating && !IsTethered) {
+				/*
+				**	Check if the APC is busy with an order
+				*/
+				bool is_busy = Mission == MISSION_MOVE;
+
+				if ((!IsRotating || Target_Legal(TarCom)) && !IsTethered) {
 
 					/*
 					**	If the potential passenger needs someplace to go, then figure out a good
@@ -637,8 +677,18 @@ RadioMessageType UnitClass::Receive_Message(RadioClass * from, RadioMessageType 
 					*/
 					if (Transmit_Message(RADIO_NEED_TO_MOVE, from) == RADIO_ROGER) {
 
+						/*
+						**	If the unit has a target, don't bother with turning logic
+						*/
 						CELL cell;
-						DirType dir = Desired_Load_Dir(from, cell);
+						DirType dir;
+						if (Target_Legal(TarCom)) {
+							dir = PrimaryFacing.Current();
+							cell = Adjacent_Cell(Coord_Cell(Coord), Direction(from));
+						}
+						else {
+							dir = Desired_Load_Dir(from, cell);
+						}
 
 						/*
 						**	If no adjacent free cells are detected, then passenger loading
@@ -648,20 +698,23 @@ RadioMessageType UnitClass::Receive_Message(RadioClass * from, RadioMessageType 
 							Transmit_Message(RADIO_OVER_OUT, from);
 						} else {
 							param = (long)::As_Target(cell);
-							Do_Turn(dir);
 
-							/*
-							**	If it is now facing the correct direction, then open the
-							**	transport doors. Close the doors if the transport is or needs
-							**	to rotate.
-							*/
-							if (IsRotating) {
-								if (!Is_Door_Closed()) {
-									APC_Close_Door();
-								}
-							} else {
-								if (!Is_Door_Open()) {
-									APC_Open_Door();
+							if (!is_busy && !IsDriving) {
+								Do_Turn(dir);
+	
+								/*
+								**	If it is now facing the correct direction, then open the
+								**	transport doors. Close the doors if the transport is or needs
+								**	to rotate.
+								*/
+								if (IsRotating) {
+									if (!Is_Door_Closed()) {
+										APC_Close_Door();
+									}
+								} else {
+									if (!Is_Door_Open()) {
+										APC_Open_Door();
+									}
 								}
 							}
 
@@ -671,7 +724,7 @@ RadioMessageType UnitClass::Receive_Message(RadioClass * from, RadioMessageType 
 							**	directly.
 							*/
 							if (Transmit_Message(RADIO_MOVE_HERE, param, from) == RADIO_YEA_NOW_WHAT) {
-								if (Is_Door_Open()) {
+								if (Is_Door_Open() || Target_Legal(TarCom)) {
 									param = (long)As_Target();
 									Transmit_Message(RADIO_TETHER);
 									if (Transmit_Message(RADIO_MOVE_HERE, param, from) != RADIO_ROGER) {
@@ -959,7 +1012,9 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 		**	Try to crush anyone that fires on this unit if possible. The harvester
 		**	typically is the only one that will qualify here.
 		*/
-		if (!Team && source && !IsTethered && !House->Is_Ally(source) && (!House->IsHuman || Special.IsSmartDefense)) {
+		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Sticky or Sleeping units should not crush infantry.
+		if (!Team && source && !IsTethered && !House->Is_Ally(source) && (!House->IsHuman || Special.IsSmartDefense) && Mission != MISSION_SLEEP && Mission != MISSION_STICKY) {
 
 			/*
 			**	Try to crush the attacker if it can be crushed by this unit and this unit is

@@ -693,10 +693,10 @@ void Keyboard_Process(KeyNumType &input)
 						RTTIType whattype = techno->What_Am_I();
 						ActionType action = techno->What_Action(techno);
 						// Aircraft are blocked if they are currently in the air because this apparently makes them seek out a friendly building to land at.
-						if ((action == ACTION_SELF || action == ACTION_NO_SELF) && (whattype != RTTI_AIRCRAFT || ((AircraftClass *)techno)->Altitude == 0)) {
+						if ((action == ACTION_SELF || action == ACTION_NO_SELF)) {
 							techno->Response_Move();
 							AllowVoice = false;
-							OutList.Add(EventClass(tech->As_Target(), MISSION_UNLOAD));
+							OutList.Add(EventClass(tech->As_Target(), MISSION_UNLOAD, TARGET_NONE, ::As_Target(Coord_Cell(techno->Coord))));
 						}
 					}
 				}

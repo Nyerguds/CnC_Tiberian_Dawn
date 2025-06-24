@@ -690,17 +690,26 @@ bool Load_Misc_Values(FileClass &file)
 	file.Read(&EndCountDown, sizeof(EndCountDown));
 	file.Read(BriefingText, sizeof(BriefingText));
 
-	if (file.Seek(0, SEEK_CUR) + sizeof(ActionMovie) <= file.Size()) {
+	// Keep boolean so these can be chained and aborted from the moment one fails.
+	bool readMore = file.Seek(0, SEEK_CUR) + sizeof(ActionMovie) <= file.Size();
+	if (readMore) {
 		file.Read(ActionMovie, sizeof(ActionMovie));
+		readMore = file.Seek(0, SEEK_CUR) + sizeof(SabotagedType) + sizeof(TempleIoned) <= file.Size();
+	} else {
+		// Clear the space to the default.
+		strncpy(ActionMovie, "X", sizeof(ActionMovie));
+		readMore = false;
+	}
+	if (readMore) {
 		// Nyerguds's TUC Quick Fix Patch v1.04:
 		// fixed temple ion cannon status not getting saved in savegames.
 		// fixed Commando last bomb target not getting saved in savegames.
-		if (file.Seek(0, SEEK_CUR) + sizeof(SabotagedType) + sizeof(TempleIoned) <= file.Size()) {
-			file.Read(&SabotagedType, sizeof(SabotagedType));
-			file.Read(&TempleIoned, sizeof(TempleIoned));
-		}
-	}	
-	
+		file.Read(&SabotagedType, sizeof(SabotagedType));
+		file.Read(&TempleIoned, sizeof(TempleIoned));
+	} else {
+		SabotagedType = STRUCT_NONE;
+		TempleIoned = false;
+	}
 	return(true);
 }
 

@@ -1821,22 +1821,22 @@ void BuildingClass::Drop_Debris(TARGET source)
 
 
 	/*
-	**	Generate random survivors from the destroyed building.
+	**	Infantry could run out of a destroyed building.
 	*/
-	cell = Coord_Cell(Coord);
-	offset = Occupy_List();
-	int odds = 2;
-	if (Target_Legal(WhomToRepay)) odds -= 1;
-	if (IsCaptured) odds += 6;
-	while (*offset != REFRESH_EOL) {
-		CELL	newcell;
-
-		newcell = cell + *offset++;
-
+	if (!House->IsToDie && !IsSurvivorless) {
 		/*
-		**	Infantry could run out of a destroyed building.
+		**	Generate random survivors from the destroyed building.
 		*/
-		if (!House->IsToDie && !IsSurvivorless) {
+		cell = Coord_Cell(Coord);
+		offset = Occupy_List();
+		int odds = 2;
+		//source != TARGET_NONE
+		bool isSabotaged = Target_Legal(source);
+		if (isSabotaged) odds -= 1;
+		if (IsCaptured) odds += 6;
+		while (*offset != REFRESH_EOL) {
+			CELL	newcell;
+			newcell = cell + *offset++;
 			InfantryClass * i = NULL;
 
 			if (Random_Pick(0, odds) == 1) {
@@ -1847,14 +1847,12 @@ void BuildingClass::Drop_Debris(TARGET source)
 					if (i->Unlimbo(Cell_Coord(newcell), DIR_N)) {
 						i->Strength = Random_Pick(5, (int)i->Class->MaxStrength);
 						i->Scatter(0, true);
-						if (source != TARGET_NONE && !House->Is_Ally(As_Object(source))) {
+						if (isSabotaged && !House->Is_Ally(As_Object(source))) {
 							// Nyerguds's TUC Quick Fix Patch v1.04
 							// If the death is the result of C4 exploding, make survivors dazed.
-							if (IsGoingToBlow) {
-								// Just enough to prevent that initial shot before the Scatter order takes hold.
-								i->Arm = 5;
-							}
-							// Seems to work a lot better than assigning them to attack the Commando.
+							// 5 is just enough to prevent that initial shot before the Scatter order takes hold.
+							i->Arm = 5;
+							// Guard Area works a lot better than an Attack order; this makes them keep chasing.
 							i->Assign_Mission(MISSION_GUARD_AREA);
 							i->Assign_Target(source);
 						} else {
@@ -1870,30 +1868,30 @@ void BuildingClass::Drop_Debris(TARGET source)
 					ScenarioInit--;
 				}
 			}
-		}
-
-		/*
-		**	Possibly add some smoke rising from the ashes of the building.
-		*/
-		switch (Random_Pick(0, 5)) {
-			case 0:
-			case 1:
-			case 2:
-				new AnimClass(ANIM_SMOKE_M, Coord_Scatter(Cell_Coord(newcell), 0x0050, false), Random_Pick(0, 5), Random_Pick(1, 2));
-				break;
-
-			default:
-				break;
-		}
-
-		/*
-		**	The building always scars the ground in some fashion.
-		*/
-		if (Random_Pick(0, 3) == 0) {
-			new SmudgeClass(Random_Pick(SMUDGE_SCORCH1, SMUDGE_SCORCH6), Cell_Coord(newcell));
-		} else {
-			// Nyerguds's TUC Quick Fix Patch v1.02: craters
-			new SmudgeClass(Random_Pick(SMUDGE_CRATER1, SMUDGE_CRATER6), Cell_Coord(newcell)); // Coord_Scatter(Cell_Coord(newcell), 0x0080, false));
+	
+			/*
+			**	Possibly add some smoke rising from the ashes of the building.
+			*/
+			switch (Random_Pick(0, 5)) {
+				case 0:
+				case 1:
+				case 2:
+					new AnimClass(ANIM_SMOKE_M, Coord_Scatter(Cell_Coord(newcell), 0x0050, false), Random_Pick(0, 5), Random_Pick(1, 2));
+					break;
+	
+				default:
+					break;
+			}
+	
+			/*
+			**	The building always scars the ground in some fashion.
+			*/
+			if (Random_Pick(0, 3) == 0) {
+				new SmudgeClass(Random_Pick(SMUDGE_SCORCH1, SMUDGE_SCORCH6), Cell_Coord(newcell));
+			} else {
+				// Nyerguds's TUC Quick Fix Patch v1.02: craters
+				new SmudgeClass(Random_Pick(SMUDGE_CRATER1, SMUDGE_CRATER6), Cell_Coord(newcell)); // Coord_Scatter(Cell_Coord(newcell), 0x0080, false));
+			}
 		}
 	}
 }

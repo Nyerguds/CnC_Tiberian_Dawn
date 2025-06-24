@@ -220,7 +220,10 @@ void Explosion_Damage(COORDINATE coord, unsigned strength, TechnoClass * source,
 	**	make sure that the warhead is of the kind that can destroy walls.
 	*/
 	cellptr = &Map[cell];
-	cellptr->Reduce_Tiberium(strength / 10);
+	// Possible enhancement? IsTiberiumDestroyer is currently completely unused.
+	// Would change gameplay a lot though since a lot of warheads do not have this enabled.
+	// if (whead->IsTiberiumDestroyer)
+		cellptr->Reduce_Tiberium(strength / 10);
 	if (cellptr->Overlay != OVERLAY_NONE) {
 		OverlayTypeClass const * optr = &OverlayTypeClass::As_Reference(cellptr->Overlay);
 
