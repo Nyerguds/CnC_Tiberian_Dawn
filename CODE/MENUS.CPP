@@ -777,7 +777,13 @@ int Main_Menu(unsigned long timeout)
 			Version_Number();
 			Fancy_Text_Print("Demo%s", D_DIALOG_X+D_DIALOG_W-5*2, D_DIALOG_Y+D_DIALOG_H-10*2, DKGREY, TBLACK, TPF_6POINT|TPF_FULLSHADOW|TPF_RIGHT, VersionText);
 #else
-			Fancy_Text_Print("V.%d%s", D_DIALOG_X+D_DIALOG_W-5*2, D_DIALOG_Y+D_DIALOG_H-10*2, DKGREY, TBLACK, TPF_6POINT|TPF_FULLSHADOW|TPF_RIGHT, Version_Number(), VersionText);
+
+#ifndef VERSION_PATCH_EXTRA
+#define VERSION_PATCH_EXTRA	""
+#endif
+			bool extra = strlen(VERSION_PATCH_EXTRA) > 0;
+			int extrasubtr = extra ? 10*2 : 0;
+			Fancy_Text_Print("V.%d%s", D_DIALOG_X+D_DIALOG_W-5*2, D_DIALOG_Y+D_DIALOG_H-10*2-extrasubtr, DKGREY, TBLACK, TPF_6POINT|TPF_FULLSHADOW|TPF_RIGHT, Version_Number(), VersionText);
 #endif
 #endif
 

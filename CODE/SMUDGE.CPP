@@ -341,6 +341,7 @@ void SmudgeClass::Read_INI(char *buffer)
  *   09/01/1994 JLB : Created.                                                                 *
  *   07/24/1995 JLB : Records the smudge data as well.                                         *
  *=============================================================================================*/
+#ifdef SCENARIO_EDITOR
 void SmudgeClass::Write_INI(char *buffer)
 {
 	char	uname[10];
@@ -374,6 +375,7 @@ void SmudgeClass::Write_INI(char *buffer)
 		}
 	}
 }
+#endif // SCENARIO_EDITOR
 
 
 /***********************************************************************************************

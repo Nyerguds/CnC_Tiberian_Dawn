@@ -1723,6 +1723,7 @@ void HouseClass::Read_INI(char *buffer)
  * HISTORY:                                                                                    *
  *   05/28/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
+#ifdef SCENARIO_EDITOR
 void HouseClass::Write_INI(char *buffer)
 {
 	for (HousesType i = HOUSE_FIRST; i < HOUSE_COUNT; i++) {
@@ -1747,6 +1748,7 @@ void HouseClass::Write_INI(char *buffer)
 		}
 	}
 }
+#endif // SCENARIO_EDITOR
 
 
 /***********************************************************************************************

@@ -3598,6 +3598,7 @@ void UnitClass::Read_INI(char *buffer)
  * HISTORY:                                                                                    *
  *   05/28/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
+#ifdef SCENARIO_EDITOR
 void UnitClass::Write_INI(char *buffer)
 {
 	int	index;
@@ -3638,6 +3639,7 @@ void UnitClass::Write_INI(char *buffer)
 		}
 	}
 }
+#endif // SCENARIO_EDITOR
 
 
 /***********************************************************************************************

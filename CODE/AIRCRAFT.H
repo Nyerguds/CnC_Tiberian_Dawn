@@ -163,7 +163,9 @@ class AircraftClass : public FootClass, public FlyClass
 		**	File I/O.
 		*/
 		static void  Read_INI(char *buffer);
+#ifdef SCENARIO_EDITOR
 		static void  Write_INI(char *buffer);
+#endif // SCENARIO_EDITOR
 		static char * INI_Name(void) {return "AIRCRAFT";};
 		bool  Load(FileClass & file);
 		bool  Save(FileClass & file);

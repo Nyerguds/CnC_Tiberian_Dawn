@@ -3001,6 +3001,7 @@ void InfantryClass::Read_INI(char *buffer)
  * HISTORY:                                                                                    *
  *   05/28/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
+#ifdef SCENARIO_EDITOR
 void InfantryClass::Write_INI(char *buffer)
 {
 	int			index;
@@ -3043,6 +3044,7 @@ void InfantryClass::Write_INI(char *buffer)
 		}
 	}
 }
+#endif // SCENARIO_EDITOR
 
 
 /***********************************************************************************************

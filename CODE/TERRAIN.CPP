@@ -864,6 +864,7 @@ void TerrainClass::Read_INI(char *buffer)
  * HISTORY:                                                                                    *
  *   05/28/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
+#ifdef SCENARIO_EDITOR
 void TerrainClass::Write_INI(char *buffer)
 {
 	int	index;
@@ -898,3 +899,4 @@ void TerrainClass::Write_INI(char *buffer)
 		}
 	}
 }
+#endif // SCENARIO_EDITOR

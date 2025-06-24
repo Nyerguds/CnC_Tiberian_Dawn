@@ -2625,46 +2625,24 @@ int Version_Number(void)
 
 #ifdef WIN32
 
-#if (FRENCH)
-		sprintf(VersionText, ".02");            // Win95 french version number
-#endif	//FRENCH
-
-#if (GERMAN)
-		sprintf(VersionText, ".01");            // Win95 german version number
-#endif	//GERMAN
-
-#if (JAPANESE)
-		sprintf(VersionText, ".01");            // Win95 german version number
-#endif	//GERMAN
-
-#if !(FRENCH | GERMAN | JAPANESE)
-		sprintf(VersionText, ".07");            // Win95 USA version number
-#endif	//FRENCH | GERMAN
-
-		RawFileClass file("VERSION.TXT");
-		char version [16];
-		memset (version, 0, sizeof (version));
-		if (file.Is_Available()){
-			file.Read (version, sizeof (version));
+	RawFileClass file("VERSION.TXT");
+	char version [16];
+	memset (version, 0, sizeof (version));
+	if (file.Is_Available()){
+		file.Read(version, sizeof (version));
+		// Correct version of the end trim done above.
+		int txtlen = strlen(version);
+		while (txtlen > 0 && (version[txtlen-1] == '\r' || version[txtlen-1] == '\n')) {
+			version[txtlen-1] = '\0';
+			txtlen = strlen(version);
 		}
-		strncat (VersionText, version, sizeof (VersionText) - strlen (VersionText) - 1);
-
-#if (FRENCH)
-		return (1);            						// Win95 french version number
-#endif	//FRENCH
-
-#if (GERMAN)
-		return (1);										// Win95 german version number
-#endif	//GERMAN
-
-#if (JAPANESE)
-		return (1);										// Win95 german version number
-#endif	//GERMAN
-
-#if !(FRENCH | GERMAN | JAPANESE)
-		return (1);										// Win95 USA version number
-#endif	//FRENCH | GERMAN
-
+	}
+#ifndef VERSION_PATCH_EXTRA
+#define VERSION_PATCH_EXTRA	""
+#endif
+	bool extra = strlen(VERSION_PATCH_EXTRA) > 0;
+	sprintf(VersionText, (extra ? ".%02d%s\r%s" : ".%02d%s%s"), VERSION_MINOR, version, VERSION_PATCH_EXTRA);
+	return (VERSION_MAJOR);
 #else
 
 

@@ -521,6 +521,7 @@ void AircraftClass::Read_INI(char *buffer)
  * HISTORY:                                                                                    *
  *   07/26/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
+#ifdef SCENARIO_EDITOR
 void AircraftClass::Write_INI(char *buffer)
 {
 	int	index;
@@ -560,6 +561,7 @@ void AircraftClass::Write_INI(char *buffer)
 		}
 	}
 }
+#endif // SCENARIO_EDITOR
 
 
 /***********************************************************************************************

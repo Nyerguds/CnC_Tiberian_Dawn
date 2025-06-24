@@ -77,7 +77,9 @@ class BaseClass
 		** The standard suite of load/save support routines
 		*/
 		void Read_INI(char *buffer);
+#ifdef SCENARIO_EDITOR
 		void Write_INI(char *buffer);
+#endif // SCENARIO_EDITOR
 		static char *INI_Name(void) {return "Base";}
 		bool Load(FileClass & file);
 		bool Save(FileClass & file);

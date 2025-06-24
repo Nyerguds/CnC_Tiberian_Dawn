@@ -633,11 +633,9 @@ bool Read_Scenario_Ini(char *root, bool fresh)
  *   10/07/1992 JLB : Created.                                                                 *
  *   05/11/1995 JLB : Updates movie data.                                                      *
  *=============================================================================================*/
+#ifdef SCENARIO_EDITOR
 void Write_Scenario_Ini(char *root)
 {
-#ifndef CHEAT_KEYS
-	root = root;
-#else
 	char * buffer;			// Scenario.ini staging buffer pointer.
 	char fname[_MAX_FNAME+_MAX_EXT];		// full scenario name
 	HousesType house;
@@ -733,8 +731,8 @@ void Write_Scenario_Ini(char *root)
 //	file.Open(WRITE);
 	file.Write(buffer,strlen(buffer));
 //	file.Close();
-#endif
 }
+#endif // SCENARIO_EDITOR
 
 
 /***********************************************************************************************

@@ -467,7 +467,9 @@ void Draw_Caption(int text, int x, int y, int w);
 **	INI.CPP
 */
 void Set_Scenario_Name(char *buf, int scenario, ScenarioPlayerType player, ScenarioDirType dir = SCEN_DIR_NONE, ScenarioVarType var = SCEN_VAR_NONE);
+#ifdef SCENARIO_EDITOR
 void Write_Scenario_Ini(char *root);
+#endif // SCENARIO_EDITOR
 bool Read_Scenario_Ini(char *root, bool fresh=true);
 int Scan_Place_Object(ObjectClass *obj, CELL cell);
 

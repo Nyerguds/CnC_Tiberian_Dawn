@@ -138,7 +138,9 @@ class TriggerClass {
 		*/
 		static void Read_INI (char *buffer);
 		void  Fill_In(char *name, char *entry);
+#ifdef SCENARIO_EDITOR
 		static void Write_INI (char *buffer, bool refresh);
+#endif // SCENARIO_EDITOR
 		static char * INI_Name(void) {return "Triggers";};
 		bool  Load(FileClass & file);
 		bool  Save(FileClass & file);

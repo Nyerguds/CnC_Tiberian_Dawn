@@ -204,6 +204,7 @@ void BaseClass::Read_INI(char *buffer)
  * HISTORY:                                                                                    *
  *   03/24/1995 BRR : Created.                                                                 *
  *=============================================================================================*/
+#ifdef SCENARIO_EDITOR
 void BaseClass::Write_INI(char *buffer)
 {
 	char buf[128];
@@ -233,6 +234,7 @@ void BaseClass::Write_INI(char *buffer)
 		WWWritePrivateProfileString(INI_Name(), uname, buf, buffer);
 	}
 }
+#endif // SCENARIO_EDITOR
 
 
 /***********************************************************************************************

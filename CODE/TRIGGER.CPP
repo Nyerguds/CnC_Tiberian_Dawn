@@ -1181,6 +1181,7 @@ void TriggerClass::Fill_In(char * name, char *entry)
  * HISTORY:                                                                                    *
  *   11/28/1994 BR : Created.                                                                  *
  *=============================================================================================*/
+#ifdef SCENARIO_EDITOR
 void TriggerClass::Write_INI(char *buffer, bool refresh)
 {
 	int index;
@@ -1231,6 +1232,7 @@ void TriggerClass::Write_INI(char *buffer, bool refresh)
 		WWWritePrivateProfileString(INI_Name(), trigger->Get_Name(), buf, buffer);
 	}
 }
+#endif // SCENARIO_EDITOR
 
 
 /***********************************************************************************************

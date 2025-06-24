@@ -433,6 +433,7 @@ void TeamTypeClass::Fill_In(char * name, char *entry)
  * HISTORY:                                                                *
  *   12/07/1994 BR : Created.                                              *
  *=========================================================================*/
+#ifdef SCENARIO_EDITOR
 void TeamTypeClass::Write_INI(char *buffer, bool refresh)
 {
 	int index;
@@ -521,6 +522,7 @@ void TeamTypeClass::Write_INI(char *buffer, bool refresh)
 		WWWritePrivateProfileString(INI_Name(), team->IniName, buf, buffer);
 	}
 }
+#endif // SCENARIO_EDITOR
 
 
 /***************************************************************************

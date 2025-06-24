@@ -125,7 +125,9 @@ class DisplayClass: public MapClass
 		DisplayClass(void);
 
 		virtual void Read_INI(char *buffer);
+#ifdef SCENARIO_EDITOR
 		void Write_INI(char *buffer);
+#endif // SCENARIO_EDITOR
 
 		/*
 		** Initialization

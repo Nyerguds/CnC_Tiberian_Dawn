@@ -67,7 +67,9 @@ class SmudgeClass : public ObjectClass
 		**	File I/O.
 		*/
 		static void Read_INI(char *);
+#ifdef SCENARIO_EDITOR
 		static void Write_INI(char *);
+#endif // SCENARIO_EDITOR
 		static char *INI_Name(void) {return "SMUDGE";};
 		bool Load(FileClass & file);
 		bool Save(FileClass & file);

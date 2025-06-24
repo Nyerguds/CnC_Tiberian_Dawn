@@ -87,7 +87,7 @@ extern bool							IsV107;
 extern char							OverridePath[128];
 #endif
 extern bool							SlowPalette;
-extern char							VersionText[16];
+extern char							VersionText[32];
 extern bool							ScoresPresent;
 extern int							CrateCount;
 extern TCountDownTimerClass	CrateTimer;

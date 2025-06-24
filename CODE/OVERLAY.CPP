@@ -399,6 +399,7 @@ void OverlayClass::Read_INI(char *buffer)
  * HISTORY:                                                                                    *
  *   09/01/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
+#ifdef SCENARIO_EDITOR
 void OverlayClass::Write_INI(char *buffer)
 {
 	int	index;
@@ -429,3 +430,4 @@ void OverlayClass::Write_INI(char *buffer)
 		}
 	}
 }
+#endif // SCENARIO_EDITOR

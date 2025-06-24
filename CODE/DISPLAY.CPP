@@ -1270,6 +1270,7 @@ void DisplayClass::Read_INI(char *buffer)
  * HISTORY:                                                                                    *
  *   05/27/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
+#ifdef SCENARIO_EDITOR
 void DisplayClass::Write_INI(char *buffer)
 {
 	char entry[20];
@@ -1319,6 +1320,7 @@ void DisplayClass::Write_INI(char *buffer)
 		}
 	}
 }
+#endif // SCENARIO_EDITOR
 
 
 /***********************************************************************************************

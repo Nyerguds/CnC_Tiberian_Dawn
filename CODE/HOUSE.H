@@ -441,7 +441,9 @@ class HouseClass {
 		**	File I/O.
 		*/
 		static void  Read_INI(char *buffer);
+#ifdef SCENARIO_EDITOR
 		static void  Write_INI(char *buffer);
+#endif // SCENARIO_EDITOR
 		static void  Read_Flag_INI(char *buffer);
 		static void  Write_Flag_INI(char *buffer);
 		bool  Load(FileClass & file);

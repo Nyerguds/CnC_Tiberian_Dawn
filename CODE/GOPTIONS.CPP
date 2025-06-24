@@ -256,9 +256,15 @@ void GameOptionsClass::Process(void)
 					ScenarioName,
 					VersionText);
 #else
+
+#ifndef VERSION_PATCH_EXTRA
+#define VERSION_PATCH_EXTRA	""
+#endif
+			bool extra = strlen(VERSION_PATCH_EXTRA) > 0;
+			int extrasubtr = extra ? 10*resfactor : 0;
 			Fancy_Text_Print("%s\rV.%d%s",
 					((WindowList[WINDOW_EDITOR][WINDOWX]+WindowList[WINDOW_EDITOR][WINDOWWIDTH])<<3)-3*resfactor,
-					WindowList[WINDOW_EDITOR][WINDOWY]+WindowList[WINDOW_EDITOR][WINDOWHEIGHT]-((GameToPlay == GAME_NORMAL) ? (32*resfactor) : (24*resfactor)),
+					WindowList[WINDOW_EDITOR][WINDOWY]+WindowList[WINDOW_EDITOR][WINDOWHEIGHT]-((GameToPlay == GAME_NORMAL) ? (32*resfactor) : (24*resfactor))-extrasubtr,
 					DKGREY, TBLACK,
 					TPF_6POINT|TPF_NOSHADOW|TPF_RIGHT,
 					ScenarioName,

@@ -109,8 +109,8 @@
 /**********************************************************************
 **	Optional parameter control for special options.
 */
-//#define	PARM_6PLAYER		0x5D9F6F24		// "6"
-#define	PARM_6PLAYER	0x9CAFC93B		// Alternate 6 player keyphrase.
+#define PARM_6PLAYER    	0x5D9F6F24		// "6"
+//#define PARM_6PLAYER    	0x9CAFC93B		// "CROWDED" - Alternate 6 player keyphrase.
 
 /*
 **	Enable the set of limited cheat key options.
@@ -124,49 +124,49 @@
 */
 #ifdef CHEAT_KEYS
 #ifndef PARM_PLAYTEST
-#define	PARM_PLAYTEST		0xF7DDC227		// "PLAYTEST"
+#define	PARM_PLAYTEST   	0xF7DDC227		// "PLAYTEST"
 #endif
-#define	PARM_CHEATDAVID	0xBE79088C		// Cheat keys for David Dettmer
-#define	PARM_CHEATERIK		0x9F38A19D		// Cheat keys for Erik Yeo
-#define	PARM_EDITORERIK	0xC2AA509B		//	Map editor for Erik Yeo
-#define	PARM_CHEATPHIL		0x39D01821		// Cheat keys for Phil Gorrow
-#define	PARM_CHEATJOE		0xABDD0362		// Cheat keys for Joe Bostic
-#define	PARM_CHEATBILL		0xB5B63531		// Cheat keys for Bill Randolph
-#define	PARM_CHEAT_STEVET	0x2E7FE493		// Cheat keys for Steve Tall
-#define	PARM_EDITORBILL	0x7E7C4CCA		//	"-EDITOR"
-#define	PARM_CHEATMIKE		0x00532693		// Mike Lightner
-#define	PARM_CHEATADAM		0xDFABC23A		// Adam Isgreen
+#define	PARM_CHEATDAVID 	0xBE79088C		// Cheat keys for David Dettmer
+#define	PARM_CHEATERIK  	0x9F38A19D		// "SUPER" Cheat keys for Erik Yeo
+#define	PARM_EDITORERIK 	0xC2AA509B		// "SUPEREDIT" Map editor for Erik Yeo
+#define	PARM_CHEATPHIL  	0x39D01821		// "WIZARD" Cheat keys for Phil Gorrow
+#define	PARM_CHEATJOE   	0xABDD0362		// "OBWAN" Cheat keys for Joe Bostic
+#define	PARM_CHEATBILL  	0xB5B63531		// "BLUB" Cheat keys for Bill Randolph
+#define	PARM_CHEAT_STEVET	0x2E7FE493		// "BOLLOCKS" Cheat keys for Steve Tall
+#define	PARM_EDITORBILL 	0x7E7C4CCA		// "-EDITOR"
+#define	PARM_CHEATMIKE  	0x00532693		// Mike Lightner
+#define	PARM_CHEATADAM  	0xDFABC23A		// Adam Isgreen
 #endif
 
 //#define	PARM_CHEAT		0x6F4BE7CA		// "CHEAT"
-//#define	PARM_EDITOR		0x7E7C4CCA		//	"-EDITOR"
+//#define	PARM_EDITOR		0x7E7C4CCA		// "-EDITOR"
 
-#define	PARM_EASY			0x59E975CE		// "EASY" Enables easy mode.
-#define	PARM_HARD			0xACFE9D13		// "HARD" Enables hard mode.
+#define	PARM_EASY       	0x59E975CE		// "EASY" Enables easy mode.
+#define	PARM_HARD       	0xACFE9D13		// "HARD" Enables hard mode.
 
-#define	PARM_INSTALL		0xD95C68A2		//	"FROMINSTALL"
-#define	PARM_TRUENAME		0xB1A34435		// Enables true object names.
-#define	PARM_3POINT			0x03552894		// Enable three point turns.
-#define	PARM_SCORE			0x7FDE2C33		// Enables alternate themes.
-#define	PARM_COMBAT			0xDC57C4B2		// Gives combat advantage to attacker.
-#define	PARM_TREETARGET	0x00AB6BEF		// Allows targeting of trees without <CTRL> key.
-#define	PARM_BIB				0xF7867BF0		// Disables building bibs.
-#define	PARM_MCV				0x104DF10F		// MCV undeploys rather than sells.
-#define	PARM_HELIPAD		0x53EBECBC		// Helipad can be purchased separately from helicopter.
-#define	PARM_IQ				0x9E3881B8		// Smart self defense logic enable.
-#define	PARM_SQUISH			0x4EA2FBDF		// Squish images for infantry bodies.
-#define	PARM_HUMAN			0xACB58F61		// Human generated sound effects.
-#define	PARM_SCROLLING		0xC084AE82		// Restricts scrolling over the tabs.
-//#define	PARM_SPECIAL		0xD18129F6		// Enables special mode.
-//#define	PARM_SPECIAL	0x2E84E394	//	#1
-//#define	PARM_SPECIAL	0x63CE7584	//	#2
-//#define	PARM_SPECIAL	0x85F110A5	//	#3
-///#define	PARM_SPECIAL	0x7F65F13C	//	#4
-//#define	PARM_SPECIAL	0x431F5F61	//	#5
-#define	PARM_SPECIAL	0x11CA05BB	//	#6 	funpark
-//#define	PARM_SPECIAL	0xE0F651B9	//	#7
-//#define	PARM_SPECIAL	0x10B9683D	//	#8
-//#define	PARM_SPECIAL	0xEE1CD37D	//	#9
+#define	PARM_INSTALL    	0xD95C68A2		// "FROMINSTALL"
+#define	PARM_TRUENAME   	0xB1A34435		// "TARBOSH" Enables true object names.
+#define	PARM_3POINT     	0x03552894		// "DANCING" Enable three point turns.
+#define	PARM_SCORE      	0x7FDE2C33		// "REMIX" Enables alternate themes.
+#define	PARM_COMBAT     	0xDC57C4B2		// "CHARGE!" Gives combat advantage to attacker.
+#define	PARM_TREETARGET 	0x00AB6BEF		// "LIGHTNING" Allows targeting of trees without <CTRL> key.
+#define	PARM_BIB        	0xF7867BF0		// "RECKLESS BABY GRIEFS" Disables building bibs.
+#define	PARM_MCV        	0x104DF10F		// "TRANSFORMER" MCV undeploys rather than sells.
+#define	PARM_HELIPAD    	0x53EBECBC		// "A LA CARTE" Helipad can be purchased separately from helicopter.
+#define	PARM_IQ         	0x9E3881B8		// "SERGENT" Smart self defense logic enable.
+#define	PARM_SQUISH     	0x4EA2FBDF		// "PANCAKE" Squish images for infantry bodies.
+#define	PARM_HUMAN      	0xACB58F61		// "7TH GRADE" Human generated sound effects.
+#define	PARM_SCROLLING  	0xC084AE82		// "RESTRICTED" Restricts scrolling over the tabs.
+//#define PARM_SPECIAL    	0xD18129F6		// #0 "JURASSIC" Enables special mode.
+//#define PARM_SPECIAL    	0x2E84E394		// #1 "FUNFUN"
+//#define PARM_SPECIAL    	0x63CE7584		// #2 "RAPATTACK"
+//#define PARM_SPECIAL    	0x85F110A5		// #3 "WHAT_THE"
+//#define PARM_SPECIAL    	0x7F65F13C		// #4 "ITS_ABOUT_TIME"
+//#define PARM_SPECIAL    	0x431F5F61		// #5 "LOST_IN_TIME"
+#define PARM_SPECIAL    	0x11CA05BB		// #6 "FUNPARK"
+//#define PARM_SPECIAL    	0xE0F651B9		// #7 "GONEWILD"
+//#define PARM_SPECIAL    	0x10B9683D		// #8 "ISITCLEAR"
+//#define PARM_SPECIAL    	0xEE1CD37D		// #9 "CHOMPCHOMP"
 
 
 /**********************************************************************
@@ -184,15 +184,43 @@
 #define	REPAIR_THRESHHOLD		1000
 
 
-//#define	GERMAN	1
-//#define	FRENCH	1
-//#define	JAPANESE	1
+/**********************************************************************
+**	Define the builds for specific languages. Only ever uncomment
+**	one of these together, or Bad Things(TM) will happen.
+*/
+//#define GERMAN	1
+//#define FRENCH	1
+//#define JAPANESE	1
+
+// Version numbers for each language
+#define VERSION_MAJOR   	1  // Major version will never change between languages.
+
+#define VER_MIN_ENGLISH 	7	// Win95 USA minor version number
+#define VER_MIN_GERMAN  	3	// Win95 german minor version number
+#define VER_MIN_FRENCH  	2	// Win95 french minor version number
+#define VER_MIN_JAPANESE	1	// Win95 japanese minor version number
+
+#ifdef GERMAN
+#define VERSION_MINOR		VER_MIN_GERMAN
+#define VERSION_MAJOR		VER_MAJ_GERMAN
+#endif //GERMAN
+#ifdef FRENCH
+#define VERSION_MINOR		VER_MIN_FRENCH
+#define VERSION_MAJOR		VER_MAJ_FRENCH
+#endif //FRENCH
+#ifdef JAPANESE
+#define VERSION_MINOR		VER_MIN_JAPANESE
+#define VERSION_MAJOR		VER_MAJ_JAPANESE
+#endif // JAPANESE
+
+#ifndef VERSION_MINOR
+#define VERSION_MINOR		VER_MIN_ENGLISH
+#endif // English
+
+#define VERSION_PATCH_EXTRA	"C&C Patch Project"
 
 // Enable this to load the map screen strings from the strings file instead of using the hardcoded ones.
 //#define EXPANDED_STRINGS 1
-
-#define	FOREIGN_VERSION_NUMBER	6
-
 
 /**********************************************************************
 **	These enumerations are used to implement RTTI.
@@ -246,7 +274,7 @@ typedef enum RTTIType {
 
 // Use this to allow keep track of versions as they affect saved games.
 #define	VERSION_NUMBER		1
-#define	RELEASE_NUMBER	01
+#define	RELEASE_NUMBER		01
 
 #define FAME_FILE_NAME					"HALLFAME.DAT"
 

@@ -105,7 +105,9 @@ class TeamTypeClass : public AbstractTypeClass
 		*/
 		static void Read_INI(char *buffer);
 		void  Fill_In(char *name, char *entry);
+#ifdef SCENARIO_EDITOR
 		static void Write_INI(char *buffer, bool refresh);
+#endif // SCENARIO_EDITOR
 		static void Read_Old_INI(char *buffer);
 		static char * INI_Name(void) {return "TeamTypes";};
 		bool  Load(FileClass & file);
