@@ -59,9 +59,9 @@ v1.03:
 * Fixed the New Missions menu only going up to 98 (59 in the Japanese version). It can now go up to 99.
 * Fixed the bug where selecting a team by number when having a structure selected would keep the structure selected.
 * Fixed the bug where selecting a team by number would not clear the currently selected units when a unit from that team was the last-added unit in the current selection.
-* The "Guard Target" ability ([Ctrl]+[Alt]+click) can now be clicked on the ground as targeted equivalent to the Area Guard function of the "G" button.
+* The "Guard Target" ability (\[Ctrl\]+\[Alt\]+click) can now be clicked on the ground as targeted equivalent to the Area Guard function of the "G" button.
 * Fixed the "Guard Target" ability not working on the minimap.
-* Fixed aircraft showing the "Guard Target" cursor when pressing [ctrl]+[alt] even though they can't execute any Area Guard orders.
+* Fixed aircraft showing the "Guard Target" cursor when pressing \[Ctrl\]+\[Alt\] even though they can't execute any Area Guard orders.
 * Restored the Stop command for defense buildings (pressing "S"), while properly fixing the cheat that allowed abusing it for cancelling building sales to get free infantry.
 * Holding down the Shift key now allows adding units when making a drag-selection.
 * Drag-selecting can now select flying aircraft.
@@ -72,16 +72,16 @@ v1.04: (in progress)
 * Infantry can now enter an APC while the APC is busy attacking something.
 * Added support for the laser Orcas in the Playstation "PATSUX" mission. This is enabled by putting "Patsux=1" inside a mission file.
 * Lasers now always show a beam that's wide at the start and thinner at the end, no matter the direction in which they are fired.
-* Allowed the Area Guard functions ("G" and [Ctrl]+[Alt]+Click) to be used by Harvesters to find nearby tiberium to harvest.
+* Allowed the Area Guard functions ("G" and \[Ctrl\]+\[Alt\]+Click) to be used by Harvesters to find nearby tiberium to harvest.
 * Added "D" as Deploy/Unload hotkey.
 * The keyboard-given orders for Area Guard, Scatter and Deploy will now give unit responses.
 * Deploying units by clicking on them now works even if you have multiple units selected. This will not affect the other units in the selection.
-* Since the deployment change makes it impossible to load passengers into a selected transport that already contains at least one passenger, you can now hold [Alt] to override the Deploy cursor to allow passengers to enter.
+* Since the deployment change makes it impossible to load passengers into a selected transport that already contains at least one passenger, you can now hold \[Alt\] to override the Deploy cursor to allow passengers to enter.
 * When having infantry selected, you can now hold down shift and add an unloaded transport to the selection without this getting overridden by the order to load into the transport.
-* An "Enter" cursor no longer overrides the [Ctrl] force-fire or [Ctrl]+[Alt] Guard Target cursors. It will still override [Alt] force-move though, since that's used to override transports' unloading.
+* An "Enter" cursor no longer overrides the \[Ctrl\] force-fire or \[Ctrl\]+\[Alt\] Guard Target cursors. It will still override \[Alt\] force-move though, since that's used to override transports' unloading.
 * Survivors from C4 explosions will no longer immediately shoot at the Commando at the moment they are spawned.
 * Fixed the bug where survivors from C4 explosions often never bothered pursuing the Commando.
-* Holding the [Shift] key on the "Select Transmission" screen while clicking the side will now go into the Funpark campaign.
+* Holding the \[Shift\] key on the "Select Transmission" screen while clicking the side will now go into the Funpark campaign.
 * Fixed dinosaur campaign savegames forgetting their campaign and chosen side.
 * Unlinked dinosaur campaign from the "Funpark" mode. All special dinosaur campaign logic is now only checked on the campaign ID. This also means dinosaur campaign savegames will function correctly without "Funpark" mode.
 * Units in Sleep or Sticky mode will no longer try to crush nearby infantry in response to being attacked.
