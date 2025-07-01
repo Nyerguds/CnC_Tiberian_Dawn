@@ -570,22 +570,37 @@ void Enable_Uncompressed_Shapes (void);
  *=============================================================================================*/
 void ScoreClass::Presentation(void)
 {
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Any nonstandard house gets a score screen without faction logo,
+	// with the GDI casualty bars, but labelled "You:" and "Enemy:"
 	//static char const _redpal[]={0x20,0x21,0x22,0x23,0x24,0x25,0x26,0x27,0x28,0x29,0x2A,0x2B,0x2C,0x2D,0x21,0x2F};
 	static char const _redpal[]={0x20,0x22,0x24,0x26,0x28,0x28,0x28,0x28,0x28,0x29,0x2A,0x2B,0x2C,0x2D,0x21,0x2F};
 	static char const _greenpal[]={0x10,0x12,0x14,0x16,0x18,0x18,0x18,0x18,0x18,0x19,0x1A,0x1B,0x1C,0x1D,0x10,0x1F};
 	static char const _bluepal[]={0x60,0x62,0x64,0x66,0x68,0x68,0x68,0x68,0x68,0x69,0x6A,0x6B,0x6C,0x6D,0x61,0x6F};
 	//static char const _bluepal[]={0x60,0x61,0x62,0x63,0x64,0x65,0x66,0x67,0x68,0x69,0x6A,0x6B,0x6C,0x6D,0x61,0x6F};
 	static char const _yellowpal[]={0x0,0x0,0xEC,0x0,0xEB,0x0,0xEA,0x0,0xE9,0x0,0x0,0x0,0x0,0x0,0xED,0x0};
-	static int const _casuax[2]={144,146};
-	static int const _casuay[2]={ 78, 90};
-	static int const _gditxx[2]={150,224};
-	static int const _gditxy[2]={ 90, 90};
-	static int const _nodtxx[2]={150,224};
-	static int const _nodtxy[2]={102,102};
+	static int const _casuax[3]={144,146,144};
+	static int const _casuay[3]={ 78, 90, 78};
+#ifdef FRENCH
+	static int const _gditxx[3]={150,224,144};
+#else // Not FRENCH
+	static int const _gditxx[3]={150,224,150};
+#endif // FRENCH
+	static int const _gditxy[3]={ 90, 90, 90};
+#ifdef GERMAN
+	static int const _nodtxx[3]={150,224,132};
+#else // Not GERMAN
+#ifdef FRENCH
+	static int const _nodtxx[3]={150,224,132};
+#else // Not FRENCH
+	static int const _nodtxx[3]={150,224,138};
+#endif // FRENCH
+#endif // GERMAN
+	static int const _nodtxy[3]={102,102,102};
 //	static int _bargrx[2]={297,SCORETEXT_X+64};
 //	static int _bargry[2]={ 90,CASUALTY_Y + 2};
-	static int const _bldggy[2]={138,128};
-	static int const _bldgny[2]={150,140};
+	static int const _bldggy[3]={138,128,138};
+	static int const _bldgny[3]={150,140,150};
 
 //	int gdikilled, nodkilled, civkilled, max, i, k, shapenum;
 	int i;
@@ -597,28 +612,31 @@ void ScoreClass::Presentation(void)
 	void *anim, *oldfont;
 	int oldfontxspacing = FontXSpacing;
 	int house = PlayerPtr->Class->House;		// 0 or 1
+	bool youvsthem = house > HOUSE_BAD;
+	int housescrn = youvsthem ? HOUSE_BAD : house;
+	int housepos = youvsthem ? 2 : house;
+	
 	char inter_pal[15];
 
 	/*
 	** Choose an appropriate palette file for the interpolation
 	*/
-	if (house == HOUSE_GOOD){
+	if (house == HOUSE_GOOD) {
 		sprintf(inter_pal,"SCORPAL1.PAL");
-	}else{
+	} else {
 		sprintf(inter_pal,"SNODPAL1.PAL");
 	}
 
 	// Nyerguds's TUC Quick Fix Patch v1.04
-	// Always skip score screen if nonstandard house is played, or playing Jurassic campaign.
-	if ((house != HOUSE_GOOD && house != HOUSE_BAD) || /*(Special.IsJurassic && AreThingiesEnabled) ||*/ ScenPlayer == SCEN_PLAYER_JP) {
+	// Always skip score screen when playing Jurassic campaign.
+	if (/*(Special.IsJurassic && AreThingiesEnabled) ||*/ ScenPlayer == SCEN_PLAYER_JP) {
 		return;
 	}
-
 	PseudoSeenBuff = new GraphicBufferClass(320,200,(void*)NULL);
 	TextPrintBuffer = new GraphicBufferClass(SeenBuff.Get_Width(), SeenBuff.Get_Height(), (void*)NULL);
 	TextPrintBuffer->Clear();
 	BlitList.Clear();
-	Disable_Uncompressed_Shapes ();
+	Disable_Uncompressed_Shapes();
 
 	ControlQ = 0;
 	FontXSpacing = 0;
@@ -641,7 +659,7 @@ void ScoreClass::Presentation(void)
 	/*
 	** Load the background for the score screen
 	*/
-	anim = Open_Animation(ScreenNames[house],NULL,0L,(WSAOpenType)(WSA_OPEN_FROM_MEM | WSA_OPEN_TO_PAGE),Palette);
+	anim = Open_Animation(ScreenNames[housescrn],NULL,0L,(WSAOpenType)(WSA_OPEN_FROM_MEM | WSA_OPEN_TO_PAGE),Palette);
 
 	unsigned minutes = (unsigned)((ElapsedTime / (long)TIMER_MINUTE))+1;
 
@@ -656,39 +674,48 @@ void ScoreClass::Presentation(void)
 		}
 	}
 
-	HouseClass *houses[3];
-	for (index = 0; index < 3; index++) {
-		houses[index] =(HouseClass::As_Pointer((HousesType)(HOUSE_GOOD+index)));
+	// Losses as "player" vs "enemy"
+	int plost=PlayerPtr->UnitsLost;
+	int elost=0;
+	int pblost=PlayerPtr->BuildingsLost;
+	int eblost=0;
+	
+	HouseClass *houses[HOUSE_COUNT];
+	for (index = HOUSE_FIRST; index < HOUSE_COUNT; index++) {
+		houses[index] = (HouseClass::As_Pointer((HousesType)(index)));
+		if (youvsthem && index != house && !PlayerPtr->Is_Ally((HousesType)index)) {
+			elost += houses[index]->UnitsLost;
+			eblost += houses[index]->BuildingsLost;
+		}
 	}
-
-	GKilled  = (HouseClass::As_Pointer(HOUSE_GOOD))->UnitsLost;
-	NKilled  = (HouseClass::As_Pointer(HOUSE_BAD))->UnitsLost;
-	CKilled  = (HouseClass::As_Pointer(HOUSE_NEUTRAL))->UnitsLost;
-	GBKilled = (HouseClass::As_Pointer(HOUSE_GOOD))->BuildingsLost;
-	NBKilled = (HouseClass::As_Pointer(HOUSE_BAD))->BuildingsLost;
-	CBKilled = (HouseClass::As_Pointer(HOUSE_NEUTRAL))->BuildingsLost;
+	GKilled  = houses[HOUSE_GOOD]->UnitsLost;
+	NKilled  = houses[HOUSE_BAD]->UnitsLost;
+	CKilled  = houses[HOUSE_NEUTRAL]->UnitsLost;
+	GBKilled = houses[HOUSE_GOOD]->BuildingsLost;
+	NBKilled = houses[HOUSE_BAD]->BuildingsLost;
+	CBKilled = houses[HOUSE_NEUTRAL]->BuildingsLost;
 
 	/*
 	** New  - ST 6/12/96 2:40PM
 	*/
-	GHarvested = (HouseClass::As_Pointer(HOUSE_GOOD))->HarvestedCredits;
-	NHarvested = (HouseClass::As_Pointer(HOUSE_BAD))->HarvestedCredits;
+	GHarvested = houses[HOUSE_GOOD]->HarvestedCredits;
+	NHarvested = houses[HOUSE_BAD]->HarvestedCredits;
 
 	if (!leadership) leadership++;
 	// Nyerguds's TUC Quick Fix Patch v1.03: nod-score-calc
 	// This used GDI values. Now it always uses the player ones.
-	leadership = Cardinal_To_Fixed(PlayerPtr->UnitsLost + PlayerPtr->BuildingsLost + leadership, leadership);
+	leadership = Cardinal_To_Fixed(plost + pblost + leadership, leadership);
 	leadership = Fixed_To_Cardinal(100, leadership);
 	if (leadership > 100) leadership = 100;
 
 	/*
 	**	Determine efficiency rating.
 	*/
-	int gharv = GHarvested;
+	int harv = PlayerPtr->HarvestedCredits;
 	int init = PlayerPtr->InitialCredits;
 	int cred = PlayerPtr->Available_Money();
 
-	unsigned efficiency = Cardinal_To_Fixed( (house == HOUSE_GOOD ? GHarvested : NHarvested) + (unsigned)PlayerPtr->InitialCredits+1, (unsigned)PlayerPtr->Available_Money()+1);
+	unsigned efficiency = Cardinal_To_Fixed(harv + (unsigned)init + 1, (unsigned)cred + 1);
 	if (!efficiency) efficiency++;
 	efficiency = Fixed_To_Cardinal(100, efficiency);
 
@@ -698,10 +725,11 @@ void ScoreClass::Presentation(void)
 	*/
 	long total = ((leadership * 40) + (4600) + (efficiency * 14))/100;
 	if (!total) total++;
-	total *= (BuildLevel+1);
+	// Buildlevel 98 will be usable without giving ridiculous scores
+	total *= (MAX(BuildLevel, 20) + 1);
 
 // Load up the shapes for the Nod score screen
-	if (house == HOUSE_GOOD) {
+	if (house == HOUSE_GOOD || youvsthem) {
 		yellowptr = MixFileClass::Retrieve("BAR3YLW.SHP");
 		redptr = MixFileClass::Retrieve("BAR3RED.SHP");
 	}
@@ -801,7 +829,9 @@ void ScoreClass::Presentation(void)
 
 	Call_Back_Delay(60);
 
-	if (house == HOUSE_BAD) Show_Credits(house, _greenpal);
+	// Note that the House here is only used for positioning.
+	// Actual credits are taken from PlayerPtr
+	if (house != HOUSE_GOOD) Show_Credits(HOUSE_BAD, _greenpal);
 
 	Call_Back_Delay(60);
 
@@ -810,22 +840,24 @@ void ScoreClass::Presentation(void)
 	*/
 	Set_Logic_Page(*PseudoSeenBuff);
 	Play_Sample(sfx4, 255, Options.Normalize_Sound(90));
-	Alloc_Object(new ScorePrintClass(TXT_SCORE_CASU, _casuax[house], _casuay[house],_redpal));
+	Alloc_Object(new ScorePrintClass(TXT_SCORE_CASU, _casuax[housepos], _casuay[housepos],_redpal));
 	Call_Back_Delay(9);
 	if (house == HOUSE_BAD) {
 		Alloc_Object(new ScorePrintClass(TXT_SCORE_NEUT, 200, 114,_redpal));
 		Call_Back_Delay(4);
 	}
 
-	Alloc_Object(new ScorePrintClass(TXT_SCORE_GDI, _gditxx[house], _gditxy[house],_redpal));
-	Alloc_Object(new ScorePrintClass(TXT_SCORE_NOD, _nodtxx[house], _nodtxy[house],_redpal));
+	Alloc_Object(new ScorePrintClass(youvsthem ? TXT_YOU : TXT_SCORE_GDI, _gditxx[housepos], _gditxy[housepos],_redpal));
+	Alloc_Object(new ScorePrintClass(youvsthem ? TXT_ENEMY : TXT_SCORE_NOD, _nodtxx[housepos], _nodtxy[housepos],_redpal));
 	Call_Back_Delay(6);
 
 	Set_Font_Palette(_redpal);
-	if (house == HOUSE_BAD) {
-		Do_Nod_Casualties_Graph();
+	if (house != HOUSE_BAD) {
+		int killed1 = youvsthem ? plost : GKilled + CKilled;
+		int killed2 = youvsthem ? elost : NKilled;
+		Do_GDI_Graph(yellowptr, redptr, killed1, killed2, 88);
 	} else {
-		Do_GDI_Graph(yellowptr, redptr, GKilled + CKilled, NKilled, 88);
+		Do_Nod_Casualties_Graph();
 	}
 
 	Set_Logic_Page(*PseudoSeenBuff);
@@ -834,7 +866,7 @@ void ScoreClass::Presentation(void)
 	** Print out stats on buildings destroyed
 	*/
 	Play_Sample(sfx4, 255, Options.Normalize_Sound(90));
-	if (house == HOUSE_GOOD) {
+	if (house != HOUSE_BAD) {
 		Alloc_Object(new ScorePrintClass(TXT_SCORE_BUIL, 144, 126,_greenpal));
 		Call_Back_Delay(9);
 	} else {
@@ -844,16 +876,18 @@ void ScoreClass::Presentation(void)
 		Alloc_Object(new ScorePrintClass(TXT_SCORE_NEUT, 200, 152,_greenpal));
 		Call_Back_Delay(4);
 	}
-	Alloc_Object(new ScorePrintClass(TXT_SCORE_GDI, _gditxx[house], _bldggy[house],_greenpal));
-	Alloc_Object(new ScorePrintClass(TXT_SCORE_NOD, _gditxx[house], _bldgny[house],_greenpal));
+	Alloc_Object(new ScorePrintClass(youvsthem ? TXT_YOU : TXT_SCORE_GDI, _gditxx[housepos], _bldggy[housepos],_greenpal));
+	Alloc_Object(new ScorePrintClass(youvsthem ? TXT_ENEMY : TXT_SCORE_NOD, _nodtxx[housepos], _bldgny[housepos],_greenpal));
 	Call_Back_Delay(7);
 
-	if (house==HOUSE_BAD) {
+	if (house != HOUSE_BAD) {
+		int bkilled1 = youvsthem ? pblost : GBKilled + CBKilled;
+		int bkilled2 = youvsthem ? eblost : NBKilled;
+		Do_GDI_Graph(yellowptr, redptr, bkilled1, bkilled2, 136);
+	} else {
 		Call_Back_Delay(6);
 		Set_Font_Palette(_greenpal);
 		Do_Nod_Buildings_Graph();
-	} else {
-		Do_GDI_Graph(yellowptr, redptr, GBKilled + CBKilled, NBKilled, 136);
 	}
 
 	// Wait for text printing to complete
@@ -863,7 +897,7 @@ void ScoreClass::Presentation(void)
 
 	if (Keyboard::Check()) Keyboard::Clear();
 
-	if (house == HOUSE_GOOD) Show_Credits(house, _greenpal);
+	if (house == HOUSE_GOOD) Show_Credits(HOUSE_GOOD, _greenpal);
 
 	/*
 	** Hall of fame display and processing

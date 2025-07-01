@@ -226,6 +226,14 @@ bool TempleIoned = false;
 
 
 /***************************************************************************
+**	Nyerguds's TUC Quick Fix Patch v1.04:
+**	Special logic for giving the ORCA the Obelisk laser.
+*/
+WeaponType PatsuxDefault = WEAPON_NONE;
+bool Patsux = false;
+
+
+/***************************************************************************
 **	This is the monochrome debug page array. The various monochrome data
 **	screens are located here.
 */

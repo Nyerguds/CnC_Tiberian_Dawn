@@ -1184,6 +1184,22 @@ void DisplayClass::Read_INI(char *buffer)
 	AircraftTypeClass::Init(Theater);
 	SmudgeTypeClass::Init(Theater);
 
+	/*
+	**	Extra initializations. These are done right after the
+	**	other Init here, but on savegames they are done after
+	**	the full load, so all additional values are included.
+	*/
+	TerrainTypeClass::After_Init();
+	TemplateTypeClass::After_Init();
+	OverlayTypeClass::After_Init();
+	UnitTypeClass::After_Init();
+	InfantryTypeClass::After_Init();
+	BuildingTypeClass::After_Init();
+	BulletTypeClass::After_Init();
+	AnimTypeClass::After_Init();
+	AircraftTypeClass::After_Init();
+	SmudgeTypeClass::After_Init();
+
 	LastTheater = Theater;
 
 	/*

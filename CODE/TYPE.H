@@ -773,7 +773,8 @@ class BuildingTypeClass : public TechnoTypeClass {
 
 		static BuildingTypeClass const &  As_Reference(StructType type);
 		static StructType  From_Name(char const *name);
-		static void  Init(TheaterType theater);
+		static void Init(TheaterType theater);
+		static void After_Init(void) {};
 		static void One_Time(void);
 		static void Prep_For_Add(void);
 
@@ -1019,7 +1020,8 @@ class UnitTypeClass : public TechnoTypeClass
 
 		static UnitType  From_Name(char const *name);
 		static UnitTypeClass const &  As_Reference(UnitType type);
-		static void  Init(TheaterType );
+		static void Init(TheaterType );
+		static void After_Init(void) {};
 		static void One_Time(void);
 		static void Prep_For_Add(void);
 
@@ -1146,7 +1148,8 @@ class InfantryTypeClass : public TechnoTypeClass
 
 		static InfantryType  From_Name(char const *name);
 		static InfantryTypeClass const &  As_Reference(InfantryType type) {return *Pointers[type];};
-		static void  Init(TheaterType );
+		static void Init(TheaterType );
+		static void After_Init(void) {};
 		static void One_Time(void);
 		static void Prep_For_Add(void);
 
@@ -1317,7 +1320,8 @@ class BulletTypeClass : public ObjectTypeClass
 		virtual RTTIType  What_Am_I(void) const {return RTTI_BULLETTYPE;};
 
 		static BulletTypeClass const &  As_Reference(BulletType type) {return *Pointers[type];};
-		static void  Init(TheaterType ) {};
+		static void Init(TheaterType ) {};
+		static void After_Init(void) {};
 		static void One_Time(void);
 
 		virtual bool  Create_And_Place(CELL , HousesType =HOUSE_NONE) const {return false;};
@@ -1401,7 +1405,8 @@ class TerrainTypeClass : public ObjectTypeClass
 
 		static TerrainType  From_Name(char const*name);
 		static TerrainTypeClass const &  As_Reference(TerrainType type) {return *Pointers[type];};
-		static void  Init(TheaterType theater = THEATER_TEMPERATE);
+		static void Init(TheaterType theater = THEATER_TEMPERATE);
+		static void After_Init(void) {};
 		static void One_Time(void) {};
 		static void Prep_For_Add(void);
 
@@ -1478,7 +1483,8 @@ class TemplateTypeClass: public ObjectTypeClass
 
 		static TemplateType  From_Name(char const *name);
 		static TemplateTypeClass const &  As_Reference(TemplateType type) {return *Pointers[type];};
-		static void  Init(TheaterType theater);
+		static void Init(TheaterType theater);
+		static void After_Init(void) {};
 		static void One_Time(void);
 		static void Prep_For_Add(void);
 
@@ -1663,6 +1669,7 @@ class AnimTypeClass : public ObjectTypeClass
 
 		static AnimTypeClass const &  As_Reference(AnimType type) {return *Pointers[type];};
 		static void Init(TheaterType) {};
+		static void After_Init(void) {};
 		static void One_Time(void);
 
 		virtual bool  Create_And_Place(CELL , HousesType =HOUSE_NONE) const {return false;};
@@ -1751,7 +1758,8 @@ class AircraftTypeClass : public TechnoTypeClass
 
 		static AircraftType  From_Name(char const *name);
 		static AircraftTypeClass const &  As_Reference(AircraftType a) {return *Pointers[a];};
-		static void  Init(TheaterType);
+		static void Init(TheaterType);
+		static void After_Init(void);
 		static void One_Time(void);
 		static void Prep_For_Add(void);
 
@@ -1878,7 +1886,8 @@ class OverlayTypeClass: public ObjectTypeClass
 
 		static OverlayType  From_Name(char const *name);
 		static OverlayTypeClass const &  As_Reference(OverlayType type) {return *Pointers[type];};
-		static void  Init(TheaterType);
+		static void Init(TheaterType);
+		static void After_Init(void) {};
 		static void One_Time(void);
 		static void Prep_For_Add(void);
 
@@ -1951,7 +1960,8 @@ class SmudgeTypeClass : public ObjectTypeClass
 
 		static SmudgeType  From_Name(char const *name);
 		static SmudgeTypeClass const &  As_Reference(SmudgeType type) {return *Pointers[type];};
-		static void  Init(TheaterType);
+		static void Init(TheaterType);
+		static void After_Init(void) {};
 		static void One_Time(void);
 		static void Prep_For_Add(void);
 

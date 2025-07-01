@@ -303,6 +303,7 @@ class TechnoClass :	public RadioClass,
 		virtual void Scatter(COORDINATE source = NULL, bool forced=false);
 		virtual void Per_Cell_Process(bool);
 		virtual void Enter_Idle_Mode(bool initial=false);
+		void TechnoClass::Draw_Laser(TARGET target, int which);
 
 		/*
 		**	Map entry and exit logic.

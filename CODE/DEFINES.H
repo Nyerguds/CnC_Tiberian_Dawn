@@ -192,30 +192,9 @@
 //#define FRENCH	1
 //#define JAPANESE	1
 
-// Version numbers for each language
-#define VERSION_MAJOR   	1  // Major version will never change between languages.
-
-#define VER_MIN_ENGLISH 	7	// Win95 USA minor version number
-#define VER_MIN_GERMAN  	3	// Win95 german minor version number
-#define VER_MIN_FRENCH  	2	// Win95 french minor version number
-#define VER_MIN_JAPANESE	1	// Win95 japanese minor version number
-
-#ifdef GERMAN
-#define VERSION_MINOR		VER_MIN_GERMAN
-#define VERSION_MAJOR		VER_MAJ_GERMAN
-#endif //GERMAN
-#ifdef FRENCH
-#define VERSION_MINOR		VER_MIN_FRENCH
-#define VERSION_MAJOR		VER_MAJ_FRENCH
-#endif //FRENCH
-#ifdef JAPANESE
-#define VERSION_MINOR		VER_MIN_JAPANESE
-#define VERSION_MAJOR		VER_MAJ_JAPANESE
-#endif // JAPANESE
-
-#ifndef VERSION_MINOR
-#define VERSION_MINOR		VER_MIN_ENGLISH
-#endif // English
+// Version numbers
+#define VERSION_MAJOR   	1	// Major version will never change between languages.
+#define VERSION_MINOR    	7	// Win95 minor version number
 
 #define VERSION_PATCH_EXTRA	"C&C Patch Project"
 

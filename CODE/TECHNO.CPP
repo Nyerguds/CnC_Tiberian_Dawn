@@ -2088,6 +2088,13 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
 		}
 
 		/*
+		**	Draw the laser beam.
+		*/
+		if (weapon->Fires == BULLET_LASER) {
+			Draw_Laser(target, which);
+		}
+
+		/*
 		**	Firing will in all likelihood, require the unit to be redraw. Flag it to be
 		**	redrawn here.
 		*/
@@ -2116,6 +2123,47 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
 	}
 
 	return(bullet);
+}
+
+
+/***********************************************************************************************
+ * TechnoClass::Draw_Laser -- draws the laser beam                                             *
+ *                                                                                             *
+ *    This routine is called for calling the special laser beam effect when a laser            *
+ *    weapon is fired. It is migrated here so all types can use it.                            *
+ *                                                                                             *
+ * INPUT:   target   -- The target to fire upon.                                               *
+ *                                                                                             *
+ *          which    -- Which weapon is the laser that is firing. 0=primary, 1=secondary.      *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/01/2025 MM : Migrated from BuildingClass::Fire_At.                                     *
+ *=============================================================================================*/
+void TechnoClass::Draw_Laser(TARGET target, int which) {
+	int x,y,x1,y1;
+	COORDINATE source, dest;
+	source = Fire_Coord(which);
+	dest = As_Coord(target);
+	if (Map.Push_Onto_TacMap(source, dest) && SpecialDialog == SDLG_NONE) {
+	
+		Map.Coord_To_Pixel(source, x, y);
+		Map.Coord_To_Pixel(dest, x1, y1);
+		x += Map.TacPixelX;
+		x1 += Map.TacPixelX;
+		y += Map.TacPixelY;
+		y1 += Map.TacPixelY;
+		Set_Logic_Page(SeenBuff);
+		LogicPage->Draw_Line(x+1, y, x1, y1, 0x7D);
+		LogicPage->Draw_Line(x-1, y, x1, y1, 0x7D);
+		LogicPage->Draw_Line(x, y, x1, y1, 0x7F);
+		Delay(1);	// Make sure line is visible briefly
+		Map.Flag_To_Redraw(true);
+	}
+	new SmudgeClass(Random_Pick(SMUDGE_SCORCH1, SMUDGE_SCORCH6), As_Coord(target) );
 }
 
 

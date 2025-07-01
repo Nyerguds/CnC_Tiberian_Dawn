@@ -768,6 +768,27 @@ void AircraftTypeClass::Init(TheaterType theater)
 }
 
 
+/***********************************************************************************************
+ * ATC::After_Init -- Load up extra things after the map / savegame is loaded                  *
+ *                                                                                             *
+ *                                                                                             *
+ *                                                                                             *
+ * INPUT:    Nothing                                                                           *
+ *                                                                                             *
+ * OUTPUT:   Nothing                                                                           *
+ *                                                                                             *
+ * WARNINGS: None                                                                              *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/01/2025 MM : Created for Nyerguds's TUC Quick Fix Patch v1.04.                         *
+ *=============================================================================================*/
+void AircraftTypeClass::After_Init()
+{
+	if (PatsuxDefault == WEAPON_NONE) {
+		PatsuxDefault = OrcaHeli.Primary;
+	}
+	((AircraftTypeClass&)AircraftTypeClass::As_Reference(AIRCRAFT_ORCA)).Primary = Patsux ? WEAPON_OBELISK_LASER : PatsuxDefault;
+}
 
 
 

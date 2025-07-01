@@ -794,31 +794,10 @@ BulletClass * BuildingClass::Fire_At(TARGET target, int which)
 				new AnimClass((AnimType)(ANIM_GUN_N + Dir_Facing(PrimaryFacing.Current())), Fire_Coord(which));
 			} else {
 				if (weapon->Fires == BULLET_LASER) {
-					int x,y,x1,y1;
-					COORDINATE source, dest;
-					source = Fire_Coord(which);
-					dest = As_Coord(target);
 					IsCharging = false;
 					IsCharged = false;
 					Set_Stage(0);
 					Set_Rate(0);
-
-					if (Map.Push_Onto_TacMap(source, dest) && SpecialDialog == SDLG_NONE) {
-
-						Map.Coord_To_Pixel(source, x, y);
-						Map.Coord_To_Pixel(dest, x1, y1);
-						x += Map.TacPixelX;
-						x1 += Map.TacPixelX;
-						y += Map.TacPixelY;
-						y1 += Map.TacPixelY;
-						Set_Logic_Page(SeenBuff);
-						LogicPage->Draw_Line(x+1, y, x1, y1, 0x7D);
-						LogicPage->Draw_Line(x-1, y, x1, y1, 0x7D);
-						LogicPage->Draw_Line(x, y, x1, y1, 0x7F);
-						Delay(1);	// Make sure line is visible briefly
-						Map.Flag_To_Redraw(true);
-					}
-					new SmudgeClass(Random_Pick(SMUDGE_SCORCH1, SMUDGE_SCORCH6), As_Coord(target) );
 				} else {
 					new AnimClass(ANIM_MUZZLE_FLASH, Fire_Coord(which));
 				}

@@ -70,6 +70,7 @@ v1.04: (in progress)
 
 * Multiple infantry can now be loaded into a transport with a single click.
 * Infantry can now enter an APC while the APC is busy attacking something.
+* Added support for the laser Orcas in the Playstation "PATSUX" mission. This is enabled by putting "Patsux=1" inside a mission file.
 * Allowed the Area Guard functions ("G" and [Ctrl]+[Alt]+Click) to be used by Harvesters to find nearby tiberium to harvest.
 * Added "D" as Deploy/Unload hotkey.
 * The keyboard-given orders for Area Guard, Scatter and Deploy will now give unit responses.
@@ -82,10 +83,11 @@ v1.04: (in progress)
 * Holding the [Shift] key on the "Select Transmission" screen while clicking the side will now go into the Funpark campaign.
 * Fixed dinosaur campaign savegames forgetting their campaign and chosen side.
 * Unlinked dinosaur campaign from the "Funpark" mode. All special dinosaur campaign logic is now only checked on the campaign ID. This also means dinosaur campaign savegames will function correctly without "Funpark" mode.
-* Units in Sleep or Sticky mode will no longer try to crush nearby infantry.
+* Units in Sleep or Sticky mode will no longer try to crush nearby infantry in response to being attacked.
 * The game will no longer give occasional "insufficient disk space" errors on startup.
 * Click orders given on the minimap will show a flash on the targeted cell in the main map view.
-* Missions where the player is neither GDI nor Nod will now always skip the score screen, to avoid a crash.
+* In missions where the player is neither GDI nor Nod, the minimap logo will now always be the Jurassic one.
+* Missions where the player is neither GDI nor Nod will now get a functional score screen, showing "You" versus "Enemy" casualties.
 * In the Japanese version, if a briefing image is not found, it will now revert to (English) text briefing.
 * All language versions now support having a CPS-format image with the filename of a mission as briefing image.
 * Helicopters can no longer be given Move and Force-attack orders into the shroud in multiplayer.
@@ -99,7 +101,7 @@ v1.04: (in progress)
 * The minimap will now update its cursor when holding down the left mouse button on it.
 * The map number in multiplayer will no longer affect logic regarding difficulty and tooltips that is only meant for singleplayer.
 * Fixed the fact the chance of an AI selling a building was affected by the mission number in Covert Ops missions. It is now affected by the set build level, capped at 20.
-* Oil Derricks preplaced on the map will now also get the flame spout animation if they're damaged below 50%.
+* Oil Derricks that are preplaced on the map as damaged below 50% will now also get the flame spout animation. 
 * The Oil Derrick and Flare animations are now truly endless, rather than stopping after 255 loops.
 * Fixed the bug that the special GDI ending unlock re-locked if another building was destroyed after the Temple, and lingered in memory when starting or loading another mission.
 * Fixed the special GDI ending unlock status not getting saved in savegames.

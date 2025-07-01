@@ -183,6 +183,103 @@ bool WWWritePrivateProfileInt(char const *section, char const *entry, int value,
 
 
 /***********************************************************************************************
+ * WWGetPrivateProfileBool -- Fetches boolean value.                                           *
+ *                                                                                             *
+ * INPUT:                                                                                      *
+ *      section      section to read from                                                      *
+ *                                                                                             *
+ *      entry         name of entry to read                                                    *
+ *                                                                                             *
+ *      def         default value, if entry isn't found                                        *
+ *                                                                                             *
+ *      profile      buffer containing INI data                                                *
+ *                                                                                             *
+ * OUTPUT:                                                                                     *
+ *      integer requested                                                                      *
+ *                                                                                             *
+ * WARNINGS:                                                                                   *
+ *      none.                                                                                  *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/01/2025 MM : Created.                                                                  *
+ *=============================================================================================*/
+bool WWGetPrivateProfileBool(char const *section, char const *entry, bool def, char *profile)
+{
+	char	buffer[16];			// Integer staging buffer.
+
+	/*
+	**	Store the default in the buffer.
+	*/
+	sprintf(buffer, "%s", def ? "yes" : "no");
+
+	/*
+	**	Get the buffer; use itself as the default.
+	*/
+	WWGetPrivateProfileString(section, entry, buffer, buffer, 15, profile);
+	char first = buffer[0];
+	// Quick toUpper() for single char
+	if (first >= 'a' && first <= 'z') {
+		first -= ('a' - 'A');
+	}
+	switch (first) {
+		case 'Y':
+		case 'T':
+		case '1':
+			return(true);
+		case 'N':
+		case 'F':
+		case '0':
+			return(false);
+	}
+	return(false);
+}
+
+
+/***********************************************************************************************
+ * WWWritePrivateProfileBool -- Write a profile bool to the profile data block.                *
+ *                                                                                             *
+ * INPUT:                                                                                      *
+ *      section      section name to write to                                                  *
+ *                                                                                             *
+ *      entry         name of entry to write; if NULL, the entire section is deleted           *
+ *                                                                                             *
+ *      value         value to write                                                           *
+ *                                                                                             *
+ *      profile      INI buffer                                                                *
+ *                                                                                             *
+ * OUTPUT:                                                                                     *
+ *      true = success, false = failure                                                        *
+ *                                                                                             *
+ * WARNINGS:                                                                                   *
+ *      none.                                                                                  *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/01/2025 MM : Created.                                                                  *
+ *=============================================================================================*/
+bool WWWritePrivateProfileBool(char const *section, char const *entry, bool value, char *profile)
+{
+	char	buffer[250];			// Working section buffer.
+
+	/*
+	**	Just return if nothing to do.
+	*/
+	if (!profile || !section) {
+		return(true);
+	}
+
+	/*
+	**	Generate string to save.
+	*/
+	sprintf(buffer, "%s", value ? "yes" : "no");
+
+	/*
+	**	Save the string.
+	*/
+	return(WWWritePrivateProfileString(section, entry, buffer, profile));
+}
+
+
+/***********************************************************************************************
  * WWGetPrivateProfileString -- Fetch game override string.                                      *
  *                                                                                             *
  * INPUT:                                                                                      *

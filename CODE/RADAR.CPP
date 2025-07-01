@@ -346,6 +346,11 @@ void RadarClass::Draw_It(bool forced)
 	if (/*(Special.IsJurassic && AreThingiesEnabled) ||*/ ScenPlayer == SCEN_PLAYER_JP) {
 		radarhouse = HOUSE_JP;
 	}
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Any nonstandard house gets the JP radar.
+	if (radarhouse != HOUSE_GOOD && radarhouse != HOUSE_BAD) {
+		radarhouse = HOUSE_JP;
+	}	
 	if (radarhouse != _house) {
 		char name[_MAX_NAME + _MAX_EXT];
 		_makepath(name, NULL, NULL, "RADAR", HouseTypeClass::As_Reference(radarhouse).Suffix);

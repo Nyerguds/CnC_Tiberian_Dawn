@@ -306,6 +306,9 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 		BuildLevel = Scenario;
 #endif
 	}
+	// Nyerguds's TUC Quick Fix Patch v1.04:
+	// Added PATSUX laser orca
+	Patsux = WWGetPrivateProfileBool("Basic", "Patsux", 0, buffer);
 
 	/*
 	**	Jurassic scenarios are allowed to build the full multiplayer set
@@ -425,7 +428,8 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 
 	/*
 	**	Read in the map control values. This includes dimensions
-	**	as well as theater information.
+	**	as well as theater information. This calls the static "Init"
+	**	function for every *TypeClass
 	*/
 	Map.Read_INI(buffer);
 	Call_Back();

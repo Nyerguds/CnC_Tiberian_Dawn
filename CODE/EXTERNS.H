@@ -83,36 +83,38 @@ extern void const *WarFactoryOverlay;
 **	Dynamic global variables (these change or are initialized at run time).
 */
 #ifdef PATCH
-extern bool							IsV107;
-extern char							OverridePath[128];
+extern bool						IsV107;
+extern char						OverridePath[128];
 #endif
-extern bool							SlowPalette;
-extern char							VersionText[32];
-extern bool							ScoresPresent;
-extern int							CrateCount;
+extern bool						SlowPalette;
+extern char						VersionText[32];
+extern bool						ScoresPresent;
+extern int						CrateCount;
 extern TCountDownTimerClass	CrateTimer;
-extern bool							CrateMaker;
-extern ThemeType					TransitTheme;
-extern bool							AllowVoice;
-extern NewConfigType				NewConfig;
-extern char							BriefingText[512];
-extern char 						IntroMovie[_MAX_FNAME+_MAX_EXT];
-extern char 						ActionMovie[_MAX_FNAME+_MAX_EXT];
-extern char 						BriefMovie[_MAX_FNAME+_MAX_EXT];
-extern char 						WinMovie[_MAX_FNAME+_MAX_EXT];
-extern char 						LoseMovie[_MAX_FNAME+_MAX_EXT];
-extern VoxType						SpeakQueue;
-extern bool							PlayerWins;
-extern bool							PlayerLoses;
-extern bool							PlayerRestarts;
-extern StructType					SabotagedType;
-extern bool							TempleIoned;
-extern long							Frame;
+extern bool						CrateMaker;
+extern ThemeType				TransitTheme;
+extern bool						AllowVoice;
+extern NewConfigType			NewConfig;
+extern char						BriefingText[512];
+extern char 					IntroMovie[_MAX_FNAME+_MAX_EXT];
+extern char 					ActionMovie[_MAX_FNAME+_MAX_EXT];
+extern char 					BriefMovie[_MAX_FNAME+_MAX_EXT];
+extern char 					WinMovie[_MAX_FNAME+_MAX_EXT];
+extern char 					LoseMovie[_MAX_FNAME+_MAX_EXT];
+extern VoxType					SpeakQueue;
+extern bool						PlayerWins;
+extern bool						PlayerLoses;
+extern bool						PlayerRestarts;
+extern StructType				SabotagedType;
+extern bool						TempleIoned;
+extern WeaponType				PatsuxDefault;
+extern bool						Patsux;
+extern long						Frame;
 extern void *						SpeechBuffer;
-extern int							PreserveVQAScreen;
-extern bool							BreakoutAllowed;
-extern bool							Brokeout;
-extern CELL							Views[4];
+extern int						PreserveVQAScreen;
+extern bool						BreakoutAllowed;
+extern bool						Brokeout;
+extern CELL						Views[4];
 
 extern GameOptionsClass 		Options;
 

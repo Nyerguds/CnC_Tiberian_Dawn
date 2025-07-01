@@ -179,6 +179,7 @@ bool Read_Scenario(char *root)
 	CCDebugString ("C&C95 - In Read_Scenario.\n");
 	Clear_Scenario();
 	ScenarioInit++;
+	Patsux = false;
 	if (Read_Scenario_Ini(root)) {
 
 		Fill_In_Data();
