@@ -110,4 +110,4 @@ v1.04: (in progress)
 * Infantry code to look for nearby targets no longer reads outside the valid weapons array when checking weapon info for unarmed units.
 * The presence of civilian building V21 (Abdul's House) can no longer cause C17 delivery planes to stay on the map indefinitely if no airstrips were found.
 * When Aircraft return to base due to lack of ammo, they will no longer face towards their last target.
-* Added "C&C Patch Project" on the main menu.
+* Added "CCPP" version number on the main menu to indicate the patch version.
