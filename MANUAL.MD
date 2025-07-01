@@ -10,7 +10,7 @@ This patch contains a number of fixes for the Ultimate Collection version of C&C
 
 Additionally, it includes some quality-of-life upgrades, such as allowing drag-selecting to add more units to the current selection by holding the Shift key, drag-selecting flying aircraft, targeting the Guard Target cursor on the ground, and using the scrollwheel to go through the sidebar options.
 
-This patch is specifically customised to match the way the game is packaged in Command & Conquer: The Ultimate Collection, so it will not have any customisable no-CD functionality; it always assumes to be running on a no-CD install. It does not contain any more elaborate upgrades like high resolution support, since that requires additional edits to the game files.
+This patch is specifically designed to match the way the game is packaged in Command & Conquer: The Ultimate Collection, so it will not have any customisable no-CD functionality; it always assumes to be running on a no-CD install. It does not contain any more elaborate upgrades like high resolution support, since that requires additional edits to the game files.
 
 Note that unlike the "v1.06" project, this is not a full game patch including peripheral files; it only contains fixes on the exe file.
 
