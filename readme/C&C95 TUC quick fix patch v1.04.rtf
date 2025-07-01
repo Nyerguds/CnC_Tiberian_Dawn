@@ -1,0 +1,150 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033\deflangfe1033{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil Arial;}{\f2\fnil\fcharset2 Symbol;}}
+{\colortbl ;\red0\green0\blue255;}
+{\*\generator Riched20 10.0.26100}\viewkind4\uc1 
+\pard\nowidctlpar\qc\ul\b\fs32 C&C95 TUC Quick Fix Patch\ulnone\b0\fs20\par
+v1.0\lang1043 3\lang1033\par
+Created by Nyerguds <nyerguds@gmail.com>\par
+Release date: \f1\lang8192 June 07\f0\lang1033 , 2025\par
+{\lang1043{\field{\*\fldinst{HYPERLINK https://www.moddb.com/mods/command-conquer-unofficial-patch-106 }}{\fldrslt{https://www.moddb.com/mods/command-conquer-unofficial-patch-106\ul0\cf0}}}}\f0\fs20\par
+
+\pard\nowidctlpar\par
+
+\pard\nowidctlpar\sa200\sl276\slmult1 This patch contains a number of fixes for the Ultimate Collection version of C&C95. It addresses the most common crash issues, as well as a number of smaller annoyances.\par
+\f1\lang8192 Additionally, it includes some quality-of-life upgrades, such as allowing drag-selecting to add more units to the current selection by holding the Shift key, drag-selecting flying aircraft, targeting the Guard Target cursor on the ground, and using the scrollwheel to go through the sidebar options.\par
+To use this patch, you will have to overwrite the "C&C95.exe" in your game folder with the correct one from one of the "game-" subfolders, depending on the language in which you installed the game.\f0\lang1033\par
+This patch is specifically based on the original exe files from TUC, so it will not have any customisable no-CD functionality; it always assumes to be running on a no-CD install. It does not contain any more elaborate upgrades like high resolution support, since that requires additional edits to the game files.\par
+The code for all changes made for these fixes can be found in the "source" folder. The exact byte changes throughout the exe files can be found in the folder of each language version.\par
+Note that unlike the "v1.06" project, this is not a full game patch including peripheral files; it only contains fixes on the exe file.\par
+\b\fs24 Extra usage notes:\b0\fs20\par
+\ul\b Grenade sound:\ulnone\b0\par
+As part of the fixes done in this patch, the previously unused grenade throw sound is now played. If this bothers anyone, the sound can be disabled by taking the file "\b ssnogren.mix\b0 " from the "\b extras\b0 " folder and putting it in the game folder.\par
+\ul\b Special \f1\lang8192 CONQUER.INI o\f0\lang1033 p\f1\lang8192 tions:\f0\lang1033\par
+\ulnone\b0\f1\lang8192 In the "\b extras\b0 " folder, you can find "\b special-options.txt\b0 ", which contains a set of secret developer switches that can be activated in the game by putting them in your CONQUER.INI file. A few of these are generally neat, such as the music remixes and showing true civilian names, but be warned that others, like disabling the "bib" pieces of buildings, can seriously mess up the game. Use these at your own risk.\f0\lang1033\par
+\ul\b\f1\lang8192 Console "\f0\lang1033 Special Ops\f1\lang8192 "\f0\lang1033  missions:\par
+\ulnone\b0 The "\b extras\b0 " folder contains the two files "\b sc-n64-tuc.mix\b0 " and "\b sc-psx-tuc.mix\b0 ". These are, respectively, the \f1\lang8192 originally console-\f0\lang1033 exclusive\f1\lang8192  \f0\lang1033 Nintendo 64 and Playstation "Special Ops" missions, which were also included in the \f1\lang8192 r\f0\lang1033 emaster. Add them into your game folder, and you can access these missions in the "New Missions" menu.\par
+As an added bonus, with the upgrades in v1.04, the Orca's LASER weapon in the "PATSUX" mission is fully functional.\par
+Note that these are not the 100% original versions; the Nintendo 64 missions were tweaked to fix some issues with base power and lack of rebuilding\lang1043 , and to align the tech with how it was on the Nintendo 64 console, all missions with base building have their tech level\f1\lang8192 s\f0\lang1043  increased to be equivalent to GDI mission 15.\lang1033\par
+Also note that these missions only have mission briefings in English\f1\lang8192 .\f0\lang1033\par
+\ul\b\f1\lang8192 Extra remix tracks\f0\lang1033 :\par
+\ulnone\b0\f1\lang8192 In the official soundtrack of the game, a bunch of the tracks have extra voices mixed into them. If the special CONQUER.INI option "Scores=remix" is enabled, the game will unlock these original mixes, making them replace the standard in-game versions. However, there are three tracks with such alternate soundtrack versions which are not included in the game, namely, "Just Do It Up!", "No Mercy" and "Deception" (aka, "We Will Stop Them"). In fact, in the Ion Cannon video, you can hear a short fragment of this version of "No Mercy".\par
+\f0\lang1033 The "\b extras\b0 " folder contains \f1\lang8192 a file called "\b sc-remix.mix\b0 " which can be added into the game folder to amend this. The game itself is already adapted to recognise these tracks as possibly having a remix, so it will substitute them automatically when found, and show the correct length for the alternate version in the playlist.\f0\lang1033\par
+\b\fs24 Full list of fixes:\b0\fs20\par
+v1.00:\par
+
+\pard{\pntext\f2\'B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\'B7}}\nowidctlpar\fi-284\li284\sl276\slmult1 Fixed the crash that happens when exploring at the top of the map with a unit with a large sight range.\par
+{\pntext\f2\'B7\tab}Fixed the stealth animation corruption on the right half of the lowest line of the screen, which could crash the game.\par
+{\pntext\f2\'B7\tab}Helipads can now be selected as primary building\par
+{\pntext\f2\'B7\tab}Units can now be assigned to team number "0".\par
+{\pntext\f2\'B7\tab}Fixed the bug that causes the deploying of an MCV to add extra power usage that could never be recovered.\par
+{\pntext\f2\'B7\tab}Fixed the bug that made harvesting the lowest stage of tiberium yield no resources.\par
+{\pntext\f2\'B7\tab}Fixed Funpark mode exiting the game when finishing the campaign.\par
+{\pntext\f2\'B7\tab}Removed the funpark mode requirement for making dinosaurs visible.\par
+{\pntext\f2\'B7\tab}Fixed the music not starting on missions added to the New Missions menu, if they contain a "Briefing" video.\par
+{\pntext\f2\'B7\tab}Fixed multiplayer houses used in singleplayer missions showing up as gray on the radar.\par
+
+\pard{\pntext\f2\'B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\'B7}}\nowidctlpar\fi-284\li284\sa200\sl276\slmult1 Fixed the order of the main menu when going through it with the arrow keys.\par
+
+\pard\nowidctlpar\sa200\sl276\slmult1 v1.01:\par
+
+\pard{\pntext\f2\'B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\'B7}}\nowidctlpar\fi-284\li284\sl276\slmult1 Fixed sequence error in engineer death animation from anti-armor-weapon.\par
+{\pntext\f2\'B7\tab}Fixed tech level of the Chem Warrior to make it 98 instead of 99.\par
+
+\pard{\pntext\f2\'B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\'B7}}\nowidctlpar\fi-284\li284\sa200\sl276\slmult1 Disabled the behaviour that makes the Chem-Warrior randomly walk around.\par
+
+\pard\nowidctlpar\sa200\sl276\slmult1 v1.02:\par
+
+\pard{\pntext\f2\'B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\'B7}}\nowidctlpar\fi-284\li284\sl276\slmult1 Fixed tiberium growth not refreshing unless you scroll away from it.\par
+{\pntext\f2\'B7\tab}Fixed craters CR02-CR06 not placing correctly from mission files.\par
+{\pntext\f2\'B7\tab}Fixed crater CR06 never being used as building debris. (it's still not used as projectile impact debris, but that's intentional)\par
+{\pntext\f2\'B7\tab}Fixed crushed infantry remains logic ("Overrun=pancake" in conquer.ini) messing up tiberium spawning.\par
+{\pntext\f2\'B7\tab}Fixed crushed infantry overlay decoration SQUISH not being usable from mission files.\par
+{\pntext\f2\'B7\tab}Fixed tiberium spread not being able to replace SQUISH overlay.\par
+{\pntext\f2\'B7\tab}Fixed crate spawning not being able to replace SQUISH overlay.\par
+{\pntext\f2\'B7\tab}Fixed force-fire modifier getting ignored on overlay.\par
+{\pntext\f2\'B7\tab}Fixed Rocket Launcher leaving refresh error trail when moving.\par
+{\pntext\f2\'B7\tab}Fixed "Right away!" voice not playing.\par
+{\pntext\f2\'B7\tab}Fixed Power Plant and Advanced Power Plant not animating when damaged.\par
+{\pntext\f2\'B7\tab}Fixed Oil Tanker not using its damaged state when below 50% strength.\par
+{\pntext\f2\'B7\tab}Fixed the names of Chan and the Hospital not getting shown to the enemy.\par
+{\pntext\f2\'B7\tab}Fixed multiplayer names exceeding 9 characters getting abbreviated to 10 characters. They can now be 10 characters.\par
+{\pntext\f2\'B7\tab}Fixed German "Abort mission" dialog having an "Abort" option which was actually the "Cancel" one.\par
+{\pntext\f2\'B7\tab}Fixed safe-scrolling ("Scrolling=restricted" in conquer.ini) only restricting half of the top buttons' width.\par
+{\pntext\f2\'B7\tab}Fixed grenade throw sound not working.\par
+{\pntext\f2\'B7\tab}Fixed SAM Site not making any sound when firing.\par
+{\pntext\f2\'B7\tab}Fixed steel crate not giving an animation for GDI. This was originally meant to indicate collecting "nuke pieces" for unlocking the nuke in the final Nod mission, but that system is obsolete anyway.\par
+{\pntext\f2\'B7\tab}Fixed radar minimap always starting as zoomed in.\par
+{\pntext\f2\'B7\tab}Fixed "juvenile" sounds (\f1\lang8192 "\f0\lang1033 Sounds=7th grade" in conquer.ini) not working.\par
+{\pntext\f2\'B7\tab}Fixed the Commando giving two responses at once when given a sabotage order. The "I got a present for ya!" yell on the map is now suppressed for the player owning the Commando, and is given as actual unit response instead.\par
+
+\pard{\pntext\f2\'B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\'B7}}\nowidctlpar\fi-284\li284\sa200\sl276\slmult1 Using the mouse scrollwheel now has the same effect as the up and down arrows; it scrolls through the sidebar lists.\par
+
+\pard\nowidctlpar\sa200\sl276\slmult1 v1.0\lang1043 3\lang1033 :\par
+
+\pard{\pntext\f2\'B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\'B7}}\nowidctlpar\fi-284\li284\sl276\slmult1\lang1043 Fix\f1\lang8192 ed\f0\lang1043  harvester giving a "no move" cursor on the minimap when targeting tiberium\f1\lang8192 .\f0\lang1033\par
+{\pntext\f2\'B7\tab}\lang1043 Fix\f1\lang8192 ed\f0\lang1043  aircraft giving a double response when unloading \f1\lang8192 or \f0\lang1043 when docking to a building.\lang1033\par
+{\pntext\f2\'B7\tab}\f1\lang8192 Fixed high damage weapons doing slightly less damage than intended, because in the damage balancing of weapons versus armor types, "100%" is actually stored as "255/256".\f0\lang1033\par
+{\pntext\f2\'B7\tab}\f1\lang8192 Fixed the hidden music tracks "Reaching Out" and "Heartbreak" not getting unlocked when enabling the hidden / remix music ("Scores=remix\f0\lang1033 " in conquer.ini\f1\lang8192 ).\f0\lang1033\par
+{\pntext\f2\'B7\tab}\f1\lang8192 Enabled the cut tracks and credits tracks: "C&C 80s Mix", "DIE!", "Enemies To Be Feared", "I AM" (Destructible Times), "Airstrike", and "Ride of the Valkyries".\f0\lang1033\par
+{\pntext\f2\'B7\tab}\f1\lang8192 The playlist now shows the correct lengths for the alternate versions of music.\f0\lang1033\par
+{\pntext\f2\'B7\tab}\f1\lang8192 Fixed Nod score calculation having a negative impact from GDI's losses.\f0\lang1033\par
+{\pntext\f2\'B7\tab}\f1\lang8192 Fixed the "Ambush" orders in missions not working. This order is supposed to make an AI-owned unit go to Hunt mode when discovered.\f0\lang1033\par
+{\pntext\f2\'B7\tab}\f1\lang8192 Fixed the New Missions menu only going up to 98 (59 in the Japanese version). It can now go up to 99.\f0\lang1033\par
+{\pntext\f2\'B7\tab}\f1\lang8192 Fixed the bug where selecting a team by number when having a structure selected would keep the structure selected.\par
+{\pntext\f2\'B7\tab}Fixed the bug where selecting a team by number would not clear the currently selected units when a unit from that team was the last-added unit in the current selection.\f0\lang1033\par
+{\pntext\f2\'B7\tab}\f1\lang8192 The \f0\lang1033 "Guard Target" ability ([Ctrl]+[Alt]+click) \f1\lang8192 can now be clicked on the ground as targeted equivalent to the Area Guard function of the "G" button.\f0\lang1033\par
+{\pntext\f2\'B7\tab}Fixed the "Guard Target" ability not working on the minimap.\par
+{\pntext\f2\'B7\tab}\f1\lang8192 Fixed aircraft showing the \f0\lang1033 "Guard Target" \f1\lang8192 cursor when pressing [ctrl]+[alt] even though they can't execute any Area Guard orders.\f0\lang1033\par
+{\pntext\f2\'B7\tab}\lang2067 Restored the Stop command for defense buildings (pressing "S"), while properly fixing the cheat that allowed abusing it for cancelling building sales to get free infantry.\lang1033\par
+{\pntext\f2\'B7\tab}\f1\lang8192 Holding down the Shift key now allows \f0\lang2067 adding units when making a drag-selection\f1\lang8192 .\f0\lang1033\par
+
+\pard{\pntext\f2\'B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\'B7}}\nowidctlpar\fi-284\li284\sa200\sl276\slmult1\f1\lang8192 Drag-selecting can now select flying aircraft\f0\lang1033 .\par
+
+\pard\nowidctlpar\sa200\sl276\slmult1 v1.0\lang1043 4\lang1033 :\par
+
+\pard{\pntext\f2\'B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\'B7}}\nowidctlpar\fi-284\li284\sl276\slmult1\lang1043 Multiple infantry can now be loaded into a transport with a single click.\par
+{\pntext\f2\'B7\tab}Infantry can now enter an APC while the APC is busy attacking something.\par
+{\pntext\f2\'B7\tab}Added support for the laser Orcas in the Playstation "PATSUX" mission. This is enabled by putting "Patsux=1" inside a mission file.\par
+{\pntext\f2\'B7\tab}Lasers now always show a beam that's wide at the start and thinner at the end, no matter the direction in which they are fired.\par
+{\pntext\f2\'B7\tab}Allowed the Area Guard functions ("G" and [Ctrl]+[Alt]+Click) to be used by Harvesters to find nearby tiberium to harvest.\par
+{\pntext\f2\'B7\tab}Added "D" as Deploy/Unload hotkey.\par
+{\pntext\f2\'B7\tab}The keyboard-given orders for Area Guard, Scatter and Deploy will now give unit responses.\par
+{\pntext\f2\'B7\tab}Deploying units by clicking on them now works even if you have multiple units selected. This will not affect the other units in the selection.\par
+{\pntext\f2\'B7\tab}Since the deployment change makes it impossible to load passengers into a selected transport that already contains at least one passenger, you can now hold [Alt] to override the Deploy cursor to allow passengers to enter.\par
+{\pntext\f2\'B7\tab}When having infantry selected, you can now hold down shift and add an unloaded transport to the selection without this getting overridden by the order to load into the transport.\par
+{\pntext\f2\'B7\tab}An "Enter" cursor no longer overrides the [Ctrl] force-fire or [Ctrl]+[Alt] Guard Target cursors. It will still override [Alt] force-move though, since that's used to override transports' unloading.\par
+{\pntext\f2\'B7\tab}Survivors from C4 explosions will no longer immediately shoot at the Commando at the moment they are spawned.\par
+{\pntext\f2\'B7\tab}Fixed the bug where survivors from C4 explosions often never bothered pursuing the Commando.\par
+{\pntext\f2\'B7\tab}Holding the [Shift] key on the "Select Transmission" screen while clicking the side will now go into the Funpark campaign.\par
+{\pntext\f2\'B7\tab}Fixed dinosaur campaign savegames forgetting their campaign and chosen side.\par
+{\pntext\f2\'B7\tab}Unlinked dinosaur campaign from the "Funpark" mode. All special dinosaur campaign logic is now only checked on the campaign ID. This also means dinosaur campaign savegames will function correctly without "Funpark" mode.\par
+{\pntext\f2\'B7\tab}Units in Sleep or Sticky mode will no longer try to crush nearby infantry in response to being attacked.\par
+{\pntext\f2\'B7\tab}The game will no longer give occasional "insufficient disk space" errors on startup.\par
+{\pntext\f2\'B7\tab}Click orders given on the minimap will show a flash on the targeted cell in the main map view.\par
+{\pntext\f2\'B7\tab}In missions where the player is neither GDI nor Nod, the minimap logo will now always be the Jurassic one.\par
+{\pntext\f2\'B7\tab}Missions where the player is neither GDI nor Nod will now get a functional score screen, showing "You" versus "Enemy" casualties.\par
+{\pntext\f2\'B7\tab}In the Japanese version, if a briefing image is not found, it will now revert to (English) text briefing.\par
+{\pntext\f2\'B7\tab}All language versions now support having a CPS-format image with the filename of a mission as briefing image.\par
+{\pntext\f2\'B7\tab}Helicopters can no longer be given Move and Force-attack orders into the shroud in multiplayer.\par
+{\pntext\f2\'B7\tab}Capturing a building will now refresh all of its cells on the radar to the new color.\par
+{\pntext\f2\'B7\tab}EVA now announces when the player loses a building. The "DeathAnnounce" option now also works for buildings.\par
+{\pntext\f2\'B7\tab}When "DeathAnnounce" is enabled, a destroyed unit or structure in singleplayer that is not GDI or Nod, and is not allied with the player, is now reported as destroyed "enemy".\par
+{\pntext\f2\'B7\tab}EVA now announces when repairs have started on a building or unit.\par
+{\pntext\f2\'B7\tab}Drag-selecting will now show the default cursor instead of keeping an incorrect cursor from where the drag action started.\par
+{\pntext\f2\'B7\tab}Drag-selecting will no longer pop up a tooltip of the thing the mouse was pressed down on.\par
+{\pntext\f2\'B7\tab}The minimap will now only respond to clicks at the moment the mouse is released, like how it works on the main map.\par
+{\pntext\f2\'B7\tab}The minimap will now update its cursor when holding down the left mouse button on it.\par
+{\pntext\f2\'B7\tab}The map number in multiplayer will no longer affect logic regarding difficulty and tooltips that is only meant for singleplayer.\par
+{\pntext\f2\'B7\tab}Fixed the fact the chance of an AI selling a building was affected by the mission number in Covert Ops missions. It is now affected by the set build level, capped at 20.\par
+{\pntext\f2\'B7\tab}Oil Derricks that are preplaced on the map as damaged below 50% will now also get the flame spout animation.\par
+{\pntext\f2\'B7\tab}The Oil Derrick and Flare animations are now truly endless, rather than stopping after 255 loops.\par
+{\pntext\f2\'B7\tab}Fixed the bug that the special GDI ending unlock re-locked if another building was destroyed after the Temple, and lingered in memory when starting or loading another mission.\par
+{\pntext\f2\'B7\tab}Fixed the special GDI ending unlock status not getting saved in savegames.\par
+{\pntext\f2\'B7\tab}Fixed the bombing target in GDI mission 6 not getting saved in savegames.\par
+{\pntext\f2\'B7\tab}Infantry code to look for nearby targets no longer reads outside the valid weapons array when checking weapon info for unarmed units.\par
+{\pntext\f2\'B7\tab}The presence of civilian building V21 (Abdul's House) can no longer cause C17 delivery planes to stay on the map indefinitely if no airstrips were found.\par
+{\pntext\f2\'B7\tab}When Aircraft return to base due to lack of ammo, they will no longer face towards their last target.\par
+{\pntext\f2\'B7\tab}Added "C&C Patch Project" on the main menu.\lang1033\par
+
+\pard\nowidctlpar\sl276\slmult1\par
+}
+ 

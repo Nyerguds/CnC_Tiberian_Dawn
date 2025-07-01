@@ -71,6 +71,7 @@ v1.04: (in progress)
 * Multiple infantry can now be loaded into a transport with a single click.
 * Infantry can now enter an APC while the APC is busy attacking something.
 * Added support for the laser Orcas in the Playstation "PATSUX" mission. This is enabled by putting "Patsux=1" inside a mission file.
+* Lasers now always show a beam that's wide at the start and thinner at the end, no matter the direction in which they are fired.
 * Allowed the Area Guard functions ("G" and [Ctrl]+[Alt]+Click) to be used by Harvesters to find nearby tiberium to harvest.
 * Added "D" as Deploy/Unload hotkey.
 * The keyboard-given orders for Area Guard, Scatter and Deploy will now give unit responses.

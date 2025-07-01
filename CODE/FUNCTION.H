@@ -743,7 +743,7 @@ inline CELL Adjacent_Cell(CELL cell, FacingType dir) {return (CELL)(cell + Adjac
 inline CELL Adjacent_Cell(CELL cell, DirType dir) {return (CELL)(cell + AdjacentCell[Dir_Facing(dir)]);}
 inline int Lepton_To_Pixel(int lepton) {return ((lepton * ICON_PIXEL_W) + (ICON_LEPTON_W / 2)) / ICON_LEPTON_W;}
 inline int Pixel_To_Lepton(int pixel) {return ((pixel * ICON_LEPTON_W) + (ICON_PIXEL_W / 2)) / ICON_PIXEL_W;}
-//inline FacingType Facing_To_8(DirType facing) {return (FacingType)(((unsigned char)(facing|0x10))>>5);}
+inline FacingType Facing_To_8(DirType facing) {return (FacingType)(((unsigned char)(facing|0x10))>>5);}
 inline COORDINATE XYP_Coord(int x,int y) {return XY_Coord(Pixel_To_Lepton(x), Pixel_To_Lepton(y));};
 inline char const * Text_String(int string) {return(Extract_String(SystemStrings, string));};
 
