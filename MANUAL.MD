@@ -1,6 +1,6 @@
 # C&C95 TUC Quick Fix Patch - Manual
 
-<p align="center">version 1.03<br/>
+<p align="center">version 1.04<br/>
 Created by Nyerguds<br/>
 Release date: Nope-ember 0, 20XX</p>
 
