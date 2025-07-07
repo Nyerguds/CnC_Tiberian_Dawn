@@ -2852,7 +2852,7 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 					bool retest = true;
 					if (!alt && object->Is_Techno() && ((TechnoClass *)object)->IsOwnedByPlayer && object->IsSelected) {
 						action = object->What_Action(object);
-						// If the action returned something else than "none", or it's the same as the first object, abort.
+						// If the action for targeting itself returned something else than "none", abort.
 						if (action != ACTION_NONE) {
 							retest = false;
 						}
@@ -2867,11 +2867,23 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 							// If a specific action was found, abort.
 							if (action != ACTION_NONE && (!alt || action != ACTION_MOVE))
 								break;
-						}					
+						}
 					}
 				}
 			} else {
-				action = CurrentObject[0]->What_Action(cell);
+				// Nyerguds's TUC Quick Fix Patch v1.04
+				// Keep looping until you got something else than "None" or "No move",
+				// so we get a more accurate representation of all units' abilities.
+				for (int index = 0; index < CurrentObject.Count(); index++) {
+					ActionType testaction = CurrentObject[index]->What_Action(cell);
+					if (testaction != ACTION_NONE) {
+						action = testaction;
+						if (testaction != ACTION_NOMOVE) {
+							break;
+						}
+					}
+				}
+				//action = CurrentObject[0]->What_Action(cell);
 			}
 		} else {
 			if (object && object->Class_Of().IsSelectable) {
@@ -3438,10 +3450,15 @@ void DisplayClass::Mouse_Left_Release(CELL cell, int x, int y, ObjectClass * obj
 
 	}
 	if (action == ACTION_SELL) {
-		if (object) {
-			OutList.Add(EventClass(EventClass::SELL, object->As_Target()));
-		} else {
+		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Fix for bug allowing the sale of technos on a wall's sell-cursor.
+		if (!object || (Map[cell].Overlay != OVERLAY_NONE &&
+			OverlayTypeClass::As_Reference(Map[cell].Overlay).IsWall &&
+			Map[cell].Owner == PlayerPtr->Class->House)) {
 			OutList.Add(EventClass(EventClass::SELL, ::As_Target(cell)));
+		}
+		else if (object) {
+			OutList.Add(EventClass(EventClass::SELL, object->As_Target()));
 		}
 	}
 	if (action == ACTION_ION) {

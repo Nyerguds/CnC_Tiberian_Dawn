@@ -110,4 +110,6 @@ v1.04: (in progress)
 * Infantry code to look for nearby targets no longer reads outside the valid weapons array when checking weapon info for unarmed units.
 * The presence of civilian building V21 (Abdul's House) can no longer cause C17 delivery planes to stay on the map indefinitely if no airstrips were found.
 * When Aircraft return to base due to lack of ammo, they will no longer face towards their last target.
+* Fixed the bug allowing selling units from the sell cursor shown when hovering over a wall.
+* If any of the units in a selection can attack a wall, it will now always show an Attack cursor on the wall.
 * Added "CCPP" version number on the main menu to indicate the patch version.
