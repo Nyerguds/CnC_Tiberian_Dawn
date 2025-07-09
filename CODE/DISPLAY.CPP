@@ -2612,19 +2612,33 @@ CELL DisplayClass::Calculated_Cell(SourceType dir, HousesType house)
  *                                                                                             *
  *          coord2   -- The opposite corner of the selection region.                           *
  *                                                                                             *
- * OUTPUT:  none                                                                               *
+ *          allowvoice -- Allow voice response from selected units. Can be disabled            *
+ *                        if this is called from inside a loop.                                *
+ *                                                                                             *
+ *          additive -- Add units to the current selection rather than replacing it.           *
+ *                                                                                             *
+ *          rttifilter -- In combination with typefilter; filters on a specific object type.   *
+ *                                                                                             *
+ *          typefilter -- In combination with rttifilter; filters on a specific unit type.     *
+ *                                                                                             *
+ * OUTPUT:  Returns true if any new unit was actually selected, meaning that if "allowvoice"   *
+ *          was enabled, a response voice was played. If this is called from a loop, this      *
+ *          can be used to conditionally disable the "allowvoice" argument in further calls.   *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   01/19/1995 JLB : Created.                                                                 *
  *   04/25/1995 JLB : Limited to non-building type.                                            *
+ *   07/09/2025 MM  : Added filters, returned status.                                          *
  *=============================================================================================*/
-void DisplayClass::Select_These(COORDINATE coord1, COORDINATE coord2, bool allowVoice, bool additive, RTTIType rttifilter, int typefilter)
+bool DisplayClass::Select_These(COORDINATE coord1, COORDINATE coord2, bool allowvoice, bool additive, RTTIType rttifilter, int typefilter)
 {
+	// only allow filtering if both an id and an object type are given.
 	if (typefilter == -1) {
 		rttifilter = RTTI_NONE;
 	}
+	bool selected = false;
 	COORDINATE tcoord = TacticalCoord;	//Cell_Coord(TacticalCell) & 0xFF00FF00L;
 	// I have a personal dislike for Coord_Add from seeing it in asm. It's way too bloated for a macro -Nyerguds
 	//coord1 = Coord_Add(tcoord, coord1);
@@ -2657,8 +2671,8 @@ void DisplayClass::Select_These(COORDINATE coord1, COORDINATE coord2, bool allow
 		Unselect_All();
 	}
 
-	// suppress voice if this is selecting a specific type.
-	AllowVoice = allowVoice;
+	// If this routine is called from a loop, allow suppressing the voice response.
+	AllowVoice = allowvoice;
 
 	// Nyerguds's TUC Quick Fix Patch v1.03: select-box-aircraft
 	// Select air units in the air. Compensate for the fact they are shown higher up than their real coordinates.
@@ -2673,6 +2687,7 @@ void DisplayClass::Select_These(COORDINATE coord1, COORDINATE coord2, bool allow
 					&& x >= x1 && x <= x2 && y >= y1 && y <= y2
 					&& (!filterair || aircraft->Class->Type == (AircraftType)typefilter)) {
 				if (aircraft->Select()) {
+					selected = true;
 					AllowVoice = false;
 				}
 			}
@@ -2715,9 +2730,6 @@ void DisplayClass::Select_These(COORDINATE coord1, COORDINATE coord2, bool allow
 					case RTTI_AIRCRAFT:
 						id = (int)((AircraftClass*)obj)->Class->Type;
 						break;
-				//	case RTTI_BUILDING:
-				//		id = (int)((BuildingClass*)obj)->Class->Type;
-				//		break;
 					default:
 						id = -1;
 						break;
@@ -2728,10 +2740,12 @@ void DisplayClass::Select_These(COORDINATE coord1, COORDINATE coord2, bool allow
 			}
 			if (obj->Select()) {
 				AllowVoice = false;
+				selected = true;
 			}
 		}
 	}
 	AllowVoice = true;
+	return(selected);
 }
 
 

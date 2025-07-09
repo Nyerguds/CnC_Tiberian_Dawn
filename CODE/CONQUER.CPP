@@ -749,6 +749,7 @@ void Keyboard_Process(KeyNumType &input)
 			if (CurrentObject.Count()) {
 				COORDINATE endpoint = XY_Coord(Map.TacLeptonWidth, Map.TacLeptonHeight);
 				bool firstSelect = true;
+				bool voice = true;
 				DynamicVectorClass<ObjectClass *> selectedTypes;
 				bool done_infantry[INFANTRY_COUNT];
 				memset(done_infantry, 0, sizeof(done_infantry));
@@ -791,7 +792,10 @@ void Keyboard_Process(KeyNumType &input)
 					}
 					if (id != -1) {
 						// args: coord1, coord2, allowVoice, additive, rttifilter, typefilter
-						Map.Select_These(0x00000000, endpoint, firstSelect, !firstSelect || additive, whattype, id);
+						// Only disable "voice" if something new was actually selected for this type.
+						if (Map.Select_These(0x00000000, endpoint, voice, !firstSelect || additive, whattype, id)) {
+							voice = false;
+						}
 						firstSelect = false;
 					}
 				}
