@@ -1599,7 +1599,7 @@ bool DisplayClass::Map_Cell(CELL cell, HouseClass * house)
 
 		// Nyerguds's TUC Quick Fix Patch v1.00: topofmap
 		if ((unsigned)c >= MAP_CELL_TOTAL) continue;
-		
+
 		if (c != cell && !(*this)[c].IsMapped) {
 			shadow = Cell_Shadow(c);
 
@@ -2620,20 +2620,23 @@ CELL DisplayClass::Calculated_Cell(SourceType dir, HousesType house)
  *   01/19/1995 JLB : Created.                                                                 *
  *   04/25/1995 JLB : Limited to non-building type.                                            *
  *=============================================================================================*/
-void DisplayClass::Select_These(COORDINATE coord1, COORDINATE coord2)
+void DisplayClass::Select_These(COORDINATE coord1, COORDINATE coord2, bool allowVoice, bool additive, RTTIType rttifilter, int typefilter)
 {
+	if (typefilter == -1) {
+		rttifilter = RTTI_NONE;
+	}
 	COORDINATE tcoord = TacticalCoord;	//Cell_Coord(TacticalCell) & 0xFF00FF00L;
 	// I have a personal dislike for Coord_Add from seeing it in asm. It's way too bloated for a macro -Nyerguds
 	//coord1 = Coord_Add(tcoord, coord1);
 	//coord2 = Coord_Add(tcoord, coord2);
-	
+
 	int tx = Coord_X(tcoord);
 	int ty = Coord_Y(tcoord);
 	int x1 = Coord_X(coord1) + tx;
 	int y1 = Coord_Y(coord1) + ty;
 	int x2 = Coord_X(coord2) + tx;
 	int y2 = Coord_Y(coord2) + ty;
-	
+
 	/*
 	**	Ensure that coordinate number one represents the upper left corner
 	**	and coordinate number two represents the lower right corner.
@@ -2650,23 +2653,28 @@ void DisplayClass::Select_These(COORDINATE coord1, COORDINATE coord2)
 	}
 	// Nyerguds's TUC Quick Fix Patch v1.03: select-box-aircraft
 	// Only unselect if Shift is not selected.
-	if (!Keyboard::Down(KN_LSHIFT) && !Keyboard::Down(KN_RSHIFT)) {
+	if (!additive) {
 		Unselect_All();
 	}
 
-	AllowVoice = true;
-	
+	// suppress voice if this is selecting a specific type.
+	AllowVoice = allowVoice;
+
 	// Nyerguds's TUC Quick Fix Patch v1.03: select-box-aircraft
 	// Select air units in the air. Compensate for the fact they are shown higher up than their real coordinates.
-	for (int air_index = 0; air_index < Aircraft.Count(); air_index++) {
-		AircraftClass * aircraft = Aircraft.Ptr(air_index);
-		COORDINATE acoord = aircraft->Center_Coord();
-		int x = Coord_X(acoord);
-		int y = Coord_Y(acoord) - Pixel_To_Lepton(aircraft->Altitude);
-		if (aircraft->Owner() == PlayerPtr->Class->House && aircraft->Class_Of().IsSelectable
-				&& x >= x1 && x <= x2 && y >= y1 && y <= y2) {
-			if (aircraft->Select()) {
-				AllowVoice = false;
+	bool filterair = rttifilter == RTTI_AIRCRAFT;
+	if (rttifilter == RTTI_NONE || filterair){
+		for (int air_index = 0; air_index < Aircraft.Count(); air_index++) {
+			AircraftClass * aircraft = Aircraft.Ptr(air_index);
+			COORDINATE acoord = aircraft->Center_Coord();
+			int x = Coord_X(acoord);
+			int y = Coord_Y(acoord) - Pixel_To_Lepton(aircraft->Altitude);
+			if (aircraft->Owner() == PlayerPtr->Class->House && aircraft->Class_Of().IsSelectable
+					&& x >= x1 && x <= x2 && y >= y1 && y <= y2
+					&& (!filterair || aircraft->Class->Type == (AircraftType)typefilter)) {
+				if (aircraft->Select()) {
+					AllowVoice = false;
+				}
 			}
 		}
 	}
@@ -2674,7 +2682,7 @@ void DisplayClass::Select_These(COORDINATE coord1, COORDINATE coord2)
 	/*
 	**	Sweep through all ground layer objects and select the ones within the
 	**	bounding box.
-	*/	
+	*/
 	for (int index = 0; index < Layer[LAYER_GROUND].Count(); index++) {
 		ObjectClass * obj = Layer[LAYER_GROUND][index];
 		COORDINATE ocoord = obj->Center_Coord();
@@ -2685,11 +2693,39 @@ void DisplayClass::Select_These(COORDINATE coord1, COORDINATE coord2)
 		**	Only try to select objects that are owned by the player, are allowed to be
 		**	selected, and are within the bouding box.
 		*/
-		if (	obj->Owner() == PlayerPtr->Class->House &&
+		RTTIType objtype = obj->What_Am_I();
+		if (obj->Owner() == PlayerPtr->Class->House &&
 				obj->Class_Of().IsSelectable &&
-				obj->What_Am_I() != RTTI_BUILDING &&
+				objtype != RTTI_BUILDING &&
 				x >= x1 && x <= x2 && y >= y1 && y <= y2) {
-
+			if (rttifilter != RTTI_NONE) {
+				// If filtering out a specific unit type, first filter on the object type.
+				if (objtype != rttifilter) {
+					continue;
+				}
+				// Now skip all except those with the specified id
+				int id;
+				switch (rttifilter) {
+					case RTTI_INFANTRY:
+						id = (int)((InfantryClass*)obj)->Class->Type;
+						break;
+					case RTTI_UNIT:
+						id = (int)((UnitClass*)obj)->Class->Type;
+						break;
+					case RTTI_AIRCRAFT:
+						id = (int)((AircraftClass*)obj)->Class->Type;
+						break;
+				//	case RTTI_BUILDING:
+				//		id = (int)((BuildingClass*)obj)->Class->Type;
+				//		break;
+					default:
+						id = -1;
+						break;
+				}
+				if (id != typefilter) {
+					continue;
+				}
+			}
 			if (obj->Select()) {
 				AllowVoice = false;
 			}
@@ -3326,7 +3362,8 @@ void DisplayClass::Mouse_Left_Release(CELL cell, int x, int y, ObjectClass * obj
 	}
 	if (IsRubberBand) {
 		Refresh_Band();
-		Select_These(XYPixel_Coord(BandX, BandY), XYPixel_Coord(x, y));
+		bool additive = Keyboard::Down(KN_LSHIFT) || Keyboard::Down(KN_RSHIFT);
+		Select_These(XYPixel_Coord(BandX, BandY), XYPixel_Coord(x, y), true, additive);
 
 		Set_Default_Mouse(MOUSE_NORMAL, wwsmall);
 #ifdef NEVER

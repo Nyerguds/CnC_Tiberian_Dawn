@@ -74,6 +74,8 @@ v1.04: (in progress)
 * Lasers now always show a beam that's wide at the start and thinner at the end, no matter the direction in which they are fired.
 * Allowed the Area Guard functions ("G" and \[Ctrl\]+\[Alt\]+Click) to be used by Harvesters to find nearby tiberium to harvest.
 * Added "D" as Deploy/Unload hotkey.
+* Added "E" as hotkey to select all units on the screen.
+* Added "T" as shortcut for selecting all units on the screen of the same types as the selected units.
 * The keyboard-given orders for Area Guard, Scatter and Deploy will now give unit responses.
 * Deploying units by clicking on them now works even if you have multiple units selected. This will not affect the other units in the selection.
 * Since the deployment change makes it impossible to load passengers into a selected transport that already contains at least one passenger, you can now hold \[Alt\] to override the Deploy cursor to allow passengers to enter.
@@ -112,4 +114,6 @@ v1.04: (in progress)
 * When Aircraft return to base due to lack of ammo, they will no longer face towards their last target.
 * Fixed the bug allowing selling units from the sell cursor shown when hovering over a wall.
 * If any of the units in a selection can attack a wall, it will now always show an Attack cursor on the wall.
+* Fixed bug where owning both an MCV and a Construction Yard and pressing the "H" key would give a voice response from the MCV but select the Construction Yard.
+* The 'H' key will no longer act like 'Home' if no MCV or Construction Yard was found.
 * Added "CCPP" version number on the main menu to indicate the patch version.

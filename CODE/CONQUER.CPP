@@ -508,6 +508,8 @@ void Keyboard_Process(KeyNumType &input)
 	if (input & WWKEY_SHIFT_BIT) action = 1;
 	if (input & WWKEY_ALT_BIT) action = 3;
 	if (input & WWKEY_CTRL_BIT) action = 2;
+	bool additive = (input & WWKEY_SHIFT_BIT) != 0;
+	bool foundhome = false;
 
 	switch (KN_To_VK(plain)) {
 
@@ -528,26 +530,35 @@ void Keyboard_Process(KeyNumType &input)
 		**	if one is present.
 		*/
 		case VK_H:
-			for (index = 0; index < Units.Count(); index++) {
-				UnitClass * unit = Units.Ptr(index);
-
-				if (unit && !unit->IsInLimbo && unit->House == PlayerPtr && *unit == UNIT_MCV) {
-					Unselect_All();
-					unit->Select();
-					break;
-				}
-			}
+			// Nyerguds's TUC Quick Fix Patch v1.04
+			// Fix MCV response when selecting CY with 'H'.
 			for (index = 0; index < Buildings.Count(); index++) {
 				BuildingClass * building = Buildings.Ptr(index);
 
 				if (building && !building->IsInLimbo && building->House == PlayerPtr && *building == STRUCT_CONST) {
 					Unselect_All();
 					building->Select();
+					foundhome = true;
 					break;
 				}
 			}
-			Map.Center_Map();
-			Map.Flag_To_Redraw(true);
+			// No construction yard found? Then check for an MCV.
+			if (!foundhome) {
+				for (index = 0; index < Units.Count(); index++) {
+					UnitClass * unit = Units.Ptr(index);
+
+					if (unit && !unit->IsInLimbo && unit->House == PlayerPtr && *unit == UNIT_MCV) {
+						Unselect_All();
+						unit->Select();
+						foundhome = true;
+						break;
+					}
+				}
+			}
+			if (foundhome) {
+				Map.Center_Map();
+				Map.Flag_To_Redraw(true);
+			}
 			break;
 
 #ifdef CHEAT_KEYS
@@ -611,31 +622,49 @@ void Keyboard_Process(KeyNumType &input)
 			}
 			break;
 #if (0)
- case VK_F11:
-	Winsock.Set_Protocol_UDP(FALSE);
-	break;
+		 case VK_F11:
+			Winsock.Set_Protocol_UDP(FALSE);
+			break;
 
- case VK_F12:
-	Winsock.Set_Protocol_UDP(TRUE);
-	break;
+		 case VK_F12:
+			Winsock.Set_Protocol_UDP(TRUE);
+			break;
 #endif	//(0)
 
 
 		/*
 		**	Control the custom team select state.
 		*/
+		// Nyerguds's TUC Quick Fix Patch v1.00: team-0
 		case VK_1:
+			Handle_Team(0, action);
+			break;
 		case VK_2:
+			Handle_Team(1, action);
+			break;
 		case VK_3:
+			Handle_Team(2, action);
+			break;
 		case VK_4:
+			Handle_Team(3, action);
+			break;
 		case VK_5:
+			Handle_Team(4, action);
+			break;
 		case VK_6:
+			Handle_Team(5, action);
+			break;
 		case VK_7:
+			Handle_Team(6, action);
+			break;
 		case VK_8:
+			Handle_Team(7, action);
+			break;
 		case VK_9:
+			Handle_Team(8, action);
+			break;
 		case VK_0:
-			// Nyerguds's TUC Quick Fix Patch v1.00: team-0
-			Handle_Team(KN_To_VK(plain) - VK_0, action);
+			Handle_Team(9, action);
 			break;
 
 		/*
@@ -665,10 +694,12 @@ void Keyboard_Process(KeyNumType &input)
 				for (int index = 0; index < CurrentObject.Count(); index++) {
 					ObjectClass const * tech = CurrentObject[index];
 					if (tech && tech->Is_Techno() && tech->Can_Player_Move()) {
-						((TechnoClass *)tech)->Response_Move();
 						// Nyerguds's TUC Quick Fix Patch v1.04
 						// Give response on keyboard orders
-						AllowVoice = false;
+						if (AllowVoice) {
+							((TechnoClass *)tech)->Response_Move();
+							AllowVoice = false;
+						}
 						OutList.Add(EventClass(EventClass::SCATTER, tech->As_Target()));
 					}
 				}
@@ -690,12 +721,13 @@ void Keyboard_Process(KeyNumType &input)
 					if (tech && tech->Is_Techno() && tech->Can_Player_Move()) {
 						TechnoClass * techno = (TechnoClass *)tech;
 						// Check if this object can deploy.
-						RTTIType whattype = techno->What_Am_I();
 						ActionType action = techno->What_Action(techno);
 						// Aircraft are blocked if they are currently in the air because this apparently makes them seek out a friendly building to land at.
 						if ((action == ACTION_SELF || action == ACTION_NO_SELF)) {
-							techno->Response_Move();
-							AllowVoice = false;
+							if (AllowVoice) {
+								techno->Response_Move();
+								AllowVoice = false;
+							}
 							OutList.Add(EventClass(tech->As_Target(), MISSION_UNLOAD, TARGET_NONE, ::As_Target(Coord_Cell(techno->Coord))));
 						}
 					}
@@ -703,7 +735,70 @@ void Keyboard_Process(KeyNumType &input)
 				AllowVoice = true;
 			}
 			break;
-			
+
+		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Select all units on screen
+		case VK_E:
+			Map.Select_These(0x00000000, XY_Coord(Map.TacLeptonWidth, Map.TacLeptonHeight), true, additive, RTTI_NONE, 0);
+			break;
+
+		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Select all units on screen of the selected types.
+		case VK_T:
+			AllowVoice = true;
+			if (CurrentObject.Count()) {
+				COORDINATE endpoint = XY_Coord(Map.TacLeptonWidth, Map.TacLeptonHeight);
+				bool firstSelect = true;
+				DynamicVectorClass<ObjectClass *> selectedTypes;
+				bool done_infantry[INFANTRY_COUNT];
+				memset(done_infantry, 0, sizeof(done_infantry));
+				bool done_units[UNIT_COUNT];
+				memset(done_units, 0, sizeof(done_units));
+				bool done_aircraft[AIRCRAFT_COUNT];
+				memset(done_aircraft, 0, sizeof(done_aircraft));
+				for (index = 0; index < CurrentObject.Count(); index++) {
+					selectedTypes.Add(CurrentObject[index]);
+				}
+				for (index = 0; index < selectedTypes.Count(); index++) {
+					ObjectClass const * sel = selectedTypes[index];
+					RTTIType whattype = sel->What_Am_I();
+					int id = -1;
+					switch (whattype) {
+						case RTTI_INFANTRY:
+							id = (int)((InfantryClass*)sel)->Class->Type;
+							if (done_infantry[id]) {
+								id = -1;
+							} else {
+								done_infantry[id] = true;
+							}
+							break;
+						case RTTI_UNIT:
+							id = (int)((UnitClass*)sel)->Class->Type;
+							if (done_units[id]) {
+								id = -1;
+							} else {
+								done_units[id] = true;
+							}
+							break;
+						case RTTI_AIRCRAFT:
+							id = (int)((AircraftClass*)sel)->Class->Type;
+							if (done_aircraft[id]) {
+								id = -1;
+							} else {
+								done_aircraft[id] = true;
+							}
+							break;
+					}
+					if (id != -1) {
+						// args: coord1, coord2, allowVoice, additive, rttifilter, typefilter
+						Map.Select_These(0x00000000, endpoint, firstSelect, !firstSelect || additive, whattype, id);
+						firstSelect = false;
+					}
+				}
+				selectedTypes.Clear();
+			}
+			AllowVoice = true;
+		break;
 		/*
 		**	All selected units will attempt to go into guard area mode.
 		*/
@@ -718,8 +813,10 @@ void Keyboard_Process(KeyNumType &input)
 						// Nyerguds's TUC Quick Fix Patch v1.04
 						// Give response on keyboard orders. Use Response_Attack()
 						// because "moving out!" is weird when it makes them stop.
-						((TechnoClass *)tech)->Response_Attack();
-						AllowVoice = false;
+						if (AllowVoice) {
+							((TechnoClass *)tech)->Response_Attack();
+							AllowVoice = false;
+						}
 						OutList.Add(EventClass(tech->As_Target(), MISSION_GUARD_AREA));
 					}
 				}
