@@ -71,11 +71,12 @@ v1.04: (in progress)
 * Multiple infantry can now be loaded into a transport with a single click.
 * Infantry can now enter an APC while the APC is busy attacking something.
 * Added support for the laser Orcas in the Playstation "PATSUX" mission. This is enabled by putting "Patsux=1" inside a mission file.
-* Lasers now always show a beam that's wide at the start and thinner at the end, no matter the direction in which they are fired.
-* Allowed the Area Guard functions ("G" and \[Ctrl\]+\[Alt\]+Click) to be used by Harvesters to find nearby tiberium to harvest.
+* The laser now always shows a beam that's wide at the start and thinner at the end, no matter the direction in which it is fired.
+* Allowed the Area Guard functions ("G" and \[Ctrl\]+\[Alt\]+Click) to be used by Harvesters to find nearby tiberium to harvest. The code for this always existed in the game, but the UI never allowed giving such orders to a harvester.
 * Added "D" as Deploy/Unload hotkey.
-* Added "E" as hotkey to select all units on the screen.
-* Added "T" as shortcut for selecting all units on the screen of the same types as the selected units.
+* Added "E" as hotkey to select all units on the screen. This can be combined with the \[Shift\] key.
+* Added "T" as shortcut for selecting all units on the screen of the same types as the already-selected units. This can be combined with the \[Shift\] key.
+* Added power balance info on the power output and building tooltips.
 * The keyboard-given orders for Area Guard, Scatter and Deploy will now give unit responses.
 * Deploying units by clicking on them now works even if you have multiple units selected. This will not affect the other units in the selection.
 * Since the deployment change makes it impossible to load passengers into a selected transport that already contains at least one passenger, you can now hold \[Alt\] to override the Deploy cursor to allow passengers to enter.
@@ -116,4 +117,7 @@ v1.04: (in progress)
 * If any of the units in a selection can attack a wall, it will now always show an Attack cursor on the wall.
 * Fixed bug where owning both an MCV and a Construction Yard and pressing the "H" key would give a voice response from the MCV but select the Construction Yard.
 * The 'H' key will no longer act like 'Home' if no MCV or Construction Yard was found.
+* The 'H' key will no longer jump to undiscovered construction yards inside the shroud.
+* Civilian buildings will no longer decay for no reason due to a 0/0 power balance being seen as low power.
+* Fixed power output tooltip not showning "low" if the player has power drain but zero power production.
 * Added "CCPP" version number on the main menu to indicate the patch version.

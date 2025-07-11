@@ -434,6 +434,12 @@ TextLabelClass * MessageListClass::Add_Message(char *txt, int color,
 		MessageList = txtlabel;
 	}
 
+	/*------------------------------------------------------------------------
+	Give audio feedback that the message was created
+	------------------------------------------------------------------------*/
+	void const * text2 = MixFileClass::Retrieve("TEXT2.AUD");
+	Play_Sample(text2, 255, Options.Normalize_Sound(90));
+
 	return(txtlabel);
 }
 

@@ -39,7 +39,7 @@
 #define FUNCTION_H
 
 #ifdef NEVER
-Map (screen) class heirarchy.
+Map (screen) class hierarchy.
 
  MapeditClass (most derived class) -- scenario editor
         ³

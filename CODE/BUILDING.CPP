@@ -1107,7 +1107,7 @@ void BuildingClass::AI(void)
 		// Nyerguds's TUC Quick Fix Patch v1.04
 		// Fix sellback chance becoming 100% for higher mission numbers in the New Missions list.
 		// Make it depend on set buildlevel rather than on mission number.
-		int scenario = MAX(BuildLevel, 20);
+		int scenario = MIN(BuildLevel, 20);
 		if (GameToPlay != GAME_NORMAL) {
 			scenario = 20;
 		}
@@ -1117,10 +1117,8 @@ void BuildingClass::AI(void)
 		if (Class->IsRepairable && Health_Ratio() <= ratio) {
 			if (House->Available_Money() >= REPAIR_THRESHHOLD) {
 				Repair(1);
-			} else {
-				if (IsTickedOff && scenario > 2 && Random_Pick(0, 50) < scenario && !Trigger) {
-					Sell_Back(1);
-				}
+			} else if (IsTickedOff && scenario > 2 && Random_Pick(0, 50) < scenario && !Trigger) {
+				Sell_Back(1);
 			}
 		}
 

@@ -2263,7 +2263,20 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 			**	Display the help text if the mouse is over the button.
 			*/
 			if (flags & LEFTUP) {
-				Map.Help_Text(choice->Full_Name(), X, Y, CC_GREEN, true, choice->Cost_Of());
+				bool showpower = false;
+				int powerdrain = 0;
+				int powerprod = 0;
+				if (otype == RTTI_BUILDINGTYPE) {
+					BuildingTypeClass * choicebld = (BuildingTypeClass *)choice;
+					powerdrain = choicebld->Drain;
+					powerprod = choicebld->Power;
+					showpower = powerdrain != 0 || powerprod != 0;
+					if (!showpower) {
+						powerdrain = 0;
+						powerprod = 0;
+					}
+				}
+				Map.Help_Text(choice->Full_Name(), X, Y, CC_GREEN, true, choice->Cost_Of(), true, powerdrain, powerprod, showpower);
 				flags &= ~LEFTUP;
 			}
 

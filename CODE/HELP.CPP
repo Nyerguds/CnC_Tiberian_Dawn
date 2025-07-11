@@ -216,7 +216,7 @@ void HelpClass::AI(KeyNumType &key, int x, int y)
  * HISTORY:                                                                                    *
  *   11/18/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-void HelpClass::Help_Text(int text, int x, int y, int color, bool quick, int cost)
+void HelpClass::Help_Text(int text, int x, int y, int color, bool quick, int cost, bool showcost, int drain, int power, bool showpower)
 {
 	if (text != Text) {
 
@@ -247,6 +247,12 @@ void HelpClass::Help_Text(int text, int x, int y, int color, bool quick, int cos
 		Color = color;
 		Text = text;
 		Cost = cost;
+		ShowCost = showcost;
+		Drain = drain;
+		Power = power;
+		ShowPower = showpower;
+		// Cache this so it gets taken into account correctly for the OverlapList
+		IsLowPower = showcost && showpower && drain > 0 && (PlayerPtr->Power + power) < (PlayerPtr->Drain + drain);
 	}
 }
 
@@ -266,6 +272,7 @@ void HelpClass::Help_Text(int text, int x, int y, int color, bool quick, int cos
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   11/18/1994 JLB : Created.                                                                 *
+ *   07/11/2025 MM  : Now takes the possibility of a longer second line length into account.   *
  *=============================================================================================*/
 void HelpClass::Draw_It(bool forced)
 {
@@ -279,23 +286,63 @@ void HelpClass::Draw_It(bool forced)
 			Fancy_Text_Print(Text, DrawX, DrawY, Color, BLACK, TPF_MAP|TPF_NOSHADOW);
 			LogicPage->Draw_Rect(DrawX-1, DrawY-1, DrawX+Width+1, DrawY+FontHeight, Color);
 
-			if (Cost) {
-				char buffer[15];
-				sprintf(buffer, "$%d", Cost);
-				int width = String_Pixel_Width(buffer);
-
-	//			Fancy_Text_Print(buffer, DrawX, DrawY+FontHeight, Color, BLACK, TPF_6POINT|TPF_NOSHADOW);
-				Fancy_Text_Print(buffer, DrawX, DrawY+FontHeight, Color, BLACK, TPF_MAP|TPF_NOSHADOW);
-				LogicPage->Draw_Rect(DrawX-1, DrawY+FontHeight, DrawX+width+1, DrawY+FontHeight+FontHeight-1, Color);
-				LogicPage->Draw_Line(DrawX, DrawY+FontHeight, DrawX+MIN(width+1, Width) - 1, DrawY+FontHeight, BLACK);
+			if (ShowCost || ShowPower) {
+				char buffer[30];
+				memset(buffer, 0, sizeof(buffer));
+				if (Get_Extra_Text(buffer)) {
+					int width = String_Pixel_Width(buffer);
+					int offset = MAX(0, width - Width);
+		//			Fancy_Text_Print(buffer, DrawX, DrawY+FontHeight, Color, BLACK, TPF_6POINT|TPF_NOSHADOW);
+					Fancy_Text_Print(buffer, DrawX - offset, DrawY+FontHeight + 1, Color, BLACK, TPF_MAP|TPF_NOSHADOW);
+					LogicPage->Draw_Rect(DrawX-1-offset, DrawY+FontHeight, DrawX+width+1-offset, DrawY+FontHeight+FontHeight, Color);
+					LogicPage->Draw_Line(DrawX, DrawY+FontHeight, DrawX+MIN(width+1, Width) - (offset != 0 ? 0 : 1), DrawY+FontHeight, BLACK);
+				}
 			}
-
 			LogicPage->Unlock();
 		}
 	}
 	//	if (!In_Debugger) HidPage.Unlock();
 }
 
+
+/***********************************************************************************************
+ * HelpClass::Get_Extra_Text -- Gets the second line of text underneath the label              *
+ *                                                                                             *
+ *    This function generates the extra info line underneath the primary label.                *
+ *                                                                                             *
+ * INPUT:   buffer -- The buffer to generate the text into.                                    *
+ *                                                                                             *
+ *          test   -- True if this is a test to get the OverlapList.                           *
+ *                                                                                             *
+ * OUTPUT:  true if any text was generated.                                                    *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/11/2025 MM  : Created.                                                                 *
+ *=============================================================================================*/
+bool HelpClass::Get_Extra_Text(char buffer[], bool fortest)
+{
+	bool printed = false;
+	if (ShowCost) {
+		if (ShowPower) {
+			sprintf(buffer, "$%d ~+%d/-%d%s", Cost, Power, Drain, IsLowPower ? " (!)" : "");
+		} else {
+			sprintf(buffer, "$%d", Cost);
+		}
+		printed = true;
+	} else if (ShowPower) {
+		// Special case for power bar. If these values are -1, live-update them.
+		// If this is a test to build the OverlapList, assume the player will
+		// never exceed seven digits.
+		int drain = Drain == -1 ? (fortest ? 9999999 : PlayerPtr->Drain) : Drain;
+		int power = Power == -1 ? (fortest ? 9999999 : PlayerPtr->Power) : Power;
+		// Only power is shown: special case for power bar label
+		sprintf(buffer, "%d/%d", drain, power);
+		printed = true;
+	}
+	return(printed);
+}
 
 /***********************************************************************************************
  * HelpClass::Set_Text -- Determines the overlap list and draw coordinates.                    *
@@ -312,6 +359,7 @@ void HelpClass::Draw_It(bool forced)
  * HISTORY:                                                                                    *
  *   11/18/1994 JLB : Created.                                                                 *
  *   12/11/1994 JLB : Won't draw past tactical map edges.                                      *
+ *   07/11/2025 MM  : Now takes the possibility of a longer second line length into account.   *
  *=============================================================================================*/
 void HelpClass::Set_Text(int text)
 {
@@ -338,8 +386,23 @@ void HelpClass::Set_Text(int text)
 			if (DrawX < TacPixelX+1) DrawX = TacPixelX+1;
 			if (DrawY < TacPixelY+1) DrawY = TacPixelY+1;
 		}
-		int lines = (Cost) ? 2 : 1;
-		memcpy((void*)OverlapList, Text_Overlap_List(Text_String(Text), DrawX-1, DrawY, lines), sizeof(OverlapList));
+		int lines = (ShowCost || ShowPower) ? 2 : 1;
+		bool useprimary = true;
+		if (ShowCost || ShowPower) {
+			char buffer[30];
+			memset(buffer, 0, sizeof(buffer));
+			if (Get_Extra_Text(buffer, true)) {
+				int width2 = String_Pixel_Width(buffer);
+				int offset = MAX(0, width2 - Width);
+				useprimary = offset == 0;
+				if (!useprimary) {
+					memcpy((void*)OverlapList, Text_Overlap_List(buffer, DrawX-1-offset, DrawY, lines), sizeof(OverlapList));
+				}
+			}
+		}
+		if (useprimary) {
+			memcpy((void*)OverlapList, Text_Overlap_List(Text_String(Text), DrawX-1, DrawY, lines), sizeof(OverlapList));
+		}
 	}
 }
 
@@ -377,11 +440,13 @@ bool HelpClass::Scroll_Map(DirType facing, int & distance, bool really)
  * HelpClass::Set_Cost -- Initiates the second line of help text showing item cost.            *
  *                                                                                             *
  *    Use this routine after the Help_Text() function to activate the second line. The second  *
- *    line displays a cost. Typically, this is used by the sidebar to display the cost of the  *
- *    specified item.                                                                          *
+ *    line displays a cost and/or power value, depending on the context. Typically, this is    *
+ *    used by the sidebar to display the cost of the specified item.                           *
  *                                                                                             *
- * INPUT:   cost  -- The cost to associate with this help text. If this value is zero, then    *
- *                   no second line is displayed, so don't pass in zero.                       *
+ * INPUT:   cost  -- The cost to associate with this help text.                                *
+ *                                                                                             *
+ *          showcost -- To allow showing a value of 0, this is set explicitly.                 *
+ *                      If false, no second line is displayed.                                 *
  *                                                                                             *
  * OUTPUT:  none                                                                               *
  *                                                                                             *
@@ -389,10 +454,42 @@ bool HelpClass::Scroll_Map(DirType facing, int & distance, bool really)
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   01/09/1995 JLB : Created.                                                                 *
+ *   07/11/2025 MM  : Added "showcost".                                                        *
  *=============================================================================================*/
-void HelpClass::Set_Cost(int cost)
+void HelpClass::Set_Cost(int cost, bool showcost)
 {
 	Cost = cost;
+	ShowCost = showcost;
+}
+
+
+/***********************************************************************************************
+ * HelpClass::Set_Power -- Initiates the second line of help text showing power values.        *
+ *                                                                                             *
+ *    Use this routine after the Help_Text() function to activate the second line. The second  *
+ *    line displays a cost and/or power value, depending on the context.                       *
+ *                                                                                             *
+ * INPUT:   drain  -- The power drained by this item, or total drain for a House. Set to -1    *
+ *                    for showing the current live-updated player house drain.                 *
+ *                                                                                             *
+ *          power  -- The power produced by this item, or total power production for a House.  *
+ *                    Set to -1 for showing the current live-updated player house production.  *
+ *                                                                                             *
+ *          showpower -- specifically set that power should be shown. f set without cost,      *
+ *                       this is assumed to be for the House power balance label.              *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/11/2025 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void HelpClass::Set_Power(int drain, int power, bool showpower)
+{
+	Drain = drain;
+	Power = power;
+	ShowPower = showpower;
 }
 
 

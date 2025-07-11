@@ -55,8 +55,9 @@ class HelpClass: public TabClass
 		virtual bool Scroll_Map(DirType facing, int &distance, bool really);
 		virtual void Set_Tactical_Position(COORDINATE coord);
 
-		void Help_Text(int text, int x=-1, int y=-1, int color=LTGREY, bool quick=false, int cost = 0);
-		void Set_Cost(int cost);
+		void Help_Text(int text, int x=-1, int y=-1, int color=LTGREY, bool quick=false, int cost = 0, bool showcost = false, int drain = 0, int power = 0, bool showpower = false);
+		void Set_Cost(int cost, bool showcost = true);
+		void Set_Power(int drain, int power, bool showpower = true);
 		short const * Overlap_List(void) const;
 
 		/*
@@ -75,6 +76,8 @@ class HelpClass: public TabClass
 
 		void Set_Text(int text);
 
+		bool Get_Extra_Text(char buffer[], bool fortest = false);
+
 		/*
 		**	If the help text is right justified (as with the help text that pops up over the
 		**	sidebar icons), then this flag is set to true.
@@ -86,7 +89,16 @@ class HelpClass: public TabClass
 		**	value will be non-zero. Typically, this is true when the help text is associated
 		**	with one of the sidebar construction icons.
 		*/
+		// Nyerguds's TUC Quick Fix Patch v1.04
 		int Cost;
+		// Allow showing a cost of 0
+		bool ShowCost;
+
+		// Add power values support
+		int Drain;
+		int Power;
+		bool ShowPower;
+		bool IsLowPower;
 
 		/*
 		**	This is the recorded position of the cursor at the time the help text

@@ -450,10 +450,10 @@ int PowerClass::PowerButtonClass::Action(unsigned flags, KeyNumType & key)
 	**	radar map.
 	*/
 	Map.Override_Mouse_Shape(MOUSE_NORMAL);
-	if (PlayerPtr->Power_Fraction() < 0x0100 && PlayerPtr->Power > 0) {
-		Map.Help_Text(TXT_POWER_OUTPUT_LOW, -1, -1, CC_GREEN);
+	if (PlayerPtr->Drain > PlayerPtr->Power) {
+		Map.Help_Text(TXT_POWER_OUTPUT_LOW, -1, -1, CC_GREEN, false, 0, false, -1, -1, true);
 	} else {
-		Map.Help_Text(TXT_POWER_OUTPUT, -1, -1, CC_GREEN);
+		Map.Help_Text(TXT_POWER_OUTPUT, -1, -1, CC_GREEN, false, 0, false, -1, -1, true);
 	}
 	GadgetClass::Action(flags, key);
 	return(true);

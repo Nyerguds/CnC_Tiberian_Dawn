@@ -149,7 +149,7 @@ class DisplayClass: public MapClass
 		void  Center_Map(void);
 		virtual bool Map_Cell(CELL cell, HouseClass *house);
 		virtual CELL Click_Cell_Calc(int x, int y);
-		virtual void Help_Text(int , int =-1, int =-1, int =YELLOW, bool =false, int =0) {};
+		virtual void Help_Text(int, int =-1, int =-1, int =YELLOW, bool =false, int =0, bool =false, int =0, int =0, bool =false) {};
 		virtual MouseType Get_Mouse_Shape(void) const = 0;
 		virtual bool Scroll_Map(DirType facing, int & distance, bool really);
 		virtual void Refresh_Cells(CELL cell, short const *list);

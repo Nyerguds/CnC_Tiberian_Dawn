@@ -531,11 +531,11 @@ void Keyboard_Process(KeyNumType &input)
 		*/
 		case VK_H:
 			// Nyerguds's TUC Quick Fix Patch v1.04
-			// Fix MCV response when selecting CY with 'H'.
+			// Fix MCV responding when selecting CY with 'H' if both are on the map.
 			for (index = 0; index < Buildings.Count(); index++) {
 				BuildingClass * building = Buildings.Ptr(index);
-
-				if (building && !building->IsInLimbo && building->House == PlayerPtr && *building == STRUCT_CONST) {
+				// Don't jump to undiscovered Construction Yard.
+				if (building && !building->IsInLimbo && building->House == PlayerPtr && *building == STRUCT_CONST && building->IsDiscoveredByPlayer) {
 					Unselect_All();
 					building->Select();
 					foundhome = true;

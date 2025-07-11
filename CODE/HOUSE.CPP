@@ -998,7 +998,9 @@ void HouseClass::AI(void)
 		**	When the power is below required, then the buildings will take damage over
 		**	time.
 		*/
-		if (Power_Fraction() < 0x100) {
+		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Only decay if drain is actually greater than Power; not when there's a 0/0 balance.
+		if (Drain > Power) {
 			for (int index = 0; index < Buildings.Count(); index++) {
 				BuildingClass & b = *Buildings.Ptr(index);
 
@@ -4257,6 +4259,8 @@ void HouseClass::Init_Data(PlayerColorType color, HousesType house, int credits)
 int HouseClass::Power_Fraction(void) const
 {
 	Validate();
+	// This should be fixed; 0/0 is actually not low power. But this unfortunately has serious
+	// repercussions in combination with the 32-bit overflows on the house "Scan" logic.
 	if (Power) {
 		if (Drain) {
 			return(Cardinal_To_Fixed(Drain, Power));
