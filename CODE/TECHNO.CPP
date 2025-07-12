@@ -1010,9 +1010,7 @@ bool TechnoClass::Unlimbo(COORDINATE coord, DirType dir)
 void TechnoClass::Look(bool incremental)
 {
 	if (!IsInLimbo && IsOwnedByPlayer) {
-		TechnoTypeClass const & ttype = (TechnoTypeClass const &)Class_Of();
-		int sight = ttype.SightRange;
-
+		int sight = Techno_Type_Class()->SightRange;
 		if (sight) {
 			Map.Sight_From(Coord_Cell(Coord), sight, incremental);
 		}
