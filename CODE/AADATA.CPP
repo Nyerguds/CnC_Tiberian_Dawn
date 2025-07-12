@@ -650,6 +650,10 @@ BuildingClass * AircraftTypeClass::Who_Can_Build_Me(bool , bool legal, HousesTyp
 			}
 		}
 	}
+	// Nothing was set primary. If anything was available, return it.
+	if (anyfreebuilding != NULL) {
+		return(anyfreebuilding);
+	}
 	return(anybuilding);
 }
 
