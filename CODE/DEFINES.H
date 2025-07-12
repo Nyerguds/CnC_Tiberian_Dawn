@@ -1937,6 +1937,7 @@ typedef enum TheaterType {
 	THEATER_JUNGLE,
 	THEATER_TEMPERATE,
 	THEATER_WINTER,
+	THEATER_SNOW,
 
 	THEATER_COUNT,
 	THEATER_FIRST=0
@@ -1948,6 +1949,7 @@ inline TheaterType operator++(TheaterType &, int);
 #define	THEATERF_JUNGLE			(1<<THEATER_JUNGLE)
 #define	THEATERF_TEMPERATE		(1<<THEATER_TEMPERATE)
 #define	THEATERF_WINTER			(1<<THEATER_WINTER)
+#define	THEATERF_SNOW			(1<<THEATER_SNOW)
 
 typedef struct {
 	char		Name[16];

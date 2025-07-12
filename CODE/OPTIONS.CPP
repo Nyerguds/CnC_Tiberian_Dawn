@@ -542,12 +542,13 @@ void OptionsClass::Load_Settings (void)
 	Set_Contrast(WWGetPrivateProfileInt("Options", "Contrast", 0x80, buffer));
 	Set_Color(WWGetPrivateProfileInt("Options", "Color", 0x80, buffer));
 	Set_Tint(WWGetPrivateProfileInt("Options", "Tint", 0x80, buffer));
-	AutoScroll = WWGetPrivateProfileInt("Options", "AutoScroll", 1, buffer);
-	Set_Repeat(WWGetPrivateProfileInt("Options", "IsScoreRepeat", 0, buffer));
-	Set_Shuffle(WWGetPrivateProfileInt("Options", "IsScoreShuffle", 0, buffer));
-	IsDeathAnnounce = WWGetPrivateProfileInt("Options", "DeathAnnounce", 0, buffer);
-	IsFreeScroll = WWGetPrivateProfileInt("Options", "FreeScrolling", 0, buffer);
-	SlowPalette = WWGetPrivateProfileInt("Options", "SlowPalette", 1, buffer);
+	AutoScroll = WWGetPrivateProfileBool("Options", "AutoScroll", true, buffer);
+	Set_Repeat(WWGetPrivateProfileBool("Options", "IsScoreRepeat", false, buffer));
+	Set_Shuffle(WWGetPrivateProfileBool("Options", "IsScoreShuffle", false, buffer));
+	IsDeathAnnounce = WWGetPrivateProfileBool("Options", "DeathAnnounce", false, buffer);
+	IsFreeScroll = WWGetPrivateProfileBool("Options", "FreeScrolling", false, buffer);
+	SlowPalette = WWGetPrivateProfileBool("Options", "SlowPalette", true, buffer);
+	PowerBuildToolTips = WWGetPrivateProfileBool("Options", "PowerToolTips", true, buffer);
 
 	char workbuf[128];
 

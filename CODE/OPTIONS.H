@@ -92,6 +92,7 @@ class OptionsClass {
 		unsigned IsScoreShuffle:1;	// Score list should shuffle?
 		unsigned IsDeathAnnounce:1;// Announce enemy deaths?
 		unsigned IsFreeScroll:1;	// Allow free direction scrolling?
+		unsigned PowerBuildToolTips:1;	// Add extra power info on building tooltips
 
 	protected:
 

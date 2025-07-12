@@ -2598,20 +2598,24 @@ short const * TemplateTypeClass::Occupy_List(bool) const
 void TemplateTypeClass::Init(TheaterType theater)
 {
 	//if (theater != LastTheater){
-		char fullname[_MAX_FNAME+_MAX_EXT];	// Fully constructed iconset name.
-		void const * ptr;		// Working loaded iconset pointer.
+	char fullname[_MAX_FNAME+_MAX_EXT];	// Fully constructed iconset name.
+	void const * ptr;		// Working loaded iconset pointer.
 
-		for (TemplateType index = TEMPLATE_FIRST; index < TEMPLATE_COUNT; index++) {
-			TemplateTypeClass	const & tplate = As_Reference(index);
+	for (TemplateType index = TEMPLATE_FIRST; index < TEMPLATE_COUNT; index++) {
+		TemplateTypeClass	const & tplate = As_Reference(index);
 
-			((void const *&)tplate.ImageData) = NULL;
-			if (tplate.Theater & (1<<theater)) {
-				_makepath(fullname, NULL, NULL, tplate.IniName, Theaters[theater].Suffix);
-				ptr = MixFileClass::Retrieve(fullname);
-				((void const *&)tplate.ImageData) = ptr;
-				Register_Icon_Set((void*)ptr,TRUE);		//Register icon set for video memory caching
-			}
+		((void const *&)tplate.ImageData) = NULL;
+		//if (tplate.Theater & (1<<theater)) {
+		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Ignore theater ownership on cells. Just try and see if it succeeds.
+		_makepath(fullname, NULL, NULL, tplate.IniName, Theaters[theater].Suffix);
+		ptr = MixFileClass::Retrieve(fullname);
+		if (ptr) {
+			((void const *&)tplate.ImageData) = ptr;
+			Register_Icon_Set((void*)ptr,TRUE);		//Register icon set for video memory caching
 		}
+		//}
+	}
 	//}
 }
 

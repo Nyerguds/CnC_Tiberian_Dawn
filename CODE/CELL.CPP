@@ -888,6 +888,10 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 				if (remap) {
 					LogicPage->Remap(x+Map.TacPixelX, y+Map.TacPixelY, ICON_PIXEL_W, ICON_PIXEL_H, remap);
 				}
+			} else {
+				// Nyerguds's TUC Quick Fix Patch v1.04
+				// Illegal tiles are shown black rather than non-refreshing.
+				LogicPage->Fill_Rect(Map.TacPixelX+x, Map.TacPixelY+y, Map.TacPixelX+x+ICON_PIXEL_W-1, Map.TacPixelY+y+ICON_PIXEL_H-1, BLACK);
 			}
 
 

@@ -2076,8 +2076,9 @@ int MapEditClass::Scenario_Dialog(void)
 			with this theater, set the icon to NONE
 			..................................................................*/
 			if ((*this)[i].TType != TEMPLATE_NONE) {
-				theater_mask = TemplateTypeClass::As_Reference((*this)[i].TType).Theater;
-				if ( (theater_mask & (1 << theater))==0) {
+				//theater_mask = TemplateTypeClass::As_Reference((*this)[i].TType).ImageData;
+				//if ( (theater_mask & (1 << theater))==0) {
+				if (!TemplateTypeClass::As_Reference((*this)[i].TType).ImageData) {
 					(*this)[i].TType = TEMPLATE_NONE;
 					(*this)[i].TIcon = 0;
 				}

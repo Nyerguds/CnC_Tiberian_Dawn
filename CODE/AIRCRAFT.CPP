@@ -492,6 +492,9 @@ void AircraftClass::Read_INI(char *buffer)
 					} else {
 
 						air->Strength = Fixed_To_Cardinal(air->Class->MaxStrength, strength);
+						// Nyerguds's TUC Quick Fix Patch v1.04
+						// Do not spawn in the air.
+						air->Altitude = 0;
 						if (air->Unlimbo(coord, dir)) {
 							air->Assign_Mission(AircraftClass::Mission_From_Name(strtok(NULL, ",\n\r")));
 						} else {

@@ -2266,7 +2266,7 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 				bool showpower = false;
 				int powerdrain = 0;
 				int powerprod = 0;
-				if (otype == RTTI_BUILDINGTYPE) {
+				if (otype == RTTI_BUILDINGTYPE && Options.PowerBuildToolTips) {
 					BuildingTypeClass * choicebld = (BuildingTypeClass *)choice;
 					powerdrain = choicebld->Drain;
 					powerprod = choicebld->Power;

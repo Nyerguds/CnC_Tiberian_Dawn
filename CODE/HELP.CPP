@@ -312,7 +312,7 @@ void HelpClass::Draw_It(bool forced)
  *                                                                                             *
  * INPUT:   buffer -- The buffer to generate the text into.                                    *
  *                                                                                             *
- *          test   -- True if this is a test to get the OverlapList.                           *
+ *          fortest -- True if this is a test to get the OverlapList.                          *
  *                                                                                             *
  * OUTPUT:  true if any text was generated.                                                    *
  *                                                                                             *
@@ -332,12 +332,11 @@ bool HelpClass::Get_Extra_Text(char buffer[], bool fortest)
 		}
 		printed = true;
 	} else if (ShowPower) {
-		// Special case for power bar. If these values are -1, live-update them.
-		// If this is a test to build the OverlapList, assume the player will
-		// never exceed seven digits.
-		int drain = Drain == -1 ? (fortest ? 9999999 : PlayerPtr->Drain) : Drain;
-		int power = Power == -1 ? (fortest ? 9999999 : PlayerPtr->Power) : Power;
 		// Only power is shown: special case for power bar label
+		// If these values are -1, live-update them. If this is a test to build the
+		// OverlapList, assume the player will never exceed seven wide digits.
+		int drain = Drain == -1 ? (fortest ? 8888888 : PlayerPtr->Drain) : Drain;
+		int power = Power == -1 ? (fortest ? 8888888 : PlayerPtr->Power) : Power;
 		sprintf(buffer, "%d/%d", drain, power);
 		printed = true;
 	}
@@ -365,6 +364,10 @@ void HelpClass::Set_Text(int text)
 {
 	if (text != TXT_NONE) {
 		Text = text;
+		/*
+		**	This is only called because it loads the correct font,
+		**	so the String_Pixel_Width calls will work correctly.
+		*/
 //		Fancy_Text_Print(TXT_NONE, 0, 0, 0, 0, TPF_6POINT|TPF_NOSHADOW);
 		Fancy_Text_Print(TXT_NONE, 0, 0, 0, 0, TPF_MAP|TPF_NOSHADOW);
 		Width = String_Pixel_Width(Text_String(Text));
@@ -386,12 +389,13 @@ void HelpClass::Set_Text(int text)
 			if (DrawX < TacPixelX+1) DrawX = TacPixelX+1;
 			if (DrawY < TacPixelY+1) DrawY = TacPixelY+1;
 		}
-		int lines = (ShowCost || ShowPower) ? 2 : 1;
+		int lines = 1;
 		bool useprimary = true;
 		if (ShowCost || ShowPower) {
 			char buffer[30];
 			memset(buffer, 0, sizeof(buffer));
 			if (Get_Extra_Text(buffer, true)) {
+				lines = 2;
 				int width2 = String_Pixel_Width(buffer);
 				int offset = MAX(0, width2 - Width);
 				useprimary = offset == 0;

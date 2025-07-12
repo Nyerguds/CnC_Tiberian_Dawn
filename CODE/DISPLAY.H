@@ -149,7 +149,9 @@ class DisplayClass: public MapClass
 		void  Center_Map(void);
 		virtual bool Map_Cell(CELL cell, HouseClass *house);
 		virtual CELL Click_Cell_Calc(int x, int y);
-		virtual void Help_Text(int, int =-1, int =-1, int =YELLOW, bool =false, int =0, bool =false, int =0, int =0, bool =false) {};
+		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Add power label support
+		virtual void Help_Text(int /*text*/, int /*x*/=-1, int /*y*/=-1, int /*color*/=YELLOW, bool /*quick*/=false, int /*cost*/=0, bool /*showcost*/=false, int /*drain*/=0, int /*power*/=0, bool /*showpower*/=false) {};
 		virtual MouseType Get_Mouse_Shape(void) const = 0;
 		virtual bool Scroll_Map(DirType facing, int & distance, bool really);
 		virtual void Refresh_Cells(CELL cell, short const *list);

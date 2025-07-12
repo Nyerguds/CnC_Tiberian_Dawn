@@ -76,7 +76,7 @@ v1.04: (in progress)
 * Added "D" as Deploy/Unload hotkey.
 * Added "E" as hotkey to select all units on the screen. This can be combined with the \[Shift\] key.
 * Added "T" as shortcut for selecting all units on the screen of the same types as the already-selected units. This can be combined with the \[Shift\] key.
-* Added power balance info on the power output and building tooltips.
+* Added power balance info on the power output and building tooltips. This is enabled by default, but can be disabled with the option "PowerToolTips=false" in conquer.ini
 * The keyboard-given orders for Area Guard, Scatter and Deploy will now give unit responses.
 * Deploying units by clicking on them now works even if you have multiple units selected. This will not affect the other units in the selection.
 * Since the deployment change makes it impossible to load passengers into a selected transport that already contains at least one passenger, you can now hold \[Alt\] to override the Deploy cursor to allow passengers to enter.
@@ -120,4 +120,7 @@ v1.04: (in progress)
 * The 'H' key will no longer jump to undiscovered construction yards inside the shroud.
 * Civilian buildings will no longer decay for no reason due to a 0/0 power balance being seen as low power.
 * Fixed power output tooltip not showning "low" if the player has power drain but zero power production.
+* A unit landed on a helipad will no longer block the building placement adjacency checks.
+* Theater-illegal tiles on maps will now be drawn black, instead of non-refreshing black holes retaining whatever content last went over it.
+* Added support for the custom Snow theater.
 * Added "CCPP" version number on the main menu to indicate the patch version.

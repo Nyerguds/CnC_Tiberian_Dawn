@@ -757,8 +757,6 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object)
 
 			if (!In_Radar(cell)) return(false);
 
-			TechnoClass * base = (*this)[newcell].Cell_Techno();
-
 			/*
 			**	The special cell ownership flag allows building adjacent
 			**	to friendly walls and bibs even though there is no official
@@ -768,7 +766,13 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object)
 				return(true);
 			}
 
-			if (base && base->What_Am_I() == RTTI_BUILDING && base->House->Class->House == PendingHouse) {
+			// Nyerguds's TUC Quick Fix Patch v1.04
+			/*
+			**	Only check for buildings. Don't mind if they are covered with
+			**	a unit (e.g. on helipads)
+			*/
+			BuildingClass * base = (*this)[newcell].Cell_Building();
+			if (base && base->House->Class->House == PendingHouse) {
 				return(true);
 			}
 		}
