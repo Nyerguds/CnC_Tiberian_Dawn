@@ -2034,6 +2034,7 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 				air->Altitude = 0;
 				ScenarioInit++;
 				if (air->Unlimbo(Docking_Coord(), air->Pose_Dir())) {
+					air->Look(false);
 					Transmit_Message(RADIO_HELLO, air);
 					Transmit_Message(RADIO_TETHER);
 					ScenarioInit--;
@@ -2050,6 +2051,7 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 				}
 				ScenarioInit++;
 				if (air->Unlimbo(Cell_Coord(cell), DIR_N)) {
+					air->Look(false);
 					air->Assign_Destination(::As_Target(Nearby_Location(air)));
 					air->Assign_Mission(MISSION_MOVE);
 					ScenarioInit--;
@@ -2071,6 +2073,7 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 						ScenarioInit++;
 						if (unit->Unlimbo(Coord_Add(unit->Coord, 0x00550060L), DIR_SW_X2)) {
 							unit->PrimaryFacing = DIR_SW_X2;
+							unit->Look(false);
 							Transmit_Message(RADIO_HELLO, unit);
 							Transmit_Message(RADIO_TETHER);
 							unit->Assign_Mission(MISSION_HARVEST);
@@ -2096,6 +2099,7 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 //						base->Assign_Mission(MISSION_MOVE);
 //						base->Assign_Destination(::As_Target(As_Cell(Coord)+MAP_CELL_W*2));
 						base->Mark(MARK_UP);
+						base->Look(false);
 						base->Coord = Coord_Add(Coord, Class->ExitPoint);
 						base->Mark(MARK_DOWN);
 						Transmit_Message(RADIO_HELLO, base);
@@ -2135,7 +2139,7 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 
 						ScenarioInit++;
 						if (base->Unlimbo(start, dir)) {
-
+							base->Look(false);
 							base->Assign_Mission(MISSION_MOVE);
 							base->Assign_Destination(::As_Target(cell));
 
@@ -3349,7 +3353,7 @@ bool BuildingClass::Captured(HouseClass * newowner)
 		Mark(MARK_CHANGE);
 
 		/*
-		**	Perform a look operation when catpured if it was the player
+		**	Perform a look operation when captured if it was the player
 		**	that performed the capture.
 		*/
 		if (House == PlayerPtr) {

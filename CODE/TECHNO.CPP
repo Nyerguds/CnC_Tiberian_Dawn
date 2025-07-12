@@ -538,8 +538,8 @@ bool TechnoClass::Revealed(HouseClass * house)
 				/*
 				**	A newly revealed object will always perform a look operation.
 				*/
-				if (house == PlayerPtr) IsDiscoveredByPlayer = true;
-				if (house != PlayerPtr) IsDiscoveredByComputer = true;
+				// if (house == PlayerPtr) IsDiscoveredByPlayer = true;
+				// if (house != PlayerPtr) IsDiscoveredByComputer = true;
 				Look();
 			}
 		}
@@ -984,6 +984,39 @@ bool TechnoClass::Unlimbo(COORDINATE coord, DirType dir)
 		return(true);
 	}
 	return(false);
+}
+
+
+/***********************************************************************************************
+ * UnitClass::Look -- Perform map revelation from a unit's position.                           *
+ *                                                                                             *
+ *    Reveal the map around the specified unit with the sighting range                         *
+ *    associated with the specified unit.                                                      *
+ *                                                                                             *
+ * INPUT:   incremental -- If looking is to process only the cells in the                      *
+ *                         outer ring of the unit's search radius, then                        *
+ *                         set this parameter to true. This method is                          *
+ *                         quite a bit faster than processing all cells,                       *
+ *                         but must be used with caution.                                      *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   This is a relatively slow routine. Call ONLY when necessary.                    *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   09/08/1994 JLB : Created.                                                                 *
+ *   07/12/2025 MM  : Basic functionality migrated from InfantryClass to higher level.         *
+ *=============================================================================================*/
+void TechnoClass::Look(bool incremental)
+{
+	if (!IsInLimbo && IsOwnedByPlayer) {
+		TechnoTypeClass const & ttype = (TechnoTypeClass const &)Class_Of();
+		int sight = ttype.SightRange;
+
+		if (sight) {
+			Map.Sight_From(Coord_Cell(Coord), sight, incremental);
+		}
+	}
 }
 
 

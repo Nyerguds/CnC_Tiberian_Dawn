@@ -615,6 +615,8 @@ short const * AircraftTypeClass::Overlap_List(void) const
 BuildingClass * AircraftTypeClass::Who_Can_Build_Me(bool , bool legal, HousesType house) const
 {
 	BuildingClass * anybuilding = NULL;
+	BuildingClass * anyfreebuilding = NULL;
+	bool foundLeader = false;
 	for (int index = 0; index < Buildings.Count(); index++) {
 		BuildingClass * building = Buildings.Ptr(index);
 
@@ -625,9 +627,27 @@ BuildingClass * AircraftTypeClass::Who_Can_Build_Me(bool , bool legal, HousesTyp
 				((1L << building->ActLike) & Ownable) &&
 				(!legal || building->House->Can_Build(Type, building->ActLike)) &&
 				building->Class->ToBuild == RTTI_AIRCRAFTTYPE) {
-
-			if (building->IsLeader) return(building);
-			anybuilding = building;
+			bool isleader = building->IsLeader;
+			if (isleader) {
+				foundLeader = true;
+			}
+			bool busy = building->In_Radio_Contact();
+			// Always prefer leader as fallback.
+			if (anybuilding == NULL || isleader) {
+				anybuilding = building;
+			}
+			// Store available fallback
+			if (!busy && anyfreebuilding == NULL) {
+				anyfreebuilding = building;
+			}
+			// If leader is available, always use that.
+			if (isleader && !busy) {
+				return(building);
+			}
+			// Leader was found but not available; return found free building.
+			if (foundLeader && anyfreebuilding != NULL) {
+				return(anyfreebuilding);
+			}
 		}
 	}
 	return(anybuilding);
@@ -743,28 +763,28 @@ bool AircraftTypeClass::Create_And_Place(CELL, HousesType) const
 
 void AircraftTypeClass::Init(TheaterType theater)
 {
-	if (theater != LastTheater){
-		if ( Get_Resolution_Factor() ) {
+	//if (theater != LastTheater){
+	if ( Get_Resolution_Factor() ) {
 
-			AircraftType index;
-			char buffer[_MAX_FNAME];
-			char fullname[_MAX_FNAME+_MAX_EXT];
-			void const * cameo_ptr;
+		AircraftType index;
+		char buffer[_MAX_FNAME];
+		char fullname[_MAX_FNAME+_MAX_EXT];
+		void const * cameo_ptr;
 
-			for (index = AIRCRAFT_FIRST; index < AIRCRAFT_COUNT; index++) {
-				AircraftTypeClass	const & uclass = As_Reference(index);
+		for (index = AIRCRAFT_FIRST; index < AIRCRAFT_COUNT; index++) {
+			AircraftTypeClass	const & uclass = As_Reference(index);
 
-				((void const *&)uclass.CameoData) = NULL;
+			((void const *&)uclass.CameoData) = NULL;
 
-				sprintf(buffer, "%.4sICNH", uclass.IniName);
-				_makepath (fullname, NULL, NULL, buffer, Theaters[theater].Suffix);
-				cameo_ptr = MixFileClass::Retrieve(fullname);
-				if (cameo_ptr){
-					((void const *&)uclass.CameoData) = cameo_ptr;
-				}
+			sprintf(buffer, "%.4sICNH", uclass.IniName);
+			_makepath (fullname, NULL, NULL, buffer, Theaters[theater].Suffix);
+			cameo_ptr = MixFileClass::Retrieve(fullname);
+			if (cameo_ptr){
+				((void const *&)uclass.CameoData) = cameo_ptr;
 			}
 		}
 	}
+	//}
 }
 
 

@@ -83,7 +83,7 @@ static char const _slope1[] = {0,-1};
 
 static TemplateTypeClass const Empty(
 	TEMPLATE_CLEAR1,
-	THEATERF_WINTER|THEATERF_DESERT|THEATERF_TEMPERATE|THEATERF_JUNGLE,
+	THEATERF_ALL,
 	"CLEAR1",
 	TXT_CLEAR,
 	LAND_CLEAR,
@@ -93,7 +93,7 @@ static TemplateTypeClass const Empty(
 );
 static TemplateTypeClass const Clear(
 	TEMPLATE_CLEAR1,
-	THEATERF_WINTER|THEATERF_DESERT|THEATERF_TEMPERATE|THEATERF_JUNGLE,
+	THEATERF_ALL,
 	"CLEAR1",
 	TXT_CLEAR,
 	LAND_CLEAR,

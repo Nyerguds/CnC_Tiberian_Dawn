@@ -148,7 +148,7 @@ class InfantryClass : public FootClass
 		*/
 		virtual short const * Overlap_List(void) const;
 		virtual void Draw_It(int x, int y, WindowNumberType window);
-		virtual void Look(bool incremental=false);
+		//virtual void Look(bool incremental=false);
 
 		/*
 		**	User I/O.

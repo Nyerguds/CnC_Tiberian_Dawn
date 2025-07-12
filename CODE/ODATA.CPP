@@ -904,22 +904,22 @@ void OverlayTypeClass::Draw_It(int x, int y, int data) const
  *=============================================================================================*/
 void OverlayTypeClass::Init(TheaterType theater)
 {
-	if (theater != LastTheater){
-		for (OverlayType index = OVERLAY_FIRST; index < OVERLAY_COUNT; index++) {
-			OverlayTypeClass const & overlay = As_Reference(index);
-			char fullname[_MAX_FNAME+_MAX_EXT];	// Fully constructed iconset name.
+	//if (theater != LastTheater){
+	for (OverlayType index = OVERLAY_FIRST; index < OVERLAY_COUNT; index++) {
+		OverlayTypeClass const & overlay = As_Reference(index);
+		char fullname[_MAX_FNAME+_MAX_EXT];	// Fully constructed iconset name.
 
-			if (overlay.IsTheater) {
-				_makepath(fullname, NULL, NULL, overlay.IniName, Theaters[theater].Suffix);
-			} else {
-				_makepath(fullname, NULL, NULL, overlay.IniName, ".SHP");
-			}
-			((void const *&)overlay.ImageData) = MixFileClass::Retrieve(fullname);
-
-			IsTheaterShape = overlay.IsTheater;
-			if (overlay.RadarIcon) delete[] (char *)overlay.RadarIcon;
-			((void const *&)overlay.RadarIcon) = Get_Radar_Icon(overlay.Get_Image_Data(), 0, -1, 3);
-			IsTheaterShape = false;
+		if (overlay.IsTheater) {
+			_makepath(fullname, NULL, NULL, overlay.IniName, Theaters[theater].Suffix);
+		} else {
+			_makepath(fullname, NULL, NULL, overlay.IniName, ".SHP");
 		}
+		((void const *&)overlay.ImageData) = MixFileClass::Retrieve(fullname);
+
+		IsTheaterShape = overlay.IsTheater;
+		if (overlay.RadarIcon) delete[] (char *)overlay.RadarIcon;
+		((void const *&)overlay.RadarIcon) = Get_Radar_Icon(overlay.Get_Image_Data(), 0, -1, 3);
+		IsTheaterShape = false;
 	}
+	//}
 }

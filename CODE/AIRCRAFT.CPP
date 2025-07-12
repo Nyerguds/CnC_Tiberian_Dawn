@@ -1500,6 +1500,7 @@ bool AircraftClass::Exit_Object(TechnoClass * unit)
 		if (Transmit_Message(RADIO_HELLO, unit) == RADIO_ROGER) {
 			Transmit_Message(RADIO_UNLOAD);
 		}
+		unit->Look(false);
 		return(true);
 	}
 	return(false);

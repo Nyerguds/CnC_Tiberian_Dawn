@@ -1945,6 +1945,7 @@ typedef enum TheaterType {
 
 inline TheaterType operator++(TheaterType &, int);
 
+#define	THEATERF_ALL                    -1
 #define	THEATERF_DESERT			(1<<THEATER_DESERT)
 #define	THEATERF_JUNGLE			(1<<THEATER_JUNGLE)
 #define	THEATERF_TEMPERATE		(1<<THEATER_TEMPERATE)

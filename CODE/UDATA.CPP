@@ -1656,28 +1656,28 @@ void UnitTypeClass::Init(TheaterType theater)
 
 	if (Get_Resolution_Factor()){
 
-		if (theater != LastTheater){
+		//if (theater != LastTheater){
 
-			void const * cameo_ptr;
-			char	fullname[_MAX_FNAME+_MAX_EXT];
-			char	buffer[_MAX_FNAME];
+		void const * cameo_ptr;
+		char	fullname[_MAX_FNAME+_MAX_EXT];
+		char	buffer[_MAX_FNAME];
 
-			for (UnitType index = UNIT_FIRST; index < UNIT_COUNT; index++) {
+		for (UnitType index = UNIT_FIRST; index < UNIT_COUNT; index++) {
 
-				UnitTypeClass const & uclass = As_Reference(index);
+			UnitTypeClass const & uclass = As_Reference(index);
 
-				((void const *&)uclass.CameoData) = NULL;
+			((void const *&)uclass.CameoData) = NULL;
 
-				if (uclass.IsBuildable) {
-					sprintf(buffer, "%sICNH", uclass.IniName);
-					_makepath(fullname, NULL, NULL, buffer, Theaters[theater].Suffix);
-					cameo_ptr = MixFileClass::Retrieve(fullname);
-					if (cameo_ptr){
-						((void const *&)uclass.CameoData) = cameo_ptr;
-					}
+			if (uclass.IsBuildable) {
+				sprintf(buffer, "%sICNH", uclass.IniName);
+				_makepath(fullname, NULL, NULL, buffer, Theaters[theater].Suffix);
+				cameo_ptr = MixFileClass::Retrieve(fullname);
+				if (cameo_ptr){
+					((void const *&)uclass.CameoData) = cameo_ptr;
 				}
 			}
 		}
+		//}
 	}
 }
 

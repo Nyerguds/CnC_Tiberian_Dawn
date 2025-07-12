@@ -4488,33 +4488,33 @@ BuildingClass * BuildingTypeClass::Who_Can_Build_Me(bool intheory, bool legal, H
  *=============================================================================================*/
 void BuildingTypeClass::Init(TheaterType theater)
 {
-	if (theater != LastTheater){
-		char fullname[_MAX_FNAME+_MAX_EXT];
+	//if (theater != LastTheater){
+	char fullname[_MAX_FNAME+_MAX_EXT];
 
-		for (StructType sindex = STRUCT_FIRST; sindex < STRUCT_COUNT; sindex++) {
-			BuildingTypeClass const *classptr = &As_Reference(sindex);
+	for (StructType sindex = STRUCT_FIRST; sindex < STRUCT_COUNT; sindex++) {
+		BuildingTypeClass const *classptr = &As_Reference(sindex);
 
-			if (classptr->IsTheater) {
-				_makepath(fullname, NULL, NULL, classptr->IniName, Theaters[theater].Suffix);
-				((void const *&)classptr->ImageData) = MixFileClass::Retrieve(fullname);
-			}
+		if (classptr->IsTheater) {
+			_makepath(fullname, NULL, NULL, classptr->IniName, Theaters[theater].Suffix);
+			((void const *&)classptr->ImageData) = MixFileClass::Retrieve(fullname);
+		}
 
-			if ( Get_Resolution_Factor() ) {
-				char buffer[_MAX_FNAME];
-				char fullname[_MAX_FNAME+_MAX_EXT];
-				void const * cameo_ptr;
+		if ( Get_Resolution_Factor() ) {
+			char buffer[_MAX_FNAME];
+			char fullname[_MAX_FNAME+_MAX_EXT];
+			void const * cameo_ptr;
 
-				((void const *&)classptr->CameoData) = NULL;
+			((void const *&)classptr->CameoData) = NULL;
 
-				sprintf(buffer, "%.4sICNH", classptr->IniName);
-				_makepath (fullname, NULL, NULL, buffer, Theaters[theater].Suffix);
-				cameo_ptr = MixFileClass::Retrieve(fullname);
-				if (cameo_ptr){
-					((void const *&)classptr->CameoData) = cameo_ptr;
-				}
+			sprintf(buffer, "%.4sICNH", classptr->IniName);
+			_makepath (fullname, NULL, NULL, buffer, Theaters[theater].Suffix);
+			cameo_ptr = MixFileClass::Retrieve(fullname);
+			if (cameo_ptr){
+				((void const *&)classptr->CameoData) = cameo_ptr;
 			}
 		}
 	}
+	//}
 }
 
 

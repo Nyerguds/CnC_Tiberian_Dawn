@@ -317,9 +317,9 @@ bool MouseClass::Load(FileClass & file)
 	/*
 	** Remove any old theater specific uncompressed shapes
 	*/
-	if (Theater != LastTheater){
-		Reset_Theater_Shapes();
-	}
+	//if (Theater != LastTheater){
+	Reset_Theater_Shapes();
+	//}
 
 	/*
 	------------------------- Init display mixfiles --------------------------

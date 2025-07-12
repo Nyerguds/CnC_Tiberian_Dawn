@@ -68,8 +68,7 @@ v1.03:
 
 v1.04: (in progress)
 
-* Multiple infantry can now be loaded into a transport with a single click.
-* Infantry can now enter an APC while the APC is busy attacking something.
+* Newly built aircraft will now spawn on available helipads.
 * Added support for the laser Orcas in the Playstation "PATSUX" mission. This is enabled by putting "Patsux=1" inside a mission file.
 * The laser now always shows a beam that's wide at the start and thinner at the end, no matter the direction in which it is fired.
 * Allowed the Area Guard functions ("G" and \[Ctrl\]+\[Alt\]+Click) to be used by Harvesters to find nearby tiberium to harvest. The code for this always existed in the game, but the UI never allowed giving such orders to a harvester.
@@ -79,6 +78,8 @@ v1.04: (in progress)
 * Added power balance info on the power output and building tooltips. This is enabled by default, but can be disabled with the option "PowerToolTips=false" in conquer.ini
 * The keyboard-given orders for Area Guard, Scatter and Deploy will now give unit responses.
 * Deploying units by clicking on them now works even if you have multiple units selected. This will not affect the other units in the selection.
+* Multiple infantry can now be loaded into a transport with a single click.
+* Infantry can now enter an APC while the APC is busy attacking something.
 * Since the deployment change makes it impossible to load passengers into a selected transport that already contains at least one passenger, you can now hold \[Alt\] to override the Deploy cursor to allow passengers to enter.
 * When having infantry selected, you can now hold down shift and add an unloaded transport to the selection without this getting overridden by the order to load into the transport.
 * An "Enter" cursor no longer overrides the \[Ctrl\] force-fire or \[Ctrl\]+\[Alt\] Guard Target cursors. It will still override \[Alt\] force-move though, since that's used to override transports' unloading.
@@ -122,5 +123,6 @@ v1.04: (in progress)
 * Fixed power output tooltip not showning "low" if the player has power drain but zero power production.
 * A unit landed on a helipad will no longer block the building placement adjacency checks.
 * Theater-illegal tiles on maps will now be drawn black, instead of non-refreshing black holes retaining whatever content last went over it.
+* Large-sight units such as the Commando will now properly reveal the area around them when coming out of a transport or a building.
 * Added support for the custom Snow theater.
 * Added "CCPP" version number on the main menu to indicate the patch version.

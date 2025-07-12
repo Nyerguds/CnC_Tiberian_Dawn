@@ -832,41 +832,6 @@ void InfantryClass::Init(void)
 
 
 /***********************************************************************************************
- * InfantryClass::Look -- The infantry performs a look operation.                              *
- *                                                                                             *
- *    This routine will cause the infantry unit to "look". For player owned infantry, this     *
- *    causes the dark shroud to be pushed back.                                                *
- *                                                                                             *
- * INPUT:   incremental -- If it is known that the infantry performed a look in the last cell  *
- *                         it was in AND it has only moved one cell, then setting this         *
- *                         parameter to true will perform a faster "incremental" look          *
- *                         operation.                                                          *
- *                                                                                             *
- * OUTPUT:  none                                                                               *
- *                                                                                             *
- * WARNINGS:   This is a relatively slow routine. Call ONLY when necessary.                    *
- *                                                                                             *
- * HISTORY:                                                                                    *
- *   09/08/1994 JLB : Created.                                                                 *
- *=============================================================================================*/
-void InfantryClass::Look(bool incremental)
-{
-	Validate();
-	int	sight;		// Number of cells to sight.
-
-	if (!IsInLimbo) {
-		if (IsOwnedByPlayer) {
-			sight = Class->SightRange;
-
-			if (sight) {
-				Map.Sight_From(Coord_Cell(Coord), sight, incremental);
-			}
-		}
-	}
-}
-
-
-/***********************************************************************************************
  * InfantryClass::Assign_Destination -- Gives the infantry a movement destination.             *
  *                                                                                             *
  *    This routine updates the infantry's navigation computer so that the infantry will        *

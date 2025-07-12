@@ -380,13 +380,13 @@ void DisplayClass::Init_Theater(TheaterType theater)
 	** Unload old mixfiles, and cache the new ones
 	*/
 	sprintf(fullname, "%s.MIX", Theaters[Theater].Root);
-	if (Theater != LastTheater){
-		if (TheaterData) {
-			delete TheaterData;
-		}
-		TheaterData = new MixFileClass(fullname);
-		TheaterData->Cache();
+	//if (Theater != LastTheater){
+	if (TheaterData) {
+		delete TheaterData;
 	}
+	TheaterData = new MixFileClass(fullname);
+	TheaterData->Cache();
+	//}
 
 #endif
 	/*
@@ -395,13 +395,13 @@ void DisplayClass::Init_Theater(TheaterType theater)
 	sprintf(fullname, "%s.MIX", Theaters[Theater].Root);
 	strcpy (iconname, fullname);
 	strcpy (&iconname[4], "ICNH.MIX");
-	if (Theater != LastTheater){
-		if (TheaterIcons) {
-			delete TheaterIcons;
-		}
-		TheaterIcons = new MixFileClass(iconname);
-		TheaterIcons->Cache();
+	//if (Theater != LastTheater){
+	if (TheaterIcons) {
+		delete TheaterIcons;
 	}
+	TheaterIcons = new MixFileClass(iconname);
+	TheaterIcons->Cache();
+	//}
 
 
 
@@ -1165,9 +1165,9 @@ void DisplayClass::Read_INI(char *buffer)
 	/*
 	** Remove any old theater specific uncompressed shapes
 	*/
-	if (Theater != LastTheater){
-		Reset_Theater_Shapes();
-	}
+	//if (Theater != LastTheater){
+	Reset_Theater_Shapes();
+	//}
 
 	/*
 	**	Now that the theater is known, init the entire map hierarchy

@@ -2047,28 +2047,28 @@ void InfantryTypeClass::Init(TheaterType theater)
 {
 	if ( Get_Resolution_Factor() ) {
 
-		if (theater != LastTheater){
-			InfantryType index;
-			char buffer[_MAX_FNAME];
-			char fullname[_MAX_FNAME+_MAX_EXT];
-			void const * cameo_ptr;
+		//if (theater != LastTheater){
+		InfantryType index;
+		char buffer[_MAX_FNAME];
+		char fullname[_MAX_FNAME+_MAX_EXT];
+		void const * cameo_ptr;
 
-			for (index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
-				InfantryTypeClass	const *uclass;
-				CCFileClass	file;
+		for (index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
+			InfantryTypeClass	const *uclass;
+			CCFileClass	file;
 
-				uclass = &As_Reference(index);
+			uclass = &As_Reference(index);
 
-				((void const *&)uclass->CameoData) = NULL;
+			((void const *&)uclass->CameoData) = NULL;
 
-				sprintf(buffer, "%.4sICNH", uclass->IniName);
-				_makepath (fullname, NULL, NULL, buffer, Theaters[theater].Suffix);
-				cameo_ptr = MixFileClass::Retrieve(fullname);
-				if (cameo_ptr){
-					((void const *&)uclass->CameoData) = cameo_ptr;
-				}
+			sprintf(buffer, "%.4sICNH", uclass->IniName);
+			_makepath (fullname, NULL, NULL, buffer, Theaters[theater].Suffix);
+			cameo_ptr = MixFileClass::Retrieve(fullname);
+			if (cameo_ptr){
+				((void const *&)uclass->CameoData) = cameo_ptr;
 			}
 		}
+		//}
 	}
 }
 
