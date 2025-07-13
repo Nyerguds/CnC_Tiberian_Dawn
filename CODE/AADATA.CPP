@@ -632,21 +632,21 @@ BuildingClass * AircraftTypeClass::Who_Can_Build_Me(bool , bool legal, HousesTyp
 				foundLeader = true;
 			}
 			bool busy = building->In_Radio_Contact();
-			// Always prefer leader as fallback.
-			if (anybuilding == NULL || isleader) {
-				anybuilding = building;
+			// If leader is available, always use that.
+			if (isleader && !busy) {
+				return(building);
 			}
 			// Store available fallback
 			if (!busy && anyfreebuilding == NULL) {
 				anyfreebuilding = building;
 			}
-			// If leader is available, always use that.
-			if (isleader && !busy) {
-				return(building);
-			}
 			// Leader was found but not available; return found free building.
 			if (foundLeader && anyfreebuilding != NULL) {
 				return(anyfreebuilding);
+			}
+			// Always prefer leader as fallback.
+			if (anybuilding == NULL || isleader) {
+				anybuilding = building;
 			}
 		}
 	}
