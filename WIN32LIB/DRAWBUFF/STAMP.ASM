@@ -140,7 +140,7 @@ GLOBAL C	Buffer_Draw_Stamp_Clip:near
 ;***********************************************************
 ; DRAW_STAMP
 ;
-; VOID cdecl Buffer_Draw_Stamp(VOID *icondata, WORD icon, WORD x_pixel, WORD y_pixel, VOID *remap);
+; INT cdecl Buffer_Draw_Stamp(VOID *icondata, WORD icon, WORD x_pixel, WORD y_pixel, VOID *remap);
 ;
 ; This routine renders the icon at the given coordinate.
 ;
@@ -150,6 +150,7 @@ GLOBAL C	Buffer_Draw_Stamp_Clip:near
 ; This routine is fastest when no remap table is passed in.
 ;*
 	PROC	Buffer_Draw_Stamp C near
+	USES	ebx,ecx,edx,esi,edi
 
 	ARG	this_object:DWORD		; this is a member function
 	ARG	icondata:DWORD		; Pointer to icondata.
@@ -162,9 +163,14 @@ GLOBAL C	Buffer_Draw_Stamp_Clip:near
 	LOCAL	iwidth:DWORD		; Icon width (here for speedy access).
 	LOCAL	doremap:BYTE		; Should remapping occur?
 
-	pushad
+	; prologue = doesn't work here???
+	push ebx
+	push ecx
+	push edx
+	push esi
+	push edi
 	cmp	[icondata],0
-	je	??out
+	je	??outbad
 
 	; Initialize the stamp data if necessary.
 	mov	eax,[icondata]
@@ -182,7 +188,7 @@ GLOBAL C	Buffer_Draw_Stamp_Clip:near
 	mov	bl,[edi+ebx]
 ??notmap:
 	cmp	ebx,[IconCount]
-	jae	??out
+	jae	??outbad
 	mov	[icon],ebx		; Updated icon number.
 
 	; If the remap table pointer passed in is NULL, then flag this condition
@@ -251,7 +257,7 @@ GLOBAL C	Buffer_Draw_Stamp_Clip:near
 	pop	ecx
 	add	edi,[modulo]
 	loop	??xrowloop
-	jmp	short ??out
+	jmp	short ??outgood
 
 
 	;************************************************************
@@ -291,7 +297,7 @@ GLOBAL C	Buffer_Draw_Stamp_Clip:near
 
 	dec	ebx
 	jnz	??loop1
-	jmp	short ??out
+	jmp	short ??outgood
 
 	;************************************************************
 	; Transparent icon draw routine -- no extended remap.
@@ -314,10 +320,22 @@ GLOBAL C	Buffer_Draw_Stamp_Clip:near
 	pop	ecx
 	add	edi,[modulo]
 	loop	??rowloop
+	jmp short ??outgood
 
 	; Cleanup and exit icon drawing routine.
-??out:
-	popad
+??outbad:
+	xor	eax, eax
+	jmp short ??outexit
+??outgood:
+	xor	eax, eax
+	inc	eax
+??outexit:
+	; epilogue - doesn't work here?
+	pop	edi
+	pop	esi
+	pop edx
+	pop ecx
+	pop ebx
 	ret
 
 	ENDP	Buffer_Draw_Stamp
@@ -338,6 +356,7 @@ GLOBAL C	Buffer_Draw_Stamp_Clip:near
 ; This routine is fastest when no remap table is passed in.
 ;*
 	PROC	Buffer_Draw_Stamp_Clip C near
+	USES	ebx,ecx,edx,esi,edi
 
 	ARG	this_object:DWORD	; this is a member function
 	ARG	icondata:DWORD		; Pointer to icondata.
@@ -355,9 +374,14 @@ GLOBAL C	Buffer_Draw_Stamp_Clip:near
 	LOCAL	skip:DWORD		; amount to skip per row of icon data
 	LOCAL	doremap:BYTE		; Should remapping occur?
 
-	pushad
+	push ebx
+	push ecx
+	push edx
+	push esi
+	push edi
+	
 	cmp	[icondata],0
-	je	??out2
+	je	??out2bad
 
 	; Initialize the stamp data if necessary.
 	mov	eax,[icondata]
@@ -375,7 +399,7 @@ GLOBAL C	Buffer_Draw_Stamp_Clip:near
 	mov	bl,[edi+ebx]
 ??notmap2:
 	cmp	ebx,[IconCount]
-	jae	??out2
+	jae	??out2bad
 	mov	[icon],ebx		; Updated icon number.
 
 	; Setup some working variables.
@@ -402,18 +426,18 @@ GLOBAL C	Buffer_Draw_Stamp_Clip:near
 	; First, verify that the icon position is less than the maximums
 	mov	ebx,[x_pixel]
 	cmp	ebx,[max_x]
-	jge	??out2
+	jge	??out2good
 	mov	ebx,[y_pixel]
 	cmp	ebx,[max_y]
-	jge	??out2
+	jge	??out2good
 	; Now verify that the icon position is >= the minimums
 	add	ebx,[IconHeight]
 	cmp	ebx,[min_y]
-	jle	??out2
+	jle	??out2good
 	mov	ebx,[x_pixel]
 	add	ebx,[IconWidth]
 	cmp	ebx,[min_x]
-	jle	??out2
+	jle	??out2good
 
 	; Now, clip the x, y, width, and height variables to be within the
 	; clipping rectangle
@@ -518,7 +542,7 @@ GLOBAL C	Buffer_Draw_Stamp_Clip:near
 	add	edi,[modulo]
  add esi,[skip]
 	loop	??xrowloopc
-	jmp	short ??out2
+	jmp	short ??out2good
 
 
 	;************************************************************
@@ -565,7 +589,7 @@ GLOBAL C	Buffer_Draw_Stamp_Clip:near
 
 	dec	ebx
 	jnz	??loop1c
-	jmp	short ??out2
+	jmp	short ??out2good
 
 	;************************************************************
 	; Transparent icon draw routine -- no extended remap.
@@ -587,12 +611,25 @@ GLOBAL C	Buffer_Draw_Stamp_Clip:near
 
 	pop	ecx
 	add	edi,[modulo]
- add esi,[skip]
+	add esi,[skip]
 	loop	??rowloopc
+	jmp short ??out2good
 
 	; Cleanup and exit icon drawing routine.
-??out2:
-	popad
+??out2bad:
+	xor	eax, eax
+	jmp short ??out2exit
+??out2good:
+	xor	eax, eax
+	inc	eax
+??out2exit:
+		; epilogue - doesn't work here?
+	pop	edi
+	pop	esi
+	pop edx
+	pop ecx
+	pop ebx
+
 	ret
 
 	ENDP	Buffer_Draw_Stamp_Clip

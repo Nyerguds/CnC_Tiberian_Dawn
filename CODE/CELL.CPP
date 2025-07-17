@@ -883,15 +883,28 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 			/*
 			**	This is the underlying terrain icon.
 			*/
-			if (ttype->Get_Image_Data()) {
-				LogicPage->Draw_Stamp(ttype->Get_Image_Data(), icon, x, y, NULL, WINDOW_TACTICAL);
-				if (remap) {
-					LogicPage->Remap(x+Map.TacPixelX, y+Map.TacPixelY, ICON_PIXEL_W, ICON_PIXEL_H, remap);
-				}
-			} else {
+			bool hasdata = ttype->Get_Image_Data() != NULL;
+			bool iconfound = false;
+			int left = Map.TacPixelX;
+			int top = Map.TacPixelY;
+			if (hasdata) {
+				iconfound = LogicPage->Draw_Stamp(ttype->Get_Image_Data(), icon, x, y, NULL, WINDOW_TACTICAL);
+			}
+			if (!iconfound) {
 				// Nyerguds's TUC Quick Fix Patch v1.04
 				// Illegal tiles are shown black rather than non-refreshing.
-				LogicPage->Fill_Rect(Map.TacPixelX+x, Map.TacPixelY+y, Map.TacPixelX+x+ICON_PIXEL_W-1, Map.TacPixelY+y+ICON_PIXEL_H-1, BLACK);
+				int right = left + Lepton_To_Pixel(Map.TacLeptonWidth);
+				int bottom = top + Lepton_To_Pixel(Map.TacLeptonHeight);
+				int x1r = left + MAX(0, x);
+				int y1r = top + MAX(0, y);
+				int x2r = MIN(right, Map.TacPixelX+x+ICON_PIXEL_W-1);
+				int y2r = MIN(bottom, Map.TacPixelY+y+ICON_PIXEL_H-1);
+				if (x2r > left && y2r > top && x1r < right && y1r < bottom) {
+					LogicPage->Fill_Rect(x1r, y1r, x2r, y2r, BLACK);
+				}
+			}
+			if (hasdata && remap) {
+				LogicPage->Remap(x+left, y+top, ICON_PIXEL_W, ICON_PIXEL_H, remap);
 			}
 
 

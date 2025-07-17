@@ -675,7 +675,9 @@ bool MapClass::Read_Binary(char const * root, unsigned long *crc)
 				rawmap = Get_Icon_Set_Map(shape);
 				if (rawmap) {
 					map = (char*)rawmap;
-					if (map[temp.TIcon] == -1) {
+					// boundary check
+					int count = Get_Icon_Set_Count(shape);
+					if (temp.TIcon >= count || map[temp.TIcon] == -1) {
 						temp.TIcon = 0;
 						temp.TType = TEMPLATE_NONE;
 					}
@@ -797,7 +799,8 @@ void MapClass::Logic(void)
 	**	Tiberium cells that can grow or spread.
 	*/
 	int subcount = 30;
-	for (int index = TiberiumScan; index < MAP_CELL_TOTAL; index++) {
+	int index = TiberiumScan;
+	for (index = TiberiumScan; index < MAP_CELL_TOTAL; index++) {
 		CELL cell = index;
 		if (!IsForwardScan) cell = (MAP_CELL_TOTAL-1) - index;
 		CellClass *ptr = &(*this)[cell];

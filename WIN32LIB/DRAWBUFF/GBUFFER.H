@@ -271,8 +271,8 @@ class GraphicViewPortClass {
 							int x2, int y2, int x3, int y3, int color);
 		VOID Remap(int sx, int sy, int width, int height, VOID *remap);
 		VOID Remap(VOID *remap);
-		void Draw_Stamp(void const *icondata, int icon, int x_pixel, int y_pixel, void const *remap);
-		void Draw_Stamp(void const *icondata, int icon, int x_pixel, int y_pixel, void const *remap, int clip_window);
+		bool Draw_Stamp(void const *icondata, int icon, int x_pixel, int y_pixel, void const *remap);
+		bool Draw_Stamp(void const *icondata, int icon, int x_pixel, int y_pixel, void const *remap, int clip_window);
 
 		VOID Texture_Fill_Rect(int xpos, int ypos, int width, int height,
 								void *shape, int shape_width, int shape_height);
@@ -1035,12 +1035,14 @@ inline unsigned long	GraphicViewPortClass::Print(long num, int x, int y, int fco
  *                                                                         *
  * HISTORY:                                                                *
  *=========================================================================*/
-inline void GraphicViewPortClass::Draw_Stamp(void const *icondata, int icon, int x_pixel, int y_pixel, void const *remap)
+inline bool GraphicViewPortClass::Draw_Stamp(void const *icondata, int icon, int x_pixel, int y_pixel, void const *remap)
 {
+	int drawn = 0;
 	if (Lock()){
-		Buffer_Draw_Stamp(this, icondata, icon, x_pixel, y_pixel, remap);
+		drawn = Buffer_Draw_Stamp(this, icondata, icon, x_pixel, y_pixel, remap);
 	}
 	Unlock();
+	return drawn != 0;
 }
 
 
@@ -1059,7 +1061,7 @@ inline void GraphicViewPortClass::Draw_Stamp(void const *icondata, int icon, int
  *    07/31/1995 BWG : Created.                                            *
  *=========================================================================*/
 extern BOOL IconCacheAllowed;
-inline void GraphicViewPortClass::Draw_Stamp(void const * icondata, int icon, int x_pixel, int y_pixel, void const * remap, int clip_window)
+inline bool GraphicViewPortClass::Draw_Stamp(void const * icondata, int icon, int x_pixel, int y_pixel, void const * remap, int clip_window)
 {
 	int	cache_index=-1;
 
@@ -1078,7 +1080,7 @@ inline void GraphicViewPortClass::Draw_Stamp(void const * icondata, int icon, in
 																WindowList[clip_window][WINDOWWIDTH] << 3,
 																WindowList[clip_window][WINDOWHEIGHT]);
 					CachedIconsDrawn++;
-               return;//drewit = 1;
+					return true;//drewit = 1;
 				}
 			}
 		}
@@ -1086,12 +1088,14 @@ inline void GraphicViewPortClass::Draw_Stamp(void const * icondata, int icon, in
 
 
    //if (drewit == 0) {
-		if (Lock()){
-			UnCachedIconsDrawn++;
-			Buffer_Draw_Stamp_Clip(this, icondata, icon, x_pixel, y_pixel, remap, WindowList[clip_window][WINDOWX] << 3, WindowList[clip_window][WINDOWY], WindowList[clip_window][WINDOWWIDTH] << 3, WindowList[clip_window][WINDOWHEIGHT]);
-		}
+	int iconfound = 0;
+	if (Lock()){
+		UnCachedIconsDrawn++;
+		iconfound = Buffer_Draw_Stamp_Clip(this, icondata, icon, x_pixel, y_pixel, remap, WindowList[clip_window][WINDOWX] << 3, WindowList[clip_window][WINDOWY], WindowList[clip_window][WINDOWWIDTH] << 3, WindowList[clip_window][WINDOWHEIGHT]);
+	}
    //}
 	Unlock();
+	return iconfound != 0;
 }
 
 

@@ -778,6 +778,9 @@ unsigned char * TerrainClass::Radar_Icon(CELL cell)
 {
 	Validate();
 	unsigned char *icon = (unsigned char *)Class->Get_Radar_Data();	// get a pointer to radar icons
+	if (!icon) {
+		return(NULL);
+	}
 	int  width = *icon++;							// extract the width from data
 	int  height = *icon++;							// extract the width from data
 
