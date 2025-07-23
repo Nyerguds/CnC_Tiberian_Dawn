@@ -1,0 +1,11 @@
+{
+  "files.exclude": {
+    "WIN32LIB/SRCDEBUG/**": true,
+    "/**/*.obj": true,
+  },
+  /*"files.encoding": "cp437", -- makes search stop working  */
+  "files.encoding": "windows1252", /* Not correct, but less destructive than utf8 on German/French and mono strings */
+  "[markdown]": {
+      "files.encoding": "utf8"
+    },
+}
