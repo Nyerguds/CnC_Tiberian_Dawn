@@ -783,6 +783,8 @@ int Main_Menu(unsigned long timeout)
 #endif
 			bool extra = strlen(VERSION_PATCH_EXTRA) > 0;
 			int extrasubtr = extra ? 10*2 : 0;
+			// TEST CODE - Enable to init VersionText on main memu, in case it's used to output debug data in-game.
+			//sprintf(VersionText, (extra ? ".%02d%s\r%s" : ".%02d%s%s"), VERSION_MINOR, "", VERSION_PATCH_EXTRA);
 			Fancy_Text_Print("V.%d%s", D_DIALOG_X+D_DIALOG_W-5*2, D_DIALOG_Y+D_DIALOG_H-10*2-extrasubtr, DKGREY, TBLACK, TPF_6POINT|TPF_FULLSHADOW|TPF_RIGHT, Version_Number(), VersionText);
 #endif
 #endif

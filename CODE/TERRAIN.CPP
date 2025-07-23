@@ -389,7 +389,7 @@ void TerrainClass::Draw_It(int x, int y, WindowNumberType window)
 		ShapeFlags_Type flags = SHAPE_NORMAL;
 		if (IsSelected && Debug_Map) flags = flags | SHAPE_FADING;
 
-		IsTheaterShape = true;
+		IsTheaterShape = Class->Image_Is_Theater_Shape();
 		CC_Draw_Shape(shapedata, shapenum, x, y, window, flags|SHAPE_WIN_REL|SHAPE_GHOST, Map.FadingLight, Map.UnitShadow);
 		IsTheaterShape = false;
 	}

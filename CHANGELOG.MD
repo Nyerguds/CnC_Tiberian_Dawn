@@ -1,5 +1,7 @@
 Note that the older versions of this project (up to v1.03) were released as edited binaries. They can be found in the 'files' section of the [Command & Conquer Unofficial Patch 1.06 project on ModDb](https://www.moddb.com/mods/command-conquer-unofficial-patch-106/). They are the entries indicated as "C&C95 TUC quick fix patch".
 
+Fixes that were specifically inspired by or copied from the Remaster's code are indicated with \[Remaster\].
+
 v1.00:
 
 * Fixed the crash that happens when exploring at the top of the map with a unit with a large sight range.
@@ -54,17 +56,17 @@ v1.03:
 * Fixed the hidden music tracks "Reaching Out" and "Heartbreak" not getting unlocked when enabling the hidden / remix music ("Scores=remix" in conquer.ini).
 * Enabled the cut tracks and credits tracks: "C&C 80s Mix", "DIE!", "Enemies To Be Feared", "I AM" (Destructible Times), "Airstrike", and "Ride of the Valkyries".
 * The playlist now shows the correct lengths for the alternate versions of music.
-* Fixed Nod score calculation having a negative impact from GDI's losses.
+* \[Remaster\] Fixed Nod score calculation having a negative impact from GDI's losses.
 * Fixed the "Ambush" orders in missions not working. This order is supposed to make an AI-owned unit go to Hunt mode when discovered.
 * Fixed the New Missions menu only going up to 98 (59 in the Japanese version). It can now go up to 99.
 * Fixed the bug where selecting a team by number when having a structure selected would keep the structure selected.
 * Fixed the bug where selecting a team by number would not clear the currently selected units when a unit from that team was the last-added unit in the current selection.
-* The "Guard Target" ability (\[Ctrl\]+\[Alt\]+click) can now be clicked on the ground as targeted equivalent to the Area Guard function of the "G" button.
+* \[Remaster\] The "Guard Target" ability (\[Ctrl\]+\[Alt\]+click) can now be clicked on the ground as targeted equivalent to the Area Guard function of the "G" button.
 * Fixed the "Guard Target" ability not working on the minimap.
 * Fixed aircraft showing the "Guard Target" cursor when pressing \[Ctrl\]+\[Alt\] even though they can't execute any Area Guard orders.
 * Restored the Stop command for defense buildings (pressing "S"), while properly fixing the cheat that allowed abusing it for cancelling building sales to get free infantry.
 * Holding down the Shift key now allows adding units when making a drag-selection.
-* Drag-selecting can now select flying aircraft.
+* \[Remaster\] Drag-selecting can now select flying aircraft.
 
 v1.04: (in progress)
 
@@ -72,14 +74,14 @@ v1.04: (in progress)
 * Added support for the laser Orcas in the Playstation "PATSUX" mission. This is enabled by putting "Patsux=1" inside a mission file.
 * The laser now always shows a beam that's wide at the start and thinner at the end, no matter the direction in which it is fired.
 * Allowed the Area Guard functions ("G" and \[Ctrl\]+\[Alt\]+Click) to be used by Harvesters to find nearby tiberium to harvest. The code for this always existed in the game, but the UI never allowed giving such orders to a harvester.
-* Added "D" as Deploy/Unload hotkey.
+* \[Remaster\] Added "D" as Deploy/Unload hotkey. This works even when having multiple units selected, and will only affect units that can perform the deploy action.
 * Added "E" as hotkey to select all units on the screen. This can be combined with the \[Shift\] key.
 * Added "T" as shortcut for selecting all units on the screen of the same types as the already-selected units. This can be combined with the \[Shift\] key.
 * Added power balance info on the power output and building tooltips. This is enabled by default, but can be disabled with the option "PowerToolTips=false" in conquer.ini
 * The keyboard-given orders for Area Guard, Scatter and Deploy will now give unit responses.
 * Deploying units by clicking on them now works even if you have multiple units selected. This will not affect the other units in the selection.
-* Multiple infantry can now be loaded into a transport with a single click.
-* Infantry can now enter an APC while the APC is busy attacking something.
+* \[Remaster\] Multiple infantry can now be loaded into a transport with a single click.
+* \[Remaster\] Infantry can now enter an APC while the APC is busy attacking something.
 * Since the deployment change makes it impossible to load passengers into a selected transport that already contains at least one passenger, you can now hold \[Alt\] to override the Deploy cursor to allow passengers to enter.
 * When having infantry selected, you can now hold down shift and add an unloaded transport to the selection without this getting overridden by the order to load into the transport.
 * An "Enter" cursor no longer overrides the \[Ctrl\] force-fire or \[Ctrl\]+\[Alt\] Guard Target cursors. It will still override \[Alt\] force-move though, since that's used to override transports' unloading.
@@ -106,9 +108,9 @@ v1.04: (in progress)
 * The minimap will now update its cursor when holding down the left mouse button on it.
 * The map number in multiplayer will no longer affect logic regarding difficulty and tooltips that is only meant for singleplayer.
 * Fixed the fact the chance of an AI selling a building was affected by the mission number in Covert Ops missions. It is now affected by the set build level, capped at 20.
-* Oil Derricks that are preplaced on the map as damaged below 50% will now also get the flame spout animation. 
+* Oil Derricks that are preplaced on the map as damaged below 50% will now also get the flame spout animation.
 * The Oil Derrick and Flare animations are now truly endless, rather than stopping after 255 loops.
-* Fixed the bug that the special GDI ending unlock re-locked if another building was destroyed after the Temple, and lingered in memory when starting or loading another mission.
+* Fixed the bug that the special GDI ending unlock status would re-lock if another building was destroyed after the Temple, and would linger in memory when starting or loading another mission.
 * Fixed the special GDI ending unlock status not getting saved in savegames.
 * Fixed the bombing target in GDI mission 6 not getting saved in savegames.
 * Infantry code to look for nearby targets no longer reads outside the valid weapons array when checking weapon info for unarmed units.
@@ -119,10 +121,15 @@ v1.04: (in progress)
 * Fixed bug where owning both an MCV and a Construction Yard and pressing the "H" key would give a voice response from the MCV but select the Construction Yard.
 * The 'H' key will no longer act like 'Home' if no MCV or Construction Yard was found.
 * The 'H' key will no longer jump to undiscovered construction yards inside the shroud.
-* Civilian buildings will no longer decay for no reason due to a 0/0 power balance being seen as low power.
+* \[Remaster\] Civilian buildings will no longer decay for no reason due to a 0/0 power balance being seen as low power.
 * Fixed power output tooltip not showning "low" if the player has power drain but zero power production.
-* A unit landed on a helipad will no longer block the building placement adjacency checks.
+* \[Remaster\] A unit landed on a helipad will no longer block the building placement adjacency checks.
 * Theater-illegal tiles on maps will now be drawn black, instead of non-refreshing black holes retaining whatever content last went over it.
-* Large-sight units such as the Commando will now properly reveal the area around them when coming out of a transport or a building.
+* \[Remaster\] Large-sight units such as the Commando will now properly reveal the area around them when coming out of a transport or a building.
 * Added support for the custom Snow theater.
 * Added "CCPP" version number on the main menu to indicate the patch version.
+* The B variant for the GDI mission 5 East-side map choices now works as it should.
+* \[Remaster\] Helipads no longer vanish without animation when selling them when an aircraft is landed on them.
+* Items without icons that are made buildable (e.g. through setting a mission's buildlevel to 99) will now show a dummy icon.
+* Icons and other theater-specific graphics overridden by addon mixfiles will no longer corrupt the game when switching theaters.
+* \[Remaster\] Buildings that are in the process of selling and have already evacuated their crew will not spawn more infantry when destroyed.

@@ -338,6 +338,11 @@ class ObjectTypeClass : public AbstractTypeClass
 		void const * ImageData;
 
 		/*
+		**	This caches whether the image data was loaded from a theater specific mix archive.
+		*/
+		bool ImageIsTheaterShape;
+
+		/*
 		**	This points to the radar imagery for this object.
 		*/
 		void const * RadarIcon;
@@ -368,7 +373,9 @@ class ObjectTypeClass : public AbstractTypeClass
 		virtual short const *  Overlap_List(void) const;
 		virtual BuildingClass *  Who_Can_Build_Me(bool, bool, HousesType) const;
 		virtual void const *  Get_Cameo_Data(void) const;
+		virtual bool  Cameo_Is_Theater_Shape(void) const;
 		void const *  Get_Image_Data(void) const {return ImageData;};
+		bool Image_Is_Theater_Shape(void) const {return ImageIsTheaterShape;};
 		void const *  Get_Radar_Data(void) const {return RadarIcon;};
 
 		#ifdef SCENARIO_EDITOR
@@ -516,6 +523,11 @@ class TechnoTypeClass : public ObjectTypeClass
 		void const * CameoData;
 
 		/*
+		**	This caches whether the icon image data was loaded from a theater specific mix archive.
+		*/
+		bool CameoIsTheaterShape;
+
+		/*
 		**	These are the weapons that this techno object is armed with.
 		*/
 		WeaponType Primary;
@@ -562,6 +574,7 @@ class TechnoTypeClass : public ObjectTypeClass
 		virtual int  Repair_Cost(void) const;
 		virtual int  Repair_Step(void) const;
 		virtual void const *  Get_Cameo_Data(void) const;
+		virtual bool  Cameo_Is_Theater_Shape(void) const;
 		virtual int  Cost_Of(void) const;
 		virtual int  Time_To_Build(HousesType house) const;
 		virtual unsigned short  Get_Ownable(void) const;

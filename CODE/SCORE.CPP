@@ -641,7 +641,8 @@ void ScoreClass::Presentation(void)
 	ControlQ = 0;
 	FontXSpacing = 0;
 	Map.Override_Mouse_Shape(MOUSE_NORMAL);
-	Theme.Queue_Song(THEME_WIN1);
+	ThemeType music = house == HOUSE_GOOD ? THEME_WIN1 : THEME_NOD_WIN1;
+	Theme.Queue_Song(music);
 
 	VisiblePage.Clear();
 	PseudoSeenBuff->Clear();
@@ -667,7 +668,8 @@ void ScoreClass::Presentation(void)
 	**	Determine leadership rating.
 	*/
 	unsigned leadership = 0;
-	for (int index = 0; index < Logic.Count(); index++) {
+	int index = 0;
+	for (index = 0; index < Logic.Count(); index++) {
 		ObjectClass * object = Logic[index];
 		if (object->Owner() == house) {
 			leadership++;

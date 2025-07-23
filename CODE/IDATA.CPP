@@ -1994,32 +1994,28 @@ InfantryType InfantryTypeClass::From_Name(char const *name)
  *=============================================================================================*/
 void InfantryTypeClass::One_Time(void)
 {
-	InfantryType index;
-
-	for (index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
+	bool hires = Get_Resolution_Factor() != 0;
+	for (InfantryType index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
 		char fullname[_MAX_FNAME+_MAX_EXT];
-		InfantryTypeClass	const *uclass;
-		CCFileClass	file;
+		char buffer[_MAX_FNAME];
+		InfantryTypeClass *uclass = (InfantryTypeClass*)&As_Reference(index);
 
-		uclass = &As_Reference(index);
+		/*
+		**	The small build image icon sized shapes are always generic.
+		*/
+		uclass->CameoData = NULL;
+		uclass->CameoIsTheaterShape = false;
+		if (uclass->IsBuildable && !hires) {
+			sprintf(buffer, "%.4sICON", uclass->IniName);
+			_makepath(fullname, NULL, NULL, buffer, ".SHP");
+			uclass->CameoData = MixFileClass::Retrieve(fullname);
+		}
 
 		/*
 		**	Generic shape for all houses load method.
 		*/
 		_makepath(fullname, NULL, NULL, uclass->IniName, ".SHP");
-		((void const *&)uclass->ImageData) = MixFileClass::Retrieve(fullname);
-
-		/*
-		**	The small build image icon sized shapes are always generic.
-		*/
-		char buffer[_MAX_FNAME];
-		if ( Get_Resolution_Factor() ) {
-			sprintf(buffer, "%.4sICNH", uclass->IniName);
-		} else {
-			sprintf(buffer, "%.4sICON", uclass->IniName);
-		}
-		_makepath(fullname, NULL, NULL, buffer, ".SHP");
-		((void const *&)uclass->CameoData) = MixFileClass::Retrieve(fullname);
+		uclass->ImageData = MixFileClass::Retrieve(fullname);
 	}
 }
 
@@ -2045,28 +2041,45 @@ void InfantryTypeClass::One_Time(void)
 
 void InfantryTypeClass::Init(TheaterType theater)
 {
-	if ( Get_Resolution_Factor() ) {
-
-		//if (theater != LastTheater){
-		InfantryType index;
+	//if (theater != LastTheater){
+	if (Get_Resolution_Factor()) {
 		char buffer[_MAX_FNAME];
 		char fullname[_MAX_FNAME+_MAX_EXT];
-		void const * cameo_ptr;
+		void * cameo_ptr = NULL;
+		char theatermixname[_MAX_FNAME+_MAX_EXT];
+		sprintf(theatermixname, "%s.MIX", Theaters[theater].Root);
+		char cameomixname[_MAX_FNAME+_MAX_EXT];
+		sprintf(cameomixname, "%.4sICNH.MIX", Theaters[theater].Root);
 
-		for (index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
-			InfantryTypeClass	const *uclass;
-			CCFileClass	file;
+		for (InfantryType index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
+			InfantryTypeClass	*classptr = (InfantryTypeClass*)&As_Reference(index);
+			classptr->CameoData = NULL;
+			classptr->CameoIsTheaterShape = true;
 
-			uclass = &As_Reference(index);
-
-			((void const *&)uclass->CameoData) = NULL;
-
-			sprintf(buffer, "%.4sICNH", uclass->IniName);
+			sprintf(buffer, "%.4sICNH", classptr->IniName);
 			_makepath (fullname, NULL, NULL, buffer, Theaters[theater].Suffix);
-			cameo_ptr = MixFileClass::Retrieve(fullname);
-			if (cameo_ptr){
-				((void const *&)uclass->CameoData) = cameo_ptr;
+			MixFileClass * mixptr = 0;
+			cameo_ptr = NULL;
+			MixFileClass::Offset(fullname, &cameo_ptr, &mixptr);
+			if (cameo_ptr) {
+				classptr->CameoData = cameo_ptr;
+				if (mixptr && mixptr->Filename) {
+					// double-check that it came from a mix file that is considered theater data.
+					// This prevents messups when icons are added from sc*.mix files.
+					classptr->CameoIsTheaterShape = (strcmpi(mixptr->Filename, cameomixname) == 0 || strcmpi(mixptr->Filename, theatermixname) == 0);
+				}
+			} else {
+				classptr->CameoIsTheaterShape = false;
+				_makepath (fullname, NULL, NULL, buffer, ".SHP");
+				cameo_ptr = (void *)MixFileClass::Retrieve(fullname);
+				if (cameo_ptr) {
+					classptr->CameoData = cameo_ptr;
+				}	
 			}
+			// test code; only works if menu code is edited to Version_Number() doesn't rewrite the VersionText buffer.
+			//if (classptr->Type == INFANTRY_RAMBO) {
+			//	sprintf(VersionText, "C?%d; N: %s, T?%d\rMix: %s <-> %s", classptr->CameoData ? 1:0, fullname, classptr->CameoIsTheaterShape ? 1 : 0, cameomixname, mixptr ? mixptr->Filename : "-");
+			//}
 		}
 		//}
 	}

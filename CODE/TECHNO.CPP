@@ -359,6 +359,25 @@ void const * TechnoTypeClass::Get_Cameo_Data(void) const
 
 
 /***********************************************************************************************
+ * TechnoTypeClass::Cameo_Is_Theater_Shape -- should cameo be cached as theater data?          *
+ *                                                                                             *
+ *    This routine will return whether the cameo data should be cached as theater data.        *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns whether the cameo data should be cached as theater data.                   *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/19/1995 JLB : Created.                                                                 *
+ *=============================================================================================*/
+bool TechnoTypeClass::Cameo_Is_Theater_Shape(void) const
+{
+	return(CameoIsTheaterShape);
+}
+
+/***********************************************************************************************
  * TechnoTypeClass::Repair_Cost -- Fetches the cost to repair one step.                        *
  *                                                                                             *
  *    This routine will return the cost to repair one step. At the TechnoTypeClass level,      *
@@ -1523,13 +1542,13 @@ TARGET TechnoClass::Greatest_Threat(ThreatType method) const
 		}
 
 	} else {
-
+		int index = 0;
 		/*
 		**	A full map scan was requested. First scan through aircraft. The top map layer
 		**	is NOT scanned since that layer will probably contain more bullets and animations
 		**	than aircraft.
 		*/
-		for (int index = 0; index < Aircraft.Count(); index++) {
+		for (index = 0; index < Aircraft.Count(); index++) {
 			TechnoClass * object = Aircraft.Ptr(index);
 
 			int value = 0;
@@ -3413,12 +3432,12 @@ void TechnoClass::Base_Is_Attacked(TechnoClass const *enemy)
 	** the situation has been dealt with.
 	*/
 	TeamClass::Suspend_Teams(20);
-
+	int index = 0;
 	/*
 	** Loop through the infantry looking for those who are capable of going
 	** on a rescue mission.
 	*/
-	for (int index = 0; index < Infantry.Count() && desired > 0; index++) {
+	for (index = 0; index < Infantry.Count() && desired > 0; index++) {
 	 	InfantryClass * infantry = Infantry.Ptr(index);
 		if (infantry && infantry->Owner() == Owner()) {
 
@@ -3543,7 +3562,8 @@ void TechnoClass::Base_Is_Attacked(TechnoClass const *enemy)
 		** Sort the defenders by value, this doesn't take very long and will
 		** help the closest defenders to respond.
 		*/
-		for (int lp = 0; lp < count - 1; lp ++) {
+		int lp = 0;
+		for (lp = 0; lp < count - 1; lp ++) {
 			for (int lp2 = lp + 1; lp2 < count; lp2++) {
 				if (value[lp] < value[lp2]) {
 

@@ -90,13 +90,14 @@ extern "C"{
 void Read_Interpolation_Palette (char const *palette_file_name)
 {
 	CCFileClass palette_file(palette_file_name);
-
-	if (palette_file.Is_Available()){
+	bool filefound = palette_file.Is_Available();
+	if (filefound){
 		palette_file.Open(READ);
 		palette_file.Read(&PaletteInterpolationTable[0][0],256*256);
 		palette_file.Close();
 		InterpolationPaletteChanged = FALSE;
 	}
+	return(filefound);
 }
 
 

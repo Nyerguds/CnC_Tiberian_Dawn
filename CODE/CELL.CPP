@@ -893,8 +893,8 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 			if (!iconfound) {
 				// Nyerguds's TUC Quick Fix Patch v1.04
 				// Illegal tiles are shown black rather than non-refreshing.
-				int right = left + Lepton_To_Pixel(Map.TacLeptonWidth);
-				int bottom = top + Lepton_To_Pixel(Map.TacLeptonHeight);
+				int right = left + Lepton_To_Pixel(Map.TacLeptonWidth) -1;
+				int bottom = top + Lepton_To_Pixel(Map.TacLeptonHeight) - 1;
 				int x1r = left + MAX(0, x);
 				int y1r = top + MAX(0, y);
 				int x2r = MIN(right, Map.TacPixelX+x+ICON_PIXEL_W-1);
@@ -903,7 +903,7 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 					LogicPage->Fill_Rect(x1r, y1r, x2r, y2r, BLACK);
 				}
 			}
-			if (hasdata && remap) {
+			if (remap) {
 				LogicPage->Remap(x+left, y+top, ICON_PIXEL_W, ICON_PIXEL_H, remap);
 			}
 

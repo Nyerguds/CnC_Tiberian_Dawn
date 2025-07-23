@@ -387,6 +387,9 @@ typedef enum ThemeType {
 	THEME_WIN1,							//	Great Shot!
 	THEME_MAP1,							// Map subliminal techno "theme".
 	THEME_VALKYRIE,					// Ride of the valkyries.
+	THEME_NOD_WIN1,					// Nod score
+	THEME_NOD_MAP1,					// Nod Map theme.
+
 
 	THEME_COUNT,
 	THEME_LAST=THEME_BFEARED,

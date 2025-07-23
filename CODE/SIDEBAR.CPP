@@ -125,6 +125,7 @@ SidebarClass::StripClass::SelectButton[COLUMNS][MAX_VISIBLE];
 void const * SidebarClass::StripClass::LogoShapes;
 void const * SidebarClass::StripClass::ClockShapes;
 void const * SidebarClass::StripClass::SpecialShapes[3];
+bool SidebarClass::StripClass::SpecialShapesTheater[3] = {false, false, false};
 
 void const * SidebarClass::SidebarShape1;
 void const * SidebarClass::SidebarShape2;
@@ -1102,6 +1103,7 @@ void SidebarClass::StripClass::One_Time(int )
 		}
 		_makepath(fullname, NULL, NULL, buffer, ".SHP");
 		SpecialShapes[lp] = MixFileClass::Retrieve(fullname);
+		SpecialShapesTheater[lp] = false;
 	}
 
 
@@ -1126,6 +1128,28 @@ void SidebarClass::StripClass::One_Time(int )
 void const * SidebarClass::StripClass::Get_Special_Cameo(int type)
 {
 	return(SpecialShapes[type]);
+}
+
+
+/***********************************************************************************************
+ * SidebarClass::StripClass::Special_Cameo_Is_Theater_Shape -- Cache cameo as theater data?    *
+ *                                                                                             *
+ *    This routine will return whether a pointer to the cameo data for the special objects     *
+ *    that can appear on the sidebar (e.g., nuclear bomb) should be cached as theater          *
+ *    specific data.                                                                           *
+ *                                                                                             *
+ * INPUT:   type  -- The special type to fetch the cameo imagery for.                          *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the cameo imagery for the specified special object.      *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/19/2025 MM : created                                                                   *
+ *=============================================================================================*/
+bool SidebarClass::StripClass::Special_Cameo_Is_Theater_Shape(int type)
+{
+	return(SpecialShapesTheater[type]);
 }
 
 
@@ -1232,19 +1256,37 @@ void SidebarClass::StripClass::Init_Theater(TheaterType theater)
 		int factor = Get_Resolution_Factor();
 		char	fullname[_MAX_FNAME+_MAX_EXT];
 		char buffer[_MAX_FNAME];
-		void const * cameo_ptr;
+		void * cameo_ptr;
+
+		char theatermixname[_MAX_FNAME+_MAX_EXT];
+		sprintf(theatermixname, "%s.MIX", Theaters[theater].Root);
+		char cameomixname[_MAX_FNAME+_MAX_EXT];
+		sprintf(cameomixname, "%.4sICNH.MIX", Theaters[theater].Root);
+
 
 		for (int lp = 0; lp < 3; lp++) {
-			if ( Get_Resolution_Factor() ) {
+			if (factor) {
 				sprintf(buffer, "%sICNH", _file[lp]);
+				_makepath(fullname, NULL, NULL, buffer, Theaters[theater].Suffix);
 			} else {
 				sprintf(buffer, "%sICON", _file[lp]);
+				_makepath(fullname, NULL, NULL, buffer, ".SHP");
 			}
-			_makepath(fullname, NULL, NULL, buffer, Theaters[theater].Suffix);
-			cameo_ptr = MixFileClass::Retrieve(fullname);
-			if (cameo_ptr){
-				SpecialShapes[lp] = cameo_ptr;
+			MixFileClass *mixptr = 0;
+			cameo_ptr = NULL;
+			MixFileClass::Offset(fullname, &cameo_ptr, &mixptr);
+			if (factor) {
+				if (!cameo_ptr) {
+					_makepath(fullname, NULL, NULL, buffer, "SHP");
+					cameo_ptr = (void*)MixFileClass::Retrieve(fullname);
+					SpecialShapesTheater[lp] = false;
+				} else if (mixptr && mixptr->Filename) {
+					// double-check that it came from a mix file that is considered theater data.
+					// This prevents messups when icons are added from sc*.mix files.
+					SpecialShapesTheater[lp] = strcmpi(mixptr->Filename, cameomixname) == 0 || strcmpi(mixptr->Filename, theatermixname) == 0;
+				} 
 			}
+			SpecialShapes[lp] = cameo_ptr;
 		}
 
 
@@ -1717,6 +1759,8 @@ void SidebarClass::StripClass::Draw_It(bool complete)
 		UpButton[ID].Draw_Me(true);
 		DownButton[ID].Draw_Me(true);
 
+		int factor = Get_Resolution_Factor();
+
 		/*
 		**	Loop through all the buildable objects that are visible in the strip and render
 		**	them. Their Y offset may be adjusted if the strip is in the process of scrolling.
@@ -1728,6 +1772,8 @@ void SidebarClass::StripClass::Draw_It(bool complete)
 			bool darken = false;
 			void const * shapefile = 0;
 			int shapenum = 0;
+			bool istheatershape = false;
+			bool isdummycameo = false;
 			void const * remapper = 0;
 			FactoryClass * factory = 0;
 			int index = i+TopIndex;
@@ -1786,8 +1832,16 @@ void SidebarClass::StripClass::Draw_It(bool complete)
 								remapper = PlayerPtr->Remap_Table(false, true);
 								break;
 						}
-						shapefile = obj->Get_Cameo_Data();
-						shapenum  = 0;
+						if (obj->Get_Cameo_Data()){
+							shapefile = obj->Get_Cameo_Data();
+							istheatershape = obj->Cameo_Is_Theater_Shape();
+							shapenum  = 0;
+						} else {
+							shapefile	= LogoShapes;
+							shapenum = SB_BLANK;
+							istheatershape = false;
+							isdummycameo = true;
+						}
 						if (Buildables[index].Factory != -1) {
 							factory 		= Factories.Raw_Ptr(Buildables[index].Factory);
 							production	= true;
@@ -1810,6 +1864,7 @@ void SidebarClass::StripClass::Draw_It(bool complete)
 
 					spc = Buildables[index].BuildableID;
 					shapefile = Get_Special_Cameo(spc - 1);
+					istheatershape = Special_Cameo_Is_Theater_Shape(spc - 1);
 					shapenum = 0;
 
 					switch (spc) {
@@ -1855,37 +1910,42 @@ void SidebarClass::StripClass::Draw_It(bool complete)
 				production	= false;
 			}
 
-			remapper = 0;
+			if (factor) {
+				if (isdummycameo) {
+					// make dummy cameo look slightly brighter to
+					// distinguish it from the standard blank one.
+					remapper = Map.FadingBrighten;
+				} else {
+					remapper = NULL;
+				}
+			}
 
 			/*
 			**	Now that the shape of the object at the current working slot has been found,
 			**	draw it and any graphic overlays as necessary.
 			**
-			** Dont draw blank shapes over the new 640x400 sidebar art - ST 5/1/96 6:01PM
+			**	Don't draw blank shapes over the new 640x400 sidebar art - ST 5/1/96 6:01PM
+			**	^ IGNORE THAT. Allow fallback to dummy shape - MM 7/19/2025
 			*/
-			if (shapenum != SB_BLANK || shapefile != LogoShapes){
-				IsTheaterShape = true;	// This shape is theater specific
-				CC_Draw_Shape(shapefile, shapenum,
-					x-(WindowList[WINDOW_SIDEBAR][WINDOWX]*8)+LeftEdgeOffset,
-					y-WindowList[WINDOW_SIDEBAR][WINDOWY],
-					WINDOW_SIDEBAR,
-					SHAPE_NORMAL|SHAPE_WIN_REL| (remapper ? SHAPE_FADING : SHAPE_NORMAL),
-					remapper);
-				IsTheaterShape = false;
+			IsTheaterShape = istheatershape;	// This shape is theater specific
+			int drawx = x-(WindowList[WINDOW_SIDEBAR][WINDOWX]*8)+LeftEdgeOffset;
+			int drawy = y-WindowList[WINDOW_SIDEBAR][WINDOWY];
+			CC_Draw_Shape(shapefile, shapenum, drawx, drawy,
+				WINDOW_SIDEBAR,
+				SHAPE_NORMAL|SHAPE_WIN_REL| (remapper ? SHAPE_FADING : SHAPE_NORMAL),
+				remapper);
+			IsTheaterShape = false;
 
 
-				/*
-				**	Darken this object because it cannot be produced or is otherwise
-				**	unavailable.
-				*/
-				if (darken) {
-					CC_Draw_Shape(ClockShapes, 0,
-							x-(WindowList[WINDOW_SIDEBAR][WINDOWX]*8)+LeftEdgeOffset,
-							y-WindowList[WINDOW_SIDEBAR][WINDOWY],
-							WINDOW_SIDEBAR,
-							SHAPE_NORMAL|SHAPE_WIN_REL|SHAPE_GHOST,
-							NULL, ClockTranslucentTable);
-				}
+			/*
+			**	Darken this object because it cannot be produced or is otherwise
+			**	unavailable.
+			*/
+			if (darken) {
+				CC_Draw_Shape(ClockShapes, 0, drawx, drawy,
+						WINDOW_SIDEBAR,
+						SHAPE_NORMAL|SHAPE_WIN_REL|SHAPE_GHOST,
+						NULL, ClockTranslucentTable);
 			}
 
 			/*
@@ -1899,14 +1959,14 @@ void SidebarClass::StripClass::Draw_It(bool complete)
 					**	Display text showing that the object is ready to place.
 					*/
 					CC_Draw_Shape(ObjectTypeClass::PipShapes, PIP_READY,
-					(x-(WindowList[WINDOW_SIDEBAR][WINDOWX]*8))+LeftEdgeOffset+(ObjectWidth >> 1),
-					(y-WindowList[WINDOW_SIDEBAR][WINDOWY])+ObjectHeight-Get_Build_Frame_Height(ObjectTypeClass::PipShapes) -8,
+					drawx+(ObjectWidth >> 1),
+					drawy+ObjectHeight-Get_Build_Frame_Height(ObjectTypeClass::PipShapes) -8,
 					WINDOW_SIDEBAR, SHAPE_CENTER);
 //					Fancy_Text_Print(TXT_READY, x+TEXT_X_OFFSET, y+TEXT_Y_OFFSET, TEXT_COLOR, TBLACK, TPF_6POINT|TPF_CENTER|TPF_NOSHADOW);
 				} else {
 					CC_Draw_Shape(ClockShapes, stage+1,
-							x-(WindowList[WINDOW_SIDEBAR][WINDOWX]*8)+LeftEdgeOffset,
-							y-WindowList[WINDOW_SIDEBAR][WINDOWY],
+							drawx,
+							drawy,
 							WINDOW_SIDEBAR,
 							SHAPE_NORMAL|SHAPE_WIN_REL|SHAPE_GHOST,
 							NULL, ClockTranslucentTable);
@@ -1915,8 +1975,8 @@ void SidebarClass::StripClass::Draw_It(bool complete)
 					*/
 					if (factory && !factory->Is_Building()) {
 						CC_Draw_Shape(ObjectTypeClass::PipShapes, PIP_HOLDING,
-						(x-(WindowList[WINDOW_SIDEBAR][WINDOWX]*8))+LeftEdgeOffset+(ObjectWidth >> 1),
-						(y-WindowList[WINDOW_SIDEBAR][WINDOWY])+ObjectHeight-Get_Build_Frame_Height(ObjectTypeClass::PipShapes) - 8,  // Moved up now that icons have names on them
+						drawx+(ObjectWidth >> 1),
+						drawy+ObjectHeight-Get_Build_Frame_Height(ObjectTypeClass::PipShapes) - 8,  // Moved up now that icons have names on them
 						WINDOW_SIDEBAR, SHAPE_CENTER);
 //						Fancy_Text_Print(TXT_HOLDING, x+TEXT_X_OFFSET, y+TEXT_Y_OFFSET, TEXT_COLOR, TBLACK, TPF_6POINT|TPF_CENTER|TPF_NOSHADOW);
 					}

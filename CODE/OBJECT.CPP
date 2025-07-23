@@ -139,6 +139,7 @@ ObjectTypeClass::ObjectTypeClass(
 	Armor = armor;
 	MaxStrength = strength;
 	ImageData = NULL;
+	ImageIsTheaterShape = false;
 	//RadarIcon = NULL;
 }
 
@@ -273,6 +274,26 @@ void const * ObjectTypeClass::Get_Cameo_Data(void) const
 	return(NULL);
 }
 
+
+
+/***********************************************************************************************
+ * ObjectTypeClass::Cameo_Is_Theater_Shape -- should cameo be cached as theater data?          *
+ *                                                                                             *
+ *    This routine will return whether the cameo data should be cached as theater data.        *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns whether the cameo data should be cached as theater data.                   *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/19/2025 MM  : Created.                                                                 *
+ *=============================================================================================*/
+bool ObjectTypeClass::Cameo_Is_Theater_Shape(void) const
+{
+	return(false);
+}
 
 
 /***********************************************************************************************

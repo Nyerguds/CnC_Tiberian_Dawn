@@ -601,7 +601,7 @@ void BuildingClass::Draw_It(int x, int y, WindowNumberType window)
 	/*
 	**	Actually draw the building shape.
 	*/
-	IsTheaterShape = Class->IsTheater;
+	IsTheaterShape = Class->IsTheater && BState != BSTATE_CONSTRUCTION && Class->Image_Is_Theater_Shape();
 	Techno_Draw_Object(shapefile, shapenum, x, y, window);
 	IsTheaterShape = false;
 
@@ -3744,11 +3744,21 @@ int BuildingClass::Mission_Deconstruction(void)
 				if (IsOwnedByPlayer) {
 					Sound_Effect(VOC_CASHTURN, Coord);
 				}
+				
+				/*
+				**	Destroy all attached objects. ST - 4/24/2020 9:38PM
+				*/
+				while (Attached_Object()) {
+					FootClass * obj = Detach_Object();
+					Detach_All(true);
+					delete obj;
+				}
+
+				Transmit_Message(RADIO_OVER_OUT);
 				Status = DURING;
 				Begin_Mode(BSTATE_CONSTRUCTION);
-				Detach_All(true);
-				Transmit_Message(RADIO_OVER_OUT);
 				IsReadyToCommence = false;
+				IsSurvivorless = true;				
 				break;
 			}
 			Transmit_Message(RADIO_RUN_AWAY);

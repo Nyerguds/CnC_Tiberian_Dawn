@@ -440,25 +440,25 @@ void AircraftTypeClass::One_Time(void)
 
 	for (index = AIRCRAFT_FIRST; index < AIRCRAFT_COUNT; index++) {
 		char fullname[_MAX_FNAME+_MAX_EXT];
-		AircraftTypeClass	const & uclass = As_Reference(index);
+		AircraftTypeClass * uclass = (AircraftTypeClass *)&As_Reference(index);
 
 		/*
 		**	Fetch the supporting data files for the unit.
 		*/
 		char buffer[_MAX_FNAME];
-		if ( Get_Resolution_Factor() ) {
-			sprintf(buffer, "%sICNH", uclass.IniName);
-		} else {
-			sprintf(buffer, "%sICON", uclass.IniName);
+		uclass->CameoData = NULL;
+		uclass->CameoIsTheaterShape = false;
+		if (!Get_Resolution_Factor() ) {
+			sprintf(buffer, "%sICON", uclass->IniName);
+			_makepath(fullname, NULL, NULL, buffer, ".SHP");
+			uclass->CameoData = MixFileClass::Retrieve(fullname);
 		}
-		_makepath(fullname, NULL, NULL, buffer, ".SHP");
-		((void const *&)uclass.CameoData) = MixFileClass::Retrieve(fullname);
-
+		
 		/*
 		**	Generic shape for all houses load method.
 		*/
-		_makepath(fullname, NULL, NULL, uclass.IniName, ".SHP");
-		((void const *&)uclass.ImageData) = MixFileClass::Retrieve(fullname);
+		_makepath(fullname, NULL, NULL, uclass->IniName, ".SHP");
+		uclass->ImageData = MixFileClass::Retrieve(fullname);
 	}
 
 	LRotorData = MixFileClass::Retrieve("LROTOR.SHP");
@@ -751,7 +751,7 @@ bool AircraftTypeClass::Create_And_Place(CELL, HousesType) const
 
 
 /***********************************************************************************************
- * ATC::Init -- load up terrain set dependant sidebar icons                                    *
+ * ATC::Init -- load up terrain set dependent sidebar icons                                    *
  *                                                                                             *
  *                                                                                             *
  *                                                                                             *
@@ -769,22 +769,39 @@ void AircraftTypeClass::Init(TheaterType theater)
 {
 	//if (theater != LastTheater){
 	if ( Get_Resolution_Factor() ) {
-
-		AircraftType index;
 		char buffer[_MAX_FNAME];
 		char fullname[_MAX_FNAME+_MAX_EXT];
-		void const * cameo_ptr;
+		void * cameo_ptr = NULL;
+		char theatermixname[_MAX_FNAME+_MAX_EXT];
+		sprintf(theatermixname, "%s.MIX", Theaters[theater].Root);
+		char cameomixname[_MAX_FNAME+_MAX_EXT];
+		sprintf(cameomixname, "%.4sICNH.MIX", Theaters[theater].Root);
 
-		for (index = AIRCRAFT_FIRST; index < AIRCRAFT_COUNT; index++) {
-			AircraftTypeClass	const & uclass = As_Reference(index);
+		for (AircraftType index = AIRCRAFT_FIRST; index < AIRCRAFT_COUNT; index++) {
+			AircraftTypeClass *classptr = (AircraftTypeClass*)&As_Reference(index);
 
-			((void const *&)uclass.CameoData) = NULL;
+			classptr->CameoData = NULL;
+			classptr->CameoIsTheaterShape = true;
 
-			sprintf(buffer, "%.4sICNH", uclass.IniName);
+			sprintf(buffer, "%.4sICNH", classptr->IniName);
 			_makepath (fullname, NULL, NULL, buffer, Theaters[theater].Suffix);
-			cameo_ptr = MixFileClass::Retrieve(fullname);
-			if (cameo_ptr){
-				((void const *&)uclass.CameoData) = cameo_ptr;
+			MixFileClass *mixptr = 0;
+			cameo_ptr = NULL;
+			MixFileClass::Offset(fullname, &cameo_ptr, &mixptr);
+			if (cameo_ptr) {
+				classptr->CameoData = cameo_ptr;
+				if (mixptr && mixptr->Filename) {
+					// double-check that it came from a mix file that is considered theater data.
+					// This prevents messups when icons are added from sc*.mix files.
+					classptr->CameoIsTheaterShape = strcmpi(mixptr->Filename, cameomixname) == 0 || strcmpi(mixptr->Filename, theatermixname) == 0;
+				}
+			} else {
+				_makepath (fullname, NULL, NULL, buffer, ".SHP");
+				cameo_ptr = (void *)MixFileClass::Retrieve(fullname);
+				if (cameo_ptr) {
+					classptr->CameoData = cameo_ptr;
+					classptr->CameoIsTheaterShape = false;
+				}
 			}
 		}
 	}

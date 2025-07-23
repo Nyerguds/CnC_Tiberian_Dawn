@@ -179,6 +179,7 @@ class SidebarClass: public PowerClass
 				void  Flag_To_Redraw(void);
 				bool  Factory_Link(int factory, RTTIType type, int id);
 				void const * Get_Special_Cameo(int type);
+				bool Special_Cameo_Is_Theater_Shape(int type);
 
 				/*
 				**	File I/O.
@@ -329,6 +330,7 @@ class SidebarClass: public PowerClass
 				** shapes which handle non-production based icons.
 				*/
 				static void const * SpecialShapes[3];
+				static bool SpecialShapesTheater[3];
 
 				/*
 				**	This is the last theater that the special palette remap table was loaded

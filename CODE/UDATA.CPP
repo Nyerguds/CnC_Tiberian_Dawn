@@ -1577,28 +1577,21 @@ void UnitTypeClass::Prep_For_Add(void)
  *=============================================================================================*/
 void UnitTypeClass::One_Time(void)
 {
+	bool hires = Get_Resolution_Factor() != 0;
 	for (UnitType index = UNIT_FIRST; index < UNIT_COUNT; index++) {
-		char	fullname[_MAX_FNAME+_MAX_EXT];
-		char	buffer[_MAX_FNAME];
-		UnitTypeClass const & uclass = As_Reference(index);
-		CCFileClass	file;
-		int			largest;			// Largest dimension of shape (so far).
+		char fullname[_MAX_FNAME+_MAX_EXT];
+		char buffer[_MAX_FNAME];
+		UnitTypeClass	*uclass = (UnitTypeClass*)&As_Reference(index);
 
-		void const 	*ptr;		// Shape pointer and set pointer.
-
-		largest = 0;
-		if (uclass.IsBuildable) {
-
+		uclass->CameoData = NULL;
+		uclass->CameoIsTheaterShape = false;
+		if (uclass->IsBuildable && !hires) {
 			/*
 			**	Fetch the supporting data files for the unit.
 			*/
-			if ( Get_Resolution_Factor() ) {
-				sprintf(buffer, "%sICNH", uclass.IniName);
-			} else {
-				sprintf(buffer, "%sICON", uclass.IniName);
-			}
+			sprintf(buffer, "%sICON", uclass->IniName);
 			_makepath(fullname, NULL, NULL, buffer, ".SHP");
-			((void const *&)uclass.CameoData) = MixFileClass::Retrieve(fullname);
+			uclass->CameoData = MixFileClass::Retrieve(fullname);
 		}
 
 		/*
@@ -1607,23 +1600,17 @@ void UnitTypeClass::One_Time(void)
 		// Nyerguds's TUC Quick Fix Patch v1.00: funpark
 		// Remove Jurassic requirement for walker units.
 		//if (!uclass.IsPieceOfEight || (Special.IsJurassic && AreThingiesEnabled) ) {
-		_makepath(fullname, NULL, NULL, uclass.IniName, ".SHP");
-		ptr = MixFileClass::Retrieve(fullname);
-		//} else {
-		//	ptr = NULL;
-		//}
-		((void const *&)uclass.ImageData) = ptr;
+		_makepath(fullname, NULL, NULL, uclass->IniName, ".SHP");
+		// Shape pointer and set pointer.
+		void const *ptr = MixFileClass::Retrieve(fullname);
+		uclass->ImageData = ptr;
+
+		int largest = 0;			// Largest dimension of shape (so far).
 		if (ptr) {
-
-			if (index == UNIT_MLRS || index == UNIT_MSAM) {
-				largest = 26;
-			} else {
-				largest = MAX(largest, (int)Get_Build_Frame_Width(ptr));
-				largest = MAX(largest, (int)Get_Build_Frame_Height(ptr));
-			}
+			largest = MAX(largest, (int)Get_Build_Frame_Width(ptr));
+			largest = MAX(largest, (int)Get_Build_Frame_Height(ptr));
 		}
-
-		((int &)uclass.MaxSize) = MAX(largest, 8);
+		uclass->MaxSize = MAX(largest, 8);
 	}
 
 	/*
@@ -1653,28 +1640,39 @@ void UnitTypeClass::One_Time(void)
 
 void UnitTypeClass::Init(TheaterType theater)
 {
-
+	//if (theater != LastTheater){
 	if (Get_Resolution_Factor()){
-
-		//if (theater != LastTheater){
-
-		void const * cameo_ptr;
-		char	fullname[_MAX_FNAME+_MAX_EXT];
-		char	buffer[_MAX_FNAME];
+		char buffer[_MAX_FNAME];
+		char fullname[_MAX_FNAME+_MAX_EXT];
+		void * cameo_ptr = NULL;
+		char cameomixname[_MAX_FNAME+_MAX_EXT];
+		sprintf(cameomixname, "%.4sICNH.MIX", Theaters[theater].Root);
 
 		for (UnitType index = UNIT_FIRST; index < UNIT_COUNT; index++) {
+			UnitTypeClass * classptr = (UnitTypeClass*)&As_Reference(index);
 
-			UnitTypeClass const & uclass = As_Reference(index);
+			classptr->CameoData = NULL;
+			classptr->CameoIsTheaterShape = true;
 
-			((void const *&)uclass.CameoData) = NULL;
-
-			if (uclass.IsBuildable) {
-				sprintf(buffer, "%sICNH", uclass.IniName);
-				_makepath(fullname, NULL, NULL, buffer, Theaters[theater].Suffix);
-				cameo_ptr = MixFileClass::Retrieve(fullname);
-				if (cameo_ptr){
-					((void const *&)uclass.CameoData) = cameo_ptr;
+			sprintf(buffer, "%.4sICNH", classptr->IniName);
+			_makepath (fullname, NULL, NULL, buffer, Theaters[theater].Suffix);
+			MixFileClass * mixptr = 0;
+			cameo_ptr = NULL;
+			MixFileClass::Offset(fullname, &cameo_ptr, &mixptr);
+			if (cameo_ptr){
+				classptr->CameoData = cameo_ptr;
+				if (mixptr && mixptr->Filename) {
+					// double-check that it came from the theater mix file.
+					// This prevents messups when icons are added from sc*.mix files.
+					classptr->CameoIsTheaterShape = strcmpi(mixptr->Filename, cameomixname) == 0;
 				}
+			} else {
+				_makepath (fullname, NULL, NULL, buffer, ".SHP");
+				cameo_ptr = (void *)MixFileClass::Retrieve(fullname);
+				if (cameo_ptr) {
+					classptr->CameoData = cameo_ptr;
+					classptr->CameoIsTheaterShape = false;
+				}	
 			}
 		}
 		//}

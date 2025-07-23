@@ -87,7 +87,7 @@ extern bool						IsV107;
 extern char						OverridePath[128];
 #endif
 extern bool						SlowPalette;
-extern char						VersionText[32];
+extern char						VersionText[128];
 extern bool						ScoresPresent;
 extern int						CrateCount;
 extern TCountDownTimerClass	CrateTimer;
@@ -190,7 +190,7 @@ extern unsigned char *		OriginalPalette;
 extern int						EndCountDown;
 extern bool						GameActive;
 extern bool						SpecialFlag;
-extern bool						ScenarioInit;
+extern int						ScenarioInit;
 extern long						TutorFlags[2];
 extern HouseClass *			PlayerPtr;
 extern unsigned char *		BlackPalette;

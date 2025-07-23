@@ -97,7 +97,7 @@ DynamicVectorClass<ObjectClass *> CurrentObject;
 **	This holds the custom version text that is fetched from the version
 **	text file. This version is displayed on the options dialog.
 */
-char VersionText[32];
+char VersionText[128];
 
 
 /***************************************************************************
@@ -328,7 +328,7 @@ char ScenarioName[_MAX_FNAME+_MAX_EXT];	// name of scenario
 int CarryOverMoney;						// Carry over money from last scenario.
 int CarryOverPercent;					// Carry over money percentage control.
 int CarryOverCap;							// Maxmimum carry over money allowed.
-bool ScenarioInit;
+int ScenarioInit;
 bool SpecialFlag = false;
 
 

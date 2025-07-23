@@ -851,27 +851,36 @@ TerrainTypeClass::TerrainTypeClass(
 void TerrainTypeClass::Init(TheaterType theater)
 {
 	//if (theater != LastTheater){
+	char fullname[_MAX_FNAME+_MAX_EXT];
+	char theatermixname[_MAX_FNAME+_MAX_EXT];
+	sprintf(theatermixname, "%s.MIX", Theaters[theater].Root);
 	for (TerrainType index = TERRAIN_FIRST; index < TERRAIN_COUNT; index++) {
-		TerrainTypeClass const & terrain = As_Reference(index);
-		char	fullname[_MAX_FNAME+_MAX_EXT];
+		TerrainTypeClass * terrain = (TerrainTypeClass*)&As_Reference(index);
 
 		/*
 		**	Clear any existing shape pointer. All terrain is theater specific, thus if
 		**	it isn't loaded in this routine, it shouldn't exist at all.
 		*/
-		((void const *&)terrain.ImageData) = NULL;
+		terrain->ImageData = NULL;
+		terrain->ImageIsTheaterShape = false;
 
-		if (terrain.Theater & (1 << theater)) {
+		if (terrain->Theater & (1 << theater)) {
 
 			/*
 			**	Load in the appropriate object shape data.
 			*/
-			_makepath(fullname, NULL, NULL, terrain.IniName, Theaters[theater].Suffix);
-			((void const *&)terrain.ImageData) = MixFileClass::Retrieve(fullname);
+			_makepath(fullname, NULL, NULL, terrain->IniName, Theaters[theater].Suffix);
 
-			IsTheaterShape = true;
-			if (terrain.RadarIcon) delete[] (char *)terrain.RadarIcon;
-			((void const *&)terrain.RadarIcon) = Get_Radar_Icon(terrain.Get_Image_Data(), 0, 1, 3);
+			MixFileClass *mixptr = 0;
+			void * image_ptr = NULL;
+			MixFileClass::Offset(fullname, &image_ptr, &mixptr);
+			if (image_ptr && mixptr) {
+				terrain->ImageIsTheaterShape = strcmpi(mixptr->Filename, theatermixname) == 0;
+			}
+			terrain->ImageData = image_ptr;
+			IsTheaterShape = terrain->ImageIsTheaterShape;
+			if (terrain->RadarIcon) delete[] (char *)terrain->RadarIcon;
+			terrain->RadarIcon = Get_Radar_Icon(terrain->Get_Image_Data(), 0, 1, 3);
 			IsTheaterShape = false;
 		}
 	}

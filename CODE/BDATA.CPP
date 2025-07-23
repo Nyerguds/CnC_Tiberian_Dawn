@@ -4122,46 +4122,46 @@ void BuildingTypeClass::One_Time(void)
 		{STRUCT_WEAP,		BSTATE_IDLE,			0,	1,	0},
 		{STRUCT_TEMPLE,	BSTATE_ACTIVE,			0,	5,	1},
 	};
-
+	bool hires = Get_Resolution_Factor() != 0;
 	for (StructType sindex = STRUCT_FIRST; sindex < STRUCT_COUNT; sindex++) {
 		char	fullname[_MAX_FNAME+_MAX_EXT];
 		char	buffer[_MAX_FNAME];
-		BuildingTypeClass const & building = As_Reference(sindex);
+		BuildingTypeClass * building = (BuildingTypeClass*)&As_Reference(sindex);
 
 		/*
 		**	Fetch the sidebar cameo image for this building.
 		*/
-		if (building.IsBuildable) {
-			if ( Get_Resolution_Factor() ) {
-				sprintf(buffer, "%sICNH", building.IniName);
-			} else {
-				sprintf(buffer, "%sICON", building.IniName);
-			}
+		building->CameoData = NULL;
+		if (building->IsBuildable && !hires) {
+			sprintf(buffer, "%.4sICON", building->IniName);
 			_makepath(fullname, NULL, NULL, buffer, ".SHP");
-			((void const *&)building.CameoData) = MixFileClass::Retrieve(fullname);
+			building->CameoData = MixFileClass::Retrieve(fullname);
+			building->CameoIsTheaterShape = false;
 		}
-
+	
 		/*
 		**	Fetch the construction animation for this building.
 		*/
-		sprintf(buffer, "%sMAKE", building.IniName);
+		sprintf(buffer, "%.4sMAKE", building->IniName);
 		_makepath(fullname, NULL, NULL, buffer, ".SHP");
 		void const * dataptr = MixFileClass::Retrieve(fullname);
-		((void const *&)building.BuildupData) = dataptr;
+		building->BuildupData = dataptr;
 		if (dataptr) {
 			int timedelay = 1;
 			int count = Get_Build_Frame_Count(dataptr);
 			if (count) {
 				timedelay = (5 * TICKS_PER_SECOND) / count;
 			}
-			building.Init_Anim(BSTATE_CONSTRUCTION, 0, count, timedelay);
+			building->Init_Anim(BSTATE_CONSTRUCTION, 0, count, timedelay);
 		}
 
 		/*
 		**	Fetch the normal game shape for this building.
 		*/
-		_makepath(fullname, NULL, NULL, building.IniName, ".SHP");
-		((void const *&)building.ImageData) = MixFileClass::Retrieve(fullname);
+		if (!building->IsTheater) {
+			_makepath(fullname, NULL, NULL, building->IniName, ".SHP");
+			building->ImageData = MixFileClass::Retrieve(fullname);
+		}
 	}
 
 	// Try to load weap2.shp
@@ -4490,27 +4490,58 @@ void BuildingTypeClass::Init(TheaterType theater)
 {
 	//if (theater != LastTheater){
 	char fullname[_MAX_FNAME+_MAX_EXT];
+	char buffer[_MAX_FNAME];
+	void * cameo_ptr = NULL;
+	char cameomixname[_MAX_FNAME+_MAX_EXT];
+	char theatermixname[_MAX_FNAME+_MAX_EXT];
+	sprintf(theatermixname, "%s.MIX", Theaters[theater].Root);
+	int hires = Get_Resolution_Factor();
+	if (hires) {
+		sprintf(cameomixname, "%.4sICNH.MIX", Theaters[theater].Root);
+	}
 
 	for (StructType sindex = STRUCT_FIRST; sindex < STRUCT_COUNT; sindex++) {
-		BuildingTypeClass const *classptr = &As_Reference(sindex);
-
+		BuildingTypeClass *classptr = (BuildingTypeClass*)&As_Reference(sindex);
+		classptr->ImageIsTheaterShape = false;
 		if (classptr->IsTheater) {
 			_makepath(fullname, NULL, NULL, classptr->IniName, Theaters[theater].Suffix);
-			((void const *&)classptr->ImageData) = MixFileClass::Retrieve(fullname);
+			MixFileClass *mixptr = NULL;
+			void * image_ptr = NULL;
+			MixFileClass::Offset(fullname, &image_ptr, &mixptr);
+			if (image_ptr && mixptr) {
+				classptr->ImageIsTheaterShape = strcmpi(mixptr->Filename, theatermixname) == 0 || (hires && strcmpi(mixptr->Filename, cameomixname) == 0);
+			}
+			if (!image_ptr) {
+				_makepath(fullname, NULL, NULL, classptr->IniName, ".SHP");
+				image_ptr = (void *)MixFileClass::Retrieve(fullname);
+				classptr->ImageIsTheaterShape = false;
+			}
+			classptr->ImageData = image_ptr;
 		}
 
-		if ( Get_Resolution_Factor() ) {
-			char buffer[_MAX_FNAME];
-			char fullname[_MAX_FNAME+_MAX_EXT];
-			void const * cameo_ptr;
-
-			((void const *&)classptr->CameoData) = NULL;
+		if (hires) {
+			classptr->CameoData = NULL;
+			classptr->CameoIsTheaterShape = true;
 
 			sprintf(buffer, "%.4sICNH", classptr->IniName);
 			_makepath (fullname, NULL, NULL, buffer, Theaters[theater].Suffix);
-			cameo_ptr = MixFileClass::Retrieve(fullname);
-			if (cameo_ptr){
-				((void const *&)classptr->CameoData) = cameo_ptr;
+			MixFileClass *mixptr = 0;
+			cameo_ptr = NULL;
+			MixFileClass::Offset(fullname, &cameo_ptr, &mixptr);
+			if (cameo_ptr) {
+				classptr->CameoData = cameo_ptr;
+				if (mixptr && mixptr->Filename) {
+					// double-check that it came from the theater mix file.
+					// This prevents messups when icons are added from sc*.mix files.
+					classptr->CameoIsTheaterShape = strcmpi(mixptr->Filename, cameomixname) == 0 || strcmpi(mixptr->Filename, theatermixname) == 0;
+				}
+			} else {
+				_makepath (fullname, NULL, NULL, buffer, ".SHP");
+				cameo_ptr = (void *)MixFileClass::Retrieve(fullname);
+				if (cameo_ptr) {
+					classptr->CameoData = cameo_ptr;
+					classptr->CameoIsTheaterShape = false;
+				}
 			}
 		}
 	}

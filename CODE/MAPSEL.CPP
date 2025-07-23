@@ -93,7 +93,7 @@ struct countrylist {
 /*  1 */	{{1,1}, { 0, 0}, {  3,  3},{{0x95,   0,   0},{0x95,   0,   0}}, {{17, 0, 0},{17, 0, 0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}}},
 /*  2 */	{{1,1}, {16,16}, { 19, 19},{{0x80,   0,   0},{0x80,   0,   0}}, {{ 0, 0, 0},{ 0, 0, 0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}}},
 /*  3 */	{{3,3}, {32,32}, { 35, 35},{{0x81,0x82,0x83},{0x81,0x82,0x83}}, {{ 3, 3, 1},{ 3, 3, 1}}, {{SDW,SDW,SDE},{SDN,SDN,SDN}},{{SVA,SVB,SVA},{SVN,SVN,SVN}}},
-/*  4 */	{{2,2}, {48,64}, { 51, 67},{{0x84,0x85,   0},{0x86,0x87,   0}}, {{ 4, 4, 0},{ 2, 2, 0}}, {{SDE,SDE,SDN},{SDW,SDW,SDN}},{{SVA,SVA,SVN},{SVA,SVB,SVN}}},
+/*  4 */	{{2,2}, {48,64}, { 51, 67},{{0x84,0x85,   0},{0x86,0x87,   0}}, {{ 4, 4, 0},{ 2, 2, 0}}, {{SDE,SDE,SDN},{SDW,SDW,SDN}},{{SVA,SVB,SVN},{SVA,SVB,SVN}}},
 /*  5 */	{{2,2}, {99,99}, {102,102},{{0x88,0x89,   0},{0x88,0x89,   0}}, {{ 7, 7, 0},{ 7, 7, 0}}, {{SDE,SDE,SDN},{SDE,SDE,SDN}},{{SVA,SVA,SVN},{SVA,SVA,SVN}}},
 /*  6 */	{{2,2}, {80,83}, { 86, 86},{{0x88,0x89,   0},{0x88,0x89,   0}}, {{ 7, 7, 0},{ 7, 7, 0}}, {{SDE,SDE,SDN},{SDE,SDE,SDN}},{{SVA,SVA,SVN},{SVA,SVA,SVN}}},
 /*  7 */	{{2,2}, {115,0}, {118,  0},{{0x8B,0x8A,   0},{0x8B,0x8A,   0}}, {{ 6, 8, 0},{ 6, 8, 0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVB,SVN},{SVN,SVN,SVN}}},
@@ -212,10 +212,16 @@ struct nodstats {
  *=============================================================================================*/
 void Map_Selection(void)
 {
+	if (ScenPlayer != SCEN_PLAYER_GDI && ScenPlayer != SCEN_PLAYER_NOD) {
+		return;
+	}
+
 	void *anim, *progress, *oldfont, *greyearth, *greyearth2;
 	unsigned char localpalette[768];
-	int scenario, lastscenario;
-	int house = PlayerPtr->Class->House;
+	int scenario;
+	bool lastscenario;
+	bool isgoodguy = ScenPlayer == SCEN_PLAYER_GDI;
+	// int house = PlayerPtr->Class->House;
 	int attackxcoord = 0;
 
 	static int const _countryx[]={195,217,115,167,
@@ -254,9 +260,8 @@ void Map_Selection(void)
 	oldfont = Set_Font(ScoreFontPtr);
 	Set_Font_Palette(_regpal);
 	Set_Palette(BlackPalette);
-
-	scenario = Scenario + ((house == HOUSE_GOOD) ? 0 : 14);
-	if (house == HOUSE_GOOD) {
+	scenario = Scenario + ((isgoodguy) ? 0 : 14);
+	if (isgoodguy) {
 		lastscenario = (Scenario == 14);
 		if (Scenario == 15) return;
 	} else {
@@ -266,6 +271,8 @@ void Map_Selection(void)
 
 	// Check if they're even entitled to map selection this time
 	if (CountryArray[scenario].Choices[ScenDir]==0) return;
+	ThemeType music = isgoodguy ? THEME_MAP1 : THEME_NOD_MAP1;
+	Theme.Queue_Song(music);
 
 	Theme.Queue_Song(THEME_MAP1);
 	PseudoSeenBuff = new GraphicBufferClass(320,200,(void*)NULL);
@@ -286,7 +293,7 @@ void Map_Selection(void)
 	/*
 	** Load the spinning-globe anim
 	*/
-	if (house == HOUSE_GOOD) {
+	if (isgoodguy) {
 		//anim     = Open_Animation("EARTH_E.WSA", NULL,0,(WSAOpenType)(WSA_OPEN_FROM_MEM | WSA_OPEN_TO_PAGE),Palette);
 		anim     = Open_Animation("HEARTH_E.WSA", NULL,0,(WSAOpenType)(WSA_OPEN_FROM_MEM | WSA_OPEN_TO_PAGE),Palette);
 		//progress = Open_Animation(lastscenario ? "BOSNIA.WSA" : "EUROPE.WSA",NULL,0,(WSAOpenType)(WSA_OPEN_FROM_MEM | WSA_OPEN_TO_PAGE),progresspalette);
@@ -334,7 +341,8 @@ void Map_Selection(void)
 	Read_Interpolation_Palette("MAP_LOCL.PAL");
 	Play_Sample(appear1, 255, Options.Normalize_Sound(110));
 	Fade_Palette_To(localpalette, FADE_PALETTE_MEDIUM, Call_Back);
-	for (int i = 1; i < Get_Animation_Frame_Count(greyearth); i++) {
+	int i = 0;
+	for (i = 1; i < Get_Animation_Frame_Count(greyearth); i++) {
 		Call_Back_Delay(4);
 		Animate_Frame(greyearth, *PseudoSeenBuff, i);
 	}
@@ -538,10 +546,11 @@ void Map_Selection(void)
 	/*
 	** Now dissolve in first advance of territories
 	*/
-	int xcoord = (house == HOUSE_GOOD ? 0 : 204);
+
+	int xcoord = (isgoodguy ? 0 : 204);
 	SysMemPage.Blit(backpage, xcoord,1, 0,0, 20*6,8);
 	Play_Sample(text2, 255, Options.Normalize_Sound(90));
-	if (house == HOUSE_GOOD) {
+	if (isgoodguy) {
 		Alloc_Object(new ScorePrintClass(TXT_MAP_GDI,0,2,_greenpal));
 	} else {
 		Alloc_Object(new ScorePrintClass(TXT_MAP_NOD,xcoord,2,_greenpal));
@@ -568,7 +577,7 @@ void Map_Selection(void)
 	SysMemPage.Blit(backpage, xcoord,1, 0,0, 20*6,8);
 	if (!lastscenario) {
 		Play_Sample(text2, 255, Options.Normalize_Sound(90));
-		if (house == HOUSE_GOOD) {
+		if (isgoodguy) {
 			Alloc_Object(new ScorePrintClass(TXT_MAP_NOD,0,12,_greenpal));
 		} else {
 			Alloc_Object(new ScorePrintClass(TXT_MAP_GDI,xcoord,12,_greenpal));
@@ -633,7 +642,7 @@ void Map_Selection(void)
 	if (lastscenario){
 		InterpolationPaletteChanged = TRUE;
 		InterpolationPalette = CurrentPalette;
-		if (house == HOUSE_GOOD){
+		if (isgoodguy){
 			Read_Interpolation_Palette("LASTSCNG.PAL");
 			Interpolate_2X_Scale(PseudoSeenBuff, &SeenBuff, "LASTSCNG.PAL");
 		}else{
@@ -654,7 +663,7 @@ void Map_Selection(void)
 			switch ( frame ){
 
 				case 23:
-					if (house == HOUSE_GOOD){
+					if (isgoodguy){
 #if (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
 						Alloc_Object(new MultiStagePrintClass (Text_String (TXT_ENHANCING_IMAGE), 0, 10, _othergreenpal));
 #else
@@ -674,7 +683,7 @@ void Map_Selection(void)
 
 
 				case 35:
-					if (house == HOUSE_GOOD){
+					if (isgoodguy){
 #if (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
 						TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width (Text_String (TXT_ENHANCING_IMAGE)), 2*(10 + 12), BLACK);
 #else
@@ -695,7 +704,7 @@ void Map_Selection(void)
 					break;
 
 				case 36:
-					if (house == HOUSE_GOOD){
+					if (isgoodguy){
 #if (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
 						TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width (Text_String (TXT_ENHANCING_IMAGE)), 2*(10 + 12), TBLACK);
 #else
@@ -748,7 +757,7 @@ void Map_Selection(void)
 	int done = 0;
 	int framecounter = 0;
 
-	if (house == HOUSE_GOOD) {
+	if (isgoodguy) {
 		Load_Uncompress(CCFileClass(lastscenario ? "CLICK_EB.CPS" : "CLICK_E.CPS"), SysMemPage, SysMemPage);
 	} else {
 		Load_Uncompress(CCFileClass(lastscenario ? "CLICK_SA.CPS" : "CLICK_A.CPS"), SysMemPage, SysMemPage);
@@ -800,7 +809,7 @@ void Map_Selection(void)
 		/*
 		** Now it's time to highlight the country we're going to.
 		*/
-		void const * countryshape = MixFileClass::Retrieve(house == HOUSE_GOOD ? "COUNTRYE.SHP" : "COUNTRYA.SHP");
+		void const * countryshape = MixFileClass::Retrieve(isgoodguy ? "COUNTRYE.SHP" : "COUNTRYA.SHP");
 
 		Hide_Mouse();
 		// erase "Select country to attack"
@@ -819,7 +828,7 @@ void Map_Selection(void)
 		europe->Blit(SysMemPage);
 
 		int shape = CountryArray[scenario].CountryShape[ScenDir][selection];
-		int xyindex = shape + (house == HOUSE_GOOD ? 0 : 18);
+		int xyindex = shape + (isgoodguy ? 0 : 18);
 		CC_Draw_Shape(countryshape, shape,
 					 _countryx[xyindex],_countryy[xyindex],
 					 WINDOW_MAIN, SHAPE_WIN_REL | SHAPE_CENTER, 0,0);
@@ -843,14 +852,14 @@ void Map_Selection(void)
 
 		Print_Statistics(color & 0x7F, _countryx[xyindex], _countryy[xyindex]);
 	} else {
-		CCFileClass(house == HOUSE_GOOD ? "DARK_B.PAL" : "DARK_SA.PAL").Read(localpalette, 768);
+		CCFileClass(isgoodguy ? "DARK_B.PAL" : "DARK_SA.PAL").Read(localpalette, 768);
 		InterpolationPaletteChanged = TRUE;
 		InterpolationPalette = localpalette;
 		Increase_Palette_Luminance(localpalette , 30,30,30,63);
 		Read_Interpolation_Palette("MAP_LOC3.PAL");
 		Interpolate_2X_Scale(PseudoSeenBuff , &SeenBuff , "MAP_LOC3.PAL");
 		Set_Palette(localpalette);
-//		Load_Data(house == HOUSE_GOOD ? "DARK_B.PAL" : "DARK_SA.PAL", localpalette, 768);
+//		Load_Data(isgoodguy ? "DARK_B.PAL" : "DARK_SA.PAL", localpalette, 768);
 
 		Hide_Mouse();
 #if (GERMAN | FRENCH)
@@ -865,7 +874,7 @@ void Map_Selection(void)
 		Set_Palette(localpalette);
 		Close_Animation(progress);
 		PseudoSeenBuff->Blit(SysMemPage);
-		Print_Statistics(20, 160, house == HOUSE_GOOD ? 0 : 160);
+		Print_Statistics(20, 160, isgoodguy ? 0 : 160);
 	}
 
 	Theme.Queue_Song(THEME_NONE);
@@ -998,7 +1007,7 @@ void Print_Statistics(int country, int xpos, int ypos)
 	xpos = (xpos > 128) ? 8 : 136;
 #endif
 	ypos = (ypos > 100) ? 8 : 104-6;
-	if (PlayerPtr->Class->House == HOUSE_GOOD) {
+	if (ScenPlayer == SCEN_PLAYER_GDI) {
 		Alloc_Object(new ScorePrintClass(_countryname[GDIStats[country].nameindex],xpos,ypos,_greenpal));
 		Call_Back_Delay(strlen(Text_String(_countryname[GDIStats[country].nameindex]))*3);
 		ypos += 16;
