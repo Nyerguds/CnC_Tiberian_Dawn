@@ -88,9 +88,12 @@ class ScoreAnimClass {
 		ScoreAnimClass(int x, int y, void const * data);
 		int XPos;
 		int YPos;
+		bool Skipping;
 		CountDownTimerClass Timer;
 		void const * DataPtr;
 		virtual void Update(void) {} ;
+		virtual void SkipToEnd(void) { Skipping = true; } ;
+		virtual bool IsSkipping(void) { return(Skipping); } ;
 		virtual ~ScoreAnimClass(void) {} ;
 };
 
@@ -103,6 +106,8 @@ class ScoreCredsClass : public ScoreAnimClass {
 		void const * Clock1;
 
 		virtual void Update(void);
+		virtual void SkipToEnd(void); // this is stopped from the UI.
+		virtual bool IsSkipping(void);
 		ScoreCredsClass(int xpos, int ypos, void const * data, int max, int timer);
 		virtual ~ScoreCredsClass(void) {};
 };
@@ -113,6 +118,8 @@ class ScoreTimeClass : public ScoreAnimClass {
 		int MaxStage;
 		int TimerReset;
 		virtual void Update(void);
+		virtual void SkipToEnd(void); // this does not end.
+		virtual bool IsSkipping(void);
 		ScoreTimeClass(int xpos, int ypos, void const * data, int max, int timer);
 		virtual ~ScoreTimeClass(void) {};
 };

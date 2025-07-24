@@ -101,7 +101,7 @@ struct countrylist {
 /*  9 */	{{2,1}, {147,0}, {150,  0},{{0x8D,0x8E,   0},{   0,   0,   0}}, {{10,13, 0},{ 0, 0, 0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVB,SVN},{SVN,SVN,SVN}}},
 /* 10 */	{{1,1}, {163,0}, {166,  0},{{0x8F,   0,   0},{   0,   0,   0}}, {{16, 0, 0},{ 0, 0, 0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}}},
 /* 11 */	{{2,1}, {179,0}, {182,  0},{{0x90,0x91,   0},{   0,   0,   0}}, {{14,15, 0},{ 0, 0, 0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVB,SVN},{SVN,SVN,SVN}}},
-/* 12 */	{{2,1}, {195,0}, {198,  0},{{0x92,0x93,   0},{   0,   0,   0}}, {{12,12, 0},{ 0, 0, 0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVB,SVN},{SVN,SVN,SVN}}},
+/* 12 */	{{2,1}, {195,0}, {198,  0},{{0x92,0x93,   0},{   0,   0,   0}}, {{12,12, 0},{ 0, 0, 0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVA,SVN},{SVN,SVN,SVN}}},
 /* 13 */	{{1,1}, {211,0}, {214,  0},{{0x93,   0,   0},{   0,   0,   0}}, {{12, 0, 0},{ 0, 0, 0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}}},
 /* 14 */	{{3,1}, {  0,0}, {  3,  0},{{0x81,0x82,0x83},{   0,   0,   0}}, {{ 0, 0, 0},{ 0, 0, 0}}, {{SDE,SDE,SDE},{SDN,SDN,SDN}},{{SVA,SVB,SVC},{SVN,SVN,SVN}}},
 
@@ -215,7 +215,7 @@ void Map_Selection(void)
 	if (ScenPlayer != SCEN_PLAYER_GDI && ScenPlayer != SCEN_PLAYER_NOD) {
 		return;
 	}
-
+	ControlQ = 0;
 	void *anim, *progress, *oldfont, *greyearth, *greyearth2;
 	unsigned char localpalette[768];
 	int scenario;
@@ -396,13 +396,15 @@ void Map_Selection(void)
 	int frame = 1;
 
 	while (frame < Get_Animation_Frame_Count(anim)) {
-		if (frame == 16 || frame == 33 || frame == 44 || frame == 70 || frame == 73) Play_Sample(text2, 255, Options.Normalize_Sound(90));
-		if (frame == 21 || frame == 27) Play_Sample(target1, 255, Options.Normalize_Sound(90));
-		if (frame == 45 || frame == 47 || frame == 49) Play_Sample(beepy6, 255, Options.Normalize_Sound(90));
-		if (frame == 51) Play_Sample(world2, 255, Options.Normalize_Sound(90));
-		if (frame == 70 || frame == 72) Play_Sample(beepy2, 255, Options.Normalize_Sound(90));
-		if (frame == 74) Play_Sample(target2, 255, Options.Normalize_Sound(110));
-
+		if (!ControlQ) {
+			// if skipping the animation, skip all sounds too.
+			if (frame == 16 || frame == 33 || frame == 44 || frame == 70 || frame == 73) Play_Sample(text2, 255, Options.Normalize_Sound(90));
+			if (frame == 21 || frame == 27) Play_Sample(target1, 255, Options.Normalize_Sound(90));
+			if (frame == 45 || frame == 47 || frame == 49) Play_Sample(beepy6, 255, Options.Normalize_Sound(90));
+			if (frame == 51) Play_Sample(world2, 255, Options.Normalize_Sound(90));
+			if (frame == 70 || frame == 72) Play_Sample(beepy2, 255, Options.Normalize_Sound(90));
+			if (frame == 74) Play_Sample(target2, 255, Options.Normalize_Sound(110));
+		}
 		switch (frame){
 			case 1:
 #if (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
@@ -497,7 +499,6 @@ void Map_Selection(void)
 		Animate_Frame(anim, *PseudoSeenBuff, frame++);
 		Call_Back_Delay(/*Keyboard::Check() ? 0 :*/ 3);
 	}
-
 #if (GERMAN | FRENCH | JAPANESE | EXPANDED_STRINGS)
 	TextPrintBuffer->Fill_Rect (0, 2*10, 2*String_Pixel_Width (Text_String (TXT_ESTABLISHING_TRADITIONAL_BOUNDARIES)), 2*(10 + 24), BLACK);
 #else
@@ -526,7 +527,7 @@ void Map_Selection(void)
 	InterpolationPaletteChanged = TRUE;
 	InterpolationPalette = progresspalette;
 	Increase_Palette_Luminance(InterpolationPalette , 30,30,30,63);
-	Read_Interpolation_Palette("MAP_PROG.PAL");
+	Read_Interpolation_Palette(isgoodguy ? "MAP_PROG.PAL" : "MAP_PROB.PAL");
 
 	GraphicBufferClass *europe = new GraphicBufferClass(SysMemPage.Get_Width(),SysMemPage.Get_Height(),(GBC_Enum)0);
 	SysMemPage.Blit(*europe);
@@ -549,7 +550,8 @@ void Map_Selection(void)
 
 	int xcoord = (isgoodguy ? 0 : 204);
 	SysMemPage.Blit(backpage, xcoord,1, 0,0, 20*6,8);
-	Play_Sample(text2, 255, Options.Normalize_Sound(90));
+	
+	if (!ControlQ) Play_Sample(text2, 255, Options.Normalize_Sound(90));
 	if (isgoodguy) {
 		Alloc_Object(new ScorePrintClass(TXT_MAP_GDI,0,2,_greenpal));
 	} else {
@@ -557,9 +559,14 @@ void Map_Selection(void)
 	}
 	Call_Back_Delay(60);
 
-	Play_Sample(country1, 255, Options.Normalize_Sound(90));
+	if (!ControlQ) Play_Sample(country1, 255, Options.Normalize_Sound(90));
 	Animate_Frame(progress,SysMemPage,startframe+1);
-	Bit_It_In_Scale(0, 0, 320, 200, &SysMemPage, PseudoSeenBuff,&SeenBuff,1,1);
+	if (ControlQ) {
+		SysMemPage.Blit(*PseudoSeenBuff);
+		Call_Back_Delay(0);
+	} else {
+		Bit_It_In_Scale(0, 0, 320, 200, &SysMemPage, PseudoSeenBuff, &SeenBuff, 1, 1);
+	}
 	backpage.Blit(SysMemPage, 0,0, xcoord,1, 20*6,8);
 	Call_Back_Delay(85);
 
@@ -576,7 +583,7 @@ void Map_Selection(void)
 	Interpolate_2X_Scale(PseudoSeenBuff, &SeenBuff,NULL);
 	SysMemPage.Blit(backpage, xcoord,1, 0,0, 20*6,8);
 	if (!lastscenario) {
-		Play_Sample(text2, 255, Options.Normalize_Sound(90));
+		if (!ControlQ) Play_Sample(text2, 255, Options.Normalize_Sound(90));
 		if (isgoodguy) {
 			Alloc_Object(new ScorePrintClass(TXT_MAP_NOD,0,12,_greenpal));
 		} else {
@@ -585,9 +592,14 @@ void Map_Selection(void)
 		Call_Back_Delay(65);
 	}
 
-	Play_Sample(country1, 255, Options.Normalize_Sound(90));
+	if (!ControlQ) Play_Sample(country1, 255, Options.Normalize_Sound(90));
 	Animate_Frame(progress,SysMemPage,startframe+2);
-	Bit_It_In_Scale(0, 0, 320, 200, &SysMemPage, PseudoSeenBuff , &SeenBuff,1,1);
+	if (ControlQ) {
+		SysMemPage.Blit(*PseudoSeenBuff);
+		Call_Back_Delay(0);
+	} else {
+		Bit_It_In_Scale(0, 0, 320, 200, &SysMemPage, PseudoSeenBuff, &SeenBuff, 1, 1);
+	}
 	backpage.Blit(SysMemPage, 0,0, xcoord,11, 20*6,8);
 	if (!lastscenario) Call_Back_Delay(85);
 //	Set_Font(oldfont);
@@ -605,7 +617,7 @@ void Map_Selection(void)
 	/*
 	** Now print the text over the page
 	*/
-	Play_Sample(text2, 255, Options.Normalize_Sound(90));
+	if (!ControlQ) Play_Sample(text2, 255, Options.Normalize_Sound(90));
 	Alloc_Object(new ScorePrintClass(TXT_MAP_LOCATE,0,160,_greenpal));
 	Call_Back_Delay(20);
 	Alloc_Object(new ScorePrintClass(TXT_MAP_NEXT_MISSION,     0,170,_greenpal));
@@ -633,7 +645,12 @@ void Map_Selection(void)
 		HidPage.Fill_Rect(0,2*160, 2*20*6,2*176, TBLACK);
 #endif
 		BlitList.Clear();
-		Bit_It_In_Scale(0, 0, 320, 200, &SysMemPage, PseudoSeenBuff , &SeenBuff);
+		if (ControlQ) {
+			SysMemPage.Blit(*PseudoSeenBuff);
+			Call_Back_Delay(0);
+		} else {
+			Bit_It_In_Scale(0, 0, 320, 200, &SysMemPage, PseudoSeenBuff, &SeenBuff, 1, 1);
+		}
 	}
 
 	/*
@@ -654,10 +671,11 @@ void Map_Selection(void)
 
 	int q = 0;
 	for (frame = 0; frame < ((lastscenario) ? Get_Animation_Frame_Count(progress)-4 : 13); frame++) {
-		if (!frame) Play_Sample(beepy3, 255, Options.Normalize_Sound(90));
-		if (frame == 2) Play_Sample(beepy3, 255, Options.Normalize_Sound(90));
-		if (frame == 6) Play_Sample(newtarg1, 255, Options.Normalize_Sound(90));
-
+		if (!ControlQ) {
+			if (!frame) Play_Sample(beepy3, 255, Options.Normalize_Sound(90));
+			if (frame == 2) Play_Sample(beepy3, 255, Options.Normalize_Sound(90));
+			if (frame == 6) Play_Sample(newtarg1, 255, Options.Normalize_Sound(90));
+		}
 
 		if (lastscenario){
 			switch ( frame ){
@@ -736,7 +754,7 @@ void Map_Selection(void)
 
 	int selection = 0, color = 0;
 	// erase the "Locating Coordinates" message...
-	Play_Sample(beepy6, 255, Options.Normalize_Sound(90));
+	if (!ControlQ) Play_Sample(beepy6, 255, Options.Normalize_Sound(90));
 	if (!lastscenario) {
 #if (GERMAN | FRENCH)
 		SysMemPage.Fill_Rect( 0,160, 20*6,186, TBLACK);
@@ -773,6 +791,7 @@ void Map_Selection(void)
 	while (Get_Mouse_State() > 0) Show_Mouse();
 
 	Keyboard::Clear();
+	ControlQ = 0;
 	while (!done) {
 		Cycle_Call_Back_Delay(1,progresspalette);
 
@@ -802,7 +821,7 @@ void Map_Selection(void)
 	}
 	ScenVar = CountryArray[scenario].CountryVariant[ScenDir][selection];
 	ScenDir = CountryArray[scenario].CountryDir[ScenDir][selection];
-
+	ControlQ = 0;
 	if (!lastscenario) {
 		Close_Animation(progress);
 
@@ -856,8 +875,8 @@ void Map_Selection(void)
 		InterpolationPaletteChanged = TRUE;
 		InterpolationPalette = localpalette;
 		Increase_Palette_Luminance(localpalette , 30,30,30,63);
-		Read_Interpolation_Palette("MAP_LOC3.PAL");
-		Interpolate_2X_Scale(PseudoSeenBuff , &SeenBuff , "MAP_LOC3.PAL");
+		Read_Interpolation_Palette(isgoodguy ? "MAP_LOC3.PAL" : "MAP_LOC4.PAL");
+		Interpolate_2X_Scale(PseudoSeenBuff , &SeenBuff , isgoodguy ? "MAP_LOC3.PAL" : "MAP_LOC4.PAL");
 		Set_Palette(localpalette);
 //		Load_Data(isgoodguy ? "DARK_B.PAL" : "DARK_SA.PAL", localpalette, 768);
 
@@ -885,6 +904,7 @@ void Map_Selection(void)
 	delete TextPrintBuffer;
 	TextPrintBuffer = NULL;
 	BlitList.Clear();
+	ControlQ = 0;
 }
 
 
@@ -965,33 +985,33 @@ void Print_Statistics(int country, int xpos, int ypos)
 	};
 
 	static int const _govtnames[]={
-		TXT_MAP_GOVT0,
-		TXT_MAP_GOVT1,
-		TXT_MAP_GOVT2,
-		TXT_MAP_GOVT3,
-		TXT_MAP_GOVT4,
-		TXT_MAP_GOVT5,
-		TXT_MAP_GOVT6,
-		TXT_MAP_GOVT7,
-		TXT_MAP_GOVT8,
-		TXT_MAP_GOVT9,
-		TXT_MAP_GOVT10,
-		TXT_MAP_GOVT11
+		TXT_MAP_GOVT0, 		// REPUBLIC
+		TXT_MAP_GOVT1, 		// DEMOCRATIC STATE
+		TXT_MAP_GOVT2, 		// FEDERAL REPUBLIC
+		TXT_MAP_GOVT3, 		// CONST. REPUBLIC
+		TXT_MAP_GOVT4, 		// PARL. DEMOCRACY
+		TXT_MAP_GOVT5, 		// PRES. PARL. REPUBLIC
+		TXT_MAP_GOVT6, 		// DEMOCRACY
+		TXT_MAP_GOVT7, 		// IN TRANSITION
+		TXT_MAP_GOVT8, 		// ISLAMIC SOCIALIST
+		TXT_MAP_GOVT9, 		// MILITARY
+		TXT_MAP_GOVT10,		// ISLAMIC REPUBLIC
+		TXT_MAP_GOVT11,		// PARL. REPUBLIC
 	};
 	static int const _armynames[]={
-		TXT_MAP_ARMY0,
-		TXT_MAP_ARMY1,
-		TXT_MAP_ARMY2,
-		TXT_MAP_ARMY3,
-		TXT_MAP_ARMY4,
-		TXT_MAP_ARMY5
+		TXT_MAP_ARMY0,	// LOCAL MILITIA
+		TXT_MAP_ARMY1,	// STATE MILITIA
+		TXT_MAP_ARMY2,	// NATIONAL GUARD
+		TXT_MAP_ARMY3,	// FREE STANDING ARMY
+		TXT_MAP_ARMY4,	// ?
+		TXT_MAP_ARMY5,	// NATIONAL POWER
 	};
 	static int const _military[]={
-		TXT_MAP_MILITARY0,
-		TXT_MAP_MILITARY1,
-		TXT_MAP_MILITARY2,
-		TXT_MAP_MILITARY3,
-		TXT_MAP_MILITARY4
+		TXT_MAP_MILITARY0,	// RESPECTABLE
+		TXT_MAP_MILITARY1,	// FORMIDABLE
+		TXT_MAP_MILITARY2,	// LAUGHABLE
+		TXT_MAP_MILITARY3,	// REASONABLE
+		TXT_MAP_MILITARY4,	// INSIGNIFICANT
 	};
 
 	static char const _greenpal[]={0,0x41,0x42,0x43,0x44,0x44,0x44,0x44,0x44,0x44,0x44,0x44,0x44,0x44,0x44,0x44};
@@ -1000,7 +1020,8 @@ void Print_Statistics(int country, int xpos, int ypos)
 
 /* Change to the six-point font for Text_Print */
 	oldfont = Set_Font(ScoreFontPtr);
-
+	// Reset skip for this part.
+	ControlQ = 0;
 #ifdef GERMAN
 	xpos = 8;
 #else
@@ -1046,6 +1067,7 @@ void Print_Statistics(int country, int xpos, int ypos)
 		} else {
 			if (country >=15) country++;	// hack to account for Egypt
 		}
+		// Nod has a data line for its first mission (Lybia). Skip it.
 		country++;
 
 		Alloc_Object(new ScorePrintClass(_countryname[NodStats[country].nameindex],xpos,ypos,_greenpal));
@@ -1103,20 +1125,29 @@ void Print_Statistics(int country, int xpos, int ypos)
 	int done = 0;
 	while (!done) {
 		done = 1;
-		for (int x = 0; x < MAXSCOREOBJS; x++) if (ScoreObjs[x]) {
-			done = 0;
-			Call_Back_Delay(1);
+		for (int x = 0; x < MAXSCOREOBJS; x++) {
+			if (ScoreObjs[x]) {
+				done = 0;
+				Call_Back_Delay(1);
+			}
 		}
 	}
 	Keyboard::Clear();
-	while (Keyboard::Check()){
-		Keyboard::Clear();
-	}
-	while (!Keyboard::Check() && !ControlQ) {
+	KeyNumType keypress = (Keyboard::Check() & (~KN_SHIFT_BIT));
+	while (keypress != KN_ESC && keypress != KN_SPACE && keypress != KN_RETURN
+		 && keypress != KN_LMOUSE && keypress != KN_RMOUSE
+		 && !(keypress >= KN_A && keypress <= KN_Z)
+		 && !(keypress >= KN_0 && keypress <= KN_9)) {
 		Call_Back_Delay(1);
+		Keyboard::Clear();
+		keypress = (Keyboard::Check() & (~KN_SHIFT_BIT));
 	}
+	//while (!Keyboard::Check() && !ControlQ) {
+	//	Call_Back_Delay(1);
+	//}
 	Keyboard::Clear();
 	Set_Font(oldfont);
+	ControlQ = 0;
 }
 
 #ifdef NEVER

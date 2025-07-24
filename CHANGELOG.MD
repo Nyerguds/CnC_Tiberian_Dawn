@@ -133,3 +133,5 @@ v1.04: (in progress)
 * Items without icons that are made buildable (e.g. through setting a mission's buildlevel to 99) will now show a dummy icon.
 * Icons and other theater-specific graphics overridden by addon mixfiles will no longer corrupt the game when switching theaters.
 * \[Remaster\] Buildings that are in the process of selling and have already evacuated their crew will not spawn more infantry when destroyed.
+* The map selection's "Click to continue" end screen now filters on specific keyboard input ranges, allowing screen capture keys to still work on this scene.
+* Pressing \[Escape\] on the score or map screen will now speed up the animations to rapidly skip to the end state.

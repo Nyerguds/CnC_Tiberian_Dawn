@@ -88,7 +88,7 @@ int  ScorePass;
 
 void const * Beepy6;
 int ControlQ;	// cheat key to skip past score/mapsel screens
-bool StillUpdating;
+bool StillUpdating; // animations are still going on.
 
 GraphicBufferClass *PseudoSeenBuff;
 GraphicBufferClass *TextPrintBuffer;
@@ -228,6 +228,7 @@ ScoreTimeClass::ScoreTimeClass(int xpos, int ypos, void const * data, int max, i
 void ScoreTimeClass::Update(void)
 {
 	GraphicViewPortClass *oldpage;
+	// this is an animated loop; it does not skip to end.
 	if (!Timer.Time()) {
 		Timer.Set(TimerReset);
 		if (++Stage >= MaxStage) Stage = 0;
@@ -237,6 +238,9 @@ void ScoreTimeClass::Update(void)
 		Set_Logic_Page(oldpage);
 	}
 }
+
+void ScoreTimeClass::SkipToEnd(void) {}; // this does not end.
+bool ScoreTimeClass::IsSkipping(void) { return(false); } ;
 
 ScoreCredsClass::ScoreCredsClass(int xpos, int ypos, void const * data, int max, int timer) :
 	ScoreAnimClass(xpos, ypos, data)
@@ -257,17 +261,15 @@ void ScoreCredsClass::Update(void)
 		if (++Stage >= MaxStage) Stage = 0;
 		oldpage = LogicPage;
 		Set_Logic_Page(PseudoSeenBuff);
-		if (Stage <22) {
-			Play_Sample(Clock1, 255, Options.Normalize_Sound(70));
-		} else {
-			if (Stage==24) {
-				Play_Sample(CashTurn, 255, Options.Normalize_Sound(70));
-			}
-		}
+		if (Stage <22) Play_Sample(Clock1, 255, Options.Normalize_Sound(70));
+		else if (Stage==24) Play_Sample(CashTurn, 255, Options.Normalize_Sound(70));
 		CC_Draw_Shape(DataPtr,Stage, XPos, YPos, WINDOW_MAIN,SHAPE_WIN_REL, 0, 0);
 		Set_Logic_Page(oldpage);
 	}
 }
+
+void ScoreCredsClass::SkipToEnd(void) { } ;// this is stopped from the UI.
+bool ScoreCredsClass::IsSkipping(void) { return(false); } ;
 
 
 ScorePrintClass::ScorePrintClass(int string, int xpos, int ypos, void const * palette, int background) :
@@ -304,10 +306,10 @@ void ScorePrintClass::Update(void)
 		return;
 	}
 
-	StillUpdating = true;
+	StillUpdating = !Skipping;
 
-	if (!Timer.Time()) {
-		Timer.Set(1);
+	if (Skipping || !Timer.Time()) {
+		if (!Skipping) Timer.Set(1);
 
 		int pos = XPos+(Stage*6);
 		if (Stage) {
@@ -381,10 +383,10 @@ void MultiStagePrintClass::Update(void)
 		return;
 	}
 
-	StillUpdating = true;
+	StillUpdating = !Skipping;
 
-	if (!Timer.Time()) {
-		Timer.Set(1);
+	if (Skipping || !Timer.Time()) {
+		if (!Skipping) Timer.Set(1);
 
 		/*
 		** Do 10 stages at once
@@ -443,8 +445,8 @@ void ScoreScaleClass::Update(void)
 	/*
 	** Restore the background for the scaled-up letter
 	*/
-	if (!Timer.Time()) {
-		Timer.Set(1);
+	if (Skipping || !Timer.Time()) {
+		if (!Skipping) Timer.Set(1);
 		if (Stage != 5) {
 			TextPrintBuffer->Blit(HidPage, _destx[Stage+1]*2, YPos*2, _destx[Stage+1]*2, YPos*2, _destw[Stage+1]*2, _destw[Stage+1]*2);
 			//SysMemPage.Blit(*PseudoSeenBuff, _destx[Stage+1], YPos, _destx[Stage+1], YPos, _destw[Stage+1], _destw[Stage+1]);
@@ -727,8 +729,8 @@ void ScoreClass::Presentation(void)
 	*/
 	long total = ((leadership * 40) + (4600) + (efficiency * 14))/100;
 	if (!total) total++;
-	// Buildlevel 98 will be usable without giving ridiculous scores
-	total *= (MAX(BuildLevel, 20) + 1);
+	// Buildlevel 98 will be usable without giving ridiculous scores. Cap score at 2000.
+	total *= (MIN(BuildLevel, 19) + 1);
 
 // Load up the shapes for the Nod score screen
 	if (house == HOUSE_GOOD || youvsthem) {
@@ -786,8 +788,12 @@ void ScoreClass::Presentation(void)
 		*/
 		void const * logoptr = MixFileClass::Retrieve("LOGOS.SHP");
 		CC_Draw_Shape(logoptr, 1, 0, 0, WINDOW_MAIN, SHAPE_WIN_REL, 0, 0);
-
-		Bit_It_In_Scale(0,0, 128,104-16, &SysMemPage, PseudoSeenBuff, &SeenBuff , 1);
+		if (ControlQ) {
+			SysMemPage.Blit(*PseudoSeenBuff);
+			Call_Back_Delay(0);
+		} else {
+			Bit_It_In_Scale(0,0, 128,104-16, &SysMemPage, PseudoSeenBuff, &SeenBuff , 1);
+		}
 	}
 
 	Set_Logic_Page(PseudoSeenBuff);
@@ -1445,7 +1451,7 @@ void ScoreClass::Show_Credits(int house, char const pal[])
 	i = -50;
 
 	BlitList.Add (2* (_credpx[house]), 2* (_credpy[house]), 2* (_credpx[house]), 2* (_credpy[house]), 5*12 , 12);
-
+	bool skipping = false;
 	do {
 		add = 5;
 		if ((PlayerPtr->Available_Money() - i) > 100 ) add += 15;
@@ -1458,7 +1464,8 @@ void ScoreClass::Show_Credits(int house, char const pal[])
 		Set_Font_Palette(pal);
 		Count_Up_Print("%d", i, PlayerPtr->Available_Money(), _credpx[house], _credpy[house]);
 		Call_Back_Delay(2);
-		if (Check_Key()) {
+		if (!skipping && (Check_Key() || ControlQ)) {
+			skipping = true;
 			i=PlayerPtr->Available_Money() - 5;
 			Keyboard::Clear();
 		}
@@ -1869,11 +1876,12 @@ void Call_Back_Delay(int time)
 {
 	CountDownTimerClass cd;
 
-	if (!ControlQ) {
-		if (Keyboard::Down(KN_LCTRL) && Keyboard::Down(KN_Q)) {
+	KeyNumType keypress = Keyboard::Check();
+	if (keypress) {
+		if (!ControlQ && keypress == KN_ESC) {
 			ControlQ = 1;
-			Keyboard::Clear();
 		}
+		Keyboard::Clear();
 	}
 	if (ControlQ) time=0;
 
@@ -1888,12 +1896,21 @@ void Call_Back_Delay(int time)
 		//	Interpolate_2X_Scale(PseudoSeenBuff , &SeenBuff ,NULL);
 			//BlitList.Update();
 		//}else{
-			Animate_Score_Objs();
-			Interpolate_2X_Scale(PseudoSeenBuff , &HidPage ,NULL);
-			BlitList.Update();
-			WWMouse->Draw_Mouse(&HidPage);
-			HidPage.Blit(SeenBuff);
-			WWMouse->Erase_Mouse(&HidPage, TRUE);
+		keypress = Keyboard::Check();
+		if (keypress) {
+			if (!ControlQ && keypress == KN_ESC) {
+				ControlQ = 1;
+				cd.Set(0);
+			}
+			Keyboard::Clear();
+		}
+
+		Animate_Score_Objs();
+		Interpolate_2X_Scale(PseudoSeenBuff , &HidPage ,NULL);
+		BlitList.Update();
+		WWMouse->Draw_Mouse(&HidPage);
+		HidPage.Blit(SeenBuff);
+		WWMouse->Erase_Mouse(&HidPage, TRUE);
 		//}
 	} while(cd.Time());
 	StreamLowImpact = false;
@@ -1906,6 +1923,14 @@ void Animate_Score_Objs()
 	for (int i = 0; i < MAXSCOREOBJS; i++) {
 		if (ScoreObjs[i]) {
 			ScoreObjs[i]->Update();
+			if (ControlQ) {
+				if (ScoreObjs[i]) {
+					ScoreObjs[i]->SkipToEnd();
+				}
+				while(ScoreObjs[i] && ScoreObjs[i]->IsSkipping()) {
+					ScoreObjs[i]->Update();
+				}
+			}
 		}
 	}
 }
