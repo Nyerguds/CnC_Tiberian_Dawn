@@ -1,9 +1,10 @@
 {
   "files.exclude": {
     "WIN32LIB/SRCDEBUG/**": true,
+    "WIN32LIB/AUDIO/OLD/**": true,
     "/**/*.obj": true,
   },
-  /*"files.encoding": "cp437", -- makes search stop working  */
+  /*"files.encoding": "cp437", -- The correct type, but this makes the search stop working  */
   "files.encoding": "windows1252", /* Not correct, but less destructive than utf8 on German/French and mono strings */
   "[markdown]": {
       "files.encoding": "utf8"

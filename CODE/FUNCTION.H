@@ -42,74 +42,74 @@
 Map (screen) class hierarchy.
 
  MapeditClass (most derived class) -- scenario editor
-        ï¿½
+        ³
    MouseClass -- handles mouse animation and display control
-        ï¿½
+        ³
   ScrollClass -- map scroll handler
-        ï¿½
+        ³
     HelpClass -- pop-up help text handler
-        ï¿½
+        ³
      TabClass -- file folder tab screen mode control dispatcher
-        ï¿½
+        ³
  SidebarClass -- displays and controls construction list sidebar
-        ï¿½
+        ³
    PowerClass -- display power production/consumption bargraph
-        ï¿½
+        ³
    RadarClass -- displays and controls radar map
-        ï¿½
+        ³
  DisplayClass -- general tactical map display handler
-        ï¿½
+        ³
      MapClass -- general tactical map data handler
-        ï¿½
+        ³
  GScreenClass (pure virtual base class) -- generic screen control
 
                           AbstractClass
-                                  ï¿½
-                                  ï¿½
-                                  ï¿½
-                                  ï¿½
+                                  ³
+                                  ³
+                                  ³
+                                  ³
                             ObjectClass
-                                  ï¿½
-       ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿
-   AnimClass  ï¿½  TemplateClass    ï¿½        ï¿½ï¿½ FuseClass     ï¿½    TerrainClass
-              ï¿½                   ï¿½        ï¿½ï¿½ FlyClass      ï¿½
-              ï¿½                   ï¿½  BulletClass            ï¿½
+                                  ³
+       ÚÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄ¿
+   AnimClass  ³  TemplateClass    ³        ÃÄ FuseClass     ³    TerrainClass
+              ³                   ³        ÃÄ FlyClass      ³
+              ³                   ³  BulletClass            ³
        OverlayClass        MissionClass               SmudgeClass
-                                  ï¿½
+                                  ³
                              RadioClass
-                                  ï¿½
-                                  ï¿½ï¿½ CrewClass
-                                  ï¿½ï¿½ FlasherClass
-                                  ï¿½ï¿½ StageClass
-                                  ï¿½ï¿½ CargoClass
+                                  ³
+                                  ÃÄ CrewClass
+                                  ÃÄ FlasherClass
+                                  ÃÄ StageClass
+                                  ÃÄ CargoClass
                             TechnoClass
-                                  ï¿½
-         ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿
+                                  ³
+         ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
      FootClass                                         BuildingClass
-         ï¿½
-         ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿
-    DriveClass  InfantryClass         ï¿½ï¿½ FlyClass
-         ï¿½                      AircraftClass
+         ³
+         ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+    DriveClass  InfantryClass         ÃÄ FlyClass
+         ³                      AircraftClass
    TurretClass
-         ï¿½
+         ³
    TarComClass
-         ï¿½
+         ³
      UnitClass
 
 
                             AbstractTypeClass
-                                    ï¿½
+                                    ³
                               ObjectTypeClass
-                                    ï¿½
-             ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿
-             ï¿½                      ï¿½            ï¿½                 ï¿½
-       TechnoTypeClass              ï¿½            ï¿½                 ï¿½
-             ï¿½                BulletTypeClass    ï¿½                 ï¿½
-             ï¿½                           TemplateTypeClass         ï¿½
-    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿             TerrainTypeClass
-    ï¿½              ï¿½           ï¿½              ï¿½
-UnitTypeClass      ï¿½   BuildingTypeClass      ï¿½
-                   ï¿½                  InfantryTypeClass
+                                    ³
+             ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+             ³                      ³            ³                 ³
+       TechnoTypeClass              ³            ³                 ³
+             ³                BulletTypeClass    ³                 ³
+             ³                           TemplateTypeClass         ³
+    ÚÄÄÄÄÄÄÄÄÁÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿             TerrainTypeClass
+    ³              ³           ³              ³
+UnitTypeClass      ³   BuildingTypeClass      ³
+                   ³                  InfantryTypeClass
            AircraftTypeClass
 #endif
 
