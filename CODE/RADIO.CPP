@@ -45,7 +45,7 @@
 /*
 **	These are the text representations of the radio messages that can be transmitted.
 */
-char const * RadioClass::Messages[RADIO_COUNT] = {
+char const * RadioClass::RadioMessages[RADIO_COUNT] = {
 	"hisssss",
 	"Roger.",
 	"Come in.",
@@ -99,7 +99,7 @@ char const * RadioClass::Messages[RADIO_COUNT] = {
  *=============================================================================================*/
 void RadioClass::Debug_Dump(MonoClass *mono) const
 {
-	mono->Set_Cursor(34, 5);mono->Printf(Messages[LastMessage]);
+	mono->Set_Cursor(34, 5);mono->Printf(RadioMessages[LastMessage]);
 	if (Radio) {
 		mono->Set_Cursor(50, 1);mono->Printf("%04X", Radio->As_Target());
 	}

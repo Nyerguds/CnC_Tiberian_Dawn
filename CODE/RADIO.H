@@ -71,8 +71,9 @@ class RadioClass : public MissionClass {
 		/*
 		**	This is a text representation of all the possible radio messages. This
 		**	text is used for monochrome debug printing.
+		**	(Renamed to allow access to global Messages.Add_Message(...))
 		*/
-		static char const * Messages[RADIO_COUNT];
+		static char const * RadioMessages[RADIO_COUNT];
 
 	public:
 

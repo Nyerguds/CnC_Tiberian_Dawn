@@ -371,20 +371,23 @@ void HelpClass::Set_Text(int text)
 //		Fancy_Text_Print(TXT_NONE, 0, 0, 0, 0, TPF_6POINT|TPF_NOSHADOW);
 		Fancy_Text_Print(TXT_NONE, 0, 0, 0, 0, TPF_MAP|TPF_NOSHADOW);
 		Width = String_Pixel_Width(Text_String(Text));
+		int	right = TacPixelX + Lepton_To_Pixel(TacLeptonWidth) - 3;
+		int	bottom = TacPixelY + Lepton_To_Pixel(TacLeptonHeight) - 1;
 		if (IsRight) {
 			DrawX = X - Width;
 			DrawY = Y;
+			if (DrawY + FontHeight > bottom) {
+				DrawY = bottom - FontHeight;
+			}
 		} else {
-			int	right = TacPixelX + Lepton_To_Pixel(TacLeptonWidth) - 3;
-			int	bottom = TacPixelY + Lepton_To_Pixel(TacLeptonHeight) - 1;
 
 			DrawX = X+X_OFFSET;
 			DrawY = Y+Y_OFFSET;
 			if (DrawX + Width > right) {
-				DrawX -= (DrawX+Width) - right;
+				DrawX = right - Width;
 			}
 			if (DrawY + FontHeight > bottom) {
-				DrawY -= (DrawY+FontHeight) - bottom;
+				DrawY = bottom - FontHeight;
 			}
 			if (DrawX < TacPixelX+1) DrawX = TacPixelX+1;
 			if (DrawY < TacPixelY+1) DrawY = TacPixelY+1;
@@ -396,6 +399,10 @@ void HelpClass::Set_Text(int text)
 			memset(buffer, 0, sizeof(buffer));
 			if (Get_Extra_Text(buffer, true)) {
 				lines = 2;
+				// Two lines now; make sure power label doesn't clip outside the screen.
+				if (DrawY + (FontHeight * 2) > bottom) {
+					DrawY = bottom - (FontHeight * 2);
+				}
 				int width2 = String_Pixel_Width(buffer);
 				int offset = MAX(0, width2 - Width);
 				useprimary = offset == 0;

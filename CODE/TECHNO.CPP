@@ -556,9 +556,10 @@ bool TechnoClass::Revealed(HouseClass * house)
 
 				/*
 				**	A newly revealed object will always perform a look operation.
+				**	Ensure that the building is set as Discovered here so it doesn't rediscover itself.
 				*/
-				// if (house == PlayerPtr) IsDiscoveredByPlayer = true;
-				// if (house != PlayerPtr) IsDiscoveredByComputer = true;
+				if (house == PlayerPtr) IsDiscoveredByPlayer = true;
+				if (house != PlayerPtr) IsDiscoveredByComputer = true;
 				Look();
 			}
 		}

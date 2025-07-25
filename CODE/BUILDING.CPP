@@ -2947,7 +2947,6 @@ void BuildingClass::Read_INI(char *buffer)
 				if (b->Unlimbo(Cell_Coord(cell), facing)) {
 					// Nyerguds's TUC Quick Fix Patch v1.04
 					// Oil Derricks placed down as damaged will have their flame spout animation.
-					bool belowhalf = strength < 0x80;
 					strength = MIN(strength, 0x100);
 					if (strength < 0x80 && classid == STRUCT_PUMP) {
 						b->Flame_Spout();
