@@ -548,7 +548,8 @@ void OptionsClass::Load_Settings (void)
 	IsDeathAnnounce = WWGetPrivateProfileBool("Options", "DeathAnnounce", false, buffer);
 	IsFreeScroll = WWGetPrivateProfileBool("Options", "FreeScrolling", false, buffer);
 	SlowPalette = WWGetPrivateProfileBool("Options", "SlowPalette", true, buffer);
-	PowerBuildToolTips = WWGetPrivateProfileBool("Options", "PowerToolTips", true, buffer);
+	NoPowerBuildToolTips = WWGetPrivateProfileBool("Options", "NoPowerToolTips", false, buffer);
+	NoNodSceneMusic = WWGetPrivateProfileBool("Options", "NoNodSceneMusic", false, buffer);
 
 	char workbuf[128];
 

@@ -643,7 +643,8 @@ void ScoreClass::Presentation(void)
 	ControlQ = 0;
 	FontXSpacing = 0;
 	Map.Override_Mouse_Shape(MOUSE_NORMAL);
-	ThemeType music = house == HOUSE_GOOD ? THEME_WIN1 : THEME_NOD_WIN1;
+	
+	ThemeType music = house == HOUSE_GOOD || Options.NoNodSceneMusic ? THEME_WIN1 : THEME_NOD_WIN1;
 	Theme.Queue_Song(music);
 
 	VisiblePage.Clear();

@@ -92,7 +92,8 @@ class OptionsClass {
 		unsigned IsScoreShuffle:1;	// Score list should shuffle?
 		unsigned IsDeathAnnounce:1;// Announce enemy deaths?
 		unsigned IsFreeScroll:1;	// Allow free direction scrolling?
-		unsigned PowerBuildToolTips:1;	// Add extra power info on building tooltips
+		unsigned NoPowerBuildToolTips:1;	// Don't add extra power info on building tooltips?
+		unsigned NoNodSceneMusic:1;	// Don't use Nod-specific sore and map music?
 
 	protected:
 

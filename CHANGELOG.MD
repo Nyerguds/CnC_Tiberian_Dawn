@@ -77,7 +77,7 @@ v1.04: (in progress)
 * \[Remaster\] Added "D" as Deploy/Unload hotkey. This works even when having multiple units selected, and will only affect units that can perform the deploy action.
 * Added "E" as hotkey to select all units on the screen. This can be combined with the \[Shift\] key.
 * Added "T" as shortcut for selecting all units on the screen of the same types as the already-selected units. This can be combined with the \[Shift\] key.
-* Added power balance info on the power output and building tooltips. This is enabled by default, but can be disabled with the option "PowerToolTips=false" in conquer.ini
+* Added power balance info on the power output and building tooltips. This is enabled by default, but can be disabled by adding the option "NoPowerToolTips=true" in conquer.ini, under \[Options\].
 * The keyboard-given orders for Area Guard, Scatter and Deploy will now give unit responses.
 * Deploying units by clicking on them now works even if you have multiple units selected. This will not affect the other units in the selection.
 * \[Remaster\] Multiple infantry can now be loaded into a transport with a single click.
@@ -135,3 +135,4 @@ v1.04: (in progress)
 * \[Remaster\] Buildings that are in the process of selling and have already evacuated their crew will not spawn more infantry when destroyed.
 * The map selection's "Click to continue" end screen now filters on specific keyboard input ranges, allowing screen capture keys to still work on this scene.
 * Pressing \[Escape\] on the score or map screen will now speed up the animations to rapidly skip to the end state.
+* Implemented the Nod-specific map and score screen music. This is enabled by default, but can be disabled by adding the option "NoNodSceneMusic=true" in conquer.ini, under \[Options\].

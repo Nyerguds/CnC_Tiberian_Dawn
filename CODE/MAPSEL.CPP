@@ -271,7 +271,7 @@ void Map_Selection(void)
 
 	// Check if they're even entitled to map selection this time
 	if (CountryArray[scenario].Choices[ScenDir]==0) return;
-	ThemeType music = isgoodguy ? THEME_MAP1 : THEME_NOD_MAP1;
+	ThemeType music = isgoodguy || Options.NoNodSceneMusic ? THEME_MAP1 : THEME_NOD_MAP1;
 	Theme.Queue_Song(music);
 
 	Theme.Queue_Song(THEME_MAP1);
