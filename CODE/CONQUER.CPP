@@ -73,6 +73,7 @@
 #include	<share.h>
 #include <malloc.h>
 #include  "ccdde.h"
+#include <filepcx.h>
 
 #define SHAPE_TRANS		0x40
 
@@ -83,6 +84,9 @@ void *Get_Shape_Header_Data(void *ptr);
 *****************************************/
 bool Main_Loop();
 void Keyboard_Process(KeyNumType & input);
+#pragma off (unreferenced)
+static void ShowUIMessage(char* message, ...);
+#pragma on (unreferenced)
 #ifndef DEMO
 static void Message_Input(KeyNumType &input);
 #endif
@@ -472,8 +476,8 @@ void Keyboard_Process(KeyNumType &input)
 	}
 #endif
 
-//#ifdef CHEAT_KEYS
-	if (/*Debug_Playtest && */input == (KN_W|KN_ALT_BIT)) {
+#ifdef CHEAT_KEYS
+	if (Debug_Playtest && input == (KN_W|KN_ALT_BIT)) {
 		PlayerPtr->Blockage = false;
 		PlayerPtr->Flag_To_Win();
 	}
@@ -486,7 +490,36 @@ void Keyboard_Process(KeyNumType &input)
 			Special_Dialog();
 		}
 	}
-//#endif
+#endif
+
+	if (input == (KN_S|KN_CTRL_BIT)) {
+		/*
+		** time to create a screen shot using the PCX code (if it works)
+		*/
+		GraphicBufferClass temp_page(	SeenBuff.Get_Width(),
+												SeenBuff.Get_Height(),
+												NULL,
+												SeenBuff.Get_Width() * SeenBuff.Get_Height());
+		char filename[30];
+		SeenBuff.Blit(temp_page);
+		bool fileAvailable = false;
+		for (int lp = 0; lp <= 9999; lp++) {
+			sprintf(filename, "scrn%04d.pcx", lp);
+			int acc = access(filename, F_OK);
+			//ShowUIMessage("File access for\"%s\" returned %d.", filename, acc);
+			if (acc == -1) {
+				fileAvailable = true;
+				break;
+			}
+		}
+		if (fileAvailable) {
+			Write_PCX_File(filename, temp_page, (unsigned char *)CurrentPalette);
+			ShowUIMessage("\"%s\" %s.", filename, Text_String(TXT_OK));
+		} else {
+			ShowUIMessage("%s", Text_String(TXT_NO_FILES));
+		}
+		input = KN_NONE;
+	}
 
 	/*
 	**	If the options key(s) were pressed, then bring up the options screen.
@@ -499,16 +532,26 @@ void Keyboard_Process(KeyNumType &input)
 		//DebugColour &=7;
 	}
 
+	bool shiftdown = (input & WWKEY_SHIFT_BIT) != 0;
+	bool ctrldown = (input & WWKEY_CTRL_BIT) != 0;
+	bool altdown = (input & WWKEY_ALT_BIT) != 0;
+
 	/*
 	**	Process prerecorded team selection. This will be an addative select
 	**	if the SHIFT key is held down. It will create the team if the
 	**	CTRL or ALT key is held down.
 	*/
 	int action = 0;
-	if (input & WWKEY_SHIFT_BIT) action = 1;
-	if (input & WWKEY_ALT_BIT) action = 3;
-	if (input & WWKEY_CTRL_BIT) action = 2;
-	bool additive = (input & WWKEY_SHIFT_BIT) != 0;
+
+	// 0 - NONE - Select the members of this team.
+	// 1 - SHIFT - Add the members of this team to the selection.
+	// 2 - CTRL - Make all selected objects members of this team.
+	// 3 - ALT - Select and center on the members of this team.
+	// 4 - ALT+SHIFT - Add the members of this team to the selection and center on the team.
+	if (shiftdown && !altdown && !ctrldown) action = 1;
+	if (ctrldown && !altdown && !shiftdown) action = 2;
+	if (altdown && !ctrldown) action = shiftdown ? 4 : 3;
+	bool additive = shiftdown;
 	bool foundhome = false;
 
 	switch (KN_To_VK(plain)) {
@@ -574,7 +617,7 @@ void Keyboard_Process(KeyNumType &input)
 		**	If the "N" key is pressed, then select the next object.
 		*/
 		case VK_N:
-			if (action) {
+			if (shiftdown) {
 				obj = Map.Prev_Object(CurrentObject.Count() ? CurrentObject[0] : NULL);
 			} else {
 				obj = Map.Next_Object(CurrentObject.Count() ? CurrentObject[0] : NULL);
@@ -618,7 +661,7 @@ void Keyboard_Process(KeyNumType &input)
 		case VK_F9:
 		case VK_F10:
 			if (!Debug_Map) {
-				Handle_View(KN_To_VK(plain) - VK_F7, action);
+				Handle_View(KN_To_VK(plain) - VK_F7, (ctrldown && !altdown) ? 1 : 0);
 			}
 			break;
 #if (0)
@@ -664,6 +707,7 @@ void Keyboard_Process(KeyNumType &input)
 			Handle_Team(8, action);
 			break;
 		case VK_0:
+			//ShowUIMessage("Ctrl=%d, Alt=%d, Shift=%d", ctrldown ? 1 : 0, altdown? 1 : 0, shiftdown? 1 : 0);
 			Handle_Team(9, action);
 			break;
 
@@ -671,7 +715,7 @@ void Keyboard_Process(KeyNumType &input)
 		**	All selected units will go into idle mode.
 		*/
 		case VK_S:
-			if (CurrentObject.Count()) {
+			if (!ctrldown && !altdown && CurrentObject.Count()) {
 				for (int index = 0; index < CurrentObject.Count(); index++) {
 					ObjectClass const * tech = CurrentObject[index];
 
@@ -720,15 +764,18 @@ void Keyboard_Process(KeyNumType &input)
 					// Block "deploy" on buildings since it just sets them Primary.
 					if (tech && tech->Is_Techno() && tech->Can_Player_Move()) {
 						TechnoClass * techno = (TechnoClass *)tech;
+						RTTIType whatami = techno->What_Am_I();
 						// Check if this object can deploy.
-						ActionType action = techno->What_Action(techno);
+						ActionType whaction = techno->What_Action(techno);
 						// Aircraft are blocked if they are currently in the air because this apparently makes them seek out a friendly building to land at.
-						if ((action == ACTION_SELF || action == ACTION_NO_SELF)) {
+						if ((whaction == ACTION_SELF || whaction == ACTION_NO_SELF)) {
 							if (AllowVoice) {
 								techno->Response_Move();
 								AllowVoice = false;
 							}
-							OutList.Add(EventClass(tech->As_Target(), MISSION_UNLOAD, TARGET_NONE, ::As_Target(Coord_Cell(techno->Coord))));
+							// only give target if this is an aircraft. Giving a target to an MCV makes it malfunction.
+							TARGET dest = whatami == RTTI_AIRCRAFT ? ::As_Target(Coord_Cell(techno->Coord)) : TARGET_NONE;
+							OutList.Add(EventClass(tech->As_Target(), MISSION_UNLOAD, TARGET_NONE, dest));
 						}
 					}
 				}
@@ -867,6 +914,20 @@ void Keyboard_Process(KeyNumType &input)
 #endif
 }
 
+#pragma off (unreferenced)
+static void ShowUIMessage(char* message, ...) {
+	va_list	va;
+	char txt[128];
+	va_start(va, message);
+	vsprintf(txt, message, va);
+	txt[sizeof(txt)-1] = '\0';
+	va_end(va);
+
+	Messages.Add_Message(txt, CC_GREEN,
+		TPF_6PT_GRAD|TPF_USE_GRAD_PAL|TPF_FULLSHADOW, 1200, 0, 0, true);
+	Map.Flag_To_Redraw(false);
+}
+#pragma on (unreferenced)
 
 #ifndef DEMO
 /***********************************************************************************************
@@ -3137,9 +3198,11 @@ long VQ_Call_Back(unsigned char *, long )
  * INPUT:   team  -- The logical team number to process.                                       *
  *                                                                                             *
  *          action-- The action to perform on this team:                                       *
- *                   0 - Toggle the select state for all members of this team.                 *
- *                   1 - Select the members of this team.                                      *
+ *                   0 - Select the members of this team.                                      *
+ *                   1 - Add the members of this team to the selection.                        *
  *                   2 - Make all selected objects members of this team.                       *
+ *                   3 - Select and center on the members of this team.                        *
+ *                   4 - Add the members of this team to the selection and center on the team. *
  *                                                                                             *
  * OUTPUT:  none                                                                               *
  *                                                                                             *
@@ -3152,6 +3215,8 @@ void Handle_Team(int team, int action)
 {
 	int index;
 
+	//ShowUIMessage("Action is %d", action);
+
 	AllowVoice = true;
 	switch (action) {
 
@@ -3159,13 +3224,20 @@ void Handle_Team(int team, int action)
 		**	Toggle the team selection. If the team is selected, then merely unselect it. If the
 		**	team is not selected, then unselect all others before selecting this team.
 		*/
-		case 3:
-		case 0:
+		case 0: // just select
+		case 1: // add to selection
+		case 3: // just select and center
+		case 4: // add to selection and center
 			// Nyerguds's TUC Quick Fix Patch v1.03: deselect-for-team
 			// The whole following check on the first selected item is unreliable nonsense, and the proper equivalent,
 			// namely a check looping through all team members, wouldn't be any more efficient than just calling the
 			// unselect in the first place. Additionally, this fails when a building is selected. So, just call it.
-			Unselect_All();
+			if (action == 0 || action == 3) {
+				/*
+				**	Not additive selection.
+				*/
+				Unselect_All();
+			}
 #ifdef OBSOLETE
 			/*
 			**	If a non team member is currently selected, then deselect all objects
@@ -3214,49 +3286,13 @@ void Handle_Team(int team, int action)
 			/*
 			**	Center the map around the team if the ALT key was pressed too.
 			*/
-			if (action == 3) {
+			if (action == 3 || action == 4) {
 				Map.Center_Map();
 				Map.Flag_To_Redraw(true);
 			}
 			break;
 
-		/*
-		**	Additive selection of team.
-		*/
-		case 1:
-			for (index = 0; index < Units.Count(); index++) {
-				UnitClass * obj = Units.Ptr(index);
-				if (obj && !obj->IsInLimbo && obj->Group == team && obj->House == PlayerPtr) {
-					if (!obj->IsSelected) {
-						obj->Select();
-						AllowVoice = false;
-					}
-				}
-			}
-			for (index = 0; index < Infantry.Count(); index++) {
-				InfantryClass * obj = Infantry.Ptr(index);
-				if (obj && !obj->IsInLimbo && obj->Group == team && obj->House == PlayerPtr) {
-					if (!obj->IsSelected) {
-						obj->Select();
-						AllowVoice = false;
-					}
-				}
-			}
-			for (index = 0; index < Aircraft.Count(); index++) {
-				AircraftClass * obj = Aircraft.Ptr(index);
-				if (obj && !obj->IsInLimbo && obj->Group == team && obj->House == PlayerPtr) {
-					if (!obj->IsSelected) {
-						obj->Select();
-						AllowVoice = false;
-					}
-				}
-			}
-			break;
-
-		/*
-		**	Create the team.
-		*/
-		case 2:
+		case 2: // Create the team.
 			for (index = 0; index < Units.Count(); index++) {
 				UnitClass * obj = Units.Ptr(index);
 				if (obj && !obj->IsInLimbo && obj->House == PlayerPtr) {

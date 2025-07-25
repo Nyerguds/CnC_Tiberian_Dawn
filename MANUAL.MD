@@ -27,6 +27,8 @@ These hotkeys have been added or changed:
 * \[G\]: This hotkey (Area Guard) already existed, but can now be used to make harvesters seek out nearby tiberium.
 * \[T\]: Select all units on the current screen of the type(s) you already have selected. This can be combined with the \[Shift\] key to add these to the selection.
 * \[Ctrl\]+\[Alt\]: This modifier key combination for mouse clicks already existed to target objects, but can now be targeted at the ground, as targeted version of the Area Guard command. As with the hotkey, this also works for harvesters. Note that some units, such as Commandos and Helicopters, do not support Area Guard orders at all.
+* \[Alt\]+\[Shift\]+\[0-9\]: Adds the numbered team to the selection and then centers on the selection.
+* \[Ctrl\]+\[S\]: Saves a screenshot to the game folder, in PCX format.
 
 General upgrades to selection and giving orders:
 

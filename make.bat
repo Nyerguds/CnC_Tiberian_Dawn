@@ -99,4 +99,4 @@ echo ==============================
 echo Finished.
 echo ==============================
 
-pause
+if not exist RUN\conquer.exe pause

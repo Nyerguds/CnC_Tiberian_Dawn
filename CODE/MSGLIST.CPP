@@ -192,7 +192,7 @@ void MessageListClass::Init(int x, int y, int max_msg, int maxchars, int height)
  *   05/05/1995 BRR : Created.                                             *
  *=========================================================================*/
 TextLabelClass * MessageListClass::Add_Message(char *txt, int color,
-	TextPrintType style, int timeout, unsigned short magic_number, unsigned short crc)
+	TextPrintType style, int timeout, unsigned short magic_number, unsigned short crc, bool forcenew)
 {
 	int num_msg;
 	TextLabelClass *txtlabel;
@@ -221,7 +221,7 @@ TextLabelClass * MessageListClass::Add_Message(char *txt, int color,
 	Prevent a duplicate message.  (The IPXManager Global Channel cannot detect
 	a resend of a packet, so sometimes two identical messages appear in a row.)
 	------------------------------------------------------------------------*/
-	if (MessageList) {
+	if (MessageList && !forcenew) {
 		txtlabel = MessageList;
 		while (txtlabel) {
 			/*
@@ -242,7 +242,7 @@ TextLabelClass * MessageListClass::Add_Message(char *txt, int color,
 	** If the magic number is a valid message tail then see if we
 	** can add this message to the tail of an existing message (crc's must also match)
 	*/
-	if (magic_number > MESSAGE_HEAD_MAGIC_NUMBER &&
+	if (!forcenew && magic_number > MESSAGE_HEAD_MAGIC_NUMBER &&
 	    magic_number < MESSAGE_HEAD_MAGIC_NUMBER+MAX_MESSAGE_SEGMENTS){
 
 		position = magic_number - MESSAGE_HEAD_MAGIC_NUMBER;
@@ -438,7 +438,9 @@ TextLabelClass * MessageListClass::Add_Message(char *txt, int color,
 	Give audio feedback that the message was created
 	------------------------------------------------------------------------*/
 	void const * text2 = MixFileClass::Retrieve("TEXT2.AUD");
-	Play_Sample(text2, 255, Options.Normalize_Sound(90));
+	if (text2) {
+		Play_Sample(text2, 255, Options.Normalize_Sound(180));
+	}
 
 	return(txtlabel);
 }

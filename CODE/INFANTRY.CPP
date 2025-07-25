@@ -720,7 +720,7 @@ void InfantryClass::Per_Cell_Process(bool center)
 		/*
 		**	Rambo types give a gung-ho comment when unloaded.
 		*/
-		if (*this == INFANTRY_RAMBO) {
+		if (*this == INFANTRY_RAMBO && Mission != MISSION_ENTER) {
 			Sound_Effect(VOC_RAMBO_ROCK, Coord);
 		}
 

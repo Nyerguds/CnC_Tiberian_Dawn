@@ -469,17 +469,18 @@ KeyNumType GadgetClass::Input(void)
 		char filename[30];
 
 		SeenBuff.Blit(temp_page);
-		for (int lp = 0; lp < 99; lp ++) {
-			if (lp < 10) {
-				sprintf(filename, "scrsht0%d.pcx", lp);
-			} else {
-				sprintf(filename, "scrsht%d.pcx", lp);
-			}
-			if (access(filename, F_OK) == -1)
+		bool fileAvailable = false;
+		for (int lp = 0; lp <= 9999; lp++) {
+			sprintf(filename, "scrn%04d.pcx", lp);
+			int acc = access(filename, F_OK);
+			if (acc == -1) {
+				fileAvailable = true;
 				break;
+			}
 		}
-
-		Write_PCX_File(filename, temp_page, (unsigned char *)CurrentPalette);
+		if (fileAvailable) {
+			Write_PCX_File(filename, temp_page, (unsigned char *)CurrentPalette);
+		}
 		//Map.Place_Random_Crate();
 	}
 
