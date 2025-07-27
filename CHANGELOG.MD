@@ -1,8 +1,10 @@
+# Command & Conquer Patch Project - Version history
+
 Note that the older versions of this project (up to v1.03) were released as edited binaries. They can be found in the 'files' section of the [Command & Conquer Unofficial Patch 1.06 project on ModDb](https://www.moddb.com/mods/command-conquer-unofficial-patch-106/). They are the entries indicated as "C&C95 TUC quick fix patch".
 
 Fixes that were specifically inspired by or copied from the Remaster's code are indicated with \[Remaster\].
 
-v1.00:
+## v1.00:
 
 * Fixed the crash that happens when exploring at the top of the map with a unit with a large sight range.
 * Fixed the stealth animation corruption on the right half of the lowest line of the screen, which could crash the game.
@@ -16,13 +18,13 @@ v1.00:
 * Fixed multiplayer houses used in singleplayer missions showing up as gray on the radar.
 * Fixed the order of the main menu when going through it with the arrow keys.
 
-v1.01:
+## v1.01:
 
 * Fixed sequence error in engineer death animation from anti-armor-weapon.
 * Fixed tech level of the Chem Warrior to make it 98 instead of 99.
 * Disabled the behaviour that makes the Chem-Warrior randomly walk around.
 
-v1.02:
+## v1.02:
 
 * Fixed tiberium growth not refreshing unless you scroll away from it.
 * Fixed craters CR02-CR06 not placing correctly from mission files.
@@ -48,7 +50,7 @@ v1.02:
 * Fixed the Commando giving two responses at once when given a sabotage order. The "I got a present for ya!" yell on the map is now suppressed for the player owning the Commando, and is given as actual unit response instead.
 * Using the mouse scrollwheel now has the same effect as the up and down arrows; it scrolls through the sidebar lists.
 
-v1.03:
+## v1.03:
 
 * Fixed harvester giving a "no move" cursor on the minimap when targeting tiberium.
 * Fixed aircraft giving a double response when unloading or when docking to a building.
@@ -68,7 +70,7 @@ v1.03:
 * Holding down the \[Shift\] key now allows adding units when making a drag-selection.
 * \[Remaster\] Drag-selecting can now select flying aircraft.
 
-v1.04: (in progress)
+## v1.04: (in progress)
 
 * Newly built aircraft will now spawn on available helipads.
 * Added support for the laser Orcas in the Playstation "PATSUX" mission. This is enabled by putting "Patsux=1" under \[Basic\] inside a mission file.
