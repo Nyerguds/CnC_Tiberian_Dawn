@@ -62,9 +62,42 @@ The game contains two unused music tracks that were intended to be Nod-specific 
 
 This behaviour is enabled by default, but can be disabled by adding the option "NoNodSceneMusic=true" in conquer.ini, under \[Options\].
 
+## Extra usage notes
+
+### "Funpark" dinosaur campaign
+
+The game has a secret mini-campaign involving dinosaurs, which is normally unlocked by starting the game with the command line argument "funpark". However, command line arguments are tedious to work with in a Windows environment, and this option switched the entire game into a special mode, rather than just unlocking the campaign, which had some really odd side effects when loading existing savegames or starting expansion missions.
+
+To resolve all this, the secret missions can now be accessed in a much simpler way: click "Start New Game", and **on the "Select Transmission" screen, hold down the \[Shift\] key** while clicking on the GDI or Nod logo.
+
+### Console "Special Ops" missions
+
+The "**extras**" folder contains the two files "**sc-n64-tuc.mix**" and "**sc-psx-tuc.mix**". These are, respectively, the originally console-exclusive Nintendo 64 and Playstation "Special Ops" missions, which were also included in the remaster. Add them into your game folder, and you can access these missions in the "New Missions" menu.
+
+As an added bonus, with the upgrades in v1.04 of this patch, the Orca's LASER weapon in the "PATSUX" mission is fully functional.
+
+Note that the Nintendo 64 missions do not completely match the original console versions; they were tweaked to fix some issues with base power and lack of rebuilding. To align the tech with how it was on the Nintendo 64 console, all missions with base building have their tech levels increased to be equivalent to GDI mission 15.
+
+Also note that these missions only have mission briefings in English.
+
+### Extra remix tracks
+
+In the official soundtrack of the game, a bunch of the tracks have extra voices mixed into them. If the special CONQUER.INI option "**Scores=remix**" is enabled, the game will unlock these original mixes, making them replace the standard in-game versions. However, there are three tracks with such alternate soundtrack versions which are not included in the game, namely, "Just Do It Up!", "No Mercy" and "Deception" (aka, "We Will Stop Them"). In fact, in the Ion Cannon video, you can hear a short fragment of this version of "No Mercy".
+
+The "**extras**" folder contains a file called "**sc-remix.mix**" which can be added into the game folder to amend this. The game itself is already adapted to recognise these tracks as possibly having a remix, so it will substitute them automatically when found, and show the correct length for the alternate version in the playlist.
+
+### Grenade sound
+
+As part of the fixes done in this patch, the previously unused grenade throw sound is now played. If this bothers anyone, the sound can be disabled by taking the file "**ssnogren.mix**" from the "**extras**" folder and putting it in the game folder.
+
+### Special CONQUER.INI options
+
+In the "**extras**" folder, you can find "**special-options.txt**", which contains a set of secret developer switches that can be activated in the game by putting them in your CONQUER.INI file, under the \[Options\] section. A few of these are generally neat, such as the music remixes and showing true civilian names, but be warned that others, like disabling the "bib" pieces of buildings, can seriously mess up the game. Use these at your own risk.
+
+
 ## Mission making upgrades
 
-These are features that were originally implemented in the 1.06 patch, and have been carried over to also work here.
+These are mostly features that were originally implemented in the 1.06 patch.
 
 ### House colors
 
@@ -111,37 +144,9 @@ These three triggers were mainly added for multiplayer purposes: when experiment
 
 Additionally, "Civ. Evac." triggers can now be looped to detect multiple evacuations. Before, such triggers would activate endlessly, since the internal "was a civilian evacuated?" status wasn't reset after the triggers were handled.
 
-## Extra usage notes
+### Smudge upgrades
 
-### "Funpark" dinosaur campaign
-
-The game has a secret mini-campaign involving dinosaurs, which is normally unlocked by starting the game with the command line argument "funpark". However, command line arguments are tedious to work with in a Windows environment, and this option switched the entire game into a special mode, rather than just unlocking the campaign, which had some really odd side effects when loading existing savegames or starting expansion missions.
-
-To resolve all this, the secret missions can now be accessed in a much simpler way: click "Start New Game", and **on the "Select Transmission" screen, hold down the \[Shift\] key** while clicking on the GDI or Nod logo.
-
-### Console "Special Ops" missions
-
-The "**extras**" folder contains the two files "**sc-n64-tuc.mix**" and "**sc-psx-tuc.mix**". These are, respectively, the originally console-exclusive Nintendo 64 and Playstation "Special Ops" missions, which were also included in the remaster. Add them into your game folder, and you can access these missions in the "New Missions" menu.
-
-As an added bonus, with the upgrades in v1.04 of this patch, the Orca's LASER weapon in the "PATSUX" mission is fully functional.
-
-Note that the Nintendo 64 missions do not completely match the original console versions; they were tweaked to fix some issues with base power and lack of rebuilding. To align the tech with how it was on the Nintendo 64 console, all missions with base building have their tech levels increased to be equivalent to GDI mission 15.
-
-Also note that these missions only have mission briefings in English.
-
-### Extra remix tracks
-
-In the official soundtrack of the game, a bunch of the tracks have extra voices mixed into them. If the special CONQUER.INI option "**Scores=remix**" is enabled, the game will unlock these original mixes, making them replace the standard in-game versions. However, there are three tracks with such alternate soundtrack versions which are not included in the game, namely, "Just Do It Up!", "No Mercy" and "Deception" (aka, "We Will Stop Them"). In fact, in the Ion Cannon video, you can hear a short fragment of this version of "No Mercy".
-
-The "**extras**" folder contains a file called "**sc-remix.mix**" which can be added into the game folder to amend this. The game itself is already adapted to recognise these tracks as possibly having a remix, so it will substitute them automatically when found, and show the correct length for the alternate version in the playlist.
-
-### Grenade sound
-
-As part of the fixes done in this patch, the previously unused grenade throw sound is now played. If this bothers anyone, the sound can be disabled by taking the file "**ssnogren.mix**" from the "**extras**" folder and putting it in the game folder.
-
-### Special CONQUER.INI options
-
-In the "**extras**" folder, you can find "**special-options.txt**", which contains a set of secret developer switches that can be activated in the game by putting them in your CONQUER.INI file, under the \[Options\] section. A few of these are generally neat, such as the music remixes and showing true civilian names, but be warned that others, like disabling the "bib" pieces of buildings, can seriously mess up the game. Use these at your own risk.
+Craters can be added to a mission in the \[Smudge\] section. This system allows setting the size of the crater. However, due to a bug in the game, only CR1 worked correctly; all other craters would revert to the smallest size of CR1. With this bug fixed, all sizes of all six crater types (CR1-CR6) are now available for use.
 
 ## Full list of changes
 
