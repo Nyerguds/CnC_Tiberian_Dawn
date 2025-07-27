@@ -68,14 +68,11 @@ void * AnimClass::VTable;
 /***********************************************************************************************
  * AnimClass::Validate -- validates anim pointer                                               *
  *                                                                                             *
- * INPUT:                                                                                      *
- *		none.                                                                          *
+ * INPUT:   none.                                                                              *
  *                                                                                             *
- * OUTPUT:                                                                                     *
- *		1 = ok, 0 = error                                                              *
+ * OUTPUT:  1 = ok, 0 = error                                                                  *
  *                                                                                             *
- * WARNINGS:                                                                                   *
- *		none.                                                                          *
+ * WARNINGS:   none.                                                                           *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/09/1995 BRR : Created.                                                                 *
@@ -109,9 +106,9 @@ int AnimClass::Validate(void) const
  *          not_dying -- if true, animations with their loop count set to 0 are considered     *
  *                       "dying" and ignored as valid matches since they will end soon.        *
  *                                                                                             *
- * OUTPUT:  none                                                                               *
+ * OUTPUT:  none.                                                                              *
  *                                                                                             *
- * WARNINGS:   none                                                                            *
+ * WARNINGS:   none.                                                                           *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   06/17/2025 MM  : Created.                                                                 *
@@ -143,22 +140,22 @@ bool Has_Attached_Anim(ObjectClass * obj, AnimType animnum, bool not_dying)
  *    animation will loop.                                                                     *
  *                                                                                             *
  * INPUT:   obj   -- Pointer to the object that all attached animations will be processed.     *
- *          animnum -- type of animation to look for. ANIM_NONE disables filtering.            *
+ *          animtype -- type of animation to look for. ANIM_NONE disables filtering.           *
  *                                                                                             *
- * OUTPUT:  none                                                                               *
+ * OUTPUT:  none.                                                                              *
  *                                                                                             *
- * WARNINGS:   none                                                                            *
+ * WARNINGS:   none.                                                                           *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   12/11/1994 JLB : Created.                                                                 *
  *   06/17/2025 MM  : Added filter and kill switch                                             *
  *=============================================================================================*/
-void Shorten_Attached_Anims(ObjectClass * obj, AnimType animnum)
+void Shorten_Attached_Anims(ObjectClass * obj, AnimType animtype)
 {
 	if (obj) {
 		for (int index = 0; index < Anims.Count(); index++) {
 			AnimClass & anim = *Anims.Ptr(index);
-			if (anim.Object == obj && (animnum == ANIM_NONE || anim == animnum)) {
+			if (anim.Object == obj && (animtype == ANIM_NONE || anim == animtype)) {
 				anim.Loops = 0;
 			}
 		}

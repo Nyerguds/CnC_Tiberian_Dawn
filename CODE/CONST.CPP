@@ -291,6 +291,10 @@ TheaterDataType const Theaters[THEATER_COUNT] = {
 };
 
 
+/***************************************************************************
+ * These are the definitions of the player color schemes.
+ */
+
 /*
 **	These are the colors used to identify the various owners.
 */
@@ -314,32 +318,29 @@ const int COLOR_MP_BRIGHT_GREEN = 167;
 const int COLOR_MP_BLUE = 203;
 const int COLOR_MP_BRIGHT_BLUE = 201;
 
-
-/***************************************************************************
- * These are the names of the player colors
- */
 PlayerColorTypeClass const PlayerColors[REMAP_COUNT] =
 {
 	// Name        RemapUnits       RemapBld  Color             BrightColor
-	// Multiplayer House colors
+	// Multiplayer House colors. These MUST ALWAYS be the first ones,
+	// since additional multiplayer color arrays map on the values 0-5.
 	{"Yellow",     RemapYellow,     NULL,     COLOR_MP_YELLOW, COLOR_MP_BRIGHT_YELLOW }, // REMAP_YELLOW
 	{"Red",        RemapRed,        NULL,     COLOR_MP_RED,    COLOR_MP_BRIGHT_RED }, // REMAP_RED
-	{"Aqua",       RemapBlueGreen,  NULL,     COLOR_MP_AQUA,   COLOR_MP_BRIGHT_AQUA }, // REMAP_AQUA
+	{"BlueGreen",  RemapBlueGreen,  NULL,     COLOR_MP_AQUA,   COLOR_MP_BRIGHT_AQUA }, // REMAP_BLUEGREEN
 	{"Orange",     RemapOrange,     NULL,     COLOR_MP_ORANGE, COLOR_MP_BRIGHT_ORANGE }, // REMAP_ORANGE
 	{"Green",      RemapGreen,      NULL,     COLOR_MP_GREEN,  COLOR_MP_BRIGHT_GREEN }, // REMAP_GREEN
 	{"Blue",       RemapBlue,       NULL,     COLOR_MP_BLUE,   COLOR_MP_BRIGHT_BLUE }, // REMAP_BLUE
-	// singleplayer House colors
+	// Singleplayer House colors
 	{"GDI",        RemapYellow,     NULL,     COLOR_GOOD,      COLOR_BRIGHT_GOOD }, // REMAP_GDI
 	{"Nod",        RemapBlue,       RemapRed, COLOR_BAD,       COLOR_BRIGHT_BAD }, // REMAP_NOD
 	{"Neutral",    RemapNone,       NULL,     COLOR_NEUTRAL,   COLOR_BRIGHT_NEUTRAL }, // REMAP_NEUTRAL
 	{"Jurassic",   RemapNone,       NULL,     COLOR_BAD,       COLOR_BRIGHT_BAD }, // REMAP_JP
-	// new remap colors (todo)
+	// New remap colors (todo)
 	{"DarkGrey",   RemapDarkGrey,   NULL,     197, 194 }, // REMAP_DARK_GREY
 	{"Brown",      RemapBrown,      NULL,     209, 146 }, // REMAP_BROWN
 	{"Fire",       RemapFire,       NULL,     27, 148 }, // REMAP_FIRE
 	{"WarmSilver", RemapWarmSilver, NULL,     132, 163 }, // REMAP_WARM_SILVER
-
 	// Alternate names for some of the colors
+	{"Aqua",       RemapBlueGreen,  NULL,     COLOR_MP_AQUA,   COLOR_MP_BRIGHT_AQUA }, // REMAP_AQUA
 	{"Grey",       RemapBlue,       NULL,     COLOR_MP_BLUE,   COLOR_MP_BRIGHT_BLUE }, // REMAP_GREY
 	{"Gray",       RemapBlue,       NULL,     COLOR_MP_BLUE,   COLOR_MP_BRIGHT_BLUE }, // REMAP_GRAY
 	{"Teal",       RemapBlueGreen,  NULL,     COLOR_MP_AQUA,   COLOR_MP_BRIGHT_AQUA }, // REMAP_TEAL

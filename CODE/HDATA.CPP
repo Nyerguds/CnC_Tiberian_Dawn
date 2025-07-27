@@ -85,7 +85,7 @@ static HouseTypeClass const HouseMulti1(
 	TXT_CIVILIAN,				// FULLNAME:	Translated house name.
 	"MP1",						// SUFFIX:		House file suffix.
 	0,								// LEMON:		Lemon vehicle frequency.
-	REMAP_AQUA,				// Remap color ID number.
+	REMAP_BLUEGREEN,	// Remap color ID number.
 	'M'							// VOICE:		Voice prefix character.
 );
 

@@ -87,7 +87,6 @@ int tmp_flag = 0;
 //---------------------------------------------------------------------------
 //	GameCRC is the current computed CRC value for this frame.
 //	CRC[] is a record of our last 32 game CRC's.
-// ColorNames is for debug output in Print_CRCs
 //---------------------------------------------------------------------------
 #ifndef DEMO
 static unsigned long GameCRC;
@@ -97,14 +96,6 @@ static unsigned long CRC[32] =
 	 0,0,0,0,0,0,0,0,0,0,
 	 0,0};
 
-static char *ColorNames[6] = {
-	"Yellow",
-	"Red",
-	"BlueGreen",
-	"Orange",
-	"Green",
-	"Blue",
-};
 #endif	//DEMO
 
 //...........................................................................
@@ -3436,7 +3427,7 @@ void Print_CRCs(EventClass *ev)
 	int rnd;
 	HouseClass *housep;
 	//HousesType house;
-	int color;
+	PlayerColorType color;
 
 	Mono_Clear_Screen();
 	Mono_Set_Cursor (0,0);
@@ -3458,42 +3449,42 @@ void Print_CRCs(EventClass *ev)
 	if (housep) {
 		color = housep->RemapColor;
 		fprintf(fp,"Multi1: IsHuman:%d  Color:%s\n",housep->IsHuman,
-			ColorNames[color]);
+			Name_From_PlayerColor(color));
 	}
 
 	housep = HouseClass::As_Pointer (HOUSE_MULTI2);
 	if (housep) {
 		color = housep->RemapColor;
 		fprintf(fp,"Multi2: IsHuman:%d  Color:%s\n",housep->IsHuman,
-			ColorNames[color]);
+			Name_From_PlayerColor(color));
 	}
 
 	housep = HouseClass::As_Pointer (HOUSE_MULTI3);
 	if (housep) {
 		color = housep->RemapColor;
 		fprintf(fp,"Multi3: IsHuman:%d  Color:%s\n",housep->IsHuman,
-			ColorNames[color]);
+			Name_From_PlayerColor(color));
 	}
 
 	housep = HouseClass::As_Pointer (HOUSE_MULTI4);
 	if (housep) {
 		color = housep->RemapColor;
 		fprintf(fp,"Multi4: IsHuman:%d  Color:%s\n",housep->IsHuman,
-			ColorNames[color]);
+			Name_From_PlayerColor(color));
 	}
 
 	housep = HouseClass::As_Pointer (HOUSE_MULTI5);
 	if (housep) {
 		color = housep->RemapColor;
 		fprintf(fp,"Multi5: IsHuman:%d  Color:%s\n",housep->IsHuman,
-			ColorNames[color]);
+			Name_From_PlayerColor(color));
 	}
 
 	housep = HouseClass::As_Pointer (HOUSE_MULTI6);
 	if (housep) {
 		color = housep->RemapColor;
 		fprintf(fp,"Multi6: IsHuman:%d  Color:%s\n",housep->IsHuman,
-			ColorNames[color]);
+			Name_From_PlayerColor(color));
 	}
 
 

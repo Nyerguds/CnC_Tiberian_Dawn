@@ -694,24 +694,32 @@ inline HousesType operator++(HousesType &, int);
 #define	HOUSEF_MULTI6	(1<<HOUSE_MULTI6)
 
 typedef enum PlayerColorType {
-	REMAP_EXPLICIT_NONE = -2, // for explicitly disabling secondary color scheme.
-	REMAP_NONE = -1,
-	// Multiplayer House colors
+	REMAP_EXPLICIT_NONE = -2, // Used for explicitly disabling secondary color scheme.
+	REMAP_NONE = -1, // General "not found in lookup" value.
+
+	// Multiplayer House colors. These MUST ALWAYS be the first indices,
+	// since additional multiplayer color arrays map on the values 0-5.
+	// See MPlayerGColors and MPlayerTColors in GLOBALS.CPP, and
+	// MAX_MPLAYER_COLORS in this file. Since these colors only apply
+	// to multiplayer, these values were not included in PlayerColorTypeClass.
 	REMAP_YELLOW,
 	REMAP_MULTI_FIRST=REMAP_YELLOW,
 	REMAP_FIRST=REMAP_YELLOW,
 	REMAP_RED,
-	REMAP_AQUA,
+	REMAP_BLUEGREEN,
 	REMAP_ORANGE,
 	REMAP_GREEN,
 	REMAP_BLUE,
 	REMAP_MULTI_LAST=REMAP_BLUE,
-	// singleplayer House colors
+
+	// Singleplayer House colors
 	REMAP_GDI,
 	REMAP_NOD,
 	REMAP_NEUTRAL,
 	REMAP_JP,
-	// new remap colors (todo)
+
+	// New remap colors
+	REMAP_AQUA,
 	REMAP_DARK_GREY,
 	REMAP_BROWN,
 	REMAP_FIRE,

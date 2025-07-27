@@ -22,13 +22,13 @@ To use this patch, overwrite the "C&C95.exe" in your game folder with the correc
 
 These hotkeys have been added or changed:
 
-* \[D\]: Deploy any unit inside the current selection that has a deploy or unload ability.
-* \[E\]: Select all units on the current screen. This can be combined with the \[Shift\] key to add these to the selection.
-* \[G\]: This hotkey (Area Guard) already existed, but can now be used to make harvesters seek out nearby tiberium.
-* \[T\]: Select all units on the current screen of the type(s) you already have selected. This can be combined with the \[Shift\] key to add these to the selection.
-* \[Ctrl\]+\[Alt\]: This modifier key combination for mouse clicks already existed to target objects, but can now be targeted at the ground, as targeted version of the Area Guard command. As with the hotkey, this also works for harvesters. Note that some units, such as Commandos and Helicopters, do not support Area Guard orders at all.
-* \[Alt\]+\[Shift\]+\[0-9\]: Adds the numbered team to the selection and then centers on the selection.
-* \[Ctrl\]+\[S\]: Saves a screenshot to the game folder, in PCX format.
+* **\[D\]**: Deploy any unit inside the current selection that has a deploy or unload ability.
+* **\[E\]**: Select all units on the current screen. This can be combined with the \[Shift\] key to add these to the selection.
+* **\[G\]**: This hotkey (Area Guard) already existed, but can now be used to make harvesters seek out nearby tiberium.
+* **\[T\]**: Select all units on the current screen of the type(s) you already have selected. This can be combined with the \[Shift\] key to add these to the selection.
+* **\[Ctrl\]+\[Alt\]**: This modifier key combination for mouse clicks already existed to target objects, but can now be targeted at the ground, as targeted version of the Area Guard command. As with the hotkey, this also works for harvesters. Note that some units, such as Commandos and Helicopters, do not support Area Guard orders at all.
+* **\[Alt\]+\[Shift\]+\[0-9\]**: Adds the numbered team to the selection and then centers on the selection.
+* **\[Ctrl\]+\[S\]**: Saves a screenshot to the game folder, in PCX format.
 
 General upgrades to selection and giving orders:
 
@@ -60,6 +60,55 @@ This behaviour is enabled by default, but can be disabled by adding the option "
 The game contains two unused music tracks that were intended to be Nod-specific music for the mission selection map and the score screen. These tracks always existed in the game, but were never enabled. This patch implements that music as it was intended.
 
 This behaviour is enabled by default, but can be disabled by adding the option "NoNodSceneMusic=true" in conquer.ini, under \[Options\].
+
+## Mission making upgrades
+
+These are features that were originally implemented in the 1.06 patch, and have been carried over to also work here.
+
+### House colors
+
+New options are available in the house sections in missions ([Goodguy], [Badguy], [Neutral], etc.) that allow tweaking their colors.
+
+The following keys are available Each more specific one will override parts of the more general ones:
+
+* **ColorScheme**: Makes this house use a different color scheme (see list below). Each color scheme is a complete set of unit color, building color, unit radar color and building radar color. All the following keys will add exceptions to that basic profile.
+* **SecondaryScheme**: Takes the primary color of a different scheme and uses it for its buildings, like Nod does. You can use 'None' to disable Nod's secondary color, but do note that the (blue/grey) Nod will still have red radar colors then. It's probably better to just put the normal ColorScheme to Blue or Red.
+* **RadarScheme**: Makes this house use the radar colors from a different color scheme.
+* **UnitRadarColor**: Specify a specific palette index to use as unit radar color.
+* **BuildingRadarColor**: Specify a specific palette index to use as building radar color.
+
+Here is the list of color schemes. A color scheme includes the general remap color, the secondary color used for buildings, and the radar colors.
+
+Multiplayer colors:
+
+* **Yellow**: Multiplayer yellow.
+* **Red**: Multiplayer red.
+* **BlueGreen**: Multiplayer aqua (blue/greenish). Also works as **Aqua** or **Teal**.
+* **Orange**: Multiplayer orange.
+* **Green**: Multiplayer green.
+* **Blue**: Multiplayer metallic blue/grey. Also works as **Grey** or **Gray**.
+
+Campaign house colors:
+
+* **GDI**: GDI yellow. Has slightly different radar colors than the multiplayer yellow.
+* **Nod**: Nod's scheme, with blue/grey units, red buildings and red radar colors. Note that specifying this as SecondaryScheme will take its primary blue/grey for that, not the red.
+* **Neutral**: Standard yellow, but with grey radar colors. Used by [Neutral] and [Special].
+* **Jurassic**: Standard yellow, but with red radar colors. Used by the [Special] side dinosaurs in the Funpark missions.
+
+Extra colors:
+
+* **DarkGrey**: Dark grey scheme. Also works as **DarkGray**.
+* **Brown**: Brown scheme.
+* **Fire**: Yellow/orange scheme.
+* **WarmSilver**: Pale brown scheme.
+
+### Trigger upgrades
+
+Triggers can normally be destroyed with a trigger action of the type **Dstry Trig 'XXXX'**. Unfortunately, the name given in that trigger isn't variable. Only three trigger actions of this type exist, to destroy triggers called **XXXX**, **YYYY** and **ZZZZ**. With this update, three clones of this type have been added, to also allow destruction of triggers called **UUUU**, **VVVV** and **WWWW**.
+
+These three triggers were mainly added for multiplayer purposes: when experimenting with multiplayer scripting, it turned out that giving the multiplayer houses timed benefits (like reinforcements) could be used to create nice multiplayer enhancements. However, these reinforcements should obviously only happen for the players that are actually on the map. The only way to do this is to check with the All Destroyed trigger on each of the houses, and make that trigger remove the reinforcing trigger. But since there are 6 multiplayer-houses, this obviously only works if 6 triggers can be destroyed.
+
+Additionally, "Civ. Evac." triggers can now be looped to detect multiple evacuations. Before, such triggers would activate endlessly, since the internal "was a civilian evacuated?" status wasn't reset after the triggers were handled.
 
 ## Extra usage notes
 

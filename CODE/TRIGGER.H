@@ -101,7 +101,9 @@ class TriggerClass {
 			ACTION_AUTOCREATE,						// Computer to autocreat teams.
 			ACTION_WINLOSE,							// Win if captured, lose if destroyed.
 			ACTION_ALLOWWIN,							// Allows winning if triggered.
-
+			ACTION_DESTROY_UUUU,						// Destroy trigger XXXX.
+			ACTION_DESTROY_VVVV,						// Destroy trigger YYYY.
+			ACTION_DESTROY_WWWW,						// Destroy trigger ZZZZ.
 			ACTION_COUNT,
 			ACTION_FIRST=0
 		} ActionType;

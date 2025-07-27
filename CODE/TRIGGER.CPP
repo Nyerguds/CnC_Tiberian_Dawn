@@ -84,7 +84,7 @@ static const char * EventText[EVENT_COUNT + 1] = {
 	"# Units Dstr.",
 	"No Factories",
 	"Civ. Evac.",
-	"Built It"
+	"Built It",
 };
 
 
@@ -106,7 +106,10 @@ static const char * ActionText[TriggerClass::ACTION_COUNT + 1] = {
 	"Dstry Trig 'ZZZZ'",
 	"Autocreate",
 	"Cap=Win/Des=Lose",
-	"Allow Win"
+	"Allow Win",
+	"Dstry Trig 'UUUU'",
+	"Dstry Trig 'VVVV'",
+	"Dstry Trig 'WWWW'",
 };
 
 
@@ -466,6 +469,30 @@ bool TriggerClass::Spring(EventType event, ObjectClass *obj)
 			delete trig;
 			break;
 
+		case ACTION_DESTROY_UUUU:
+			trig = As_Pointer("UUUU");
+			if (trig) {
+				trig->Remove();
+			}
+			delete trig;
+			break;
+
+		case ACTION_DESTROY_VVVV:
+			trig = As_Pointer("VVVV");
+			if (trig) {
+				trig->Remove();
+			}
+			delete trig;
+			break;
+
+			case ACTION_DESTROY_WWWW:
+			trig = As_Pointer("WWWW");
+			if (trig) {
+				trig->Remove();
+			}
+			delete trig;
+			break;
+
 		case ACTION_AIRSTRIKE:
 			PlayerPtr->IsAirstrikePending = true;
 //			PlayerPtr->Make_Air_Strike_Available(true);
@@ -645,6 +672,30 @@ bool TriggerClass::Spring(EventType event, CELL cell)
 
 		case ACTION_DESTROY_ZZZZ:
 			trig = As_Pointer("ZZZZ");
+			if (trig) {
+				trig->Remove();
+			}
+			delete trig;
+			break;
+
+		case ACTION_DESTROY_UUUU:
+			trig = As_Pointer("UUUU");
+			if (trig) {
+				trig->Remove();
+			}
+			delete trig;
+			break;
+
+		case ACTION_DESTROY_VVVV:
+			trig = As_Pointer("VVVV");
+			if (trig) {
+				trig->Remove();
+			}
+			delete trig;
+			break;
+
+			case ACTION_DESTROY_WWWW:
+			trig = As_Pointer("WWWW");
 			if (trig) {
 				trig->Remove();
 			}
@@ -841,6 +892,30 @@ bool TriggerClass::Spring(EventType event, HousesType house, long data)
 
 		case ACTION_DESTROY_ZZZZ:
 			trig = As_Pointer("ZZZZ");
+			if (trig) {
+				trig->Remove();
+			}
+			delete trig;
+			break;
+
+		case ACTION_DESTROY_UUUU:
+			trig = As_Pointer("UUUU");
+			if (trig) {
+				trig->Remove();
+			}
+			delete trig;
+			break;
+
+		case ACTION_DESTROY_VVVV:
+			trig = As_Pointer("VVVV");
+			if (trig) {
+				trig->Remove();
+			}
+			delete trig;
+			break;
+
+			case ACTION_DESTROY_WWWW:
+			trig = As_Pointer("WWWW");
 			if (trig) {
 				trig->Remove();
 			}

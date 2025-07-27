@@ -456,7 +456,8 @@ CCDebugString ("C&C95 - Resignation packet received\n");
 				HouseClass * house = Houses.Raw_Ptr(ID);
 
 				sprintf(txt, Text_String(TXT_SPECIAL_WARNING), house->Name);
-				Messages.Add_Message(txt, MPlayerTColors[house->RemapColor],
+				int col = house->RemapColor >= MAX_MPLAYER_COLORS ? CC_GREEN : MPlayerTColors[house->RemapColor];
+				Messages.Add_Message(txt, col,
 					TPF_6PT_GRAD|TPF_USE_GRAD_PAL|TPF_FULLSHADOW, 1200, 0, 0);
 				Map.Flag_To_Redraw(false);
 			}

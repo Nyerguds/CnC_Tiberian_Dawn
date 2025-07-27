@@ -1341,9 +1341,7 @@ void HouseClass::AI(void)
 	}
 	// Nyerguds's TUC Quick Fix Patch v1.04
 	// Allows looping evacuation triggers.
-	if (IsCivEvacuated) {
-		IsCivEvacuated = false;
-	}
+	IsCivEvacuated = false;
 
 	/*
 	**	If a radar facility is not present, but the radar is active, then turn the radar off.
@@ -1692,14 +1690,21 @@ void HouseClass::Read_INI(char *buffer)
 			remap = housetype.RemapColor;
 		}
 		p->Init_Color(remap);
+		if (remap != REMAP_NONE && remap != REMAP_EXPLICIT_NONE) {
+			// The ini file contained a valid value. Even if nothing was really modified, mark it as edited.
+			p->ColorsWereChanged = true;
+		}
 
 		if (WWGetPrivateProfileString(hname, "SecondaryScheme", "", buf, sizeof(buf)-1, buffer)) {
 			PlayerColorType remap2 = PlayerColor_From_Name(buf);
 			if (remap2 == REMAP_EXPLICIT_NONE) {
-				// Explicit "None" disables the buildings palette
+				// Explicit "None" disables the buildings palette.
 				p->RemapTableBuildings = NULL;
+				p->ColorsWereChanged = true;
 			} else if (remap2 != REMAP_NONE) {
+				// Use the primary remap table of the found color scheme as buildings remap.
 				p->RemapTableBuildings = PlayerColors[remap2].RemapTable;
+				p->ColorsWereChanged = true;
 			}
 		}
 
@@ -1709,17 +1714,20 @@ void HouseClass::Read_INI(char *buffer)
 			if (remapRadar != REMAP_NONE && remapRadar != REMAP_EXPLICIT_NONE) {
 				p->Color = PlayerColors[remapRadar].Color;
 				p->BrightColor = PlayerColors[remapRadar].BrightColor;
+				p->ColorsWereChanged = true;
 			}
 		}
 
 		int radarCol = WWGetPrivateProfileInt(hname, "BuildingRadarColor", -1, buffer);
 		if(radarCol > 0 && radarCol < 256) {
 				p->Color = (unsigned char)radarCol;
+				p->ColorsWereChanged = true;
 		}
 
 		int radarColBri = WWGetPrivateProfileInt(hname, "UnitRadarColor", -1, buffer);
 		if(radarColBri > 0 && radarColBri < 256) {
 				p->BrightColor = (unsigned char)radarColBri;
+				p->ColorsWereChanged = true;
 		}
 
 		if (GameToPlay == GAME_NORMAL) {
@@ -4255,7 +4263,8 @@ void HouseClass::Init_Color(PlayerColorType color)
 	RemapTableBuildings = col ? col->RemapTableBuildings : NULL;
 	Color = col ? col->Color : GREY;
 	BrightColor = col ? col->BrightColor : GREY;
-	
+	// indicates whether this is the House's default color scheme.
+	ColorsWereChanged = Class->RemapColor != color;
 }
 
 /***********************************************************************************************

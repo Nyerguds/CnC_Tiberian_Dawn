@@ -344,12 +344,13 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 	HouseClass::Read_INI(buffer);
 	Call_Back();
 
-	if (GameToPlay == GAME_NORMAL) {
+	if (GameToPlay == GAME_NORMAL && ScenPlayer == SCEN_PLAYER_JP) {
 		// Nyerguds's TUC Quick Fix Patch v1.04
 		// Make funpark campaign independent from Jurassic mode.
 		// Special color exceptions for House Special in dinosaur campaign.
 		HouseClass *p = HouseClass::As_Pointer(HOUSE_JP);
-		if (ScenPlayer == SCEN_PLAYER_JP) {
+		// Only change it if the mission file didn't override it.
+		if (!p->ColorsWereChanged) {
 			// Red radar colors with yellow remap
 			p->Init_Color(REMAP_JP);
 		}

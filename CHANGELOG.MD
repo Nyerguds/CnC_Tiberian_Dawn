@@ -65,16 +65,16 @@ v1.03:
 * Fixed the "Guard Target" ability not working on the minimap.
 * Fixed aircraft showing the "Guard Target" cursor when pressing \[Ctrl\]+\[Alt\] even though they can't execute any Area Guard orders.
 * Restored the Stop command for defense buildings (pressing "S"), while properly fixing the cheat that allowed abusing it for cancelling building sales to get free infantry.
-* Holding down the Shift key now allows adding units when making a drag-selection.
+* Holding down the \[Shift\] key now allows adding units when making a drag-selection.
 * \[Remaster\] Drag-selecting can now select flying aircraft.
 
 v1.04: (in progress)
 
 * Newly built aircraft will now spawn on available helipads.
-* Added support for the laser Orcas in the Playstation "PATSUX" mission. This is enabled by putting "Patsux=1" inside a mission file.
+* Added support for the laser Orcas in the Playstation "PATSUX" mission. This is enabled by putting "Patsux=1" under \[Basic\] inside a mission file.
 * The laser now always shows a beam that's wide at the start and thinner at the end, no matter the direction in which it is fired.
 * Allowed the Area Guard functions ("G" and \[Ctrl\]+\[Alt\]+Click) to be used by Harvesters to find nearby tiberium to harvest. The code for this always existed in the game, but the UI never allowed giving such orders to a harvester.
-* \[Remaster\] Added "D" as Deploy/Unload hotkey. This works even when having multiple units selected, and will only affect units that can perform the deploy action.
+* \[Remaster\] Added "D" as Deploy/Unload hotkey. Unlike in the Remaster, this works even when having multiple units selected, and will only affect the units that can perform the deploy action.
 * Added "E" as hotkey to select all units on the screen. This can be combined with the \[Shift\] key.
 * Added "T" as shortcut for selecting all units on the screen of the same types as the already-selected units. This can be combined with the \[Shift\] key.
 * Added power balance info on the power output and building tooltips. This is enabled by default, but can be disabled by adding the option "NoPowerToolTips=true" in conquer.ini, under \[Options\].
@@ -83,7 +83,7 @@ v1.04: (in progress)
 * \[Remaster\] Multiple infantry can now be loaded into a transport with a single click.
 * \[Remaster\] Infantry can now enter an APC while the APC is busy attacking something.
 * Since the deployment change makes it impossible to load passengers into a selected transport that already contains at least one passenger, you can now hold \[Alt\] to override the Deploy cursor to allow passengers to enter.
-* When having infantry selected, you can now hold down shift and add an unloaded transport to the selection without this getting overridden by the order to load into the transport.
+* When having infantry selected, you can now hold down \[Shift\] and add an unloaded transport to the selection without this getting overridden by the order to load into the transport.
 * An "Enter" cursor no longer overrides the \[Ctrl\] force-fire or \[Ctrl\]+\[Alt\] Guard Target cursors. It will still override \[Alt\] force-move though, since that's used to override transports' unloading.
 * Survivors from C4 explosions will no longer immediately shoot at the Commando at the moment they are spawned.
 * Fixed the bug where survivors from C4 explosions often never bothered pursuing the Commando.
@@ -130,6 +130,7 @@ v1.04: (in progress)
 * Added support for the custom Snow theater.
 * Added "CCPP" version number on the main menu to indicate the patch version.
 * The B variant for the GDI mission 5 East-side map choices now works as it should.
+* The B variant of GDI mission 13, which showed the map info of the next mission when clicked, and which was completely identical to the A variant, is no longer accessible.
 * \[Remaster\] Helipads no longer vanish without animation when selling them when an aircraft is landed on them.
 * Items without icons that are made buildable (e.g. through setting a mission's buildlevel to 99) will now show a dummy icon.
 * Icons and other theater-specific graphics overridden by addon mixfiles will no longer corrupt the game when switching theaters.
@@ -140,3 +141,5 @@ v1.04: (in progress)
 * Added \[Ctrl\]+\[S\] as in-game screenshot key.
 * Added new option to enable the debug option IsBarOn, as "BarOn=harkonnen" ;)
 * Added the ability to customize color schemes from mission files.
+* Added support for extra destroyable triggers named UUUU, VVVV and WWWW.
+* Civilian evacuation triggers in missions can now be looped to detect multiple evacuations.

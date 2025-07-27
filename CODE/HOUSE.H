@@ -347,14 +347,35 @@ class HouseClass {
 		CELL FlagHome;
 
 		/*
-		** For multiplayer games, each house instance has a remap table; the table
-		** in the HousesTypeClass isn't used.  This variable is set to the remap
-		** table for the color the player wants to play.
+		** Color control info. The player color type is retained for multiplayer
+		** color identification reasons, but the actual values from it are all
+		** copied locally so they can be customized further.
+		*/
+		PlayerColorType RemapColor;
+		unsigned ColorsWereChanged:1;
+
+		/*
+		** Each house instance has a remap table. This was originally copied from
+		** the HousesTypeClass objects, using them as templates for assigning the
+		** different multiplayer colors, but this data is now stored in
+		** PlayerColorTypeClass objects in the PlayerColors array, and can also be
+		** customized in singleplayer missions. -MM 2025/07/27
 		*/
 		unsigned char const * RemapTable;
+		
+		/*
+		** Secondary remap table for buildings.
+		*/
 		unsigned char const * RemapTableBuildings;
-		PlayerColorType RemapColor;
+
+		/*
+		** Base Color for this House. Used for painting buildings on the minimap.
+		*/		
 		unsigned char Color;
+
+		/*
+		** Brighter Color for this House. Used for painting units on the minimap.
+		*/		
 		unsigned char BrightColor;
 
 		char Name[MPLAYER_NAME_MAX];
