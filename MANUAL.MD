@@ -138,15 +138,19 @@ Extra colors:
 
 ### Trigger upgrades
 
+#### Destroying triggers
+
 Triggers can normally be destroyed with a trigger action of the type **Dstry Trig 'XXXX'**. Unfortunately, the name given in that trigger isn't variable. Only three trigger actions of this type exist, to destroy triggers called **XXXX**, **YYYY** and **ZZZZ**. With this update, three clones of this type have been added, to also allow destruction of triggers called **UUUU**, **VVVV** and **WWWW**.
 
 These three triggers were mainly added for multiplayer purposes: when experimenting with multiplayer scripting, it turned out that giving the multiplayer houses timed benefits (like reinforcements) could be used to create nice multiplayer enhancements. However, these reinforcements should obviously only happen for the players that are actually on the map. The only way to do this is to check with the All Destroyed trigger on each of the houses, and make that trigger remove the reinforcing trigger. But since there are 6 multiplayer-houses, this obviously only works if 6 triggers can be destroyed.
 
-Additionally, "Civ. Evac." triggers can now be looped to detect multiple evacuations. Before, such triggers would activate endlessly, since the internal "was a civilian evacuated?" status wasn't reset after the triggers were handled.
+#### Civilian evacuation
+
+The **Civ. Evac.** trigger can now be looped to detect multiple evacuations. Before, such triggers would activate endlessly, since the internal "was a civilian evacuated?" status wasn't reset after the triggers were handled.
 
 ### Smudge upgrades
 
-Craters can be added to a mission in the \[Smudge\] section. This system allows setting the size of the crater. However, due to a bug in the game, only CR1 worked correctly; all other craters would revert to the smallest size of CR1. With this bug fixed, all sizes of all six crater types (CR1-CR6) are now available for use.
+Craters can be added to a mission in the \[Smudge\] section, and this system normally allows setting the size of the crater. However, due to a bug in the game, only CR1 worked correctly; all other craters would revert to the smallest size of CR1. With this bug fixed, all sizes of all six crater types (CR1-CR6) are now available for use.
 
 ## Full list of changes
 
