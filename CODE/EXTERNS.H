@@ -333,6 +333,7 @@ extern int										NewMaxAheadFrame2;
 /*
 **	Constant externs (data is not modified during game play).
 */
+extern PlayerColorTypeClass const PlayerColors[REMAP_COUNT];
 extern unsigned char const					RemapGreen[256];
 extern unsigned char const					RemapBlue[256];
 extern unsigned char const					RemapOrange[256];
@@ -340,6 +341,11 @@ extern unsigned char const					RemapNone[256];
 extern unsigned char const					RemapYellow[256];
 extern unsigned char const					RemapRed[256];
 extern unsigned char const					RemapBlueGreen[256];
+extern unsigned char const					RemapDarkGrey[256];
+extern unsigned char const					RemapBrown[256];
+extern unsigned char const					RemapFire[256];
+extern unsigned char const					RemapWarmSilver[256];
+
 extern WeaponTypeClass const				Weapons[WEAPON_COUNT];
 extern WarheadTypeClass const				Warheads[WARHEAD_COUNT];
 extern char const *							SourceName[SOURCE_COUNT];

@@ -125,6 +125,7 @@ v1.04: (in progress)
 * Fixed power output tooltip not showning "low" if the player has power drain but zero power production.
 * \[Remaster\] A unit landed on a helipad will no longer block the building placement adjacency checks.
 * Theater-illegal tiles on maps will now be drawn black, instead of non-refreshing black holes retaining whatever content last went over it.
+* Theater-illegal tiles can no longer crash the radar minimap.
 * \[Remaster\] Large-sight units such as the Commando will now properly reveal the area around them when coming out of a transport or a building.
 * Added support for the custom Snow theater.
 * Added "CCPP" version number on the main menu to indicate the patch version.
@@ -136,3 +137,6 @@ v1.04: (in progress)
 * The map selection's "Click to continue" end screen now filters on specific keyboard input ranges, allowing screen capture keys to still work on this scene.
 * Pressing \[Escape\] on the score or map screen will now speed up the animations to rapidly skip to the end state.
 * Implemented the Nod-specific map and score screen music. This is enabled by default, but can be disabled by adding the option "NoNodSceneMusic=true" in conquer.ini, under \[Options\].
+* Added \[Ctrl\]+\[S\] as in-game screenshot key.
+* Added new option to enable the debug option IsBarOn, as "BarOn=harkonnen" ;)
+* Added the ability to customize color schemes from mission files.

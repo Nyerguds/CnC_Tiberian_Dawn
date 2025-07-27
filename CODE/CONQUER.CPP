@@ -501,6 +501,7 @@ void Keyboard_Process(KeyNumType &input)
 												NULL,
 												SeenBuff.Get_Width() * SeenBuff.Get_Height());
 		char filename[30];
+
 		SeenBuff.Blit(temp_page);
 		bool fileAvailable = false;
 		for (int lp = 0; lp <= 9999; lp++) {
@@ -516,7 +517,7 @@ void Keyboard_Process(KeyNumType &input)
 			Write_PCX_File(filename, temp_page, (unsigned char *)CurrentPalette);
 			ShowUIMessage("\"%s\" %s.", filename, Text_String(TXT_OK));
 		} else {
-			ShowUIMessage("%s", Text_String(TXT_NO_FILES));
+			ShowUIMessage("scrn####.pcx: %s", Text_String(TXT_NO_FILES));
 		}
 		input = KN_NONE;
 	}
@@ -1454,15 +1455,22 @@ void Call_Back(void)
  * HISTORY:                                                                                    *
  *   10/07/1992 JLB : Created.                                                                 *
  *=============================================================================================*/
-char const *Language_Name(char const *basename)
+#pragma off (unreferenced)
+char const *Language_Name(char const *basename, bool standardext)
 {
 	static char _fullname[_MAX_FNAME+_MAX_EXT];
 
 	if (!basename) return(NULL);
-
-	sprintf(_fullname, "%s.ENG", basename);
+#if (GERMAN | FRENCH | JAPANESE)
+	if (standardext) {
+		sprintf(_fullname, "%s.ENG", basename);
+		return(_fullname);
+	}
+#endif
+	sprintf(_fullname, "%s.%s", basename, LANGUAGE_EXT);
 	return(_fullname);
 }
+#pragma on (unreferenced)
 
 
 /***********************************************************************************************
@@ -1496,24 +1504,75 @@ SourceType Source_From_Name(char const *name)
 
 
 /***********************************************************************************************
- * Name_From_Source -- retrieves the name for the given SourceType         						  *
- *                                                                         						  *
- * INPUT:                                                                  						  *
- *		source		SourceType to get the name for															  *
- *                                                                         						  *
- * OUTPUT:                                                                 						  *
- *		name of SourceType																							  *
- *                                                                         						  *
- * WARNINGS:                                                               						  *
- *		none.																												  *
- *                                                                         						  *
- * HISTORY:                                                                						  *
- *   11/15/1994 BR : Created.                                              						  *
+ * Name_From_Source -- retrieves the name for the given SourceType                             *
+ *                                                                                             *
+ * INPUT:   source -- SourceType to get the name for                                           *
+ *                                                                                             *
+ * OUTPUT:  name of SourceType                                                                 *
+ *                                                                                             *
+ * WARNINGS:   none.                                                                           *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   11/15/1994 BR : Created.                                                                  *
  *=============================================================================================*/
 char const *Name_From_Source(SourceType source)
 {
 	if ((unsigned)source < SOURCE_COUNT) {
 		return(SourceName[source]);
+	}
+	return("None");
+}
+
+
+/***********************************************************************************************
+ * PlayerColor_From_Name -- Converts ASCII name into PlayerColorType.                          *
+ *                                                                                             *
+ *    This routine is used to convert an ASCII name representing a                             *
+ *    PlayerColorType into the actual PlayerColorType value. Typically,                        *
+ *    this is used when processing the scenario INI file.                                      *
+ *                                                                                             *
+ * INPUT:   name  -- The ASCII source name to process.                                         *
+ *                                                                                             *
+ * OUTPUT:  Returns with the SourceType represented by the name                                *
+ *          specified.                                                                         *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   04/17/1994 JLB : Created.                                                                 *
+ *=============================================================================================*/
+PlayerColorType PlayerColor_From_Name(char const *name)
+{
+	if (name) {
+		if (stricmp("None", name) == 0) {
+			return(REMAP_EXPLICIT_NONE);
+		}
+		for (PlayerColorType remap = REMAP_FIRST; remap < REMAP_COUNT; remap++) {
+			if (stricmp(PlayerColors[remap].IniName, name) == 0) {
+				return(remap);
+			}
+		}
+	}
+	return(REMAP_NONE);
+}
+
+
+/***********************************************************************************************
+ * Name_From_PlayerColor -- retrieves the name for the given PlayerColorType                   *
+ *                                                                                             *
+ * INPUT:   source -- PlayerColorType to get the name for                                      *
+ *                                                                                             *
+ * OUTPUT:  name of PlayerColorType                                                            *
+ *                                                                                             *
+ * WARNINGS:   none.                                                                           *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   11/15/1994 BR : Created.                                                                  *
+ *=============================================================================================*/
+char const *Name_From_PlayerColor(PlayerColorType remap)
+{
+	if ((unsigned)remap < REMAP_COUNT) {
+		return(PlayerColors[remap].IniName);
 	}
 	return("None");
 }

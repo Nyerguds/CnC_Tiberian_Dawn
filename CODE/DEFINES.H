@@ -147,6 +147,7 @@
 #define	PARM_INSTALL    	0xD95C68A2		// "FROMINSTALL"
 #define	PARM_TRUENAME   	0xB1A34435		// "TARBOSH" Enables true object names.
 #define	PARM_3POINT     	0x03552894		// "DANCING" Enable three point turns.
+#define	PARM_BAR_ON	     	0xC3B59CA2		// "HARKONNEN" Enable health bars (newly added :p)
 #define	PARM_SCORE      	0x7FDE2C33		// "REMIX" Enables alternate themes.
 #define	PARM_COMBAT     	0xDC57C4B2		// "CHARGE!" Gives combat advantage to attacker.
 #define	PARM_TREETARGET 	0x00AB6BEF		// "LIGHTNING" Allows targeting of trees without <CTRL> key.
@@ -192,6 +193,20 @@
 //#define FRENCH	1
 //#define JAPANESE	1
 
+#ifdef GERMAN
+#define LANGUAGE_EXT "GER"
+#else
+#ifdef FRENCH
+#define LANGUAGE_EXT "FRE"
+#else
+#ifdef JAPANESE
+#define LANGUAGE_EXT "JPN"
+#else
+#define LANGUAGE_EXT "ENG"
+#endif
+#endif
+#endif
+
 // Version numbers
 #define VERSION_MAJOR   	1	// Major version will never change between languages.
 #define VERSION_MINOR    	7	// Win95 minor version number
@@ -200,6 +215,9 @@
 
 // Enable this to load the map screen strings from the strings file instead of using the hardcoded ones.
 //#define EXPANDED_STRINGS 1
+
+// used by virgin cheat keys
+#define	FOREIGN_VERSION_NUMBER	6
 
 /**********************************************************************
 **	These enumerations are used to implement RTTI.
@@ -676,15 +694,34 @@ inline HousesType operator++(HousesType &, int);
 #define	HOUSEF_MULTI6	(1<<HOUSE_MULTI6)
 
 typedef enum PlayerColorType {
+	REMAP_EXPLICIT_NONE = -2, // for explicitly disabling secondary color scheme.
 	REMAP_NONE = -1,
+	// Multiplayer House colors
 	REMAP_YELLOW,
+	REMAP_MULTI_FIRST=REMAP_YELLOW,
 	REMAP_FIRST=REMAP_YELLOW,
 	REMAP_RED,
 	REMAP_AQUA,
 	REMAP_ORANGE,
 	REMAP_GREEN,
 	REMAP_BLUE,
-	REMAP_LAST=REMAP_BLUE,
+	REMAP_MULTI_LAST=REMAP_BLUE,
+	// singleplayer House colors
+	REMAP_GDI,
+	REMAP_NOD,
+	REMAP_NEUTRAL,
+	REMAP_JP,
+	// new remap colors (todo)
+	REMAP_DARK_GREY,
+	REMAP_BROWN,
+	REMAP_FIRE,
+	REMAP_WARM_SILVER,
+
+	// Alternate names for some of the colors
+	REMAP_GREY, // identical to REMAP_BLUE
+	REMAP_GRAY, // identical to REMAP_BLUE
+	REMAP_TEAL, // identical to REMAP_AQUA
+	REMAP_DARK_GRAY, // identical to REMAP_DARK_GREY
 
 	REMAP_COUNT
 } PlayerColorType;

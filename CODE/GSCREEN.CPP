@@ -458,7 +458,7 @@ void Add_Current_Screen(void)
 
 			char filename[20];
 			for (int i = 0 ; i < MAX_SCREENS_SAVED ; i++){
-				sprintf (filename, "SCRN%04d.PCX", i);
+				sprintf (filename, "vid%05d.pcx", i);
 				Write_PCX_File (filename,*ScreenList[i], (unsigned char *)CurrentPalette);
 				delete ScreenList[i];
 			}

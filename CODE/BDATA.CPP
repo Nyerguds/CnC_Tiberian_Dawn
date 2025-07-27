@@ -4236,11 +4236,24 @@ StructType BuildingTypeClass::From_Name(char const *name)
  *=============================================================================================*/
 void BuildingTypeClass::Display(int x, int y, WindowNumberType window, HousesType house) const
 {
+	unsigned char const * remap = NULL;
 	void const * ptr = Get_Cameo_Data();
+	if (!ptr || !Get_Resolution_Factor()) {
+		// Either displays the building graphics, or a remapping cameo.
+		// No actual House is available, so take the House's default color info.
+		PlayerColorType remapColor = HouseTypeClass::As_Reference(house).RemapColor;
+		if ((unsigned)remapColor < REMAP_COUNT) {
+			PlayerColorTypeClass remapInfo = PlayerColors[remapColor];
+			remap = remapInfo.RemapTableBuildings;
+			if (!remap) {
+				remap = remapInfo.RemapTable;
+			}
+		}
+	}
 	if (!ptr) {
 		ptr = Get_Image_Data();
 	}
-	CC_Draw_Shape(ptr, 0, x, y, window, SHAPE_FADING|SHAPE_CENTER|SHAPE_WIN_REL, HouseTypeClass::As_Reference(house).RemapTable);
+	CC_Draw_Shape(ptr, 0, x, y, window, SHAPE_FADING|SHAPE_CENTER|SHAPE_WIN_REL, remap);
 }
 
 

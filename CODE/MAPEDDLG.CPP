@@ -1163,7 +1163,7 @@ int MapEditClass::Size_Map(int x, int y, int w, int h)
 					if (occupier) {
 						color = DKGREEN;
 						if (occupier && occupier->Owner() != HOUSE_NONE) {
-							color = HouseClass::As_Pointer(occupier->Owner())->Class->Color;
+							color = HouseClass::As_Pointer(occupier->Owner())->Color;
 						}
 						LogicPage->Put_Pixel(D_BORD_X1 + Cell_X(cell) + 1, D_BORD_Y1 + Cell_Y(cell) + 1, color);
 					}

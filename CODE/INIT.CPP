@@ -264,10 +264,18 @@ bool Init_Game(int , char *[])
 	**	Fetch the language text from the hard drive first. If it cannot be
 	**	found on the hard drive, then look for it in the mixfile.
 	*/
-	if (RawFileClass(Language_Name("CONQUER")).Is_Available()) {
-		SystemStrings = (char const *)Load_Alloc_Data(RawFileClass(Language_Name("CONQUER")));
+	SystemStrings = NULL;
+	if (RawFileClass(Language_Name("CONQUER", false)).Is_Available()) {
+		SystemStrings = (char const *)Load_Alloc_Data(RawFileClass(Language_Name("CONQUER", false)));
 	} else {
-		SystemStrings = (char const *)MixFileClass::Retrieve(Language_Name("CONQUER"));
+		SystemStrings = (char const *)MixFileClass::Retrieve(Language_Name("CONQUER", false));
+	}
+	if (SystemStrings == NULL) {
+		if (RawFileClass(Language_Name("CONQUER", true)).Is_Available()) {
+			SystemStrings = (char const *)Load_Alloc_Data(RawFileClass(Language_Name("CONQUER", true)));
+		} else {
+			SystemStrings = (char const *)MixFileClass::Retrieve(Language_Name("CONQUER", true));
+		}		
 	}
 
 	/*

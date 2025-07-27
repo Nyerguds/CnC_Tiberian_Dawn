@@ -77,7 +77,8 @@ bool Start_Scenario(char *root, bool briefing)
 	}
 	CCDebugString ("C&C95 - Scenario read OK.\n");
 
-	if (GameToPlay == GAME_NORMAL) {
+	// Don't play videos or show briefing screens in playback mode.
+	if (GameToPlay == GAME_NORMAL && !PlaybackGame) {
 #ifdef DEMO
 	
 		if (briefing) {
@@ -116,8 +117,8 @@ bool Start_Scenario(char *root, bool briefing)
 		}
 #endif // DEMO
 
-	// Nyerguds's TUC Quick Fix Patch v1.04
-	// Always show brief screen if no briefing video is available.
+		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Always show brief screen if no briefing video is available.
 		char buffer[25];
 		sprintf(buffer, "%s.VQA", BriefMovie);
 		CCFileClass file(buffer);
@@ -136,7 +137,8 @@ bool Start_Scenario(char *root, bool briefing)
 			InMainLoop = oldinmain;
 //			Hide_Mouse();
 		}
-
+	}
+	if (GameToPlay == GAME_NORMAL) {
 		// Nyerguds's TUC Quick Fix Patch v1.00: always start the music.
 		// Keeping it disabled for multiplay until the randomizer desync is fixed though.
 		if (TransitTheme == THEME_NONE) {

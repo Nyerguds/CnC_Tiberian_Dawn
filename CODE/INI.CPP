@@ -338,40 +338,20 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 	**	Read in the specific information for each of the house types.  This creates
 	**	the houses of different types.
 	*/
+	// Nyerguds's TUC Quick Fix Patch v1.00: mpcols (elaborate version)
+	// This now reads color schemes, and resets to the house default scheme if not found,
+	// thereby resetting multiplayer houses to their default colors and radar colors.
 	HouseClass::Read_INI(buffer);
 	Call_Back();
 
 	if (GameToPlay == GAME_NORMAL) {
-		// Nyerguds's TUC Quick Fix Patch v1.00: mpcols (elaborate version)
-		/*
-		**	Reset multiplayer houses to their default colors and radar colors,
-		**	in case they are used in the scenario. This fixes the fact their
-		**	default radar colors are set to gray.
-		*/
-		HouseClass *p;
-		p = HouseClass::As_Pointer(HOUSE_MULTI1);
-		p->Init_Data(REMAP_AQUA, HOUSE_MULTI1, p->InitialCredits);
-		p = HouseClass::As_Pointer(HOUSE_MULTI2);
-		p->Init_Data(REMAP_ORANGE, HOUSE_MULTI2, p->InitialCredits);
-		p = HouseClass::As_Pointer(HOUSE_MULTI3);
-		p->Init_Data(REMAP_GREEN, HOUSE_MULTI3, p->InitialCredits);
-		p = HouseClass::As_Pointer(HOUSE_MULTI4);
-		p->Init_Data(REMAP_BLUE, HOUSE_MULTI4, p->InitialCredits);
-		p = HouseClass::As_Pointer(HOUSE_MULTI5);
-		p->Init_Data(REMAP_YELLOW, HOUSE_MULTI5, p->InitialCredits);
-		p = HouseClass::As_Pointer(HOUSE_MULTI6);
-		p->Init_Data(REMAP_RED, HOUSE_MULTI6, p->InitialCredits);
-
 		// Nyerguds's TUC Quick Fix Patch v1.04
 		// Make funpark campaign independent from Jurassic mode.
 		// Special color exceptions for House Special in dinosaur campaign.
-		p = HouseClass::As_Pointer(HOUSE_JP);
+		HouseClass *p = HouseClass::As_Pointer(HOUSE_JP);
 		if (ScenPlayer == SCEN_PLAYER_JP) {
 			// Red radar colors with yellow remap
-			p->Init_Data(REMAP_RED, HOUSE_JP, p->InitialCredits);
-			p->RemapTable = RemapYellow;
-		} else {
-			p->Init_Data(REMAP_YELLOW, HOUSE_JP, p->InitialCredits);
+			p->Init_Color(REMAP_JP);
 		}
 	}
 	Call_Back();
@@ -840,7 +820,7 @@ CCDebugString (wibble);
 			house = (HousesType)(i + (int)HOUSE_MULTI1);
 			pref_house = (HousesType)(IRandom(0, 1) + (int)HOUSE_GOOD);
 			for (;;) {
-				color = Random_Pick(REMAP_FIRST, REMAP_LAST);
+				color = Random_Pick(REMAP_MULTI_FIRST, REMAP_MULTI_LAST);
 				if (color_used[color] == false) {
 					break;
 				}

@@ -378,8 +378,8 @@ HouseClass::HouseClass(HousesType house) :
 	NewUScan = 0;
 	NukePieces = 0x07;
 	Power = 0;
-	RemapTable = Class->RemapTable;
 	RemapColor = Class->RemapColor;
+	Init_Color(RemapColor);
 	Resigned = false;
 	SpeakAttackDelay = 1;
 	SpeakMaxedDelay = 1;
@@ -1661,7 +1661,8 @@ void HouseClass::Read_INI(char *buffer)
 	char			buf[128];
 
 	for (HousesType index = HOUSE_FIRST; index < HOUSE_COUNT; index++) {
-		hname = HouseTypeClass::As_Reference(index).IniName;
+		HouseTypeClass housetype = HouseTypeClass::As_Reference(index);
+		hname = housetype.IniName;
 		int maxunit = WWGetPrivateProfileInt(hname, "MaxUnit", EACH_UNIT_MAX, buffer);
 
 		maxunit = MAX(maxunit, 150);
@@ -1682,6 +1683,43 @@ void HouseClass::Read_INI(char *buffer)
 		p->Edge = Source_From_Name(buf);
 		if (p->Edge == SOURCE_NONE) {
 			p->Edge = SOURCE_NORTH;
+		}
+		
+		WWGetPrivateProfileString(hname, "ColorScheme", "", buf, sizeof(buf)-1, buffer);
+		PlayerColorType remap = PlayerColor_From_Name(buf);
+		// Explicit "None" is not supported for this.
+		if (remap == REMAP_NONE || remap == REMAP_EXPLICIT_NONE) {
+			remap = housetype.RemapColor;
+		}
+		p->Init_Color(remap);
+
+		if (WWGetPrivateProfileString(hname, "SecondaryScheme", "", buf, sizeof(buf)-1, buffer)) {
+			PlayerColorType remap2 = PlayerColor_From_Name(buf);
+			if (remap2 == REMAP_EXPLICIT_NONE) {
+				// Explicit "None" disables the buildings palette
+				p->RemapTableBuildings = NULL;
+			} else if (remap2 != REMAP_NONE) {
+				p->RemapTableBuildings = PlayerColors[remap2].RemapTable;
+			}
+		}
+
+		if (WWGetPrivateProfileString(hname, "RadarScheme", "", buf, sizeof(buf)-1, buffer)) {
+			PlayerColorType remapRadar = PlayerColor_From_Name(buf);
+			// Explicit "None" is not supported for this.
+			if (remapRadar != REMAP_NONE && remapRadar != REMAP_EXPLICIT_NONE) {
+				p->Color = PlayerColors[remapRadar].Color;
+				p->BrightColor = PlayerColors[remapRadar].BrightColor;
+			}
+		}
+
+		int radarCol = WWGetPrivateProfileInt(hname, "BuildingRadarColor", -1, buffer);
+		if(radarCol > 0 && radarCol < 256) {
+				p->Color = (unsigned char)radarCol;
+		}
+
+		int radarColBri = WWGetPrivateProfileInt(hname, "UnitRadarColor", -1, buffer);
+		if(radarColBri > 0 && radarColBri < 256) {
+				p->BrightColor = (unsigned char)radarColBri;
 		}
 
 		if (GameToPlay == GAME_NORMAL) {
@@ -1953,26 +1991,13 @@ unsigned char const * HouseClass::Remap_Table(bool blushing, bool unit) const
 	if (blushing) return(&Map.FadingLight[0]);
 
 	/*
-	** For normal game play, return the TypeClass's remap table for this
-	** house type
+	**	Special case exception for Nod. Remap buildings to red
+	**	as opposed to the default color of bluegrey.
 	*/
-	if (GameToPlay == GAME_NORMAL) {
-		/*
-		**	Special case exception for Nod and single player only. Remap
-		**	buildings to red as opposed to the default color of bluegrey.
-		*/
-		if (!unit && Class->House == HOUSE_BAD) {
-			return(RemapRed);
-		}
-
-		return(Class->RemapTable);
-	} else {
-
-		/*
-		** For multiplayer games, return the remap table for this exact house instance.
-		*/
-		return(RemapTable);
+	if (!unit && RemapTableBuildings) {
+		return(RemapTableBuildings);
 	}
+	return(RemapTable);
 }
 
 
@@ -3217,7 +3242,8 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 				**	Build a list of the maximum of each type we wish to produce. This will be
 				**	twice the number required to fill all teams.
 				*/
-				for (int index = 0; index < Teams.Count(); index++) {
+				int index;
+				for (index = 0; index < Teams.Count(); index++) {
 					TeamClass * tptr = Teams.Ptr(index);
 					if (tptr) {
 						TeamTypeClass const * team = tptr->Class;
@@ -3313,7 +3339,8 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 				**	Build a list of the maximum of each type we wish to produce. This will be
 				**	twice the number required to fill all teams.
 				*/
-				for (int index = 0; index < Teams.Count(); index++) {
+				int index;
+				for (index = 0; index < Teams.Count(); index++) {
 					TeamClass * tptr = Teams.Ptr(index);
 					if (tptr) {
 						TeamTypeClass const * team = tptr->Class;
@@ -4200,46 +4227,36 @@ void HouseClass::Init_Data(PlayerColorType color, HousesType house, int credits)
 	Validate();
 	Credits = InitialCredits = credits;
 	ActLike = house;
-	RemapColor = color;
-	switch (color) {
-		case REMAP_YELLOW:
-			RemapTable = RemapYellow;
-			((unsigned char &)Class->Color) = 157;
-			((unsigned char &)Class->BrightColor) = 5;
-			break;
-
-		case REMAP_RED:
-			RemapTable = RemapRed;
-			((unsigned char &)Class->Color) = 123;
-			((unsigned char &)Class->BrightColor) = 127;
-			break;
-
-		case REMAP_AQUA:
-			RemapTable = RemapBlueGreen;
-			((unsigned char &)Class->Color) = 135;
-			((unsigned char &)Class->BrightColor) = 2;
-			break;
-
-		case REMAP_ORANGE:
-			RemapTable = RemapOrange;
-			((unsigned char &)Class->Color) = 26;
-			((unsigned char &)Class->BrightColor) = 24;
-			break;
-
-		case REMAP_GREEN:
-			RemapTable = RemapGreen;
-			((unsigned char &)Class->Color) = 167;
-			((unsigned char &)Class->BrightColor) = 159;
-			break;
-
-		case REMAP_BLUE:
-			RemapTable = RemapBlue;
-			((unsigned char &)Class->Color) = 203;
-			((unsigned char &)Class->BrightColor) = 201;
-			break;
-	}
+	Init_Color(color);
 }
 
+/***********************************************************************************************
+ * HouseClass::Init_Color -- Initializes the player color data.                                *
+ *                                                                                             *
+ *    This routine is called when initializing the color and remap data for this house.        *
+ *                                                                                             *
+ * INPUT:   color    -- The color of this house.                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/29/1995 JLB : Created.                                                                 *
+ *=============================================================================================*/
+void HouseClass::Init_Color(PlayerColorType color)
+{
+	RemapColor = color;
+	const PlayerColorTypeClass * col = NULL;
+	if ((unsigned)color < REMAP_COUNT) {
+		col = &PlayerColors[color];
+	}
+	RemapTable = col ? col->RemapTable : RemapNone;
+	RemapTableBuildings = col ? col->RemapTableBuildings : NULL;
+	Color = col ? col->Color : GREY;
+	BrightColor = col ? col->BrightColor : GREY;
+	
+}
 
 /***********************************************************************************************
  * HouseClass::Power_Fraction -- Fetches the current power output rating.                      *

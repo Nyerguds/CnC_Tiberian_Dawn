@@ -95,6 +95,27 @@ class WeaponTypeClass
 };
 
 
+
+/**********************************************************************
+**	This is the constant data associated with a player color.
+*/
+class PlayerColorTypeClass
+{
+	public:
+
+		/*
+		**	The INI name of the player color is pointed to by this element.
+		**	This is the identification name used in the scenario INI file.
+		*/
+		char const *IniName;
+
+		unsigned char const * RemapTable;
+		unsigned char const * RemapTableBuildings;
+		unsigned char Color;
+		unsigned char BrightColor;
+};
+
+
 /**********************************************************************
 **	Each of the warhead types has specific characteristics. This structure
 **	holds these characteristics.
@@ -179,14 +200,6 @@ class HouseTypeClass {
 		**	Each house is assigned a unique identification color to be used on the
 		**	radar map and other color significant areas.
 		*/
-		unsigned char Color;
-
-		unsigned char BrightColor;
-
-		/*
-		**	This points to the default remap table for this house.
-		*/
-		unsigned char const * RemapTable;
 		PlayerColorType RemapColor;
 
 		/*
@@ -202,10 +215,7 @@ class HouseTypeClass {
 							int fullname,
 							char const *ext,
 							int lemon,
-							int color,
-							int bright_color,
 							PlayerColorType remapcolor,
-							unsigned char const * remap,
 							char prefix);
 
 		static HousesType  From_Name(char const *name);

@@ -1524,12 +1524,25 @@ UnitType UnitTypeClass::From_Name(char const *name)
 void UnitTypeClass::Display(int x, int y, WindowNumberType window, HousesType house) const
 {
 	int shape = 0;
+	unsigned char const * remap = NULL;
 	void const * ptr = Get_Cameo_Data();
+	if (!ptr || !Get_Resolution_Factor()) {
+		PlayerColorType remapColor = HouseTypeClass::As_Reference(house).RemapColor;
+		if ((unsigned)remapColor < REMAP_COUNT) {
+			PlayerColorTypeClass remapInfo = PlayerColors[remapColor];
+			if (!(remapInfo.RemapTableBuildings) || (this->Type != UNIT_HARVESTER && this->Type != UNIT_MCV)) {
+				remap = remapInfo.RemapTable;
+			} else {
+				remap = remapInfo.RemapTableBuildings;
+			}
+		}
+
+	}
 	if (!ptr) {
 		ptr = Get_Image_Data();
 		shape = IsChunkyShape ? 0 : 5;
 	}
-	CC_Draw_Shape(ptr, shape, x, y, window, SHAPE_FADING|SHAPE_CENTER|SHAPE_WIN_REL, HouseTypeClass::As_Reference(house).RemapTable);
+	CC_Draw_Shape(ptr, shape, x, y, window, SHAPE_FADING|SHAPE_CENTER|SHAPE_WIN_REL, remap);
 }
 
 

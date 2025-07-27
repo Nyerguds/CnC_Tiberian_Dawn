@@ -352,7 +352,11 @@ class HouseClass {
 		** table for the color the player wants to play.
 		*/
 		unsigned char const * RemapTable;
+		unsigned char const * RemapTableBuildings;
 		PlayerColorType RemapColor;
+		unsigned char Color;
+		unsigned char BrightColor;
+
 		char Name[MPLAYER_NAME_MAX];
 
 		/*
@@ -394,6 +398,7 @@ class HouseClass {
 		bool  Flag_Attach(UnitClass * object, bool set_home = false);
 		bool  Flag_Remove(TARGET target, bool set_home = false);
 		void  Init_Data(PlayerColorType color, HousesType house, int credits);
+		void  Init_Color(PlayerColorType color);
 
 		void  Sell_Wall(CELL cell);
 		bool  Flag_To_Die(void);

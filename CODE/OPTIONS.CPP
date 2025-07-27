@@ -578,6 +578,14 @@ void OptionsClass::Load_Settings (void)
 	}
 
 	/*
+	**	Always show all health bars.
+	*/
+	WWGetPrivateProfileString("Options", "BarOn", "", workbuf, sizeof(workbuf), buffer);
+	if (Obfuscate(workbuf) == PARM_BAR_ON) {
+		Special.IsBarOn = true;
+	}
+
+	/*
 	**	Allow purchase of the helipad separately from the helicopter.
 	*/
 	WWGetPrivateProfileString("Options", "Helipad", "", workbuf, sizeof(workbuf), buffer);

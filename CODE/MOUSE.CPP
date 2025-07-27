@@ -118,7 +118,8 @@ void MouseClass::Mouse_Small(bool wwsmall)
 		if (control->SmallFrame != -1) {
 			Set_Mouse_Cursor(control->X, control->Y, Extract_Shape(MouseShapes, control->SmallFrame + Frame/4));
 		} else {
-			Set_Mouse_Cursor(MouseControl[MOUSE_NORMAL].X, MouseControl[MOUSE_NORMAL].Y, Extract_Shape(MouseShapes, MOUSE_NORMAL));
+			control = &MouseControl[MOUSE_NORMAL];
+			Set_Mouse_Cursor(control->X, control->Y, Extract_Shape(MouseShapes, control->StartFrame));
 		}
 	} else {
 		Set_Mouse_Cursor(control->X, control->Y, Extract_Shape(MouseShapes, control->StartFrame + Frame/4));

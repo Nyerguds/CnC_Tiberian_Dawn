@@ -610,7 +610,7 @@ void RadarClass::Render_Infantry(CELL cell, int x, int y, int size)
 							xoff = 0;
 							yoff = 0;
 						}
-						LogicPage->Put_Pixel(x+xoff, y+yoff, ((InfantryClass *)obj)->House->Class->BrightColor);
+						LogicPage->Put_Pixel(x+xoff, y+yoff, ((InfantryClass *)obj)->House->BrightColor);
 					}
 					break;
 
@@ -618,7 +618,7 @@ void RadarClass::Render_Infantry(CELL cell, int x, int y, int size)
 				case RTTI_AIRCRAFT:
 					// PWG: Slowdown?
 					//if (LogicPage->Lock()){
-						Fat_Put_Pixel(x, y, ((UnitClass *)obj)->House->Class->BrightColor, size, *LogicPage);
+						Fat_Put_Pixel(x, y, ((UnitClass *)obj)->House->BrightColor, size, *LogicPage);
 						//LogicPage->Unlock();
 					//}
 					break;
@@ -815,43 +815,47 @@ void RadarClass::Plot_Radar_Pixel(CELL cell)
  		**	If no color override occurs for this cell, then render the underlying
  		**	terrain.
  		*/
+		bool rendered = false;
 		if (color == TBLACK) {
 			if (ZoomFactor > 1) {
-				void const *ptr;
+				void const *ptr = NULL;
 				long offset;
 				int icon;
 
-				if (cellptr->TType != TEMPLATE_NONE) {
+				if (cellptr->TType != TEMPLATE_NONE && (unsigned)cellptr->TType < TEMPLATE_COUNT) {
 					ptr = TemplateTypeClass::As_Reference(cellptr->TType).Get_Image_Data();
 					icon = cellptr->TIcon;
 				} else {
 					ptr = TemplateTypeClass::As_Reference(TEMPLATE_CLEAR1).Get_Image_Data();
 					icon = cellptr->Clear_Icon();
 				}
+				if (ptr) {
+					/*
+					**	Convert the logical icon number into the actual icon number.
+					*/
+					Mem_Copy(Add_Long_To_Pointer((void *)ptr, 28), &offset, sizeof(offset));
+					Mem_Copy(Add_Long_To_Pointer((void *)ptr, offset+icon), &icon, sizeof(char));
+					icon &= 0x00FF;
 
-				/*
-				**	Convert the logical icon number into the actual icon number.
-				*/
-				Mem_Copy(Add_Long_To_Pointer((void *)ptr, 28), &offset, sizeof(offset));
-				Mem_Copy(Add_Long_To_Pointer((void *)ptr, offset+icon), &icon, sizeof(char));
-				icon &= 0x00FF;
+					Mem_Copy(Add_Long_To_Pointer((void *)ptr, 12), &offset, sizeof(offset));
+					ptr = Add_Long_To_Pointer((void *)ptr, offset + icon*(24*24));
 
-				Mem_Copy(Add_Long_To_Pointer((void *)ptr, 12), &offset, sizeof(offset));
-				ptr = Add_Long_To_Pointer((void *)ptr, offset + icon*(24*24));
-
-				unsigned char * data = (unsigned char *)ptr;
-				Buffer_To_Page(0, 0, 24, 24, data, _TileStage);
-				_TileStage.Scale(*LogicPage, 0, 0, x, y, 24, 24, ZoomFactor, ZoomFactor, TRUE);
-
+					unsigned char * data = (unsigned char *)ptr;
+					Buffer_To_Page(0, 0, 24, 24, data, _TileStage);
+					_TileStage.Scale(*LogicPage, 0, 0, x, y, 24, 24, ZoomFactor, ZoomFactor, TRUE);
+					rendered = true;
+				}
 			} else {
 				if (LogicPage->Lock()){
 					Fat_Put_Pixel(x, y, cellptr->Cell_Color(false), ZoomFactor, *LogicPage);
 					LogicPage->Unlock();
+					rendered = true;
 				}
 			}
-		} else {
+		}
+		if (!rendered) {
 			if (LogicPage->Lock()){
-				Fat_Put_Pixel(x, y, color, ZoomFactor, *LogicPage);
+				Fat_Put_Pixel(x, y, color == TBLACK ? BLACK : color, ZoomFactor, *LogicPage);
 				LogicPage->Unlock();
 			}
 		}

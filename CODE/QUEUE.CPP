@@ -3252,7 +3252,8 @@ static void Queue_Playback(void)
 		for (i = 0; i < numevents; i++) {
 			if (RecordFile.Read (&event, sizeof(EventClass)) ==
 				sizeof(EventClass)) {
-				event.IsExecuted = 0;
+				// Suppress menu opening events from file because they pause the recording.
+				event.IsExecuted = event.Type != EventClass::OPTIONS;
 				DoList.Add (event);
 			}
 			else {

@@ -39,27 +39,13 @@
 
 #include	"function.h"
 
-/*
-**	These are the colors used to identify the various owners.
-*/
-const int COLOR_GOOD = 180;  // GOLD
-const int COLOR_BRIGHT_GOOD = 176;  // GOLD
-const int COLOR_BAD = 123;	//RED;
-const int COLOR_BRIGHT_BAD = 127;	//RED;
-const int COLOR_NEUTRAL = 205;	//WHITE;
-const int COLOR_BRIGHT_NEUTRAL = 202;	//WHITE;
-
-
 static HouseTypeClass const HouseGood(
 	HOUSE_GOOD,
 	"GoodGuy",					//	NAME:			House name.
 	TXT_GDI,						// FULLNAME:	Translated house name.
 	"GDI",						// SUFFIX:		House file suffix.
 	0,								// LEMON:		Lemon vehicle frequency.
-	COLOR_GOOD,					// COLOR:		Dark Radar map color.
-	COLOR_BRIGHT_GOOD,		// COLOR:		Bright Radar map color.
-	REMAP_YELLOW,				// Remap color ID number.
-	RemapYellow,				// Default remap table.
+	REMAP_GDI,				// Remap color ID number.
 	'G'							// VOICE:		Voice prefix character.
 );
 
@@ -69,10 +55,7 @@ static HouseTypeClass const HouseBad(
 	TXT_NOD,						// FULLNAME:	Translated house name.
 	"NOD",						// SUFFIX:		House file suffix.
 	0,								// LEMON:		Lemon vehicle frequency.
-	COLOR_BAD,					// COLOR:		Dark Radar map color.
-	COLOR_BRIGHT_BAD,			// COLOR:		Bright Radar map color.
-	REMAP_BLUE,					// Remap color ID number.
-	RemapBlue,					// Default remap table.
+	REMAP_NOD,				// Remap color ID number.
 	'B'							// VOICE:		Voice prefix character.
 );
 
@@ -82,10 +65,7 @@ static HouseTypeClass const HouseCivilian(
 	TXT_CIVILIAN,				// FULLNAME:	Translated house name.
 	"CIV",						// SUFFIX:		House file suffix.
 	0,								// LEMON:		Lemon vehicle frequency.
-	COLOR_NEUTRAL,				// COLOR:		Dark Radar map color.
-	COLOR_BRIGHT_NEUTRAL,	// COLOR:		Bright Radar map color.
-	REMAP_YELLOW,				// Remap color ID number.
-	RemapNone,					// Default remap table.
+	REMAP_NEUTRAL,		// Remap color ID number.
 	'C'							// VOICE:		Voice prefix character.
 );
 
@@ -95,10 +75,7 @@ static HouseTypeClass const HouseJP(
 	TXT_JP,						// FULLNAME:	Translated house name.
 	"JP",							// SUFFIX:		House file suffix.
 	0,								// LEMON:		Lemon vehicle frequency.
-	COLOR_NEUTRAL,				// COLOR:		Dark Radar map color.
-	COLOR_BRIGHT_NEUTRAL,	// COLOR:		Bright Radar map color.
-	REMAP_YELLOW,				// Remap color ID number.
-	RemapNone,					// Default remap table.
+	REMAP_NEUTRAL,		// Remap color ID number.
 	'J'							// VOICE:		Voice prefix character.
 );
 
@@ -108,10 +85,7 @@ static HouseTypeClass const HouseMulti1(
 	TXT_CIVILIAN,				// FULLNAME:	Translated house name.
 	"MP1",						// SUFFIX:		House file suffix.
 	0,								// LEMON:		Lemon vehicle frequency.
-	COLOR_NEUTRAL,				// COLOR:		Radar map color.
-	COLOR_BRIGHT_NEUTRAL,	// COLOR:		Bright Radar map color.
-	REMAP_AQUA,					// Remap color ID number.
-	RemapBlueGreen,			// Default remap table.
+	REMAP_AQUA,				// Remap color ID number.
 	'M'							// VOICE:		Voice prefix character.
 );
 
@@ -121,10 +95,7 @@ static HouseTypeClass const HouseMulti2(
 	TXT_CIVILIAN,				// FULLNAME:	Translated house name.
 	"MP2",						// SUFFIX:		House file suffix.
 	0,								// LEMON:		Lemon vehicle frequency.
-	COLOR_NEUTRAL,				// COLOR:		Radar map color.
-	COLOR_BRIGHT_NEUTRAL,	// COLOR:		Bright Radar map color.
-	REMAP_ORANGE,				// Remap color ID number.
-	RemapOrange,				// Default remap table.
+	REMAP_ORANGE,			// Remap color ID number.
 	'M'							// VOICE:		Voice prefix character.
 );
 
@@ -134,10 +105,7 @@ static HouseTypeClass const HouseMulti3(
 	TXT_CIVILIAN,				// FULLNAME:	Translated house name.
 	"MP3",						// SUFFIX:		House file suffix.
 	0,								// LEMON:		Lemon vehicle frequency.
-	COLOR_NEUTRAL,				// COLOR:		Radar map color.
-	COLOR_BRIGHT_NEUTRAL,	// COLOR:		Bright Radar map color.
-	REMAP_GREEN,				// Remap color ID number.
-	RemapGreen,					// Default remap table.
+	REMAP_GREEN,			// Remap color ID number.
 	'M'							// VOICE:		Voice prefix character.
 );
 
@@ -147,10 +115,7 @@ static HouseTypeClass const HouseMulti4(
 	TXT_CIVILIAN,				// FULLNAME:	Translated house name.
 	"MP4",						// SUFFIX:		House file suffix.
 	0,								// LEMON:		Lemon vehicle frequency.
-	COLOR_NEUTRAL,				// COLOR:		Radar map color.
-	COLOR_BRIGHT_NEUTRAL,	// COLOR:		Bright Radar map color.
-	REMAP_BLUE,					// Remap color ID number.
-	RemapBlue,					// Default remap table.
+	REMAP_BLUE,				// Remap color ID number.
 	'M'							// VOICE:		Voice prefix character.
 );
 
@@ -160,10 +125,7 @@ static HouseTypeClass const HouseMulti5(
 	TXT_CIVILIAN,				// FULLNAME:	Translated house name.
 	"MP5",						// SUFFIX:		House file suffix.
 	0,								// LEMON:		Lemon vehicle frequency.
-	COLOR_NEUTRAL,				// COLOR:		Radar map color.
-	COLOR_BRIGHT_NEUTRAL,	// COLOR:		Bright Radar map color.
-	REMAP_YELLOW,				// Remap color ID number.
-	RemapYellow,				// Default remap table.
+	REMAP_YELLOW,			// Remap color ID number.
 	'M'							// VOICE:		Voice prefix character.
 );
 
@@ -173,10 +135,7 @@ static HouseTypeClass const HouseMulti6(
 	TXT_CIVILIAN,				// FULLNAME:	Translated house name.
 	"MP6",						// SUFFIX:		House file suffix.
 	0,								// LEMON:		Lemon vehicle frequency.
-	COLOR_NEUTRAL,				// COLOR:		Radar map color.
-	COLOR_BRIGHT_NEUTRAL,	// COLOR:		Bright Radar map color.
-	REMAP_RED,					// Remap color ID number.
-	RemapRed,					// Default remap table.
+	REMAP_RED,				// Remap color ID number.
 	'M'							// VOICE:		Voice prefix character.
 );
 
@@ -221,13 +180,9 @@ HouseTypeClass::HouseTypeClass(HousesType house,
 				int fullname, 
 				char const * ext, 
 				int lemon, 
-				int color, 
-				int bright_color, 
 				PlayerColorType remapcolor,
-				unsigned char const * remap, 
 				char prefix)
 {
-	RemapTable = remap;
 	RemapColor = remapcolor;
 	House = house;
 	IniName = ini;
@@ -235,8 +190,6 @@ HouseTypeClass::HouseTypeClass(HousesType house,
 	strncpy(Suffix, ext, 3);
 	Suffix[3] = '\0';
 	Lemon = lemon;
-	Color = color;
-	BrightColor = bright_color;
 	Prefix = prefix;
 }
 
