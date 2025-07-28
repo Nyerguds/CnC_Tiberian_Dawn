@@ -512,11 +512,24 @@ KeyNumType GadgetClass::Input(void)
 		if (key == KN_RMOUSE) {
 			flags |= RIGHTPRESS;
 		}
+		if (key == KN_MMOUSE) {
+			flags |= MIDDLEPRESS;
+		}
 		if (key == (KN_LMOUSE | KN_RLSE_BIT)) {
 			flags |= LEFTRELEASE;
 		}
 		if (key == (KN_RMOUSE | KN_RLSE_BIT)) {
 			flags |= RIGHTRELEASE;
+		}
+		if (key == (KN_MMOUSE | KN_RLSE_BIT)) {
+			flags |= MIDDLERELEASE;
+		}
+		if (key == KN_MWHEEL) {
+			flags |= MOUSEWHEELDN;
+		}
+		if (key == (KN_MWHEEL | KN_RLSE_BIT)) {
+			// Hack: mouse wheel + release is considered to be "mouse wheel scroll up".
+			flags |= MOUSEWHEELUP;
 		}
 	}
 
@@ -551,6 +564,11 @@ KeyNumType GadgetClass::Input(void)
 			flags |= RIGHTHELD;
 		} else {
 			flags |= RIGHTUP;
+		}
+		if (Keyboard::Down(KN_MMOUSE)) {
+			flags |= MIDDLEHELD;
+		} else {
+			flags |= MIDDLEUP;
 		}
 	}
 

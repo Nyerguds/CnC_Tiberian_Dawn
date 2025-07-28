@@ -2134,7 +2134,7 @@ bool SidebarClass::StripClass::Recalc(void)
  *   01/19/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 SidebarClass::StripClass::SelectClass::SelectClass(void) :
-	ControlClass(0, 0, 0, 0, 0, LEFTPRESS|RIGHTPRESS|LEFTUP)
+	ControlClass(0, 0, 0, 0, 0, LEFTPRESS|RIGHTPRESS|LEFTUP|MOUSEWHEELUP|MOUSEWHEELDN)
 {
 	int factor = Get_Resolution_Factor();
 
@@ -2244,11 +2244,16 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 		if (fnumber != -1) {
 			factory = Factories.Raw_Ptr(fnumber);
 		}
-
-  	} else {
-  		Map.Help_Text(TXT_NONE);
-  	}
-
+		if (flags & MOUSEWHEELDN) {
+			Strip->Scroll(false);
+			flags &= ~MOUSEWHEELDN;
+		} else if (flags & MOUSEWHEELUP) {
+			Strip->Scroll(true);
+			flags &= ~MOUSEWHEELUP;
+		}
+	} else {
+		Map.Help_Text(TXT_NONE);
+	}
 	if (spc) {
 		/*
 		**	Display the help text if the mouse is over the button.

@@ -100,15 +100,22 @@ class GadgetClass : public LinkClass
 {
 	public:
 		typedef enum FlagEnum {
-			LEFTPRESS    = 0x0001,	// Left mouse button press.
-			LEFTHELD     = 0x0002,	// Left mouse button is being held down.
-			LEFTRELEASE  = 0x0004,	// Left mouse button released.
-			LEFTUP       = 0x0008,	// Left mouse button is being held up.
-			RIGHTPRESS   = 0x0010,	// Right mouse button press.
-			RIGHTHELD    = 0x0020,	// Right mouse button is being held down.
-			RIGHTRELEASE = 0x0040,	// Right mouse button released.
-			RIGHTUP      = 0x0080,	// Right mouse button is being held up.
-			KEYBOARD     = 0x0100,	// Keyboard input processing (maybe).
+			LEFTPRESS     = 0x0001,	// Left mouse button press.
+			LEFTHELD      = 0x0002,	// Left mouse button is being held down.
+			LEFTRELEASE   = 0x0004,	// Left mouse button released.
+			LEFTUP        = 0x0008,	// Left mouse button is being held up.
+			RIGHTPRESS    = 0x0010,	// Right mouse button press.
+			RIGHTHELD     = 0x0020,	// Right mouse button is being held down.
+			RIGHTRELEASE  = 0x0040,	// Right mouse button released.
+			RIGHTUP       = 0x0080,	// Right mouse button is being held up.
+			KEYBOARD      = 0x0100,	// Keyboard input processing (maybe).			
+			MOUSEWHEELDN  = 0x0200,  // Mouse wheel scrolling down
+			MOUSEWHEELUP  = 0x0400,  // Mouse wheel scrolling up
+			MIDDLEPRESS   = 0x0800,	// Middle mouse button press.
+			MIDDLEHELD    = 0x1000,	// Middle mouse button is being held down.
+			MIDDLERELEASE = 0x2000,	// Middle mouse button released.
+			MIDDLEUP      = 0x4000,	// Middle mouse button is being held up.
+
 		} FlagEnum;
 
 		GadgetClass(int x, int y, int w, int h, unsigned flags, int sticky=false);

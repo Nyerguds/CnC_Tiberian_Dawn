@@ -262,15 +262,8 @@ long FAR PASCAL _export Windows_Procedure (HWND hwnd, UINT message, UINT wParam,
 		case WM_RBUTTONDOWN:
 		case WM_RBUTTONUP:
 		case WM_RBUTTONDBLCLK:
-	 		Kbd.Message_Handler(hwnd, message, wParam, lParam);
-			return(0);
 		case WM_MOUSEWHEEL:
-			// Nyerguds's TUC Quick Fix Patch v1.02: mousewheel
-			// Not sure exactly how to get the delta out, but checking the highest bit works.
-			if ((wParam >> 31) == 0)
-				up = true;
-			Map.Scroll(up, 1);
-			Map.Scroll(up, 0);
+	 		Kbd.Message_Handler(hwnd, message, wParam, lParam);
 			return(0);
 		case WM_DESTROY:
 			CCDebugString ("C&C95 - WM_DESTROY message received.\n");

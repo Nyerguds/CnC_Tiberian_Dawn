@@ -80,7 +80,7 @@
  * HISTORY:          01/05/1995 MML : Created.                             *
  *=========================================================================*/
 ListClass::ListClass (int id, int x, int y, int w, int h, TextPrintType flags, void const * up, void const * down) :
-	ControlClass(id, x, y, w, h, LEFTPRESS | LEFTRELEASE | KEYBOARD, false),
+	ControlClass(id, x, y, w, h, LEFTPRESS | LEFTRELEASE | MOUSEWHEELUP | MOUSEWHEELDN | KEYBOARD, false),
 	UpGadget(0, up, x+w, y),
 	DownGadget(0, down, x+w, y+h),
 	ScrollGadget(0, x+w, y, 0, h, true)
@@ -277,12 +277,29 @@ int ListClass::Action(unsigned flags, KeyNumType & key)
 			} else if (key == KN_DOWN) {
 				Step_Selected_Index(1);
 				key = KN_NONE;
+			} else if (key == KN_PGUP) {
+				if (SelectedIndex == CurrentTopIndex) {
+					Step_Selected_Index(1 - LineCount);
+				} else {
+					Set_Selected_Index(CurrentTopIndex);
+				}
+				key = KN_NONE;
+			} else if (key == KN_PGDN) {
+				int bottomvisible = CurrentTopIndex + LineCount - 1;
+				if (SelectedIndex == bottomvisible) {
+					Step_Selected_Index(LineCount - 1);
+				} else {
+					Set_Selected_Index(bottomvisible);
+				}
+				key = KN_NONE;
 			} else {
 				flags &= ~KEYBOARD;
 			}
-
-		} else {
-
+		} else if (flags & MOUSEWHEELDN) {
+				Step_Selected_Index(1);
+		} else if (flags & MOUSEWHEELUP) {
+				Step_Selected_Index(-1);			
+		} else if (flags & LEFTPRESS) {
 			int index = Get_Mouse_Y() - (Y+1);
 			index = index / LineHeight;
 			SelectedIndex = CurrentTopIndex + index;
@@ -860,16 +877,14 @@ GadgetClass * ListClass::Remove(void)
  *=============================================================================================*/
 void ListClass::Set_Selected_Index(int index)
 { 
-   if ((unsigned)index < List.Count()) {
-		SelectedIndex = index; 
-		Flag_To_Redraw();
-		if (SelectedIndex < CurrentTopIndex) {
-			Set_View_Index(SelectedIndex);
-		}
-		if (SelectedIndex >= CurrentTopIndex+LineCount) {
-			Set_View_Index(SelectedIndex-(LineCount-1));
-		}
-   }
+	SelectedIndex = Bound(index, 0, List.Count() -1);; 
+	Flag_To_Redraw();
+	if (SelectedIndex < CurrentTopIndex) {
+		Set_View_Index(SelectedIndex);
+	}
+	if (SelectedIndex >= CurrentTopIndex+LineCount) {
+		Set_View_Index(SelectedIndex-(LineCount-1));
+	}
 }
 
 

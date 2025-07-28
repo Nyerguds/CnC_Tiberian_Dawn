@@ -123,7 +123,7 @@ class WWKeyboardClass
 #define	VK_RBUTTON          0x02
 #define	VK_CANCEL           0x03
 #define	VK_MBUTTON          0x04
-#define	VK_NONE_05			  0x05
+#define	VK_MWHEEL				  0x05
 #define	VK_NONE_06			  0x06
 #define	VK_NONE_07			  0x07
 #define	VK_BACK             0x08
@@ -520,6 +520,8 @@ enum {
 	KA_F1					= VK_F1 | WWKEY_VK_BIT,
 	KA_LMOUSE 	 		= VK_LBUTTON | WWKEY_VK_BIT,
 	KA_RMOUSE 	 		= VK_RBUTTON | WWKEY_VK_BIT,
+	KA_MMOUSE			= VK_MBUTTON | WWKEY_VK_BIT,
+	KA_MWHEEL			= VK_MWHEEL | WWKEY_VK_BIT,
 
 	KA_SHIFT_BIT 		= WWKEY_SHIFT_BIT,
 	KA_CTRL_BIT  		= WWKEY_CTRL_BIT,
@@ -589,6 +591,8 @@ enum {
 	KN_SPACE 			= KA_SPACE,
 	KN_LMOUSE			= KA_LMOUSE,
 	KN_RMOUSE			= KA_RMOUSE,
+	KN_MMOUSE			= KA_MMOUSE,
+	KN_MWHEEL			= KA_MWHEEL,
 
 	KN_HOME				= KA_HOME,										/* num key pad 7 */
 	KN_UPLEFT			= KA_UPLEFT,

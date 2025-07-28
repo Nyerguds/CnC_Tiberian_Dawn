@@ -142,7 +142,7 @@ int WWKeyboardClass::Buff_Get(void)
 BOOL WWKeyboardClass::Is_Mouse_Key(int key)
 {
 	key &= 0xFF;
-	return (key == VK_LBUTTON || key == VK_MBUTTON || key == VK_RBUTTON);
+	return (key == VK_LBUTTON || key == VK_MBUTTON || key == VK_RBUTTON || key == VK_MWHEEL);
 }
 
 
@@ -242,7 +242,7 @@ WWKeyboardClass::Put_Key_Message(UINT vk_key, BOOL release, BOOL dbl)
 	// that we do not want to set the shift, ctrl and alt bits for Mouse keypresses as this
 	// would be incompatible with the dos version.
 	//
-	if (vk_key != VK_LBUTTON && vk_key != VK_MBUTTON && vk_key != VK_RBUTTON) 	{
+	if (vk_key != VK_LBUTTON && vk_key != VK_MBUTTON && vk_key != VK_RBUTTON && vk_key != VK_MWHEEL) 	{
 		int	shift		= (GetKeyState(VK_SHIFT) & 0xFF00) 		!= 0;
 		int	ctrl 		= (GetKeyState(VK_CONTROL) & 0xFF00) 	!= 0;
 		int	alt 		= (GetKeyState(VK_MENU) & 0xFF00) 		!= 0;
@@ -261,7 +261,7 @@ WWKeyboardClass::Put_Key_Message(UINT vk_key, BOOL release, BOOL dbl)
 		if (alt) {
 			bits |= WWKEY_ALT_BIT;
 		}
-		}
+	}
 	if (!AsciiRemap[vk_key|bits]) {
 		bits |= WWKEY_VK_BIT;
 	}
@@ -310,6 +310,8 @@ VOID WWKeyboardClass::Split(int &key, int &shift, int &ctrl, int &alt, int &rls,
 extern "C" {
 	void __cdecl Stop_Execution (void);
 }
+
+#define WM_MOUSEWHEEL 0x20A
 
 #pragma off(unreferenced)
 void WWKeyboardClass::Message_Handler(HWND , UINT message, UINT wParam, LONG lParam)
@@ -382,6 +384,16 @@ void WWKeyboardClass::Message_Handler(HWND , UINT message, UINT wParam, LONG lPa
 			Put(LOWORD(lParam));
 			Put(HIWORD(lParam));
 			break;
+
+		case WM_MOUSEWHEEL:
+			// Cheeky hack: because barely anything actually receives and handles
+			// the params, and scroll goes per tick without having a "pressed down"
+			// status, scroll button "release" status is used for "scroll up".
+			Put_Key_Message(VK_MWHEEL, (wParam >> 31) == 0);
+			Put(LOWORD(lParam));
+			Put(HIWORD(lParam));
+			break;
+
 		case WM_MOUSEMOVE:
 			if (CurrentCursor)
 				SetCursor(CurrentCursor);
