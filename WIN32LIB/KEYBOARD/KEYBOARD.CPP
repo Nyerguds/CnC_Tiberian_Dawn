@@ -233,7 +233,7 @@ BOOL WWKeyboardClass::Put(int key)
  * HISTORY:                                                                                    *
  *   10/16/1995 PWG : Created.                                                                 *
  *=============================================================================================*/
-WWKeyboardClass::Put_Key_Message(UINT vk_key, BOOL release, BOOL dbl)
+int WWKeyboardClass::Put_Key_Message(UINT vk_key, BOOL release, BOOL dbl)
 {
 	int bits = 0;
 	//

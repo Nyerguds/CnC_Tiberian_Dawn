@@ -150,3 +150,4 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * The prefix shown on items in the New Missions menu now actually matches the player set in the mission file.
 * Items in the New Missions menu now load missions for campaign side "J" too, from SCJ20EA to SCJ99EA.
 * Added constraint checks on strings file reading, with any unknown string returning "<<UNKNOWN STRING>>".
+* The AI behaviour to run from incoming threats is now enabled at BuildLevel 8, rather than at Scenario 8, making it equivalent to other difficulty increase tweaks that happen at that level.

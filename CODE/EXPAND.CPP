@@ -81,6 +81,51 @@ void EListClass::Draw_Entry(int index, int x, int y, int width, int selected)
 	}
 }
 
+void Add_List_Items(EListClass * list, ScenarioPlayerEnum player, int start, int end, int skipstart, int skipend) {
+	/*
+	**	Add in all the expansion scenarios.
+	*/
+	char * sbuffer = (char*)_ShapeBuffer;
+	int startindex = MIN(start, end);
+	int endindex = MAX(start, end);
+	int startskip = MIN(skipstart, skipend);
+	int endskip = MAX(skipstart, skipend);
+	int index;
+	// Nyerguds's TUC Quick Fix Patch v1.03: newmissions-max (enhanced)
+	for (index = startindex; index <= endindex; index++) {
+		if (index >= startskip && index <= endskip)
+			continue;
+
+		char buffer[128];
+		CCFileClass file;
+
+		Set_Scenario_Name(buffer, index, player, SCEN_DIR_EAST, SCEN_VAR_A);
+		strcat(buffer, ".INI");
+		file.Set_Name(buffer);
+		if (file.Is_Available()) {
+			file.Read(sbuffer, 1000);
+			sbuffer[1000] = '\r';
+			sbuffer[1000+1] = '\n';
+			sbuffer[1000+2] = '\0';
+
+			WWGetPrivateProfileString("Basic", "Player", "GoodGuy", buffer, sizeof(buffer), sbuffer);
+			HousesType house = HouseTypeClass::From_Name(buffer);
+			HouseTypeClass housetype = HouseTypeClass::As_Reference(house);
+			int name = housetype.ShortName;
+			const char* prefix = name ? Text_String(name) : housetype.Suffix;
+
+			WWGetPrivateProfileString("Basic", "Name", "x", buffer, sizeof(buffer), sbuffer);
+			char * data = new char [sizeof(int)*2+sizeof(buffer)];
+			*((int*)&data[0]) = index;
+			*((int*)&data[sizeof(int)]) = player;
+			strcpy(&data[sizeof(int)*2], prefix);
+			strcat(&data[sizeof(int)*2], ": ");
+			strcat(&data[sizeof(int)*2], buffer);
+			list->Add_Item(data);
+		}
+	}	
+}
+
 bool Expansion_Dialog(void)
 {
 	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
@@ -203,51 +248,6 @@ bool Expansion_Dialog(void)
 	}
 
 	return(okval);
-}
-
-void Add_List_Items(ListClass * list, ScenarioPlayerEnum player, int start, int end, int skipstart, int skipend) {
-	/*
-	**	Add in all the expansion scenarios.
-	*/
-	char * sbuffer = (char*)_ShapeBuffer;
-	int startindex = MIN(start, end);
-	int endindex = MAX(start, end);
-	int startskip = MIN(skipstart, skipend);
-	int endskip = MAX(skipstart, skipend);
-	int index;
-	// Nyerguds's TUC Quick Fix Patch v1.03: newmissions-max (enhanced)
-	for (index = startindex; index <= endindex; index++) {
-		if (index >= startskip && index <= endskip)
-			continue;
-
-		char buffer[128];
-		CCFileClass file;
-
-		Set_Scenario_Name(buffer, index, player, SCEN_DIR_EAST, SCEN_VAR_A);
-		strcat(buffer, ".INI");
-		file.Set_Name(buffer);
-		if (file.Is_Available()) {
-			file.Read(sbuffer, 1000);
-			sbuffer[1000] = '\r';
-			sbuffer[1000+1] = '\n';
-			sbuffer[1000+2] = '\0';
-
-			WWGetPrivateProfileString("Basic", "Player", "GoodGuy", buffer, sizeof(buffer), sbuffer);
-			HousesType house = HouseTypeClass::From_Name(buffer);
-			HouseTypeClass housetype = HouseTypeClass::As_Reference(house);
-			int name = housetype.ShortName;
-			const char* prefix = name ? Text_String(name) : housetype.Suffix;
-
-			WWGetPrivateProfileString("Basic", "Name", "x", buffer, sizeof(buffer), sbuffer);
-			char * data = new char [sizeof(int)*2+sizeof(buffer)];
-			*((int*)&data[0]) = index;
-			*((int*)&data[sizeof(int)]) = player;
-			strcpy(&data[sizeof(int)*2], prefix);
-			strcat(&data[sizeof(int)*2], ": ");
-			strcat(&data[sizeof(int)*2], buffer);
-			list->Add_Item(data);
-		}
-	}	
 }
 
 #ifdef BONUS_MISSIONS

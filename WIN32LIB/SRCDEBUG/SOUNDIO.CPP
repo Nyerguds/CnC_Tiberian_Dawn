@@ -435,14 +435,15 @@ void File_Stream_Preload(int handle)
     /*
     ** Loop through the blocks and load up the number we need.
     */
-    for (int index = st->FilePending; index < num; index++) {
+	int index;
+	for (index = st->FilePending; index < num; index++) {
 		long s = Read_File(fh, Add_Long_To_Pointer(buffer, (long)index * (long)LockedData.StreamBufferSize), LockedData.StreamBufferSize);
-       if (s) {
-         	st->FilePendingSize = s;
-	  		st->FilePending++;
+				if (s) {
+					st->FilePendingSize = s;
+				st->FilePending++;
 		}
 		if (s < LockedData.StreamBufferSize) break;
-    }
+	}
 
 	Sound_Timer_Callback(0,0,0,0,0);	//Shouldnt block as we are calling it from the same thread
 

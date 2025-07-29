@@ -452,7 +452,6 @@ void Nod_Ending(void);
 */
 bool Expansion_Present(void);
 bool Expansion_Dialog(void);
-void Add_List_Items(ListClass * list, ScenarioPlayerEnum player, int start, int end, int skipstart, int skipend);
 bool Bonus_Dialog(void);
 
 /*
