@@ -56,6 +56,7 @@ class MixFileClass : public LinkClass
 		static bool Cache(char const *filename);
 		static bool Offset(char const *filename, void ** realptr = 0, MixFileClass ** mixfile = 0, long * offset = 0, long * size = 0);
 		static void const * Retrieve(char const *filename);
+		static void const * Retrieve_With_Length(char const *filename, long *size);
 
 		struct SubBlock {
 			long CRC;				// CRC code for embedded file.

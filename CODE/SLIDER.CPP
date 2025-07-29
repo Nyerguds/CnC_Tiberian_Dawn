@@ -301,6 +301,23 @@ int SliderClass::Step(int up)
 		return(Set_Value(CurValue - 1));
 	}
 	return(Set_Value(CurValue + 1));
+}
+
+/***********************************************************************************************
+ * SliderClass::Step -- Steps the slider up or down by the specified amount.                   *
+ *                                                                                             *
+ *    This routine will move the slider thumb by the given amount of steps.                    *
+ *    Negative numbers make it move up.                                                        *
+ *                                                                                             *
+ * INPUT:   amount -- Amount to change. Negative will slide upwards.                           *
+ * OUTPUT:  bool; Was the slider changed at all? A false indicates that the slider is already  *
+ *                at one end or the other.                                                     *
+ * WARNINGS:   none                                                                            *
+ * HISTORY:    01/15/1995 JLB : Created.                                                       *
+ *=============================================================================================*/
+int SliderClass::StepBy(int amount)
+{
+	return(Set_Value(CurValue + amount));
 }	
 
 

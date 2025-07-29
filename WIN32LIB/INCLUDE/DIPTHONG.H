@@ -18,7 +18,7 @@
 
 int Dip_Text(char const *source, char *dest);
 int UnDip_Text(char const *source, char *dest);
-char *Extract_String(void const *data, int string);
+char *Extract_String(void const *data, int datalen, int string);
 void Fixup_Text(char const *source, char *dest);
 extern char Common[];
 extern char Dipthong[16][8];

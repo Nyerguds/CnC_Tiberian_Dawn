@@ -292,13 +292,22 @@ int ListClass::Action(unsigned flags, KeyNumType & key)
 					Set_Selected_Index(bottomvisible);
 				}
 				key = KN_NONE;
+			} else if (key == KN_HOME) {
+				Set_Selected_Index(0);
+				key = KN_NONE;
+			} else if (key == KN_END) {
+				Set_Selected_Index(Count()-1);
+				key = KN_NONE;
 			} else {
 				flags &= ~KEYBOARD;
 			}
-		} else if (flags & MOUSEWHEELDN) {
-				Step_Selected_Index(1);
-		} else if (flags & MOUSEWHEELUP) {
-				Step_Selected_Index(-1);			
+		} else if (flags & (MOUSEWHEELDN|MOUSEWHEELUP)) {
+			// Scrollwheel scrolls by 3 items, or one page if that is less.
+			int scrollStep = MIN(3, LineCount-1);
+			if (flags & MOUSEWHEELUP) {
+				scrollStep *= -1;
+			}
+			StepBy(scrollStep);
 		} else if (flags & LEFTPRESS) {
 			int index = Get_Mouse_Y() - (Y+1);
 			index = index / LineHeight;
@@ -412,6 +421,32 @@ void ListClass::Step(int up)
 {
 	if (IsScrollActive) {
 		if (ScrollGadget.Step(up)) {
+			CurrentTopIndex = ScrollGadget.Get_Value();
+			Flag_To_Redraw();
+		}
+	}
+}
+
+
+/***********************************************************************************************
+ * ListClass::StepBy -- Moves the list view by the specified amount of lines.                  *
+ *                                                                                             *
+ *    This routine will move the current view "page" by the given amount of lines.             *
+ *    Negative numbers make it move up.                                                        *
+ *                                                                                             *
+ * INPUT:   amount -- Amount to change. Negative will slide upwards.                           *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   01/15/1995 JLB : Created.                                                                 *
+ *=============================================================================================*/
+void ListClass::StepBy(int amount)
+{
+	if (IsScrollActive) {
+		if (ScrollGadget.StepBy(amount)) {
 			CurrentTopIndex = ScrollGadget.Get_Value();
 			Flag_To_Redraw();
 		}

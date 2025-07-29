@@ -67,6 +67,7 @@ class SliderClass : public GaugeClass
 		virtual int  Set_Value(int);
 		virtual int  Bump(int up);
 		virtual int  Step(int up);
+		virtual int  StepBy(int amount);
 		virtual int  Draw_Me(int forced);
 		virtual void Peer_To_Peer(unsigned flags, KeyNumType & key, ControlClass & whom);
 

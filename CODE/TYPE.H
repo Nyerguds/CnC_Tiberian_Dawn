@@ -183,6 +183,13 @@ class HouseTypeClass {
 		int FullName;
 
 		/*
+		**	The short name (translated) of the house is identified by this number.
+		**	The actual text of the name is located in a text file loaded at run
+		**	time.
+		*/
+		int ShortName;
+
+		/*
 		**	This is the filename suffix to use when creating a house specific
 		**	file name. It is three characters long.
 		*/
@@ -213,6 +220,7 @@ class HouseTypeClass {
 		HouseTypeClass(HousesType house,
 							char const *ini,
 							int fullname,
+							int shortname,
 							char const *ext,
 							int lemon,
 							PlayerColorType remapcolor,

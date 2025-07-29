@@ -297,6 +297,38 @@ void * Load_Alloc_Data(FileClass &file)
 
 
 /***********************************************************************************************
+ * Load_Alloc_Data_Size -- Allocates a buffer and loads the file into it, and returns the size *
+ * too.                                                                                        *
+ *                                                                                             *
+ *    This is the C++ replacement for the Load_Alloc_Data function. It will allocate the       *
+ *    memory big enough to hold the file and then read the file into it.                       *
+ *                                                                                             *
+ * INPUT:   file  -- The file to read.                                                         *
+ *                                                                                             *
+ *          filesize -- The file size to return.                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the allocated and filled memory block.                   *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   10/17/1994 JLB : Created.                                                                 *
+ *=============================================================================================*/
+void * Load_Alloc_Data_Size(FileClass &file, long *filesize)
+{
+	void *ptr = 0;
+	long size = file.Size();
+
+	ptr = new char [size];
+	if (ptr) {
+		file.Read(ptr, size);
+	}
+	if (filesize) *filesize = size;
+	return(ptr);
+}
+
+
+/***********************************************************************************************
  * Translucent_Table_Size -- Determines the size of a translucent table.                       *
  *                                                                                             *
  *    Use this routine to determine how big the translucent table needs                        *

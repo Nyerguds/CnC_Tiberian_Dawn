@@ -74,10 +74,10 @@ void EListClass::Draw_Entry(int index, int x, int y, int width, int selected)
 			}
 		}
 
-		Conquer_Clip_Text_Print(List[index]+sizeof(int), x, y, CC_GREEN, TBLACK, flags, width, Tabs);
+		Conquer_Clip_Text_Print(List[index]+sizeof(int)*2, x, y, CC_GREEN, TBLACK, flags, width, Tabs);
 
 	} else {
-		Conquer_Clip_Text_Print(List[index]+sizeof(int), x, y, (selected ? BLUE : WHITE), TBLACK, TextFlags, width, Tabs);
+		Conquer_Clip_Text_Print(List[index]+sizeof(int)*2, x, y, (selected ? BLUE : WHITE), TBLACK, TextFlags, width, Tabs);
 	}
 }
 
@@ -111,65 +111,24 @@ bool Expansion_Dialog(void)
 	cancel.Add(*buttons);
 	list.Add(*buttons);
 
-
 	/*
 	**	Add in all the expansion scenarios.
 	*/
-	char * sbuffer = (char*)_ShapeBuffer;
-	// Nyerguds's TUC Quick Fix Patch v1.03: newmissions-max (enhanced)
-	for (int index = 20; index < 100; index++) {
+	// Bonus_Dialog missions start
+	int bonuslow = 0;
+	// Bonus_Dialog missions end
+	int bonushigh = 0;
 #ifdef BONUS_MISSIONS
-		if (index >= 60 && index < 63)
-			continue;
+	bonuslow = 60;
+	bonushigh = 62;
 #endif // BONUS_MISSIONS
-
-		char buffer[128];
-		CCFileClass file;
-
-		Set_Scenario_Name(buffer, index, SCEN_PLAYER_GDI, SCEN_DIR_EAST, SCEN_VAR_A);
-		strcat(buffer, ".INI");
-		file.Set_Name(buffer);
-		if (file.Is_Available()) {
-			file.Read(sbuffer, 1000);
-			sbuffer[1000] = '\r';
-			sbuffer[1000+1] = '\n';
-			sbuffer[1000+2] = '\0';
-
-			WWGetPrivateProfileString("Basic", "Name", "x", buffer, sizeof(buffer), sbuffer);
-			char * data = new char [strlen(buffer)+1+sizeof(int)+25];
-			*((int*)&data[0]) = index;
-			strcpy(&data[sizeof(int)], "GDI: ");
-			strcat(&data[sizeof(int)], buffer);
-			list.Add_Item(data);
-		}
-	}
-
-	// Nyerguds's TUC Quick Fix Patch v1.03: newmissions-max (enhanced)
-	for (index = 20; index < 100; index++) {
+	Add_List_Items(&list, SCEN_PLAYER_GDI, 20, 99, bonuslow, bonushigh);
 #ifdef BONUS_MISSIONS
-		if (index >= 60 && index < 62)
-			continue;
+	bonuslow = 60;
+	bonushigh = 61;
 #endif // BONUS_MISSIONS
-		char buffer[128];
-		CCFileClass file;
-
-		Set_Scenario_Name(buffer, index, SCEN_PLAYER_NOD, SCEN_DIR_EAST, SCEN_VAR_A);
-		strcat(buffer, ".INI");
-		file.Set_Name(buffer);
-		if (file.Is_Available()) {
-			file.Read(sbuffer, 1000);
-			sbuffer[1000] = '\r';
-			sbuffer[1000+1] = '\n';
-			sbuffer[1000+2] = '\0';
-
-			WWGetPrivateProfileString("Basic", "Name", "x", buffer, sizeof(buffer), sbuffer);
-			char * data = new char [strlen(buffer)+1+sizeof(int)+25];
-			*((int*)&data[0]) = index;
-			strcpy(&data[sizeof(int)], "NOD: ");
-			strcat(&data[sizeof(int)], buffer);
-			list.Add_Item(data);
-		}
-	}
+	Add_List_Items(&list, SCEN_PLAYER_NOD, 20, 99, bonuslow, bonushigh);
+	Add_List_Items(&list, SCEN_PLAYER_JP, 20, 99, 0, 0);
 
 	Set_Logic_Page(SeenBuff);
 	bool recalc = true;
@@ -207,27 +166,26 @@ bool Expansion_Dialog(void)
 		}
 
 		KeyNumType input = buttons->Input();
+		const char* item = NULL;
 		switch (input) {
 			case KN_RETURN:
 			case 200|KN_BUTTON:
-				if (list.Current_Item()[sizeof(int)] == 'G') {
-					ScenPlayer = SCEN_PLAYER_GDI;
-				} else {
-					ScenPlayer = SCEN_PLAYER_NOD;
+				if (list.Count()) {
+					item = list.Current_Item();
+					ScenPlayer = (ScenarioPlayerType)*(int *)(item + sizeof(int));
+					ScenDir = SCEN_DIR_EAST;
+					Whom = HOUSE_GOOD;
+					Scenario = *(int *)item;
+					process = false;
+					okval = true;
+					break;
 				}
-				ScenDir = SCEN_DIR_EAST;
-				Whom = HOUSE_GOOD;
-				Scenario = *(int *)list.Current_Item();
-				process = false;
-				okval = true;
-				break;
-
 			case KN_ESC:
 			case 201|KN_BUTTON:
 				ScenPlayer = SCEN_PLAYER_GDI;
 				ScenDir = SCEN_DIR_EAST;
 				Whom = HOUSE_GOOD;
-				Scenario = *(int *)list.Current_Item();
+				Scenario = 0;
 				process = false;
 				okval = false;
 				break;
@@ -240,11 +198,56 @@ bool Expansion_Dialog(void)
 	/*
 	**	Free up the allocations for the text lines in the list box.
 	*/
-	for (index = 0; index < list.Count(); index++) {
+	for (int index = 0; index < list.Count(); index++) {
 		delete [] (char *)list.Get_Item(index);
 	}
 
 	return(okval);
+}
+
+void Add_List_Items(ListClass * list, ScenarioPlayerEnum player, int start, int end, int skipstart, int skipend) {
+	/*
+	**	Add in all the expansion scenarios.
+	*/
+	char * sbuffer = (char*)_ShapeBuffer;
+	int startindex = MIN(start, end);
+	int endindex = MAX(start, end);
+	int startskip = MIN(skipstart, skipend);
+	int endskip = MAX(skipstart, skipend);
+	int index;
+	// Nyerguds's TUC Quick Fix Patch v1.03: newmissions-max (enhanced)
+	for (index = startindex; index <= endindex; index++) {
+		if (index >= startskip && index <= endskip)
+			continue;
+
+		char buffer[128];
+		CCFileClass file;
+
+		Set_Scenario_Name(buffer, index, player, SCEN_DIR_EAST, SCEN_VAR_A);
+		strcat(buffer, ".INI");
+		file.Set_Name(buffer);
+		if (file.Is_Available()) {
+			file.Read(sbuffer, 1000);
+			sbuffer[1000] = '\r';
+			sbuffer[1000+1] = '\n';
+			sbuffer[1000+2] = '\0';
+
+			WWGetPrivateProfileString("Basic", "Player", "GoodGuy", buffer, sizeof(buffer), sbuffer);
+			HousesType house = HouseTypeClass::From_Name(buffer);
+			HouseTypeClass housetype = HouseTypeClass::As_Reference(house);
+			int name = housetype.ShortName;
+			const char* prefix = name ? Text_String(name) : housetype.Suffix;
+
+			WWGetPrivateProfileString("Basic", "Name", "x", buffer, sizeof(buffer), sbuffer);
+			char * data = new char [sizeof(int)*2+sizeof(buffer)];
+			*((int*)&data[0]) = index;
+			*((int*)&data[sizeof(int)]) = player;
+			strcpy(&data[sizeof(int)*2], prefix);
+			strcat(&data[sizeof(int)*2], ": ");
+			strcat(&data[sizeof(int)*2], buffer);
+			list->Add_Item(data);
+		}
+	}	
 }
 
 #ifdef BONUS_MISSIONS
@@ -309,8 +312,9 @@ bool Bonus_Dialog(void)
 		TXT_BONUS_MISSION_5
 	};
 
-
-	for (int index = 60; index < 63; index++) {
+	int nameindex = 0;
+	int index;
+	for (index = 60; index < 63; index++) {
 		char buffer[128];
 		CCFileClass file;
 
@@ -318,15 +322,17 @@ bool Bonus_Dialog(void)
 		strcat(buffer, ".INI");
 		file.Set_Name(buffer);
 		if (file.Is_Available()) {
-			memcpy (buffer, Text_String (gdi_scen_names[index-60]), 1+strlen(Text_String (gdi_scen_names[index-60])));
-			char * data = new char [strlen(buffer)+1+sizeof(int)+25];
+			memcpy (buffer, Text_String (gdi_scen_names[nameindex]), 1+strlen(Text_String (gdi_scen_names[nameindex])));
+			char * data = new char [sizeof(int)*2+sizeof(buffer)];
 			*((int*)&data[0]) = index;
-			strcpy(&data[sizeof(int)], "GDI: ");
-			strcat(&data[sizeof(int)], buffer);
+			*((int*)&data[sizeof(int)]) = SCEN_PLAYER_GDI;
+			strcpy(&data[sizeof(int)*2], "GDI: ");
+			strcat(&data[sizeof(int)*2], buffer);
 			list.Add_Item(data);
 		}
+		nameindex++;
 	}
-
+	nameindex = 0;
 	for (index = 60; index < 62; index++) {
 		char buffer[128];
 		CCFileClass file;
@@ -335,13 +341,15 @@ bool Bonus_Dialog(void)
 		strcat(buffer, ".INI");
 		file.Set_Name(buffer);
 		if (file.Is_Available()) {
-			memcpy (buffer, Text_String (nod_scen_names[index-60]), 1+strlen(Text_String (nod_scen_names[index-60])));
-			char * data = new char [strlen(buffer)+1+sizeof(int)+25];
+			memcpy (buffer, Text_String (nod_scen_names[nameindex]), 1+strlen(Text_String (nod_scen_names[nameindex])));
+			char * data = new char [sizeof(int)*2+sizeof(buffer)];
 			*((int*)&data[0]) = index;
-			strcpy(&data[sizeof(int)], "NOD: ");
-			strcat(&data[sizeof(int)], buffer);
+			*((int*)&data[sizeof(int)]) = SCEN_PLAYER_NOD;
+			strcpy(&data[sizeof(int)*2], "NOD: ");
+			strcat(&data[sizeof(int)*2], buffer);
 			list.Add_Item(data);
 		}
+		nameindex++;
 	}
 
 	Set_Logic_Page(SeenBuff);
@@ -380,27 +388,26 @@ bool Bonus_Dialog(void)
 		}
 
 		KeyNumType input = buttons->Input();
+		const char* item = NULL;
 		switch (input) {
 			case KN_RETURN:
 			case 200|KN_BUTTON:
-				if (list.Current_Item()[sizeof(int)] == 'G') {
-					ScenPlayer = SCEN_PLAYER_GDI;
-				} else {
-					ScenPlayer = SCEN_PLAYER_NOD;
+				if (list.Count()) {
+					item = list.Current_Item();
+					ScenPlayer = (ScenarioPlayerType)*(int *)(item + sizeof(int));
+					ScenDir = SCEN_DIR_EAST;
+					Whom = HOUSE_GOOD;
+					Scenario = *(int *)item;
+					process = false;
+					okval = true;
+					break;
 				}
-				ScenDir = SCEN_DIR_EAST;
-				Whom = HOUSE_GOOD;
-				Scenario = *(int *)list.Current_Item();
-				process = false;
-				okval = true;
-				break;
-
 			case KN_ESC:
 			case 201|KN_BUTTON:
 				ScenPlayer = SCEN_PLAYER_GDI;
 				ScenDir = SCEN_DIR_EAST;
 				Whom = HOUSE_GOOD;
-				Scenario = *(int *)list.Current_Item();
+				Scenario = 0;
 				process = false;
 				okval = false;
 				break;

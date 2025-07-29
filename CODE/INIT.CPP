@@ -266,15 +266,15 @@ bool Init_Game(int , char *[])
 	*/
 	SystemStrings = NULL;
 	if (RawFileClass(Language_Name("CONQUER", false)).Is_Available()) {
-		SystemStrings = (char const *)Load_Alloc_Data(RawFileClass(Language_Name("CONQUER", false)));
+		SystemStrings = (char const *)Load_Alloc_Data_Size(RawFileClass(Language_Name("CONQUER", false)), &SystemStringsLength);
 	} else {
-		SystemStrings = (char const *)MixFileClass::Retrieve(Language_Name("CONQUER", false));
+		SystemStrings = (char const *)MixFileClass::Retrieve_With_Length(Language_Name("CONQUER", false), &SystemStringsLength);
 	}
 	if (SystemStrings == NULL) {
 		if (RawFileClass(Language_Name("CONQUER", true)).Is_Available()) {
-			SystemStrings = (char const *)Load_Alloc_Data(RawFileClass(Language_Name("CONQUER", true)));
+			SystemStrings = (char const *)Load_Alloc_Data_Size(RawFileClass(Language_Name("CONQUER", true)), &SystemStringsLength);
 		} else {
-			SystemStrings = (char const *)MixFileClass::Retrieve(Language_Name("CONQUER", true));
+			SystemStrings = (char const *)MixFileClass::Retrieve_With_Length(Language_Name("CONQUER", true), &SystemStringsLength);
 		}		
 	}
 
@@ -311,7 +311,7 @@ bool Init_Game(int , char *[])
 		CCFileClass::Set_Search_Drives(OverridePath);
 	}
 #endif
-#ifdef TUC_Build
+#ifdef TUC_BUILD
 	CCFileClass::Set_Search_Drives(".");
 	RequiredCD = -2;
 #else
@@ -380,7 +380,7 @@ bool Init_Game(int , char *[])
 		*/
 		RequiredCD = -2;
 	}
-#endif // TUC_Build
+#endif // TUC_BUILD
 
 #ifndef DEMO
 	CCDebugString ("C&C95 - About to register addon mixfiles\n");
@@ -976,6 +976,12 @@ bool Select_Game(bool fade)
 			}
 			Call_Back();
 
+#ifdef BONUS_MISSIONS
+#ifndef TUC_BUILD
+			int cd_index = -2;
+#endif // TUC_BUILD
+#endif // BONUS_MISSIONS
+
 			switch (selection) {
 
 #ifdef NEWMENU
@@ -1031,11 +1037,12 @@ bool Select_Game(bool fade)
 				case SEL_BONUS_MISSIONS:
 					CarryOverMoney = 0;
 
+#ifndef TUC_BUILD
 					/*
 					** Ensure that CD1 or CD2 is in the drive. These missions
 					** are not on the covert CD.
 					*/
-					int cd_index = Get_CD_Index(CCFileClass::Get_CD_Drive(), 1*60);
+					cd_index = Get_CD_Index(CCFileClass::Get_CD_Drive(), 1*60);
 					/*
 					** If cd_index == 2 then its a covert CD
 					*/
@@ -1046,6 +1053,7 @@ bool Select_Game(bool fade)
 							exit(EXIT_FAILURE);
 						}
 					}
+#endif	//TUC_BUILD
 
 					if (Bonus_Dialog()) {
 						Theme.Fade_Out();

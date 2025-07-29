@@ -43,6 +43,7 @@ static HouseTypeClass const HouseGood(
 	HOUSE_GOOD,
 	"GoodGuy",					//	NAME:			House name.
 	TXT_GDI,						// FULLNAME:	Translated house name.
+	TXT_G_D_I,					// SHORTNAME:	Translated house name.
 	"GDI",						// SUFFIX:		House file suffix.
 	0,								// LEMON:		Lemon vehicle frequency.
 	REMAP_GDI,				// Remap color ID number.
@@ -53,6 +54,7 @@ static HouseTypeClass const HouseBad(
 	HOUSE_BAD,
 	"BadGuy",					//	NAME:			House name.
 	TXT_NOD,						// FULLNAME:	Translated house name.
+	TXT_N_O_D,					// SHORTNAME:	Translated house name.
 	"NOD",						// SUFFIX:		House file suffix.
 	0,								// LEMON:		Lemon vehicle frequency.
 	REMAP_NOD,				// Remap color ID number.
@@ -63,6 +65,7 @@ static HouseTypeClass const HouseCivilian(
 	HOUSE_NEUTRAL,
 	"Neutral",					//	NAME:			House name.
 	TXT_CIVILIAN,				// FULLNAME:	Translated house name.
+	TXT_CIVILIAN,				// SHORTNAME:	Translated house name.
 	"CIV",						// SUFFIX:		House file suffix.
 	0,								// LEMON:		Lemon vehicle frequency.
 	REMAP_NEUTRAL,		// Remap color ID number.
@@ -73,6 +76,7 @@ static HouseTypeClass const HouseJP(
 	HOUSE_JP,
 	"Special",					//	NAME:			House name.
 	TXT_JP,						// FULLNAME:	Translated house name.
+	0,									// SHORTNAME:	Translated house name.
 	"JP",							// SUFFIX:		House file suffix.
 	0,								// LEMON:		Lemon vehicle frequency.
 	REMAP_NEUTRAL,		// Remap color ID number.
@@ -83,6 +87,7 @@ static HouseTypeClass const HouseMulti1(
 	HOUSE_MULTI1,
 	"Multi1",					//	NAME:			House name.
 	TXT_CIVILIAN,				// FULLNAME:	Translated house name.
+	0,									// SHORTNAME:	Translated house name.
 	"MP1",						// SUFFIX:		House file suffix.
 	0,								// LEMON:		Lemon vehicle frequency.
 	REMAP_BLUEGREEN,	// Remap color ID number.
@@ -93,6 +98,7 @@ static HouseTypeClass const HouseMulti2(
 	HOUSE_MULTI2,
 	"Multi2",					//	NAME:			House name.
 	TXT_CIVILIAN,				// FULLNAME:	Translated house name.
+	0,									// SHORTNAME:	Translated house name.
 	"MP2",						// SUFFIX:		House file suffix.
 	0,								// LEMON:		Lemon vehicle frequency.
 	REMAP_ORANGE,			// Remap color ID number.
@@ -103,6 +109,7 @@ static HouseTypeClass const HouseMulti3(
 	HOUSE_MULTI3,
 	"Multi3",					//	NAME:			House name.
 	TXT_CIVILIAN,				// FULLNAME:	Translated house name.
+	0,									// SHORTNAME:	Translated house name.
 	"MP3",						// SUFFIX:		House file suffix.
 	0,								// LEMON:		Lemon vehicle frequency.
 	REMAP_GREEN,			// Remap color ID number.
@@ -113,6 +120,7 @@ static HouseTypeClass const HouseMulti4(
 	HOUSE_MULTI4,
 	"Multi4",					//	NAME:			House name.
 	TXT_CIVILIAN,				// FULLNAME:	Translated house name.
+	0,									// SHORTNAME:	Translated house name.
 	"MP4",						// SUFFIX:		House file suffix.
 	0,								// LEMON:		Lemon vehicle frequency.
 	REMAP_BLUE,				// Remap color ID number.
@@ -123,6 +131,7 @@ static HouseTypeClass const HouseMulti5(
 	HOUSE_MULTI5,
 	"Multi5",					//	NAME:			House name.
 	TXT_CIVILIAN,				// FULLNAME:	Translated house name.
+	0,									// SHORTNAME:	Translated house name.
 	"MP5",						// SUFFIX:		House file suffix.
 	0,								// LEMON:		Lemon vehicle frequency.
 	REMAP_YELLOW,			// Remap color ID number.
@@ -133,6 +142,7 @@ static HouseTypeClass const HouseMulti6(
 	HOUSE_MULTI6,
 	"Multi6",					//	NAME:			House name.
 	TXT_CIVILIAN,				// FULLNAME:	Translated house name.
+	0,									// SHORTNAME:	Translated house name.
 	"MP6",						// SUFFIX:		House file suffix.
 	0,								// LEMON:		Lemon vehicle frequency.
 	REMAP_RED,				// Remap color ID number.
@@ -176,10 +186,11 @@ HouseTypeClass const * const HouseTypeClass::Pointers[HOUSE_COUNT] = {
  *   06/21/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
 HouseTypeClass::HouseTypeClass(HousesType house, 
-				char const * ini, 
-				int fullname, 
-				char const * ext, 
-				int lemon, 
+				char const * ini,
+				int fullname,
+				int shortname,
+				char const * ext,
+				int lemon,
 				PlayerColorType remapcolor,
 				char prefix)
 {
@@ -187,6 +198,7 @@ HouseTypeClass::HouseTypeClass(HousesType house,
 	House = house;
 	IniName = ini;
 	FullName = fullname;
+	ShortName = shortname;
 	strncpy(Suffix, ext, 3);
 	Suffix[3] = '\0';
 	Lemon = lemon;

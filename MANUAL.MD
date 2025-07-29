@@ -44,7 +44,8 @@ General upgrades to selection and giving orders:
 Other control upgrades:
 
 * You can now press \[Escape\] to fast-forward the animations on the map selection screen and the score screen.
-* You can use the scroll wheel to go through the sidebar items.
+* You can use the mouse scroll wheel to go through the sidebar items. This will scroll the specific strip you're hovering the mouse over:
+* Item lists such as the New Missions menu and the music list now support PageUp, PageDown, Home, End, and the mouse scroll wheel.
 
 ## Added features that can be disabled
 

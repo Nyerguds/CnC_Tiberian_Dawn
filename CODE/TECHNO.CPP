@@ -884,7 +884,7 @@ void TechnoClass::Per_Cell_Process(bool )
 void TechnoClass::Draw_It(int x, int y, WindowNumberType window)
 {
 	Clear_Redraw_Flag();
-	if (IsSelected || Special.IsBarOn) {
+	if (IsSelected || (Special.IsBarOn && (House->Is_Ally(PlayerPtr) || Cloak != CLOAKED))) {
 		GraphicViewPortClass draw_window(	LogicPage->Get_Graphic_Buffer(),
 														WindowList[window][WINDOWX] << 3 + LogicPage->Get_XPos(),
 														WindowList[window][WINDOWY] + LogicPage->Get_YPos(),

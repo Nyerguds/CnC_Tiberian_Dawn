@@ -269,12 +269,16 @@ int UnDip_Text(char const *source, char *dest)
  *   08/13/1993 JLB : Created.                                             *
  *   08/13/1993 JLB : Handles EMS or XMS data pointer.                     *
  *=========================================================================*/
-char *Extract_String(void const *data, int string)
+char *Extract_String(void const *data, int datalen, int string)
 {
 	unsigned short int	const *ptr;
-
-	if (!data || string < 0) return(NULL);
-
-	ptr = (unsigned short int const *)data;
-	return (((char*)data) + ptr[string]);
+	if (data && string >= 0 && datalen > string * sizeof(short)) {
+		ptr = (unsigned short int const *)data;
+		// Find first invalid string id by finding location of first string after lookup table.
+		int strend = ptr[0] / sizeof(short);
+		if (string < strend && ptr[string] < datalen) {
+			return (((char*)data) + ptr[string]);
+		}
+	}
+	return("<<UNKNOWN STRING>>");
 }

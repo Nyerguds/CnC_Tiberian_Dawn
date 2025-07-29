@@ -352,6 +352,8 @@ unsigned long ScenarioCRC;
 */
 char const * SystemStrings;
 
+long SystemStringsLength;
+
 
 /***************************************************************************
 **	The game plays as long as this var is true.

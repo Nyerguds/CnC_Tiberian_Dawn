@@ -3841,7 +3841,7 @@ int Get_CD_Index (int cd_drive, int timeout)
  *=============================================================================================*/
 bool Force_CD_Available(int cd)
 {
-#ifndef TUC_Build
+#ifndef TUC_BUILD
 #ifndef DEMO
 	static int _last = -1;
 	int open_failed;
@@ -4050,7 +4050,7 @@ bool Force_CD_Available(int cd)
 	if (theme_playing != THEME_NONE) {
 		Theme.Queue_Song(theme_playing);
 	}
-#endif // TUC_Build
+#endif // TUC_BUILD
 	return(true);
 }
 
@@ -4078,7 +4078,7 @@ unsigned long Disk_Space_Available(void)
 	_dos_getdiskfree(drive, &diskdata);
 
 	return(diskdata.avail_clusters * diskdata.sectors_per_cluster * diskdata.bytes_per_sector);
-#endif // TUC_Build
+#endif
 }
 
 

@@ -452,6 +452,7 @@ void Nod_Ending(void);
 */
 bool Expansion_Present(void);
 bool Expansion_Dialog(void);
+void Add_List_Items(ListClass * list, ScenarioPlayerEnum player, int start, int end, int skipstart, int skipend);
 bool Bonus_Dialog(void);
 
 /*
@@ -495,6 +496,7 @@ void Load_Recording_Values(void);
 void * Small_Icon(void const * iconptr, int iconnum);
 void Set_Window(int window, int x, int y, int w, int h);
 void * Load_Alloc_Data(FileClass &file);
+void * Load_Alloc_Data_Size(FileClass &file, long *filesize);
 long Load_Uncompress(FileClass &file, BuffType &uncomp_buff, BuffType &dest_buff, void *reserved_data);
 long Translucent_Table_Size(int count);
 void *Build_Translucent_Table(void const *palette, TLucentType const *control, int count, void *buffer);
@@ -747,7 +749,7 @@ inline int Lepton_To_Pixel(int lepton) {return ((lepton * ICON_PIXEL_W) + (ICON_
 inline int Pixel_To_Lepton(int pixel) {return ((pixel * ICON_LEPTON_W) + (ICON_PIXEL_W / 2)) / ICON_PIXEL_W;}
 inline FacingType Facing_To_8(DirType facing) {return (FacingType)(((unsigned char)(facing|0x10))>>5);}
 inline COORDINATE XYP_Coord(int x,int y) {return XY_Coord(Pixel_To_Lepton(x), Pixel_To_Lepton(y));};
-inline char const * Text_String(int string) {return(Extract_String(SystemStrings, string));};
+inline char const * Text_String(int string) {return(Extract_String(SystemStrings, SystemStringsLength, string));};
 
 
 template<class T> inline T Random_Picky(T a, T b, char *sfile, int line)

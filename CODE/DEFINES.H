@@ -41,7 +41,7 @@
 /**********************************************************************
 **	If defined, no CD checks will ever be done for this version.
 */
-#define TUC_Build
+#define TUC_BUILD
 
 
 /**********************************************************************
@@ -211,7 +211,7 @@
 #define VERSION_MAJOR   	1	// Major version will never change between languages.
 #define VERSION_MINOR    	7	// Win95 minor version number
 
-#define VERSION_PATCH_EXTRA	"CCPP v1.04"
+#define VERSION_PATCH_EXTRA	"CCPP v1.04 pre2"
 
 // Enable this to load the map screen strings from the strings file instead of using the hardcoded ones.
 //#define EXPANDED_STRINGS 1

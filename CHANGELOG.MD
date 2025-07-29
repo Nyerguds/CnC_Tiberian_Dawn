@@ -145,3 +145,8 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Added the ability to customize color schemes from mission files.
 * Added support for extra destroyable triggers named UUUU, VVVV and WWWW.
 * Civilian evacuation triggers in missions can now be looped to detect multiple evacuations.
+* Added proper mouse scroll wheel support to the sidebar; it now scrolls the list you hover over.
+* Item lists such as the New Missions menu and the music list now support PageUp, PageDown, Home, End, and the mouse scroll wheel.
+* The prefix shown on items in the New Missions menu now actually matches the player set in the mission file.
+* Items in the New Missions menu now load missions for campaign side "J" too, from SCJ20EA to SCJ99EA.
+* Added constraint checks on strings file reading, with any unknown string returning "<<UNKNOWN STRING>>".
