@@ -5022,8 +5022,6 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 		for (FacingType facing = FACING_N; facing < FACING_COUNT; facing++) {
 			CELL	newcell = Adjacent_Cell(cell, facing);
 
-			TechnoClass * base = Map[newcell].Cell_Techno();
-
 			/*
 			**	The special cell ownership flag allows building adjacent
 			**	to friendly walls and bibs even though there is no official
@@ -5033,7 +5031,13 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 				return(true);
 			}
 
-			if (base && base->What_Am_I() == RTTI_BUILDING && base->House->Class->House == House->Class->House) {
+			// Nyerguds's TUC Quick Fix Patch v1.04
+			/*
+			**	Only check for buildings. Don't mind if they are covered with
+			**	a unit (e.g. on helipads)
+			*/
+			BuildingClass * base = Map[newcell].Cell_Building();
+			if (base && base->House->Class->House == House->Class->House) {
 				return(true);
 			}
 		}

@@ -343,7 +343,7 @@ void RadarClass::Draw_It(bool forced)
 	// -Simplified this logic to actually use House JP
 	static HousesType _house = HOUSE_NONE;
 	HousesType radarhouse = PlayerPtr->ActLike;
-	if (/*(Special.IsJurassic && AreThingiesEnabled) ||*/ ScenPlayer == SCEN_PLAYER_JP) {
+	if (ScenPlayer == SCEN_PLAYER_JP && Scenario < 20) {
 		radarhouse = HOUSE_JP;
 	}
 	// Nyerguds's TUC Quick Fix Patch v1.04

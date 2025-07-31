@@ -220,6 +220,12 @@
 #define	FOREIGN_VERSION_NUMBER	6
 
 /**********************************************************************
+ * Extra implemented features that could be disabled.
+ */
+//#define MIDDLE_MOUSE_PANNING
+
+
+/**********************************************************************
 **	These enumerations are used to implement RTTI.
 */
 typedef enum RTTIType {

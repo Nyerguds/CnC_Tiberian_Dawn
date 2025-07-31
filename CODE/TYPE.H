@@ -955,6 +955,21 @@ class UnitTypeClass : public TechnoTypeClass
 		unsigned IsAnimating:1;
 
 		/*
+		** Does this unit emit smoke when it is damaged?
+		*/
+		unsigned IsSmoker:1;
+
+		/*
+		** Until what health ratio does this unit autoheal? Set to 0 to disable.
+		*/
+		unsigned short AutoHealMax;
+
+		/*
+		** Until what health ratio does this unit autoheal on tiberium? Set to 0 to disable.
+		*/
+		unsigned short TibHealMax;
+
+		/*
 		**	This value represents the unit class. It can serve as a unique
 		**	identification number for this unit class.
 		*/
@@ -1031,6 +1046,9 @@ class UnitTypeClass : public TechnoTypeClass
 						bool is_chunky,
 						bool is_cloakable,
 						bool is_animating,
+						bool isSmoker,
+						unsigned short autohealmax,
+						unsigned short tibhealmax,
 						int ammo,
 						unsigned short strength,
 						int sightrange,

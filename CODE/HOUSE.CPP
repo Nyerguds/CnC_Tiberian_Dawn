@@ -473,7 +473,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	*/
 	// Nyerguds's TUC Quick Fix Patch v1.04
 	// Make funpark campaign independent from Jurassic mode.
-	if (GameToPlay != GAME_NORMAL || /*(Special.IsJurassic && AreThingiesEnabled) ||*/ ScenPlayer == SCEN_PLAYER_JP) {
+	if (GameToPlay != GAME_NORMAL || (ScenPlayer == SCEN_PLAYER_JP && Scenario < 20)) {
 		return((pre & flags) == pre && type->Level <= BuildLevel);
 	}
 
@@ -2693,6 +2693,7 @@ bool HouseClass::Manual_Place(BuildingClass * builder,  BuildingClass * object)
 		Map.Repair_Mode_Control(0);
 		Map.Sell_Mode_Control(0);
 
+		Map.IsTargettingMode = SPC_NONE;
 		Map.PendingObject = object->Class;
 		Map.PendingObjectPtr = object;
 		Map.PendingHouse = Class->House;

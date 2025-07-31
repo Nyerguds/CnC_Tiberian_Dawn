@@ -252,46 +252,31 @@ void Choose_Side(void)
 		ScenPlayer = SCEN_PLAYER_JP;
 	}
 	
-	/*
-	** Skip the briefings if we're in special mode.
-	*/
-	// Nyerguds's TUC Quick Fix Patch v1.04
-	// Make funpark campaign independent from Jurassic mode.
-	if (ScenPlayer == SCEN_PLAYER_JP) {
-		if (nodbrief) {
-			VQA_Close(nodbrief);
-			VQA_Free(nodbrief);
-			nodbrief = NULL;
-		}
-		if (gdibrief) {
-			VQA_Close(gdibrief);
-			VQA_Free(gdibrief);
-			gdibrief = NULL;
-		}
+	/* dispose the videos that will not be played */
+	
+	if (nodbrief && ScenPlayer != SCEN_PLAYER_NOD) {
+		VQA_Close(nodbrief);
+		VQA_Free(nodbrief);
+		nodbrief = NULL;
+	}
+	if (gdibrief && ScenPlayer != SCEN_PLAYER_GDI) {
+		VQA_Close(gdibrief);
+		VQA_Free(gdibrief);
+		gdibrief = NULL;
 	}
 
 	/* play the scenario 1 briefing movie */
-	if (Whom == HOUSE_GOOD) {
-		if (nodbrief) {
-			VQA_Close(nodbrief);
-			VQA_Free(nodbrief);
-		}
-		if (gdibrief) {
-			PaletteCounter = gdi_start_palette;
-			VQA_Play(gdibrief, VQAMODE_RUN);
-			VQA_Close(gdibrief);
-			VQA_Free(gdibrief);
-		}
-	} else {
-		if (gdibrief) {
-			VQA_Close(gdibrief);
-			VQA_Free(gdibrief);
-		}
-		if (nodbrief) {
-			VQA_Play(nodbrief, VQAMODE_RUN);
-			VQA_Close(nodbrief);
-			VQA_Free(nodbrief);
-		}
+	
+	if (gdibrief && ScenPlayer == SCEN_PLAYER_GDI) {
+		PaletteCounter = gdi_start_palette;
+		VQA_Play(gdibrief, VQAMODE_RUN);
+		VQA_Close(gdibrief);
+		VQA_Free(gdibrief);
+	}
+	if (nodbrief && ScenPlayer == SCEN_PLAYER_NOD) {
+		VQA_Play(nodbrief, VQAMODE_RUN);
+		VQA_Close(nodbrief);
+		VQA_Free(nodbrief);
 	}
 
 	Free_Interpolated_Palettes();

@@ -171,6 +171,9 @@ class DisplayClass: public MapClass
 		*/
 		virtual void Set_Tactical_Position(COORDINATE coord);
 		void  Refresh_Band(void);
+#ifdef MIDDLE_MOUSE_PANNING
+		void  Refresh_Pan(bool force);
+#endif
 		bool  Select_These(COORDINATE coord1, COORDINATE coord2, bool allowVoice = true, bool additive = false, RTTIType rttifilter = RTTI_NONE, int typefilter = -1);
 		COORDINATE  Pixel_To_Coord(int x, int y);
 		bool  Coord_To_Pixel(COORDINATE coord, int &x, int &y);
@@ -214,6 +217,11 @@ class DisplayClass: public MapClass
 		virtual void Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType action, bool held, bool wwsmall = false);
 		virtual void Mouse_Left_Held(int x, int y);
 		virtual void Mouse_Left_Release(CELL cell, int x, int y, ObjectClass * object, ActionType action, bool wwsmall = false);
+#ifdef MIDDLE_MOUSE_PANNING
+		virtual void Mouse_Middle_Press(int x, int y);
+		virtual void Mouse_Middle_Held(int x, int y);
+		virtual void Mouse_Middle_Release();
+#endif
 
 	public:
 		/*
@@ -257,7 +265,7 @@ class DisplayClass: public MapClass
 
 		/*
 		**	If it is currently in rubber band mode (multi unit selection), then this
-		**	flag will be true. While in such a mode, normal input is prempted while
+		**	flag will be true. While in such a mode, normal input is preempted while
 		**	the extended selection is in progress.
 		*/
 		unsigned IsRubberBand:1;
@@ -270,13 +278,21 @@ class DisplayClass: public MapClass
 		*/
 		unsigned IsTentative:1;
 
+#ifdef MIDDLE_MOUSE_PANNING
+		/*
+		**	If it is currently in pan-drag mode, then this flag will be true. While in such
+		**  a mode, normal input is preempted.
+		*/
+		unsigned IsPanDrag:1;
+#endif
+
 		/*
 		**	This gadget class is used for capturing input to the tactical map. All mouse input
 		**	will be routed through this gadget.
 		*/
 		class TacticalClass : public GadgetClass {
 			public:
-				TacticalClass(void) : GadgetClass(0,0,0,0,LEFTPRESS|LEFTRELEASE|LEFTHELD|LEFTUP|RIGHTPRESS,true) {};
+				TacticalClass(void) : GadgetClass(0,0,0,0,LEFTPRESS|LEFTRELEASE|LEFTHELD|LEFTUP|RIGHTPRESS|MIDDLEPRESS|MIDDLERELEASE|MIDDLEHELD|MIDDLEUP,true) {};
 
 			protected:
 				virtual int Action(unsigned flags, KeyNumType & key);
@@ -305,6 +321,15 @@ class DisplayClass: public MapClass
 		*/
 		int BandX,BandY;
 		int NewX,NewY;
+
+#ifdef MIDDLE_MOUSE_PANNING
+		/*
+		**	Rubber band mode consists of stretching a box from the anchor point (specified
+		**	here) to the current cursor position.
+		*/
+		int PanX,PanY;
+		int NewPanX,NewPanY;
+#endif
 
 		static void const *ShadowShapes;
 		static unsigned char ShadowTrans[(SHADOW_COL_COUNT+1)*256];

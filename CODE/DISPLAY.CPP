@@ -162,6 +162,9 @@ DisplayClass::DisplayClass(void)
 	IsTargettingMode = false;
 	IsToRedraw = true;
 	IsRubberBand = false;
+#ifdef MIDDLE_MOUSE_PANNING
+	IsPanDrag = false;
+#endif
 	IsTentative = false;
 	IsSellMode = false;
 }
@@ -270,6 +273,9 @@ void DisplayClass::Init_Clear(void)
 	IsTargettingMode = false;
 	IsRepairMode = false;
 	IsRubberBand = false;
+#ifdef MIDDLE_MOUSE_PANNING
+	IsPanDrag = false;
+#endif
 	IsTentative = false;
 	IsSellMode = false;
 
@@ -1802,6 +1808,9 @@ ObjectClass * DisplayClass::Cell_Object(CELL cell, int x, int y)
 		**	redrawn.
 		*/
 		Refresh_Band();
+#ifdef MIDDLE_MOUSE_PANNING
+		Refresh_Pan(false);
+#endif
 
 		/*
 		** If the multiplayer message system is displaying one or more messages,
@@ -1810,7 +1819,8 @@ ObjectClass * DisplayClass::Cell_Object(CELL cell, int x, int y)
 		*/
 		int num = Messages.Num_Messages();
 		if (num) {
-			for (CELL cell = Coord_Cell(TacticalCoord); cell < Coord_Cell(TacticalCoord) + Lepton_To_Cell(TacLeptonWidth)+1; cell++) {
+			CELL cell;
+			for (cell = Coord_Cell(TacticalCoord); cell < Coord_Cell(TacticalCoord) + Lepton_To_Cell(TacLeptonWidth)+1; cell++) {
 				(*this)[cell].Redraw_Objects();
 			}
 			for (cell = Coord_Cell(TacticalCoord) + MAP_CELL_W;
@@ -2080,6 +2090,10 @@ ObjectClass * DisplayClass::Cell_Object(CELL cell, int x, int y)
 		*/
 		if (IsRubberBand) {
 			LogicPage->Draw_Rect(BandX+TacPixelX, BandY+TacPixelY, NewX+TacPixelX, NewY+TacPixelY, WHITE);
+#ifdef MIDDLE_MOUSE_PANNING
+		} else if (IsPanDrag) {
+			LogicPage->Draw_Line(PanX+TacPixelX, PanY+TacPixelY, NewPanX+TacPixelX, NewPanY+TacPixelY, WHITE);
+#endif
 		}
 		/*
 		**	Clear the redraw flags so that normal redraw flag setting can resume.
@@ -2813,6 +2827,54 @@ void DisplayClass::Refresh_Band(void)
 	}
 }
 
+/***********************************************************************************************
+ * DisplayClass::Refresh_Pan -- Causes all cells under the pan indicator to be redrawn.        *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   01/19/1995 JLB : Created.                                                                 *
+ *=============================================================================================*/
+#ifdef MIDDLE_MOUSE_PANNING
+void DisplayClass::Refresh_Pan(bool force)
+{
+	if (IsPanDrag || force) {
+
+		/*
+		**	In pan mode, mark all cells under the "pan area" to be
+		**	redrawn.
+		*/
+		int x1 = PanX+TacPixelX;
+		int y1 = PanY+TacPixelY;
+		int x2 = NewPanX+TacPixelX;
+		int y2 = NewPanY+TacPixelY;
+
+		if (x1 > x2) {
+			int temp = x1;
+			x1 = x2;
+			x2 = temp;
+		}
+		if (y1 > y2) {
+			int temp = y1;
+			y1 = y2;
+			y2 = temp;
+		}
+
+		CELL cell;
+		for (int y = y1; y <= y2+CELL_PIXEL_H; y += CELL_PIXEL_H) {
+			for (int x = x1; x <= x2+CELL_PIXEL_W; x += CELL_PIXEL_W) {
+				cell = Click_Cell_Calc(Bound(x, 0, TacPixelX+Lepton_To_Pixel(TacLeptonWidth)), y);
+				if (cell != -1) (*this)[cell].Redraw_Objects();
+			}
+		}
+	}
+}
+#endif
+
 
 /***********************************************************************************************
  * DisplayClass::TacticalClass::Action -- Processes input for the tactical map.                *
@@ -2845,16 +2907,12 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 	**	or release event, special mouse queuing storage variables are used. Other
 	**	events must use the current mouse position globals.
 	*/
-	bool edge = false;
-	if (flags & (LEFTPRESS|LEFTRELEASE|RIGHTPRESS|RIGHTRELEASE)) {
+	if (flags & (LEFTPRESS|LEFTRELEASE|RIGHTPRESS|RIGHTRELEASE|MIDDLEPRESS|MIDDLERELEASE)) {
 		x = _Kbd->MouseQX;
 		y = _Kbd->MouseQY;
 	} else {
 		x = Get_Mouse_X();
 		y = Get_Mouse_Y();
-
-		// This seems extremely outdated... -Nyer
-		//if (x == 0 || y == 199 || x == 319) edge = true;
 	}
 	COORDINATE coord = Map.Pixel_To_Coord(x, y);
 	CELL cell = Coord_Cell(coord);
@@ -2977,13 +3035,9 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 
 			if (Map.IsTargettingMode == SPC_ION_CANNON) {
 				action = ACTION_ION;
-			}
-
-			if (Map.IsTargettingMode == SPC_NUCLEAR_BOMB) {
+			} else if (Map.IsTargettingMode == SPC_NUCLEAR_BOMB) {
 				action = ACTION_NUKE_BOMB;
-			}
-
-			if (Map.IsTargettingMode == SPC_AIR_STRIKE) {
+			} else if (Map.IsTargettingMode == SPC_AIR_STRIKE) {
 				action = ACTION_AIR_STRIKE;
 			}
 
@@ -3014,12 +3068,22 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 			flags |= LEFTRELEASE;
 		}
 
+#ifdef MIDDLE_MOUSE_PANNING
+		/*
+		**	Make sure that if the middle mouse button has been released and the map doesn't know about it,
+		**	then it must be informed. Do this by faking a mouse release event.
+		*/
+		if ((flags & MIDDLEUP) && Map.IsPanDrag) {
+			flags |= MIDDLERELEASE;
+		}
+#endif
+
 		/*
 		**	When the mouse buttons aren't pressed, only the mouse cursor shape is processed.
 		**	The shape changes depending on what object the mouse is currently over and what
 		**	object is currently selected.
 		*/
-		if (flags & LEFTUP) {
+		if (flags & LEFTUP && MIDDLEUP) {
 			Map.Mouse_Left_Up(shadow, object, action, false);
 		}
 
@@ -3031,6 +3095,16 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 			Map.Mouse_Left_Release(cell, x, y, object, action);
 		}
 
+#ifdef MIDDLE_MOUSE_PANNING
+		/*
+		**	Normal actions occur when the middle mouse button is released.
+		**	This disables possible pan-drag mode.
+		*/
+		if (flags & MIDDLERELEASE) {
+			Map.Mouse_Middle_Release();
+		}
+#endif
+
 		/*
 		**	When the mouse is first pressed on the map, then record the mouse
 		**	position so that a proper check before going into rubber band
@@ -3040,6 +3114,11 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 		if (flags & LEFTPRESS) {
 			Map.Mouse_Left_Press(x, y);
 		}
+#ifdef MIDDLE_MOUSE_PANNING
+		if (flags & MIDDLEPRESS) {
+			Map.Mouse_Middle_Press(x, y);
+		}
+#endif
 
 		/*
 		**	While the mouse is being held down, determine if rubber band mode should
@@ -3049,6 +3128,11 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 		if (flags & LEFTHELD) {
 			Map.Mouse_Left_Held(x, y);
 		}
+#ifdef MIDDLE_MOUSE_PANNING
+		if (flags & MIDDLEHELD) {
+			Map.Mouse_Middle_Held(x, y);
+		}
+#endif
 	}
 
 	return(GadgetClass::Action(0, key));
@@ -3558,7 +3642,6 @@ void DisplayClass::Mouse_Left_Press(int x, int y)
 	}
 }
 
-
 /***********************************************************************************************
  * DisplayClass::Mouse_Left_Held -- Handles the left button held down.                         *
  *                                                                                             *
@@ -3615,6 +3698,90 @@ void DisplayClass::Mouse_Left_Held(int x, int y)
 		}
 	}
 }
+
+
+#ifdef MIDDLE_MOUSE_PANNING
+/***********************************************************************************************
+ * DisplayClass::Mouse_Middle_Press -- Handles the middle mouse button press                   *
+ *                                                                                             *
+ *    This routine is called continuously while the left mouse button is held down over        *
+ *    the tactical map. This handles the rubber band mode detection and dragging.              *
+ *                                                                                             *
+ * INPUT:   x,y   -- The mouse coordinate.                                                     *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/24/1995 JLB : Created.                                                                 *
+ *=============================================================================================*/
+void DisplayClass::Mouse_Middle_Press(int x, int y)
+{
+	IsRubberBand = false;
+	IsTentative = false;
+	IsPanDrag = true;
+	PanX = x;
+	PanY = y;
+	NewPanX = x;
+	NewPanY = y;
+	Refresh_Pan(false);
+}
+
+/***********************************************************************************************
+ * DisplayClass::Mouse_Middle_Held -- Handles the middle button held down.                     *
+ *                                                                                             *
+ *    This routine is called continuously while the left mouse button is held down over        *
+ *    the tactical map. This handles the rubber band mode detection and dragging.              *
+ *                                                                                             *
+ * INPUT:   x,y   -- The mouse coordinate.                                                     *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/24/1995 JLB : Created.                                                                 *
+ *=============================================================================================*/
+void DisplayClass::Mouse_Middle_Held(int x, int y)
+{
+	if (IsPanDrag) {
+		Set_Default_Mouse(MOUSE_NORMAL, false);
+		Help_Text(TXT_NONE);
+		if (x != NewPanX || y != NewPanY) {
+			x = Bound(x, 0, Lepton_To_Pixel(TacLeptonWidth)-1);
+			y = Bound(y, 0, Lepton_To_Pixel(TacLeptonHeight)-1);
+			Refresh_Pan(false);
+			NewPanX = x;
+			NewPanY = y;
+			IsToRedraw = true;
+			Flag_To_Redraw(false);
+		}
+	}
+}
+
+/***********************************************************************************************
+ * DisplayClass::Mouse_Middle_Release -- Handles the middle mouse button release.              *
+ *                                                                                             *
+ *    This routine is called when the middle mouse button is released over the tactical map.   *
+ *    This basically just stops the panning action.                                            *
+ *                                                                                             *
+ * INPUT:   x,y   -- The mouse coordinate.                                                     *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/24/1995 JLB : Created.                                                                 *
+ *   03/27/1995 JLB : Handles sell and repair actions.                                         *
+ *=============================================================================================*/
+void DisplayClass::Mouse_Middle_Release()
+{
+	IsPanDrag = false;
+	Refresh_Pan(true);
+}
+#endif
 
 
 /***********************************************************************************************

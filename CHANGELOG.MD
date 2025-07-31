@@ -151,3 +151,5 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Items in the New Missions menu now load missions for campaign side "J" too, from SCJ20EA to SCJ99EA.
 * Added constraint checks on strings file reading, with any unknown string returning "<<UNKNOWN STRING>>".
 * The AI behaviour to run from incoming threats is now enabled at BuildLevel 8, rather than at Scenario 8, making it equivalent to other difficulty increase tweaks that happen at that level.
+* Units that are damaged below 50% will not start smoking again when attacked by a weapon that deals no damage to them (e.g. tank vs Technician gun or Blossom Tree).
+* Clicking to place down a building when having superweapon targeting active will now cancel the superweapon targeting rather than remembering it until after the building placement is done or cancelled.

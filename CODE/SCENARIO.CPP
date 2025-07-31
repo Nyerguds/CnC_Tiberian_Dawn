@@ -434,16 +434,6 @@ void Do_Win(void)
 
 #else
 
-		// Nyerguds's TUC Quick Fix Patch v1.00: funpark
-		// Makes the Funpark campaign end gracefully to the main menu instead of quitting the game.
-		if (Scenario >= 20 || (ScenPlayer == SCEN_PLAYER_JP && Scenario == 5)) {
-			Keyboard::Clear();
-			Score.Presentation();
-			GameActive = false;
-			Show_Mouse();
-			return;
-		}
-
 		if (ScenPlayer == SCEN_PLAYER_NOD && Scenario == 13) {
 			Nod_Ending();
 			//Prog_End();
@@ -455,8 +445,6 @@ void Do_Win(void)
 		}
 		if (ScenPlayer == SCEN_PLAYER_GDI && Scenario == 15) {
 			GDI_Ending();
-			//Prog_End();
-			//exit(0);
 			SeenBuff.Clear();
 			Show_Mouse();
 			GameActive = false;
@@ -464,16 +452,29 @@ void Do_Win(void)
 		}
 
 		// Nyerguds's TUC Quick Fix Patch v1.00: funpark
-#ifdef OBSOLETE
-		if ( (Special.IsJurassic && AreThingiesEnabled) && Scenario == 5) {
-			Prog_End();
-			exit(0);
+		// Makes the Funpark campaign end gracefully to the main menu instead of quitting the game.
+		if (ScenPlayer == SCEN_PLAYER_JP && Scenario == 5) {
+			//Prog_End();
+			//exit(0);
+			GameActive = false;
+			Show_Mouse();
+			return;
 		}
-#endif
-		Keyboard::Clear();
-		InterpolationPaletteChanged = TRUE;
-		InterpolationPalette = Palette;
-		Score.Presentation();
+
+		// If not a Funpark scenario, or a Funpark scenario loaded from the New Missions list, show score screen.
+		if (ScenPlayer != SCEN_PLAYER_JP || Scenario >= 20) {
+			Keyboard::Clear();
+			InterpolationPaletteChanged = TRUE;
+			InterpolationPalette = Palette;
+			Score.Presentation();
+		}
+
+		// Return from single menu-selected mission
+		if (Scenario >= 20) {
+			GameActive = false;
+			Show_Mouse();
+			return;
+		}
 
 		// Nyerguds's TUC Quick Fix Patch v1.04
 		// Consistently use ScenPlayer for scenario exceptions

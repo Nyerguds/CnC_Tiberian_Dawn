@@ -60,17 +60,17 @@ static UnitTypeClass const UnitVisceroid(
 	99,							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		false,			// Can this be a goodie surprise from a crate?
-		true,				// Is a leader type?
+		true, 			// Is a leader type?
 		false,			// Only has eight facings?
-		true,				// Always use the given name for the vehicle?
+		true, 			// Always use the given name for the vehicle?
 		false,			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
+		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
-		true,				// Is invisible to radar?
-		true,				// Is selectable by player?
-		true,				// Can it be a target for attack or move?
-		true,				// Is it insignificant (won't be announced)?
+		true, 			// Is invisible to radar?
+		true, 			// Is selectable by player?
+		true, 			// Can it be a target for attack or move?
+		true, 			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
@@ -84,7 +84,10 @@ static UnitTypeClass const UnitVisceroid(
 		false,			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		false,			// Is the unit capable of cloaking?
-		true,				// Does the unit have a constant animation?
+		true, 			// Does the unit have a constant animation?
+		false,			// Does this unit emit smoke when it is damaged?
+	0,					// Until what health ratio does this unit autoheal?
+	0x100,				// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
 	150,										// STRENGTH:	Strength (in damage points).
 	4,											// SIGHTRANGE:	Range of sighting.
@@ -118,32 +121,35 @@ static UnitTypeClass const UnitFTank(
 	ANIM_NAPALM3,							// EXPLOSION:	Type of explosion when destroyed.
 	4,							// Build level.
 	STRUCTF_RADAR,			// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
-		true,				// Is a leader type?
+		true, 			// Can this be a goodie surprise from a crate?
+		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
 		false,			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
+		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
-		true,				// Is selectable by player?
-		true,				// Can it be a target for attack or move?
+		true, 			// Is selectable by player?
+		true, 			// Can it be a target for attack or move?
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
-		true,				// Fires multiple shots in quick succession?
-		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
-		true,				// Is there a crew inside?
+		true, 			// Fires multiple shots in quick succession?
+		true, 			// Can it be repaired in a repair facility?
+		true, 			// Can the player construct or order this unit?
+		true, 			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
 		false,			// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
+		true, 			// Does it lay tracks while moving?
 		false,			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
+		true, 			// Does this unit emit smoke when it is damaged?
+	0,					// Until what health ratio does this unit autoheal?
+	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
 	300,										// STRENGTH:	Strength (in damage points).
 	4,											// SIGHTRANGE:	Range of sighting.
@@ -175,32 +181,35 @@ static UnitTypeClass const UnitSTank(
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
 	5,								// Build level.
 	STRUCTF_RADAR,				// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
-		true,				// Is a leader type?
+		true, 			// Can this be a goodie surprise from a crate?
+		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
 		false,			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
+		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
-		true,				// Is invisible to radar?
-		true,				// Is selectable by player?
-		true,				// Can it be a target for attack or move?
+		true, 			// Is invisible to radar?
+		true, 			// Is selectable by player?
+		true, 			// Can it be a target for attack or move?
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
-		true,				// Fires multiple shots in quick succession?
-		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
-		true,				// Is there a crew inside?
+		true, 			// Fires multiple shots in quick succession?
+		true, 			// Can it be repaired in a repair facility?
+		true, 			// Can the player construct or order this unit?
+		true, 			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
 		false,			// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
+		true, 			// Does it lay tracks while moving?
 		false,			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
-		true,				// Is the unit capable of cloaking?
+		true, 			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
+		true, 			// Does this unit emit smoke when it is damaged?
+	0,					// Until what health ratio does this unit autoheal?
+	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
 	110,										// STRENGTH:	Strength (in damage points).
 	4,											// SIGHTRANGE:	Range of sighting.
@@ -232,32 +241,35 @@ static UnitTypeClass const UnitLTank(
 	ANIM_FRAG1,							// EXPLOSION:	Type of explosion when destroyed.
 	3,								// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
-		true,				// Is a leader type?
+		true, 			// Can this be a goodie surprise from a crate?
+		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
 		false,			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
+		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
-		true,				// Is selectable by player?
-		true,				// Can it be a target for attack or move?
+		true, 			// Is selectable by player?
+		true, 			// Can it be a target for attack or move?
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
-		true,				// Is it equipped with a combat turret?
+		true, 			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
-		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
-		true,				// Is there a crew inside?
+		true, 			// Can it be repaired in a repair facility?
+		true, 			// Can the player construct or order this unit?
+		true, 			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
 		false,			// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
+		true, 			// Does it lay tracks while moving?
 		false,			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
+		true, 			// Does this unit emit smoke when it is damaged?
+	0,					// Until what health ratio does this unit autoheal?
+	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
 	300,										// STRENGTH:	Strength (in damage points).
 	3,											// SIGHTRANGE:	Range of sighting.
@@ -289,32 +301,35 @@ static UnitTypeClass const UnitMTank(
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
 	3,								// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
-		true,				// Is a leader type?
+		true, 			// Can this be a goodie surprise from a crate?
+		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
 		false,			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
+		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
-		true,				// Is selectable by player?
-		true,				// Can it be a target for attack or move?
+		true, 			// Is selectable by player?
+		true, 			// Can it be a target for attack or move?
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
-		true,				// Is it equipped with a combat turret?
+		true, 			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
-		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
-		true,				// Is there a crew inside?
+		true, 			// Can it be repaired in a repair facility?
+		true, 			// Can the player construct or order this unit?
+		true, 			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
 		false,			// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
-		true,				// Is this a gigundo-rotund-enormous unit?
+		true, 			// Does it lay tracks while moving?
+		true, 			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
+		true, 			// Does this unit emit smoke when it is damaged?
+	0,					// Until what health ratio does this unit autoheal?
+	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
 	400,										// STRENGTH:	Strength (in damage points).
 	3,											// SIGHTRANGE:	Range of sighting.
@@ -346,32 +361,35 @@ static UnitTypeClass const UnitHTank(
 	ANIM_ART_EXP1,							// EXPLOSION:	Type of explosion when destroyed.
 	5,								// Build level.
 	STRUCTF_REPAIR,			// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
-		true,				// Is a leader type?
+		true, 			// Can this be a goodie surprise from a crate?
+		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
 		false,			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
+		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
-		true,				// Is selectable by player?
-		true,				// Can it be a target for attack or move?
+		true, 			// Is selectable by player?
+		true, 			// Can it be a target for attack or move?
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
-		true,				// Is it equipped with a combat turret?
-		true,				// Fires multiple shots in quick succession?
-		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
-		true,				// Is there a crew inside?
+		true, 			// Is it equipped with a combat turret?
+		true, 			// Fires multiple shots in quick succession?
+		true, 			// Can it be repaired in a repair facility?
+		true, 			// Can the player construct or order this unit?
+		true, 			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
 		false,			// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
-		true,				// Is this a gigundo-rotund-enormous unit?
+		true, 			// Does it lay tracks while moving?
+		true, 			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
+		true, 			// Does this unit emit smoke when it is damaged?
+	0x80,				// Until what health ratio does this unit autoheal?
+	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
 	600,										// STRENGTH:	Strength (in damage points).
 	4,											// SIGHTRANGE:	Range of sighting.
@@ -409,26 +427,29 @@ static UnitTypeClass const UnitMHQ(
 		false,			// Always use the given name for the vehicle?
 		false,			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
+		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
-		true,				// Is selectable by player?
-		true,				// Can it be a target for attack or move?
+		true, 			// Is selectable by player?
+		true, 			// Can it be a target for attack or move?
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
-		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
-		true,				// Is there a crew inside?
-		true,				// Does it have a rotating radar dish?
+		true, 			// Can it be repaired in a repair facility?
+		true, 			// Can the player construct or order this unit?
+		true, 			// Is there a crew inside?
+		true, 			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
 		false,			// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
+		true, 			// Does it lay tracks while moving?
 		false,			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
+		true, 			// Does this unit emit smoke when it is damaged?
+	0,					// Until what health ratio does this unit autoheal?
+	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
 	110,										// STRENGTH:	Strength (in damage points).
 	5,											// SIGHTRANGE:	Range of sighting.
@@ -464,8 +485,8 @@ static UnitTypeClass const UnitHover(
 		false,			// Can this be a goodie surprise from a crate?
 		false,			// Is a leader type?
 		false,			// Only has eight facings?
-		true,				// Always use the given name for the vehicle?
-		true,				//	Is this a typical transport vehicle?
+		true, 			// Always use the given name for the vehicle?
+		true, 			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
 		false,			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
@@ -473,8 +494,8 @@ static UnitTypeClass const UnitHover(
 //		true,			// Is selectable by player?
 		false,			// Is selectable by player?
 		false,			// Can it be a target for attack or move?
-		true,				// Is it insignificant (won't be announced)?
-		true,				// Is it immune to normal combat damage?
+		true, 			// Is it insignificant (won't be announced)?
+		true, 			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
 		false,			// Can it be repaired in a repair facility?
@@ -484,10 +505,13 @@ static UnitTypeClass const UnitHover(
 		false,			// Is there an associated firing animation?
 		false,			// Must the turret be in a locked down position while moving?
 		false,			// Does it lay tracks while moving?
-		true,				// Is this a gigundo-rotund-enormous unit?
-		true,				// Is the unit's art as "chunky" cardinal facing only?
+		true, 			// Is this a gigundo-rotund-enormous unit?
+		true, 			// Is the unit's art as "chunky" cardinal facing only?
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
+		true, 			// Does this unit emit smoke when it is damaged?
+	0,					// Until what health ratio does this unit autoheal?
+	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
 	400,										// STRENGTH:	Strength (in damage points).
 	3,											// SIGHTRANGE:	Range of sighting.
@@ -520,8 +544,8 @@ static UnitTypeClass const UnitSAM(
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
 	7,								// Build level.
 	STRUCTF_ATOWER,			// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
-		true,				// Is a leader type?
+		true, 			// Can this be a goodie surprise from a crate?
+		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
 		false,			//	Is this a typical transport vehicle?
@@ -529,23 +553,26 @@ static UnitTypeClass const UnitSAM(
 		false,			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
-		true,				// Is selectable by player?
-		true,				// Can it be a target for attack or move?
+		true, 			// Is selectable by player?
+		true, 			// Can it be a target for attack or move?
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
-		true,				// Is it equipped with a combat turret?
+		true, 			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
-		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
-		true,				// Is there a crew inside?
+		true, 			// Can it be repaired in a repair facility?
+		true, 			// Can the player construct or order this unit?
+		true, 			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
-		true,				// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
-		true,				// Is this a gigundo-rotund-enormous unit?
+		true, 			// Must the turret be in a locked down position while moving?
+		true, 			// Does it lay tracks while moving?
+		true, 			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
+		true, 			// Does this unit emit smoke when it is damaged?
+	0,					// Until what health ratio does this unit autoheal?
+	0,					// Until what health ratio does this unit autoheal on tiberium?
 	2,											// AMMO:			Number of shots it has (default).
 	120,										// STRENGTH:	Strength (in damage points).
 	4,											// SIGHTRANGE:	Range of sighting.
@@ -578,8 +605,8 @@ static UnitTypeClass const UnitArty(
 	ANIM_ART_EXP1,							// EXPLOSION:	Type of explosion when destroyed.
 	6,								// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
-		true,				// Is a leader type?
+		true, 			// Can this be a goodie surprise from a crate?
+		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
 		false,			//	Is this a typical transport vehicle?
@@ -587,23 +614,26 @@ static UnitTypeClass const UnitArty(
 		false,			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
-		true,				// Is selectable by player?
-		true,				// Can it be a target for attack or move?
+		true, 			// Is selectable by player?
+		true, 			// Can it be a target for attack or move?
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
-		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
-		true,				// Is there a crew inside?
+		true, 			// Can it be repaired in a repair facility?
+		true, 			// Can the player construct or order this unit?
+		true, 			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
 		false,			// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
+		true, 			// Does it lay tracks while moving?
 		false,			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
+		true, 			// Does this unit emit smoke when it is damaged?
+	0,					// Until what health ratio does this unit autoheal?
+	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
 	75,										// STRENGTH:	Strength (in damage points).
 	4,											// SIGHTRANGE:	Range of sighting.
@@ -635,32 +665,35 @@ static UnitTypeClass const UnitHarvester(
 	ANIM_FBALL1,							// EXPLOSION:	Type of explosion when destroyed.
 	2,								// Build level.
 	STRUCTF_REFINERY,			// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
+		true, 			// Can this be a goodie surprise from a crate?
 		false,			// Is a leader type?
 		false,			// Only has eight facings?
-		true,				// Always use the given name for the vehicle?
+		true, 			// Always use the given name for the vehicle?
 		false,			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
-		true,				// Does this unit harvest Tiberium?
+		true, 			// Can this unit squash infantry?
+		true, 			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
-		true,				// Is selectable by player?
-		true,				// Can it be a target for attack or move?
+		true, 			// Is selectable by player?
+		true, 			// Can it be a target for attack or move?
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
-		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
-		true,				// Is there a crew inside?
+		true, 			// Can it be repaired in a repair facility?
+		true, 			// Can the player construct or order this unit?
+		true, 			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
 		false,			// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
-		true,				// Is this a gigundo-rotund-enormous unit?
+		true, 			// Does it lay tracks while moving?
+		true, 			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
+		true, 			// Does this unit emit smoke when it is damaged?
+	0,					// Until what health ratio does this unit autoheal?
+	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
 	600,										// STRENGTH:	Strength (in damage points).
 //	300,										// STRENGTH:	Strength (in damage points).
@@ -694,32 +727,35 @@ static UnitTypeClass const UnitMCV(
 	ANIM_FBALL1,							// EXPLOSION:	Type of explosion when destroyed.
 	7,							// Build level.
 	STRUCTF_EYE,			// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
+		true, 			// Can this be a goodie surprise from a crate?
 		false,			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
 		false,			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
+		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
-		true,				// Is selectable by player?
-		true,				// Can it be a target for attack or move?
+		true, 			// Is selectable by player?
+		true, 			// Can it be a target for attack or move?
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
 		false,			// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
-		true,				// Is there a crew inside?
+		true, 			// Can the player construct or order this unit?
+		true, 			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
 		false,			// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
-		true,				// Is this a gigundo-rotund-enormous unit?
+		true, 			// Does it lay tracks while moving?
+		true, 			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
+		true, 			// Does this unit emit smoke when it is damaged?
+	0,					// Until what health ratio does this unit autoheal?
+	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
 	600,										// STRENGTH:	Strength (in damage points).
 	2,											// SIGHTRANGE:	Range of sighting.
@@ -752,8 +788,8 @@ static UnitTypeClass const UnitJeep(
 	ANIM_FRAG1,							// EXPLOSION:	Type of explosion when destroyed.
 	2,								// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
-		true,				// Is a leader type?
+		true, 			// Can this be a goodie surprise from a crate?
+		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
 		false,			//	Is this a typical transport vehicle?
@@ -761,23 +797,26 @@ static UnitTypeClass const UnitJeep(
 		false,			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
-		true,				// Is selectable by player?
-		true,				// Can it be a target for attack or move?
+		true, 			// Is selectable by player?
+		true, 			// Can it be a target for attack or move?
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
-		true,				// Is it equipped with a combat turret?
+		true, 			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
-		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
-		true,				// Is there a crew inside?
+		true, 			// Can it be repaired in a repair facility?
+		true, 			// Can the player construct or order this unit?
+		true, 			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
 		false,			// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
+		true, 			// Does it lay tracks while moving?
 		false,			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
+		true, 			// Does this unit emit smoke when it is damaged?
+	0,					// Until what health ratio does this unit autoheal?
+	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
 	150,										// STRENGTH:	Strength (in damage points).
 	2,											// SIGHTRANGE:	Range of sighting.
@@ -809,8 +848,8 @@ static UnitTypeClass const UnitBuggy(
 	ANIM_FRAG1,							// EXPLOSION:	Type of explosion when destroyed.
 	4,								// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
-		true,				// Is a leader type?
+		true, 			// Can this be a goodie surprise from a crate?
+		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
 		false,			//	Is this a typical transport vehicle?
@@ -818,15 +857,15 @@ static UnitTypeClass const UnitBuggy(
 		false,			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
-		true,				// Is selectable by player?
-		true,				// Can it be a target for attack or move?
+		true, 			// Is selectable by player?
+		true, 			// Can it be a target for attack or move?
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
-		true,				// Is it equipped with a combat turret?
+		true, 			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
-		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
-		true,				// Is there a crew inside?
+		true, 			// Can it be repaired in a repair facility?
+		true, 			// Can the player construct or order this unit?
+		true, 			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
 		false,			// Must the turret be in a locked down position while moving?
@@ -835,6 +874,9 @@ static UnitTypeClass const UnitBuggy(
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
+		true, 			// Does this unit emit smoke when it is damaged?
+	0,					// Until what health ratio does this unit autoheal?
+	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
 	140,										// STRENGTH:	Strength (in damage points).
 	2,											// SIGHTRANGE:	Range of sighting.
@@ -866,24 +908,24 @@ static UnitTypeClass const UnitBike(
 	ANIM_FRAG1,							// EXPLOSION:	Type of explosion when destroyed.
 	2,								// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
-		true,				// Is a leader type?
+		true, 			// Can this be a goodie surprise from a crate?
+		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
 		false,			//	Is this a typical transport vehicle?
-		true,				// Can it be crushed by a heavy vehicle?
+		true, 			// Can it be crushed by a heavy vehicle?
 		false,			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
-		true,				// Is selectable by player?
-		true,				// Can it be a target for attack or move?
+		true, 			// Is selectable by player?
+		true, 			// Can it be a target for attack or move?
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
-		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
-		true,				// Is there a crew inside?
+		true, 			// Can it be repaired in a repair facility?
+		true, 			// Can the player construct or order this unit?
+		true, 			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
 		false,			// Must the turret be in a locked down position while moving?
@@ -892,6 +934,9 @@ static UnitTypeClass const UnitBike(
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
+		true, 			// Does this unit emit smoke when it is damaged?
+	0,					// Until what health ratio does this unit autoheal?
+	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
 #ifdef ADVANCED
 	90,										// STRENGTH:	Strength (in damage points).
@@ -927,8 +972,8 @@ static UnitTypeClass const UnitMLRS(
 	ANIM_ART_EXP1,							// EXPLOSION:	Type of explosion when destroyed.
 	7,								// Build level.
 	STRUCTF_EYE,				// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
-		true,				// Is a leader type?
+		true, 			// Can this be a goodie surprise from a crate?
+		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
 		false,			//	Is this a typical transport vehicle?
@@ -936,23 +981,26 @@ static UnitTypeClass const UnitMLRS(
 		false,			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
-		true,				// Is selectable by player?
-		true,				// Can it be a target for attack or move?
+		true, 			// Is selectable by player?
+		true, 			// Can it be a target for attack or move?
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
-		true,				// Is it equipped with a combat turret?
-		true,				// Fires multiple shots in quick succession?
-		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
-		true,				// Is there a crew inside?
+		true, 			// Is it equipped with a combat turret?
+		true, 			// Fires multiple shots in quick succession?
+		true, 			// Can it be repaired in a repair facility?
+		true, 			// Can the player construct or order this unit?
+		true, 			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
-		true,				// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
-		true,			// Is this a gigundo-rotund-enormous unit? // Nyerguds's TUC Quick Fix Patch v1.02: rocketlauncher
+		true, 			// Must the turret be in a locked down position while moving?
+		true, 			// Does it lay tracks while moving?
+		true, 			// Is this a gigundo-rotund-enormous unit? // Nyerguds's TUC Quick Fix Patch v1.02: rocketlauncher
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
+		true, 			// Does this unit emit smoke when it is damaged?
+	0,					// Until what health ratio does this unit autoheal?
+	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
 	100,										// STRENGTH:	Strength (in damage points).
 	4,											// SIGHTRANGE:	Range of sighting.
@@ -985,32 +1033,35 @@ static UnitTypeClass const UnitAPC(
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
 	4,								// Build level.
 	STRUCTF_BARRACKS,			// Building prerequisite.
-		true,				// Can this be a goodie surprise from a crate?
-		true,				// Is a leader type?
+		true, 			// Can this be a goodie surprise from a crate?
+		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		true,				//	Is this a typical transport vehicle?
+		true, 			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
+		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
-		true,				// Is selectable by player?
-		true,				// Can it be a target for attack or move?
+		true, 			// Is selectable by player?
+		true, 			// Can it be a target for attack or move?
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
 		false,			// Fires multiple shots in quick succession?
-		true,				// Can it be repaired in a repair facility?
-		true,				// Can the player construct or order this unit?
+		true, 			// Can it be repaired in a repair facility?
+		true, 			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
 		false,			// Must the turret be in a locked down position while moving?
-		true,				// Does it lay tracks while moving?
+		true, 			// Does it lay tracks while moving?
 		false,			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
+		true, 			// Does this unit emit smoke when it is damaged?
+	0,					// Until what health ratio does this unit autoheal?
+	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
 	200,										// STRENGTH:	Strength (in damage points).
 	4,											// SIGHTRANGE:	Range of sighting.
@@ -1044,31 +1095,34 @@ static UnitTypeClass const UnitGunBoat(
 	99,							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		false,			// Can this be a goodie surprise from a crate?
-		true,				// Is a leader type?
+		true, 			// Is a leader type?
 		false,			// Only has eight facings?
-		true,				// Always use the given name for the vehicle?
+		true, 			// Always use the given name for the vehicle?
 		false,			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
 		false,			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
 		false,			// Is invisible to radar?
-		true,				// Is selectable by player?
-		true,				// Can it be a target for attack or move?
-		true,				// Is it insignificant (won't be announced)?
+		true, 			// Is selectable by player?
+		true, 			// Can it be a target for attack or move?
+		true, 			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
-		true,				// Is it equipped with a combat turret?
-		true,				// Fires multiple shots in quick succession?
+		true, 			// Is it equipped with a combat turret?
+		true, 			// Fires multiple shots in quick succession?
 		false,			// Can it be repaired in a repair facility?
 		false,			// Can the player construct or order this unit?
-		true,				// Is there a crew inside?
+		true, 			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
 		false,			// Is there an associated firing animation?
 		false,			// Must the turret be in a locked down position while moving?
 		false,			// Does it lay tracks while moving?
-		true,				// Is this a gigundo-rotund-enormous unit?
-		true,				// Is the unit's art as "chunky" cardinal facing only?
+		true, 			// Is this a gigundo-rotund-enormous unit?
+		true, 			// Is the unit's art as "chunky" cardinal facing only?
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
+		true, 			// Does this unit emit smoke when it is damaged?
+	0,					// Until what health ratio does this unit autoheal?
+	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
 	700,										// STRENGTH:	Strength (in damage points).
 	5,											// SIGHTRANGE:	Range of sighting.
@@ -1102,16 +1156,16 @@ static UnitTypeClass const UnitTric(
 	99,							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		false,			// Can this be a goodie surprise from a crate?
-		true,				// Is a leader type?
-		true,				// Only has eight facings?
-		true,				// Always use the given name for the vehicle?
+		true, 			// Is a leader type?
+		true, 			// Only has eight facings?
+		true, 			// Always use the given name for the vehicle?
 		false,			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
+		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
-		true,				// Is invisible to radar?
-		true,				// Is selectable by player?
-		true,				// Can it be a target for attack or move?
+		true, 			// Is invisible to radar?
+		true, 			// Is selectable by player?
+		true, 			// Can it be a target for attack or move?
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
@@ -1120,13 +1174,16 @@ static UnitTypeClass const UnitTric(
 		false,			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
-		true,				// Is there an associated firing animation?
+		true, 			// Is there an associated firing animation?
 		false,			// Must the turret be in a locked down position while moving?
 		false,			// Does it lay tracks while moving?
-		true,				// Is this a gigundo-rotund-enormous unit?
+		true, 			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
+		false,			// Does this unit emit smoke when it is damaged?
+	0,					// Until what health ratio does this unit autoheal?
+	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
 	700,										// STRENGTH:	Strength (in damage points).
 	5,											// SIGHTRANGE:	Range of sighting.
@@ -1152,16 +1209,16 @@ static UnitTypeClass const UnitTrex(
 	99,							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		false,			// Can this be a goodie surprise from a crate?
-		true,				// Is a leader type?
-		true,				// Only has eight facings?
-		true,				// Always use the given name for the vehicle?
+		true, 			// Is a leader type?
+		true, 			// Only has eight facings?
+		true, 			// Always use the given name for the vehicle?
 		false,			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
+		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
-		true,				// Is invisible to radar?
-		true,				// Is selectable by player?
-		true,				// Can it be a target for attack or move?
+		true, 			// Is invisible to radar?
+		true, 			// Is selectable by player?
+		true, 			// Can it be a target for attack or move?
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
@@ -1170,13 +1227,16 @@ static UnitTypeClass const UnitTrex(
 		false,			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
-		true,				// Is there an associated firing animation?
+		true, 			// Is there an associated firing animation?
 		false,			// Must the turret be in a locked down position while moving?
 		false,			// Does it lay tracks while moving?
-		true,				// Is this a gigundo-rotund-enormous unit?
+		true, 			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
+		false,			// Does this unit emit smoke when it is damaged?
+	0,					// Until what health ratio does this unit autoheal?
+	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
 	750,										// STRENGTH:	Strength (in damage points).
 	5,											// SIGHTRANGE:	Range of sighting.
@@ -1202,16 +1262,16 @@ static UnitTypeClass const UnitRapt(
 	99,							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		false,			// Can this be a goodie surprise from a crate?
-		true,				// Is a leader type?
-		true,				// Only has eight facings?
-		true,				// Always use the given name for the vehicle?
+		true, 			// Is a leader type?
+		true, 			// Only has eight facings?
+		true, 			// Always use the given name for the vehicle?
 		false,			//	Is this a typical transport vehicle?
-		true,				// Can it be crushed by a heavy vehicle?
+		true, 			// Can it be crushed by a heavy vehicle?
 		false,			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
-		true,				// Is invisible to radar?
-		true,				// Is selectable by player?
-		true,				// Can it be a target for attack or move?
+		true, 			// Is invisible to radar?
+		true, 			// Is selectable by player?
+		true, 			// Can it be a target for attack or move?
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
@@ -1220,13 +1280,16 @@ static UnitTypeClass const UnitRapt(
 		false,			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
-		true,				// Is there an associated firing animation?
+		true, 			// Is there an associated firing animation?
 		false,			// Must the turret be in a locked down position while moving?
 		false,			// Does it lay tracks while moving?
-		true,				// Is this a gigundo-rotund-enormous unit?
+		true, 			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
+		false,			// Does this unit emit smoke when it is damaged?
+	0,					// Until what health ratio does this unit autoheal?
+	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
 	180,										// STRENGTH:	Strength (in damage points).
 	5,											// SIGHTRANGE:	Range of sighting.
@@ -1252,16 +1315,16 @@ static UnitTypeClass const UnitSteg(
 	99,							// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		false,			// Can this be a goodie surprise from a crate?
-		true,				// Is a leader type?
-		true,				// Only has eight facings?
-		true,				// Always use the given name for the vehicle?
+		true, 			// Is a leader type?
+		true, 			// Only has eight facings?
+		true, 			// Always use the given name for the vehicle?
 		false,			//	Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
-		true,				// Can this unit squash infantry?
+		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
-		true,				// Is invisible to radar?
-		true,				// Is selectable by player?
-		true,				// Can it be a target for attack or move?
+		true, 			// Is invisible to radar?
+		true, 			// Is selectable by player?
+		true, 			// Can it be a target for attack or move?
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
@@ -1270,13 +1333,16 @@ static UnitTypeClass const UnitSteg(
 		false,			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
-		true,				// Is there an associated firing animation?
+		true, 			// Is there an associated firing animation?
 		false,			// Must the turret be in a locked down position while moving?
 		false,			// Does it lay tracks while moving?
-		true,				// Is this a gigundo-rotund-enormous unit?
+		true, 			// Is this a gigundo-rotund-enormous unit?
 		false,			// Is the unit's art as "chunky" cardinal facing only?
 		false,			// Is the unit capable of cloaking?
 		false,			// Does the unit have a constant animation?
+		false,			// Does this unit emit smoke when it is damaged?
+	0,					// Until what health ratio does this unit autoheal?
+	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
 	600,										// STRENGTH:	Strength (in damage points).
 	5,											// SIGHTRANGE:	Range of sighting.
@@ -1373,6 +1439,9 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 				bool is_chunky,
 				bool is_cloakable,
 				bool is_animating,
+				bool is_smoker,
+				unsigned short autohealmax,
+				unsigned short tibhealmax,
 				int ammo,
 				unsigned short strength,
 				int sightrange,
@@ -1434,6 +1503,9 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 	IsToHarvest = is_harvest;
 	IsTracked = is_tracked;
 	IsAnimating = is_animating;
+	IsSmoker = is_smoker;
+	AutoHealMax = autohealmax;
+	TibHealMax = tibhealmax;
 	Mission = order;
 	ROT = rot;
 	Speed = speed;

@@ -274,7 +274,8 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 	*/
 	ScenarioCRC = 0;
 	len = strlen(buffer);
-	for (int i = 0; i < len; i++) {
+	int i;
+	for (i = 0; i < len; i++) {
 		val = (unsigned char)buffer[i];
 #ifndef DEMO
 		Add_CRC(&ScenarioCRC, (unsigned long)val);
@@ -316,7 +317,7 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 	*/
 	// Nyerguds's TUC Quick Fix Patch v1.04
 	// Make funpark campaign independent from Jurassic mode.
-	if (/*(Special.IsJurassic && AreThingiesEnabled) || */ ScenPlayer == SCEN_PLAYER_JP) {
+	if (ScenPlayer == SCEN_PLAYER_JP && Scenario < 20) {
 		BuildLevel = 98;
 	}
 
@@ -344,7 +345,7 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 	HouseClass::Read_INI(buffer);
 	Call_Back();
 
-	if (GameToPlay == GAME_NORMAL && ScenPlayer == SCEN_PLAYER_JP) {
+	if (GameToPlay == GAME_NORMAL && ScenPlayer == SCEN_PLAYER_JP && Scenario < 20) {
 		// Nyerguds's TUC Quick Fix Patch v1.04
 		// Make funpark campaign independent from Jurassic mode.
 		// Special color exceptions for House Special in dinosaur campaign.
@@ -381,7 +382,7 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 
 		// Nyerguds's TUC Quick Fix Patch v1.04
 		// Make funpark campaign independent from Jurassic mode.
-		if (ScenPlayer == SCEN_PLAYER_JP) {
+		if (ScenPlayer == SCEN_PLAYER_JP && Scenario < 20) {
 			PlayerPtr->ActLike = Whom;
 		}
 	} else {

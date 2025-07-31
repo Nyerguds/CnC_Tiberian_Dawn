@@ -430,13 +430,13 @@ void UnitClass::AI(void)
 	**	If this is a vehicle that heals itself (e.g., Mammoth Tank), then it will perform
 	**	the heal logic here.
 	*/
-	if (*this == UNIT_HTANK && (Frame % 16) == 0 && Health_Ratio() < 0x0080) {
-		Strength++;
-		Mark(MARK_CHANGE);
-	}
-	if (*this == UNIT_VICE && Map[Coord_Cell(Coord)].Land_Type() == LAND_TIBERIUM && Health_Ratio() < 0x0100 && (Frame % 16) == 0) {
-		Strength++;
-		Mark(MARK_CHANGE);
+	if ((Class->AutoHealMax || Class->TibHealMax) && (Frame % 16) == 0) {
+		unsigned int healthratio = Health_Ratio();
+		if (healthratio < Class->AutoHealMax ||
+			(healthratio < Class->TibHealMax && Map[Coord_Cell(Coord)].Land_Type() == LAND_TIBERIUM)) {
+			Strength++;
+			Mark(MARK_CHANGE);
+		}
 	}
 
 	/*
@@ -868,7 +868,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 	**	Special case: If this is a laser attacking a gunboat, then the gunboat is ALWAYS toasted.
 	*/
 	if (*this == UNIT_GUNBOAT && warhead == WARHEAD_LASER) {
-		damage = Strength*3;
+		damage = Class->MaxStrength*3;
 	}
 
 	/*
@@ -993,7 +993,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 		**	When damaged and below half strength, start smoking if
 		**	it isn't already smoking.
 		*/
-		if (Health_Ratio() < 0x0080 && !IsAnimAttached && *this != UNIT_VICE && *this != UNIT_STEG && *this != UNIT_TREX && *this != UNIT_TRIC && *this != UNIT_RAPT) {
+		if (res != RESULT_NONE && Health_Ratio() < 0x0080 && Class->IsSmoker) {
 			AnimClass * anim = new AnimClass(ANIM_SMOKE_M, Coord_Add(Coord, XYP_Coord(0, -8)));
 			if (anim) anim->Attach_To(this);
 		}

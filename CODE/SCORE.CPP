@@ -629,11 +629,6 @@ void ScoreClass::Presentation(void)
 		sprintf(inter_pal,"SNODPAL1.PAL");
 	}
 
-	// Nyerguds's TUC Quick Fix Patch v1.04
-	// Always skip score screen when playing Jurassic campaign.
-	if (/*(Special.IsJurassic && AreThingiesEnabled) ||*/ ScenPlayer == SCEN_PLAYER_JP) {
-		return;
-	}
 	PseudoSeenBuff = new GraphicBufferClass(320,200,(void*)NULL);
 	TextPrintBuffer = new GraphicBufferClass(SeenBuff.Get_Width(), SeenBuff.Get_Height(), (void*)NULL);
 	TextPrintBuffer->Clear();
