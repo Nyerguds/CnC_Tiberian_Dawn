@@ -885,11 +885,19 @@ int Main_Menu(unsigned long timeout)
 #ifdef NEWMENU
 				if (expansions) {
 					if (curbutton < 0) {
+#ifdef BONUS_MISSIONS
+						curbutton = 7;
+#else
 						curbutton = 6;
+#endif
 					}
 				} else {
 					if (curbutton < 1) {
+#ifdef BONUS_MISSIONS
+						curbutton = 7;
+#else
 						curbutton = 6;
+#endif
 					}
 				}
 #else
@@ -906,7 +914,11 @@ int Main_Menu(unsigned long timeout)
 				buttons[curbutton]->Flag_To_Redraw();
 				curbutton++;
 #ifdef NEWMENU
+#ifdef BONUS_MISSIONS
+				if (curbutton > 7) {
+#else
 				if (curbutton > 6) {
+#endif
 					if (expansions) {
 						curbutton = 0;
 					} else {

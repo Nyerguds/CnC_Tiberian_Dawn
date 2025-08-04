@@ -728,7 +728,9 @@ typedef enum PlayerColorType {
 	REMAP_AQUA,
 	REMAP_DARK_GREY,
 	REMAP_BROWN,
+	REMAP_BURGUNDY,
 	REMAP_FIRE,
+	REMAP_PINK,
 	REMAP_WARM_SILVER,
 
 	// Alternate names for some of the colors

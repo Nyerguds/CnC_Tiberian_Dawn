@@ -92,7 +92,9 @@ LayerClass DisplayClass::Layer[LAYER_COUNT];
 unsigned char DisplayClass::FadingBrighten[256];
 unsigned char DisplayClass::FadingShade[256];
 unsigned char DisplayClass::FadingLight[256];
+#ifdef OBSOLETE
 unsigned char DisplayClass::RemapTables[HOUSE_COUNT][3][256];
+#endif
 unsigned char DisplayClass::FadingGreen[256];
 unsigned char DisplayClass::FadingYellow[256];
 unsigned char DisplayClass::FadingRed[256];
@@ -213,6 +215,11 @@ void DisplayClass::One_Time(void)
 
 	Set_View_Dimensions(0, Map.Get_Tab_Height());
 
+#ifdef OBSOLETE
+	// MM 20250701: Disabled; this is not used anywhere at all, except in
+	// the "IsAlternate" code for animations, which just always uses the same
+	// HOUSE_GOOD, table 0, which is a table that does nothing. And nothing
+	// actually ever enables the "IsAlternate" state for animations anyway.
 	/*
 	**	Allocate and initialize the remap tables needed for each "house".
 	*/
@@ -241,6 +248,7 @@ void DisplayClass::One_Time(void)
 			Mem_Copy(&RemapTables[hindex][fade][((int)hindex+11)*16], &RemapTables[hindex][fade][(0+11)*16], 16);
 		}
 	}
+#endif
 }
 
 

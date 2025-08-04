@@ -54,7 +54,7 @@ class EventClass
 		typedef enum EventType {
 			EMPTY,
 
-			ALLY,					// Make allie of specified house.
+			ALLY,					// Make ally of specified house.
 			MEGAMISSION,		// Full change of mission with target and destination.
 			IDLE,					// Request to enter idle mode.
 			SCATTER,				// Request to scatter from current location.

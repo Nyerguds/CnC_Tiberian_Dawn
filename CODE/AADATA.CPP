@@ -747,11 +747,8 @@ bool AircraftTypeClass::Create_And_Place(CELL, HousesType) const
 }
 
 
-
-
-
 /***********************************************************************************************
- * ATC::Init -- load up terrain set dependent sidebar icons                                    *
+ * AircraftTypeClass::Init -- load up terrain set dependent sidebar icons                      *
  *                                                                                             *
  *                                                                                             *
  *                                                                                             *
@@ -764,7 +761,6 @@ bool AircraftTypeClass::Create_And_Place(CELL, HousesType) const
  * HISTORY:                                                                                    *
  *    4/25/96 0:33AM ST : Created                                                              *
  *=============================================================================================*/
-
 void AircraftTypeClass::Init(TheaterType theater)
 {
 	//if (theater != LastTheater){
@@ -810,7 +806,7 @@ void AircraftTypeClass::Init(TheaterType theater)
 
 
 /***********************************************************************************************
- * ATC::After_Init -- Load up extra things after the map / savegame is loaded                  *
+ * AircraftTypeClass::After_Init -- Load up extra things after the map / savegame is loaded    *
  *                                                                                             *
  *                                                                                             *
  *                                                                                             *

@@ -305,10 +305,13 @@ void AnimClass::Draw_It(int x, int y, WindowNumberType window)
 			**	table necessary.
 			*/
 			ShapeFlags_Type flags = SHAPE_CENTER|SHAPE_WIN_REL;
+
+#ifdef OBSOLETE			
 			if (IsAlternate) {
 				flags = flags | SHAPE_FADING;
 				remap = Map.RemapTables[HOUSE_GOOD][0];
 			}
+#endif
 			if (transtable) flags = flags | SHAPE_GHOST;
 
 			/*
@@ -563,7 +566,7 @@ void AnimClass::operator delete(void *ptr)
  *   05/31/1994 JLB : Created.                                                                 *
  *   08/03/1994 JLB : Added a delayed affect parameter.                                        *
  *=============================================================================================*/
-AnimClass::AnimClass(AnimType animnum, COORDINATE coord, unsigned char timedelay, unsigned char loop, bool alt) :
+AnimClass::AnimClass(AnimType animnum, COORDINATE coord, unsigned char timedelay, unsigned char loop /*, bool alt*/):
 	Class(&AnimTypeClass::As_Reference(animnum))
 {
 	Object = 0;
@@ -604,7 +607,9 @@ AnimClass::AnimClass(AnimType animnum, COORDINATE coord, unsigned char timedelay
 
 	IsToDelete = false;
 	IsBrandNew = true;
+#ifdef OBSOLETE
 	IsAlternate = alt;
+#endif
 	IsInvisible = false;
 
 	/*

@@ -430,11 +430,19 @@ void UnitClass::AI(void)
 	**	If this is a vehicle that heals itself (e.g., Mammoth Tank), then it will perform
 	**	the heal logic here.
 	*/
-	if ((Class->AutoHealMax || Class->TibHealMax) && (Frame % 16) == 0) {
-		unsigned int healthratio = Health_Ratio();
-		if (healthratio < Class->AutoHealMax ||
-			(healthratio < Class->TibHealMax && Map[Coord_Cell(Coord)].Land_Type() == LAND_TIBERIUM)) {
+	if ((Frame % 16) == 0 && (Class->AutoHealMax || Class->TibHealMax)) {
+		bool healed = false;
+		// Apply autoheal
+		if (Health_Ratio() < Class->AutoHealMax) {
 			Strength++;
+			healed = true;
+		}
+		// Apply tiberium heal. If it has both, this is cumulative.
+		if (Health_Ratio() < Class->TibHealMax && Map[Coord_Cell(Coord)].Land_Type() == LAND_TIBERIUM) {
+			Strength++;
+			healed = true;
+		}
+		if (healed) {
 			Mark(MARK_CHANGE);
 		}
 	}
@@ -3280,11 +3288,12 @@ void UnitClass::Response_Select(void)
 		VOC_YESSIR,
 		VOC_AWAIT
 	};
-	VocType response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
-
+	VocType response ;
 	// Nyerguds's TUC Quick Fix Patch v1.04
 	// Added Visceroid to this, so it never responds with a human voice.
-	if (*this == UNIT_TRIC || *this == UNIT_TREX || *this == UNIT_RAPT || *this == UNIT_STEG || *this == UNIT_VICE) {
+	if (Class->IsTalker) {
+		response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
+	} else {
 		response = VOC_DINOYES;
 	}
 
@@ -3319,11 +3328,12 @@ void UnitClass::Response_Move(void)
 		VOC_AFFIRM,
 		VOC_AFFIRM
 	};
-	VocType response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
-
+	VocType response;
 	// Nyerguds's TUC Quick Fix Patch v1.04
 	// Added Visceroid to this, so it never responds with a human voice.
-	if (*this == UNIT_TRIC || *this == UNIT_TREX || *this == UNIT_RAPT || *this == UNIT_STEG || *this == UNIT_VICE) {
+	if (Class->IsTalker) {
+		response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
+	} else {
 		response = VOC_DINOMOUT;
 	}
 
@@ -3357,11 +3367,12 @@ void UnitClass::Response_Attack(void)
 		VOC_YESSIR,
 		VOC_YESSIR
 	};
-	VocType response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
-
+	VocType response;
 	// Nyerguds's TUC Quick Fix Patch v1.04
 	// Added Visceroid to this, so it never responds with a human voice.
-	if (*this == UNIT_TRIC || *this == UNIT_TREX || *this == UNIT_RAPT || *this == UNIT_STEG || *this == UNIT_VICE) {
+	if (Class->IsTalker) {
+		response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
+	} else {
 		response = VOC_DINOMOUT;
 	}
 

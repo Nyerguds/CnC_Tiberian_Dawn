@@ -51,7 +51,7 @@ class AnimClass : public ObjectClass, private StageClass {
 		static void * AnimClass::operator new(size_t size);
 		static void AnimClass::operator delete(void *ptr);
 		AnimClass(void) : Class(0) {Owner=HOUSE_NONE;Object=0;};		// Default constructor does nothing.
-		AnimClass(AnimType animnum, COORDINATE coord, unsigned char timedelay=0, unsigned char loop=1, bool alt=false);
+		AnimClass(AnimType animnum, COORDINATE coord, unsigned char timedelay=0, unsigned char loop=1/*, bool alt=false*/);
 		virtual ~AnimClass(void);
 		operator AnimType(void) const {return Class->Type;};
 		virtual RTTIType What_Am_I(void) const {return RTTI_ANIM;};
@@ -134,8 +134,10 @@ class AnimClass : public ObjectClass, private StageClass {
 		*/
 		unsigned IsBrandNew:1;
 
+#ifdef OBSOLETE
 		// Use alternate color when drawing?
 		unsigned IsAlternate:1;
+#endif
 
 		/*
 		**	If this animation is invisible, then this flag will be true. An invisible

@@ -960,6 +960,11 @@ class UnitTypeClass : public TechnoTypeClass
 		unsigned IsSmoker:1;
 
 		/*
+		** Can this unit respond with a human voice?
+		*/
+		unsigned IsTalker:1;
+
+		/*
 		** Until what health ratio does this unit autoheal? Set to 0 to disable.
 		*/
 		unsigned short AutoHealMax;
@@ -1046,7 +1051,8 @@ class UnitTypeClass : public TechnoTypeClass
 						bool is_chunky,
 						bool is_cloakable,
 						bool is_animating,
-						bool isSmoker,
+						bool is_smoker,
+						bool is_talker,
 						unsigned short autohealmax,
 						unsigned short tibhealmax,
 						int ammo,

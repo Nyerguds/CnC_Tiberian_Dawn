@@ -344,7 +344,9 @@ extern unsigned char const					RemapRed[256];
 extern unsigned char const					RemapBlueGreen[256];
 extern unsigned char const					RemapDarkGrey[256];
 extern unsigned char const					RemapBrown[256];
+extern unsigned char const					RemapBurgundy[256];
 extern unsigned char const					RemapFire[256];
+extern unsigned char const					RemapPink[256];
 extern unsigned char const					RemapWarmSilver[256];
 
 extern WeaponTypeClass const				Weapons[WEAPON_COUNT];

@@ -3448,7 +3448,7 @@ void BuildingClass::Flame_Spout(void)
 /***********************************************************************************************
  * BuildingClass::Flame_Out -- Makes the oil derrick's flame spout anim vanish                 *
  *                                                                                             *
- *    This routine is called if the Oil Derrick is supposed to catch on fire.                  *
+ *    This routine is called if the Oil Derrick is no longer supposed to be on fire.           *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *

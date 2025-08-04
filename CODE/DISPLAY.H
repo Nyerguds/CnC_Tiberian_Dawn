@@ -110,7 +110,10 @@ class DisplayClass: public MapClass
 		static unsigned char FadingBrighten[256];
 		static unsigned char FadingShade[256];
 		static unsigned char FadingLight[256];
+		
+#ifdef OBSOLETE
 		static unsigned char RemapTables[HOUSE_COUNT][3][256];
+#endif
 		static unsigned char FadingGreen[256];
 		static unsigned char FadingYellow[256];
 		static unsigned char FadingRed[256];

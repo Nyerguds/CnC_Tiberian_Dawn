@@ -610,11 +610,10 @@ bool Save_Misc_Values(FileClass &file)
 	// This is new...
 	file.Write(ActionMovie, sizeof(ActionMovie));
 
-	// Even newer
 	// Nyerguds's TUC Quick Fix Patch v1.04:
-	// fixed temple ion cannon status not getting saved in savegames.
+	// fixed Commando last bomb target not getting transferred in savegames.
 	file.Write(&SabotagedType, sizeof(SabotagedType));
-	// fixed Commando last bomb target not getting saved in savegames.
+	// fixed temple ion cannon status not getting transferred in savegames.
 	file.Write(&TempleIoned, sizeof(TempleIoned));
 	// Added PATSUX laser orca to save data
 	file.Write(&Patsux, sizeof(Patsux));
@@ -707,38 +706,14 @@ bool Load_Misc_Values(FileClass &file)
 	file.Read(Views, sizeof(Views));
 	file.Read(&EndCountDown, sizeof(EndCountDown));
 	file.Read(BriefingText, sizeof(BriefingText));
-
-	// Keep boolean so these can be chained and aborted from the moment one fails.
-	bool readMore = file.Seek(0, SEEK_CUR) + sizeof(ActionMovie) <= file.Size();
-	if (readMore) {
-		file.Read(ActionMovie, sizeof(ActionMovie));
-		readMore = file.Seek(0, SEEK_CUR) + sizeof(SabotagedType) <= file.Size();
-	} else {
-		// Clear the space to the default.
-		strncpy(ActionMovie, "X", sizeof(ActionMovie));
-	}
-	// Nyerguds's TUC Quick Fix Patch v1.04: read more.
-	if (readMore) {
-		// fixed temple ion cannon status not getting saved in savegames.
-		file.Read(&SabotagedType, sizeof(SabotagedType));
-		readMore = file.Seek(0, SEEK_CUR) + sizeof(TempleIoned) <= file.Size();
-	} else {
-		SabotagedType = STRUCT_NONE;
-	}
-	if (readMore) {
-		// fixed Commando last bomb target not getting saved in savegames.
-		file.Read(&TempleIoned, sizeof(TempleIoned));
-		readMore = file.Seek(0, SEEK_CUR) + sizeof(Patsux) <= file.Size();
-	} else {
-		TempleIoned = false;
-	}
-	if (readMore) {
-		// Added PATSUX laser orca to save data
-		file.Read(&Patsux, sizeof(Patsux));
-		//readMore = file.Seek(0, SEEK_CUR) + sizeof(SOMETHING_ELSE) <= file.Size();
-	} else {
-		Patsux = false;
-	}
+	file.Read(ActionMovie, sizeof(ActionMovie));
+	// Nyerguds's TUC Quick Fix Patch v1.04
+	// fixed Commando last bomb target not getting transferred in savegames.
+	file.Read(&SabotagedType, sizeof(SabotagedType));
+	// fixed temple ion cannon status not getting transferred in savegames.
+	file.Read(&TempleIoned, sizeof(TempleIoned));
+	// Added PATSUX laser orca to save data
+	file.Read(&Patsux, sizeof(Patsux));
 	return(true);
 }
 
