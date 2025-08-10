@@ -796,8 +796,7 @@ void Keyboard_Process(KeyNumType &input)
 			AllowVoice = true;
 			if (CurrentObject.Count()) {
 				COORDINATE endpoint = XY_Coord(Map.TacLeptonWidth, Map.TacLeptonHeight);
-				bool firstSelect = true;
-				bool voice = true;
+				bool noselects = true;
 				DynamicVectorClass<ObjectClass *> selectedTypes;
 				bool done_infantry[INFANTRY_COUNT];
 				memset(done_infantry, 0, sizeof(done_infantry));
@@ -808,6 +807,7 @@ void Keyboard_Process(KeyNumType &input)
 				for (index = 0; index < CurrentObject.Count(); index++) {
 					selectedTypes.Add(CurrentObject[index]);
 				}
+				Unselect_All();
 				for (index = 0; index < selectedTypes.Count(); index++) {
 					ObjectClass const * sel = selectedTypes[index];
 					RTTIType whattype = sel->What_Am_I();
@@ -841,10 +841,17 @@ void Keyboard_Process(KeyNumType &input)
 					if (id != -1) {
 						// args: coord1, coord2, allowVoice, additive, rttifilter, typefilter
 						// Only disable "voice" if something new was actually selected for this type.
-						if (Map.Select_These(0x00000000, endpoint, voice, !firstSelect || additive, whattype, id)) {
-							voice = false;
+						if (Map.Select_These(0x00000000, endpoint, noselects, true, whattype, id)) {
+							noselects = false;
 						}
-						firstSelect = false;
+					}
+				}
+				// If nothing was selected, or this was an additive select,
+				// silently add the originals back to the selection.
+				if (noselects || additive) {
+					AllowVoice = false;
+					for (index = 0; index < selectedTypes.Count(); index++) {
+						selectedTypes[index]->Select();
 					}
 				}
 				selectedTypes.Clear();
