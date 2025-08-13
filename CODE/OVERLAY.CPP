@@ -241,10 +241,11 @@ bool OverlayClass::Mark(MarkType mark)
 				*/
 				if (Class->IsWall) {
 					if (cellptr->Is_Generally_Clear() && cellptr->Overlay != OVERLAY_FLAG_SPOT) {
-						cellptr->Overlay = Class->Type;
+						OverlayType overlay = Class->Type;
+						cellptr->Overlay = overlay;
 						cellptr->OverlayData = 0;
+						cellptr->Wall_Update(overlay);
 						cellptr->Redraw_Objects();
-						cellptr->Wall_Update();
 
 						/*
 						**	Flag ownership of the cell if the 'global' ownership flag indicates that this
@@ -312,7 +313,10 @@ bool OverlayClass::Mark(MarkType mark)
 								static FacingType _face[4] = {FACING_N, FACING_E, FACING_S, FACING_W};
 
 								for (int index = 0; index < (sizeof(_face)/sizeof(_face[0])); index++) {
-									cellptr->Adjacent_Cell(_face[index]).Concrete_Calc();
+									CellClass *newcell = &cellptr->Adjacent_Cell(_face[index]);
+									if (newcell != cellptr) {
+										newcell->Concrete_Calc();
+									}
 								}
 							}
 						}
@@ -323,6 +327,7 @@ bool OverlayClass::Mark(MarkType mark)
 				**	*****  Is this really needed?
 				*/
 				cellptr->Recalc_Attributes();
+				Map.Radar_Pixel(cell);
 			}
 			delete this;
 			return(true);

@@ -1702,6 +1702,7 @@ BuildingClass::BuildingClass(StructType type, HousesType house) :
 	QueueBState = BSTATE_NONE;
 	Strength = Class->MaxStrength;
 	WhoLastHurtMe = house;
+	LastRepaired = TARGET_NONE;
 	Ammo = Class->MaxAmmo;
 
 	/*
@@ -4169,6 +4170,7 @@ int BuildingClass::Mission_Repair(void)
 			case INITIAL:
 				if (!In_Radio_Contact()) {
 					Begin_Mode(BSTATE_IDLE);
+					LastRepaired = TARGET_NONE;
 					Assign_Mission(MISSION_GUARD);
 					return(1);
 				}
@@ -4181,14 +4183,17 @@ int BuildingClass::Mission_Repair(void)
 
 			case IDLE:
 				if (!In_Radio_Contact()) {
+					LastRepaired = TARGET_NONE;
 					Assign_Mission(MISSION_GUARD);
 					return(1);
 				}
 
 				if (Transmit_Message(RADIO_NEED_TO_MOVE) == RADIO_ROGER) {
 					if (Contact_With_Whom()->Health_Ratio() < 0x0100 && Transmit_Message(RADIO_REPAIR) == RADIO_ROGER) {
-						if (IsOwnedByPlayer) {
+						TARGET astarget = Contact_With_Whom()->As_Target();
+						if (IsOwnedByPlayer && LastRepaired != astarget) {
 							Speak(VOX_REPAIRING);
+							LastRepaired = astarget;
 						}
 						Status = DURING;
 						Begin_Mode(BSTATE_ACTIVE);
@@ -4208,6 +4213,7 @@ int BuildingClass::Mission_Repair(void)
 				if (!In_Radio_Contact()) {
 					Begin_Mode(BSTATE_IDLE);
 					Status = IDLE;
+					LastRepaired = TARGET_NONE;
 					return(1);
 				}
 				if (IsReadyToCommence && Transmit_Message(RADIO_NEED_TO_MOVE) == RADIO_ROGER) {

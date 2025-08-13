@@ -78,14 +78,14 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Allowed the Area Guard functions ("G" and \[Ctrl\]+\[Alt\]+Click) to be used by Harvesters to find nearby tiberium to harvest. The code for this always existed in the game, but the UI never allowed giving such orders to a harvester.
 * \[Remaster\] Added "D" as Deploy/Unload hotkey. Unlike in the Remaster, this works even when having multiple units selected, and will only affect the units that can perform the deploy action.
 * Added "E" as hotkey to select all units on the screen. This can be combined with the \[Shift\] key.
-* Added "T" as shortcut for selecting all units on the screen of the same types as the already-selected units. This can be combined with the \[Shift\] key.
+* Added "T" as shortcut for selecting all units on the screen of the same types as the already-selected units. This can be combined with the \[Shift\] key. If the current screen contains no units of these types to select, the original selection is retained.
 * Added power balance info on the power output and building tooltips. This is enabled by default, but can be disabled by adding the option "NoPowerToolTips=true" in conquer.ini, under \[Options\].
-* The keyboard-given orders for Area Guard, Scatter and Deploy will now give unit responses.
+* The keyboard-given orders for Area Guard, Scatter, Deploy and Stop will now give unit responses.
 * Deploying units by clicking on them now works even if you have multiple units selected. This will not affect the other units in the selection.
 * \[Remaster\] Multiple infantry can now be loaded into a transport with a single click.
 * \[Remaster\] Infantry can now enter an APC while the APC is busy attacking something.
 * Since the deployment change makes it impossible to load passengers into a selected transport that already contains at least one passenger, you can now hold \[Alt\] to override the Deploy cursor to allow passengers to enter.
-* When having infantry selected, you can now hold down \[Shift\] and add an unloaded transport to the selection without this getting overridden by the order to load into the transport.
+* When having infantry selected, you can now hold down \[Shift\] and add a transport to the selection without this getting overridden by the order to load into the transport.
 * An "Enter" cursor no longer overrides the \[Ctrl\] force-fire or \[Ctrl\]+\[Alt\] Guard Target cursors. It will still override \[Alt\] force-move though, since that's used to override transports' unloading.
 * Survivors from C4 explosions will no longer immediately shoot at the Commando at the moment they are spawned.
 * Fixed the bug where survivors from C4 explosions often never bothered pursuing the Commando.
@@ -133,14 +133,14 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Added "CCPP" version number on the main menu to indicate the patch version.
 * The B variant for the GDI mission 5 East-side map choices now works as it should.
 * The B variant of GDI mission 13, which showed the map info of the next mission when clicked, and which was completely identical to the A variant, is no longer accessible.
-* \[Remaster\] Helipads no longer vanish without animation when selling them when an aircraft is landed on them.
+* \[Remaster\] Helipads no longer vanish without animation if they are sold when an aircraft is landed on them.
 * Items without icons that are made buildable (e.g. through setting a mission's buildlevel to 99) will now show a dummy icon.
 * Icons and other theater-specific graphics overridden by addon mixfiles will no longer corrupt the game when switching theaters.
 * \[Remaster\] Buildings that are in the process of selling and have already evacuated their crew will not spawn more infantry when destroyed.
 * The map selection's "Click to continue" end screen now filters on specific keyboard input ranges, allowing screen capture keys to still work on this scene.
 * Pressing \[Escape\] on the score or map screen will now speed up the animations to rapidly skip to the end state.
 * Implemented the Nod-specific map and score screen music. This is enabled by default, but can be disabled by adding the option "NoNodSceneMusic=true" in conquer.ini, under \[Options\].
-* Added \[Ctrl\]+\[S\] as in-game screenshot key.
+* Added \[Ctrl\]+\[S\] as in-game screenshot key. This does not work on menus, though.
 * Added new option to enable the debug option IsBarOn, as "BarOn=harkonnen" ;)
 * Added the ability to customize color schemes from mission files.
 * Added support for extra destroyable triggers named UUUU, VVVV and WWWW.
@@ -153,3 +153,8 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * The AI behaviour to run from incoming threats is now enabled at BuildLevel 8, rather than at Scenario 8, making it equivalent to other difficulty increase tweaks that happen at that level.
 * Units that are damaged below 50% will not start smoking again when attacked by a weapon that deals no damage to them (e.g. tank vs Technician gun or Blossom Tree).
 * Clicking to place down a building when having superweapon targeting active will now cancel the superweapon targeting rather than remembering it until after the building placement is done or cancelled.
+* In the Save menu, when clicking on an obsolete savegame to overwrite it, the "(old)" status at the start will no longer be included in the savegame description.
+* \[Remaster\] After unloading in a Refinery, Harvesters will now return to the first spot where they started harvesting the previous time, rather than the last one, reducing top-left harvester drifting.
+* \[Remaster\] Harvesters will randomise their starting point when scanning for tiberium, reducing top-left harvester drifting.
+* \[Remaster\] Harvesters will prefer higher-value cells when scanning around themselves looking for tiberium.
+* Changes in discovered terrain, walls and tiberium will now get updated more correctly on the minimap without needing a manual refresh.

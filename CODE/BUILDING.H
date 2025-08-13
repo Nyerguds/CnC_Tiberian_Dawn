@@ -302,6 +302,8 @@ class BuildingClass : public TechnoClass
 		void  Drop_Debris(TARGET source = TARGET_NONE);
 		virtual BulletClass * Fire_At(TARGET target, int which);
 
+		TARGET LastRepaired;
+
 		static COORDINATE const CenterOffset[BSIZE_COUNT];
 
 		/*

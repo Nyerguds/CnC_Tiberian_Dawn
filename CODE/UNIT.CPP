@@ -2150,26 +2150,26 @@ void UnitClass::Draw_It(int x, int y, WindowNumberType window)
  * HISTORY:                                                                                    *
  *   07/18/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-bool UnitClass::Tiberium_Check(CELL &center, int x, int y)
+int UnitClass::Tiberium_Check(CELL &center, int x, int y)
 {
 	Validate();
 	/*
 	**	If the specified offset from the origin will cause it
 	**	to spill past the map edge, then abort this cell check.
 	*/
-	if (Cell_X(center)+x < Map.MapCellX) return(false);
-	if (Cell_X(center)+x >= Map.MapCellX+Map.MapCellWidth) return(false);
-	if (Cell_Y(center)+y < Map.MapCellY) return(false);
-	if (Cell_Y(center)+y >= Map.MapCellY+Map.MapCellHeight) return(false);
+	if (Cell_X(center)+x < Map.MapCellX) return(0);
+	if (Cell_X(center)+x >= Map.MapCellX+Map.MapCellWidth) return(0);
+	if (Cell_Y(center)+y < Map.MapCellY) return(0);
+	if (Cell_Y(center)+y >= Map.MapCellY+Map.MapCellHeight) return(0);
 
 	center = XY_Cell(Cell_X(center)+x, Cell_Y(center)+y);
 
 	if ((GameToPlay != GAME_NORMAL || (!IsOwnedByPlayer || Map[center].IsVisible))) {
 		if (!Map[center].Cell_Techno() && Map[center].Land_Type() == LAND_TIBERIUM) {
-			return(true);
+			return(Map[center].OverlayData+1);
 		}
 	}
-	return(false);
+	return(0);
 }
 
 
@@ -2186,31 +2186,69 @@ bool UnitClass::Goto_Tiberium(void)
 			**	Perform a ring search outward from the center.
 			*/
 			for (int radius = 1; radius < 32; radius++) {
+				CELL cell = center;
+				CELL bestcell = 0;
+				int tiberium = 0;
+				int besttiberium = 0;
 				for (int x = -radius; x <= radius; x++) {
-					CELL cell = center;
-					if (Tiberium_Check(cell, x, -radius)) {
-						Assign_Destination(::As_Target(cell));
-						return(false);
+
+					/*
+					**	Randomize the corners.
+					*/
+					int corner1;
+					int corner2;
+					//int corner[2];
+					int corners[4][2] = {
+						{x, -radius},
+						{x, +radius},
+						{-radius, x},
+						{+radius, x}
+					};
+					for (int i = 0; i < 3; i++) {
+						int j = i + rand() / (RAND_MAX / (4 - i) + 1);
+						//memcpy(&corner, &corners[j], sizeof(corner));
+						corner1 = corners[j][0];
+						corner2 = corners[j][1];
+						//memcpy(&corners[j], &corners[i], sizeof(corner));
+						corners[j][0] = corners[i][0];
+						corners[j][1] = corners[i][1];
+						//memcpy(&corners[i], corner, sizeof(corner));
+						corner1 = corners[i][0] = corner1;
+						corner2 = corners[i][1] = corner2;
+
 					}
 
 					cell = center;
-					if (Tiberium_Check(cell, x, +radius)) {
-						Assign_Destination(::As_Target(cell));
-						return(false);
+					tiberium = Tiberium_Check(cell, corners[0][0], corners[0][1]);
+					if (tiberium > besttiberium) {
+						bestcell = cell;
+						besttiberium = tiberium;
 					}
 
 					cell = center;
-					if (Tiberium_Check(cell, -radius, x)) {
-						Assign_Destination(::As_Target(cell));
-						return(false);
+					tiberium = Tiberium_Check(cell, corners[1][0], corners[1][1]);
+					if (tiberium > besttiberium) {
+						bestcell = cell;
+						besttiberium = tiberium;
 					}
-
 
 					cell = center;
-					if (Tiberium_Check(cell, +radius, x)) {
-						Assign_Destination(::As_Target(cell));
-						return(false);
+					tiberium = Tiberium_Check(cell, corners[2][0], corners[2][1]);
+					if (tiberium > besttiberium) {
+						bestcell = cell;
+						besttiberium = tiberium;
 					}
+
+					cell = center;
+					tiberium = Tiberium_Check(cell, corners[3][0], corners[3][1]);
+					if (tiberium > besttiberium) {
+						bestcell = cell;
+						besttiberium = tiberium;
+					}
+				}
+				if (bestcell) {
+					Assign_Destination(::As_Target(bestcell));
+					return(false);
 				}
 			}
 		}
@@ -2480,11 +2518,19 @@ int UnitClass::Mission_Harvest(void)
 		*/
 		case LOOKING:
 			IsHarvesting = false;
-			if (Goto_Tiberium()) {
+			/*
+			**	Slightly hacky; if TarCom is set then skip to finding home state.
+			*/
+			if (Target_Legal(TarCom)) {
+				Assign_Target(TARGET_NONE);
+				Status = FINDHOME;
+				return(1);
+			} else if (Goto_Tiberium()) {
 				IsHarvesting = true;
 				Set_Rate(2);
 				Set_Stage(0);
 				Status = HARVESTING;
+				ArchiveTarget = ::As_Target(Coord_Cell(Coord));
 				return(1);
 			} else {
 
@@ -2494,8 +2540,19 @@ int UnitClass::Mission_Harvest(void)
 				**	searching for Tiberium.
 				*/
 				if (!Target_Legal(NavCom)) {
-					Status = GOINGTOIDLE;
-					return(TICKS_PER_SECOND*15);
+
+					/*
+					**	If the archive target is legal, then head there since it is presumed
+					**	that the archive target points to the last place it harvested at. This might
+					**	solve the case where the harvester gets stuck and can't find Tiberium just because
+					**	it is greater than 32 squares away.
+					*/
+					if (Target_Legal(ArchiveTarget)) {
+						Assign_Destination(ArchiveTarget);
+					} else {
+						Status = GOINGTOIDLE;
+						return(TICKS_PER_SECOND*15);
+					}
 				}
 			}
 			break;
@@ -2508,7 +2565,7 @@ int UnitClass::Mission_Harvest(void)
 				IsHarvesting = false;
 				if (Tiberium_Load() == 0x0100) {
 					Status = FINDHOME;
-				  	ArchiveTarget = ::As_Target(Coord_Cell(Coord));
+				  	//ArchiveTarget = ::As_Target(Coord_Cell(Coord));
 				} else {
 					if (!Goto_Tiberium() && !Target_Legal(NavCom))	{
 					  	ArchiveTarget = TARGET_NONE;
@@ -2519,6 +2576,8 @@ int UnitClass::Mission_Harvest(void)
 					}
 				}
 				return(1);
+			} else if (!Target_Legal(NavCom) && ArchiveTarget == TARGET_NONE) {
+				ArchiveTarget = ::As_Target(Coord_Cell(Coord));
 			}
 			break;
 

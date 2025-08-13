@@ -223,6 +223,7 @@
  * Extra implemented features that could be disabled.
  */
 //#define MIDDLE_MOUSE_PANNING
+//#define FIX_CONCRETE
 
 
 /**********************************************************************

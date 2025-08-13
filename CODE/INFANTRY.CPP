@@ -2375,7 +2375,7 @@ TARGET InfantryClass::Greatest_Threat(ThreatType threat) const
 {
 	Validate();
 	/*
-	**	Engineers consider only buildings that can be captures as being a threat. All others
+	**	Engineers consider only buildings that can be captured as being a threat. All others
 	**	are ignored.
 	*/
 	if (Class->IsCapture && Class->Primary == WEAPON_NONE) {
@@ -2615,7 +2615,7 @@ void InfantryClass::Response_Sabotage(void)
 {
     Validate();
     if (*this == INFANTRY_RAMBO && AllowVoice) {
-        Sound_Effect(VOC_RAMBO_PRESENT, 0, Infantry.ID(this)+1);
+        Sound_Effect(VOC_RAMBO_PRESENT, 0, 0);
     }
 }
 

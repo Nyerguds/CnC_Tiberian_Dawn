@@ -1602,6 +1602,7 @@ bool DisplayClass::Map_Cell(CELL cell, HouseClass * house)
 	(*this)[cell].IsMapped = true;
 	(*this)[cell].IsVisible = true;
 	(*this)[cell].Redraw_Objects();
+	Map.Radar_Pixel(cell);
 
 	/*
 	**	Check out all adjacent cells to see if they need
@@ -1612,9 +1613,7 @@ bool DisplayClass::Map_Cell(CELL cell, HouseClass * house)
 	*/
 	for (FacingType dir = FACING_FIRST; dir < FACING_COUNT; dir++) {
 		int	shadow;
-		CELL	c;
-
-		c = Adjacent_Cell(cell, dir);
+		CELL c = Adjacent_Cell(cell, dir);
 
 		// Nyerguds's TUC Quick Fix Patch v1.00: topofmap
 		if ((unsigned)c >= MAP_CELL_TOTAL) continue;
@@ -1632,6 +1631,7 @@ bool DisplayClass::Map_Cell(CELL cell, HouseClass * house)
 				if (shadow != -2) {
 					(*this)[c].IsVisible = true;
 					(*this)[c].Redraw_Objects();
+					Map.Radar_Pixel(c);
 				}
 			}
 		}

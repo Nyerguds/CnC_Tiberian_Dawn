@@ -502,7 +502,11 @@ int LoadOptionsClass::Process(void)
 					** it is, set the edit buffer to empty.
 					*/
 					if (game_idx != 0) {
-						strcpy(game_descr,listbtn.Get_Item(game_idx));
+						// Nyerguds's TUC Quick Fix Patch v1.04
+						// when overwriting an obsolete savegame, trim off the "(old)" prefix,
+						// to prevent it from becoming a real part of the savegame description.
+						int skip = Files[game_idx]->Valid ? 0 : strlen(Text_String(TXT_OLD_GAME));
+						strcpy(game_descr,listbtn.Get_Item(game_idx)+skip);
 					} else {
 						game_descr[0] = 0;
 					}
@@ -653,7 +657,8 @@ void LoadOptionsClass::Fill_List(ListClass *list)
 		** in the list; if any number isn't found, use that number; otherwise,
 		** use 'N + 1'.
 		*/
-		for (int i = 0; i < Files.Count(); i++) {		// i = the # we're searching for
+		int i;
+		for (i = 0; i < Files.Count(); i++) {			// i = the # we're searching for
 			id = -1;											// mark as 'not found'
 			for (int j = 0; j < Files.Count(); j++) {	// loop through all game ID's
 				if (Files[j]->Num==i) {					// if found, mark as found

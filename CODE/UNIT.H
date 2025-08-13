@@ -78,7 +78,7 @@ class UnitClass :	public TarComClass
 		bool  Goto_Clear_Spot(void);
 		bool  Try_To_Deploy(void);
 
-		bool  Tiberium_Check(CELL &center, int x, int y);
+		int   Tiberium_Check(CELL &center, int x, int y);
 		bool  Flag_Attach(HousesType house);
 		bool  Flag_Remove(void);
 		void  Find_LZ(void);

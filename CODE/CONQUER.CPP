@@ -722,9 +722,10 @@ void Keyboard_Process(KeyNumType &input)
 
 					// Nyerguds's TUC Quick Fix Patch v1.03: building-stop-key
 					// Don't block Stop order on defense buildings unless it's building up or selling.
-					if (tech && (tech->Can_Player_Move() || (tech->Can_Player_Fire() &&
-							(tech->What_Am_I() != RTTI_BUILDING || (((BuildingClass *)tech)->BState != BSTATE_CONSTRUCTION))))) {
-						OutList.Add(EventClass(EventClass::IDLE, tech->As_Target()));
+					if (tech && tech->Is_Techno()
+					 	&& (tech->Can_Player_Move() || tech->Can_Player_Fire())
+						&& (tech->What_Am_I() != RTTI_BUILDING || ((BuildingClass *)tech)->BState != BSTATE_CONSTRUCTION)) {
+						((TechnoClass *)tech)->Player_Assign_Mission(MISSION_GUARD, TARGET_NONE, TARGET_NONE);
 					}
 				}
 			}
@@ -770,18 +771,17 @@ void Keyboard_Process(KeyNumType &input)
 						ActionType whaction = techno->What_Action(techno);
 						// Aircraft are blocked if they are currently in the air because this apparently makes them seek out a friendly building to land at.
 						if ((whaction == ACTION_SELF || whaction == ACTION_NO_SELF)) {
-							if (AllowVoice) {
-								techno->Response_Move();
-								AllowVoice = false;
-							}
 							// only give target if this is an aircraft. Giving a target to an MCV makes it malfunction.
 							TARGET dest = whatami == RTTI_AIRCRAFT ? ::As_Target(Coord_Cell(techno->Coord)) : TARGET_NONE;
-							OutList.Add(EventClass(tech->As_Target(), MISSION_UNLOAD, TARGET_NONE, dest));
+							techno->Player_Assign_Mission(MISSION_UNLOAD, TARGET_NONE, dest);
+							if (AllowVoice) {
+								AllowVoice = false;
+							}
 						}
 					}
 				}
-				AllowVoice = true;
 			}
+			AllowVoice = true;
 			break;
 
 		// Nyerguds's TUC Quick Fix Patch v1.04
@@ -870,13 +870,11 @@ void Keyboard_Process(KeyNumType &input)
 					// Allow Guard Area order on harvesters
 					if (tech && tech->Is_Techno() && tech->Can_Player_Move() && (tech->Can_Player_Fire() || (tech -> What_Am_I() == RTTI_UNIT && ((UnitClass *)tech)->Class->IsToHarvest))) {
 						// Nyerguds's TUC Quick Fix Patch v1.04
-						// Give response on keyboard orders. Use Response_Attack()
-						// because "moving out!" is weird when it makes them stop.
+						// Give response on keyboard orders.
+						((TechnoClass *)tech)->Player_Assign_Mission(MISSION_GUARD_AREA, TARGET_NONE, TARGET_NONE);
 						if (AllowVoice) {
-							((TechnoClass *)tech)->Response_Attack();
 							AllowVoice = false;
 						}
-						OutList.Add(EventClass(tech->As_Target(), MISSION_GUARD_AREA));
 					}
 				}
 				AllowVoice = true;

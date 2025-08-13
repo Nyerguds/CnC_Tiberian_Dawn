@@ -2280,16 +2280,33 @@ void TechnoClass::Draw_Laser(TARGET target, int which) {
 void TechnoClass::Player_Assign_Mission(MissionType mission, TARGET target, TARGET destination)
 {
 	if (AllowVoice) {
-		// Nyerguds's TUC Quick Fix Patch v1.02: commando-voice
-        	if (mission == MISSION_SABOTAGE) {
-			Response_Sabotage();
-	        } else if (mission == MISSION_ATTACK) {
-			Response_Attack();
-		} else {
-			Response_Move();
+		switch(mission)
+		{
+			// Nyerguds's TUC Quick Fix Patch v1.02: commando-voice
+			case MISSION_SABOTAGE:
+				Response_Sabotage();
+				break;
+			// Nyerguds's TUC Quick Fix Patch v1.04:
+			// Use Response_Attack on Area Guard and Stop keyboard orders. Don't use
+			// Response_Move: hearing "moving out!" is weird when it makes them stop.
+			case MISSION_ATTACK:
+			case MISSION_GUARD_AREA:
+			case MISSION_GUARD:
+			case MISSION_STOP:
+				Response_Attack();
+				break;
+			default:
+				Response_Move();
+				break;
 		}
 	}
-	Queue_Mission(As_Target(), mission, target, destination);
+	// Used when "S" is pressed, but should execute full Enter_Idle_Mode routine.
+	if (mission == MISSION_STOP || mission == MISSION_GUARD) {
+		// Idle is a special event. Need to queue it directly.
+		OutList.Add(EventClass(EventClass::IDLE, As_Target()));
+	} else {
+		Queue_Mission(As_Target(), mission, target, destination);
+	}
 }
 
 

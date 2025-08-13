@@ -4376,13 +4376,16 @@ void HouseClass::Sell_Wall(CELL cell)
 						break;
 				}
 				Refund_Money(cost/2);
-				Map[cell].Overlay = OVERLAY_NONE;
-				Map[cell].OverlayData = 0;
-				Map[cell].Owner = HOUSE_NONE;
-				Map[cell].Wall_Update();
-				Map[cell].Recalc_Attributes();
-				Map[cell].Redraw_Objects();
+				CellClass * cellptr = &Map[cell];
+				OverlayType overlay = cellptr->Overlay;
+				cellptr->Owner = HOUSE_NONE;
+				cellptr->Overlay = OVERLAY_NONE;
+				cellptr->OverlayData = 0;
+				cellptr->Wall_Update(overlay);
 				ObjectClass::Detach_This_From_All(::As_Target(cell), true);
+				cellptr->Recalc_Attributes();
+				cellptr->Redraw_Objects();
+				Map.Radar_Pixel(cellptr->Cell_Number());
 			}
 		}
 	}

@@ -79,6 +79,48 @@
 
 #define	FIXUP		0
 
+#ifdef FIX_CONCRETE
+	enum ConcFill {
+			CONC_FILL_NONE   = 0,
+			CONC_FILL_CENTER = 1 << 0,
+			CONC_FILL_TOP    = 1 << 1,
+			CONC_FILL_BOTTOM = 1 << 2,
+		};
+		
+		enum ConcAdj {
+			CONC_ADJ_NONE       = 0,
+			CONC_ADJ_TOP        = 1 << 0,
+			CONC_ADJ_TOPSIDE    = 1 << 1,
+			CONC_ADJ_SIDE       = 1 << 2,
+			CONC_ADJ_BOTTOMSIDE = 1 << 3,
+			CONC_ADJ_BOTTOM     = 1 << 4,
+		};
+		
+		// Represents the order of the different fill states inside the CONC sprite file.
+		// Each state has two icons; one for odd and one for even cells. Note that for some
+		// reason, the first state has these switched on the sprite; it has the even graphics first.
+		const ConcFill ConcIconFillStates[7] = {
+			/* 0 */ CONC_FILL_CENTER,
+			/* 1 */ CONC_FILL_CENTER | CONC_FILL_BOTTOM | CONC_FILL_TOP,
+			/* 2 */ CONC_FILL_TOP,
+			/* 3 */ CONC_FILL_BOTTOM,
+			/* 4 */ CONC_FILL_CENTER | CONC_FILL_BOTTOM,
+			/* 5 */ CONC_FILL_CENTER | CONC_FILL_TOP,
+			/* 6 */ CONC_FILL_BOTTOM | CONC_FILL_TOP,
+		};
+		
+		// To convert fill state to icon index.
+		const int ConcFillStateToIcon[8] = {
+			0, // CONC_FILL_NONE = 0
+			0, // CONC_FILL_CENTER  = 1
+			2, // CONC_FILL_TOP = 2
+			5, // CONC_FILL_CENTER | CONC_FILL_TOP = 3
+			3, // CONC_FILL_BOTTOM = 4
+			4, // CONC_FILL_CENTER | CONC_FILL_BOTTOM = 5
+			6, // CONC_FILL_BOTTOM | CONC_FILL_TOP = 6
+			1, // CONC_FILL_CENTER | CONC_FILL_BOTTOM | CONC_FILL_TOP = 7
+		};
+#endif
 
 /***********************************************************************************************
  * CellClass::Validate -- validates cell's number                                              *
@@ -691,7 +733,8 @@ void CellClass::Overlap_Down(ObjectClass * object)
 	ObjectClass **ptr = 0;
 
 	if (!object) return;
-	for (int index = 0; index < sizeof(Overlapper)/sizeof(Overlapper[0]); index++) {
+	int index;
+	for (index = 0; index < sizeof(Overlapper)/sizeof(Overlapper[0]); index++) {
 		if (Overlapper[index] == object) return;
 		if (!Overlapper[index]) ptr = &Overlapper[index];
 	}
@@ -1073,6 +1116,108 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 	}
 }
 
+#ifdef FIX_CONCRETE
+
+// WIP
+
+int Get_Conc_Icon(ConcFill fillState, bool isOdd)
+{
+	int odd = isOdd ? 1 : 0;
+	int val = fillState < 0 || fillState >= 8 ? 0 : ConcFillStateToIcon[fillState];
+	// For some reason the odd and even icons for state 0 are swapped compared to all the others, so
+	// an extra check has to be added for that. Otherwise just "(state * 2) + 1 - odd" would suffice.
+	return val == 0 ? odd : (val * 2) + 1 - odd;
+}
+
+ConcFill Get_Conc_State(CellClass * cell)
+{
+		if (!cell->Overlay == OVERLAY_CONCRETE)
+		{
+				return CONC_FILL_NONE;
+		}
+		int val = cell->OverlayData / 2;
+		if (val < 0 || val > 7)
+		{
+				return CONC_FILL_NONE;
+		}
+		return ConcIconFillStates[val];
+}
+
+bool Is_Ignorable_Conc(CellClass * cell)
+{
+		if (cell->Overlay == OVERLAY_NONE)
+				return true;
+		// only true if concrete without its center filled, or empty.
+		return cell->Overlay == OVERLAY_CONCRETE && (Get_Conc_State(cell) & CONC_FILL_CENTER) == 0;
+}
+
+/***********************************************************************************************
+ * CellClass::Concrete_Calc -- Calculates the concrete icon to use for the cell.               *
+ *                                                                                             *
+ *    This routine examines the cells around the current one and from this, determines what    *
+ *    concrete icon shape to use (if any). The cell data is adjusted and the cell is marked    *
+ *    for redraw if the icon changed.                                                          *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   08/01/1994 JLB : Created.                                                                 *
+ *=============================================================================================*/
+void CellClass::Concrete_Calc(void)
+{
+
+  // Facings to check for adjacent cells around even and odd-cell concrete.
+	// The order in this array matches the bits order in the CONC_ADJ values.
+	static FacingType _even[5] = {FACING_N, FACING_NW, FACING_W, FACING_SW, FACING_S};
+	static FacingType _odd[5] = {FACING_N, FACING_NE, FACING_E, FACING_SE, FACING_S};
+
+	FacingType *ptr;		// Working pointer into adjacent cell list.
+	int	mask;	// Constructed bit index.
+	int	icon;		// Icon number.
+	bool	isodd;	// Is this for the odd column?
+
+	/*
+	**	Determine if the even or odd row logic is necessary.
+	*/
+	isodd = ((Cell_Number() & 0x01) != 0);
+
+	/*
+	**	Fetch correct pointer depending on whether this is for an
+	**	odd or even row.
+	*/
+	ptr = (isodd) ? _odd : _even;
+
+	/*
+	**	Build an index according to the presence of concrete in the special
+	**	adjacent cells. This is a short list of adjacent cell flags since
+	**	only 5 adjacent cells need to be examined. The choice of which 5
+	**	depends on whether this is for an even or odd column.
+	*/
+	mask = 0;
+	const int len = sizeof(_even)/sizeof(_even[0]);
+	int cells[len];
+
+	for (int i = 0; i < len; i++) {
+		CellClass * cellptr = &Adjacent_Cell(*ptr++);
+		if (cellptr != this && cellptr->Overlay == OVERLAY_CONCRETE && (Get_Conc_State(cellptr) & CONC_FILL_CENTER) != 0) {
+			mask |= (1<<i);
+		}
+	}
+	bool top = (mask & CONC_ADJ_TOP) == CONC_ADJ_TOP;
+	bool topSide = (mask & CONC_ADJ_TOPSIDE) == CONC_ADJ_TOPSIDE;
+	bool side = (mask & CONC_ADJ_SIDE) == CONC_ADJ_SIDE;
+	bool bottomSide = (mask & CONC_ADJ_BOTTOMSIDE) == CONC_ADJ_BOTTOMSIDE;
+	bool bottom = (mask & CONC_ADJ_BOTTOM) == CONC_ADJ_BOTTOM;
+	
+	ConcFill fillState = CONC_FILL_CENTER;
+
+}
+
+#else
 
 /***********************************************************************************************
  * CellClass::Concrete_Calc -- Calculates the concrete icon to use for the cell.               *
@@ -1292,7 +1437,10 @@ void CellClass::Concrete_Calc(void)
 		//Array[cell].Base = 0;
 		Redraw_Objects();
 	}
+	Map.Radar_Pixel(Cell_Number());
 }
+#endif
+
 
 
 /***********************************************************************************************
@@ -1303,7 +1451,9 @@ void CellClass::Concrete_Calc(void)
  *    the cell to be redrawn if necessary. This routine should be called whenever the wall     *
  *    or an adjacent wall is created or destroyed.                                             *
  *                                                                                             *
- * INPUT:   none                                                                               *
+ * INPUT:   overlay - The OverlayType this cell has or had (if it was just destroyed / sold).  *
+ *                    Since walls can only connect to other walls of the same type, this       *
+ *                    function will ignore walls of other types.                               *
  *                                                                                             *
  * OUTPUT:  none                                                                               *
  *                                                                                             *
@@ -1313,58 +1463,59 @@ void CellClass::Concrete_Calc(void)
  *   09/19/1994 JLB : Created.                                                                 *
  *   09/19/1994 BWG : Updated to handle partially-damaged walls.                               *
  *=============================================================================================*/
-void CellClass::Wall_Update(void)
+void CellClass::Wall_Update(OverlayType overlay)
 {
 	Validate();
-	static FacingType _offsets[5] = {FACING_N, FACING_E, FACING_S, FACING_W, FACING_NONE};
+	if (overlay == OVERLAY_NONE) {
+			return;
+	}
+	OverlayTypeClass wall = OverlayTypeClass::As_Reference(overlay);
+	if (!wall.IsWall) {
+		return;
+	}
+
+	static FacingType _offsets[5] = {FACING_NONE, FACING_N, FACING_E, FACING_S, FACING_W};
 
 	for (unsigned index = 0; index < (sizeof(_offsets)/sizeof(_offsets[0])); index++) {
-		CellClass & newcell = Adjacent_Cell(_offsets[index]);
+		FacingType facing  =_offsets[index];
+		CellClass * newcell = &Adjacent_Cell(facing);
+		if (newcell == this && facing != FACING_NONE) {
+			continue;
+		}
+		// Only update walls that can connect to this one.
+		if (newcell->Overlay != overlay) {
+			continue;
+		}
+			
+		int	icon = 0;
 
-		if (newcell.Overlay != OVERLAY_NONE && OverlayTypeClass::As_Reference(newcell.Overlay).IsWall) {
-			int	icon = 0;
-
-			/*
-			**	Build the icon number according to walls located in the adjacent
-			**	cells.
-			*/
-			for (unsigned i = 0; i < 4; i++) {
-				if (newcell.Adjacent_Cell(_offsets[i]).Overlay == newcell.Overlay) {
-					icon |= 1 << i;
-				}
+		/*
+		**	Build the icon number according to walls located in the adjacent
+		**	cells.
+		*/
+		for (unsigned i = 1; i < 5; i++) {
+			CellClass * adjcell = &newcell->Adjacent_Cell(_offsets[i]);
+			if (adjcell != newcell && adjcell->Overlay == overlay) {
+				icon |= 1 << (i-1);
 			}
-			newcell.OverlayData = (newcell.OverlayData & 0xFFF0) | icon;
+		}
+		newcell->OverlayData = (newcell->OverlayData & 0xFFF0) | icon;
 //			newcell.OverlayData = icon;
 
-			/*
-			**	Handle special cases for the incomplete damaged wall sets. If a damage stage
-			**	is calculated, but there is no artwork for it, then consider the wall to be
-			**	completely destroyed.
-			*/
-			if (newcell.Overlay == OVERLAY_BRICK_WALL && newcell.OverlayData == 48) {
-				newcell.Overlay = OVERLAY_NONE;
-				newcell.OverlayData = 0;
-				ObjectClass::Detach_This_From_All(::As_Target(newcell.Cell_Number()), true);
-			}
-			if (newcell.Overlay == OVERLAY_SANDBAG_WALL && newcell.OverlayData == 16) {
-				newcell.Overlay = OVERLAY_NONE;
-				newcell.OverlayData = 0;
-				ObjectClass::Detach_This_From_All(::As_Target(newcell.Cell_Number()), true);
-			}
-			if (newcell.Overlay == OVERLAY_CYCLONE_WALL && newcell.OverlayData == 32) {
-				newcell.Overlay = OVERLAY_NONE;
-				newcell.OverlayData = 0;
-				ObjectClass::Detach_This_From_All(::As_Target(newcell.Cell_Number()), true);
-			}
-			if (newcell.Overlay == OVERLAY_BARBWIRE_WALL && newcell.OverlayData == 16) {
-				newcell.Overlay = OVERLAY_NONE;
-				newcell.OverlayData = 0;
-				ObjectClass::Detach_This_From_All(::As_Target(newcell.Cell_Number()), true);
-			}
-
-			newcell.Recalc_Attributes();
-			newcell.Redraw_Objects();
+		/*
+		**	Handle special cases for the incomplete damaged wall sets. If a damage stage
+		**	is calculated, but there is no artwork for it, then consider the wall to be
+		**	completely destroyed.
+		*/
+		if ((newcell->OverlayData>>4) >= wall.DamageLevels) {
+			newcell->Owner = HOUSE_NONE;
+			newcell->Overlay = OVERLAY_NONE;
+			newcell->OverlayData = 0;
+			ObjectClass::Detach_This_From_All(::As_Target(newcell->Cell_Number()), true);
 		}
+		newcell->Recalc_Attributes();
+		newcell->Redraw_Objects();
+		Map.Radar_Pixel(newcell->Cell_Number());
 	}
 }
 
@@ -1420,6 +1571,7 @@ int CellClass::Reduce_Tiberium(int levels)
 			OverlayData = 0;
 			Recalc_Attributes();
 		}
+		Map.Radar_Pixel(Cell_Number());
 	}
 	return(reducer);
 }
@@ -1444,40 +1596,35 @@ int CellClass::Reduce_Tiberium(int levels)
 int CellClass::Reduce_Wall(int damage)
 {
 	Validate();
-	if (Overlay != OVERLAY_NONE) {
-		bool destroyed = false;
-		OverlayTypeClass const & wall = OverlayTypeClass::As_Reference(Overlay);
+	if (Overlay == OVERLAY_NONE) {
+		return(false);
+	}
 
-		if (wall.IsWall) {
+	OverlayTypeClass const & wall = OverlayTypeClass::As_Reference(Overlay);
+	if (!wall.IsWall) {
+		return(false);
+	}
+	/*
+	**	If the damage was great enough to ensure wall destruction, reduce the wall by one
+	**	level (no more). Otherwise determine wall reduction based on a percentage chance
+	**	proportional to the damage received and the wall's strength.
+	*/
+	bool reduced = false;
+	if (damage >= wall.DamagePoints) {
+		reduced = true;
+	} else {
+		reduced = Random_Pick(0, wall.DamagePoints) < damage;
+	}
 
-			/*
-			**	If the damage was great enough to ensure wall destruction, reduce the wall by one
-			**	level (no more). Otherwise determine wall reduction based on a percentage chance
-			**	proportional to the damage received and the wall's strength.
-			*/
-			if (damage >= wall.DamagePoints) {
-				destroyed = true;
-			} else {
-				destroyed = Random_Pick(0, wall.DamagePoints) < damage;
-			}
-
-			if (destroyed) {
-				OverlayData+=16;
-				if ((OverlayData>>4) >= wall.DamageLevels) {
-					ObjectClass::Detach_This_From_All(As_Target());
-					Owner = HOUSE_NONE;
-					Overlay = OVERLAY_NONE;
-					OverlayData = 0;
-					Recalc_Attributes();
-					Redraw_Objects();
-					Adjacent_Cell(FACING_N).Wall_Update();
-					Adjacent_Cell(FACING_W).Wall_Update();
-					Adjacent_Cell(FACING_S).Wall_Update();
-					Adjacent_Cell(FACING_E).Wall_Update();
-					return(true);
-				}
-			}
+	if (reduced) {
+		OverlayData+=16;
+		if ((OverlayData>>4) >= wall.DamageLevels) {
+			// Detects the overflow, removes this wall, and updates the walls around it.
+			Wall_Update(Overlay);
+			Map.Radar_Pixel(Cell_Number());
+			return(true);
 		}
+		Map.Radar_Pixel(Cell_Number());
 	}
 	return(false);
 }
@@ -1739,7 +1886,15 @@ CellClass const & CellClass::Adjacent_Cell(FacingType face) const
 	}
 
 	CellClass const * ptr = this + AdjacentCell[face];
-	if (ptr->Cell_Number() & 0xF000) return(*this);
+	int cell = ptr->Cell_Number();
+	
+	if (cell < 0 || cell > MAP_CELL_TOTAL) return(*this);
+
+	// prevent wraparound
+	int currx = Cell_Number() % MAP_CELL_W;
+	int cellx = cell % MAP_CELL_W;
+	if (ABS(currx - cellx) > 1) return(*this);
+
 	return(*ptr);
 //	return(*(this + AdjacentCell[face]));
 }
