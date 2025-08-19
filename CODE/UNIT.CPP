@@ -2205,7 +2205,10 @@ bool UnitClass::Goto_Tiberium(void)
 						{+radius, x}
 					};
 					for (int i = 0; i < 3; i++) {
-						int j = i + rand() / (RAND_MAX / (4 - i) + 1);
+						//int j = i + rand() / (RAND_MAX / (4 - i) + 1);
+						// Use pseudorandoms to correctly sync this in multiplayer.
+						int j = Random_Pick(i, 3);
+						if (i == j) continue;
 						//memcpy(&corner, &corners[j], sizeof(corner));
 						corner1 = corners[j][0];
 						corner2 = corners[j][1];
@@ -2215,7 +2218,6 @@ bool UnitClass::Goto_Tiberium(void)
 						//memcpy(&corners[i], corner, sizeof(corner));
 						corner1 = corners[i][0] = corner1;
 						corner2 = corners[i][1] = corner2;
-
 					}
 
 					cell = center;

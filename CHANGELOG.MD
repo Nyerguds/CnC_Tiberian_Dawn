@@ -140,16 +140,16 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * The map selection's "Click to continue" end screen now filters on specific keyboard input ranges, allowing screen capture keys to still work on this scene.
 * Pressing \[Escape\] on the score or map screen will now speed up the animations to rapidly skip to the end state.
 * Implemented the Nod-specific map and score screen music. This is enabled by default, but can be disabled by adding the option "NoNodSceneMusic=true" in conquer.ini, under \[Options\].
-* Added \[Ctrl\]+\[S\] as in-game screenshot key. This does not work on menus, though.
+* Added \[Ctrl\]+\[S\] as in-game screenshot key. This does not work on menus or between missions, though.
 * Added new option to enable the debug option IsBarOn, as "BarOn=harkonnen" ;)
-* Added the ability to customize color schemes from mission files.
+* Added the ability to customize color schemes from mission files using the "ColorScheme" / "SecondaryScheme" / "RadarScheme" options under the House ini sections.
 * Added support for extra destroyable triggers named UUUU, VVVV and WWWW.
 * Civilian evacuation triggers in missions can now be looped to detect multiple evacuations.
 * Added proper mouse scroll wheel support to the sidebar; it now scrolls the list you hover over.
 * Item lists such as the New Missions menu and the music list now support PageUp, PageDown, Home, End, and the mouse scroll wheel.
 * The prefix shown on items in the New Missions menu now actually matches the player set in the mission file.
 * Items in the New Missions menu now load missions for campaign side "J" too, from SCJ20EA to SCJ99EA.
-* Added constraint checks on strings file reading, with any unknown string returning "<<UNKNOWN STRING>>".
+* Added constraint checks on strings file reading, with any unknown string returning "&lt;&lt;UNKNOWN STRING&gt;&gt;".
 * The AI behaviour to run from incoming threats is now enabled at BuildLevel 8, rather than at Scenario 8, making it equivalent to other difficulty increase tweaks that happen at that level.
 * Units that are damaged below 50% will not start smoking again when attacked by a weapon that deals no damage to them (e.g. tank vs Technician gun or Blossom Tree).
 * Clicking to place down a building when having superweapon targeting active will now cancel the superweapon targeting rather than remembering it until after the building placement is done or cancelled.
@@ -157,4 +157,4 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * \[Remaster\] After unloading in a Refinery, Harvesters will now return to the first spot where they started harvesting the previous time, rather than the last one, reducing top-left harvester drifting.
 * \[Remaster\] Harvesters will randomise their starting point when scanning for tiberium, reducing top-left harvester drifting.
 * \[Remaster\] Harvesters will prefer higher-value cells when scanning around themselves looking for tiberium.
-* Changes in discovered terrain, walls and tiberium will now get updated more correctly on the minimap without needing a manual refresh.
+* Changes in discovered terrain, walls and tiberium will now immediately get updated correctly on the minimap.
