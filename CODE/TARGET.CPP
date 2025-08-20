@@ -388,6 +388,8 @@ bool Target_Legal(TARGET target)
  *    necessary for find path and other procedures that need a cell value.                     *
  *                                                                                             *
  * INPUT:   target   -- The target value to convert to a cell value.                           *
+ *          enter    -- The goal is to enter the target. If it is a building, ensure this      *
+ *                      gives a valid cell that is part of the building's occupied cells.      *
  *                                                                                             *
  * OUTPUT:  Returns with the target value expressed as a cell location.                        *
  *                                                                                             *
