@@ -158,3 +158,4 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * \[Remaster\] Harvesters will randomise their starting point when scanning for tiberium, reducing top-left harvester drifting.
 * \[Remaster\] Harvesters will prefer higher-value cells when scanning around themselves looking for tiberium.
 * Changes in discovered terrain, walls and tiberium will now immediately get updated correctly on the minimap.
+* Engineers and Commandos are now able to enter buildings from the north even if the buildings' northern cells are unoccupied.
