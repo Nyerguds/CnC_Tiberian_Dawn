@@ -831,7 +831,7 @@ TechnoClass::TechnoClass(HousesType house) :
  *   10/26/94   JLB : Handles scanner units.                                                   *
  *   12/27/1994 JLB : Checks for an processes any trigger in cell.                             *
  *=============================================================================================*/
-void TechnoClass::Per_Cell_Process(bool )
+void TechnoClass::Per_Cell_Process(bool /*center*/)
 {
 	CELL cell = Coord_Cell(Center_Coord());
 

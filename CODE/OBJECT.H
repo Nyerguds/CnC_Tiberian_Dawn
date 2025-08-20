@@ -160,7 +160,7 @@ class ObjectClass : public AbstractClass
 		**	combat purposes.
 		*/
 		virtual COORDINATE Docking_Coord(void) const;
-		virtual COORDINATE Target_Coord(void) const;
+		virtual COORDINATE Target_Coord(bool enter = false) const;
 		virtual COORDINATE Center_Coord(void) const;
 		virtual COORDINATE Render_Coord(void) const;
 		virtual COORDINATE Sort_Y(void) const;

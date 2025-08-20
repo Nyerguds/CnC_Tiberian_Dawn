@@ -218,7 +218,7 @@ static BuildingTypeClass const ClassTemple(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points generated.
 	150,										// DRAIN:		Power points required.
-	BSIZE_33, 								// SIZE:			Building size.
+	BSIZE_3X3, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)ListTmpl,		// OCCUPYLIST:	List of active foundation squares.
 	(short const *)OListTmpl		// OVERLAPLIST:List of overlap cell offset.
@@ -273,7 +273,7 @@ static BuildingTypeClass const ClassEye(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	200,										// DRAIN:		Power points required.
-	BSIZE_22, 								// SIZE:			Building size.
+	BSIZE_2X2, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)ComList,		// OCCUPYLIST:	List of active foundation squares.
 	(short const *)OComList		// OVERLAPLIST:List of overlap cell offset.
@@ -332,7 +332,7 @@ static BuildingTypeClass const ClassWeapon(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	30,										// DRAIN:		Power points required.
-	BSIZE_33, 								// SIZE:			Building size.
+	BSIZE_3X3, 								// SIZE:			Building size.
 	(short const *)ExitWeap,		// Preferred exit cell list.
 	(short const *)ListWeap,		// OCCUPYLIST:	List of active foundation squares.
 	(short const *)OListWeap		// OVERLAPLIST:List of overlap cell offset.
@@ -388,7 +388,7 @@ static BuildingTypeClass const ClassGTower(
 	0,											// CAPACITY:	Spice storage capacity.
 	00,										// POWER:		Power points required.
 	10,										// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL			// OVERLAPLIST:List of overlap cell offset.
@@ -444,7 +444,7 @@ static BuildingTypeClass const ClassATower(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	20,										// DRAIN:		Power points required.
-	BSIZE_12, 								// SIZE:			Building size.
+	BSIZE_1X2, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List12,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)OList12			// OVERLAPLIST:List of overlap cell offset.
@@ -499,7 +499,7 @@ static BuildingTypeClass const ClassObelisk(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	150,										// DRAIN:		Power points required.
-	BSIZE_12, 								// SIZE:			Building size.
+	BSIZE_1X2, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List12,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)OList12			// OVERLAPLIST:List of overlap cell offset.
@@ -562,7 +562,7 @@ static BuildingTypeClass const ClassTurret(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	20,										// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL			// OVERLAPLIST:List of overlap cell offset.
@@ -618,7 +618,7 @@ static BuildingTypeClass const ClassConst(
 	0,											// CAPACITY:	Spice storage capacity.
 	30,										// POWER:		Power points required.
 	15,										// DRAIN:		Power points required.
-	BSIZE_32, 								// SIZE:			Building size.
+	BSIZE_3X2, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List32,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL			// OVERLAPLIST:List of overlap cell offset.
@@ -674,7 +674,7 @@ static BuildingTypeClass const ClassRefinery(
 	1000,										// CAPACITY:	Spice storage capacity.
 	10,										// POWER:		Power points required.
 	40,										// DRAIN:		Power points required.
-	BSIZE_33, 								// SIZE:			Building size.
+	BSIZE_3X3, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List010111000,		// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List101000111		// OVERLAPLIST:List of overlap cell offset.
@@ -731,7 +731,7 @@ static BuildingTypeClass const ClassStorage(
 	1500,										// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	10,										// DRAIN:		Power points required.
-	BSIZE_21, 								// SIZE:			Building size.
+	BSIZE_2X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)StoreList,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -787,7 +787,7 @@ static BuildingTypeClass const ClassHelipad(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	10,										// DRAIN:		Power points required.
-	BSIZE_22, 								// SIZE:			Building size.
+	BSIZE_2X2, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List2,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL			// OVERLAPLIST:List of overlap cell offset.
@@ -843,7 +843,7 @@ static BuildingTypeClass const ClassCommand(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	40,										// DRAIN:		Power points required.
-	BSIZE_22, 								// SIZE:			Building size.
+	BSIZE_2X2, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)ComList,		// OCCUPYLIST:	List of active foundation squares.
 	(short const *)OComList		// OVERLAPLIST:List of overlap cell offset.
@@ -898,7 +898,7 @@ static BuildingTypeClass const ClassSAM(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	20,										// DRAIN:		Power points required.
-	BSIZE_21, 								// SIZE:			Building size.
+	BSIZE_2X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List21,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)OListSAM				// OVERLAPLIST:List of overlap cell offset.
@@ -953,7 +953,7 @@ static BuildingTypeClass const ClassAirStrip(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	30,										// DRAIN:		Power points required.
-	BSIZE_42, 								// SIZE:			Building size.
+	BSIZE_4X2, 								// SIZE:			Building size.
 	ExitAirstrip,							// Preferred exit cell list.
 	(short const *)List42,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -1009,7 +1009,7 @@ static BuildingTypeClass const ClassPower(
 	0,											// CAPACITY:	Spice storage capacity.
 	100,										// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_22, 								// SIZE:			Building size.
+	BSIZE_2X2, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1011,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List0100				// OVERLAPLIST:List of overlap cell offset.
@@ -1065,7 +1065,7 @@ static BuildingTypeClass const ClassAdvancedPower(
 	0,											// CAPACITY:	Spice storage capacity.
 	200,										// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_22, 								// SIZE:			Building size.
+	BSIZE_2X2, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1011,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List0100				// OVERLAPLIST:List of overlap cell offset.
@@ -1121,7 +1121,7 @@ static BuildingTypeClass const ClassHospital(
 	100,										// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	20,										// DRAIN:		Power points required.
-	BSIZE_22, 								// SIZE:			Building size.
+	BSIZE_2X2, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List2,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL			// OVERLAPLIST:List of overlap cell offset.
@@ -1176,7 +1176,7 @@ static BuildingTypeClass const ClassBioLab(
 	100,										// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	40,										// DRAIN:		Power points required.
-	BSIZE_22, 								// SIZE:			Building size.
+	BSIZE_2X2, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List2,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL			// OVERLAPLIST:List of overlap cell offset.
@@ -1231,7 +1231,7 @@ static BuildingTypeClass const ClassBarracks(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	20,										// DRAIN:		Power points required.
-	BSIZE_22, 								// SIZE:			Building size.
+	BSIZE_2X2, 								// SIZE:			Building size.
 	(short const *)ExitPyle,			// Preferred exit cell list.
 	(short const *)List22_1100,		// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List22_0011			// OVERLAPLIST:List of overlap cell offset.
@@ -1286,7 +1286,7 @@ static BuildingTypeClass const ClassHand(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	20,										// DRAIN:		Power points required.
-	BSIZE_23, 								// SIZE:			Building size.
+	BSIZE_2X3, 								// SIZE:			Building size.
 	(short const *)ExitHand,		// Preferred exit cell list.
 	(short const *)ListHand,		// OCCUPYLIST:	List of active foundation squares.
 	(short const *)OListHand		// OVERLAPLIST:List of overlap cell offset.
@@ -1341,7 +1341,7 @@ static BuildingTypeClass const ClassTanker(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_21, 								// SIZE:			Building size.
+	BSIZE_2X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List21,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL			// OVERLAPLIST:List of overlap cell offset.
@@ -1397,7 +1397,7 @@ static BuildingTypeClass const ClassRepair(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	30,										// DRAIN:		Power points required.
-	BSIZE_33, 								// SIZE:			Building size.
+	BSIZE_3X3, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)ListFix,		// OCCUPYLIST:	List of active foundation squares.
 	(short const *)OListFix		// OVERLAPLIST:List of overlap cell offset.
@@ -1455,7 +1455,7 @@ static BuildingTypeClass const ClassRoad(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL			// OVERLAPLIST:List of overlap cell offset.
@@ -1511,7 +1511,7 @@ static BuildingTypeClass const ClassV01(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_22, 								// SIZE:			Building size.
+	BSIZE_2X2, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List0011,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List1100				// OVERLAPLIST:List of overlap cell offset.
@@ -1566,7 +1566,7 @@ static BuildingTypeClass const ClassV02(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_22, 								// SIZE:			Building size.
+	BSIZE_2X2, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List0011,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List1100				// OVERLAPLIST:List of overlap cell offset.
@@ -1621,7 +1621,7 @@ static BuildingTypeClass const ClassV03(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_22, 								// SIZE:			Building size.
+	BSIZE_2X2, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List0111,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List1000				// OVERLAPLIST:List of overlap cell offset.
@@ -1676,7 +1676,7 @@ static BuildingTypeClass const ClassV04(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_22, 								// SIZE:			Building size.
+	BSIZE_2X2, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List0011,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List1100				// OVERLAPLIST:List of overlap cell offset.
@@ -1731,7 +1731,7 @@ static BuildingTypeClass const ClassV05(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_21, 								// SIZE:			Building size.
+	BSIZE_2X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -1786,7 +1786,7 @@ static BuildingTypeClass const ClassV06(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_21, 								// SIZE:			Building size.
+	BSIZE_2X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -1841,7 +1841,7 @@ static BuildingTypeClass const ClassV07(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_21, 								// SIZE:			Building size.
+	BSIZE_2X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -1896,7 +1896,7 @@ static BuildingTypeClass const ClassV08(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -1951,7 +1951,7 @@ static BuildingTypeClass const ClassV09(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2006,7 +2006,7 @@ static BuildingTypeClass const ClassV10(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2061,7 +2061,7 @@ static BuildingTypeClass const ClassV11(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2116,7 +2116,7 @@ static BuildingTypeClass const ClassV12(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2171,7 +2171,7 @@ static BuildingTypeClass const ClassV13(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2226,7 +2226,7 @@ static BuildingTypeClass const ClassV14(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2281,7 +2281,7 @@ static BuildingTypeClass const ClassV15(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2336,7 +2336,7 @@ static BuildingTypeClass const ClassV16(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2391,7 +2391,7 @@ static BuildingTypeClass const ClassV17(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2446,7 +2446,7 @@ static BuildingTypeClass const ClassV18(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2502,7 +2502,7 @@ static BuildingTypeClass const ClassV19(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2558,7 +2558,7 @@ static BuildingTypeClass const ClassV20(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_22, 								// SIZE:			Building size.
+	BSIZE_2X2, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List0011,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List1100				// OVERLAPLIST:List of overlap cell offset.
@@ -2614,7 +2614,7 @@ static BuildingTypeClass const ClassV21(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_22, 								// SIZE:			Building size.
+	BSIZE_2X2, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1101,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List0010				// OVERLAPLIST:List of overlap cell offset.
@@ -2670,7 +2670,7 @@ static BuildingTypeClass const ClassV22(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_21, 								// SIZE:			Building size.
+	BSIZE_2X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2726,7 +2726,7 @@ static BuildingTypeClass const ClassV23(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2782,7 +2782,7 @@ static BuildingTypeClass const ClassV24(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_22, 								// SIZE:			Building size.
+	BSIZE_2X2, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List0011,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List1100				// OVERLAPLIST:List of overlap cell offset.
@@ -2838,7 +2838,7 @@ static BuildingTypeClass const ClassV25(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_22, 								// SIZE:			Building size.
+	BSIZE_2X2, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List0111,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List1000				// OVERLAPLIST:List of overlap cell offset.
@@ -2894,7 +2894,7 @@ static BuildingTypeClass const ClassV26(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_21, 								// SIZE:			Building size.
+	BSIZE_2X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2950,7 +2950,7 @@ static BuildingTypeClass const ClassV27(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3006,7 +3006,7 @@ static BuildingTypeClass const ClassV28(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3062,7 +3062,7 @@ static BuildingTypeClass const ClassV29(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3118,7 +3118,7 @@ static BuildingTypeClass const ClassV30(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_21, 								// SIZE:			Building size.
+	BSIZE_2X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3174,7 +3174,7 @@ static BuildingTypeClass const ClassV31(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_21, 								// SIZE:			Building size.
+	BSIZE_2X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3230,7 +3230,7 @@ static BuildingTypeClass const ClassV32(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_21, 								// SIZE:			Building size.
+	BSIZE_2X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3286,7 +3286,7 @@ static BuildingTypeClass const ClassV33(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_21, 								// SIZE:			Building size.
+	BSIZE_2X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3342,7 +3342,7 @@ static BuildingTypeClass const ClassV34(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3398,7 +3398,7 @@ static BuildingTypeClass const ClassV35(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3454,7 +3454,7 @@ static BuildingTypeClass const ClassV36(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3509,7 +3509,7 @@ static BuildingTypeClass const ClassV37(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_42, 								// SIZE:			Building size.
+	BSIZE_4X2, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)ListWestwood,		// OCCUPYLIST:	List of active foundation squares.
 	(short const *)OListWestwood		// OVERLAPLIST:List of overlap cell offset.
@@ -3565,7 +3565,7 @@ static BuildingTypeClass const ClassMission(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_32, 								// SIZE:			Building size.
+	BSIZE_3X2, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List32,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3622,7 +3622,7 @@ static BuildingTypeClass const Sandbag(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3678,7 +3678,7 @@ static BuildingTypeClass const Cyclone(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3734,7 +3734,7 @@ static BuildingTypeClass const Brick(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3791,7 +3791,7 @@ static BuildingTypeClass const Barbwire(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3847,7 +3847,7 @@ static BuildingTypeClass const Wood(
 	0,											// CAPACITY:	Spice storage capacity.
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
-	BSIZE_11, 								// SIZE:			Building size.
+	BSIZE_1X1, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
 	(short const *)List1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.

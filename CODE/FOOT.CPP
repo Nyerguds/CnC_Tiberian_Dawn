@@ -356,7 +356,10 @@ bool FootClass::Basic_Path(void)
 	Path[0] = FACING_NONE;
 
 	if (Target_Legal(NavCom)) {
-		cell = As_Cell(NavCom);
+		// If the purpose is to capture or demolish, get valid occupied cell.
+		// Note that this special code is normally only applied to NavCom.
+		bool enter = Mission == MISSION_CAPTURE || Mission == MISSION_SABOTAGE;
+		cell = As_Cell(NavCom, enter);
 
 		/*
 		**	When the navigation computer is set to a location that is impassible, then
@@ -364,7 +367,7 @@ bool FootClass::Basic_Path(void)
 		**	EXCEPT when that cell is very close -- then just bail.
 		*/
 //		IsFindPath = true;
-		if (Can_Enter_Cell(cell) == MOVE_NO && Distance(NavCom) > 0x0300) {
+		if (Can_Enter_Cell(cell) == MOVE_NO && Distance(NavCom, enter) > 0x0300) {
 			static int	_faceadjust[8] = {0, 1, -1, 2, -2, 3, -3, 4};
 			FacingType	f2 = (FacingType)(((unsigned)::Direction(cell, Coord_Cell(Coord)))>>5);
 
@@ -431,7 +434,7 @@ bool FootClass::Basic_Path(void)
 				**	to a destination just because there is another friendly unit
 				**	occupying the destination location.
 				*/
-				if (Mission == MISSION_MOVE && Distance(NavCom) < 0x0280) {
+				if (Mission == MISSION_MOVE && Distance(NavCom, enter) < 0x0280) {
 					maxtype = MOVE_DESTROYABLE;
 				}
 			}
@@ -1446,21 +1449,21 @@ void FootClass::Per_Cell_Process(bool center)
  *                                                                         *
  *                                                                         *
  *                                                                         *
- * INPUT:		MissionType mission - the mission we want to overide        *
- *					TARGET	   tarcom  - the new target we want to overide		*
- *					TARGET		navcom  - the new navigation point to overide	*
+ * INPUT:      MissionType mission - the mission we want to overide        *
+ *             TARGET      tarcom  - the new target we want to overide     *
+ *             TARGET      navcom  - the new navigation point to overide   *
  *                                                                         *
- * OUTPUT:		none                                                        *
+ * OUTPUT:     none                                                        *
  *                                                                         *
  * WARNINGS:   If a mission is already overidden, the current mission is   *
- *					just re-assigned.															*
+ *             just re-assigned.                                           *
  *                                                                         *
  * HISTORY:                                                                *
  *   04/28/1995 PWG : Created.                                             *
  *=========================================================================*/
 void FootClass::Override_Mission(MissionType mission, TARGET tarcom, TARGET navcom)
 {
- 	SuspendedNavCom = NavCom;
+	SuspendedNavCom = NavCom;
 	TechnoClass::Override_Mission(mission, tarcom, navcom);
 
 	Assign_Destination(navcom);
@@ -1470,7 +1473,7 @@ void FootClass::Override_Mission(MissionType mission, TARGET tarcom, TARGET navc
 /***************************************************************************
  * FootClass::Restore_Mission -- Restores an overidden mission             *
  *                                                                         *
- * INPUT:		none                                                        *
+ * INPUT:      none                                                        *
  *                                                                         *
  * OUTPUT:     none                                                        *
  *                                                                         *

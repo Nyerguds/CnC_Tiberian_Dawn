@@ -47,6 +47,7 @@
  *    'leptons'. This routine is typically used for weapon range checks.                       *
  *                                                                                             *
  * INPUT:   target   -- The target to determine range to.                                      *
+ *          enter    -- Get the distance to an actual occupied cell, not a vague center.       * 
  *                                                                                             *
  * OUTPUT:  Returns with the range to the specified target (in leptons).                       *
  *                                                                                             *
@@ -55,19 +56,20 @@
  * HISTORY:                                                                                    *
  *   08/17/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-int AbstractClass::Distance(TARGET target) const
+int AbstractClass::Distance(TARGET target, bool enter) const
 {
 	/*
 	**	Should subtract a fudge-factor distance for building targets.
 	*/
 	BuildingClass	*obj = As_Building(target);
-	int dist = Distance(As_Coord(target));
+	
+	int dist = Distance(As_Coord(target, enter));
 
 	/*
 	** If the object is a building the adjust it by the average radius
 	** of the object.
 	*/
-	if (obj) {
+	if (obj && !enter) {
 		dist -= ((obj->Class->Width() + obj->Class->Height()) * (0x100 / 4));
 		if (dist < 0) dist = 0;
 	}

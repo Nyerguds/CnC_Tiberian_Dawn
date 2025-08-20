@@ -81,7 +81,7 @@ class TerrainClass : public ObjectClass, public StageClass
 		virtual COORDINATE Center_Coord(void) const;
 		virtual COORDINATE Render_Coord(void) const {return Coord;};
 		virtual COORDINATE Sort_Y(void) const {return Coord_Add(Coord, Class->CenterBase);};
-		virtual COORDINATE Target_Coord(void) const {return Sort_Y();};
+		virtual COORDINATE Target_Coord(bool /* enter*/ = false) const {return Sort_Y();};
 
 		/*
 		**	Object entry and exit from the game system.

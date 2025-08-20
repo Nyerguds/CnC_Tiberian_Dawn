@@ -2023,15 +2023,15 @@ typedef struct {
 */
 typedef enum BSizeType {
 	BSIZE_NONE=-1,
-	BSIZE_11=0,
-	BSIZE_21,
-	BSIZE_12,
-	BSIZE_22,
-	BSIZE_23,
-	BSIZE_32,
-	BSIZE_33,
-	BSIZE_42,
-	BSIZE_55,
+	BSIZE_1X1=0, // 1x1
+	BSIZE_2X1,   // 2x1
+	BSIZE_1X2,   // 1x2
+	BSIZE_2X2,   // 2x2
+	BSIZE_2X3,   // 2x3
+	BSIZE_3X2,   // 3x2
+	BSIZE_3X3,   // 3x3
+	BSIZE_4X2,   // 4x2
+	BSIZE_5x5,   // 5x5
 
 	BSIZE_COUNT
 } BSizeType;
@@ -2040,10 +2040,10 @@ inline BSizeType operator++(BSizeType &, int);
 
 
 /**********************************************************************
-** When objects are manipulated on the map that are marked as being
+**	When objects are manipulated on the map that are marked as being
 **	removed (up), placed down (down), or just to be redrawn (change);
-** or when an object's rendering (not logical) size changes, due to
-** its being selected or having an animation attached (overlap up/down).
+**	or when an object's rendering (not logical) size changes, due to
+**	its being selected or having an animation attached (overlap up/down).
 */
 typedef enum MarkType {
 	MARK_UP,					//	Removed from the map.

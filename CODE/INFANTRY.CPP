@@ -885,7 +885,7 @@ void InfantryClass::Assign_Destination(TARGET target)
 				*/
 				if (techno->In_Radio_Contact()) {
 
-// TCTCTC -- call for an update from the transport to get a good rondezvous position.
+// TCTCTC -- call for an update from the transport to get a good rendezvous position.
 
 					ArchiveTarget = target;
 				} else {
@@ -1344,7 +1344,10 @@ void InfantryClass::AI(void)
 
 				if (!IsActive || IsInLimbo) return;
 
-				if (Coord_Cell(Coord) == As_Cell(NavCom)) {
+				// If the purpose is to capture or demolish, pass that along
+				// so the function always gets an occupied cell.
+				bool enter = Mission == MISSION_CAPTURE || Mission == MISSION_SABOTAGE;
+				if (Coord_Cell(Coord) == As_Cell(NavCom, enter)) {
 					NavCom = TARGET_NONE;
 					if (Mission == MISSION_MOVE) {
 						Enter_Idle_Mode();
@@ -1542,8 +1545,7 @@ MoveType InfantryClass::Can_Enter_Cell(CELL cell, FacingType ) const
 				}
 
 				/*
-				**	Special check to always allow entry into the building that this infantry
-				**	is trying to capture.
+				**	Special check to allow docking to the building.
 				*/
 				if (Mission == MISSION_ENTER && obj->As_Target() == NavCom && IsTethered) {
 					return(MOVE_OK);

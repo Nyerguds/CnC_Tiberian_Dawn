@@ -781,7 +781,8 @@ void DriveClass::Per_Cell_Process(bool center)
 	**	Check to see if it has reached its destination. If so, then clear the NavCom
 	**	regardless of the remaining path list.
 	*/
-	if (center && As_Cell(NavCom) == cell) {
+	bool enter = Mission == MISSION_CAPTURE || Mission == MISSION_SABOTAGE;
+	if (center && As_Cell(NavCom, enter) == cell) {
 		IsTurretLockedDown = false;
 		NavCom = TARGET_NONE;
 		Path[0] = FACING_NONE;

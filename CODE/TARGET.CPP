@@ -396,9 +396,9 @@ bool Target_Legal(TARGET target)
  * HISTORY:                                                                                    *
  *   05/27/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-CELL As_Cell(TARGET target)
+CELL As_Cell(TARGET target, bool enter)
 {
-	return(Coord_Cell(As_Coord(target)));
+	return(Coord_Cell(As_Coord(target, enter)));
 }
 
 
@@ -409,6 +409,8 @@ CELL As_Cell(TARGET target)
  *    is necessary for those procedures that require a coordinate value.                       *
  *                                                                                             *
  * INPUT:   target   -- The target value to convert.                                           *
+ * INPUT:   enter    -- The goal is to enter the target. If it is a building, ensure this      *
+ *                      gives a valid cell that is part of the building's occupied cells.      *
  *                                                                                             *
  * OUTPUT:  Returns with the target expressed as a COORD value.                                *
  *                                                                                             *
@@ -418,7 +420,7 @@ CELL As_Cell(TARGET target)
  *   05/27/1994 JLB : Created.                                                                 *
  *   11/16/1994 JLB : Simplified.                                                              *
  *=============================================================================================*/
-COORDINATE As_Coord(TARGET target)
+COORDINATE As_Coord(TARGET target, bool enter)
 {
 	if (Target_Legal(target)) {
 		/*
@@ -445,8 +447,7 @@ COORDINATE As_Coord(TARGET target)
 //OutputDebugString ("C&C95 - As_Coord called for invalid target object\m");
 				return(0x00000000L);
 			}
-
-			return(obj->Target_Coord());
+			return(obj->Target_Coord(enter));
 		}
 	}
 

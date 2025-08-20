@@ -42,7 +42,7 @@ DirType  Direction(CELL cell1, CELL cell2);
 DirType  Direction(COORDINATE coord1, COORDINATE coord2);
 int  Distance(COORDINATE coord1, COORDINATE coord2);
 int  Distance(CELL coord1, CELL coord2);
-COORDINATE  As_Coord(TARGET target);
+COORDINATE  As_Coord(TARGET target, bool enter = false);
 
 class AbstractTypeClass;
 
@@ -78,7 +78,7 @@ class AbstractClass
 		**	Coordinate query support functions.
 		*/
 		virtual COORDINATE Center_Coord(void) const {return Coord;};
-		virtual COORDINATE Target_Coord(void) const {return Coord;};
+		virtual COORDINATE Target_Coord(bool /* enter */ = false) const {return Coord;};
 
 		/*
 		**	Coordinate inquiry functions. These are used for both display and
@@ -88,7 +88,7 @@ class AbstractClass
 		DirType Direction(COORDINATE coord) const {return ::Direction(Center_Coord(), coord);};
 		DirType Direction(TARGET target) const {return ::Direction(Center_Coord(), As_Coord(target));};
 		DirType Direction(CELL cell) const {return ::Direction(Coord_Cell(Center_Coord()), cell);};
-		int Distance(TARGET target) const;
+		int Distance(TARGET target, bool enter = false) const;
 		int Distance(COORDINATE coord) const {return ::Distance(Center_Coord(), coord);};
 		int Distance(CELL cell) const {return ::Distance(Coord_Cell(Center_Coord()), cell);};
 		int Distance(AbstractClass const * object) const {return ::Distance(Center_Coord(), object->Target_Coord());};

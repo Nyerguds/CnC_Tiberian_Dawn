@@ -117,17 +117,15 @@ enum SAMState {
 **	Center of building offset table.
 */
 COORDINATE const BuildingClass::CenterOffset[BSIZE_COUNT] = {
-	0x00800080L,
-	0x008000FFL,
-	0x00FF0080L,
-	0x00FF00FFL,
-	0x018000FFL,
-	0x00FF0180L,
-	0x01800180L,
-
-	0x00FF0200L,
-
-	0x02800280L,
+	0x00800080L, // 1x1
+	0x008000FFL, // 2x1
+	0x00FF0080L, // 1x2
+	0x00FF00FFL, // 2x2
+	0x018000FFL, // 2x3
+	0x00FF0180L, // 3x2
+	0x01800180L, // 3x3
+	0x00FF0200L, // 4x2
+	0x02800280L, // 5x5
 };
 
 /*
@@ -3089,6 +3087,51 @@ COORDINATE BuildingClass::Docking_Coord(void) const
 	return(TechnoClass::Docking_Coord());
 }
 
+
+/***********************************************************************************************
+ * BuildingClass::Target_Coord -- Fetches the coordinate if this building is a target.         *
+ *                                                                                             *
+ *    When the coordinate to use when firing at this building is needed, this routine will     *
+ *    provide it. Normally this just returns the center of the building, if something needs to *
+ *    enter an actual cell of the building, though, it will need to return a valid cell.       *
+ *                                                                                             *
+ * INPUT:   enter    -- True if the request for the coordinate was for entering, in which      *
+ *                      case the coordinate needs to be on a valid cell of the building.       *
+ *                      Since entering is a movement order, this is normally only done         *
+ *                      for NavCom, not for TarCom.                                            *
+ *                                                                                             *
+ * OUTPUT:  Returns with the coordinate to fire at if this object is a target.                 *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   20/08/2025 MM : Created.                                                                  *
+ *=============================================================================================*/
+COORDINATE BuildingClass::Target_Coord(bool enter) const
+{
+	Validate();
+	COORDINATE target = Center_Coord();
+	if (enter) {
+		BuildingClass * occupier = Map[Coord_Cell(target)].Cell_Building();
+		if (occupier != this) {
+			// "center" cell is not part of the building cells. Fix coords.
+			const short *occupy = &(*this->Class->Occupy_List(false));
+			CELL pos = Coord_Cell(Coord);
+			COORDINATE center = Center_Coord();
+			int distance = -1;
+			while (*occupy != REFRESH_EOL) {
+				CELL cell = pos + *occupy++;
+				COORDINATE cellcoord = Cell_Coord(cell);
+				int curdist = Distance_Coord(center, cellcoord);
+				if (curdist < distance || distance == -1) {
+					distance = curdist;
+					target = cellcoord;
+				}
+			}
+		}
+	}
+	return target;
+}
 
 /***********************************************************************************************
  * BuildingClass::Can_Fire -- Determines if this building can fire.                            *
