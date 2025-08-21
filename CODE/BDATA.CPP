@@ -4243,11 +4243,11 @@ void BuildingTypeClass::Display(int x, int y, WindowNumberType window, HousesTyp
 		// No actual House is available, so take the House's default color info.
 		PlayerColorType remapColor = HouseTypeClass::As_Reference(house).RemapColor;
 		if ((unsigned)remapColor < REMAP_COUNT) {
-			PlayerColorTypeClass remapInfo = PlayerColors[remapColor];
-			remap = remapInfo.RemapTableBuildings;
-			if (!remap) {
-				remap = remapInfo.RemapTable;
+			const PlayerColorTypeClass *remapInfo = &PlayerColors[remapColor];
+			if ((unsigned)remapInfo->RemapBuildings < REMAP_COUNT) {
+				remapInfo = &PlayerColors[remapInfo->RemapBuildings];
 			}
+			remap = remapInfo->RemapTable;
 		}
 	}
 	if (!ptr) {

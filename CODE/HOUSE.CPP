@@ -378,8 +378,7 @@ HouseClass::HouseClass(HousesType house) :
 	NewUScan = 0;
 	NukePieces = 0x07;
 	Power = 0;
-	RemapColor = Class->RemapColor;
-	Init_Color(RemapColor);
+	Init_Color(Class->RemapColor);
 	Resigned = false;
 	SpeakAttackDelay = 1;
 	SpeakMaxedDelay = 1;
@@ -1699,11 +1698,11 @@ void HouseClass::Read_INI(char *buffer)
 			PlayerColorType remap2 = PlayerColor_From_Name(buf);
 			if (remap2 == REMAP_EXPLICIT_NONE) {
 				// Explicit "None" disables the buildings palette.
-				p->RemapTableBuildings = NULL;
+				p->SecondaryRemapColor = REMAP_NONE;
 				p->ColorsWereChanged = true;
 			} else if (remap2 != REMAP_NONE) {
 				// Use the primary remap table of the found color scheme as buildings remap.
-				p->RemapTableBuildings = PlayerColors[remap2].RemapTable;
+				p->SecondaryRemapColor = remap2;
 				p->ColorsWereChanged = true;
 			}
 		}
@@ -1712,8 +1711,7 @@ void HouseClass::Read_INI(char *buffer)
 			PlayerColorType remapRadar = PlayerColor_From_Name(buf);
 			// Explicit "None" is not supported for this.
 			if (remapRadar != REMAP_NONE && remapRadar != REMAP_EXPLICIT_NONE) {
-				p->Color = PlayerColors[remapRadar].Color;
-				p->BrightColor = PlayerColors[remapRadar].BrightColor;
+				p->Init_Color(remapRadar, true);
 				p->ColorsWereChanged = true;
 			}
 		}
@@ -1998,14 +1996,17 @@ unsigned char const * HouseClass::Remap_Table(bool blushing, bool unit) const
 	Validate();
 	if (blushing) return(&Map.FadingLight[0]);
 
+	const PlayerColorTypeClass *col = NULL;
 	/*
 	**	Special case exception for Nod. Remap buildings to red
 	**	as opposed to the default color of bluegrey.
 	*/
-	if (!unit && RemapTableBuildings) {
-		return(RemapTableBuildings);
+	if (!unit && (unsigned)SecondaryRemapColor < REMAP_COUNT) {
+		col = &PlayerColors[SecondaryRemapColor];
+	} else if ((unsigned)RemapColor < REMAP_COUNT) {
+		col = &PlayerColors[RemapColor];
 	}
-	return(RemapTable);
+	return col ? col->RemapTable : RemapNone;
 }
 
 
@@ -4253,19 +4254,24 @@ void HouseClass::Init_Data(PlayerColorType color, HousesType house, int credits)
  * HISTORY:                                                                                    *
  *   07/29/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-void HouseClass::Init_Color(PlayerColorType color)
+void HouseClass::Init_Color(PlayerColorType color, bool radaronly)
 {
-	RemapColor = color;
-	const PlayerColorTypeClass * col = NULL;
+	const PlayerColorTypeClass *col = NULL;
 	if ((unsigned)color < REMAP_COUNT) {
 		col = &PlayerColors[color];
+	} else {
+		color = REMAP_YELLOW;
 	}
-	RemapTable = col ? col->RemapTable : RemapNone;
-	RemapTableBuildings = col ? col->RemapTableBuildings : NULL;
+	if (!radaronly) {
+		RemapColor = color;
+		SecondaryRemapColor = col ? col->RemapBuildings : REMAP_NONE;
+	}
 	Color = col ? col->Color : GREY;
 	BrightColor = col ? col->BrightColor : GREY;
-	// indicates whether this is the House's default color scheme.
-	ColorsWereChanged = Class->RemapColor != color;
+	if (!radaronly) {
+		// indicates whether this is the House's default color scheme.
+		ColorsWereChanged = Class->RemapColor != color;
+	}
 }
 
 /***********************************************************************************************

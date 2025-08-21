@@ -84,7 +84,11 @@
 										sizeof(BaseClass) + 				\
 										sizeof(LayerClass) +				\
 										sizeof(BriefingText) + \
-										sizeof(Waypoint)))
+										sizeof(Waypoint) + \
+										sizeof(WinMovie) + \
+										sizeof(LoseMovie) + \
+										sizeof(ActionMovie) + \
+										sizeof(CustomRadarExt)))
 
 
 /***************************************************************************
@@ -611,6 +615,9 @@ bool Save_Misc_Values(FileClass &file)
 	file.Write(ActionMovie, sizeof(ActionMovie));
 
 	// Nyerguds's TUC Quick Fix Patch v1.04:
+
+	// Added custom radar extension support
+	file.Write(CustomRadarExt, sizeof(CustomRadarExt));
 	// fixed Commando last bomb target not getting transferred in savegames.
 	file.Write(&SabotagedType, sizeof(SabotagedType));
 	// fixed temple ion cannon status not getting transferred in savegames.
@@ -707,7 +714,10 @@ bool Load_Misc_Values(FileClass &file)
 	file.Read(&EndCountDown, sizeof(EndCountDown));
 	file.Read(BriefingText, sizeof(BriefingText));
 	file.Read(ActionMovie, sizeof(ActionMovie));
+
 	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Added custom radar extension support
+	file.Read(CustomRadarExt, sizeof(CustomRadarExt));
 	// fixed Commando last bomb target not getting transferred in savegames.
 	file.Read(&SabotagedType, sizeof(SabotagedType));
 	// fixed temple ion cannon status not getting transferred in savegames.

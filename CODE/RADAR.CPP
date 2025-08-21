@@ -99,13 +99,14 @@ static GraphicBufferClass _TileStage(24,24);
  *=============================================================================================*/
 RadarClass::RadarClass(void)
 {
-	IsZoomed          = true;
+	IsZoomed        = false;
 	IsRadarActive		= false;
 	IsToRedraw			= false;
 	RadarCursorRedraw = false;
 	PixelPtr				= 0;
 	SpecialRadarFrame = 0;
 	IsPlayerNames		= false;
+	RadarAnim       = NULL;
 }
 
 
@@ -181,6 +182,7 @@ void RadarClass::Init_Clear(void)
 	DoesRadarExist 		= false;
 	PixelPtr 				= 0;
 	IsPlayerNames		= false;
+	RadarAnim       = NULL;
 
 	/*
 	** If we have a valid map lets make sure that we set it correctly
@@ -341,7 +343,6 @@ void RadarClass::Draw_It(bool forced)
 	// Nyerguds's TUC Quick Fix Patch v1.04
 	// -Make funpark campaign independent from Jurassic mode.
 	// -Simplified this logic to actually use House JP
-	static HousesType _house = HOUSE_NONE;
 	HousesType radarhouse = PlayerPtr->ActLike;
 	if (ScenPlayer == SCEN_PLAYER_JP && Scenario < 20) {
 		radarhouse = HOUSE_JP;
@@ -350,12 +351,26 @@ void RadarClass::Draw_It(bool forced)
 	// Any nonstandard house gets the JP radar.
 	if (radarhouse != HOUSE_GOOD && radarhouse != HOUSE_BAD) {
 		radarhouse = HOUSE_JP;
-	}	
-	if (radarhouse != _house) {
+	}
+	bool hascustom = strlen(CustomRadarExt) > 0;
+
+	// RadarAnim pointer is forcibly reset whenever a game is started
+	// or loaded, to ensure the correct radar logo is fetched.
+	if (!RadarAnim) {
 		char name[_MAX_NAME + _MAX_EXT];
-		_makepath(name, NULL, NULL, "RADAR", HouseTypeClass::As_Reference(radarhouse).Suffix);
+		const char * extension;
+		if (hascustom) {
+			extension = &CustomRadarExt[0];
+		} else {
+			 extension = HouseTypeClass::As_Reference(radarhouse).Suffix;
+		}
+		_makepath(name, NULL, NULL, "RADAR", extension);
 		RadarAnim = Hires_Retrieve(name);
-		_house = radarhouse;
+		if (!RadarAnim && hascustom) {
+			// Custom not found; fall back on radarhouse.
+			_makepath(name, NULL, NULL, "RADAR", HouseTypeClass::As_Reference(radarhouse).Suffix);
+			RadarAnim = Hires_Retrieve(name);
+		}
 	}
 
 	/*

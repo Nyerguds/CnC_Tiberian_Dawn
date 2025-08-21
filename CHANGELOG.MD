@@ -159,3 +159,5 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * \[Remaster\] Harvesters will prefer higher-value cells when scanning around themselves looking for tiberium.
 * Changes in discovered terrain, walls and tiberium will now immediately get updated correctly on the minimap.
 * Engineers and Commandos are now able to enter buildings from the north even if the buildings' northern cells are unoccupied.
+* The sidebar radar logo in a mission can now be overridden by specifying the extension for the HRADAR.??? file to load. This can be done by adding RadarLogo=??? under \[Basic\].
+* Build levels can now be customized in the campaign missions.

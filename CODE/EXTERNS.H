@@ -101,6 +101,7 @@ extern char 					ActionMovie[_MAX_FNAME+_MAX_EXT];
 extern char 					BriefMovie[_MAX_FNAME+_MAX_EXT];
 extern char 					WinMovie[_MAX_FNAME+_MAX_EXT];
 extern char 					LoseMovie[_MAX_FNAME+_MAX_EXT];
+extern char 					CustomRadarExt[8];
 extern VoxType					SpeakQueue;
 extern bool						PlayerWins;
 extern bool						PlayerLoses;

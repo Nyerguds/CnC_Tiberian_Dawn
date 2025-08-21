@@ -828,7 +828,6 @@ void AircraftTypeClass::After_Init()
 }
 
 
-
 /***********************************************************************************************
  * AircraftTypeClass::Dimensions -- Fetches the graphic dimensions of the aircraft type.       *
  *                                                                                             *

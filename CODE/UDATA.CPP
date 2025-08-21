@@ -1625,12 +1625,12 @@ void UnitTypeClass::Display(int x, int y, WindowNumberType window, HousesType ho
 	if (!ptr || !Get_Resolution_Factor()) {
 		PlayerColorType remapColor = HouseTypeClass::As_Reference(house).RemapColor;
 		if ((unsigned)remapColor < REMAP_COUNT) {
-			PlayerColorTypeClass remapInfo = PlayerColors[remapColor];
-			if (!(remapInfo.RemapTableBuildings) || (this->Type != UNIT_HARVESTER && this->Type != UNIT_MCV)) {
-				remap = remapInfo.RemapTable;
-			} else {
-				remap = remapInfo.RemapTableBuildings;
+			const PlayerColorTypeClass * remapInfo = &PlayerColors[remapColor];
+			if ((this->Type == UNIT_HARVESTER || this->Type == UNIT_MCV)
+				&& (unsigned)remapInfo->RemapBuildings < REMAP_COUNT) {
+				remapInfo = &PlayerColors[remapInfo->RemapBuildings];
 			}
+			remap = remapInfo->RemapTable;
 		}
 
 	}

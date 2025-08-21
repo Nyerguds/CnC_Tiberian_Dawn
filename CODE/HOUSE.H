@@ -352,21 +352,8 @@ class HouseClass {
 		** copied locally so they can be customized further.
 		*/
 		PlayerColorType RemapColor;
+		PlayerColorType SecondaryRemapColor;
 		unsigned ColorsWereChanged:1;
-
-		/*
-		** Each house instance has a remap table. This was originally copied from
-		** the HousesTypeClass objects, using them as templates for assigning the
-		** different multiplayer colors, but this data is now stored in
-		** PlayerColorTypeClass objects in the PlayerColors array, and can also be
-		** customized in singleplayer missions. -MM 2025/07/27
-		*/
-		unsigned char const * RemapTable;
-		
-		/*
-		** Secondary remap table for buildings.
-		*/
-		unsigned char const * RemapTableBuildings;
 
 		/*
 		** Base Color for this House. Used for painting buildings on the minimap.
@@ -419,7 +406,7 @@ class HouseClass {
 		bool  Flag_Attach(UnitClass * object, bool set_home = false);
 		bool  Flag_Remove(TARGET target, bool set_home = false);
 		void  Init_Data(PlayerColorType color, HousesType house, int credits);
-		void  Init_Color(PlayerColorType color);
+		void  Init_Color(PlayerColorType color, bool radaronly = false);
 
 		void  Sell_Wall(CELL cell);
 		bool  Flag_To_Die(void);

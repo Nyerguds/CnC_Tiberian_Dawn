@@ -126,6 +126,12 @@ ThemeType TransitTheme = THEME_NONE;
 
 
 /***************************************************************************
+**	This is a custom radar extension that can be set in the mission file.
+**	If available, it will override the house based radar logo.
+*/
+char CustomRadarExt[8];
+
+/***************************************************************************
 **	This records the view hotspots for the player. These are the cell numbers
 **	of the upper left corner for the view position.
 */

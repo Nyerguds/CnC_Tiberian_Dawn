@@ -292,25 +292,28 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 	WWGetPrivateProfileString("Basic", "Action", "x", ActionMovie, sizeof(ActionMovie), buffer);
 
 	/*
+	** Always reset this, for both singleplay and multiplay.
+	*/
+	memset(CustomRadarExt, 0, sizeof(CustomRadarExt));
+
+	/*
 	**	For single-player scenarios, 'BuildLevel' is the scenario number.
 	**	This must be set before any buildings are created (if a factory is created,
 	**	it needs to know the BuildLevel for the sidebar.)
 	*/
 	if (GameToPlay == GAME_NORMAL) {
 #ifdef NEWMENU
-		if (Scenario < 20) {
-			BuildLevel = Scenario;
-		} else {
-			BuildLevel = WWGetPrivateProfileInt("Basic", "BuildLevel", Scenario, buffer);
-		}
+		BuildLevel = WWGetPrivateProfileInt("Basic", "BuildLevel", Scenario, buffer);
 #else
 		BuildLevel = Scenario;
 #endif
-	}
-	// Nyerguds's TUC Quick Fix Patch v1.04:
-	// Added PATSUX laser orca
-	Patsux = WWGetPrivateProfileBool("Basic", "Patsux", 0, buffer);
 
+		// Nyerguds's TUC Quick Fix Patch v1.04:
+		// Added PATSUX laser orca
+		Patsux = WWGetPrivateProfileBool("Basic", "Patsux", 0, buffer);
+		// Custom radar extension
+		WWGetPrivateProfileString("Basic", "RadarLogo", NULL, CustomRadarExt, sizeof(CustomRadarExt), buffer);
+	}
 	/*
 	**	Jurassic scenarios are allowed to build the full multiplayer set
 	**	of objects.

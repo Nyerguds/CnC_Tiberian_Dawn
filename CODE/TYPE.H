@@ -108,9 +108,8 @@ class PlayerColorTypeClass
 		**	This is the identification name used in the scenario INI file.
 		*/
 		char const *IniName;
-
 		unsigned char const * RemapTable;
-		unsigned char const * RemapTableBuildings;
+		PlayerColorType RemapBuildings;
 		unsigned char Color;
 		unsigned char BrightColor;
 };
