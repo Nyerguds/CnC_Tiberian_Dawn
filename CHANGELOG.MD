@@ -160,4 +160,10 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Changes in discovered terrain, walls and tiberium will now immediately get updated correctly on the minimap.
 * Engineers and Commandos are now able to enter buildings from the north even if the buildings' northern cells are unoccupied.
 * The sidebar radar logo in a mission can now be overridden by specifying the extension for the HRADAR.??? file to load. This can be done by adding RadarLogo=??? under \[Basic\].
+* For the purpose of checking build prerequisites, owning an Advanced Communication Center will now act as if you own a normal Communications Center.
+* The Advanced Communications Center can now detect stealth units, since its non-advanced variant can do that too.
 * Build levels can now be customized in the campaign missions.
+* The "New Missions" menu only shows mission variants with the EA suffix, but these missions will now attempt to continue to other variants to act as campaign up to 15 missions. The order is EA/EB/EC/ED/EE, WA/WB/WC/WD/WE, XA/XB/XC/XD/XE.
+* Added "RemoveBuildExceptions" option for missions, to remove all singleplayer-specific build rules.
+* Fixed double-firing on aircraft getting disrupted by other orders, causing the aircraft to always fire per single shot.
+* Fixed Mammoth Tank showing its muzzle flashes on the wrong barrel.

@@ -776,10 +776,10 @@ BulletClass * BuildingClass::Fire_At(TARGET target, int which)
 	bullet = TechnoClass::Fire_At(target, which);
 	if (bullet) {
 	
-		// Nyerguds's TUC Quick Fix Patch v1.02: samsite-sound
 		/*
 		**	Flash the muzzle, play sound, and perform any firing animation.
 		*/
+		// Nyerguds's TUC Quick Fix Patch v1.02: samsite-sound
 		Sound_Effect(weapon->Sound, Coord);
 
 		if (*this == STRUCT_SAM) {
@@ -950,9 +950,9 @@ void BuildingClass::AI(void)
 
 	/*
 	**	If a change of animation was requested, then make the change
-	**	now. The building animation system acts independantly but subordinate
+	**	now. The building animation system acts independently but subordinate
 	**	to the mission state machine system. By performing the animation change-up
-	**	here, the mission AI system is ensured of immediate visual affect when it
+	**	here, the mission AI system is ensured of immediate visual effect when it
 	**	decides to change the animation state of the building.
 	*/
 	if (QueueBState != BSTATE_NONE) {
@@ -1049,7 +1049,7 @@ void BuildingClass::AI(void)
 					Strength = max;
 					IsRepairing = false;
 				}
-				// Nyerguds's TUC Quick Fix Patch v1.04
+				// Nyerguds's C&C Patch Project v1.04
 				// Allow oil derricks to stop their flame. Normally not used since it's not set as repairable.
 				if (*this == STRUCT_PUMP && Strength >= (max >> 1)) {
 					Flame_Out();
@@ -1102,7 +1102,7 @@ void BuildingClass::AI(void)
 		/*
 		**	Possibly start repair process if the building is below half strength.
 		*/
-		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Nyerguds's C&C Patch Project v1.04
 		// Fix sellback chance becoming 100% for higher mission numbers in the New Missions list.
 		// Make it depend on set buildlevel rather than on mission number.
 		int scenario = MIN(BuildLevel, 20);
@@ -1461,7 +1461,7 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 				**	remembering of this fact. The finale uses this information to
 				**	play the correct movie.
 				*/
-				// Nyerguds's TUC Quick Fix Patch v1.04:
+				// Nyerguds's C&C Patch Project v1.04:
 				// Fixed temple ion cannon status resetting.
 				if (*this == STRUCT_TEMPLE && warhead == WARHEAD_PB) {
 					TempleIoned = true;
@@ -1776,7 +1776,7 @@ void BuildingClass::Drop_Debris(TARGET source)
 	**	Special case for Moebius to run from destroyed technology
 	**	building.
 	*/
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Consistently use ScenPlayer for scenario exceptions
 	if (GameToPlay == GAME_NORMAL && *this ==  STRUCT_MISSION && ScenPlayer == SCEN_PLAYER_NOD && Scenario == 10) {
 		InfantryClass * i = new InfantryClass(INFANTRY_CHAN, House->Class->House);
@@ -1823,8 +1823,9 @@ void BuildingClass::Drop_Debris(TARGET source)
 					if (i->Unlimbo(Cell_Coord(newcell), DIR_N)) {
 						i->Strength = Random_Pick(5, (int)i->Class->MaxStrength);
 						i->Scatter(0, true);
-						if (isSabotaged && !House->Is_Ally(As_Object(source))) {
-							// Nyerguds's TUC Quick Fix Patch v1.04
+						// Nyerguds's C&C Patch Project v1.04
+						// If not armed (e.g. Engineer), don't use 'isSabotaged' logic.
+						if (isSabotaged && !House->Is_Ally(As_Object(source)) && i->Is_Weapon_Equipped()) {
 							// If the death is the result of C4 exploding, make survivors dazed.
 							// 5 is just enough to prevent that initial shot before the Scatter order takes hold.
 							i->Arm = 5;
@@ -2944,7 +2945,7 @@ void BuildingClass::Read_INI(char *buffer)
 			b = new BuildingClass(classid, bhouse);
 			if (b) {
 				if (b->Unlimbo(Cell_Coord(cell), facing)) {
-					// Nyerguds's TUC Quick Fix Patch v1.04
+					// Nyerguds's C&C Patch Project v1.04
 					// Oil Derricks placed down as damaged will have their flame spout animation.
 					strength = MIN(strength, 0x100);
 					if (strength < 0x80 && classid == STRUCT_PUMP) {
@@ -3271,7 +3272,7 @@ bool BuildingClass::Captured(HouseClass * newowner)
 					break;
 			}
 		}
-		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Nyerguds's C&C Patch Project v1.04
 		// Fix radar refresh for player
 		if (House == PlayerPtr || newowner == PlayerPtr) {
 			Map.PowerClass::IsToRedraw = true;
@@ -5080,7 +5081,7 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 				return(true);
 			}
 
-			// Nyerguds's TUC Quick Fix Patch v1.04
+			// Nyerguds's C&C Patch Project v1.04
 			/*
 			**	Only check for buildings. Don't mind if they are covered with
 			**	a unit (e.g. on helipads)

@@ -232,11 +232,18 @@ bool TempleIoned = false;
 
 
 /***************************************************************************
-**	Nyerguds's TUC Quick Fix Patch v1.04:
+**	Nyerguds's C&C Patch Project:
 **	Special logic for giving the ORCA the Obelisk laser.
 */
 WeaponType PatsuxDefault = WEAPON_NONE;
 bool Patsux = false;
+
+
+/***************************************************************************
+**	Nyerguds's C&C Patch Project:
+**	Special logic to allow full multiplayer tech in singleplayer.
+*/
+bool RemoveBuildExceptions = false;
 
 
 /***************************************************************************
@@ -328,8 +335,8 @@ SpecialClass Special;
 HousesType Whom;							// Initial command line house choice.
 unsigned Scenario;						// Scenario #
 ScenarioPlayerType ScenPlayer;		// GDI, NOD, 2-Player, Multi-Player
-ScenarioDirType ScenDir;				// East/West
-ScenarioVarType ScenVar;				// variation A/B/C
+ScenarioDirType ScenDir;				// East/West/eXtra
+ScenarioVarType ScenVar;				// variation A/B/C/D/E
 char ScenarioName[_MAX_FNAME+_MAX_EXT];	// name of scenario
 int CarryOverMoney;						// Carry over money from last scenario.
 int CarryOverPercent;					// Carry over money percentage control.

@@ -251,7 +251,7 @@ HousesType HouseTypeClass::From_Name(char const *name)
  *=============================================================================================*/
 void HouseTypeClass::One_Time(void)
 {
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Make funpark campaign independent from Jurassic mode.
 	// Now handled in the scenario read.
 #ifdef OBSOLETE

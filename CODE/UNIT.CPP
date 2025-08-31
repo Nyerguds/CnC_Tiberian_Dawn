@@ -634,7 +634,7 @@ RadioMessageType UnitClass::Receive_Message(RadioClass * from, RadioMessageType 
 		**	to the impatient unit.
 		*/
 		case RADIO_DOCKING:
-			// Nyerguds's TUC Quick Fix Patch v1.04
+			// Nyerguds's C&C Patch Project v1.04
 			// Ported the remaster's multi-load logic.
 			/*
 			**	Check for the case of a docking message arriving from a unit that does not
@@ -666,7 +666,7 @@ RadioMessageType UnitClass::Receive_Message(RadioClass * from, RadioMessageType 
 					return(RADIO_ROGER);
 				}
 			}
-			// Nyerguds's TUC Quick Fix Patch v1.04
+			// Nyerguds's C&C Patch Project v1.04
 			// Ported the remaster's logic to allow loading while busy attacking.
 			// Removed explicit check on APC.
 			if (Class->IsTransporter && How_Many() < Class->Max_Passengers()) {
@@ -904,7 +904,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 				anim = ANIM_NAPALM3;
 			}
 
-			// Nyerguds's TUC Quick Fix Patch v1.04
+			// Nyerguds's C&C Patch Project v1.04
 			// This is now simply linked to the death animations directly.
 #ifdef OBSOLETE
 			if (*this == UNIT_TRIC || *this == UNIT_TREX || *this == UNIT_RAPT || *this == UNIT_STEG) {
@@ -1020,7 +1020,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 		**	Try to crush anyone that fires on this unit if possible. The harvester
 		**	typically is the only one that will qualify here.
 		*/
-		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Nyerguds's C&C Patch Project v1.04
 		// Sticky or Sleeping units should not crush infantry.
 		if (!Team && source && !IsTethered && !House->Is_Ally(source) && (!House->IsHuman || Special.IsSmartDefense) && Mission != MISSION_SLEEP && Mission != MISSION_STICKY) {
 
@@ -3350,7 +3350,7 @@ void UnitClass::Response_Select(void)
 		VOC_AWAIT
 	};
 	VocType response ;
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Added Visceroid to this, so it never responds with a human voice.
 	if (Class->IsTalker) {
 		response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
@@ -3390,7 +3390,7 @@ void UnitClass::Response_Move(void)
 		VOC_AFFIRM
 	};
 	VocType response;
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Added Visceroid to this, so it never responds with a human voice.
 	if (Class->IsTalker) {
 		response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
@@ -3429,7 +3429,7 @@ void UnitClass::Response_Attack(void)
 		VOC_YESSIR
 	};
 	VocType response;
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Added Visceroid to this, so it never responds with a human voice.
 	if (Class->IsTalker) {
 		response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
@@ -3488,7 +3488,7 @@ ActionType UnitClass::What_Action(ObjectClass * object) const
 		} else {
 			((ObjectClass &)(*this)).Mark(MARK_UP);
 			if (!BuildingTypeClass::As_Reference(STRUCT_CONST).Legal_Placement(Coord_Cell(Adjacent_Cell(Center_Coord(), FACING_NW)))) {
- 				// Nyerguds's TUC Quick Fix Patch v1.04
+ 				// Nyerguds's C&C Patch Project v1.04
 				// Fun little "Cannot deploy here" cursor :)
 				action = ACTION_NO_SELF;
 			}
@@ -3499,7 +3499,7 @@ ActionType UnitClass::What_Action(ObjectClass * object) const
 	/*
 	**	Special return to friendly dockable building action. Used for the refinery and repair facility.
 	*/
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Don't allow ENTER to override Ctrl or Ctrl+Alt. Alt is still allowed to be overridden.
 	if (
 		action != ACTION_ATTACK && action != ACTION_GUARD_AREA && object->Is_Techno() && IsOwnedByPlayer &&

@@ -502,7 +502,7 @@ int LoadOptionsClass::Process(void)
 					** it is, set the edit buffer to empty.
 					*/
 					if (game_idx != 0) {
-						// Nyerguds's TUC Quick Fix Patch v1.04
+						// Nyerguds's C&C Patch Project v1.04
 						// when overwriting an obsolete savegame, trim off the "(old)" prefix,
 						// to prevent it from becoming a real part of the savegame description.
 						int skip = Files[game_idx]->Valid ? 0 : strlen(Text_String(TXT_OLD_GAME));

@@ -314,7 +314,7 @@ extern void Fatal(char const *message, ...);
 /*
 **	ANIM.CPP
 */
-// Nyerguds's TUC Quick Fix Patch v1.04
+// Nyerguds's C&C Patch Project v1.04
 bool Has_Attached_Anim(ObjectClass * obj, AnimType animnum = ANIM_NONE, bool not_dying = false);
 void Shorten_Attached_Anims(ObjectClass * obj, AnimType animnum = ANIM_NONE);
 
@@ -628,7 +628,7 @@ TARGET TechnoType_To_Target(TechnoTypeClass const * ptr);
 TechnoTypeClass const * Target_To_TechnoType(TARGET target);
 void * Get_VTable(void *ptr, int base_size);
 void Code_All_Pointers(void);
-// Nyerguds's TUC Quick Fix Patch v1.04: Fix funpark campaign savegames
+// Nyerguds's C&C Patch Project v1.04: Fix funpark campaign savegames
 void Decode_All_Pointers(ScenarioPlayerType campaign);
 void Dump(void);
 void Set_VTable(void *ptr, int base_size, void *vtable);

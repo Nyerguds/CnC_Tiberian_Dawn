@@ -440,6 +440,7 @@ typedef enum ThreatType {
 	THREAT_BOATS=0x0080,			// Scan for gunboats?
 	THREAT_CIVILIANS=0x0100,	// Consider civilians to be primary target?
 	THREAT_CAPTURE=0x0200,		// Consider capturable buildings only?
+	THREAT_DUMB=0x0400,		// Emulate old broken scan logic, for Airstrikes.
 } ThreatType;
 inline ThreatType operator |(ThreatType, ThreatType);
 inline ThreatType operator &(ThreatType, ThreatType);
@@ -563,7 +564,7 @@ typedef enum ActionType {
 	ACTION_NOMOVE,			// Special case for movable object, but illegal mouse position.
 	ACTION_ENTER,			// Special case for infantry->APC or vehicle->Repair facility.
 	ACTION_SELF,			// Self select special case.
-	ACTION_NO_SELF,			// Self select acknowledged but denied. // Nyerguds's TUC Quick Fix Patch v1.04
+	ACTION_NO_SELF,			// Self select acknowledged but denied. // Nyerguds's C&C Patch Project v1.04
 	ACTION_ATTACK,			// Can attack or fire upon it in some fashion.
 	ACTION_HARVEST,		// Special harvest mode.
 	ACTION_SELECT,			// Would change selection to specified object.
@@ -772,6 +773,7 @@ typedef enum ScenarioDirEnum
 	SCEN_DIR_NONE = -1,
 	SCEN_DIR_EAST,
 	SCEN_DIR_WEST,
+	SCEN_DIR_EXTRA,
 	SCEN_DIR_COUNT,
 	SCEN_DIR_FIRST = 0,
 } ScenarioDirType;
@@ -789,8 +791,8 @@ typedef enum ScenarioVarEnum
 	SCEN_VAR_B,
 	SCEN_VAR_C,
 	SCEN_VAR_D,
-	SCEN_VAR_COUNT,		// comes before the Lose value!
-	SCEN_VAR_LOSE,
+	SCEN_VAR_E,
+	SCEN_VAR_COUNT,
 	SCEN_VAR_FIRST = 0,
 } ScenarioVarType;
 
@@ -1740,7 +1742,7 @@ typedef enum MouseType
 	MOUSE_NO_SW,
 	MOUSE_NO_W,
 	MOUSE_NO_NW,
-	MOUSE_NO,  // Nyerguds's TUC Quick Fix Patch v1.04; added as "can't deploy here" cursor.
+	MOUSE_NO,  // Nyerguds's C&C Patch Project v1.04; added as "can't deploy here" cursor.
 	MOUSE_NO_MOVE,
 	MOUSE_CAN_MOVE,
 	MOUSE_ENTER,

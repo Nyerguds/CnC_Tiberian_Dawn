@@ -224,7 +224,7 @@ void Choose_Side(void)
 						speechplaying = true;
 						speech = speechn;
 					}
-					// Nyerguds's TUC Quick Fix Patch v1.04
+					// Nyerguds's C&C Patch Project v1.04
 					// Make funpark campaign independent from Jurassic mode.
 					// Added [Shift] key to unlock Jurassic campaign.
 					if (Keyboard::Down(KN_LSHIFT) || Keyboard::Down(KN_RSHIFT)) {
@@ -245,7 +245,7 @@ void Choose_Side(void)
 	Keyboard::Clear();
 	SysMemPage.Clear();
 
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Make funpark campaign independent from Jurassic mode.
 	// Last functional remainder of "Funpark": force the campaign to JP if we're playing in Jurassic mode.
 	if (Special.IsJurassic && AreThingiesEnabled) {

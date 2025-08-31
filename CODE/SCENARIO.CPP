@@ -93,7 +93,7 @@ bool Start_Scenario(char *root, bool briefing)
 		** sides introduction.  We don't want an intro movie on scenario 1, and
 		** we don't want a briefing movie on GDI scenario 1.
 		*/
-		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Nyerguds's C&C Patch Project v1.04
 		// -Consistently use ScenPlayer for scenario exceptions
 		// -Make funpark campaign independent from Jurassic mode.
 		if (Scenario < 20 && /*(!Special.IsJurassic || !AreThingiesEnabled) ||*/ ScenPlayer != SCEN_PLAYER_JP) {
@@ -108,7 +108,7 @@ bool Start_Scenario(char *root, bool briefing)
 			Play_Movie(ActionMovie, TransitTheme);
 		} else {
 #ifdef NEWMENU
-			// Nyerguds's TUC Quick Fix Patch v1.04
+			// Nyerguds's C&C Patch Project v1.04
 			// Allow into movie for Covert Ops (because why not?)
 			Play_Movie(IntroMovie);
 			Play_Movie(BriefMovie);
@@ -117,7 +117,7 @@ bool Start_Scenario(char *root, bool briefing)
 		}
 #endif // DEMO
 
-		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Nyerguds's C&C Patch Project v1.04
 		// Always show brief screen if no briefing video is available.
 		char buffer[25];
 		sprintf(buffer, "%s.VQA", BriefMovie);
@@ -460,35 +460,58 @@ void Do_Win(void)
 			Show_Mouse();
 			return;
 		}
-
-		// If not a Funpark scenario, or a Funpark scenario loaded from the New Missions list, show score screen.
-		if (ScenPlayer != SCEN_PLAYER_JP || Scenario >= 20) {
+		bool bonusmission = Scenario >= 20;
+		// If it is not a Funpark scenario, or if it is a scenario loaded from the New Missions list, show score screen.
+		if (ScenPlayer != SCEN_PLAYER_JP || bonusmission) {
 			Keyboard::Clear();
 			InterpolationPaletteChanged = TRUE;
 			InterpolationPalette = Palette;
 			Score.Presentation();
 		}
 
-		// Return from single menu-selected mission
-		if (Scenario >= 20) {
-			GameActive = false;
-			Show_Mouse();
-			return;
-		}
-
-		// Nyerguds's TUC Quick Fix Patch v1.04
-		// Consistently use ScenPlayer for scenario exceptions
-		/*
-		**	Skip scenario #7 if the airfield was blown up.
-		*/
-		if (Scenario == 6 && ScenPlayer == SCEN_PLAYER_GDI && SabotagedType == STRUCT_AIRSTRIP) {
+		// Handle end of menu-selected mission.
+		if (bonusmission) {
+			// Nyerguds's C&C Patch Project v1.04
+			// Minicampaigns system: progress from EA...->EE -> WA...->WE -> XA...->XE
+			ScenarioVarEnum nextvar = ScenVar;
+			ScenarioDirEnum nextdir = ScenDir;
+			nextvar++;
+			// Wrap to A variant of next direction.
+			if (nextvar >= SCEN_VAR_COUNT)
+			{
+				nextvar = SCEN_VAR_FIRST;
+				nextdir++;
+			}
+			if (nextdir < SCEN_DIR_COUNT) {
+				Set_Scenario_Name(ScenarioName, Scenario, ScenPlayer, nextdir, nextvar);
+				char fname[_MAX_FNAME+_MAX_EXT];
+				sprintf(fname, "%s.INI", ScenarioName);
+				if (!CCFileClass(fname).Is_Available()) {
+					nextdir = SCEN_DIR_COUNT;
+				}
+			}
+			if (nextdir >= SCEN_DIR_COUNT) {
+				GameActive = false;
+				Show_Mouse();
+				return;
+			} else {
+				ScenVar = nextvar;
+				ScenDir = nextdir;
+			}
+		} else {
+			// Nyerguds's C&C Patch Project v1.04
+			// Consistently use ScenPlayer for scenario exceptions
+			/*
+			**	Skip scenario #7 if the airfield was blown up.
+			*/
+			if (Scenario == 6 && ScenPlayer == SCEN_PLAYER_GDI && SabotagedType == STRUCT_AIRSTRIP) {
+				Scenario++;
+			}
+			if (ScenPlayer == SCEN_PLAYER_GDI || ScenPlayer == SCEN_PLAYER_NOD) {
+				Map_Selection();
+			}
 			Scenario++;
 		}
-		if (ScenPlayer == SCEN_PLAYER_GDI || ScenPlayer == SCEN_PLAYER_NOD) {
-			Map_Selection();
-		}
-		
-		Scenario++;
 #endif
 		Keyboard::Clear();
 	}
@@ -510,7 +533,8 @@ void Do_Win(void)
 	**	applies to GDI mission #7.
 	*/
 	if (sabotaged != STRUCT_NONE && Scenario == 7 && PlayerPtr->Class->House == HOUSE_GOOD) {
-		for (int index = 0; index < Buildings.Count(); index++) {
+		int index;
+		for (index = 0; index < Buildings.Count(); index++) {
 			BuildingClass * building = Buildings.Ptr(index);
 
 			if (building && !building->IsInLimbo && building->House != PlayerPtr && building->Class->Type == sabotaged) {
@@ -533,7 +557,7 @@ void Do_Win(void)
 		}
 	}
 
-	// Nyerguds's TUC Quick Fix Patch v1.04:
+	// Nyerguds's C&C Patch Project v1.04:
 	// fixed temple ion cannon status lingering in memory / getting reset / not getting saved in savegames.
 	/*
 	** Always clear these on mission start.
@@ -712,8 +736,8 @@ bool Restate_Mission(char const * name, int button1, int button2)
 			brief = false;
 		}
 #endif
-		// Nyerguds's TUC Quick Fix Patch v1.04
-		// Always check for CPS. This has interesting modding opportunities.
+		// Nyerguds's C&C Patch Project v1.04
+		// Always check for CPS. This offers interesting modding / mapping opportunities.
 		char fname[14];
 		strcpy(fname, name);
 		strcat(fname,".CPS");

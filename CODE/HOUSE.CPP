@@ -460,17 +460,28 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	*/
 	long flags = ActiveBScan;
 	int pre = type->Pre;
+	/*
+	** Equivalent buildings; normal and advanced versions.
+	*/
 	if (flags & STRUCTF_ADVANCED_POWER) flags |= STRUCTF_POWER;
+	// Nyerguds's C&C Patch Project v1.04
+	// if the player owns an Advanced Comm Center, make it act as normal Comm Center, too,
+	// so selling the now obsolete non-advanced version has no effect on the tech tree.
+	// This needs to be done before the Temple check since a Temple does not act as Comm Center.
+	if (flags & STRUCTF_EYE) flags |= STRUCTF_RADAR;
+	/*
+	** GDI/Nod equivalency
+	*/
 	if (flags & STRUCTF_HAND) flags |= STRUCTF_BARRACKS;
 	if (flags & STRUCTF_OBELISK) flags |= STRUCTF_ATOWER;
 	if (flags & STRUCTF_TEMPLE) flags |= STRUCTF_EYE;
 	if (flags & STRUCTF_AIRSTRIP) flags |= STRUCTF_WEAP;
-	if (flags & STRUCTF_SAM) flags |= STRUCTF_HELIPAD;
+	// if (flags & STRUCTF_SAM) flags |= STRUCTF_HELIPAD;
 
 	/*
 	**	Multiplayer game uses a different legality check for building.
 	*/
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Make funpark campaign independent from Jurassic mode.
 	if (GameToPlay != GAME_NORMAL || (ScenPlayer == SCEN_PLAYER_JP && Scenario < 20)) {
 		return((pre & flags) == pre && type->Level <= BuildLevel);
@@ -482,125 +493,128 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	int level = Scenario;
 #endif
 
-	/*
-	**	Special check to make the mission objective buildings the prerequisite
-	**	for the stealth tank in mission #11 only.
-	*/
-	if (house == HOUSE_BAD &&
-		type->What_Am_I() == RTTI_UNITTYPE &&
-		((UnitTypeClass const *)type)->Type == UNIT_STANK &&
-		level == 11) {
+	// Nyerguds's C&C Patch Project v1.04
+	// Add ability to unlock all tech in singleplayer.
+	if (!RemoveBuildExceptions) {
+		/*
+		**	Special check to make the mission objective buildings the prerequisite
+		**	for the stealth tank in mission #11 only.
+		*/
+		if (house == HOUSE_BAD &&
+			type->What_Am_I() == RTTI_UNITTYPE &&
+			((UnitTypeClass const *)type)->Type == UNIT_STANK &&
+			level == 11) {
 
-		pre = STRUCTF_MISSION;
-		level = type->Scenario;
+			pre = STRUCTF_MISSION;
+			level = type->Scenario;
+		}
+
+		/*
+		**	Special case check to ensure that GDI doesn't get the bazooka guy
+		**	until mission #8.
+		*/
+		if (house == HOUSE_GOOD &&
+			type->What_Am_I() == RTTI_INFANTRYTYPE &&
+			((InfantryTypeClass const *)type)->Type == INFANTRY_E3 &&
+			level < 7) {
+
+			return(false);
+		}
+
+		/*
+		**	Special check to allow GDI to build the MSAM by mission #9
+		**	and no sooner.
+		*/
+		if (house == HOUSE_GOOD &&
+			type->What_Am_I() == RTTI_UNITTYPE &&
+			((UnitTypeClass const *)type)->Type == UNIT_MLRS &&
+			level < 9) {
+
+			return(false);
+		}
+
+		/*
+		**	Special case to disable the APC from the Nod player.
+		*/
+		if (house == HOUSE_BAD &&
+			type->What_Am_I() == RTTI_UNITTYPE &&
+			((UnitTypeClass const *)type)->Type == UNIT_APC) {
+
+			return(false);
+		}
+
+		/*
+		**	Ensure that the Temple of Nod cannot be built by GDI even
+		**	if GDI has captured the Nod construction yard.
+		*/
+		if (type->What_Am_I() == RTTI_BUILDINGTYPE &&
+			(((BuildingTypeClass const *)type)->Type == STRUCT_TEMPLE || ((BuildingTypeClass const *)type)->Type == STRUCT_OBELISK) &&
+			Class->House == HOUSE_GOOD) {
+
+			return(false);
+		}
+
+		/*
+		**	Ensure that the rocket launcher tank cannot be built by Nod.
+		*/
+		if (type->What_Am_I() == RTTI_UNITTYPE &&
+			((UnitTypeClass const *)type)->Type == UNIT_MLRS &&
+			Class->House == HOUSE_BAD) {
+
+			return(false);
+		}
+
+		/*
+		**	Ensure that the ion cannon cannot be built if
+		**	Nod has captured the GDI construction yard.
+		*/
+		if (type->What_Am_I() == RTTI_BUILDINGTYPE &&
+			(((BuildingTypeClass const *)type)->Type == STRUCT_EYE) &&
+			Class->House == HOUSE_BAD) {
+
+			return(false);
+		}
+
+		/*
+		**	Nod can build the advanced power plant at scenario #12.
+		*/
+		if (house == HOUSE_BAD &&
+			level >= 12 &&
+			type->What_Am_I() == RTTI_BUILDINGTYPE &&
+			((BuildingTypeClass const *)type)->Type == STRUCT_ADVANCED_POWER) {
+
+			level = type->Scenario;
+		}
+
+		/*
+		**	Nod cannot build a helipad in the normal game.
+		*/
+		if (house == HOUSE_BAD &&
+			type->What_Am_I() == RTTI_BUILDINGTYPE &&
+			((BuildingTypeClass const *)type)->Type == STRUCT_HELIPAD) {
+
+			return(false);
+		}
+
+		/*
+		**	GDI can build the sandbag wall only from scenario #9 onwards.
+		*/
+		if (house == HOUSE_GOOD &&
+			level < 8 &&
+			type->What_Am_I() == RTTI_BUILDINGTYPE &&
+			((BuildingTypeClass const *)type)->Type == STRUCT_SANDBAG_WALL) {
+
+			return(false);
+		}
+
+		/*
+		**	GDI has a special second training mission. Adjust the scenario level so that
+		**	scenario two will still feel like scenario #1.
+		*/
+		if (house == HOUSE_GOOD && level == 2) {
+			level = 1;
+		}
 	}
-
-	/*
-	**	Special case check to ensure that GDI doesn't get the bazooka guy
-	**	until mission #8.
-	*/
-	if (house == HOUSE_GOOD &&
-		type->What_Am_I() == RTTI_INFANTRYTYPE &&
-		((InfantryTypeClass const *)type)->Type == INFANTRY_E3 &&
-		level < 7) {
-
-		return(false);
-	}
-
-	/*
-	**	Special check to allow GDI to build the MSAM by mission #9
-	**	and no sooner.
-	*/
-	if (house == HOUSE_GOOD &&
-		type->What_Am_I() == RTTI_UNITTYPE &&
-		((UnitTypeClass const *)type)->Type == UNIT_MLRS &&
-		level < 9) {
-
-		return(false);
-	}
-
-	/*
-	**	Special case to disable the APC from the Nod player.
-	*/
-	if (house == HOUSE_BAD &&
-		type->What_Am_I() == RTTI_UNITTYPE &&
-		((UnitTypeClass const *)type)->Type == UNIT_APC) {
-
-		return(false);
-	}
-
-	/*
-	**	Ensure that the Temple of Nod cannot be built by GDI even
-	**	if GDI has captured the Nod construction yard.
-	*/
-	if (type->What_Am_I() == RTTI_BUILDINGTYPE &&
-		(((BuildingTypeClass const *)type)->Type == STRUCT_TEMPLE || ((BuildingTypeClass const *)type)->Type == STRUCT_OBELISK) &&
-		Class->House == HOUSE_GOOD) {
-
-		return(false);
-	}
-
-	/*
-	**	Ensure that the rocket launcher tank cannot be built by Nod.
-	*/
-	if (type->What_Am_I() == RTTI_UNITTYPE &&
-		((UnitTypeClass const *)type)->Type == UNIT_MLRS &&
-		Class->House == HOUSE_BAD) {
-
-		return(false);
-	}
-
-	/*
-	**	Ensure that the ion cannon cannot be built if
-	**	Nod has captured the GDI construction yard.
-	*/
-	if (type->What_Am_I() == RTTI_BUILDINGTYPE &&
-		(((BuildingTypeClass const *)type)->Type == STRUCT_EYE) &&
-		Class->House == HOUSE_BAD) {
-
-		return(false);
-	}
-
-	/*
-	**	Nod can build the advanced power plant at scenario #12.
-	*/
-	if (house == HOUSE_BAD &&
-		level >= 12 &&
-		type->What_Am_I() == RTTI_BUILDINGTYPE &&
-		((BuildingTypeClass const *)type)->Type == STRUCT_ADVANCED_POWER) {
-
-		level = type->Scenario;
-	}
-
-	/*
-	**	Nod cannot build a helipad in the normal game.
-	*/
-	if (house == HOUSE_BAD &&
-		type->What_Am_I() == RTTI_BUILDINGTYPE &&
-		((BuildingTypeClass const *)type)->Type == STRUCT_HELIPAD) {
-
-		return(false);
-	}
-
-	/*
-	**	GDI can build the sandbag wall only from scenario #9 onwards.
-	*/
-	if (house == HOUSE_GOOD &&
-		level < 8 &&
-		type->What_Am_I() == RTTI_BUILDINGTYPE &&
-		((BuildingTypeClass const *)type)->Type == STRUCT_SANDBAG_WALL) {
-
-		return(false);
-	}
-
-	/*
-	**	GDI has a special second training mission. Adjust the scenario level so that
-	**	scenario two will still feel like scenario #1.
-	*/
-	if (house == HOUSE_GOOD && level == 2) {
-		level = 1;
-	}
-
 	if (Debug_Cheat) level = 98;
 	return((pre & flags) == pre && type->Scenario <= level);
 }
@@ -997,7 +1011,7 @@ void HouseClass::AI(void)
 		**	When the power is below required, then the buildings will take damage over
 		**	time.
 		*/
-		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Nyerguds's C&C Patch Project v1.04
 		// Only decay if drain is actually greater than Power; not when there's a 0/0 balance.
 		if (Drain > Power) {
 			for (int index = 0; index < Buildings.Count(); index++) {
@@ -1338,7 +1352,7 @@ void HouseClass::AI(void)
 			continue;
 		}
 	}
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Allows looping evacuation triggers.
 	IsCivEvacuated = false;
 

@@ -781,7 +781,7 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object)
 				return(true);
 			}
 
-			// Nyerguds's TUC Quick Fix Patch v1.04
+			// Nyerguds's C&C Patch Project v1.04
 			/*
 			**	Only check for buildings. Don't mind if they are covered with
 			**	a unit (e.g. on helipads)
@@ -2960,14 +2960,14 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 		*/
 		if (CurrentObject.Count()) {
 			if (object) {
-				// Nyerguds's TUC Quick Fix Patch v1.04
+				// Nyerguds's C&C Patch Project v1.04
 				// If shift is held over an object, ALWAYS switch to select toggle.
 				bool shift = Keyboard::Down(KN_LSHIFT) || Keyboard::Down(KN_RSHIFT);
 				bool alt = Keyboard::Down(KN_LALT) || Keyboard::Down(KN_RALT);
 				if (shift && object->Class_Of().IsSelectable) {
 					action = ACTION_TOGGLE_SELECT;
 				} else {
-					// Nyerguds's TUC Quick Fix Patch v1.04
+					// Nyerguds's C&C Patch Project v1.04
 					// If a selected unit is targeted, execute from that one to test if it's a deployer.
 					// This has an exception for the Alt key, to allow other units a chance to enter it.
 					bool retest = true;
@@ -2992,7 +2992,7 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 					}
 				}
 			} else {
-				// Nyerguds's TUC Quick Fix Patch v1.04
+				// Nyerguds's C&C Patch Project v1.04
 				// Keep looping until you got something else than "None" or "No move",
 				// so we get a more accurate representation of all units' abilities.
 				for (int index = 0; index < CurrentObject.Count(); index++) {
@@ -3320,7 +3320,7 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
 				Set_Default_Mouse(MOUSE_DEPLOY, wwsmall);
 				break;
 
-			// Nyerguds's TUC Quick Fix Patch v1.04
+			// Nyerguds's C&C Patch Project v1.04
 			// Special case where self-targeting is acknowledged to be possible, but currently
 			// unavailable due to external circumstances. Used for the MCV in nondeployable area.
 			case ACTION_NO_SELF:
@@ -3363,7 +3363,7 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
 	**	Give a generic help message when over shadow terrain.
 	*/
 	if (shadow) {
-		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Nyerguds's C&C Patch Project v1.04
 		// Consider secret campaign to be for advanced players; they don't need basic hints.
 		if (Scenario < 4 && GameToPlay == GAME_NORMAL && ScenPlayer != SCEN_PLAYER_JP) {
 			Help_Text(TXT_SHADOW);
@@ -3419,7 +3419,7 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
 					}
 				}
 			}
-			// Nyerguds's TUC Quick Fix Patch v1.04
+			// Nyerguds's C&C Patch Project v1.04
 			// Consider secret campaign to be for advanced players; they can see advanced hints.
 			if (Scenario > 3 || object->What_Am_I() != RTTI_TERRAIN || GameToPlay != GAME_NORMAL || ScenPlayer == SCEN_PLAYER_JP) {
 				Help_Text(text, -1, -1, color);
@@ -3531,7 +3531,7 @@ void DisplayClass::Mouse_Left_Release(CELL cell, int x, int y, ObjectClass * obj
 		return;
 	}
 
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// This seems to have fixed the bug that a click action could
 	// occur after drawing a rubberband box for selecting.
 	if (action == ACTION_NONE || action == ACTION_SELECT || action == ACTION_TOGGLE_SELECT) {
@@ -3543,7 +3543,7 @@ void DisplayClass::Mouse_Left_Release(CELL cell, int x, int y, ObjectClass * obj
 	**	to all selected objects.
 	*/
 
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// if the object under the cursor is in the selection, prioritize it, except if Alt is held down.
 	AllowVoice = true;
 	bool loopall = true;
@@ -3598,7 +3598,7 @@ void DisplayClass::Mouse_Left_Release(CELL cell, int x, int y, ObjectClass * obj
 
 	}
 	if (action == ACTION_SELL) {
-		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Nyerguds's C&C Patch Project v1.04
 		// Fix for bug allowing the sale of technos on a wall's sell-cursor.
 		if (!object || (Map[cell].Overlay != OVERLAY_NONE &&
 			OverlayTypeClass::As_Reference(Map[cell].Overlay).IsWall &&

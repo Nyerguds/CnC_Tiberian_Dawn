@@ -275,7 +275,7 @@ class BuildingClass : public TechnoClass
 		/*
 		** Special extra stuff
 		*/
-		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Nyerguds's C&C Patch Project v1.04
 		void  Flame_Spout(void);
 		void  Flame_Out(void);
 		

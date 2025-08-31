@@ -177,9 +177,10 @@ void MessageListClass::Init(int x, int y, int max_msg, int maxchars, int height)
  *                                                                         *
  * INPUT:                                                                  *
  *      txt         text to display                                        *
- *      color         color to draw text in                                *
- *      style         style to use                                         *
- *      timeout      # of ticks the thing is supposed to last (-1 = forever)*
+ *      color       color to draw text in                                  *
+ *      style       style to use                                           *
+ *      timeout     # of ticks the thing is supposed to last (-1 = forever)*
+ *      mute        Don't play a sound.                                    *
  *                                                                         *
  * OUTPUT:                                                                 *
  *      ptr to new TextLabelClass object.                                  *
@@ -192,7 +193,7 @@ void MessageListClass::Init(int x, int y, int max_msg, int maxchars, int height)
  *   05/05/1995 BRR : Created.                                             *
  *=========================================================================*/
 TextLabelClass * MessageListClass::Add_Message(char *txt, int color,
-	TextPrintType style, int timeout, unsigned short magic_number, unsigned short crc, bool forcenew)
+	TextPrintType style, int timeout, unsigned short magic_number, unsigned short crc, bool forcenew, bool mute)
 {
 	int num_msg;
 	TextLabelClass *txtlabel;
@@ -434,14 +435,16 @@ TextLabelClass * MessageListClass::Add_Message(char *txt, int color,
 		MessageList = txtlabel;
 	}
 
+	// Nyerguds's C&C Patch Project v1.04
 	/*------------------------------------------------------------------------
 	Give audio feedback that the message was created
 	------------------------------------------------------------------------*/
-	void const * text2 = MixFileClass::Retrieve("TEXT2.AUD");
-	if (text2) {
-		Play_Sample(text2, 255, Options.Normalize_Sound(180));
+	if (!mute) {
+		void const * text2 = MixFileClass::Retrieve("TEXT2.AUD");
+		if (text2) {
+			Play_Sample(text2, 255, Options.Normalize_Sound(180));
+		}
 	}
-
 	return(txtlabel);
 }
 

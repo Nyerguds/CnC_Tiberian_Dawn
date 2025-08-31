@@ -67,7 +67,7 @@ class MessageListClass {
 		*/
 		void Init (int x, int y, int max_msg, int maxchars, int height);
 		TextLabelClass * Add_Message (char *txt, int color, TextPrintType style, int timeout,
-												unsigned short magic_number, unsigned short crc, bool forcenew = false);
+												unsigned short magic_number, unsigned short crc, bool forcenew = false, bool mute = false);
 
 		/*
 		**	Message-editing routines

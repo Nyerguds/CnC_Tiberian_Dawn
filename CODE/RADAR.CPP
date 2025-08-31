@@ -340,14 +340,14 @@ void RadarClass::Draw_It(bool forced)
 	*/
 	if (!forced && !IsToRedraw && !FullRedraw) return;
 
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// -Make funpark campaign independent from Jurassic mode.
 	// -Simplified this logic to actually use House JP
 	HousesType radarhouse = PlayerPtr->ActLike;
 	if (ScenPlayer == SCEN_PLAYER_JP && Scenario < 20) {
 		radarhouse = HOUSE_JP;
 	}
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Any nonstandard house gets the JP radar.
 	if (radarhouse != HOUSE_GOOD && radarhouse != HOUSE_BAD) {
 		radarhouse = HOUSE_JP;
@@ -1506,7 +1506,7 @@ int RadarClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 				**	The shape changes depending on what object the mouse is currently over and what
 				**	object is currently selected.
 				*/
-				// Nyerguds's TUC Quick Fix Patch v1.04
+				// Nyerguds's C&C Patch Project v1.04
 				// Update cursor while held down on minimap.
 				if ((flags & LEFTUP) || (flags & LEFTHELD)) {
 					Map.Mouse_Left_Up(shadow, object, action, true, true);
@@ -1516,7 +1516,7 @@ int RadarClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 				**	Normal actions occur when the mouse button is released. The press event is
 				**	intercepted and possible rubber-band mode is flagged.
 				*/
-				// Nyerguds's TUC Quick Fix Patch v1.04
+				// Nyerguds's C&C Patch Project v1.04
 				// Minimap now gives order on mouse release, for consistency with main map.
 				if (flags & LEFTRELEASE) {
 					Map.Mouse_Left_Release(cell, cellx, celly, object, action, true);

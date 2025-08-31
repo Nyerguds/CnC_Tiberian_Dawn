@@ -121,6 +121,9 @@ void Set_Scenario_Name(char *buf, int scenario, ScenarioPlayerType player, Scena
 	** Set the directional character value.
 	** If SCEN_DIR_NONE is specified, randomly pick a direction; otherwise, use 'E' or 'W'
 	*/
+	if (dir == SCEN_DIR_NONE) {
+		dir = (ScenarioDirType)Random_Pick((int)SCEN_DIR_FIRST, (int)SCEN_DIR_COUNT - 1);
+	}
 	switch (dir) {
 		case SCEN_DIR_EAST:
 			c_dir = 'E';
@@ -131,8 +134,8 @@ void Set_Scenario_Name(char *buf, int scenario, ScenarioPlayerType player, Scena
 			break;
 
 		default:
-		case SCEN_DIR_NONE:
-			c_dir = (Random_Pick(0, 1) == 0) ? 'W' : 'E';
+		case SCEN_DIR_EXTRA:
+			c_dir = 'X';
 			break;
 	}
 
@@ -151,7 +154,7 @@ void Set_Scenario_Name(char *buf, int scenario, ScenarioPlayerType player, Scena
 			}
 		}
 
-		if (i==SCEN_VAR_FIRST) {
+		if (i == SCEN_VAR_FIRST) {
 			c_var = 'X';						// indicates an error
 		} else {
 			c_var = 'A' + Random_Pick(0, i-1);
@@ -174,10 +177,10 @@ void Set_Scenario_Name(char *buf, int scenario, ScenarioPlayerType player, Scena
 				c_var = 'D';
 				break;
 
+			case SCEN_VAR_E:
 			default:
-				c_var = 'L';
+				c_var = 'E';
 				break;
-
 		}
 	}
 
@@ -236,7 +239,7 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 	** If we are not dealing with scenario 1, or a multi player scenario
 	** then make sure the correct disk is in the drive.
 	*/
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Allow nonstandard missions with any CD.
 	// Yes, not very useful with the TUC logic removing CD stuff, but I wanted this fixed :p
 	if (RequiredCD != -2) {
@@ -292,9 +295,11 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 	WWGetPrivateProfileString("Basic", "Action", "x", ActionMovie, sizeof(ActionMovie), buffer);
 
 	/*
-	** Always reset this, for both singleplay and multiplay.
+	** Always reset these, for both singleplay and multiplay.
 	*/
 	memset(CustomRadarExt, 0, sizeof(CustomRadarExt));
+	Patsux = false;
+	RemoveBuildExceptions = false;
 
 	/*
 	**	For single-player scenarios, 'BuildLevel' is the scenario number.
@@ -308,9 +313,10 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 		BuildLevel = Scenario;
 #endif
 
-		// Nyerguds's TUC Quick Fix Patch v1.04:
+		// Nyerguds's C&C Patch Project v1.04:
 		// Added PATSUX laser orca
 		Patsux = WWGetPrivateProfileBool("Basic", "Patsux", 0, buffer);
+		RemoveBuildExceptions = WWGetPrivateProfileBool("Basic", "RemoveBuildExceptions", 0, buffer);
 		// Custom radar extension
 		WWGetPrivateProfileString("Basic", "RadarLogo", NULL, CustomRadarExt, sizeof(CustomRadarExt), buffer);
 	}
@@ -318,7 +324,7 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 	**	Jurassic scenarios are allowed to build the full multiplayer set
 	**	of objects.
 	*/
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Make funpark campaign independent from Jurassic mode.
 	if (ScenPlayer == SCEN_PLAYER_JP && Scenario < 20) {
 		BuildLevel = 98;
@@ -349,7 +355,7 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 	Call_Back();
 
 	if (GameToPlay == GAME_NORMAL && ScenPlayer == SCEN_PLAYER_JP && Scenario < 20) {
-		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Nyerguds's C&C Patch Project v1.04
 		// Make funpark campaign independent from Jurassic mode.
 		// Special color exceptions for House Special in dinosaur campaign.
 		HouseClass *p = HouseClass::As_Pointer(HOUSE_JP);
@@ -383,7 +389,7 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 		PlayerPtr->Credits += carryover;
 		PlayerPtr->InitialCredits += carryover;
 
-		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Nyerguds's C&C Patch Project v1.04
 		// Make funpark campaign independent from Jurassic mode.
 		if (ScenPlayer == SCEN_PLAYER_JP && Scenario < 20) {
 			PlayerPtr->ActLike = Whom;

@@ -85,7 +85,7 @@ void *Get_Shape_Header_Data(void *ptr);
 bool Main_Loop();
 void Keyboard_Process(KeyNumType & input);
 #pragma off (unreferenced)
-static void ShowUIMessage(char* message, ...);
+static void ShowUIMessage(bool mute, char* message, ...);
 #pragma on (unreferenced)
 #ifndef DEMO
 static void Message_Input(KeyNumType &input);
@@ -492,6 +492,8 @@ void Keyboard_Process(KeyNumType &input)
 	}
 #endif
 
+	// Nyerguds's C&C Patch Project v1.04
+	// Screenshot button
 	if (input == (KN_S|KN_CTRL_BIT)) {
 		/*
 		** time to create a screen shot using the PCX code (if it works)
@@ -507,7 +509,7 @@ void Keyboard_Process(KeyNumType &input)
 		for (int lp = 0; lp <= 9999; lp++) {
 			sprintf(filename, "scrn%04d.pcx", lp);
 			int acc = access(filename, F_OK);
-			//ShowUIMessage("File access for\"%s\" returned %d.", filename, acc);
+			//ShowUIMessage(false, "File access for\"%s\" returned %d.", filename, acc);
 			if (acc == -1) {
 				fileAvailable = true;
 				break;
@@ -515,9 +517,15 @@ void Keyboard_Process(KeyNumType &input)
 		}
 		if (fileAvailable) {
 			Write_PCX_File(filename, temp_page, (unsigned char *)CurrentPalette);
-			ShowUIMessage("\"%s\" %s.", filename, Text_String(TXT_OK));
+			Sound_Effect(VOC_RELOAD);
+			if (!Options.NoScreenshotMessage) {
+				ShowUIMessage(true, "\"%s\" %s.", filename, Text_String(TXT_OK));
+			}
 		} else {
-			ShowUIMessage("scrn####.pcx: %s", Text_String(TXT_NO_FILES));
+			Sound_Effect(VOC_SCOLD);
+			if (!Options.NoScreenshotMessage) {
+				ShowUIMessage(true, "scrn####.pcx: %s", Text_String(TXT_NO_FILES));
+			}
 		}
 		input = KN_NONE;
 	}
@@ -574,7 +582,7 @@ void Keyboard_Process(KeyNumType &input)
 		**	if one is present.
 		*/
 		case VK_H:
-			// Nyerguds's TUC Quick Fix Patch v1.04
+			// Nyerguds's C&C Patch Project v1.04
 			// Fix MCV responding when selecting CY with 'H' if both are on the map.
 			for (index = 0; index < Buildings.Count(); index++) {
 				BuildingClass * building = Buildings.Ptr(index);
@@ -717,6 +725,7 @@ void Keyboard_Process(KeyNumType &input)
 		*/
 		case VK_S:
 			if (!ctrldown && !altdown && CurrentObject.Count()) {
+				AllowVoice = true;
 				for (int index = 0; index < CurrentObject.Count(); index++) {
 					ObjectClass const * tech = CurrentObject[index];
 
@@ -726,8 +735,10 @@ void Keyboard_Process(KeyNumType &input)
 					 	&& (tech->Can_Player_Move() || tech->Can_Player_Fire())
 						&& (tech->What_Am_I() != RTTI_BUILDING || ((BuildingClass *)tech)->BState != BSTATE_CONSTRUCTION)) {
 						((TechnoClass *)tech)->Player_Assign_Mission(MISSION_GUARD, TARGET_NONE, TARGET_NONE);
+						AllowVoice = false;
 					}
 				}
+				AllowVoice = true;
 			}
 			break;
 
@@ -740,7 +751,7 @@ void Keyboard_Process(KeyNumType &input)
 				for (int index = 0; index < CurrentObject.Count(); index++) {
 					ObjectClass const * tech = CurrentObject[index];
 					if (tech && tech->Is_Techno() && tech->Can_Player_Move()) {
-						// Nyerguds's TUC Quick Fix Patch v1.04
+						// Nyerguds's C&C Patch Project v1.04
 						// Give response on keyboard orders
 						if (AllowVoice) {
 							((TechnoClass *)tech)->Response_Move();
@@ -756,7 +767,7 @@ void Keyboard_Process(KeyNumType &input)
 		/*
 		**	All applicable selected units will attempt to deploy themselves.
 		*/
-		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Nyerguds's C&C Patch Project v1.04
 		// Add "D" as deploy key
 		case VK_D:
 			if (CurrentObject.Count()) {
@@ -766,16 +777,29 @@ void Keyboard_Process(KeyNumType &input)
 					// Block "deploy" on buildings since it just sets them Primary.
 					if (tech && tech->Is_Techno() && tech->Can_Player_Move()) {
 						TechnoClass * techno = (TechnoClass *)tech;
-						RTTIType whatami = techno->What_Am_I();
 						// Check if this object can deploy.
 						ActionType whaction = techno->What_Action(techno);
-						// Aircraft are blocked if they are currently in the air because this apparently makes them seek out a friendly building to land at.
-						if ((whaction == ACTION_SELF || whaction == ACTION_NO_SELF)) {
-							// only give target if this is an aircraft. Giving a target to an MCV makes it malfunction.
-							TARGET dest = whatami == RTTI_AIRCRAFT ? ::As_Target(Coord_Cell(techno->Coord)) : TARGET_NONE;
-							techno->Player_Assign_Mission(MISSION_UNLOAD, TARGET_NONE, dest);
-							if (AllowVoice) {
-								AllowVoice = false;
+						if (whaction == ACTION_SELF || whaction == ACTION_NO_SELF) {
+							TARGET dest = TARGET_NONE;
+							bool allowed = true;
+							if (techno->What_Am_I() == RTTI_AIRCRAFT) {
+								CELL cell = Coord_Cell(techno->Coord);
+								// Air units are not allowed to land when flying through unrevealed terrain.
+								allowed = Map[cell].IsMapped || ((AircraftClass *)techno)->Altitude == 0;
+								if (allowed) {
+									// Air units need to be given a target to unload at, to prevent them from seeking out a friendly building.
+									dest = ::As_Target(cell);
+								} else {
+									// play "cannot deploy here".
+									Speak(VOX_DEPLOY);
+									AllowVoice = false;
+								}
+							}
+							if (allowed) {
+								techno->Player_Assign_Mission(MISSION_UNLOAD, TARGET_NONE, dest);
+								if (AllowVoice) {
+									AllowVoice = false;
+								}
 							}
 						}
 					}
@@ -784,13 +808,13 @@ void Keyboard_Process(KeyNumType &input)
 			AllowVoice = true;
 			break;
 
-		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Nyerguds's C&C Patch Project v1.04
 		// Select all units on screen
 		case VK_E:
 			Map.Select_These(0x00000000, XY_Coord(Map.TacLeptonWidth, Map.TacLeptonHeight), true, additive, RTTI_NONE, 0);
 			break;
 
-		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Nyerguds's C&C Patch Project v1.04
 		// Select all units on screen of the selected types.
 		case VK_T:
 			AllowVoice = true;
@@ -866,10 +890,10 @@ void Keyboard_Process(KeyNumType &input)
 				AllowVoice = true;
 				for (int index = 0; index < CurrentObject.Count(); index++) {
 					ObjectClass const * tech = CurrentObject[index];
-					// Nyerguds's TUC Quick Fix Patch v1.04
+					// Nyerguds's C&C Patch Project v1.04
 					// Allow Guard Area order on harvesters
 					if (tech && tech->Is_Techno() && tech->Can_Player_Move() && (tech->Can_Player_Fire() || (tech -> What_Am_I() == RTTI_UNIT && ((UnitClass *)tech)->Class->IsToHarvest))) {
-						// Nyerguds's TUC Quick Fix Patch v1.04
+						// Nyerguds's C&C Patch Project v1.04
 						// Give response on keyboard orders.
 						((TechnoClass *)tech)->Player_Assign_Mission(MISSION_GUARD_AREA, TARGET_NONE, TARGET_NONE);
 						if (AllowVoice) {
@@ -921,7 +945,7 @@ void Keyboard_Process(KeyNumType &input)
 }
 
 #pragma off (unreferenced)
-static void ShowUIMessage(char* message, ...) {
+static void ShowUIMessage(bool mute, char* message, ...) {
 	va_list	va;
 	char txt[128];
 	va_start(va, message);
@@ -930,7 +954,7 @@ static void ShowUIMessage(char* message, ...) {
 	va_end(va);
 
 	Messages.Add_Message(txt, CC_GREEN,
-		TPF_6PT_GRAD|TPF_USE_GRAD_PAL|TPF_FULLSHADOW, 1200, 0, 0, true);
+		TPF_6PT_GRAD|TPF_USE_GRAD_PAL|TPF_FULLSHADOW, 1200, 0, 0, true, mute);
 	Map.Flag_To_Redraw(false);
 }
 #pragma on (unreferenced)
@@ -3279,7 +3303,7 @@ void Handle_Team(int team, int action)
 {
 	int index;
 
-	//ShowUIMessage("Action is %d", action);
+	//ShowUIMessage(false, "Action is %d", action);
 
 	AllowVoice = true;
 	switch (action) {

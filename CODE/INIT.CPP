@@ -1106,7 +1106,7 @@ bool Select_Game(bool fade)
 #endif // not DEMO
 
 #ifdef OBSOLETE
-					// Nyerguds's TUC Quick Fix Patch v1.04
+					// Nyerguds's C&C Patch Project v1.04
 					// Make funpark campaign independent from Jurassic mode.
 					// This is now handled in the intro screen.
 					/*

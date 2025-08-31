@@ -817,7 +817,7 @@ void AircraftTypeClass::Init(TheaterType theater)
  * WARNINGS: None                                                                              *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   07/01/2025 MM : Created for Nyerguds's TUC Quick Fix Patch v1.04.                         *
+ *   07/01/2025 MM : Created for Nyerguds's C&C Patch Project v1.04.                           *
  *=============================================================================================*/
 void AircraftTypeClass::After_Init()
 {

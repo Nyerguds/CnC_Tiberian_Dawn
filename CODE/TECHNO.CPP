@@ -1456,7 +1456,7 @@ TARGET TechnoClass::Greatest_Threat(ThreatType method) const
 			mask |= (1 << RTTI_AIRCRAFT);
 		}
 
-		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Nyerguds's C&C Patch Project v1.04
 		// Fixed "best target" logic by remembering "bestval".
 		// Not sure if it works though; it didn't when I did this in asm. Needs more testing.
 
@@ -2125,7 +2125,9 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
 		**	now.
 		*/
 		if (a != ANIM_NONE) {
-			AnimClass * anim = new AnimClass(a, Fire_Coord(which));
+			// Nyerguds's C&C Patch Project v1.04
+			// Don't call Fire_Coord() again; IsSecondShot has potentially changed. Use cached coords.
+			AnimClass * anim = new AnimClass(a, fire_coord);
 			if (anim) {
 				anim->Attach_To(this);
 			}
@@ -2138,6 +2140,15 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
 			Ammo--;
 		}
 
+		// Nyerguds's C&C Patch Project v1.04
+		/*
+		** If the unit ran out of ammo, always reset this.
+		*/
+		if (!Ammo && tclass.IsTwoShooter) {
+			IsSecondShot = false;
+		}
+
+		// Nyerguds's C&C Patch Project v1.04
 		/*
 		**	Draw the laser beam.
 		*/
@@ -2286,7 +2297,7 @@ void TechnoClass::Player_Assign_Mission(MissionType mission, TARGET target, TARG
 			case MISSION_SABOTAGE:
 				Response_Sabotage();
 				break;
-			// Nyerguds's TUC Quick Fix Patch v1.04:
+			// Nyerguds's C&C Patch Project v1.04:
 			// Use Response_Attack on Area Guard and Stop keyboard orders. Don't use
 			// Response_Move: hearing "moving out!" is weird when it makes them stop.
 			case MISSION_ATTACK:
@@ -2335,7 +2346,7 @@ ActionType TechnoClass::What_Action(ObjectClass * object) const
 		**	object cannot do anything special with itself, then just return with
 		**	the no action flag.
 		*/
- 		// Nyerguds's TUC Quick Fix Patch v1.04
+ 		// Nyerguds's C&C Patch Project v1.04
 		// Don't disallow deploy just because more is selected. This is now checked afterwards.
 		if (object == this && /*CurrentObject.Count() == 1 &&*/ House == PlayerPtr) {
 			return(ACTION_SELF);
@@ -2445,7 +2456,7 @@ ActionType TechnoClass::What_Action(CELL cell) const
 	**	Special guard area mission is possible if both the control and the
 	**	alt keys are held down.
 	*/
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Allow Guard Area order on harvesters
 	if (IsOwnedByPlayer && ctrldown && altdown && Can_Player_Move() && (Can_Player_Fire() || (What_Am_I() == RTTI_UNIT && ((UnitClass *)this)->Class->IsToHarvest))) {
 		return(ACTION_GUARD_AREA);

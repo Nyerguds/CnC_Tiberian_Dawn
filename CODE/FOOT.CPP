@@ -1256,7 +1256,7 @@ void FootClass::Active_Click_With(ActionType action, ObjectClass * object)
 			break;
 
 		case ACTION_SELF:
-		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Nyerguds's C&C Patch Project v1.04
 		// "NO_SELF" is purely visual; it will still allow the order so it can give its feedback.
 		case ACTION_NO_SELF:
 			Player_Assign_Mission(MISSION_UNLOAD);
@@ -1318,7 +1318,7 @@ void FootClass::Active_Click_With(ActionType action, ObjectClass * object)
  *=============================================================================================*/
 void FootClass::Active_Click_With(ActionType action, CELL cell)
 {
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// These actions can give a movement flash.
 	switch (action) {
 		case ACTION_HARVEST:
@@ -1597,7 +1597,7 @@ RadioMessageType FootClass::Receive_Message(RadioClass * from, RadioMessageType 
  *=============================================================================================*/
 int FootClass::Mission_Enter(void)
 {
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Ported the remaster's multi-load logic.
 	/*
 	**	Find out who to coordinate with. If in radio contact, then this the transporter is

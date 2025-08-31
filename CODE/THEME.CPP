@@ -505,7 +505,7 @@ bool ThemeClass::Is_Allowed(ThemeType index) const
 		return(false);
 	}
 #endif
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Always block repeating themes from the playlist.
 	return (
 		_themes[index].Available && !_themes[index].Repeat &&

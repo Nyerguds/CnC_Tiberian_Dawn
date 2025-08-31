@@ -536,7 +536,7 @@ int MapEditClass::Pick_Scenario(char const * caption, int *scen_nump,
 		TPF_CENTER | TPF_6PT_GRAD | TPF_USE_GRAD_PAL | TPF_NOSHADOW,
 		D_VARD_X, D_VARD_Y, D_VARD_W, D_VARD_H);
 
-	TextButtonClass varlbtn (BUTTON_VAR_L, "L",
+	TextButtonClass varlbtn (BUTTON_VAR_L, "E",
 		TPF_CENTER | TPF_6PT_GRAD | TPF_USE_GRAD_PAL | TPF_NOSHADOW,
 		D_VARLOSE_X, D_VARLOSE_Y, D_VARLOSE_W, D_VARLOSE_H);
 
@@ -598,7 +598,7 @@ int MapEditClass::Pick_Scenario(char const * caption, int *scen_nump,
 			vardbtn.Turn_On();
 			break;
 
-		case SCEN_VAR_LOSE:
+		case SCEN_VAR_E:
 			varlbtn.Turn_On();
 			break;
 	}
@@ -756,7 +756,7 @@ int MapEditClass::Pick_Scenario(char const * caption, int *scen_nump,
 				break;
 
 			case (BUTTON_VAR_L | KN_BUTTON):
-				(*varp) = SCEN_VAR_LOSE;
+				(*varp) = SCEN_VAR_E;
 				varabtn.Turn_Off();
 				varbbtn.Turn_Off();
 				varcbtn.Turn_Off();

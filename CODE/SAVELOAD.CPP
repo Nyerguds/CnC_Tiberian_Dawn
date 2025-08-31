@@ -52,43 +52,47 @@
 /*
 ********************************** Defines **********************************
 */
-#define	SAVEGAME_VERSION		(DESCRIP_MAX +						\
-										0x01000003 + ( 					\
-										sizeof(AircraftClass) + 		\
-										sizeof(AircraftTypeClass) + 	\
-										sizeof(AnimClass) + 				\
-										sizeof(AnimTypeClass) + 		\
-										sizeof(BuildingClass) + 		\
-										sizeof(BuildingTypeClass) + 	\
-										sizeof(BulletClass) + 			\
-										sizeof(BulletTypeClass) + 		\
-										sizeof(HouseClass) + 			\
-										sizeof(HouseTypeClass) + 		\
-										sizeof(InfantryClass) + 		\
-										sizeof(InfantryTypeClass) + 	\
-										sizeof(OverlayClass) + 			\
-										sizeof(OverlayTypeClass) + 	\
-										sizeof(SmudgeClass) + 			\
-										sizeof(SmudgeTypeClass) + 		\
-										sizeof(TeamClass) + 				\
-										sizeof(TeamTypeClass) + 		\
-										sizeof(TemplateClass) + 		\
-										sizeof(TemplateTypeClass) + 	\
-										sizeof(TerrainClass) + 			\
-										sizeof(TerrainTypeClass) + 	\
-										sizeof(UnitClass) + 				\
-										sizeof(UnitTypeClass) + 		\
-										sizeof(MouseClass) + 			\
-										sizeof(CellClass) + 				\
-										sizeof(FactoryClass) + 			\
-										sizeof(BaseClass) + 				\
-										sizeof(LayerClass) +				\
+#define	SAVEGAME_VERSION		(DESCRIP_MAX + \
+										0x01000003 + ( \
+										sizeof(AircraftClass) + \
+										sizeof(AircraftTypeClass) + \
+										sizeof(AnimClass) + \
+										sizeof(AnimTypeClass) + \
+										sizeof(BuildingClass) + \
+										sizeof(BuildingTypeClass) + \
+										sizeof(BulletClass) + \
+										sizeof(BulletTypeClass) + \
+										sizeof(HouseClass) + \
+										sizeof(HouseTypeClass) + \
+										sizeof(InfantryClass) + \
+										sizeof(InfantryTypeClass) + \
+										sizeof(OverlayClass) + \
+										sizeof(OverlayTypeClass) + \
+										sizeof(SmudgeClass) + \
+										sizeof(SmudgeTypeClass) + \
+										sizeof(TeamClass) + \
+										sizeof(TeamTypeClass) + \
+										sizeof(TemplateClass) + \
+										sizeof(TemplateTypeClass) + \
+										sizeof(TerrainClass) + \
+										sizeof(TerrainTypeClass) + \
+										sizeof(UnitClass) + \
+										sizeof(UnitTypeClass) + \
+										sizeof(MouseClass) + \
+										sizeof(CellClass) + \
+										sizeof(FactoryClass) + \
+										sizeof(BaseClass) + \
+										sizeof(LayerClass) + \
 										sizeof(BriefingText) + \
 										sizeof(Waypoint) + \
 										sizeof(WinMovie) + \
 										sizeof(LoseMovie) + \
 										sizeof(ActionMovie) + \
-										sizeof(CustomRadarExt)))
+										sizeof(CustomRadarExt) + \
+										sizeof(SabotagedType) + \
+										sizeof(TempleIoned) + \
+										sizeof(Patsux) + \
+										sizeof(RemoveBuildExceptions)))
 
 
 /***************************************************************************
@@ -136,7 +140,7 @@ bool Save_Game(int id,char *descr)
 	int i;
 	unsigned long version;
 	unsigned scenario;
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Fix funpark campaign savegames
 	ScenarioPlayerType campaign;
 	char descr_buf[DESCRIP_MAX];
@@ -614,17 +618,17 @@ bool Save_Misc_Values(FileClass &file)
 	// This is new...
 	file.Write(ActionMovie, sizeof(ActionMovie));
 
-	// Nyerguds's TUC Quick Fix Patch v1.04:
-
+	// Nyerguds's C&C Patch Project v1.04:
 	// Added custom radar extension support
 	file.Write(CustomRadarExt, sizeof(CustomRadarExt));
 	// fixed Commando last bomb target not getting transferred in savegames.
 	file.Write(&SabotagedType, sizeof(SabotagedType));
 	// fixed temple ion cannon status not getting transferred in savegames.
 	file.Write(&TempleIoned, sizeof(TempleIoned));
-	// Added PATSUX laser orca to save data
+	// Added PATSUX laser orca to savegame data
 	file.Write(&Patsux, sizeof(Patsux));
-
+	// Added tech unlock to savegame data
+	file.Write(&RemoveBuildExceptions, sizeof(RemoveBuildExceptions));
 	return(true);
 }
 
@@ -715,15 +719,17 @@ bool Load_Misc_Values(FileClass &file)
 	file.Read(BriefingText, sizeof(BriefingText));
 	file.Read(ActionMovie, sizeof(ActionMovie));
 
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Added custom radar extension support
 	file.Read(CustomRadarExt, sizeof(CustomRadarExt));
 	// fixed Commando last bomb target not getting transferred in savegames.
 	file.Read(&SabotagedType, sizeof(SabotagedType));
 	// fixed temple ion cannon status not getting transferred in savegames.
 	file.Read(&TempleIoned, sizeof(TempleIoned));
-	// Added PATSUX laser orca to save data
+	// Added PATSUX laser orca to savegame data
 	file.Read(&Patsux, sizeof(Patsux));
+	// Added tech unlock to savegame data
+	file.Read(&RemoveBuildExceptions, sizeof(RemoveBuildExceptions));
 	return(true);
 }
 
@@ -874,10 +880,10 @@ void Decode_All_Pointers(ScenarioPlayerType campaign)
 	**	PlayerPtr.
 	*/
 	PlayerPtr = HouseClass::As_Pointer((HousesType)PlayerPtr);
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Set the player choice, not the player house. Needed for Funpark.
 	Whom = PlayerPtr->ActLike;
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Actually save and load campaign ID from the savegame's header, rather than this messy lookup from house type.
 	// The original code could cause a GDI mission inserted in the Nod campaign to make the player switch campaigns.
 	// Note that the Funpark check was wrong anyway; the player in these missions is Multi4, not JP.
@@ -1127,7 +1133,7 @@ bool Get_Savefile_Info(int id, char *buf, unsigned *scenp, HousesType *housep)
 			return(false);
 		}
 
-		if (version!=SAVEGAME_VERSION) {
+		if (version != SAVEGAME_VERSION) {
 			file.Close();
 			return(false);
 		}

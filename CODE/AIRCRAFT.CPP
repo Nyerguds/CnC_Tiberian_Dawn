@@ -492,7 +492,7 @@ void AircraftClass::Read_INI(char *buffer)
 					} else {
 
 						air->Strength = Fixed_To_Cardinal(air->Class->MaxStrength, strength);
-						// Nyerguds's TUC Quick Fix Patch v1.04
+						// Nyerguds's C&C Patch Project v1.04
 						// Do not spawn in the air.
 						air->Altitude = 0;
 						if (air->Unlimbo(coord, dir)) {
@@ -587,6 +587,13 @@ int AircraftClass::Mission_Hunt(void)
 {
 	Validate();
 	if (Class->IsFixedWing) {
+		// Nyerguds's C&C Patch Project v1.04
+		// unarmed planes (C17) should not attempt to hunt at all.
+		if (!Is_Weapon_Equipped()) {
+			Assign_Mission(MISSION_RETREAT);
+			Commence();
+			return(TICKS_PER_SECOND);
+		}
 		enum {
 			LOOK_FOR_TARGET,
 			FLY_TO_TARGET,
@@ -1039,7 +1046,7 @@ int AircraftClass::Mission_Unload(void)
 						if (!(House->ActiveBScan & STRUCTF_AIRSTRIP)) {
 							Assign_Mission(MISSION_RETREAT);
 						} else {
-							// Nyerguds's TUC Quick Fix Patch v1.04
+							// Nyerguds's C&C Patch Project v1.04
 							// BScan is not 100% reliable due to civilian building V21
 							// overflowing to the same bit. Re-check actual list to be sure.
 							bool found = false;
@@ -1164,7 +1171,7 @@ int AircraftClass::Mission_Unload(void)
 					Status = UNLOAD_PASSENGERS;
 				} else {
 					if (!Is_LZ_Clear(NavCom)) {
-						// Nyerguds's TUC Quick Fix Patch v1.04
+						// Nyerguds's C&C Patch Project v1.04
 						// Fix DZ scan so the Unload key does not make flying helis go to WAYPT_REINF
 						TARGET newlz = New_LZ(NavCom);
 						if (!Is_LZ_Clear(newlz)) {
@@ -2119,7 +2126,7 @@ ActionType AircraftClass::What_Action(ObjectClass * object) const
 		action = ACTION_NONE;
 	}
 
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Don't allow ENTER to override Ctrl or Ctrl+Alt. Alt is still allowed to be overridden.
 	if (
 		action != ACTION_ATTACK && action != ACTION_GUARD_AREA && object->Is_Techno() && IsOwnedByPlayer &&
@@ -2153,7 +2160,7 @@ ActionType AircraftClass::What_Action(CELL cell) const
 	Validate();
 	ActionType action = FootClass::What_Action(cell);
 
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Don't allow Move or Force-attack in the shroud in multiplay.
 	if ((action == ACTION_MOVE || action == ACTION_ATTACK) && !Map[cell].IsVisible) {
 		action = ACTION_NOMOVE;
@@ -2333,6 +2340,11 @@ int AircraftClass::Mission_Attack(void)
 					break;
 
 				case FIRE_OK:
+					// Nyerguds's C&C Patch Project v1.04
+					// If this got scrambled, re-sync it now.
+					if (Techno_Type_Class()->IsTwoShooter && IsSecondShot) {
+						IsSecondShot = false;
+					}
 					Fire_At(TarCom, 0);
 					Map[::As_Cell(TarCom)].Incoming(Coord, true);
 					Status = FIRE_AT_TARGET2;
@@ -2349,7 +2361,7 @@ int AircraftClass::Mission_Attack(void)
 			return(1);
 
 		/*
-		**	Fire at the target.
+		**	Fire at the target a second time.
 		*/
 		case FIRE_AT_TARGET2:
 			if (!Target_Legal(TarCom)) {
@@ -2368,6 +2380,11 @@ int AircraftClass::Mission_Attack(void)
 					break;
 
 				case FIRE_OK:
+					// Nyerguds's C&C Patch Project v1.04
+					// If this got scrambled, re-sync it now.
+					if (Techno_Type_Class()->IsTwoShooter && !IsSecondShot) {
+						IsSecondShot = true;
+					}
 					Fire_At(TarCom, 0);
 					Map[::As_Cell(TarCom)].Incoming(Coord, true);
 
@@ -2392,7 +2409,7 @@ int AircraftClass::Mission_Attack(void)
 		**	Fly back to landing spot.
 		*/
 		case RETURN_TO_BASE:
-			// Nyerguds's TUC Quick Fix Patch v1.04
+			// Nyerguds's C&C Patch Project v1.04
 			// Don't land on the helipad facing the direction of the last target.
 			Assign_Target(TARGET_NONE);
 			Assign_Destination(TARGET_NONE);
@@ -2790,7 +2807,7 @@ MoveType AircraftClass::Can_Enter_Cell(CELL cell, FacingType ) const
 		if (!cellptr->Is_Generally_Clear()) return(MOVE_NO);
 	}
 
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Do not allow aircraft to enter shroud in multiplay. It can be abused.
 	if (/*GameToPlay == GAME_NORMAL &&*/ IsOwnedByPlayer && !cellptr->IsVisible) return(MOVE_NO);
 
@@ -2830,7 +2847,7 @@ TARGET AircraftClass::Good_Fire_Location(TARGET target) const
 				COORDINATE newcoord = Coord_Move(tcoord, (DirType)face, r);
 				CELL newcell = Coord_Cell(newcoord);
 
-				// Nyerguds's TUC Quick Fix Patch v1.04
+				// Nyerguds's C&C Patch Project v1.04
 				// Do not allow aircraft to enter shroud in multiplay. It can be abused.
 				if (Map.In_Radar(newcell) && (/*GameToPlay != GAME_NORMAL ||*/ Map[newcell].IsVisible) && Cell_Seems_Ok(newcell, true)) {
 					int dist = Distance(newcoord);
@@ -3328,7 +3345,7 @@ int AircraftClass::Mission_Guard(void)
 	**	Special case to force the GDI helicopter to be brain dead in the Nod
 	**	mission where it is supposed to be captured.
 	*/
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Consistently use ScenPlayer for scenario exceptions
 	if (GameToPlay == GAME_NORMAL && ScenPlayer == SCEN_PLAYER_NOD && Scenario == 7 && !House->IsHuman) {
 		return(TICKS_PER_SECOND*20);

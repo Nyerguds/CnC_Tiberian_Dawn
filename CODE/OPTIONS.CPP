@@ -548,8 +548,13 @@ void OptionsClass::Load_Settings (void)
 	IsDeathAnnounce = WWGetPrivateProfileBool("Options", "DeathAnnounce", false, buffer);
 	IsFreeScroll = WWGetPrivateProfileBool("Options", "FreeScrolling", false, buffer);
 	SlowPalette = WWGetPrivateProfileBool("Options", "SlowPalette", true, buffer);
+	// Nyerguds's C&C Patch Project v1.04
+	/*
+	** New options related to the patch additions.
+	*/
 	NoPowerBuildToolTips = WWGetPrivateProfileBool("Options", "NoPowerToolTips", false, buffer);
 	NoNodSceneMusic = WWGetPrivateProfileBool("Options", "NoNodSceneMusic", false, buffer);
+	NoScreenshotMessage = WWGetPrivateProfileBool("Options", "NoScreenshotMessage", false, buffer);
 
 	char workbuf[128];
 

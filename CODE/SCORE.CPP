@@ -572,9 +572,6 @@ void Enable_Uncompressed_Shapes (void);
  *=============================================================================================*/
 void ScoreClass::Presentation(void)
 {
-	// Nyerguds's TUC Quick Fix Patch v1.04
-	// Any nonstandard house gets a score screen without faction logo,
-	// with the GDI casualty bars, but labelled "You:" and "Enemy:"
 	//static char const _redpal[]={0x20,0x21,0x22,0x23,0x24,0x25,0x26,0x27,0x28,0x29,0x2A,0x2B,0x2C,0x2D,0x21,0x2F};
 	static char const _redpal[]={0x20,0x22,0x24,0x26,0x28,0x28,0x28,0x28,0x28,0x29,0x2A,0x2B,0x2C,0x2D,0x21,0x2F};
 	static char const _greenpal[]={0x10,0x12,0x14,0x16,0x18,0x18,0x18,0x18,0x18,0x19,0x1A,0x1B,0x1C,0x1D,0x10,0x1F};
@@ -613,7 +610,10 @@ void ScoreClass::Presentation(void)
 	struct Fame hallfame[NUMFAMENAMES];
 	void *anim, *oldfont;
 	int oldfontxspacing = FontXSpacing;
-	int house = PlayerPtr->Class->House;		// 0 or 1
+	int house = PlayerPtr->Class->House;		// normally 0 or 1
+	// Nyerguds's C&C Patch Project v1.04
+	// Any nonstandard house gets a score screen without faction logo,
+	// with the GDI casualty bars, but labelled "You:" and "Enemy:"
 	bool youvsthem = house > HOUSE_BAD;
 	int housescrn = youvsthem ? HOUSE_BAD : house;
 	int housepos = youvsthem ? 2 : house;

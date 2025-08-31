@@ -934,7 +934,7 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 				iconfound = LogicPage->Draw_Stamp(ttype->Get_Image_Data(), icon, x, y, NULL, WINDOW_TACTICAL);
 			}
 			if (!iconfound) {
-				// Nyerguds's TUC Quick Fix Patch v1.04
+				// Nyerguds's C&C Patch Project v1.04
 				// Illegal tiles are shown black rather than non-refreshing.
 				int right = left + Lepton_To_Pixel(Map.TacLeptonWidth) -1;
 				int bottom = top + Lepton_To_Pixel(Map.TacLeptonHeight) - 1;

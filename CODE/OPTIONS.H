@@ -92,8 +92,10 @@ class OptionsClass {
 		unsigned IsScoreShuffle:1;	// Score list should shuffle?
 		unsigned IsDeathAnnounce:1;// Announce enemy deaths?
 		unsigned IsFreeScroll:1;	// Allow free direction scrolling?
+		// Nyerguds's C&C Patch Project v1.04
 		unsigned NoPowerBuildToolTips:1;	// Don't add extra power info on building tooltips?
 		unsigned NoNodSceneMusic:1;	// Don't use Nod-specific sore and map music?
+		unsigned NoScreenshotMessage:1;	// Don't show a message when taking a screenshot?
 
 	protected:
 

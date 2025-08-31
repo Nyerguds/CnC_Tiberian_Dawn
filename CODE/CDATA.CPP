@@ -2606,7 +2606,7 @@ void TemplateTypeClass::Init(TheaterType theater)
 
 		((void const *&)tplate.ImageData) = NULL;
 		//if (tplate.Theater & (1<<theater)) {
-		// Nyerguds's TUC Quick Fix Patch v1.04
+		// Nyerguds's C&C Patch Project v1.04
 		// Ignore theater ownership on cells. Just try and see if it succeeds.
 		_makepath(fullname, NULL, NULL, tplate.IniName, Theaters[theater].Suffix);
 		ptr = MixFileClass::Retrieve(fullname);

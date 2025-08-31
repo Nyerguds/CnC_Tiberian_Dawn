@@ -466,7 +466,7 @@ ResultType InfantryClass::Take_Damage(int & damage, int distance, WarheadType wa
 			case WARHEAD_SPORE:
 			case WARHEAD_HOLLOW_POINT:
 			case WARHEAD_SA:
-			// Nyerguds's TUC Quick Fix Patch v1.04
+			// Nyerguds's C&C Patch Project v1.04
 			// Always have a default death anim
 			default:
 				Sound_Effect(sound, Coord);
@@ -2389,7 +2389,7 @@ TARGET InfantryClass::Greatest_Threat(ThreatType threat) const
 			if (*this != INFANTRY_E7) {
 				return(TARGET_NONE);
 			}
-			// Nyerguds's TUC Quick Fix Patch v1.04
+			// Nyerguds's C&C Patch Project v1.04
 			// added break here; "fall into next case." causes it to check illegal index -1 in weapons list.
 			break;
 
@@ -2812,7 +2812,7 @@ ActionType InfantryClass::What_Action(ObjectClass * object) const
 	/*
 	**	Check to see if it can enter a transporter.
 	*/
-	// Nyerguds's TUC Quick Fix Patch v1.04
+	// Nyerguds's C&C Patch Project v1.04
 	// Don't allow ENTER to override Ctrl or Ctrl+Alt. Alt is still allowed to be overridden.
 	if (
 		action != ACTION_ATTACK && action != ACTION_GUARD_AREA &&

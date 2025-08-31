@@ -231,7 +231,7 @@ static BuildingTypeClass const ClassEye(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	7,								// Build level.
 	STRUCTF_RADAR,				// Building prerequisite.
-		false,		// Has ability to detect adjacent cloaked objects?
+		true,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
 		false,		// Always use the given name for the building?
