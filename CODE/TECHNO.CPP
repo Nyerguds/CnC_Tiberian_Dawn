@@ -2207,6 +2207,12 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
  *   07/01/2025 MM : Migrated from BuildingClass::Fire_At, added directional offsets           *
  *=============================================================================================*/
 void TechnoClass::Draw_Laser(TARGET target, int which) {
+	//                                             N   NE  E   SE  S   SW  W   NW
+	static const char _nudge_x1a[FACING_COUNT] = { -1, -1,  0,  0,  1,  1,  0,  0};
+	static const char _nudge_y1a[FACING_COUNT] = {  0,  0, -1, -1,  0,  0,  1,  1};
+	static const char _nudge_x1b[FACING_COUNT] = {  1,  0,  0, -1, -1,  0,  0,  1};
+	static const char _nudge_y1b[FACING_COUNT] = {  0,  1,  1,  0,  0, -1, -1,  0};
+
 	COORDINATE source, dest;
 	source = Fire_Coord(which);
 	dest = As_Coord(target);
@@ -2222,41 +2228,12 @@ void TechnoClass::Draw_Laser(TARGET target, int which) {
 		y1a = y1b = y1;
 		// Spread out the beam according to the direction of the target so it always looks nice.
 		FacingType facing = Facing_To_8((DirType)Desired_Facing8(x1, y1, x2, y2));
-		switch (facing) {
-			case FACING_N:
-			case FACING_S:
-				// straight line horizontal
-				x1a--;
-				x1b++;
-				break;
-			case FACING_E:
-			case FACING_W:
-				// straight line vertical
-				y1a--;
-				y1b++;
-				break;
-			case FACING_NE:
-				// To top right
-				x1a--;
-				y1b++;
-				break;
-			case FACING_SE:
-				// To bottom right
-				x1a--;
-				y1b--;
-				break;
-			case FACING_SW:
-				// To bottom left
-				y1a--;
-				x1b++;
-				break;
-			case FACING_NW:
-				// To top left
-				x1a++;
-				y1b++;
-				break;				
-		}
+		x1a += _nudge_x1a[facing];
+		y1a += _nudge_y1a[facing];
+		x1b += _nudge_x1b[facing];
+		y1b += _nudge_y1b[facing];
 		Set_Logic_Page(SeenBuff);
+		// Should technically check if the extra lines are inside TacMap too...
 		LogicPage->Draw_Line(x1a, y1a, x2, y2, 0x7D);
 		LogicPage->Draw_Line(x1b, y1b, x2, y2, 0x7D);
 		LogicPage->Draw_Line(x1, y1, x2, y2, 0x7F);
