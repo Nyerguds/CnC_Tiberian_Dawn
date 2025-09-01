@@ -1344,10 +1344,7 @@ void InfantryClass::AI(void)
 
 				if (!IsActive || IsInLimbo) return;
 
-				// If the purpose is to capture or demolish, pass that along
-				// so the function always gets an occupied cell.
-				bool enter = Mission == MISSION_CAPTURE || Mission == MISSION_SABOTAGE;
-				if (Coord_Cell(Coord) == As_Cell(NavCom, enter)) {
+				if (Coord_Cell(Coord) == As_Cell(NavCom)) {
 					NavCom = TARGET_NONE;
 					if (Mission == MISSION_MOVE) {
 						Enter_Idle_Mode();

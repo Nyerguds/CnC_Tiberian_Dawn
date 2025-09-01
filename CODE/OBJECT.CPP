@@ -566,7 +566,7 @@ bool ObjectClass::Can_Player_Move(void) const
  * HISTORY:                                                                                    *
  *   08/13/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-COORDINATE ObjectClass::Target_Coord(bool /* enter */) const
+COORDINATE ObjectClass::Target_Coord() const
 {
 	return(Center_Coord());
 }

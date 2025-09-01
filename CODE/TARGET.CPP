@@ -398,9 +398,9 @@ bool Target_Legal(TARGET target)
  * HISTORY:                                                                                    *
  *   05/27/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-CELL As_Cell(TARGET target, bool enter)
+CELL As_Cell(TARGET target)
 {
-	return(Coord_Cell(As_Coord(target, enter)));
+	return(Coord_Cell(As_Coord(target)));
 }
 
 
@@ -422,7 +422,7 @@ CELL As_Cell(TARGET target, bool enter)
  *   05/27/1994 JLB : Created.                                                                 *
  *   11/16/1994 JLB : Simplified.                                                              *
  *=============================================================================================*/
-COORDINATE As_Coord(TARGET target, bool enter)
+COORDINATE As_Coord(TARGET target)
 {
 	if (Target_Legal(target)) {
 		/*
@@ -449,7 +449,7 @@ COORDINATE As_Coord(TARGET target, bool enter)
 //OutputDebugString ("C&C95 - As_Coord called for invalid target object\m");
 				return(0x00000000L);
 			}
-			return(obj->Target_Coord(enter));
+			return(obj->Target_Coord());
 		}
 	}
 

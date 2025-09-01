@@ -2495,7 +2495,7 @@ COORDINATE AircraftClass::Fire_Coord(int ) const
 }
 
 
-COORDINATE AircraftClass::Target_Coord(bool /* enter */) const
+COORDINATE AircraftClass::Target_Coord() const
 {
 	Validate();
 	return(Coord_Add(XYP_Coord(0, -Altitude), Coord));

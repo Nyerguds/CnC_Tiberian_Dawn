@@ -3158,7 +3158,7 @@ void UnitClass::Init(void)
  * HISTORY:                                                                                    *
  *   09/19/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-COORDINATE UnitClass::Target_Coord(bool /* enter */) const
+COORDINATE UnitClass::Target_Coord() const
 {
 	Validate();
 //	if (*this == UNIT_GUNBOAT) {

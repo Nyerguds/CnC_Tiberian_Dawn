@@ -63,7 +63,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Fixed the New Missions menu only going up to 98 (59 in the Japanese version). It can now go up to 99.
 * Fixed the bug where selecting a team by number when having a structure selected would keep the structure selected.
 * Fixed the bug where selecting a team by number would not clear the currently selected units when a unit from that team was the last-added unit in the current selection.
-* \[Remaster\] The "Guard Target" ability (\[Ctrl\]+\[Alt\]+click) can now be clicked on the ground as targeted equivalent to the Area Guard function of the "G" button.
+* \[Remaster\] The "Guard Target" ability (\[Ctrl\]+\[Alt\]+Click) can now be clicked on the ground as targeted equivalent to the Area Guard function of the "G" button.
 * Fixed the "Guard Target" ability not working on the minimap.
 * Fixed aircraft showing the "Guard Target" cursor when pressing \[Ctrl\]+\[Alt\] even though they can't execute any Area Guard orders.
 * Restored the Stop command for defense buildings (pressing "S"), while properly fixing the cheat that allowed abusing it for cancelling building sales to get free infantry.
@@ -159,6 +159,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * \[Remaster\] Harvesters will prefer higher-value cells when scanning around themselves looking for tiberium.
 * Changes in discovered terrain, walls and tiberium will now immediately get updated correctly on the minimap.
 * Engineers and Commandos are now able to enter buildings from the north even if the buildings' northern cells are unoccupied.
+* Fixed "wall armor" bug, where buildings with an unoccupied northern cell become practically invulnerable to certain weapons if a wall is placed on that open cell.
 * The sidebar radar logo in a mission can now be overridden by specifying the extension for the HRADAR.??? file to load. This can be done by adding RadarLogo=??? under \[Basic\].
 * For the purpose of checking build prerequisites, owning an Advanced Communication Center will now act as if you own a normal Communications Center.
 * The Advanced Communications Center can now detect stealth units, since its non-advanced variant can do that too.

@@ -3093,13 +3093,10 @@ COORDINATE BuildingClass::Docking_Coord(void) const
  * BuildingClass::Target_Coord -- Fetches the coordinate if this building is a target.         *
  *                                                                                             *
  *    When the coordinate to use when firing at this building is needed, this routine will     *
- *    provide it. Normally this just returns the center of the building, if something needs to *
- *    enter an actual cell of the building, though, it will need to return a valid cell.       *
+ *    provide it. Normally this just returns the center of the building, but if the cell of    *
+ *    that center point is not occupied by the building, a better one is found.                *
  *                                                                                             *
- * INPUT:   enter    -- True if the request for the coordinate was for entering, in which      *
- *                      case the coordinate needs to be on a valid cell of the building.       *
- *                      Since entering is a movement order, this is normally only done         *
- *                      for NavCom, not for TarCom.                                            *
+ * INPUT:   none                                                                               *
  *                                                                                             *
  * OUTPUT:  Returns with the coordinate to fire at if this object is a target.                 *
  *                                                                                             *
@@ -3108,27 +3105,36 @@ COORDINATE BuildingClass::Docking_Coord(void) const
  * HISTORY:                                                                                    *
  *   20/08/2025 MM : Created.                                                                  *
  *=============================================================================================*/
-COORDINATE BuildingClass::Target_Coord(bool enter) const
+COORDINATE BuildingClass::Target_Coord() const
 {
+	// Edge values for cells facing a specific direction away from the center
+	//                                                    N     NE    E     SE    S     SW    W     NW
+	static const unsigned char _edge_x[FACING_COUNT] = { 0x80, 0x00, 0x00, 0x00, 0x80, 0xFF, 0xFF, 0xFF};
+	static const unsigned char _edge_y[FACING_COUNT] = { 0xFF, 0xFF, 0x80, 0x00, 0x00, 0x00, 0x80, 0xFF};
+
 	Validate();
 	COORDINATE target = Center_Coord();
-	if (enter) {
-		BuildingClass * occupier = Map[Coord_Cell(target)].Cell_Building();
-		if (occupier != this) {
-			// "center" cell is not part of the building cells. Fix coords.
-			const short *occupy = &(*this->Class->Occupy_List(false));
-			CELL pos = Coord_Cell(Coord);
-			COORDINATE center = Center_Coord();
-			int distance = -1;
-			while (*occupy != REFRESH_EOL) {
-				CELL cell = pos + *occupy++;
-				COORDINATE cellcoord = Cell_Coord(cell);
-				int curdist = Distance_Coord(center, cellcoord);
-				if (curdist < distance || distance == -1) {
-					distance = curdist;
-					target = cellcoord;
-				}
+	if (Map[Coord_Cell(target)].Cell_Building() != this) {
+		// "center" cell is not part of the building cells. Fix coords.
+		const short *occupy = &(*this->Class->Occupy_List(false));
+		CELL origin = Coord_Cell(Coord);
+		COORDINATE center = target;
+		// Start at 128 cells; no building will ever be that large.
+		int distance = 0x8000;
+		FacingType facing = FACING_NONE;
+		while (*occupy != REFRESH_EOL) {
+			CELL cell = origin + *occupy++;
+			COORDINATE cellcoord = Cell_Coord(cell);
+			int curdist = Distance_Coord(center, cellcoord);
+			if (curdist < distance) {
+				distance = curdist;
+				target = cellcoord;
+				// Get facing from center towards target cell, so we can get the closest edge point later.
+				facing = center == cellcoord ? FACING_NONE : Facing_To_8((DirType)Direction8(center, cellcoord));
 			}
+		}
+		if (facing != FACING_NONE && target != center) {
+			target = (target & 0xFF00FF00l) | _edge_x[facing] | (_edge_y[facing] << 16);
 		}
 	}
 	return target;

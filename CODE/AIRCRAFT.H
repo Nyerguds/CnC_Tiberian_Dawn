@@ -109,7 +109,7 @@ class AircraftClass : public FootClass, public FlyClass
 		*/
 		virtual COORDINATE Sort_Y(void) const;
 		virtual COORDINATE Fire_Coord(int which) const;
-		virtual COORDINATE Target_Coord(bool /*enter*/ = false) const;
+		virtual COORDINATE Target_Coord() const;
 
 		/*
 		**	Object entry and exit from the game system.
