@@ -722,9 +722,21 @@ class BuildingTypeClass : public TechnoTypeClass {
 
 		/*
 		**	This is the size of the building. This size value is a rough indication
-		**	of the building's "footprint".
+		**	of the building's "footprint". It is derived from OccupyList and OverlapList.
 		*/
-		BSizeType Size;
+		int SizeX;
+		int SizeY;
+
+		/*
+		** This is the center of the building. It is derived from the size.
+		*/
+		COORDINATE Center;
+
+		/*
+		** This is the targeted center of the building. It is the same as Center,
+		** but adjusted to be on an actual occupied cell of the building.
+		*/
+		COORDINATE TargetCenter;
 
 		/**********************************************************************
 		**	For each stage that a building may be in, its animation is controlled
@@ -794,7 +806,7 @@ class BuildingTypeClass : public TechnoTypeClass {
 						unsigned capacity,
 						int power,
 						int drain,
-						BSizeType size,
+						//BSizeType size,
 						short const *exitlist,
 						short const *sizelist,
 						short const *overlap);
@@ -859,6 +871,12 @@ class BuildingTypeClass : public TechnoTypeClass {
 		void const * BuildupData;
 
 		void  Init_Anim(BStateType state, int start, int count, int rate) const;
+
+		/*
+		**	Static functions to process the constructor input and generate related values.
+		*/
+		static void Max_Dimensions(short const *occupylist, short const *overlapList, int *width, int *height);
+		static COORDINATE Valid_Target_Center(COORDINATE center, short const *occupylist);
 };
 
 

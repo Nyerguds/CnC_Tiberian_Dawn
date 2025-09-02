@@ -51,30 +51,34 @@
 #define	TREE_WEAK		400
 #define	TREE_STRONG		800
 
+#ifndef MCW
+#define	MCW	MAP_CELL_W
+#endif
+
 static short const _List1[] = {0, REFRESH_EOL};
-static short const _List000010[] = {MAP_CELL_W+1, REFRESH_EOL};
-static short const _List000011101000[] = {MAP_CELL_W, MAP_CELL_W+1, MAP_CELL_W+2, MAP_CELL_W*2, REFRESH_EOL};
+static short const _List000010[] = {MCW+1, REFRESH_EOL};
+static short const _List000011101000[] = {MCW, MCW+1, MCW+2, MCW*2, REFRESH_EOL};
 static short const _List00001[] = {4, REFRESH_EOL};
-static short const _List000110[] = {MAP_CELL_W, MAP_CELL_W+1, REFRESH_EOL};
-static short const _List000111[] = {MAP_CELL_W, MAP_CELL_W+1, MAP_CELL_W+2, REFRESH_EOL};
-static short const _List001011100110[] = {2, MAP_CELL_W, MAP_CELL_W+1, MAP_CELL_W+2, MAP_CELL_W*2+1, MAP_CELL_W*2+2, REFRESH_EOL};
-static short const _List0010[] = {MAP_CELL_W, REFRESH_EOL};
-static short const _List0011[] = {MAP_CELL_W, MAP_CELL_W+1, REFRESH_EOL};
+static short const _List000110[] = {MCW, MCW+1, REFRESH_EOL};
+static short const _List000111[] = {MCW, MCW+1, MCW+2, REFRESH_EOL};
+static short const _List001011100110[] = {2, MCW, MCW+1, MCW+2, MCW*2+1, MCW*2+2, REFRESH_EOL};
+static short const _List0010[] = {MCW, REFRESH_EOL};
+static short const _List0011[] = {MCW, MCW+1, REFRESH_EOL};
 static short const _List001[] = {2, REFRESH_EOL};
-static short const _List010110[] = {1, MAP_CELL_W, MAP_CELL_W+1, REFRESH_EOL};
+static short const _List010110[] = {1, MCW, MCW+1, REFRESH_EOL};
 static short const _List01[] = {1, REFRESH_EOL};
-static short const _List1001[] = {0, MAP_CELL_W+1, REFRESH_EOL};
-static short const _List101001[] = {0, 2, MAP_CELL_W+2, REFRESH_EOL};
+static short const _List1001[] = {0, MCW+1, REFRESH_EOL};
+static short const _List101001[] = {0, 2, MCW+2, REFRESH_EOL};
 static short const _List10[] = {0, REFRESH_EOL};
-static short const _List110000011001[] = {0, 1, MAP_CELL_W+3, MAP_CELL_W*2, MAP_CELL_W*2+3, REFRESH_EOL};
+static short const _List110000011001[] = {0, 1, MCW+3, MCW*2, MCW*2+3, REFRESH_EOL};
 static short const _List110000[] = {0, 1, REFRESH_EOL};
-static short const _List110001[] = {0, 1, MAP_CELL_W+2, REFRESH_EOL};
+static short const _List110001[] = {0, 1, MCW+2, REFRESH_EOL};
 static short const _List1100[] = {0, 1, REFRESH_EOL};
-static short const _List110110[] = {0, 1, MAP_CELL_W, MAP_CELL_W+1, REFRESH_EOL};
-static short const _List1101[] = {0, 1, MAP_CELL_W+1, REFRESH_EOL};
-static short const _List111000010110[] = {0, 1, 2, MAP_CELL_W+3, MAP_CELL_W*2+1, MAP_CELL_W*2+2, REFRESH_EOL};
-static short const _List111001[] = {0, 1, 2, MAP_CELL_W+2, REFRESH_EOL};
-static short const _List111101[] = {0, 1, 2, MAP_CELL_W, MAP_CELL_W+2, REFRESH_EOL};
+static short const _List110110[] = {0, 1, MCW, MCW+1, REFRESH_EOL};
+static short const _List1101[] = {0, 1, MCW+1, REFRESH_EOL};
+static short const _List111000010110[] = {0, 1, 2, MCW+3, MCW*2+1, MCW*2+2, REFRESH_EOL};
+static short const _List111001[] = {0, 1, 2, MCW+2, REFRESH_EOL};
+static short const _List111101[] = {0, 1, 2, MCW, MCW+2, REFRESH_EOL};
 static short const _List11110[] = {0, 1, 2, 3, REFRESH_EOL};
 
 
@@ -890,7 +894,7 @@ void TerrainTypeClass::Init(TheaterType theater)
 
 /***********************************************************************************************
  * TerrainTypeClass::From_Name -- Convert name to terrain type.                                *
- *                                                                                             *
+ *                                                                                             *
  *    This routine is used to convert a text name into the matching                            *
  *    terrain type number. This is used during scenario initialization.                        *
  *                                                                                             *

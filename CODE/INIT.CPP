@@ -265,16 +265,18 @@ bool Init_Game(int , char *[])
 	**	found on the hard drive, then look for it in the mixfile.
 	*/
 	SystemStrings = NULL;
-	if (RawFileClass(Language_Name("CONQUER", false)).Is_Available()) {
-		SystemStrings = (char const *)Load_Alloc_Data_Size(RawFileClass(Language_Name("CONQUER", false)), &SystemStringsLength);
+	const char * stringsfile = Language_Name("CONQUER", false);
+	if (RawFileClass(stringsfile).Is_Available()) {
+		SystemStrings = (char const *)Load_Alloc_Data_Size(RawFileClass(stringsfile), &SystemStringsLength);
 	} else {
-		SystemStrings = (char const *)MixFileClass::Retrieve_With_Length(Language_Name("CONQUER", false), &SystemStringsLength);
+		SystemStrings = (char const *)MixFileClass::Retrieve_With_Length(stringsfile, &SystemStringsLength);
 	}
 	if (SystemStrings == NULL) {
-		if (RawFileClass(Language_Name("CONQUER", true)).Is_Available()) {
-			SystemStrings = (char const *)Load_Alloc_Data_Size(RawFileClass(Language_Name("CONQUER", true)), &SystemStringsLength);
+		stringsfile = Language_Name("CONQUER", true);
+		if (RawFileClass(stringsfile).Is_Available()) {
+			SystemStrings = (char const *)Load_Alloc_Data_Size(RawFileClass(stringsfile), &SystemStringsLength);
 		} else {
-			SystemStrings = (char const *)MixFileClass::Retrieve_With_Length(Language_Name("CONQUER", true), &SystemStringsLength);
+			SystemStrings = (char const *)MixFileClass::Retrieve_With_Length(stringsfile, &SystemStringsLength);
 		}		
 	}
 

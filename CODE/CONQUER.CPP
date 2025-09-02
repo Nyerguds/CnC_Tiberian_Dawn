@@ -1475,6 +1475,7 @@ void Call_Back(void)
  *                                                                                             *
  * INPUT:   basename -- Base name to append language specific                                  *
  *                      extension to.                                                          *
+ *          standardext -- true to always return .ENG rather than the language extension.      *
  *                                                                                             *
  * OUTPUT:  Returns with pointer to completed filename.                                        *
  *                                                                                             *
@@ -1484,22 +1485,18 @@ void Call_Back(void)
  * HISTORY:                                                                                    *
  *   10/07/1992 JLB : Created.                                                                 *
  *=============================================================================================*/
-#pragma off (unreferenced)
 char const *Language_Name(char const *basename, bool standardext)
 {
 	static char _fullname[_MAX_FNAME+_MAX_EXT];
 
 	if (!basename) return(NULL);
-#if (GERMAN | FRENCH | JAPANESE)
 	if (standardext) {
 		sprintf(_fullname, "%s.ENG", basename);
 		return(_fullname);
 	}
-#endif
 	sprintf(_fullname, "%s.%s", basename, LANGUAGE_EXT);
 	return(_fullname);
 }
-#pragma on (unreferenced)
 
 
 /***********************************************************************************************

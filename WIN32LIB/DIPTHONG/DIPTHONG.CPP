@@ -268,11 +268,12 @@ int UnDip_Text(char const *source, char *dest)
  * HISTORY:                                                                *
  *   08/13/1993 JLB : Created.                                             *
  *   08/13/1993 JLB : Handles EMS or XMS data pointer.                     *
+ *   07/29/2025 MM  : Added length checks and fallback.                    *
  *=========================================================================*/
 char *Extract_String(void const *data, int datalen, int string)
 {
 	unsigned short int	const *ptr;
-	if (data && string >= 0 && datalen > string * sizeof(short)) {
+	if (data && string >= 0 && datalen >= (string + 1) * sizeof(short)) {
 		ptr = (unsigned short int const *)data;
 		// Find first invalid string id by finding location of first string after lookup table.
 		int strend = ptr[0] / sizeof(short);

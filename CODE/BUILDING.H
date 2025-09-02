@@ -304,7 +304,9 @@ class BuildingClass : public TechnoClass
 
 		TARGET LastRepaired;
 
+#ifdef OBSOLETE
 		static COORDINATE const CenterOffset[BSIZE_COUNT];
+#endif
 
 		/*
 		** This contains the value of the Virtual Function Table Pointer

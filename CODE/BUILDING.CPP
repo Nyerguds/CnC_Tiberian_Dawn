@@ -113,6 +113,7 @@ enum SAMState {
 };
 
 
+#ifdef OBSOLETE
 /***************************************************************************
 **	Center of building offset table.
 */
@@ -127,6 +128,7 @@ COORDINATE const BuildingClass::CenterOffset[BSIZE_COUNT] = {
 	0x00FF0200L, // 4x2
 	0x02800280L, // 5x5
 };
+#endif
 
 /*
 ** This contains the value of the Virtual Function Table Pointer
@@ -3072,7 +3074,7 @@ TARGET BuildingClass::As_Target(void) const
 COORDINATE BuildingClass::Center_Coord(void) const
 {
 	Validate();
-	return(Coord_Add(Coord, CenterOffset[Class->Size]));
+	return(Coord_Add(Coord, Class->Center));
 }
 
 
@@ -3107,37 +3109,7 @@ COORDINATE BuildingClass::Docking_Coord(void) const
  *=============================================================================================*/
 COORDINATE BuildingClass::Target_Coord() const
 {
-	// Edge values for cells facing a specific direction away from the center
-	//                                                    N     NE    E     SE    S     SW    W     NW
-	static const unsigned char _edge_x[FACING_COUNT] = { 0x80, 0x00, 0x00, 0x00, 0x80, 0xFF, 0xFF, 0xFF};
-	static const unsigned char _edge_y[FACING_COUNT] = { 0xFF, 0xFF, 0x80, 0x00, 0x00, 0x00, 0x80, 0xFF};
-
-	Validate();
-	COORDINATE target = Center_Coord();
-	if (Map[Coord_Cell(target)].Cell_Building() != this) {
-		// "center" cell is not part of the building cells. Fix coords.
-		const short *occupy = &(*this->Class->Occupy_List(false));
-		CELL origin = Coord_Cell(Coord);
-		COORDINATE center = target;
-		// Start at 128 cells; no building will ever be that large.
-		int distance = 0x8000;
-		FacingType facing = FACING_NONE;
-		while (*occupy != REFRESH_EOL) {
-			CELL cell = origin + *occupy++;
-			COORDINATE cellcoord = Cell_Coord(cell);
-			int curdist = Distance_Coord(center, cellcoord);
-			if (curdist < distance) {
-				distance = curdist;
-				target = cellcoord;
-				// Get facing from center towards target cell, so we can get the closest edge point later.
-				facing = center == cellcoord ? FACING_NONE : Facing_To_8((DirType)Direction8(center, cellcoord));
-			}
-		}
-		if (facing != FACING_NONE && target != center) {
-			target = (target & 0xFF00FF00l) | _edge_x[facing] | (_edge_y[facing] << 16);
-		}
-	}
-	return target;
+	return(Coord_Add(Coord, Class->TargetCenter));
 }
 
 /***********************************************************************************************

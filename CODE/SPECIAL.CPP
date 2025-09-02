@@ -71,7 +71,8 @@ void Special_Dialog(void)
 	buttons = &ok;
 	cancel.Add(*buttons);
 
-	for (int index = 0; index < sizeof(_options)/sizeof(_options[0]); index++) {
+	int index;
+	for (index = 0; index < sizeof(_options)/sizeof(_options[0]); index++) {
 		_options[index].Button = new CheckBoxClass(100+index, OPTION_X+7, OPTION_Y+20+(index*10));
 		if (_options[index].Button) {
 			_options[index].Button->Add(*buttons);

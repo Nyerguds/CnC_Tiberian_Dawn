@@ -295,15 +295,15 @@ typedef enum RTTIType {
 #define	MAP_CELL_MAX_X_BITS		6
 #define	MAP_CELL_MAX_Y_BITS		6
 #define	MAP_CELL_X_MASK			(~(~0 << MAP_CELL_MAX_X_BITS))
-//#define	MAP_CELL_Y_MASK			((~(~0 << MAP_CELL_MAX_Y_BITS)) << MAP_CELL_MAX_Y_BITS)
+#define	MAP_CELL_Y_MASK			((~(~0 << MAP_CELL_MAX_Y_BITS)) << MAP_CELL_MAX_Y_BITS)
 
 // Size of the map in cells.
 #define	MAP_CELL_W				(1<<MAP_CELL_MAX_X_BITS)
 #define	MAP_CELL_H				(1<<MAP_CELL_MAX_Y_BITS)
 #define	MAP_CELL_TOTAL			(MAP_CELL_W*MAP_CELL_H)
 
-#define	REFRESH_EOL				32767		// This number ends a refresh/occupy offset list.
-#define	REFRESH_SIDEBAR		32766		// This number flags that sidebar needs refreshing.
+#define	REFRESH_EOL				0x7FFF		// This number ends a refresh/occupy offset list.
+#define	REFRESH_SIDEBAR		0x7FFE		// This number flags that sidebar needs refreshing.
 
 /*
 **	The map is broken down into regions of this specified dimensions.
@@ -2018,6 +2018,7 @@ typedef struct {
 } TheaterDataType;
 
 
+#ifdef OBSOLETE
 /**********************************************************************
 **	Each building has a predetermined size. These are the size numbers.
 **	The trailing number is this define is the width and height (respectively)
@@ -2025,20 +2026,21 @@ typedef struct {
 */
 typedef enum BSizeType {
 	BSIZE_NONE=-1,
-	BSIZE_1X1=0, // 1x1
-	BSIZE_2X1,   // 2x1
-	BSIZE_1X2,   // 1x2
-	BSIZE_2X2,   // 2x2
-	BSIZE_2X3,   // 2x3
-	BSIZE_3X2,   // 3x2
-	BSIZE_3X3,   // 3x3
-	BSIZE_4X2,   // 4x2
-	BSIZE_5x5,   // 5x5
+	BSIZE_11=0,
+	BSIZE_21,
+	BSIZE_12,
+	BSIZE_22,
+	BSIZE_23,
+	BSIZE_32,
+	BSIZE_33,
+	BSIZE_42,
+	BSIZE_55,
 
 	BSIZE_COUNT
 } BSizeType;
 
 inline BSizeType operator++(BSizeType &, int);
+#endif
 
 
 /**********************************************************************
