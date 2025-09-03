@@ -1187,9 +1187,9 @@ void SidebarClass::StripClass::Init_Clear(void)
 
 
 /***********************************************************************************************
- * SidebarClass::StripClass::Init_IO -- Initializes the strip's buttons								  *
+ * SidebarClass::StripClass::Init_IO -- Initializes the strip's buttons                        *
  *                                                                                             *
- * This routine doesn't actually add any buttons to the list;
+ * This routine doesn't actually add any buttons to the list;                                  *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *

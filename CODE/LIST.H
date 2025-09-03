@@ -17,22 +17,22 @@
 */
 
 /* $Header:   F:\projects\c&c\vcs\code\list.h_v   2.17   16 Oct 1995 16:46:24   JOE_BOSTIC  $ */
-/*********************************************************************************************** 
- ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               *** 
- *********************************************************************************************** 
- *                                                                                             * 
- *                 Project Name : Command & Conquer                                            * 
- *                                                                                             * 
- *                    File Name : LIST.H                                                       * 
- *                                                                                             * 
- *                   Programmer : Joe L. Bostic                                                * 
- *                                                                                             * 
- *                   Start Date : 01/15/95                                                     * 
- *                                                                                             * 
- *                  Last Update : January 15, 1995 [JLB]                                       * 
- *                                                                                             * 
- *---------------------------------------------------------------------------------------------* 
- * Functions:                                                                                  * 
+/***********************************************************************************************
+ ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               ***
+ ***********************************************************************************************
+ *                                                                                             *
+ *                 Project Name : Command & Conquer                                            *
+ *                                                                                             *
+ *                    File Name : LIST.H                                                       *
+ *                                                                                             *
+ *                   Programmer : Joe L. Bostic                                                *
+ *                                                                                             *
+ *                   Start Date : 01/15/95                                                     *
+ *                                                                                             *
+ *                  Last Update : January 15, 1995 [JLB]                                       *
+ *                                                                                             *
+ *---------------------------------------------------------------------------------------------*
+ * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #ifndef LIST_H
@@ -44,16 +44,16 @@
 
 
 /***************************************************************************
- * ListClass -- Like a Windows ListBox structure									*
+ * ListClass -- Like a Windows ListBox structure                           *
  *                                                                         *
- * INPUT:      int x -- x position of gadget											*
- *					int y -- y position of gadget											*
- *					int w -- width of gadget												*							
- *					int h -- height of gadget												*							
- *					UWORD flags -- see enumeration choices								*							
+ * INPUT:      int x -- x position of gadget                               *
+ *             int y -- y position of gadget                               *
+ *             int w -- width of gadget                                    *
+ *             int h -- height of gadget                                   *
+ *             UWORD flags -- see enumeration choices                      *
  *                                                                         *
- * OUTPUT:     none.																			*
- * WARNINGS:														   						*
+ * OUTPUT:     none.                                                       *
+ * WARNINGS:                                                               *
  * HISTORY:    01/03/1995 MML : Created.                                   *
  *=========================================================================*/
 class ListClass : public ControlClass

@@ -91,7 +91,7 @@
  *   HouseClass::Suggest_New_Object -- Determine what would the next buildable object be.      *
  *   HouseClass::Suggested_New_Team -- Determine what team should be created.                  *
  *   HouseClass::Suspend_Production -- Temporarily puts production on hold.                    *
- *   HouseClass::Validate -- validates house pointer														  *
+ *   HouseClass::Validate -- validates house pointer                                           *
  *   HouseClass::Write_INI -- Writes house specific data into INI file.                        *
  *   HouseClass::delete -- Deallocator function for a house object.                            *
  *   HouseClass::new -- Allocator for a house class.                                           *
@@ -103,16 +103,16 @@
 
 
 /***********************************************************************************************
- * HouseClass::Validate -- validates house pointer															  *
+ * HouseClass::Validate -- validates house pointer                                             *
  *                                                                                             *
  * INPUT:                                                                                      *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *		1 = ok, 0 = error																								  *
+ *    1 = ok, 0 = error                                                                        *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/09/1995 BRR : Created.                                                                 *

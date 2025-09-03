@@ -57,7 +57,7 @@ ENDS
 
 
 ;*=========================================================================*
-;* Extern the font pointer which is defined by the font class		   *
+;* Extern the font pointer which is defined by the font class              *
 ;*=========================================================================*
 GLOBAL C	FontPtr:DWORD
 GLOBAL C	FontXSpacing:DWORD
@@ -65,7 +65,7 @@ GLOBAL C	FontYSpacing:DWORD
 GLOBAL C	ColorXlat:BYTE
 
 ;*=========================================================================*
-;* Define the necessary equates for structures and bounds checking	   *
+;* Define the necessary equates for structures and bounds checking         *
 ;*=========================================================================*
 ; The header of the font file looks like this:
 ; 	UWORD	FontLength;		0
@@ -89,7 +89,7 @@ FONTINFOMAXWIDTH	EQU	5
 
 LOCALS ??
 ;*=========================================================================*
-;* Define the color xlate table in the data segment			   *
+;* Define the color xlate table in the data segment                        *
 ;*=========================================================================*
 	DATASEG
 

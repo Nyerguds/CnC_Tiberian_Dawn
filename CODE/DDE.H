@@ -20,28 +20,28 @@
  **   C O N F I D E N T I A L --- W E S T W O O D    S T U D I O S        **
  ***************************************************************************
  *                                                                         *
- *                 Project Name : Dynamic Data Encapsulation					*
+ *                 Project Name : Dynamic Data Encapsulation               *
  *                                                                         *
- *                    File Name : DDE.H												*
+ *                    File Name : DDE.H                                    *
  *                                                                         *
- *                   Programmer : Steve Wetherill									*
+ *                   Programmer : Steve Wetherill                          *
  *                                                                         *
- *                   Start Date : June 1, 1996		                        *
+ *                   Start Date : June 1, 1996                             *
  *                                                                         *
- *                  Last Update : June 8, 1996   [SW]                 		*
+ *                  Last Update : June 8, 1996   [SW]                      *
  *                                                                         *
  *-------------------------------------------------------------------------*
  *                                                                         *
- * This is the DDE (Instance_Class) which provides a simple CLIENT/SERVER	*
- * DDE model for data transactions between Windows applications.				*
- * This is a fairly naieve implementation allowing only one client/server	*
- * per Instance_Class object. 															*
- *																									*
- * Typical uses for this class are:														*
- *																									*
- * i. Robust verification of whether an application is running					*
- * ii. Data transfer between applications												*
- *																									*
+ * This is the DDE (Instance_Class) which provides a simple CLIENT/SERVER  *
+ * DDE model for data transactions between Windows applications.           *
+ * This is a fairly naieve implementation allowing only one client/server  *
+ * per Instance_Class object.                                              *
+ *                                                                         *
+ * Typical uses for this class are:                                        *
+ *                                                                         *
+ * i. Robust verification of whether an application is running             *
+ * ii. Data transfer between applications                                  *
+ *                                                                         *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 /*

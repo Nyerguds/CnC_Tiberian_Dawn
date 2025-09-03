@@ -31,13 +31,13 @@
  *                                                                         *
  *                  Last Update : December 19, 1994   [BR]                 *
  *                                                                         *
- * This class is useful for any IPX-related code.  It's just a utility		*
- * to help manage those annoying IPX address fields.  This class lets you	*
- * compare addresses, copy addresses to & from the IPX header, etc.			*
+ * This class is useful for any IPX-related code.  It's just a utility     *
+ * to help manage those annoying IPX address fields.  This class lets you  *
+ * compare addresses, copy addresses to & from the IPX header, etc.        *
  *                                                                         *
- * The class has no virtual functions, so you can treat this class just		*
- * like a data structure; it can be loaded & saved, and even transmitted	*
- * across the net.																			*
+ * The class has no virtual functions, so you can treat this class just    *
+ * like a data structure; it can be loaded & saved, and even transmitted   *
+ * across the net.                                                         *
  *                                                                         *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 

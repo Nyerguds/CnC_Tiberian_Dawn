@@ -94,7 +94,7 @@
  *   BuildingClass::delete -- Deallocates building object.                                     *
  *   BuildingClass::new -- Allocates a building object from building pool.                     *
  *   BuildingClass::~BuildingClass -- Destructor for building type objects.                    *
- *   BuildingClass::Validate -- validates building pointer												  *
+ *   BuildingClass::Validate -- validates building pointer                                     *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include	"function.h"
@@ -137,16 +137,16 @@ void * BuildingClass::VTable;
 
 
 /***********************************************************************************************
- * BuildingClass::Validate -- validates building pointer													  *
+ * BuildingClass::Validate -- validates building pointer                                       *
  *                                                                                             *
  * INPUT:                                                                                      *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *		1 = ok, 0 = error																								  *
+ *    1 = ok, 0 = error                                                                        *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/09/1995 BRR : Created.                                                                 *
@@ -550,7 +550,7 @@ void BuildingClass::Draw_It(int x, int y, WindowNumberType window)
 				} else {
 
 					/*
-					**	Special render stage for silos. The stage is dependant on the current
+					**	Special render stage for silos. The stage is dependent on the current
 					**	Tiberium collected as it relates to Tiberium capacity.
 					*/
 					if (*this == STRUCT_STORAGE) {
@@ -1463,7 +1463,7 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 				**	remembering of this fact. The finale uses this information to
 				**	play the correct movie.
 				*/
-				// Nyerguds's C&C Patch Project v1.04:
+				// Nyerguds's C&C Patch Project v1.04
 				// Fixed temple ion cannon status resetting.
 				if (*this == STRUCT_TEMPLE && warhead == WARHEAD_PB) {
 					TempleIoned = true;

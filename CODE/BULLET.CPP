@@ -45,7 +45,7 @@
  *   BulletClass::Unlimbo -- Transitions a bullet object into the game render/logic system.    *
  *   BulletClass::delete -- Bullet memory delete.                                              *
  *   BulletClass::new -- Allocates memory for bullet object.                                   *
- *   BulletClass::Validate -- validates bullet pointer													  *
+ *   BulletClass::Validate -- validates bullet pointer                                         *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include	"function.h"
@@ -59,16 +59,16 @@ void * BulletClass::VTable;
 
 
 /***********************************************************************************************
- * BulletClass::Validate -- validates bullet pointer														  *
+ * BulletClass::Validate -- validates bullet pointer                                           *
  *                                                                                             *
  * INPUT:                                                                                      *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *		1 = ok, 0 = error																								  *
+ *    1 = ok, 0 = error                                                                        *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/09/1995 BRR : Created.                                                                 *

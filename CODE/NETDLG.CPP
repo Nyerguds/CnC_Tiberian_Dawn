@@ -20,85 +20,85 @@
 /***********************************************************************************************
  ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               ***
  ***********************************************************************************************
- *                                                                         						  *
- *                 Project Name : Command & Conquer                        						  *
- *                                                                         						  *
- *                    File Name : NETDLG.CPP                               						  *
- *                                                                         						  *
- *                   Programmer : Bill Randolph                            						  *
- *                                                                         						  *
- *                   Start Date : January 23, 1995                         						  *
- *                                                                         						  *
- *                  Last Update : July 8, 1995 [BRR]                       						  *
- *                                                                         						  *
+ *                                                                                             *
+ *                 Project Name : Command & Conquer                                            *
+ *                                                                                             *
+ *                    File Name : NETDLG.CPP                                                   *
+ *                                                                                             *
+ *                   Programmer : Bill Randolph                                                *
+ *                                                                                             *
+ *                   Start Date : January 23, 1995                                             *
+ *                                                                                             *
+ *                  Last Update : July 8, 1995 [BRR]                                           *
+ *                                                                                             *
  *---------------------------------------------------------------------------------------------*
- *                                                                         						  *
- * These routines establish & maintain peer-to-peer connections between this system				  *
- * and all others in the game.  Each system finds out the IPX address of the others,			  *
- * and forms a direct connection (IPXConnectionClass) to that system.  Systems are				  *
- * found out via broadcast queries.  Every system broadcasts its queries, and every				  *
- * system replies to queries it receives.  At the point when the game owner signals				  *
- * 'OK', every system must know about all the other systems in the game.							  *
- *                                                                         						  *
- * How Bridges are handled:																						  *
- * Currently, bridges are handled by specifying the destination IPX address of the				  *
- * "server" (game owner's system) on the command-line.  This address is used to					  *
- * derive a broadcast address to that destination network, and this system's queries			  *
- * are broadcast over its network & the server's network; replies to the queries come			  *
- * with each system's IPX address attached, so once we have the address, we can form			  *
- * a connection with any system on the bridged net.														  *
- *                                                                         						  *
- * The flaw in this plan is that we can only cross one bridge.  If there are 3 nets				  *
- * bridged (A, B, & C), and the server is on net B, and we're on net A, our broadcasts			  *
- * will reach nets A & B, but not C.  The way to circumvent this (if it becomes a problem)	  *
- * would be to have the server tell us what other systems are in its game, not each				  *
- * individual player's system.  Thus, each system would find out about all the other systems	  *
- * by interacting with the game's owner system (this would be more involved than what			  *
- * I'm doing here).																									  *
- *                                                                         						  *
- * Here's a list of all the different packets sent over the Global Channel:						  *
- *																															  *
- *	NET_QUERY_GAME																										  *
- *							(no other data)																			  *
- *	NET_ANSWER_GAME																									  *
- *							Name:					game owner's name													  *
- *							GameInfo:			game's version & open state									  *
- *	NET_QUERY_PLAYER																									  *
- *							Name:					name of game we want players to respond for				  *
- *	NET_ANSWER_PLAYER																									  *
- *							Name:					player's name														  *
- *							PlayerInfo:			info about player													  *
- *	NET_QUERY_JOIN																										  *
- *							Name:					name of player wanting to join								  *
- *							PlayerInfo:			player's requested house & color								  *
- *	NET_CONFIRM_JOIN																									  *
- *							PlayerInfo:			approves player's house & color								  *
- *	NET_REJECT_JOIN																									  *
- *							(no other data)																			  *
- *	NET_GAME_OPTIONS																									  *
- *							ScenarioInfo:		info about scenario												  *
- *	NET_SIGN_OFF																										  *
- *							Name:					name of player signing off										  *
- *	NET_PING																												  *
- *							(no other data)																			  *
- *	NET_GO																												  *
- *							Delay:            value of one-way response time, in frames               *
- * 																														  *
+ *                                                                                             *
+ * These routines establish & maintain peer-to-peer connections between this system            *
+ * and all others in the game.  Each system finds out the IPX address of the others,           *
+ * and forms a direct connection (IPXConnectionClass) to that system.  Systems are             *
+ * found out via broadcast queries.  Every system broadcasts its queries, and every            *
+ * system replies to queries it receives.  At the point when the game owner signals            *
+ * 'OK', every system must know about all the other systems in the game.                       *
+ *                                                                                             *
+ * How Bridges are handled:                                                                    *
+ * Currently, bridges are handled by specifying the destination IPX address of the             *
+ * "server" (game owner's system) on the command-line.  This address is used to                *
+ * derive a broadcast address to that destination network, and this system's queries           *
+ * are broadcast over its network & the server's network; replies to the queries come          *
+ * with each system's IPX address attached, so once we have the address, we can form           *
+ * a connection with any system on the bridged net.                                            *
+ *                                                                                             *
+ * The flaw in this plan is that we can only cross one bridge.  If there are 3 nets            *
+ * bridged (A, B, & C), and the server is on net B, and we're on net A, our broadcasts         *
+ * will reach nets A & B, but not C.  The way to circumvent this (if it becomes a problem)     *
+ * would be to have the server tell us what other systems are in its game, not each            *
+ * individual player's system.  Thus, each system would find out about all the other systems   *
+ * by interacting with the game's owner system (this would be more involved than what          *
+ * I'm doing here).                                                                            *
+ *                                                                                             *
+ * Here's a list of all the different packets sent over the Global Channel:                    *
+ *                                                                                             *
+ *	NET_QUERY_GAME                                                                             *
+ *                   (no other data)                                                           *
+ *	NET_ANSWER_GAME                                                                            *
+ *                   Name:					game owner's name                                          *
+ *                   GameInfo:			game's version & open state                                *
+ *	NET_QUERY_PLAYER                                                                           *
+ *                   Name:					name of game we want players to respond for                *
+ *	NET_ANSWER_PLAYER                                                                          *
+ *                   Name:					player's name                                              *
+ *                   PlayerInfo:			info about player                                        *
+ *	NET_QUERY_JOIN                                                                             *
+ *                   Name:					name of player wanting to join                             *
+ *                   PlayerInfo:			player's requested house & color                         *
+ *	NET_CONFIRM_JOIN                                                                           *
+ *                   PlayerInfo:			approves player's house & color                          *
+ *	NET_REJECT_JOIN                                                                            *
+ *                   (no other data)                                                           *
+ *	NET_GAME_OPTIONS                                                                           *
+ *                   ScenarioInfo:		info about scenario                                      *
+ *	NET_SIGN_OFF                                                                               *
+ *                   Name:					name of player signing off                                 *
+ *	NET_PING                                                                                   *
+ *                   (no other data)                                                           *
+ *	NET_GO                                                                                     *
+ *                   Delay:            value of one-way response time, in frames               *
+ *                                                                                             *
  *---------------------------------------------------------------------------------------------*
- * Functions:                                                              						  *
- *   Clear_Game_List -- Clears the game-name listbox & 'Games' Vector        						  *
- *   Clear_Player_List -- Clears the player-name listbox & Vector     		   					  *
- *   Destroy_Connection -- destroys the given connection													  *
- *   Get_Join_Responses -- sends queries for the Join Dialog											  *
+ * Functions:                                                                                  *
+ *   Clear_Game_List -- Clears the game-name listbox & 'Games' Vector                          *
+ *   Clear_Player_List -- Clears the player-name listbox & Vector                              *
+ *   Destroy_Connection -- destroys the given connection                                       *
+ *   Get_Join_Responses -- sends queries for the Join Dialog                                   *
  *   Get_NewGame_Responses -- processes packets for New Game dialog                            *
- *   Init_Network -- initializes network stuff                             						  *
- *   Net_Join_Dialog -- lets user join an existing game, or start a new one						  *
- *   Net_New_Dialog -- lets user start a new game															  *
- *   Process_Global_Packet -- responds to remote queries                   						  *
- *   Remote_Connect -- handles connecting this user to others              						  *
- *   Request_To_Join -- Sends a JOIN request packet to game owner           	 					  *
- *   Send_Join_Queries -- sends queries for the Join Dialog												  *
- *   Shutdown_Network -- shuts down network stuff                          						  *
+ *   Init_Network -- initializes network stuff                                                 *
+ *   Net_Join_Dialog -- lets user join an existing game, or start a new one                    *
+ *   Net_New_Dialog -- lets user start a new game                                              *
+ *   Process_Global_Packet -- responds to remote queries                                       *
+ *   Remote_Connect -- handles connecting this user to others                                  *
+ *   Request_To_Join -- Sends a JOIN request packet to game owner                              *
+ *   Send_Join_Queries -- sends queries for the Join Dialog                                    *
+ *   Shutdown_Network -- shuts down network stuff                                              *
  *   Compute_Name_CRC -- computes CRC from char string                                         *
  *   Net_Reconnect_Dialog -- Draws/updates the network reconnect dialog                        *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -156,19 +156,19 @@ static int Net_Fake_Join_Dialog(void);
 
 
 /***********************************************************************************************
- * Init_Network -- initializes network stuff                               						  *
- *                                                                         						  *
- * INPUT:                                                                  						  *
- *		none.																												  *
- *                                                                         						  *
- * OUTPUT:                                                                 						  *
- *		true = Initialization OK, false = error																  *
- *                                                                         						  *
- * WARNINGS:                                                               						  *
- *		none.																												  *
- *                                                                         						  *
- * HISTORY:                                                                						  *
- *   02/14/1995 BR : Created.                                              						  *
+ * Init_Network -- initializes network stuff                                                   *
+ *                                                                                             *
+ * INPUT:                                                                                      *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * OUTPUT:                                                                                     *
+ *    true = Initialization OK, false = error                                                  *
+ *                                                                                             *
+ * WARNINGS:                                                                                   *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/14/1995 BR : Created.                                                                  *
  *=============================================================================================*/
 bool Init_Network (void)
 {
@@ -205,19 +205,19 @@ bool Init_Network (void)
 
 
 /***********************************************************************************************
- * Shutdown_Network -- shuts down network stuff                            						  *
- *                                                                         						  *
- * INPUT:                                                                  						  *
- *		none.																												  *
- *                                                                         						  *
- * OUTPUT:                                                                 						  *
- *		none.																												  *
- *                                                                         						  *
- * WARNINGS:                                                               						  *
- *		none.																												  *
- *                                                                         						  *
- * HISTORY:                                                                						  *
- *   02/14/1995 BR : Created.                                              						  *
+ * Shutdown_Network -- shuts down network stuff                                                *
+ *                                                                                             *
+ * INPUT:                                                                                      *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * OUTPUT:                                                                                     *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * WARNINGS:                                                                                   *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/14/1995 BR : Created.                                                                  *
  *=============================================================================================*/
 void Shutdown_Network (void)
 {
@@ -278,26 +278,26 @@ void Shutdown_Network (void)
 
 
 /***********************************************************************************************
- * Process_Global_Packet -- responds to remote queries                     						  *
- *                                                                         						  *
- * The only commands from other systems this routine responds to are NET_QUERY_GAME				  *
- * and NET_QUERY_PLAYER.  The other commands are too context-specific to be able					  *
- * to handle here, such as joining the game or signing off; but this routine handles			  *
- * the majority of the program's needs.																		  *
- *                                                                         						  *
- * INPUT:                                                                  						  *
- *		packet		ptr to packet to process																	  *
- *		address		source address of sender																	  *
- *                                                                         						  *
- * OUTPUT:                                                                 						  *
- *		true = packet was processed, false = wasn't															  *
- *                                                                         						  *
- * WARNINGS:                                                               						  *
- *		MPlayerName & MPlayerGameName must have been filled in before this function				  *
- *		can be called.																									  *
- *                                                                         						  *
- * HISTORY:                                                                						  *
- *   02/15/1995 BR : Created.                                              						  *
+ * Process_Global_Packet -- responds to remote queries                                         *
+ *                                                                                             *
+ * The only commands from other systems this routine responds to are NET_QUERY_GAME            *
+ * and NET_QUERY_PLAYER.  The other commands are too context-specific to be able               *
+ * to handle here, such as joining the game or signing off; but this routine handles           *
+ * the majority of the program's needs.                                                        *
+ *                                                                                             *
+ * INPUT:                                                                                      *
+ *    packet      ptr to packet to process                                                     *
+ *    address     source address of sender                                                     *
+ *                                                                                             *
+ * OUTPUT:                                                                                     *
+ *    true = packet was processed, false = wasn't                                              *
+ *                                                                                             *
+ * WARNINGS:                                                                                   *
+ *    MPlayerName & MPlayerGameName must have been filled in before this function              *
+ *    can be called.                                                                           *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/15/1995 BR : Created.                                                                  *
  *=============================================================================================*/
 bool Process_Global_Packet(GlobalPacketType *packet, IPXAddressClass *address)
 {
@@ -359,22 +359,22 @@ bool Process_Global_Packet(GlobalPacketType *packet, IPXAddressClass *address)
 
 
 /***********************************************************************************************
- * Destroy_Connection -- destroys the given connection													  *
- *                                                                         						  *
- * Call this routine when a connection goes bad, or another player signs off.						  *
- *                                                                         						  *
- * INPUT:                                                                  						  *
- *		id			connection ID to destroy																		  *
- *		error		0 = user signed off; 1 = connection error; otherwise, no error is shown.		  *
- *                                                                         						  *
- * OUTPUT:                                                                 						  *
- *		none.																												  *
- *                                                                         						  *
- * WARNINGS:                                                               						  *
- *		none.																												  *
- *                                                                         						  *
- * HISTORY:                                                                						  *
- *   04/22/1995 BR : Created.                                              						  *
+ * Destroy_Connection -- destroys the given connection                                         *
+ *                                                                                             *
+ * Call this routine when a connection goes bad, or another player signs off.                  *
+ *                                                                                             *
+ * INPUT:                                                                                      *
+ *    id       connection ID to destroy                                                        *
+ *    error    0 = user signed off; 1 = connection error; otherwise, no error is shown.        *
+ *                                                                                             *
+ * OUTPUT:                                                                                     *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * WARNINGS:                                                                                   *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   04/22/1995 BR : Created.                                                                  *
  *=============================================================================================*/
 void Destroy_Connection(int id, int error)
 {
@@ -444,19 +444,19 @@ void Destroy_Connection(int id, int error)
 
 
 /***********************************************************************************************
- * Remote_Connect -- handles connecting this user to others                						  *
- *                                                                         						  *
- * INPUT:                                                                  						  *
- *		none.																												  *
- *                                                                         						  *
- * OUTPUT:                                                                 						  *
- *		true = connections established; false = not															  *
- *                                                                         						  *
- * WARNINGS:                                                               						  *
- *		none.																												  *
- *                                                                         						  *
- * HISTORY:                                                                						  *
- *   02/14/1995 BR : Created.                                              						  *
+ * Remote_Connect -- handles connecting this user to others                                    *
+ *                                                                                             *
+ * INPUT:                                                                                      *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * OUTPUT:                                                                                     *
+ *    true = connections established; false = not                                              *
+ *                                                                                             *
+ * WARNINGS:                                                                                   *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/14/1995 BR : Created.                                                                  *
  *=============================================================================================*/
 bool Remote_Connect(void)
 {
@@ -550,19 +550,19 @@ bool Remote_Connect(void)
 
 
 /***********************************************************************************************
- * Remote_Connect -- handles connecting this host to the server in an internet game 			    *
- *                                                                         						    *
- * INPUT:                                                                  						    *
- *		none.																												 *
- *                                                                         						    *
- * OUTPUT:                                                                 						    *
- *		true = connections established; false = not															 *
- *                                                                         						    *
- * WARNINGS:                                                               						    *
- *		none.																												 *
- *                                                                         						    *
- * HISTORY:                                                                						    *
- *   02/14/1995 BR : Created.                                              						    *
+ * Remote_Connect -- handles connecting this host to the server in an internet game            *
+ *                                                                                             *
+ * INPUT:                                                                                      *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * OUTPUT:                                                                                     *
+ *    true = connections established; false = not                                              *
+ *                                                                                             *
+ * WARNINGS:                                                                                   *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/14/1995 BR : Created.                                                                  *
  *=============================================================================================*/
 bool Server_Remote_Connect(void)
 {
@@ -608,18 +608,18 @@ bool Server_Remote_Connect(void)
 
 /***********************************************************************************************
  * Client_Remote_Connect -- handles connecting this client to the server in an internet game   *
- *                                                                         						    *
- * INPUT:                                                                  						    *
- *		none.																												 *
- *                                                                         						    *
- * OUTPUT:                                                                 						    *
- *		true = connections established; false = not															 *
- *                                                                         						    *
- * WARNINGS:                                                               						    *
- *		none.																												 *
- *                                                                         						    *
- * HISTORY:                                                                						    *
- *   02/14/1995 ST : Created.                                              						    *
+ *                                                                                             *
+ * INPUT:                                                                                      *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * OUTPUT:                                                                                     *
+ *    true = connections established; false = not                                              *
+ *                                                                                             *
+ * WARNINGS:                                                                                   *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/14/1995 ST : Created.                                                                  *
  *=============================================================================================*/
 bool Client_Remote_Connect(void)
 {
@@ -671,75 +671,75 @@ bool Client_Remote_Connect(void)
 
 
 /***********************************************************************************************
- * Net_Join_Dialog -- lets user join an existing game or start a new one							  *
- *                                                                         						  *
- * This dialog displays an edit field for the player's name, and a list of all non-stealth-	  *
+ * Net_Join_Dialog -- lets user join an existing game or start a new one                       *
+ *                                                                                             *
+ * This dialog displays an edit field for the player's name, and a list of all non-stealth-    *
  * mode games.  Clicking once on a game name displays a list of who's in that game.  Clicking  *
- * "New" takes the user to the Net_New dialog, where he waits for other users to join his		  *
- * game.  All other input is done through this dialog.													  *
- *                                                                         						  *
- * The dialog has several "states":																				  *
- *                                                                         						  *
+ * "New" takes the user to the Net_New dialog, where he waits for other users to join his      *
+ * game.  All other input is done through this dialog.                                         *
+ *                                                                                             *
+ * The dialog has several "states":                                                            *
+ *                                                                                             *
  * 1) Initially, it waits for the user to fill in his/her name and then to select Join or New; *
- *    if New is selected, this dialog is exited.															  *
- *                                                                         						  *
- *	2) If Join is selected, the Join & New buttons are removed, but the Cancel button remains.  *
- *	   The join request is transmitted to the game's owner, and the message "Waiting for		  *
- *		Confirmation" is displayed, until a confirmation or denial is received from the game's	  *
- *		owner.  The user may click Cancel at this point to cancel the join request.				  *
- *		(Once Join is selected, the name editing field is disabled, and becomes a display-only	  *
- *		field.  If cancel is selected, it reappears as an edit field.) The user can still click  *
- *		around & see who's in which games.																		  *
- *                                                                         						  *
- *	3) If the join request is denied, the dialog re-initializes to its pre-join state; the		  *
- *		Join & New buttons reappear, & the Name field is available again.								  *
- *                                                                         						  *
- * 4) If join confirmation is obtained, the message just changes to "Confirmed.  Waiting for	  *
- *		Entry Signal." or some such nonsense.  The user can still click around & see who's		  *
- *		in which games.																								  *
- *                                                                         						  *
- * Any game running in Stealth mode won't show up on this dialog.										  *
- *                                                                         						  *
- *    ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿                     					  *
- *    ³                 Network Games                     ³                     					  *
- *    ³                                                   ³                     					  *
- *    ³              Your Name: ____________              ³                     					  *
- *    ³                  House: [GDI] [NOD]               ³                     					  *
- *    ³          Desired Color: [ ][ ][ ][ ]              ³                     					  *
- *    ³                                                   ³                     					  *
- *    ³            Games                 Players          ³                     					  *
- *    ³ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄ¿ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄ¿ ³                     					  *
- *    ³ ³(Bill's Game         )³³ ³ Peter Parker GDI ³³ ³                     					  *
- *    ³ ³ Peter Parker's Game  ÃÄ´ ³ Mary Jane    GDI ÃÄ´ ³                     					  *
- *    ³ ³(Magnum PI's Game    )³ ³ ³ JJ Jameson   NOD ³ ³ ³                     					  *
- *    ³ ³                      ÃÄ´ ³                  ÃÄ´ ³                     					  *
- *    ³ ³                      ³³ ³                  ³³ ³                     					  *
- *    ³ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÙ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÙ ³                     					  *
- *    ³           Scenario: Big Long Description          ³                     					  *
- *    ³                Starting Credits: xxxx             ³                     					  *
- *    ³          Count: ---          Level: ---           ³                     					  *
- *    ³          Bases: ON          Crates: ON            ³                          					  *
- *    ³       Tiberium: ON      AI Players: ON            ³                           					  *
- *    ³                                                   ³                     					  *
- *    ³            [Join]  [Cancel]    [New]              ³                     					  *
- *    ³  ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿  ³                     					  *
- *    ³  ³                                             ³  ³                     					  *
- *    ³  ³                                             ³  ³                     					  *
- *    ³  ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ  ³                     					  *
- *    ³                  [Send Message]                   ³                     					  *
- *    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ                     					  *
- *                                                                         						  *
- * INPUT:                                                                  						  *
- *		none.																												  *
- *                                                                         						  *
- * OUTPUT:                                                                 						  *
- *		-1 = cancel, 0 = OK, 1 = New net game requested														  *
- *                                                                         						  *
- * WARNINGS:                                                               						  *
- *		none.																												  *
- *                                                                         						  *
- * HISTORY:                                                                						  *
- *   02/14/1995 BR : Created.                                              						  *
+ *    if New is selected, this dialog is exited.                                               *
+ *                                                                                             *
+ * 2) If Join is selected, the Join & New buttons are removed, but the Cancel button remains.  *
+ *    The join request is transmitted to the game's owner, and the message "Waiting for        *
+ *    Confirmation" is displayed, until a confirmation or denial is received from the game's   *
+ *    owner.  The user may click Cancel at this point to cancel the join request.              *
+ *    (Once Join is selected, the name editing field is disabled, and becomes a display-only   *
+ *    field.  If cancel is selected, it reappears as an edit field.) The user can still click  *
+ *    around & see who's in which games.                                                       *
+ *                                                                                             *
+ * 3) If the join request is denied, the dialog re-initializes to its pre-join state; the      *
+ *    Join & New buttons reappear, & the Name field is available again.                        *
+ *                                                                                             *
+ * 4) If join confirmation is obtained, the message just changes to "Confirmed.  Waiting for   *
+ *    Entry Signal." or some such nonsense.  The user can still click around & see who's       *
+ *    in which games.                                                                          *
+ *                                                                                             *
+ * Any game running in Stealth mode won't show up on this dialog.                              *
+ *                                                                                             *
+ *    ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿                                    *
+ *    ³                 Network Games                     ³                                    *
+ *    ³                                                   ³                                    *
+ *    ³              Your Name: ____________              ³                                    *
+ *    ³                  House: [GDI] [NOD]               ³                                    *
+ *    ³          Desired Color: [ ][ ][ ][ ]              ³                                    *
+ *    ³                                                   ³                                    *
+ *    ³            Games                 Players          ³                                    *
+ *    ³ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄ¿ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄ¿ ³                                    *
+ *    ³ ³(Bill's Game         )³³ ³ Peter Parker GDI ³³ ³                                    *
+ *    ³ ³ Peter Parker's Game  ÃÄ´ ³ Mary Jane    GDI ÃÄ´ ³                                    *
+ *    ³ ³(Magnum PI's Game    )³ ³ ³ JJ Jameson   NOD ³ ³ ³                                    *
+ *    ³ ³                      ÃÄ´ ³                  ÃÄ´ ³                                    *
+ *    ³ ³                      ³³ ³                  ³³ ³                                    *
+ *    ³ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÙ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÙ ³                                    *
+ *    ³           Scenario: Big Long Description          ³                                    *
+ *    ³                Starting Credits: xxxx             ³                                    *
+ *    ³          Count: ---          Level: ---           ³                                    *
+ *    ³          Bases: ON          Crates: ON            ³                                    *
+ *    ³       Tiberium: ON      AI Players: ON            ³                                    *
+ *    ³                                                   ³                                    *
+ *    ³            [Join]  [Cancel]    [New]              ³                                    *
+ *    ³  ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿  ³                                    *
+ *    ³  ³                                             ³  ³                                    *
+ *    ³  ³                                             ³  ³                                    *
+ *    ³  ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ  ³                                    *
+ *    ³                  [Send Message]                   ³                                    *
+ *    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ                                    *
+ *                                                                                             *
+ * INPUT:                                                                                      *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * OUTPUT:                                                                                     *
+ *    -1 = cancel, 0 = OK, 1 = New net game requested                                          *
+ *                                                                                             *
+ * WARNINGS:                                                                                   *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/14/1995 BR : Created.                                                                  *
  *=============================================================================================*/
 static int Net_Join_Dialog(void)
 {
@@ -1937,17 +1937,17 @@ static int Net_Join_Dialog(void)
 /***************************************************************************
  * Clear_Game_List -- Clears the game-name listbox & 'Games' Vector        *
  *                                                                         *
- * Assumes each entry in 'Games' & the list box have been allocated		   *
- * separately.																				   *
+ * Assumes each entry in 'Games' & the list box have been allocated        *
+ * separately.                                                             *
  *                                                                         *
  * INPUT:                                                                  *
- *		gamelist		ptr to list box													   *
+ *    gamelist    ptr to list box                                          *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none																					   *
+ *    none                                                                 *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none																					   *
+ *    none                                                                 *
  *                                                                         *
  * HISTORY:                                                                *
  *=========================================================================*/
@@ -1978,19 +1978,19 @@ static void Clear_Game_List (ListClass *gamelist)
 
 
 /***************************************************************************
- * Clear_Player_List -- Clears the player-name listbox & Vector     		   *
+ * Clear_Player_List -- Clears the player-name listbox & Vector            *
  *                                                                         *
- * Assumes each entry in 'Players' & the list box have been allocated		*
- * separately.																				   *
+ * Assumes each entry in 'Players' & the list box have been allocated      *
+ * separately.                                                             *
  *                                                                         *
  * INPUT:                                                                  *
- *		playerlist		ptr to list box												   *
+ *    playerlist     ptr to list box                                       *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none																					   *
+ *    none                                                                 *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none																					   *
+ *    none                                                                 *
  *                                                                         *
  * HISTORY:                                                                *
  *=========================================================================*/
@@ -2023,21 +2023,21 @@ static void Clear_Player_List (ListClass *playerlist)
 /***************************************************************************
  * Request_To_Join -- Sends a JOIN request packet to game owner            *
  *                                                                         *
- * Regardless of the return code, the Join Dialog will need to be redrawn	*
- * after calling this routine.															*
+ * Regardless of the return code, the Join Dialog will need to be redrawn  *
+ * after calling this routine.                                             *
  *                                                                         *
  * INPUT:                                                                  *
- *		playername		player's name														*
- *		join_index		index of game we're joining									*
- *		playerlist		listbox containing other players' names					*
- *		house				requested house													*
- *		color				requested color													*
+ *    playername     player's name                                         *
+ *    join_index     index of game we're joining                           *
+ *    playerlist     listbox containing other players' names               *
+ *    house          requested house                                       *
+ *    color          requested color                                       *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = Packet sent, 0 = wasn't														*
+ *    1 = Packet sent, 0 = wasn't                                          *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *=========================================================================*/
@@ -2128,29 +2128,29 @@ static int Request_To_Join (char *playername, int join_index, ListClass *playerl
 
 
 /***********************************************************************************************
- * Send_Join_Queries -- sends queries for the Join Dialog												  *
- *                                                                         						  *
- * This routine [re]sends the queries related to the Join Dialog:										  *
- * - NET_QUERY_GAME																									  *
- * - NET_QUERY_PLAYER for the game currently selected (if there is one)								  *
- *																															  *
- * The queries are "staggered" in time so they aren't all sent at once; otherwise, we'd		  *
- * be inundated with reply packets & we'd miss some (even though the replies will require		  *
- * ACK's).																												  *
- *                                                                         						  *
- * INPUT:                                                                  						  *
- *		curgame		index of currently-selected game; -1 = none											  *
- *		gamenow		if 1, will immediately send the game query											  *
- *		playernow	if 1, will immediately send the player query for currently-selected game	  *
- *                                                                         						  *
- * OUTPUT:                                                                 						  *
- *		none.																												  *
- *                                                                         						  *
- * WARNINGS:                                                               						  *
- *		none.																												  *
- *                                                                         						  *
- * HISTORY:                                                                						  *
- *   02/14/1995 BR : Created.                                              						  *
+ * Send_Join_Queries -- sends queries for the Join Dialog                                      *
+ *                                                                                             *
+ * This routine [re]sends the queries related to the Join Dialog:                              *
+ * - NET_QUERY_GAME                                                                            *
+ * - NET_QUERY_PLAYER for the game currently selected (if there is one)                        *
+ *                                                                                             *
+ * The queries are "staggered" in time so they aren't all sent at once; otherwise, we'd        *
+ * be inundated with reply packets & we'd miss some (even though the replies will require      *
+ * ACK's).                                                                                     *
+ *                                                                                             *
+ * INPUT:                                                                                      *
+ *    curgame     index of currently-selected game; -1 = none                                  *
+ *    gamenow     if 1, will immediately send the game query                                   *
+ *    playernow   if 1, will immediately send the player query for currently-selected game     *
+ *                                                                                             *
+ * OUTPUT:                                                                                     *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * WARNINGS:                                                                                   *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/14/1995 BR : Created.                                                                  *
  *   04/15/1995 BRR : Created.                                                                 *
  *=============================================================================================*/
 static void Send_Join_Queries(int curgame, int gamenow, int playernow)
@@ -2209,40 +2209,40 @@ static void Send_Join_Queries(int curgame, int gamenow, int playernow)
 
 
 /***********************************************************************************************
- * Get_Join_Responses -- sends queries for the Join Dialog												  *
- *                                                                         						  *
- * This routine polls the Global Channel to see if there are any incoming packets;				  *
- * if so, it processes them.  This routine can change the state of the Join Dialog, or			  *
- * the contents of the list boxes, based on what the packet is.										  *
- *                                                                         						  *
- * The list boxes are passed in as pointers; they can't be made globals, because they			  *
- * can't be constructed, because they require shape pointers to the arrow buttons, and			  *
- * the mix files won't have been initialized when the global variables' constructors are		  *
- * called.																												  *
- *                                                                         						  *
- * This routine sets the globals 																				  *
- *		MPlayerHouse			(from NET_CONFIRM_JOIN)															  *
- *		MPlayerColorIdx		(from NET_CONFIRM_JOIN)															  *
- *		MPlayerBases			(from NET_GAME_OPTIONS)															  *
- *		MPlayerTiberium		(from NET_GAME_OPTIONS)															  *
- *		MPlayerGoodies			(from NET_GAME_OPTIONS)															  *
- *		MPlayerGhosts			(from NET_GAME_OPTIONS)															  *
- *		ScenarioIdx				(from NET_GAME_OPTIONS; -1 = scenario not found)						  *
- *                                                                         						  *
- * INPUT:                                                                  						  *
- *		joinstate		current state of Join Dialog															  *
- *		gamelist			list box containing game names														  *
- *		playerlist		list box containing player names for the currently-selected game			  *
- *		join_index		index of the game we've joined or are asking to join							  *
- *                                                                         						  *
- * OUTPUT:                                                                 						  *
- *		Event that occurred																							  *
- *                                                                         						  *
- * WARNINGS:                                                               						  *
- *		none.																												  *
- *                                                                         						  *
- * HISTORY:                                                                						  *
- *   02/14/1995 BR : Created.                                              						  *
+ * Get_Join_Responses -- sends queries for the Join Dialog                                     *
+ *                                                                                             *
+ * This routine polls the Global Channel to see if there are any incoming packets;             *
+ * if so, it processes them.  This routine can change the state of the Join Dialog, or         *
+ * the contents of the list boxes, based on what the packet is.                                *
+ *                                                                                             *
+ * The list boxes are passed in as pointers; they can't be made globals, because they          *
+ * can't be constructed, because they require shape pointers to the arrow buttons, and         *
+ * the mix files won't have been initialized when the global variables' constructors are       *
+ * called.                                                                                     *
+ *                                                                                             *
+ * This routine sets the globals                                                               *
+ *    MPlayerHouse         (from NET_CONFIRM_JOIN)                                             *
+ *    MPlayerColorIdx      (from NET_CONFIRM_JOIN)                                             *
+ *    MPlayerBases         (from NET_GAME_OPTIONS)                                             *
+ *    MPlayerTiberium      (from NET_GAME_OPTIONS)                                             *
+ *    MPlayerGoodies       (from NET_GAME_OPTIONS)                                             *
+ *    MPlayerGhosts        (from NET_GAME_OPTIONS)                                             *
+ *    ScenarioIdx          (from NET_GAME_OPTIONS; -1 = scenario not found)                    *
+ *                                                                                             *
+ * INPUT:                                                                                      *
+ *    joinstate      current state of Join Dialog                                              *
+ *    gamelist       list box containing game names                                            *
+ *    playerlist     list box containing player names for the currently-selected game          *
+ *    join_index     index of the game we've joined or are asking to join                      *
+ *                                                                                             *
+ * OUTPUT:                                                                                     *
+ *    Event that occurred                                                                      *
+ *                                                                                             *
+ * WARNINGS:                                                                                   *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/14/1995 BR : Created.                                                                  *
  *   04/15/1995 BRR : Created.                                                                 *
  *=============================================================================================*/
 static JoinEventType Get_Join_Responses(JoinStateType *joinstate, ListClass *gamelist,
@@ -2616,48 +2616,48 @@ CCDebugString ("C&C95 - Received the 'GO' packet\n");
 
 
 /***********************************************************************************************
- * Net_New_Dialog -- lets user start a new game																  *
- *                                                                         						  *
- * This dialog shows a list of who's requesting to join this game, and lets						  *
- * the game initiator selectively approve each user.														  *
- *                                                                         						  *
- *    ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿                       						  *
- *    ³              New Network Game              ³                       						  *
- *    ³                                            ³                       						  *
- *    ³     Players               Scenario         ³   													  *
- *    ³ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄ¿   ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄ¿ ³ 														  *
- *    ³ ³ Boffo       ³³   ³ Hell's Kitchen   ³³ ³ 														  *
- *    ³ ³ Bozo        ÃÄ´   ³ Heaven's Gate    ÃÄ´ ³														  *
- *    ³ ³ Bonzo       ³ ³   ³      ...         ³ ³ ³														  *
- *    ³ ³             ÃÄ´   ³                  ÃÄ´ ³ 														  *
- *    ³ ³             ³³   ³                  ³³ ³ 														  *
- *    ³ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÙ   ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÙ ³ 														  *
- *    ³     [Reject]             Count:--- ##      ³														  *
- *    ³                          Level:--- ##      ³                       						  *
- *    ³                                            ³                       						  *
- *    ³               Credits: _____               ³                             				  *
- *    ³       [  Bases   ]   [   Crates   ]        ³                          					  *
- *    ³       [ Tiberium ]   [ AI Players ]        ³                           					  *
- *    ³                                            ³                       						  *
- *    ³              [OK]    [Cancel]              ³                       						  *
- *    ³  ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿   ³                       						  *
- *    ³  ³                                     ³   ³                       						  *
- *    ³  ³                                     ³   ³                       						  *
- *    ³  ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ   ³                       						  *
- *    ³               [Send Message]               ³                       						  *
- *    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ                       						  *
- *                                                                         						  *
- * INPUT:                                                                  						  *
- *		none.																												  *
- *                                                                         						  *
- * OUTPUT:                                                                 						  *
- *		true = success, false = cancel																			  *
- *                                                                         						  *
- * WARNINGS:                                                               						  *
- *		MPlayerName & MPlayerGameName must contain this player's name.									  *
- *                                                                         						  *
- * HISTORY:                                                                						  *
- *   02/14/1995 BR : Created.                                              						  *
+ * Net_New_Dialog -- lets user start a new game                                                *
+ *                                                                                             *
+ * This dialog shows a list of who's requesting to join this game, and lets                    *
+ * the game initiator selectively approve each user.                                           *
+ *                                                                                             *
+ *    ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿                                           *
+ *    ³              New Network Game              ³                                           *
+ *    ³                                            ³                                           *
+ *    ³     Players               Scenario         ³                                           *
+ *    ³ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄ¿   ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄ¿ ³                                           *
+ *    ³ ³ Boffo       ³³   ³ Hell's Kitchen   ³³ ³                                           *
+ *    ³ ³ Bozo        ÃÄ´   ³ Heaven's Gate    ÃÄ´ ³                                           *
+ *    ³ ³ Bonzo       ³ ³   ³      ...         ³ ³ ³                                           *
+ *    ³ ³             ÃÄ´   ³                  ÃÄ´ ³                                           *
+ *    ³ ³             ³³   ³                  ³³ ³                                           *
+ *    ³ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÙ   ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÙ ³                                           *
+ *    ³     [Reject]             Count:--- ##      ³                                           *
+ *    ³                          Level:--- ##      ³                                           *
+ *    ³                                            ³                                           *
+ *    ³               Credits: _____               ³                                           *
+ *    ³       [  Bases   ]   [   Crates   ]        ³                                           *
+ *    ³       [ Tiberium ]   [ AI Players ]        ³                                           *
+ *    ³                                            ³                                           *
+ *    ³              [OK]    [Cancel]              ³                                           *
+ *    ³  ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿   ³                                           *
+ *    ³  ³                                     ³   ³                                           *
+ *    ³  ³                                     ³   ³                                           *
+ *    ³  ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ   ³                                           *
+ *    ³               [Send Message]               ³                                           *
+ *    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ                                           *
+ *                                                                                             *
+ * INPUT:                                                                                      *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * OUTPUT:                                                                                     *
+ *    true = success, false = cancel                                                           *
+ *                                                                                             *
+ * WARNINGS:                                                                                   *
+ *    MPlayerName & MPlayerGameName must contain this player's name.                           *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/14/1995 BR : Created.                                                                  *
  *=============================================================================================*/
 static int Net_New_Dialog(void)
 {
@@ -3764,19 +3764,19 @@ static int Net_New_Dialog(void)
 /***************************************************************************
  * Get_NewGame_Responses -- processes packets for New Game dialog          *
  *                                                                         *
- * This routine can modify the contents of the given list box, as well		*
- * as the contents of the Players Vector global.									*
+ * This routine can modify the contents of the given list box, as well     *
+ * as the contents of the Players Vector global.                           *
  *                                                                         *
  * INPUT:                                                                  *
- *		playerlist		list of players in this game									*
+ *    playerlist     list of players in this game                          *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		EV_NONE = nothing happened															*
- *		EV_NEW_PLAYER = a new player has joined; false otherwise					*
- *		EV_MESSAGE = a message was received												*
+ *    EV_NONE = nothing happened                                           *
+ *    EV_NEW_PLAYER = a new player has joined; false otherwise             *
+ *    EV_MESSAGE = a message was received                                  *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   04/18/1995 BRR : Created.                                             *
@@ -3963,13 +3963,13 @@ static JoinEventType Get_NewGame_Responses(ColorListClass *playerlist)
  * Compute_Name_CRC -- computes CRC from char string                       *
  *                                                                         *
  * INPUT:                                                                  *
- *		name		string to create CRC for												*
+ *    name     string to create CRC for                                    *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		CRC																						*
+ *    CRC                                                                  *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   06/29/1995 BRR : Created.                                             *
@@ -3994,17 +3994,17 @@ unsigned long Compute_Name_CRC(char *name)
  * Net_Reconnect_Dialog -- Draws/updates the network reconnect dialog      *
  *                                                                         *
  * INPUT:                                                                  *
- *		reconn			1 = reconnect, 0 = waiting for first-time connection	*
- *		fresh				1 = draw from scratch, 0 = only update time counter	*
- *		oldest_index	IPX connection index of oldest connection 				*
- *							(only used for reconnection)									*
- *		timeval			value to print in the countdown field						*
+ *    reconn         1 = reconnect, 0 = waiting for first-time connection  *
+ *    fresh          1 = draw from scratch, 0 = only update time counter   *
+ *    oldest_index   IPX connection index of oldest connection             *
+ *                   (only used for reconnection)                          *
+ *    timeval        value to print in the countdown field                 *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   07/08/1995 BRR : Created.                                             *

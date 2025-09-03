@@ -25,9 +25,9 @@
  *                                                                         *
  *                    File Name : IPX.H                                    *
  *                                                                         *
- *                   Programmer : Barry Nance										*
- * 										 from Client/Server LAN Programming			*
- *											 Westwood-ized by Bill Randolph				*
+ *                   Programmer : Barry Nance                              *
+ *                                from Client/Server LAN Programming       *
+ *                                Westwood-ized by Bill Randolph           *
  *                                                                         *
  *                   Start Date : December 14, 1994                        *
  *                                                                         *

@@ -28,8 +28,8 @@
  *                                                                         *
  *                  Last Update : November 30, 1995 [BRR]                  *
  *                                                                         *
- * The purpose of this class is to contain those variables & routines		*
- * specifically related to a multiplayer game.										*
+ * The purpose of this class is to contain those variables & routines      *
+ * specifically related to a multiplayer game.                             *
  *                                                                         *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 #ifndef SESSION_H

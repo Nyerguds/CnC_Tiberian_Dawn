@@ -29,7 +29,7 @@
  *                  Last Update : April 22, 1996 [PWG]                     *
  *                                                                         *
  * This module takes care of maintaining the field list used to process    *
- * packets.																						*
+ * packets.                                                                *
  *                                                                         *
  *-------------------------------------------------------------------------*
  * Functions:                                                              *

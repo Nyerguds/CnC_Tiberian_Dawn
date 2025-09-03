@@ -23,28 +23,28 @@
  *                                                                         *
  *                 Project Name : Command & Conquer                        *
  *                                                                         *
- *                    File Name : COMBUF.H                               	*
+ *                    File Name : COMBUF.H                                 *
  *                                                                         *
  *                   Programmer : Bill Randolph                            *
  *                                                                         *
  *                   Start Date : December 19, 1994                        *
  *                                                                         *
- *                  Last Update : April 1, 1995   [BR]                 		*
+ *                  Last Update : April 1, 1995   [BR]                     *
  *                                                                         *
  *-------------------------------------------------------------------------*
  *                                                                         *
- * This class's job is to store outgoing messages & incoming messages, 		*
- * and serves as a storage area for various flags for ACK & Retry logic.	*
+ * This class's job is to store outgoing messages & incoming messages,     *
+ * and serves as a storage area for various flags for ACK & Retry logic.   *
  *                                                                         *
- * This class stores buffers in a non-sequenced order; it allows freeing	*
- * any entry, so the buffers can be kept clear, even if packets come in		*
- * out of order.																				*
+ * This class stores buffers in a non-sequenced order; it allows freeing   *
+ * any entry, so the buffers can be kept clear, even if packets come in    *
+ * out of order.                                                           *
  *                                                                         *
- * The class also contains routines to maintain a cumulative response time	*
- * for this queue.  It's up to the caller to call Add_Delay() whenever		*
- * it detects that an outgoing message has been ACK'd; this class adds		*
- * that delay into a computed average delay over the last few message 		*
- * delays.																						*
+ * The class also contains routines to maintain a cumulative response time *
+ * for this queue.  It's up to the caller to call Add_Delay() whenever     *
+ * it detects that an outgoing message has been ACK'd; this class adds     *
+ * that delay into a computed average delay over the last few message      *
+ * delays.                                                                 *
  *                                                                         *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 

@@ -115,20 +115,20 @@ Marker2		DW 2222h		; placeholder to find data end
 
 
 ;***************************************************************************
-;* IPXHandler -- IPX callback routine					   *
+;* IPXHandler -- IPX callback routine                                      *
 ;*                                                                         *
 ;* This routine is assembled as a stand-alone executable, then loaded      *
 ;* into low DOS memory by a protected-mode application.                    *
 ;*                                                                         *
 ;* INPUT:                                                                  *
-;*	none.								   *
-;*									   *
-;* OUTPUT: 			                                           *
-;*	none.								   *
+;*      none.                                                              *
+;*                                                                         *
+;* OUTPUT:                                                                 *
+;*      none.                                                              *
 ;*                                                                         *
 ;* WARNINGS:                                                               *
-;*	none.								   *
-;* 									   *
+;*      none.                                                              *
+;*                                                                         *
 ;* HISTORY:                                                                *
 ;*   04/07/1995 BRR : Created.                                             *
 ;*=========================================================================*

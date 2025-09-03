@@ -22,7 +22,7 @@
  ***********************************************************************************************
  *                                                                                             *
  *                 Project Name : Command & Conquer                                            *
- *                                              name in                                                *
+ *                                                                                             *
  *                    File Name : AADATA.CPP                                                   *
  *                                                                                             *
  *                   Programmer : Joe L. Bostic                                                *
@@ -30,7 +30,7 @@
  *                   Start Date : July 22, 1994                                                *
  *                                                                                             *
  *                  Last Update : August 7, 1995 [JLB]                                         *
- *                               Determines                                                              *
+ *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  *   AircraftTypeClass::AircraftTypeClass -- Constructor for aircraft objects.                 *
@@ -808,7 +808,8 @@ void AircraftTypeClass::Init(TheaterType theater)
 /***********************************************************************************************
  * AircraftTypeClass::After_Init -- Load up extra things after the map / savegame is loaded    *
  *                                                                                             *
- *                                                                                             *
+ *    This routine will make additional tweaks to the data after a game is loaded.             *
+ *    Specifically, it initialises the Orca laser weapon of the PATSUX logic.                  *
  *                                                                                             *
  * INPUT:    Nothing                                                                           *
  *                                                                                             *
@@ -824,7 +825,11 @@ void AircraftTypeClass::After_Init()
 	if (PatsuxDefault == WEAPON_NONE) {
 		PatsuxDefault = OrcaHeli.Primary;
 	}
-	((AircraftTypeClass&)AircraftTypeClass::As_Reference(AIRCRAFT_ORCA)).Primary = Patsux ? WEAPON_OBELISK_LASER : PatsuxDefault;
+	AircraftTypeClass & orca = ((AircraftTypeClass&)AircraftTypeClass::As_Reference(AIRCRAFT_ORCA));
+	WeaponType weapon = Patsux ? WEAPON_OBELISK_LASER : PatsuxDefault;
+	if (orca.Primary != weapon) {
+		orca.Primary = weapon;
+	}
 }
 
 

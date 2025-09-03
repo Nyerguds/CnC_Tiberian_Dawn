@@ -232,7 +232,7 @@ bool TempleIoned = false;
 
 
 /***************************************************************************
-**	Nyerguds's C&C Patch Project:
+**	Nyerguds's C&C Patch Project v1.04
 **	Special logic for giving the ORCA the Obelisk laser.
 */
 WeaponType PatsuxDefault = WEAPON_NONE;
@@ -240,7 +240,7 @@ bool Patsux = false;
 
 
 /***************************************************************************
-**	Nyerguds's C&C Patch Project:
+**	Nyerguds's C&C Patch Project v1.04
 **	Special logic to allow full multiplayer tech in singleplayer.
 */
 bool RemoveBuildExceptions = false;

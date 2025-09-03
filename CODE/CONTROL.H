@@ -17,22 +17,22 @@
 */
 
 /* $Header:   F:\projects\c&c\vcs\code\control.h_v   2.18   16 Oct 1995 16:46:08   JOE_BOSTIC  $ */
-/*********************************************************************************************** 
- ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               *** 
- *********************************************************************************************** 
- *                                                                                             * 
- *                 Project Name : Command & Conquer                                            * 
- *                                                                                             * 
- *                    File Name : CONTROL.H                                                    * 
- *                                                                                             * 
- *                   Programmer : Joe L. Bostic                                                * 
- *                                                                                             * 
- *                   Start Date : 01/15/95                                                     * 
- *                                                                                             * 
- *                  Last Update : January 15, 1995 [JLB]                                       * 
- *                                                                                             * 
- *---------------------------------------------------------------------------------------------* 
- * Functions:                                                                                  * 
+/***********************************************************************************************
+ ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               ***
+ ***********************************************************************************************
+ *                                                                                             *
+ *                 Project Name : Command & Conquer                                            *
+ *                                                                                             *
+ *                    File Name : CONTROL.H                                                    *
+ *                                                                                             *
+ *                   Programmer : Joe L. Bostic                                                *
+ *                                                                                             *
+ *                   Start Date : 01/15/95                                                     *
+ *                                                                                             *
+ *                  Last Update : January 15, 1995 [JLB]                                       *
+ *                                                                                             *
+ *---------------------------------------------------------------------------------------------*
+ * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #ifndef CONTROL_H
@@ -41,16 +41,16 @@
 #include	"gadget.h"
 
 /***************************************************************************
- * ControlClass -- Region tracking class									         *
+ * ControlClass -- Region tracking class                                   *
  *                                                                         *
- * INPUT:      int x -- x position of gadget											*
- *					int y -- y position of gadget											*
- *					int w -- width of gadget												*							
- *					int h -- height of gadget												*							
- *					UWORD flags -- see enumeration choices								*							
+ * INPUT:      int x -- x position of gadget                               *
+ *             int y -- y position of gadget                               *
+ *             int w -- width of gadget                                    *
+ *             int h -- height of gadget                                   *
+ *             UWORD flags -- see enumeration choices                      *
  *                                                                         *
- * OUTPUT:     0 = new scenario created, -1 = not									*
- * WARNINGS:	This class is Abstract (cannot make an instance of it)      *
+ * OUTPUT:     0 = new scenario created, -1 = not                          *
+ * WARNINGS:   This class is Abstract (cannot make an instance of it)      *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/03/1995 MML : Created.                                             *

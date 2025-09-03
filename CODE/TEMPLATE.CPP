@@ -44,7 +44,7 @@
  *   TemplateClass::Write_INI -- Writes the template objects to the INI file.                  *
  *   TemplateClass::delete -- Returns a template object to the pool.                           *
  *   TemplateClass::new -- Allocates a template object from pool                               *
- *   TemplateClass::Validate -- validates template pointer												  *
+ *   TemplateClass::Validate -- validates template pointer                                     *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include	"function.h"
@@ -58,16 +58,16 @@ void * TemplateClass::VTable;
 
 
 /***********************************************************************************************
- * TemplateClass::Validate -- validates template pointer													  *
+ * TemplateClass::Validate -- validates template pointer                                       *
  *                                                                                             *
  * INPUT:                                                                                      *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *		1 = ok, 0 = error																								  *
+ *    1 = ok, 0 = error                                                                        *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/09/1995 BRR : Created.                                                                 *

@@ -29,20 +29,20 @@
  *                                                                         *
  *                   Start Date : December 19, 1994                        *
  *                                                                         *
- *                  Last Update : April 9, 1995   [BR]                 		*
+ *                  Last Update : April 9, 1995   [BR]                     *
  *                                                                         *
  *-------------------------------------------------------------------------*
  *                                                                         *
- * This class provides a "Sequenced" ACK/Retry approach to packet				*
- * transmission.  It waits until the last packet has been ACK'd before		*
- * sending another packet.  Thus, it guarantees order of delivery of			*
- * packets, but its performance will be slower than the Non-Sequenced		*
- * approach.																					*
- *																									*
- *	A derived class must provide:															*
- * - Init: Initialization of any hardware-specific values.						*
- * - Send: a hardware-dependent send routine.										*
- *																									*
+ * This class provides a "Sequenced" ACK/Retry approach to packet          *
+ * transmission.  It waits until the last packet has been ACK'd before     *
+ * sending another packet.  Thus, it guarantees order of delivery of       *
+ * packets, but its performance will be slower than the Non-Sequenced      *
+ * approach.                                                               *
+ *                                                                         *
+ * A derived class must provide:                                           *
+ * - Init: Initialization of any hardware-specific values.                 *
+ * - Send: a hardware-dependent send routine.                              *
+ *                                                                         *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #ifndef SEQCONN_H

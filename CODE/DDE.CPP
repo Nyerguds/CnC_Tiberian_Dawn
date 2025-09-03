@@ -22,7 +22,7 @@
  *                                                                         *
  *                 Project Name : Dynamic Data Encapsulation               *
  *                                                                         *
- *                    File Name : DDE.CPP		                              *
+ *                    File Name : DDE.CPP                                  *
  *                                                                         *
  *                   Programmer : Steve Wetherill                          *
  *                                                                         *
@@ -38,7 +38,7 @@
  *   Instance_Class::Register_Servers -- registers a local DDE DNS service *
  *   Instance_Class::Cleanup_App -- currently does nothing                 *
  *   Instance_Class::Test_Server_Running -- does a trial connect to remote *
- *	  Instance_Class::Open_Poke_Connection -- pokes some data to server		*
+ *   Instance_Class::Open_Poke_Connection -- pokes some data to server     *
  *   Instance_Class::Close_Poke_Connectionp -- closes connection to remote *
  *   Instance_Class::Poke_Server -- sends a chunk of data to remote        *
  *   Instance_Class::dde_callback -- processes DDE transactions            *
@@ -62,17 +62,17 @@ static BOOL CALLBACK	(*Instance_Class::callback) (
 			) = NULL;
 
 /***************************************************************************
- * Instance_Class::InstanceClass -- class constructor              			*
+ * Instance_Class::InstanceClass -- class constructor                      *
  *                                                                         *
  * INPUT:                                                                  *
- *		name1		null terminated ASCII client name									*
- *		name1		null terminated ASCII server name									*
+ *    name1    null terminated ASCII client name                           *
+ *    name1    null terminated ASCII server name                           *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		dde_error = TRUE if error occurs when initializing DDE					*
+ *    dde_error = TRUE if error occurs when initializing DDE               *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   6/1/1996 SW : Created.                                                *
@@ -126,16 +126,16 @@ Instance_Class::Instance_Class( LPSTR name1, LPSTR name2 )
 }
 
 /***************************************************************************
- * Instance_Class::~Instance_Class -- class destructor	              		*
+ * Instance_Class::~Instance_Class -- class destructor                     *
  *                                                                         *
  * INPUT:                                                                  *
  *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   6/1/1996 SW : Created.                                                *
@@ -147,17 +147,17 @@ Instance_Class::~Instance_Class()
 }
 
 /***************************************************************************
- * Instance_Class::Enable_Callback -- enables user callback						*
+ * Instance_Class::Enable_Callback -- enables user callback                *
  *                                                                         *
  * INPUT:                                                                  *
- *    TRUE = enable poke processing														*
- *    FALSE = disable poke processing													*
+ *    TRUE = enable poke processing                                        *
+ *    FALSE = disable poke processing                                      *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		echos the input																		*
+ *    echos the input                                                      *
  *                                                                         *
  * WARNINGS:                                                               *
- *		user callback must be explicitly enabled. Disbabled by default.		*
+ *    user callback must be explicitly enabled. Disbabled by default.      *
  *                                                                         *
  * HISTORY:                                                                *
  *   6/1/1996 SW : Created.                                                *
@@ -176,11 +176,11 @@ BOOL	Instance_Class::Enable_Callback( BOOL flag )		// enable or disable callback
  *    BOOL CALLBACK ( *callback_fnc) ( LPBYTE, DWORD) = user poke callbacl *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		TRUE == success																		*
- *		FALSE == failed																		*
+ *    TRUE == success                                                      *
+ *    FALSE == failed                                                      *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   6/1/1996 SW : Created.                                                *
@@ -201,16 +201,16 @@ BOOL	Instance_Class::Register_Server( BOOL CALLBACK ( *callback_fnc) (LPBYTE, lo
  * Instance_Class::Test_Server_Running -- does a trial connect to remote   *
  *                                                                         *
  * INPUT:                                                                  *
- *    name = HSZ string handle of server name.										*
+ *    name = HSZ string handle of server name.                             *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		TRUE == successfully connected to remote										*
- *		FALSE == failed to connect															*
+ *    TRUE == successfully connected to remote                             *
+ *    FALSE == failed to connect                                           *
  *                                                                         *
  * WARNINGS:                                                               *
- *		- Can be called for local or remote server but of course will 			*
- *      fail if a called for local and local server is not "up".				*
- *		- Disconects before exiting.														*
+ *    - Can be called for local or remote server but of course will        *
+ *      fail if a called for local and local server is not "up".           *
+ *    - Disconects before exiting.                                         *
  *                                                                         *
  * HISTORY:                                                                *
  *   6/1/1996 SW : Created.                                                *
@@ -228,18 +228,18 @@ BOOL	Instance_Class::Test_Server_Running( HSZ name )
 }
 
 /***************************************************************************
- *	Instance_Class::Open_Poke_Connection -- open a connection to server		*
+ * Instance_Class::Open_Poke_Connection -- open a connection to server     *
  *                                                                         *
  * INPUT:                                                                  *
- *    name = HSZ server name.																*
+ *    name = HSZ server name.                                              *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		TRUE == successfully opened connection											*
- *		FALSE == failed to connect															*
+ *    TRUE == successfully opened connection                               *
+ *    FALSE == failed to connect                                           *
  *                                                                         *
  * WARNINGS:                                                               *
- *		Can be called for local or remote server but of course will 			*
- *    fail if a called for local and local server is not "up".					*
+ *    Can be called for local or remote server but of course will          *
+ *    fail if a called for local and local server is not "up".             *
  *                                                                         *
  * HISTORY:                                                                *
  *   6/1/1996 SW : Created.                                                *
@@ -261,17 +261,17 @@ BOOL	Instance_Class::Open_Poke_Connection( HSZ name )
 }
 
 /***************************************************************************
- *	Instance_Class::Close_Poke_Connection -- closes poke connection			*
+ * Instance_Class::Close_Poke_Connection -- closes poke connection         *
  *                                                                         *
  * INPUT:                                                                  *
- *    none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		TRUE == successfully closed connection											*
- *		FALSE == failed to close connection for some reason						*
+ *    TRUE == successfully closed connection                               *
+ *    FALSE == failed to close connection for some reason                  *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   6/1/1996 SW : Created.                                                *
@@ -289,18 +289,18 @@ BOOL	Instance_Class::Close_Poke_Connection( void )
 }
 
 /***************************************************************************
- *	Instance_Class::Poke_Server -- pokes some data to server						*
+ * Instance_Class::Poke_Server -- pokes some data to server                *
  *                                                                         *
  * INPUT:                                                                  *
- *    poke_data	points to data to send to remote									*
- *    poke_length	length of buffer to send											*
+ *    poke_data	points to data to send to remote                           *
+ *    poke_length	length of buffer to send                                 *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		TRUE == successfully poked the data												*
- *		FALSE == failed to connect															*
+ *    TRUE == successfully poked the data                                  *
+ *    FALSE == failed to connect                                           *
  *                                                                         *
  * WARNINGS:                                                               *
- *		has a 3 second timeout (change POKE_TIMEOUT, in milliseconds)			*
+ *    has a 3 second timeout (change POKE_TIMEOUT, in milliseconds)        *
  *                                                                         *
  * HISTORY:                                                                *
  *   6/1/1996 SW : Created.                                                *
@@ -330,23 +330,23 @@ BOOL	Instance_Class::Poke_Server( LPBYTE poke_data, DWORD poke_length )
 }
 
 /***************************************************************************
- *	Instance_Class::dde_callback -- callback dde event handler					*
+ * Instance_Class::dde_callback -- callback dde event handler              *
  *                                                                         *
  * INPUT:                                                                  *
- *		dde_event	transaction type														*
- *		uFmt			clipboard data format												*
- *		hconv			handle of the conversation											*
- *		hsz1			handle of a string													*
- *		hsz2			handle of a string													*
- *		hdata			handle of a global memory object									*
- *		dwData1		transaction-specific data											*
- *		dwData2 		transaction-specific data											*
+ *    dde_event   transaction type                                         *
+ *    uFmt        clipboard data format                                    *
+ *    hconv       handle of the conversation                               *
+ *    hsz1        handle of a string                                       *
+ *    hsz2        handle of a string                                       *
+ *    hdata       handle of a global memory object                         *
+ *    dwData1     transaction-specific data                                *
+ *    dwData2     transaction-specific data                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		context specific HDDEDATA object													*
+ *    context specific HDDEDATA object                                     *
  *                                                                         *
  * WARNINGS:                                                               *
- *	  	NOTE: declared as HDDEDATA CALLBACK which means PASCAL parameters		*
+ *    NOTE: declared as HDDEDATA CALLBACK which means PASCAL parameters    *
  *                                                                         *
  * HISTORY:                                                                *
  *   6/1/1996 SW : Created.                                                *

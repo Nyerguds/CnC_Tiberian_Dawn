@@ -17,20 +17,20 @@
 */
 
 /* $Header:   F:\projects\c&c\vcs\code\dial8.h_v   2.18   16 Oct 1995 16:47:28   JOE_BOSTIC  $ */
-/*********************************************************************************************** 
- ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               *** 
- *********************************************************************************************** 
- *                                                                                             * 
- *                 Project Name : Command & Conquer                                            * 
- *                                                                                             * 
- *                    File Name : DIAL8.H                                                      * 
- *                                                                                             * 
- *                   Programmer : Bill Randolph																  *
- *                                                                                             * 
- *                   Start Date : 02/06/95                                                     * 
- *                                                                                             * 
- *                  Last Update : February 6, 1995 [BR]													  *
- *                                                                                             * 
+/***********************************************************************************************
+ ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               ***
+ ***********************************************************************************************
+ *                                                                                             *
+ *                 Project Name : Command & Conquer                                            *
+ *                                                                                             *
+ *                    File Name : DIAL8.H                                                      *
+ *                                                                                             *
+ *                   Programmer : Bill Randolph                                                *
+ *                                                                                             *
+ *                   Start Date : 02/06/95                                                     *
+ *                                                                                             *
+ *                  Last Update : February 6, 1995 [BR]                                        *
+ *                                                                                             *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #ifndef DIAL8_H

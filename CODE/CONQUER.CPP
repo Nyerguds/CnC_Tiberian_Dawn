@@ -34,7 +34,7 @@
  *   CC_Draw_Shape -- Custom draw shape handler.                                               *
  *   Call_Back -- Main game maintenance callback routine.                                      *
  *   Color_Cycle -- Handle the general palette color cycling.                                  *
- *   Disk_Space_Available -- returns bytes of free disk space              						  *
+ *   Disk_Space_Available -- returns bytes of free disk space                                  *
  *   Do_Record_Playback -- handles saving/loading map pos & current object                     *
  *   Fading_Table_Name -- Builds a theater specific fading table name.                         *
  *   Fetch_Techno_Type -- Convert type and ID into TechnoTypeClass pointer.                    *
@@ -964,13 +964,13 @@ static void ShowUIMessage(bool mute, char* message, ...) {
  * Message_Input -- allows inter-player message input processing                               *
  *                                                                                             *
  * INPUT:                                                                                      *
- *		input		key value																							 *
+ *    input    key value                                                                       *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *		none.																												 *
+ *    none.                                                                                    *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *		MAX_MESSAGE_LENGTH has increased over the DOS version. COMPAT_MESSAGE_LENGTH reflects   *                                                                                             *
+ *    MAX_MESSAGE_LENGTH has increased over the DOS version. COMPAT_MESSAGE_LENGTH reflects    *
  *  the length of the DOS message and also the length of the message in the packet header.     *
  *  To allow transmission of longer messages I split the message into COMPAT_MESSAGE_LENGTH-4  *
  *  sized chunks and use the extra space after the zero terminator to specify which segment    *
@@ -2021,16 +2021,16 @@ bool Map_Edit_Loop(void)
 
 
 /***************************************************************************
- * Go_Editor -- Enables/disables the map editor										*
+ * Go_Editor -- Enables/disables the map editor                            *
  *                                                                         *
  * INPUT:                                                                  *
- *		flag		true = go into editor mode; false = go into game mode			*
+ *    flag     true = go into editor mode; false = go into game mode       *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   10/19/1994 BR : Created.                                              *
@@ -2764,7 +2764,7 @@ void Unselect_All(void)
 /***********************************************************************************************
  * Fading_Table_Name -- Builds a theater specific fading table name.                           *
  *                                                                                             *
- *    This routine builds a standard fading table name. This name is dependant on the theater  *
+ *    This routine builds a standard fading table name. This name is dependent on the theater  *
  *    being played, since each theater has its own palette.                                    *
  *                                                                                             *
  * INPUT:   base  -- The base name of this fading table. The base name can be no longer than   *
@@ -4084,7 +4084,7 @@ bool Force_CD_Available(int cd)
 /***************************************************************************
  * DISK_SPACE_AVAILABLE -- returns bytes of free disk space                *
  *                                                                         *
- * INPUT:		none                                                        *
+ * INPUT:      none                                                        *
  *                                                                         *
  * OUTPUT:     returns amount of free disk space                           *
  *                                                                         *
@@ -4112,13 +4112,13 @@ unsigned long Disk_Space_Available(void)
  * Validate_Error -- prints an error message when an object fails validation                   *
  *                                                                                             *
  * INPUT:                                                                                      *
- *		name		name of object type that failed																  *
+ *    name     name of object type that failed                                                 *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/15/1995 BRR : Created.                                                                 *
@@ -4139,14 +4139,14 @@ void Validate_Error(char *name)
  * Do_Record_Playback -- handles saving/loading map pos & current object                       *
  *                                                                                             *
  * INPUT:                                                                                      *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *		none.																												  *
- *                                                                                              *
+ *    none.                                                                                    *
+ *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/15/1995 BRR : Created.                                                                 *
  *=============================================================================================*/
@@ -4266,9 +4266,9 @@ static void Do_Record_Playback(void)
 	}
 }
 /***************************************************************************
- * HIRES_RETRIEVE -- retrieves a resolution dependant file						*
+ * HIRES_RETRIEVE -- retrieves a resolution dependent file                 *
  *                                                                         *
- * INPUT:		char * file name of the file to retrieve							*
+ * INPUT:      char * file name of the file to retrieve                    *
  *                                                                         *
  * OUTPUT:     none                                                        *
  *                                                                         *

@@ -17,28 +17,28 @@
 */
 
 /* $Header:   F:\projects\c&c\vcs\code\queue.h_v   2.16   16 Oct 1995 16:45:50   JOE_BOSTIC  $ */
-/*********************************************************************************************** 
- ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               *** 
- *********************************************************************************************** 
- *                                                                                             * 
- *                 Project Name : Command & Conquer                                            * 
- *                                                                                             * 
- *                    File Name : QUEUE.H                                                      * 
- *                                                                                             * 
- *                   Programmer : Joe L. Bostic                                                * 
- *                                                                                             * 
- *                   Start Date : 12/08/94                                                     * 
- *                                                                                             * 
- *                  Last Update : December 9, 1994 [JLB]                                       * 
- *                                                                                             * 
- *---------------------------------------------------------------------------------------------* 
- * Functions:                                                                                  * 
- *   QueueClass<T,size>::Add -- Add object to queue.                                           * 
- *   QueueClass<T,size>::First -- Fetches reference to first object in list.                   * 
- *   QueueClass<T,size>::Init -- Initializes queue to empty state.                             * 
- *   QueueClass<T,size>::Next -- Throws out the head of the line.                              * 
- *   QueueClass<T,size>::operator[] -- Fetches reference to sub object in queue.               * 
- *   QueueClass<T,size>::QueueClass -- Default constructor for QueueClass objects.             * 
+/***********************************************************************************************
+ ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               ***
+ ***********************************************************************************************
+ *                                                                                             *
+ *                 Project Name : Command & Conquer                                            *
+ *                                                                                             *
+ *                    File Name : QUEUE.H                                                      *
+ *                                                                                             *
+ *                   Programmer : Joe L. Bostic                                                *
+ *                                                                                             *
+ *                   Start Date : 12/08/94                                                     *
+ *                                                                                             *
+ *                  Last Update : December 9, 1994 [JLB]                                       *
+ *                                                                                             *
+ *---------------------------------------------------------------------------------------------*
+ * Functions:                                                                                  *
+ *   QueueClass<T,size>::Add -- Add object to queue.                                           *
+ *   QueueClass<T,size>::First -- Fetches reference to first object in list.                   *
+ *   QueueClass<T,size>::Init -- Initializes queue to empty state.                             *
+ *   QueueClass<T,size>::Next -- Throws out the head of the line.                              *
+ *   QueueClass<T,size>::operator[] -- Fetches reference to sub object in queue.               *
+ *   QueueClass<T,size>::QueueClass -- Default constructor for QueueClass objects.             *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #ifndef QUEUE_H
@@ -118,20 +118,20 @@ class QueueClass
 };
 
 
-/*********************************************************************************************** 
- * QueueClass<T,size>::QueueClass -- Default constructor for QueueClass objects.               * 
- *                                                                                             * 
- *    This default constructor for QueueClass objects initializes the queue to an empty        * 
- *    state.                                                                                   * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   12/09/1994 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * QueueClass<T,size>::QueueClass -- Default constructor for QueueClass objects.               *
+ *                                                                                             *
+ *    This default constructor for QueueClass objects initializes the queue to an empty        *
+ *    state.                                                                                   *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   12/09/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
 template<class T, int size> 
 inline QueueClass<T,size>::QueueClass(void) : Count(0)
@@ -140,19 +140,19 @@ inline QueueClass<T,size>::QueueClass(void) : Count(0)
 }	
 
 
-/*********************************************************************************************** 
- * QueueClass<T,size>::Init -- Initializes queue to empty state.                               * 
- *                                                                                             * 
- *    This function resets the queue to an empty state.                                        * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   12/09/1994 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * QueueClass<T,size>::Init -- Initializes queue to empty state.                               *
+ *                                                                                             *
+ *    This function resets the queue to an empty state.                                        *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   12/09/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
 template<class T, int size> 
 inline void QueueClass<T,size>::Init(void)
@@ -163,20 +163,20 @@ inline void QueueClass<T,size>::Init(void)
 }	
 
 
-/*********************************************************************************************** 
- * QueueClass<T,size>::Add -- Add object to queue.                                             * 
- *                                                                                             * 
- *    This function is used to add an object to the tail of the line. If the queue cannot      * 
- *    accept any more entries, then the object won't be added and false will be returned.      * 
- *                                                                                             * 
- * INPUT:   object   -- The object that is to be added to the queue.                           * 
- *                                                                                             * 
- * OUTPUT:  bool; Was the object added successfully?                                           * 
- *                                                                                             * 
- * WARNINGS:   If the queue is full, then the object won't be added. Be sure to check for this.* 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   12/09/1994 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * QueueClass<T,size>::Add -- Add object to queue.                                             *
+ *                                                                                             *
+ *    This function is used to add an object to the tail of the line. If the queue cannot      *
+ *    accept any more entries, then the object won't be added and false will be returned.      *
+ *                                                                                             *
+ * INPUT:   object   -- The object that is to be added to the queue.                           *
+ *                                                                                             *
+ * OUTPUT:  bool; Was the object added successfully?                                           *
+ *                                                                                             *
+ * WARNINGS:   If the queue is full, then the object won't be added. Be sure to check for this.*
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   12/09/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
 template<class T, int size>
 inline int QueueClass<T,size>::Add(T const &q)
@@ -193,22 +193,22 @@ inline int QueueClass<T,size>::Add(T const &q)
 }
 
 
-/*********************************************************************************************** 
- * QueueClass<T,size>::Next -- Throws out the head of the line.                                * 
- *                                                                                             * 
- *    This routine is used to discard the object at the head of the line. All remaining        * 
- *    objects "move up" one. No actual movement occurs, merely the index is adjusted, but      * 
- *    the affect is that the next oldest object in the queue will now be returned with the     * 
- *    next call to the First() function.                                                       * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  Returns the number of object remaining in the queue.                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   12/09/1994 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * QueueClass<T,size>::Next -- Throws out the head of the line.                                *
+ *                                                                                             *
+ *    This routine is used to discard the object at the head of the line. All remaining        *
+ *    objects "move up" one. No actual movement occurs, merely the index is adjusted, but      *
+ *    the affect is that the next oldest object in the queue will now be returned with the     *
+ *    next call to the First() function.                                                       *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns the number of object remaining in the queue.                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   12/09/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
 template<class T, int size>
 inline int QueueClass<T,size>::Next(void)
@@ -221,25 +221,25 @@ inline int QueueClass<T,size>::Next(void)
 }	
 
 
-/*********************************************************************************************** 
- * QueueClass<T,size>::operator[] -- Fetches reference to sub object in queue.                 * 
- *                                                                                             * 
- *    Use this routine to examine individual objects within the queue. The oldest object in    * 
- *    the queue is referenced by an index value of zero. The newest object in the queue is     * 
- *    referenced by a value of Count-1. If there are no objects in the queue, then this        * 
- *    operator is undefined. Although this operator allows examination of the queue, there is  * 
- *    no corresponding ability to insert or delete objects from the middle of the queue.       * 
- *                                                                                             * 
- * INPUT:   index -- The index into the queue of objects. Valid values range from zero to      * 
- *                   Count-1. All other values return an undefined reference!                  * 
- *                                                                                             * 
- * OUTPUT:  Returns with a reference to the object indicated by the index.                     * 
- *                                                                                             * 
- * WARNINGS:   Check to make sure that Count is not zero before using this operator. Failure   * 
- *             to do so will return a reference to an undefined object.                        * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   12/09/1994 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * QueueClass<T,size>::operator[] -- Fetches reference to sub object in queue.                 *
+ *                                                                                             *
+ *    Use this routine to examine individual objects within the queue. The oldest object in    *
+ *    the queue is referenced by an index value of zero. The newest object in the queue is     *
+ *    referenced by a value of Count-1. If there are no objects in the queue, then this        *
+ *    operator is undefined. Although this operator allows examination of the queue, there is  *
+ *    no corresponding ability to insert or delete objects from the middle of the queue.       *
+ *                                                                                             *
+ * INPUT:   index -- The index into the queue of objects. Valid values range from zero to      *
+ *                   Count-1. All other values return an undefined reference!                  *
+ *                                                                                             *
+ * OUTPUT:  Returns with a reference to the object indicated by the index.                     *
+ *                                                                                             *
+ * WARNINGS:   Check to make sure that Count is not zero before using this operator. Failure   *
+ *             to do so will return a reference to an undefined object.                        *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   12/09/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
 template<class T, int size>
 inline T & QueueClass<T,size>::operator[](int index)
@@ -248,23 +248,23 @@ inline T & QueueClass<T,size>::operator[](int index)
 }	
 
 
-/*********************************************************************************************** 
- * QueueClass<T,size>::First -- Fetches reference to first object in list.                     * 
- *                                                                                             * 
- *    This routine is used to fetch the first object in the list (head of the line). This      * 
- *    object is the oldest in the list. Typical use of this function is to get and process     * 
- *    the first object so that it may be discarded with the Next() function in order to bring  * 
- *    subsequent objects to the first position.                                                * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  Returns with a reference to the oldest object in the queue.                        * 
- *                                                                                             * 
- * WARNINGS:   If there are no objects in the queue, then this function returns an undefined   * 
- *             reference. Be sure to check Count against zero before calling this function.    * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   12/09/1994 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * QueueClass<T,size>::First -- Fetches reference to first object in list.                     *
+ *                                                                                             *
+ *    This routine is used to fetch the first object in the list (head of the line). This      *
+ *    object is the oldest in the list. Typical use of this function is to get and process     *
+ *    the first object so that it may be discarded with the Next() function in order to bring  *
+ *    subsequent objects to the first position.                                                *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with a reference to the oldest object in the queue.                        *
+ *                                                                                             *
+ * WARNINGS:   If there are no objects in the queue, then this function returns an undefined   *
+ *             reference. Be sure to check Count against zero before calling this function.    *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   12/09/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
 template<class T, int size>
 inline T & QueueClass<T,size>::First(void)

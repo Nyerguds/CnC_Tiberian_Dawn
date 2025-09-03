@@ -29,15 +29,15 @@
  *                                                                         *
  *                   Start Date : December 19, 1994                        *
  *                                                                         *
- *                  Last Update : April 3, 1995   [BR]                 		*
+ *                  Last Update : April 3, 1995   [BR]                     *
  *                                                                         *
  *-------------------------------------------------------------------------*
  *                                                                         *
- * This is the Connection Class for a NULL-Modem connection.  It inherits	*
- * a Queue, PacketBuf, timeout variables from ConnectionClass.  It 			*
- * inherits its Send_/Receive_/Get_Packet functions, and the non-sequenced	*
- * ACK/Retry logic in Service_Send_Queue & Service_Recieve_Queue from		*
- * NonSequencedConnClass.																	*
+ * This is the Connection Class for a NULL-Modem connection.  It inherits  *
+ * a Queue, PacketBuf, timeout variables from ConnectionClass.  It         *
+ * inherits its Send_/Receive_/Get_Packet functions, and the non-sequenced *
+ * ACK/Retry logic in Service_Send_Queue & Service_Recieve_Queue from      *
+ * NonSequencedConnClass.                                                  *
  *                                                                         *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 

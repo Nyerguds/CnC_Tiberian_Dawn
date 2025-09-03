@@ -20,17 +20,17 @@
 /***********************************************************************************************
  ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               ***
  ***********************************************************************************************
- *                                                                         						  *
- *                 Project Name : Command & Conquer                        						  *
- *                                                                         						  *
- *                    File Name : LOADDLG.H 	                              						  *
- *                                                                         						  *
- *                   Programmer : Maria Legg, Joe Bostic, Bill Randolph     						  *
- *                                                                         						  *
- *                   Start Date : March 19, 1995															  *
- *                                                                         						  *
- *                  Last Update : March 19, 1995															  *
- *                                                                         						  *
+ *                                                                                             *
+ *                 Project Name : Command & Conquer                                            *
+ *                                                                                             *
+ *                    File Name : LOADDLG.H                                                    *
+ *                                                                                             *
+ *                   Programmer : Maria Legg, Joe Bostic, Bill Randolph                        *
+ *                                                                                             *
+ *                   Start Date : March 19, 1995                                               *
+ *                                                                                             *
+ *                  Last Update : March 19, 1995                                               *
+ *                                                                                             *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #ifndef LOADDLG_H

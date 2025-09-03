@@ -41,7 +41,7 @@
  *   SmudgeClass::Read_INI -- Reads smudge data from an INI file.                              *
  *   SmudgeClass::Write_INI -- Writes the smudge data to an INI file.                          *
  *   SmudgeClass::Disown -- Disowns (removes) a building bib piece.                            *
- *   SmudgeClass::Validate -- validates smudge pointer													  *
+ *   SmudgeClass::Validate -- validates smudge pointer                                         *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include	"function.h"
@@ -57,16 +57,16 @@ HousesType SmudgeClass::ToOwn = HOUSE_NONE;
 
 
 /***********************************************************************************************
- * SmudgeClass::Validate -- validates smudge pointer														  *
+ * SmudgeClass::Validate -- validates smudge pointer                                           *
  *                                                                                             *
  * INPUT:                                                                                      *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *		1 = ok, 0 = error																								  *
+ *    1 = ok, 0 = error                                                                        *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/09/1995 BRR : Created.                                                                 *

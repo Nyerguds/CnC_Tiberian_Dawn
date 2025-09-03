@@ -50,19 +50,19 @@ bool ReadyToQuit = false;
 
 #if (0)
 /***************************************************************************
- * Extract_Shape_Count -- returns # of shapes in the given shape block		*
+ * Extract_Shape_Count -- returns # of shapes in the given shape block     *
  *                                                                         *
- * The # of shapes in a shape block is the first WORD in the block, so		*
- * this is the value returned.															*
- *																									*
+ * The # of shapes in a shape block is the first WORD in the block, so     *
+ * this is the value returned.                                             *
+ *                                                                         *
  * INPUT:                                                                  *
- * buffer	pointer to shape block, created with MAKESHPS.EXE					*
+ * buffer   pointer to shape block, created with MAKESHPS.EXE              *
  *                                                                         *
  * OUTPUT:                                                                 *
- * # shapes in the block																	*
+ * # shapes in the block                                                   *
  *                                                                         *
  * WARNINGS:                                                               *
- *	none																							*
+ * none                                                                    *
  *                                                                         *
  * HISTORY:                                                                *
  *   06/09/1992 JLB : Created.                                             *
@@ -79,17 +79,17 @@ int __cdecl Extract_Shape_Count(VOID const *buffer)
 
 
 /***************************************************************************
- * Extract_Shape -- Gets pointer to shape in given shape block					*
+ * Extract_Shape -- Gets pointer to shape in given shape block             *
  *                                                                         *
  * INPUT:                                                                  *
- * buffer	pointer to shape block, created with MAKESHPS.EXE					*
- * shape		index of shape to get														*
+ * buffer   pointer to shape block, created with MAKESHPS.EXE              *
+ * shape    index of shape to get                                          *
  *                                                                         *
  * OUTPUT:                                                                 *
- * pointer to shape in the shape block													*
+ * pointer to shape in the shape block                                     *
  *                                                                         *
  * WARNINGS:                                                               *
- *	none																							*
+ * none                                                                    *
  *                                                                         *
  * HISTORY:                                                                *
  *   06/09/1992 JLB : Created.                                             *
@@ -795,22 +795,21 @@ void Load_Title_Screen(char *name, GraphicViewPortClass *video_page, unsigned ch
 /***************************************************************************
  * READ_PCX_FILE -- read a pcx file into a Graphic Buffer                  *
  *                                                                         *
- *	GraphicBufferClass* Read_PCX_File (char* name, char* palette ,void *Buff, long size );	*
- *  																								*
+ *                                                                         *
  *                                                                         *
  * INPUT: name is a NULL terminated string of the fromat [xxxx.pcx]        *
  *        palette is optional, if palette != NULL the the color palette of *
- *					 the pcx file will be place in the memory block pointed	   *
- *               by palette.																*
- *			 Buff is optinal, if Buff == NULL a new memory Buffer		 			*
- *					 will be allocated, otherwise the file will be placed 		*
- *					 at location pointd by Buffer;										*
- *			Size is the size in bytes of the memory block pointed by Buff		*
- *				  is also optional;
+ *             the pcx file will be place in the memory block pointed      *
+ *             by palette.                                                 *
+ *        Buff is optinal, if Buff == NULL a new memory Buffer             *
+ *             will be allocated, otherwise the file will be placed        *
+ *             at location pointd by Buffer;                               *
+ *       Size is the size in bytes of the memory block pointed by Buff     *
+ *             is also optional;                                           *
  *                                                                         *
  * OUTPUT: on succes a pointer to a GraphicBufferClass cointaining the     *
  *         pcx file, NULL othewise.                                        *
- *																									*
+ *                                                                         *
  * WARNINGS:                                                               *
  *         Appears to be a comment-free zone                               *
  *                                                                         *

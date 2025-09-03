@@ -36,16 +36,16 @@
  *  Miscellaneous junk related to H2H internet connection.                           *
  *                                                                                   *
  *-----------------------------------------------------------------------------------*
- * Functions:                                                             	 			*
- *  Check_From_WChat -- Interprets start game packet from WChat           	 			*
- *  Read_Game_Options -- Read the game setup options from the wchat packet	 			*
- *  Is_User_WChat_Registered -- retrieve the users wchat entry from registry 			*
- *  Spawn_WChat -- spawns or switches focus to wchat                         			*
- *  Spawn_Registration_App -- spawns the C&C/Planet westwood registration app			*
+ * Functions:                                                                        *
+ *  Check_From_WChat -- Interprets start game packet from WChat                      *
+ *  Read_Game_Options -- Read the game setup options from the wchat packet           *
+ *  Is_User_WChat_Registered -- retrieve the users wchat entry from registry         *
+ *  Spawn_WChat -- spawns or switches focus to wchat                                 *
+ *  Spawn_Registration_App -- spawns the C&C/Planet westwood registration app        *
  *  Do_The_Internet_Menu_Thang -- Handle case where user clicks on 'Internet' button *
- *                                                                         				*
- *                                                                         				*
- *                                                                         				*
+ *                                                                                   *
+ *                                                                                   *
+ *                                                                                   *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 
@@ -222,16 +222,16 @@ void Check_From_WChat(char *wchat_name)
 /***************************************************************************
  * Read_Game_Options -- reads multiplayer game options from disk           *
  *                                                                         *
- * This routine is used for multiplayer games which read the game options	*
- * from disk, rather than through a connection dialog.							*
+ * This routine is used for multiplayer games which read the game options  *
+ * from disk, rather than through a connection dialog.                     *
  *                                                                         *
  * INPUT:                                                                  *
- *		name of C&CSPAWN.INI file. Null if data should be got from DDE server*                                                                         *
+ *    name of C&CSPAWN.INI file. Null if data should be got from DDE server*                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = error																		*
+ *    1 = OK, 0 = error                                                    *
  *                                                                         *
- * WARNINGS:                          \                                     *
- *		none.																						*
+ * WARNINGS:                          \                                    *
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/11/1996 BRR : Created.                                             *

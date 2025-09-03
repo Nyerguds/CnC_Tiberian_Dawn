@@ -39,7 +39,7 @@
  *   MapEditClass::Team_Members -- user picks makeup of a team             *
  *   MapEditClass::Build_Mission_list -- fills in mission list box         *
  *   MapEditClass::Draw_Member -- Draws a member of the team dialog box.   *
- *   MapEditClass::Team_Members -- Team members dialog                     * 
+ *   MapEditClass::Team_Members -- Team members dialog                     *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include "function.h"
@@ -1459,20 +1459,20 @@ enum {
 
 };
 
-/*************************************************************************** 
- * MapEditClass::Team_Members -- Team members dialog                       * 
- *                                                                         * 
- * INPUT:                                                                  * 
- *		house			house to show members for											*
- *                                                                         * 
- * OUTPUT:                                                                 * 
- *		0 = OK, -1 = cancel																	*
- *                                                                         * 
- * WARNINGS:                                                               * 
- *		none.																						*
- *                                                                         * 
- * HISTORY:                                                                * 
- *   04/09/1996 BRR : Created.                                             * 
+/***************************************************************************
+ * MapEditClass::Team_Members -- Team members dialog                       *
+ *                                                                         *
+ * INPUT:                                                                  *
+ *    house       house to show members for                                *
+ *                                                                         *
+ * OUTPUT:                                                                 *
+ *    0 = OK, -1 = cancel                                                  *
+ *                                                                         *
+ * WARNINGS:                                                               *
+ *    none.                                                                *
+ *                                                                         *
+ * HISTORY:                                                                *
+ *   04/09/1996 BRR : Created.                                             *
  *=========================================================================*/
 int MapEditClass::Team_Members(HousesType house)
 {

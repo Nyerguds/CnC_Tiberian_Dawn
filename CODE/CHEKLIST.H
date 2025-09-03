@@ -32,10 +32,10 @@
  *                  Last Update : February 16, 1995   [BR]                 *
  *                                                                         *
  *-------------------------------------------------------------------------*
- *	This class behaves just like the standard list box, except that if the	*
- * first character of a list entry is a space, clicking on it toggles the	*
- * space with a check-mark ('\3').  This makes each entry in the list box	*
- * "toggle-able".																				*
+ * This class behaves just like the standard list box, except that if the  *
+ * first character of a list entry is a space, clicking on it toggles the  *
+ * space with a check-mark ('\3').  This makes each entry in the list box  *
+ * "toggle-able".                                                          *
  *-------------------------------------------------------------------------*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 

@@ -55,14 +55,14 @@ extern "C" {
 }
 
 /*=========================================================================*/
-/* Define some equates for the different graphic routines we will install	*/
-/*		later.																					*/
+/* Define some equates for the different graphic routines we will install  */
+/* later.                                                                  */
 /*=========================================================================*/
 #define HIDBUFF	  ((void *)(0xA0000))
 //#define Size_Of_Region(a, b) a*b
 
 /*=========================================================================*/
-/* Define some Graphic Routines which will only be fixed by these defines	*/
+/* Define some Graphic Routines which will only be fixed by these defines  */
 /*=========================================================================*/
 #define Set_Font_Palette(a) 		Set_Font_Palette_Range(a, 0, 15)
 

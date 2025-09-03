@@ -199,7 +199,7 @@ COORDINATE AnimClass::Sort_Y(void) const
  * AnimClass::Center_Coord -- Determine center of animation.                                   *
  *                                                                                             *
  *    This support function will return the "center" of the animation. The actual coordinate   *
- *    of the animation may be dependant on if the the animation is attached to an object.      *
+ *    of the animation may be dependent on if the the animation is attached to an object.      *
  *    In such a case, it must factor in the object's location.                                 *
  *                                                                                             *
  * INPUT:   none                                                                               *

@@ -87,7 +87,7 @@
  *   UnitClass::UnitClass -- Constructor for units.                                            *
  *   UnitClass::Unlimbo -- Removes unit from stasis.                                           *
  *   UnitClass::Unload_Hovercraft_Process -- Handles unloading hovercraft transport.           *
- *   UnitClass::Validate -- validates unit pointer.														  *
+ *   UnitClass::Validate -- validates unit pointer.                                            *
  *   UnitClass::What_Action -- Determines what action would occur if clicked on object.        *
  *   UnitClass::What_Am_I -- Returns with the RTTI type this object is.                        *
  *   UnitClass::Write_INI -- Writes all the units out to an INI file.                          *
@@ -105,16 +105,16 @@ void * UnitClass::VTable;
 
 
 /***********************************************************************************************
- * UnitClass::Validate -- validates unit pointer.															  *
+ * UnitClass::Validate -- validates unit pointer.                                              *
  *                                                                                             *
  * INPUT:                                                                                      *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *		1 = ok, 0 = error																								  *
+ *    1 = ok, 0 = error                                                                        *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/09/1995 BRR : Created.                                                                 *
@@ -2071,7 +2071,7 @@ void UnitClass::Draw_It(int x, int y, WindowNumberType window)
 			shapenum = TechnoClass::BodyShape[tfacing]+32;
 
 			/*
-			**	The shape to use for the rocket launcher is dependant on the
+			**	The shape to use for the rocket launcher is dependent on the
 			**	ammo remaining.
 			*/
 			if (*this == UNIT_MSAM) {

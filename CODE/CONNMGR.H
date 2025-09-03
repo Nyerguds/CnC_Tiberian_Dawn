@@ -29,38 +29,38 @@
  *                                                                         *
  *                   Start Date : December 19, 1994                        *
  *                                                                         *
- *                  Last Update : April 3, 1995   [BR]                 		*
+ *                  Last Update : April 3, 1995   [BR]                     *
  *                                                                         *
  *-------------------------------------------------------------------------*
  *                                                                         *
- * This is the Connection Manager base class.  This is an abstract base		*
- * class that's just a shell for more functional derived classes.				*
- * The main job of the Connection Manager classes is to parse a "pool" of	*
- * incoming packets, which may be from different computers, and distribute	*
- * those packets to Connection Classes via their Receive_Packet function.	*
+ * This is the Connection Manager base class.  This is an abstract base    *
+ * class that's just a shell for more functional derived classes.          *
+ * The main job of the Connection Manager classes is to parse a "pool" of  *
+ * incoming packets, which may be from different computers, and distribute *
+ * those packets to Connection Classes via their Receive_Packet function.  *
  *                                                                         *
- * This class should be the only access to the network/modem for the			*
- * application, so if the app needs any functions to access the 				*
- * connections or the queue's, the derived versions of this class should	*
- * provide them.																				*
+ * This class should be the only access to the network/modem for the       *
+ * application, so if the app needs any functions to access the            *
+ * connections or the queue's, the derived versions of this class should   *
+ * provide them.                                                           *
  *                                                                         *
- * It's up to the derived class to define:											*
- * - Service:		polling routine; should Service each connection				*
- * - Init:			initialization; should perform hardware-dependent			*
- *						initialization, then Init each connection; this function	*
- *   					isn't defined in this class, since the parameters will 	*
- *						be highly protocol-dependent)										*
- * - Send_Message:sends a packet across the connection (this function 		*
- * 					isn't defined in this class, since the parameters will 	*
- *						be highly protocol-dependent)										*
- * - Get_Message:	gets a message from the connection (this function 			*
- * 					isn't defined in this class, since the parameters will 	*
- *						be highly protocol-dependent)										*
+ * It's up to the derived class to define:                                 *
+ * - Service:     polling routine; should Service each connection          *
+ * - Init:        initialization; should perform hardware-dependent        *
+ *                initialization, then Init each connection; this function *
+ *                isn't defined in this class, since the parameters will   *
+ *                be highly protocol-dependent)                            *
+ * - Send_Message:sends a packet across the connection (this function      *
+ *                isn't defined in this class, since the parameters will   *
+ *                be highly protocol-dependent)                            *
+ * - Get_Message: gets a message from the connection (this function        *
+ *                isn't defined in this class, since the parameters will   *
+ *                be highly protocol-dependent)                            *
  *                                                                         *
- * If the derived class supports multiple connections, it should provide	*
- * functions for creating the connections, associating them with a name		*
- * or ID or both, destroying them, and sending data through all or any		*
- * connection.																					*
+ * If the derived class supports multiple connections, it should provide   *
+ * functions for creating the connections, associating them with a name    *
+ * or ID or both, destroying them, and sending data through all or any     *
+ * connection.                                                             *
  *                                                                         *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 

@@ -25,11 +25,11 @@
  *                                                                                             *
  *                    File Name : BASE.H                                                       *
  *                                                                                             *
- *                   Programmer : Bill Randolph																  *
+ *                   Programmer : Bill Randolph                                                *
  *                                                                                             *
  *                   Start Date : 03/27/95                                                     *
  *                                                                                             *
- *                  Last Update : March 27, 1995															  *
+ *                  Last Update : March 27, 1995                                               *
  *                                                                                             *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 

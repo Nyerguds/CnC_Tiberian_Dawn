@@ -58,18 +58,18 @@
 #ifndef DEMO
 
 /***************************************************************************
- * CommQueueClass::CommQueueClass -- class constructor             			*
+ * CommQueueClass::CommQueueClass -- class constructor                     *
  *                                                                         *
  * INPUT:                                                                  *
- *		numsend		# queue entries for sending										*
- *		numreceive	# queue entries for receiving										*
- *		maxlen		maximum desired packet length, in bytes						*
+ *    numsend     # queue entries for sending                              *
+ *    numreceive  # queue entries for receiving                            *
+ *    maxlen      maximum desired packet length, in bytes                  *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/19/1994 BR : Created.                                              *
@@ -108,16 +108,16 @@ CommQueueClass::CommQueueClass(int numsend, int numreceive, int maxlen)
 
 
 /***************************************************************************
- * CommQueueClass::~CommQueueClass -- class destructor             			*
+ * CommQueueClass::~CommQueueClass -- class destructor                     *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/19/1994 BR : Created.                                              *
@@ -147,13 +147,13 @@ CommQueueClass::~CommQueueClass()
  * CommQueueClass::Init -- initializes this queue                          *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/20/1995 BR : Created.                                              *
@@ -214,14 +214,14 @@ void CommQueueClass::Init(void)
  * CommQueueClass::Queue_Send -- queues a message for sending              *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf			buffer containing the message										*
- *		buflen		length of 'buf'														*
+ *    buf         buffer containing the message                            *
+ *    buflen      length of 'buf'                                          *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = no room in the queue													*
+ *    1 = OK, 0 = no room in the queue                                     *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -265,17 +265,17 @@ int CommQueueClass::Queue_Send(void *buf, int buflen)
 
 
 /***************************************************************************
- * CommQueueClass::UnQueue_Send -- removes next entry from send queue		*
+ * CommQueueClass::UnQueue_Send -- removes next entry from send queue      *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf			buffer to store entry's data in; if NULL, it's discarded	*
- *		buflen		filled in with length of entry retrieved						*
+ *    buf         buffer to store entry's data in; if NULL, it's discarded *
+ *    buflen      filled in with length of entry retrieved                 *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = no entry to retreive													*
+ *    1 = OK, 0 = no entry to retrieve                                     *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -319,13 +319,13 @@ int CommQueueClass::UnQueue_Send(void *buf, int *buflen)
  * CommQueueClass::Next_Send -- gets ptr to next entry in send queue       *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		ptr to entry, NULL if there is none.											*
+ *    ptr to entry, NULL if there is none.                                 *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -343,18 +343,18 @@ SendQueueType * CommQueueClass::Next_Send(void)
 /***************************************************************************
  * CommQueueClass::Get_Send -- gets ptr to queue entry                     *
  *                                                                         *
- * This routine gets a pointer to the indicated queue entry.  The index		*
- * value is relative to the next-accessable queue entry; 0 = get the			*
- * next available queue entry, 1 = get the one behind that, etc.				*
+ * This routine gets a pointer to the indicated queue entry.  The index    *
+ * value is relative to the next-accessable queue entry; 0 = get the       *
+ * next available queue entry, 1 = get the one behind that, etc.           *
  *                                                                         *
  * INPUT:                                                                  *
- *		index		index of entry to get (0 = 1st available)							*
+ *    index    index of entry to get (0 = 1st available)                   *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		ptr to entry																			*
+ *    ptr to entry                                                         *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/21/1994 BR : Created.                                              *
@@ -376,17 +376,17 @@ SendQueueType * CommQueueClass::Get_Send(int index)
 
 
 /***************************************************************************
- * CommQueueClass::Queue_Receive -- queues a received message					*
+ * CommQueueClass::Queue_Receive -- queues a received message              *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf			buffer containing the message										*
- *		buflen		length of 'buf'														*
+ *    buf         buffer containing the message                            *
+ *    buflen      length of 'buf'                                          *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = no room in the queue													*
+ *    1 = OK, 0 = no room in the queue                                     *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -432,17 +432,17 @@ int CommQueueClass::Queue_Receive(void *buf, int buflen)
 
 
 /***************************************************************************
- * CommQueueClass::UnQueue_Receive -- removes next entry from send queue	*
+ * CommQueueClass::UnQueue_Receive -- removes next entry from send queue   *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf			buffer to store entry's data in; if NULL, it's discarded	*
- *		buflen		filled in with length of entry retrieved						*
+ *    buf         buffer to store entry's data in; if NULL, it's discarded *
+ *    buflen      filled in with length of entry retrieved                 *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = no entry to retreive													*
+ *    1 = OK, 0 = no entry to retrieve                                     *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -486,13 +486,13 @@ int CommQueueClass::UnQueue_Receive(void *buf, int *buflen)
  * CommQueueClass::Next_Receive -- gets ptr to next entry in send queue    *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		ptr to entry, NULL if there is none.											*
+ *    ptr to entry, NULL if there is none.                                 *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -510,18 +510,18 @@ ReceiveQueueType * CommQueueClass::Next_Receive(void)
 /***************************************************************************
  * CommQueueClass::Get_Receive -- gets ptr to queue entry                  *
  *                                                                         *
- * This routine gets a pointer to the indicated queue entry.  The index		*
- * value is relative to the next-accessable queue entry; 0 = get the			*
- * next available queue entry, 1 = get the one behind that, etc.				*
+ * This routine gets a pointer to the indicated queue entry.  The index    *
+ * value is relative to the next-accessable queue entry; 0 = get the       *
+ * next available queue entry, 1 = get the one behind that, etc.           *
  *                                                                         *
  * INPUT:                                                                  *
- *		index		index of entry to get (0 = 1st available)							*
+ *    index    index of entry to get (0 = 1st available)                   *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		ptr to entry																			*
+ *    ptr to entry                                                         *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/21/1994 BR : Created.                                              *
@@ -545,24 +545,24 @@ ReceiveQueueType * CommQueueClass::Get_Receive(int index)
 /***************************************************************************
  * CommQueueClass::Add_Delay -- adds a new delay value for response time   *
  *                                                                         *
- * This routine updates the average response time for this queue.  The		*
- * computation is based on the average of the last 'n' delay values given,	*
- * It computes a running total of the last n delay values, then divides 	*
- * that by n to compute the average.													*
- *																									*
- * When the number of values given exceeds the max, the mean is subtracted	*
- * off the total, then the new value is added in.  Thus, any single delay	*
- * value will have an effect on the total that approaches 0 over time, and	*
- * the new delay value contributes to 1/n of the mean.							*
+ * This routine updates the average response time for this queue.  The     *
+ * computation is based on the average of the last 'n' delay values given, *
+ * It computes a running total of the last n delay values, then divides    *
+ * that by n to compute the average.                                       *
+ *                                                                         *
+ * When the number of values given exceeds the max, the mean is subtracted *
+ * off the total, then the new value is added in.  Thus, any single delay  *
+ * value will have an effect on the total that approaches 0 over time, and *
+ * the new delay value contributes to 1/n of the mean.                     *
  *                                                                         *
  * INPUT:                                                                  *
- *		delay			value to add into the response time computation				*
+ *    delay       value to add into the response time computation          *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/19/1995 BR : Created.                                              *
@@ -591,16 +591,16 @@ void CommQueueClass::Add_Delay(unsigned long delay)
 
 
 /***************************************************************************
- * CommQueueClass::Avg_Response_Time -- returns average response time    	*
+ * CommQueueClass::Avg_Response_Time -- returns average response time      *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		latest computed average response time											*
+ *    latest computed average response time                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/19/1995 BR : Created.                                              *
@@ -613,16 +613,16 @@ unsigned long CommQueueClass::Avg_Response_Time(void)
 
 
 /***************************************************************************
- * CommQueueClass::Max_Response_Time -- returns max response time    		*
+ * CommQueueClass::Max_Response_Time -- returns max response time          *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		latest computed average response time											*
+ *    latest computed average response time                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/19/1995 BR : Created.                                              *
@@ -635,16 +635,16 @@ unsigned long CommQueueClass::Max_Response_Time(void)
 
 
 /***************************************************************************
- * CommQueueClass::Reset_Response_Time -- resets computations					*
+ * CommQueueClass::Reset_Response_Time -- resets computations              *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/19/1995 BR : Created.                                              *
@@ -662,23 +662,23 @@ void CommQueueClass::Reset_Response_Time(void)
 /***************************************************************************
  * CommQueueClass::Configure_Debug -- sets up special debug values         *
  *                                                                         *
- * Mono_Debug_Print2() can look into a packet to pull out a particular		*
- * ID, and can print both that ID and a string corresponding to				*
- * that ID.  This routine configures these values so it can find				*
- * and decode the ID.  This ID is used in addition to the normal				*
- * CommHeaderType values.																	*
+ * Mono_Debug_Print2() can look into a packet to pull out a particular     *
+ * ID, and can print both that ID and a string corresponding to            *
+ * that ID.  This routine configures these values so it can find           *
+ * and decode the ID.  This ID is used in addition to the normal           *
+ * CommHeaderType values.                                                  *
  *                                                                         *
  * INPUT:                                                                  *
- *		offset		ID's byte offset into packet										*
- *		size			size of ID, in bytes; 0 if none									*
- *		names			ptr to array of names; use ID as an index into this		*
- *		maxnames		max # in the names array; 0 if none.							*
+ *    offset      ID's byte offset into packet                             *
+ *    size        size of ID, in bytes; 0 if none                          *
+ *    names       ptr to array of names; use ID as an index into this      *
+ *    maxnames    max # in the names array; 0 if none.                     *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		Names shouldn't be longer than 12 characters.								*
+ *    Names shouldn't be longer than 12 characters.                        *
  *                                                                         *
  * HISTORY:                                                                *
  *   05/31/1995 BRR : Created.                                             *
@@ -697,16 +697,16 @@ void CommQueueClass::Configure_Debug(int offset, int size, char **names,
 /***************************************************************************
  * Mono_Debug_Print -- Debug output routine                                *
  *                                                                         *
- * This routine leaves 5 lines at the top for the caller's use.				*
+ * This routine leaves 5 lines at the top for the caller's use.            *
  *                                                                         *
  * INPUT:                                                                  *
- *		refresh		1 = clear screen & completely refresh							*
+ *    refresh     1 = clear screen & completely refresh                    *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   05/02/1995 BRR : Created.                                             *
@@ -831,18 +831,18 @@ void CommQueueClass::Mono_Debug_Print(int refresh)
 /***************************************************************************
  * CommQueueClass::Mono_Debug_Print2 -- Debug output; alternate format     *
  *                                                                         *
- * This routine prints more information than the other version; it's			*
- * called only if the number of queue entries is small enough to support	*
- * this format.																				*
+ * This routine prints more information than the other version; it's       *
+ * called only if the number of queue entries is small enough to support   *
+ * this format.                                                            *
  *                                                                         *
  * INPUT:                                                                  *
- *		refresh		1 = clear screen & completely refresh							*
+ *    refresh     1 = clear screen & completely refresh                    *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   05/31/1995 BRR : Created.                                             *

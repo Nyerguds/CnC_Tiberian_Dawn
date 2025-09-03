@@ -126,13 +126,13 @@
  * CellClass::Validate -- validates cell's number                                              *
  *                                                                                             *
  * INPUT:                                                                                      *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *		1 = ok, 0 = error																								  *
+ *    1 = ok, 0 = error                                                                        *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/09/1995 BRR : Created.                                                                 *
@@ -273,9 +273,9 @@ TechnoClass * CellClass::Cell_Techno(int x, int y) const
 /***************************************************************************
  * CellClass::Cell_Find_Object -- Returns ptr to RTTI type occupying cell  *
  *                                                                         *
- * INPUT:		RTTIType the RTTI type we are searching for                 *
+ * INPUT:      RTTIType the RTTI type we are searching for                 *
  *                                                                         *
- * OUTPUT:		none                                                        *
+ * OUTPUT:     none                                                        *
  *                                                                         *
  * WARNINGS:   none                                                        *
  *                                                                         *

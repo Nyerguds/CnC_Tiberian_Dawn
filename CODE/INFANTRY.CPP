@@ -79,7 +79,7 @@
  *   InfantryClass::~InfantryClass -- Default destructor for infantry units.                   *
  *   InfantryClass::Full_Name -- Fetches the full name of the infantry unit.                   *
  *   InfantryClass::Mission_Attack -- Intercept attack mission for special handling.           *
- *   InfantryClass::Validate -- validates infantry pointer.												  *
+ *   InfantryClass::Validate -- validates infantry pointer.                                    *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include	"function.h"
@@ -140,16 +140,16 @@ DoStruct const InfantryClass::MasterDoControls[DO_COUNT] = {
 
 
 /***********************************************************************************************
- * InfantryClass::Validate -- validates infantry pointer.												  *
+ * InfantryClass::Validate -- validates infantry pointer.                                      *
  *                                                                                             *
  * INPUT:                                                                                      *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *		1 = ok, 0 = error																								  *
+ *    1 = ok, 0 = error                                                                        *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/09/1995 BRR : Created.                                                                 *
@@ -1389,10 +1389,10 @@ void InfantryClass::AI(void)
 /***************************************************************************
  * InfantryClass::Blocking_Object -- Determines how a object blocks an inf *
  *                                                                         *
- * INPUT:		TechnoClass * pointer to object that is blocking unit       *
- *					CELL			  the cell the unit is being blocked in			*
+ * INPUT:      TechnoClass * pointer to object that is blocking unit       *
+ *             CELL          the cell the unit is being blocked in         *
  *                                                                         *
- * OUTPUT:		MoveBitType the way that the object is blocking the unit    *
+ * OUTPUT:     MoveBitType the way that the object is blocking the unit    *
  *                                                                         *
  * HISTORY:                                                                *
  *   06/08/1995 PWG : Created.                                             *
@@ -3108,7 +3108,7 @@ void InfantryClass::Set_Occupy_Bit(CELL cell, int spot_index)
 
 
 /***************************************************************************
- * InfantryClass::Clear_Occupy_Bit -- Clears occupy bit and given cell		*
+ * InfantryClass::Clear_Occupy_Bit -- Clears occupy bit and given cell     *
  *                                                                         *
  * INPUT:                                                                  *
  *                                                                         *

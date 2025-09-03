@@ -2256,7 +2256,7 @@ static long CCWrite_CMAP(CCFileClass &lbmhandle, unsigned char * palette, short 
  * INPUT: short lbmhandle -- file handle of lbm file                       *
  *                                                                         *
  * OUTPUT: long - number of byte written                                   *
- *  	                                                                     *
+ *                                                                         *
  * WARNINGS:                                                               *
  *                                                                         *
  * HISTORY:                                                                *

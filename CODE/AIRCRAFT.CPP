@@ -87,7 +87,7 @@
  *   AircraftClass::operator delete -- Deletes the aircraft object.                            *
  *   AircraftClass::operator new -- Allocates a new aircraft object from the pool              *
  *   AircraftClass::~AircraftClass -- Destructor for aircraft object.                          *
- *   AircraftClass::Validate -- validates aircraft pointer												  *
+ *   AircraftClass::Validate -- validates aircraft pointer                                     *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include	"function.h"
@@ -100,16 +100,16 @@ void * AircraftClass::VTable;
 
 
 /***********************************************************************************************
- * AircraftClass::Validate -- validates aircraft pointer													  *
+ * AircraftClass::Validate -- validates aircraft pointer                                       *
  *                                                                                             *
  * INPUT:                                                                                      *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *		1 = ok, 0 = error																								  *
+ *    1 = ok, 0 = error                                                                        *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/09/1995 BRR : Created.                                                                 *
@@ -268,9 +268,9 @@ AircraftClass::AircraftClass(AircraftType classid, HousesType house) :
  *                                                                                             *
  *          dir   -- The direction it should start facing.                                     *
  *                                                                                             *
- *				strength (optional) -- sets initial strength													  *
+ *        strength (optional) -- sets initial strength                                         *
  *                                                                                             *
- *				mission (optional) -- sets initial mission													  *
+ *        mission (optional) -- sets initial mission                                           *
  *                                                                                             *
  * OUTPUT:  bool; Was the aircraft unlimboed successfully?                                     *
  *                                                                                             *

@@ -17,41 +17,41 @@
 */
 
 /* $Header:   F:\projects\c&c\vcs\code\team.cpv   2.18   16 Oct 1995 16:48:34   JOE_BOSTIC  $ */
-/*********************************************************************************************** 
- ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               *** 
- *********************************************************************************************** 
- *                                                                                             * 
- *                 Project Name : Command & Conquer                                            * 
- *                                                                                             * 
- *                    File Name : TEAM.CPP                                                     * 
- *                                                                                             * 
- *                   Programmer : Joe L. Bostic                                                * 
- *                                                                                             * 
- *                   Start Date : 12/11/94                                                     * 
- *                                                                                             * 
+/***********************************************************************************************
+ ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               ***
+ ***********************************************************************************************
+ *                                                                                             *
+ *                 Project Name : Command & Conquer                                            *
+ *                                                                                             *
+ *                    File Name : TEAM.CPP                                                     *
+ *                                                                                             *
+ *                   Programmer : Joe L. Bostic                                                *
+ *                                                                                             *
+ *                   Start Date : 12/11/94                                                     *
+ *                                                                                             *
  *                  Last Update : August 6, 1995 [JLB]                                         *
- *                                                                                             * 
- *---------------------------------------------------------------------------------------------* 
- * Functions:                                                                                  * 
+ *                                                                                             *
+ *---------------------------------------------------------------------------------------------*
+ * Functions:                                                                                  *
  *   Assign_Mission_Target -- Sets teams mission target and clears old target                  *
- *   TeamClass::Add -- Adds specified object to team.                                          * 
- *   TeamClass::AI -- Process team logic.                                                      * 
- *   TeamClass::As_Target -- Converts this team object into a target number.                   * 
- *   TeamClass::Calc_Center -- Determines average location of team members.                    * 
- *   TeamClass::Control -- Updates control on a member unit.                                   * 
- *   TeamClass::Coordinate_Attack -- Handles coordinating a team attack.                       * 
- *   TeamClass::Coordinate_Conscript -- Gives orders to new recruit.                           * 
- *   TeamClass::Coordinate_Move -- Handles team movement coordination.                         * 
- *   TeamClass::Coordinate_Regroup -- Handles team idling (regrouping).                        * 
- *   TeamClass::Coordinate_Unload -- Tells the team to unload passengers now.                  * 
- *   TeamClass::Detach -- Removes specified target from team tracking.                         * 
- *   TeamClass::Init -- Initializes the team objects for scenario preparation.                 * 
+ *   TeamClass::Add -- Adds specified object to team.                                          *
+ *   TeamClass::AI -- Process team logic.                                                      *
+ *   TeamClass::As_Target -- Converts this team object into a target number.                   *
+ *   TeamClass::Calc_Center -- Determines average location of team members.                    *
+ *   TeamClass::Control -- Updates control on a member unit.                                   *
+ *   TeamClass::Coordinate_Attack -- Handles coordinating a team attack.                       *
+ *   TeamClass::Coordinate_Conscript -- Gives orders to new recruit.                           *
+ *   TeamClass::Coordinate_Move -- Handles team movement coordination.                         *
+ *   TeamClass::Coordinate_Regroup -- Handles team idling (regrouping).                        *
+ *   TeamClass::Coordinate_Unload -- Tells the team to unload passengers now.                  *
+ *   TeamClass::Detach -- Removes specified target from team tracking.                         *
+ *   TeamClass::Init -- Initializes the team objects for scenario preparation.                 *
  *   TeamClass::Is_A_Member -- Tests if a unit is a member of a team                           *
- *   TeamClass::Recruit -- Attempts to recruit members to the team for the given index ID.     * 
- *   TeamClass::Remove -- Removes the specified object from the team.                          * 
+ *   TeamClass::Recruit -- Attempts to recruit members to the team for the given index ID.     *
+ *   TeamClass::Remove -- Removes the specified object from the team.                          *
  *   TeamClass::Suspend_Teams -- Suspends activity for low priority teams                      *
- *   TeamClass::Took_Damage -- Informs the team when the team member takes damage.             * 
- *   TeamClass::Validate -- validates team pointer															  *
+ *   TeamClass::Took_Damage -- Informs the team when the team member takes damage.             *
+ *   TeamClass::Validate -- validates team pointer                                             *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include "function.h"
@@ -73,20 +73,20 @@ unsigned char TeamClass::Success[TEAMTYPE_MAX];
 void * TeamClass::VTable;
 
 
-/*********************************************************************************************** 
- * TeamClass::Validate -- validates team pointer															  *
- *                                                                                             * 
- * INPUT:                                                                                      * 
- *		none.																												  *
- *                                                                                             * 
- * OUTPUT:                                                                                     * 
- *		1 = ok, 0 = error																								  *
- *                                                                                             * 
- * WARNINGS:                                                                                   * 
- *		none.																												  *
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   08/09/1995 BRR : Created.                                                                 * 
+/***********************************************************************************************
+ * TeamClass::Validate -- validates team pointer                                               *
+ *                                                                                             *
+ * INPUT:                                                                                      *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * OUTPUT:                                                                                     *
+ *    1 = ok, 0 = error                                                                        *
+ *                                                                                             *
+ * WARNINGS:                                                                                   *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   08/09/1995 BRR : Created.                                                                 *
  *=============================================================================================*/
 #ifdef CHEAT_KEYS
 int TeamClass::Validate(void) const
@@ -106,20 +106,20 @@ int TeamClass::Validate(void) const
 #endif
 
 
-/*********************************************************************************************** 
- * TeamClass::Init -- Initializes the team objects for scenario preparation.                   * 
- *                                                                                             * 
- *    This routine clears out the team object array in preparation for starting a new          * 
- *    scenario.                                                                                * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   12/29/1994 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * TeamClass::Init -- Initializes the team objects for scenario preparation.                   *
+ *                                                                                             *
+ *    This routine clears out the team object array in preparation for starting a new          *
+ *    scenario.                                                                                *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   12/29/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
 void TeamClass::Init(void)
 {
@@ -223,7 +223,7 @@ void TeamClass::Assign_Mission_Target(TARGET new_target)
 		bool nav = (unit->NavCom == MissionTarget);
 		if (tar || nav) {
 
-			/* 
+			/*
 			** If the unit was doing something related to the team mission
 			** then we kick him into guard mode so that he is easy to change
 			** missions for.
@@ -263,22 +263,22 @@ void TeamClass::Assign_Mission_Target(TARGET new_target)
 }
 
 
-/*********************************************************************************************** 
- * TeamClass::AI -- Process team logic.                                                        * 
- *                                                                                             * 
- *    General purpose team logic is handled by this routine. It should be called once per      * 
- *    active team per game tick. This routine handles recruitment and assigning orders to      * 
- *    member units.                                                                            * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   12/29/1994 JLB : Created.                                                                 * 
- *   01/06/1995 JLB : Choreographed gesture.                                                   * 
+/***********************************************************************************************
+ * TeamClass::AI -- Process team logic.                                                        *
+ *                                                                                             *
+ *    General purpose team logic is handled by this routine. It should be called once per      *
+ *    active team per game tick. This routine handles recruitment and assigning orders to      *
+ *    member units.                                                                            *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   12/29/1994 JLB : Created.                                                                 *
+ *   01/06/1995 JLB : Choreographed gesture.                                                   *
  *=============================================================================================*/
 void TeamClass::AI(void)
 {
@@ -622,26 +622,26 @@ void TeamClass::AI(void)
 }
 
 
-/*********************************************************************************************** 
- * TeamClass::Add -- Adds specified object to team.                                            * 
- *                                                                                             * 
- *    Use this routine to add the specified object to the team. The object is checked to make  * 
- *    sure that it can be assigned to the team. If it can't, then the object will be left      * 
- *    alone and false will be returned.                                                        * 
- *                                                                                             * 
- * INPUT:   obj      -- Pointer to the object that is to be assigned to this team.             * 
- *                                                                                             * 
- *          typeindex-- Optional value that specifies the index in the team type class array   * 
- *                      that this object belongs.                                              * 
- *                                                                                             * 
- * OUTPUT:  bool; Was the unit added to the team?                                              * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   12/29/1994 JLB : Created.                                                                 * 
- *   01/02/1995 JLB : Initiation flag setup.                                                   * 
- *   08/06/1995 JLB : Allows member stealing from lesser priority teams.                       * 
+/***********************************************************************************************
+ * TeamClass::Add -- Adds specified object to team.                                            *
+ *                                                                                             *
+ *    Use this routine to add the specified object to the team. The object is checked to make  *
+ *    sure that it can be assigned to the team. If it can't, then the object will be left      *
+ *    alone and false will be returned.                                                        *
+ *                                                                                             *
+ * INPUT:   obj      -- Pointer to the object that is to be assigned to this team.             *
+ *                                                                                             *
+ *          typeindex-- Optional value that specifies the index in the team type class array   *
+ *                      that this object belongs.                                              *
+ *                                                                                             *
+ * OUTPUT:  bool; Was the unit added to the team?                                              *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   12/29/1994 JLB : Created.                                                                 *
+ *   01/02/1995 JLB : Initiation flag setup.                                                   *
+ *   08/06/1995 JLB : Allows member stealing from lesser priority teams.                       *
  *=============================================================================================*/
 bool TeamClass::Add(FootClass * obj, int typeindex)
 {
@@ -737,25 +737,25 @@ bool TeamClass::Add(FootClass * obj, int typeindex)
 }	
 
 
-/*********************************************************************************************** 
- * TeamClass::Remove -- Removes the specified object from the team.                            * 
- *                                                                                             * 
- *    Use this routine to remove an object from a team. Objects removed from the team are      * 
- *    then available to be recruited by other teams, or even by the same team at a later time. * 
- *                                                                                             * 
- * INPUT:   obj      -- Pointer to the object that is to be removed from this team.            * 
- *                                                                                             * 
- *          typeindex-- Optional index of where this object type is specified in the type      * 
- *                      type class. This parameter can be omitted. It only serves to make      * 
- *                      the removal process faster.                                            * 
- *                                                                                             * 
- * OUTPUT:  bool; Was the object removed from this team?                                       * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   12/29/1994 JLB : Created.                                                                 * 
- *   01/02/1995 JLB : Initiation tracking and team captain selection.                          * 
+/***********************************************************************************************
+ * TeamClass::Remove -- Removes the specified object from the team.                            *
+ *                                                                                             *
+ *    Use this routine to remove an object from a team. Objects removed from the team are      *
+ *    then available to be recruited by other teams, or even by the same team at a later time. *
+ *                                                                                             *
+ * INPUT:   obj      -- Pointer to the object that is to be removed from this team.            *
+ *                                                                                             *
+ *          typeindex-- Optional index of where this object type is specified in the type      *
+ *                      type class. This parameter can be omitted. It only serves to make      *
+ *                      the removal process faster.                                            *
+ *                                                                                             *
+ * OUTPUT:  bool; Was the object removed from this team?                                       *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   12/29/1994 JLB : Created.                                                                 *
+ *   01/02/1995 JLB : Initiation tracking and team captain selection.                          *
  *=============================================================================================*/
 bool TeamClass::Remove(FootClass * obj, int typeindex)
 {
@@ -846,24 +846,24 @@ bool TeamClass::Remove(FootClass * obj, int typeindex)
 }	
 
 
-/*********************************************************************************************** 
- * TeamClass::Recruit -- Attempts to recruit members to the team for the given index ID.       * 
- *                                                                                             * 
- *    This routine will take the given index ID and scan for available objects of that type    * 
- *    to recruit to the team. Recruiting will continue until that object type has either       * 
- *    been exhausted or if the team's requirment for that type has been filled.                * 
- *                                                                                             * 
- * INPUT:   typeindex   -- The index for the object type to recruit. The index is used to      * 
- *                         look into the type type's array of object types that make up this   * 
- *                         team.                                                               * 
- *                                                                                             * 
- * OUTPUT:  Returns with the number of objects added to this team.                             * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   12/29/1994 JLB : Created.                                                                 * 
- *   04/10/1995 JLB : Scans for units too.                                                     * 
+/***********************************************************************************************
+ * TeamClass::Recruit -- Attempts to recruit members to the team for the given index ID.       *
+ *                                                                                             *
+ *    This routine will take the given index ID and scan for available objects of that type    *
+ *    to recruit to the team. Recruiting will continue until that object type has either       *
+ *    been exhausted or if the team's requirment for that type has been filled.                *
+ *                                                                                             *
+ * INPUT:   typeindex   -- The index for the object type to recruit. The index is used to      *
+ *                         look into the type type's array of object types that make up this   *
+ *                         team.                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with the number of objects added to this team.                             *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   12/29/1994 JLB : Created.                                                                 *
+ *   04/10/1995 JLB : Scans for units too.                                                     *
  *=============================================================================================*/
 int TeamClass::Recruit(int typeindex)
 {
@@ -936,22 +936,22 @@ int TeamClass::Recruit(int typeindex)
 }	
 
 
-/*********************************************************************************************** 
- * TeamClass::Detach -- Removes specified target from team tracking.                           * 
- *                                                                                             * 
- *    When a target object is about to be removed from the game (e.g., it was killed), then    * 
- *    any team that is looking at that target must abort from that target.                     * 
- *                                                                                             * 
- * INPUT:   target   -- The target object that is going to be removed from the game.           * 
- *                                                                                             * 
+/***********************************************************************************************
+ * TeamClass::Detach -- Removes specified target from team tracking.                           *
+ *                                                                                             *
+ *    When a target object is about to be removed from the game (e.g., it was killed), then    *
+ *    any team that is looking at that target must abort from that target.                     *
+ *                                                                                             *
+ * INPUT:   target   -- The target object that is going to be removed from the game.           *
+ *                                                                                             *
  *          all      -- Is the target going away for good as opposed to just cloaking/hiding?  *
  *                                                                                             *
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   12/29/1994 JLB : Created.                                                                 * 
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   12/29/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
 void TeamClass::Detach(TARGET target, bool )
 {
@@ -972,20 +972,20 @@ void TeamClass::Detach(TARGET target, bool )
 }	
 
 
-/*********************************************************************************************** 
- * TeamClass::As_Target -- Converts this team object into a target number.                     * 
- *                                                                                             * 
- *    This routine is used by the save/load code to produce a persistant identifier for this   * 
- *    team object.                                                                             * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  Returns the team represented as a target number.                                   * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   06/14/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * TeamClass::As_Target -- Converts this team object into a target number.                     *
+ *                                                                                             *
+ *    This routine is used by the save/load code to produce a persistant identifier for this   *
+ *    team object.                                                                             *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns the team represented as a target number.                                   *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/14/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 TARGET TeamClass::As_Target(void) const
 {
@@ -994,22 +994,22 @@ TARGET TeamClass::As_Target(void) const
 }
 
 
-/*********************************************************************************************** 
- * TeamClass::Calc_Center -- Determines average location of team members.                      * 
- *                                                                                             * 
- *    Use this routine to calculate the "center" location of the team. This is the average     * 
- *    position of all members of the team. Using this center value it is possible to tell      * 
- *    if a team member is too far away and where to head to in order to group up.              * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  Returns with the cell number of the team's center point. If the team contains      * 
- *          no members, then the return value will be zero.                                    * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   12/29/1994 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * TeamClass::Calc_Center -- Determines average location of team members.                      *
+ *                                                                                             *
+ *    Use this routine to calculate the "center" location of the team. This is the average     *
+ *    position of all members of the team. Using this center value it is possible to tell      *
+ *    if a team member is too far away and where to head to in order to group up.              *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with the cell number of the team's center point. If the team contains      *
+ *          no members, then the return value will be zero.                                    *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   12/29/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
 void TeamClass::Calc_Center(CELL &center, CELL &obj_center) const
 {
@@ -1046,25 +1046,25 @@ void TeamClass::Calc_Center(CELL &center, CELL &obj_center) const
 }	
 
 
-/*********************************************************************************************** 
- * TeamClass::Took_Damage -- Informs the team when the team member takes damage.               * 
- *                                                                                             * 
- *    This routine is used when a team member takes damage. Usually the team will react in     * 
- *    some fashion to the attack. This reaction can range from running away to assigning this  * 
- *    new target as the team's target.                                                         * 
- *                                                                                             * 
- * INPUT:   obj      -- The team member that was damaged.                                      * 
- *                                                                                             * 
- *          result   -- The severity of the damage taken.                                      * 
- *                                                                                             * 
- *          source   -- The purpetrator of the damage.                                         * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   12/29/1994 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * TeamClass::Took_Damage -- Informs the team when the team member takes damage.               *
+ *                                                                                             *
+ *    This routine is used when a team member takes damage. Usually the team will react in     *
+ *    some fashion to the attack. This reaction can range from running away to assigning this  *
+ *    new target as the team's target.                                                         *
+ *                                                                                             *
+ * INPUT:   obj      -- The team member that was damaged.                                      *
+ *                                                                                             *
+ *          result   -- The severity of the damage taken.                                      *
+ *                                                                                             *
+ *          source   -- The purpetrator of the damage.                                         *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   12/29/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
 void TeamClass::Took_Damage(FootClass * , ResultType result, TechnoClass * source)
 {
@@ -1098,20 +1098,20 @@ void TeamClass::Took_Damage(FootClass * , ResultType result, TechnoClass * sourc
 }	
 
 
-/*********************************************************************************************** 
- * TeamClass::Coordinate_Attack -- Handles coordinating a team attack.                         * 
- *                                                                                             * 
- *    This function is called when the team knows what it should attack. This routine will     * 
- *    give the necessary orders to the members of the team.                                    * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   04/06/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * TeamClass::Coordinate_Attack -- Handles coordinating a team attack.                         *
+ *                                                                                             *
+ *    This function is called when the team knows what it should attack. This routine will     *
+ *    give the necessary orders to the members of the team.                                    *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   04/06/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 void TeamClass::Coordinate_Attack(void)
 {
@@ -1149,21 +1149,21 @@ void TeamClass::Coordinate_Attack(void)
 }	
 
 
-/*********************************************************************************************** 
- * TeamClass::Coordinate_Regroup -- Handles team idling (regrouping).                          * 
- *                                                                                             * 
- *    This routine is called when the team must delay at its current location. Team members    * 
- *    are grouped together by this function. It is called when the team needs to sit and       * 
- *    wait.                                                                                    * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   04/06/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * TeamClass::Coordinate_Regroup -- Handles team idling (regrouping).                          *
+ *                                                                                             *
+ *    This routine is called when the team must delay at its current location. Team members    *
+ *    are grouped together by this function. It is called when the team needs to sit and       *
+ *    wait.                                                                                    *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   04/06/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 bool TeamClass::Coordinate_Regroup(void)
 {
@@ -1212,20 +1212,20 @@ bool TeamClass::Coordinate_Regroup(void)
 }	
 
 
-/*********************************************************************************************** 
- * TeamClass::Coordinate_Move -- Handles team movement coordination.                           * 
- *                                                                                             * 
- *    This routine is called when the team must move to a new location. Movement and grouping  * 
- *    commands associated with this task are initiated here.                                   * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   04/06/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * TeamClass::Coordinate_Move -- Handles team movement coordination.                           *
+ *                                                                                             *
+ *    This routine is called when the team must move to a new location. Movement and grouping  *
+ *    commands associated with this task are initiated here.                                   *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   04/06/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 void TeamClass::Coordinate_Move(void)
 {
@@ -1351,19 +1351,19 @@ bool TeamClass::Lagging_Units(void)
 }
 
 
-/*********************************************************************************************** 
- * TeamClass::Coordinate_Unload -- Tells the team to unload passengers now.                    * 
- *                                                                                             * 
- *    This routine tells all transport vehicles to unload passengers now.                      * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   06/14/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * TeamClass::Coordinate_Unload -- Tells the team to unload passengers now.                    *
+ *                                                                                             *
+ *    This routine tells all transport vehicles to unload passengers now.                      *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/14/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 void TeamClass::Coordinate_Unload(void)
 {
@@ -1407,20 +1407,20 @@ void TeamClass::Coordinate_Unload(void)
 }	
 
 
-/*********************************************************************************************** 
- * TeamClass::Coordinate_Conscript -- Gives orders to new recruit.                             * 
- *                                                                                             * 
- *    This routine will give the movement orders to the conscript so that it will group        * 
- *    with the other members of the team.                                                      * 
- *                                                                                             * 
- * INPUT:   unit  -- Pointer to the conscript unit.                                            * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   04/06/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * TeamClass::Coordinate_Conscript -- Gives orders to new recruit.                             *
+ *                                                                                             *
+ *    This routine will give the movement orders to the conscript so that it will group        *
+ *    with the other members of the team.                                                      *
+ *                                                                                             *
+ * INPUT:   unit  -- Pointer to the conscript unit.                                            *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   04/06/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 void TeamClass::Coordinate_Conscript(FootClass * unit)
 {
@@ -1448,7 +1448,7 @@ void TeamClass::Coordinate_Conscript(FootClass * unit)
 /***************************************************************************
  * TeamClass::Is_A_Member -- Tests if a unit is a member of a team         *
  *                                                                         *
- * INPUT:		none                                                        *
+ * INPUT:      none                                                        *
  *                                                                         *
  * OUTPUT:     none                                                        *
  *                                                                         *

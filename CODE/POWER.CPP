@@ -387,7 +387,7 @@ void PowerClass::Refresh_Cells(CELL cell, short const *list)
 /***************************************************************************
  * PowHeight -- Given a value figure where it falls on bar              *
  *                                                                         *
- * INPUT:		int value - the value we are testing                        *
+ * INPUT:      int value - the value we are testing                        *
  *                                                                         *
  * OUTPUT:     int the height of the point that this value is on graph     *
  *                                                                         *

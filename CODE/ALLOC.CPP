@@ -173,8 +173,8 @@ void DPMI_Unlock(void const *ptr, long const size)
  *                                                                         *
  *          flags          -- Memory allocation control flags.             *
  *             MEM_NORMAL: No special flags.                               *
- *             MEM_CLEAR:  Zero out memory block.                        	*
- *             MEM_NEW:		Called by a new.                                *
+ *             MEM_CLEAR:  Zero out memory block.                          *
+ *             MEM_NEW:    Called by a new.                                *
  *                                                                         *
  * OUTPUT:  Returns with pointer to allocated block.  If NULL was returned *
  *          it indicates a failure to allocate.  Note: NULL will never be  *

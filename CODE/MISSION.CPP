@@ -18,7 +18,7 @@
 
 /* $Header:   F:\projects\c&c\vcs\code\mission.cpv   2.18   16 Oct 1995 16:49:12   JOE_BOSTIC  $ */
 /***********************************************************************************************
- ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               *** 
+ ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               ***
  ***********************************************************************************************
  *                                                                                             *
  *                 Project Name : Command & Conquer                                            *
@@ -37,32 +37,32 @@
  *   MissionClass::Assign_Mission -- Give an order to a unit.                                  *
  *   MissionClass::Commence -- Start script with new order.                                    *
  *   MissionClass::Debug_Dump -- Dumps status values to mono screen.                           *
- *   MissionClass::Get_Mission -- Fetches the mission that this object is acting under.        * 
- *   MissionClass::MissionClass -- Default constructor for the mission object type.            * 
+ *   MissionClass::Get_Mission -- Fetches the mission that this object is acting under.        *
+ *   MissionClass::MissionClass -- Default constructor for the mission object type.            *
  *   MissionClass::Mission_From_Name -- Fetch order pointer from its name.                     *
- *   MissionClass::Mission_Name -- Converts a mission number into an ASCII string.             * 
+ *   MissionClass::Mission_Name -- Converts a mission number into an ASCII string.             *
  *   MissionClass::Overide_Mission -- temporarily overides the units mission                   *
  *   MissionClass::Restore_Mission -- Restores overidden mission                               *
- *   MissionClass::Set_Mission -- Sets the mission to the specified value.                     * 
+ *   MissionClass::Set_Mission -- Sets the mission to the specified value.                     *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include	"function.h"
 
 
-/*********************************************************************************************** 
- * MissionClass::MissionClass -- Default constructor for the mission object type.              * 
- *                                                                                             * 
- *    This is the default constructor for the mission class object. It sets the mission        * 
- *    handler into a default -- do nothing -- state.                                           * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   01/23/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * MissionClass::MissionClass -- Default constructor for the mission object type.              *
+ *                                                                                             *
+ *    This is the default constructor for the mission class object. It sets the mission        *
+ *    handler into a default -- do nothing -- state.                                           *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   01/23/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 MissionClass::MissionClass(void) 
 {
@@ -95,21 +95,21 @@ int MissionClass::Mission_Repair(void) {return TICKS_PER_SECOND*30;};
 int MissionClass::Mission_Missile(void) {return TICKS_PER_SECOND*30;};
 
 
-/*********************************************************************************************** 
- * MissionClass::Set_Mission -- Sets the mission to the specified value.                       * 
- *                                                                                             * 
- *    Use this routine to set the current mission for this object. This routine will blast     * 
- *    over the current mission, bypassing the queue method. Call it when the mission needs     * 
- *    to be changed immediately.                                                               * 
- *                                                                                             * 
- * INPUT:   mission  -- The mission to set to.                                                 * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   01/23/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * MissionClass::Set_Mission -- Sets the mission to the specified value.                       *
+ *                                                                                             *
+ *    Use this routine to set the current mission for this object. This routine will blast     *
+ *    over the current mission, bypassing the queue method. Call it when the mission needs     *
+ *    to be changed immediately.                                                               *
+ *                                                                                             *
+ * INPUT:   mission  -- The mission to set to.                                                 *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   01/23/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 void MissionClass::Set_Mission(MissionType mission)
 {
@@ -118,21 +118,21 @@ void MissionClass::Set_Mission(MissionType mission)
 }
 
 
-/*********************************************************************************************** 
- * MissionClass::Get_Mission -- Fetches the mission that this object is acting under.          * 
- *                                                                                             * 
- *    Use this routine to fetch the mission that this object is CURRENTLY acting under. The    * 
- *    mission queue may be filled with a immanent mission change, but this routine does not    * 
- *    consider that. It only returns the CURRENT mission.                                      * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  Returns with the mission that this unit is currently following.                    * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   01/23/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * MissionClass::Get_Mission -- Fetches the mission that this object is acting under.          *
+ *                                                                                             *
+ *    Use this routine to fetch the mission that this object is CURRENTLY acting under. The    *
+ *    mission queue may be filled with a immanent mission change, but this routine does not    *
+ *    consider that. It only returns the CURRENT mission.                                      *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with the mission that this unit is currently following.                    *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   01/23/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 MissionType MissionClass::Get_Mission(void) const
 {
@@ -183,7 +183,7 @@ void MissionClass::Debug_Dump(MonoClass *mono) const
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   04/23/1994 JLB : Created.                                                                 *
- *   06/25/1995 JLB : Added new missions.                                                      * 
+ *   06/25/1995 JLB : Added new missions.                                                      *
  *=============================================================================================*/
 void MissionClass::AI(void)
 {
@@ -295,7 +295,7 @@ void MissionClass::AI(void)
  * HISTORY:                                                                                    *
  *   04/23/1994 JLB : Created.                                                                 *
  *   07/14/1994 JLB : Simplified.                                                              *
- *   06/17/1995 JLB : Returns success flag.                                                    * 
+ *   06/17/1995 JLB : Returns success flag.                                                    *
  *=============================================================================================*/
 bool MissionClass::Commence(void)
 {
@@ -373,20 +373,20 @@ MissionType MissionClass::Mission_From_Name(char const *name)
 }
 
 
-/*********************************************************************************************** 
- * MissionClass::Mission_Name -- Converts a mission number into an ASCII string.               * 
- *                                                                                             * 
- *    Use this routine to convert a mission number into the ASCII string that represents       * 
- *    it. Typical use of this is when generating an INI file.                                  * 
- *                                                                                             * 
- * INPUT:   mission  -- The mission number to convert.                                         * 
- *                                                                                             * 
- * OUTPUT:  Returns with a pointer to the ASCII string that represents the mission type.       * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   01/23/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * MissionClass::Mission_Name -- Converts a mission number into an ASCII string.               *
+ *                                                                                             *
+ *    Use this routine to convert a mission number into the ASCII string that represents       *
+ *    it. Typical use of this is when generating an INI file.                                  *
+ *                                                                                             *
+ * INPUT:   mission  -- The mission number to convert.                                         *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the ASCII string that represents the mission type.       *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   01/23/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 char const * MissionClass::Mission_Name(MissionType mission)
 {

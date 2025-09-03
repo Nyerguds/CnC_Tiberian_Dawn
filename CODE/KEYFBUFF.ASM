@@ -52,8 +52,8 @@ TRUE	equ	1			; Boolean 'true' value
 FALSE	equ	0			; Boolean 'false' value
 
 ;*=========================================================================*/
-;* The following are defines used to control what functions are linked	   *
-;* in for Buffer_Frame_To_Page.						   *
+;* The following are defines used to control what functions are linked     *
+;* in for Buffer_Frame_To_Page.                                            *
 ;*=========================================================================*/
 ;USE_NORMAL		EQU	TRUE
 ;USE_HORZ_REV 		EQU	TRUE
@@ -1110,23 +1110,23 @@ USE	BF_Predator_Ghost_Fading_Trans
 
 
 ;***************************************************************************
-;* VVC::TOPAGE -- Copies a linear buffer to a virtual viewport		   *
+;* VVC::TOPAGE -- Copies a linear buffer to a virtual viewport             *
 ;*                                                                         *
-;* INPUT:	WORD	x_pixel		- x pixel on viewport to copy from *
-;*		WORD	y_pixel 	- y pixel on viewport to copy from *
-;*		WORD	pixel_width	- the width of copy region	   *
-;*		WORD	pixel_height	- the height of copy region	   *
-;*		BYTE *	src		- buffer to copy from		   *
-;*		VVPC *  dest		- virtual viewport to copy to	   *
+;* INPUT:       WORD    x_pixel         - x pixel on viewport to copy from *
+;*              WORD    y_pixel         - y pixel on viewport to copy from *
+;*              WORD    pixel_width     - the width of copy region         *
+;*              WORD    pixel_height    - the height of copy region        *
+;*              BYTE *  src             - buffer to copy from              *
+;*              VVPC *  dest            - virtual viewport to copy to      *
 ;*                                                                         *
 ;* OUTPUT:      none                                                       *
 ;*                                                                         *
 ;* WARNINGS:    Coordinates and dimensions will be adjusted if they exceed *
-;*	        the boundaries.  In the event that no adjustment is 	   *
-;*	        possible this routine will abort.  If the size of the 	   *
-;*		region to copy exceeds the size passed in for the buffer   *
-;*		the routine will automatically abort.			   *
-;*									   *
+;*              the boundaries.  In the event that no adjustment is        *
+;*              possible this routine will abort.  If the size of the      *
+;*              region to copy exceeds the size passed in for the buffer   *
+;*              the routine will automatically abort.                      *
+;*                                                                         *
 ;* HISTORY:                                                                *
 ;*   06/15/1994 PWG : Created.                                             *
 ;*=========================================================================*
@@ -4420,12 +4420,12 @@ LineTable	DW	WSA_Normal_Draw			;0
 ;***************************************************************************
 ;* NORMAL_DRAW -- Function that writes a normal pixel line                 *
 ;*                                                                         *
-;* INPUT:	cx    - number of pixels to write                          *
-;*		ds:si - buffer which holds the pixels to write		   *
-;*		es:di - place to put the pixels we are writing		   *
+;* INPUT:       cx    - number of pixels to write                          *
+;*              ds:si - buffer which holds the pixels to write             *
+;*              es:di - place to put the pixels we are writing             *
 ;*                                                                         *
 ;* OUTPUT:      ds:si - points to next pixel past last pixel read          *
-;*		es:di - points to next pixel past last pixel written	   *
+;*              es:di - points to next pixel past last pixel written       *
 ;*                                                                         *
 ;* WARNINGS:    none                                                       *
 ;*                                                                         *
@@ -4463,12 +4463,12 @@ LineTable	DW	WSA_Normal_Draw			;0
 ;***************************************************************************
 ;* TRANSPARENT_DRAW -- Function that writes a transparent pixel line       *
 ;*                                                                         *
-;* INPUT:	cx    - number of pixels to write                          *
-;*		ds:si - buffer which holds the pixels to write		   *
-;*		es:di - place to put the pixels we are writing		   *
+;* INPUT:       cx    - number of pixels to write                          *
+;*              ds:si - buffer which holds the pixels to write             *
+;*              es:di - place to put the pixels we are writing             *
 ;*                                                                         *
 ;* OUTPUT:      ds:si - points to next pixel past last pixel read          *
-;*		es:di - points to next pixel past last pixel written	   *
+;*              es:di - points to next pixel past last pixel written       *
 ;*                                                                         *
 ;* WARNINGS:    none                                                       *
 ;*                                                                         *
@@ -4584,21 +4584,21 @@ LineTable	DW	WSA_Normal_Draw			;0
 
 ;***************************************************************************
 ;* PRIORITY_DRAW -- Function that writes a pixels if they are in front of  *
-;*		    the given plate.					   *
+;*                  the given plate.                                       *
 ;*                                                                         *
-;* INPUT:	cx    - number of pixels to write                          *
-;*		ds:si - buffer which holds the pixels to write		   *
-;*		es:di - place to put the pixels we are writing		   *
+;* INPUT:       cx    - number of pixels to write                          *
+;*              ds:si - buffer which holds the pixels to write             *
+;*              es:di - place to put the pixels we are writing             *
 ;*                                                                         *
 ;* OUTPUT:      ds:si - points to next pixel past last pixel read          *
-;*		es:di - points to next pixel past last pixel written	   *
+;*              es:di - points to next pixel past last pixel written       *
 ;*                                                                         *
 ;* WARNINGS:    none                                                       *
 ;*                                                                         *
 ;* HISTORY:                                                                *
 ;*   07/17/1992 PWG : Created.                                             *
 ;*   12/01/1992 MBL : Updated to work with latest mask data encoding.      *
-;*   17/01/1993 MCC : Updated for 386, and optimized			   *
+;*   17/01/1993 MCC : Updated for 386, and optimized                       *
 ;*=========================================================================*
 
 	PROC	NOLANGUAGE Priority_Draw NEAR
@@ -4631,22 +4631,22 @@ LineTable	DW	WSA_Normal_Draw			;0
 
 ;***************************************************************************
 ;* PRIORITY_TRANSPARENT_DRAW -- Function that writes a pixels if they are  *
-;*		    in front of the given plate.  It also deals with	   *
-;*		    transparent pixels.					   *
+;*                  in front of the given plate.  It also deals with       *
+;*                  transparent pixels.                                    *
 ;*                                                                         *
-;* INPUT:	cx    - number of pixels to write                          *
-;*		ds:si - buffer which holds the pixels to write		   *
-;*		es:di - place to put the pixels we are writing		   *
+;* INPUT:       cx    - number of pixels to write                          *
+;*              ds:si - buffer which holds the pixels to write             *
+;*              es:di - place to put the pixels we are writing             *
 ;*                                                                         *
 ;* OUTPUT:      ds:si - points to next pixel past last pixel read          *
-;*		es:di - points to next pixel past last pixel written	   *
+;*              es:di - points to next pixel past last pixel written       *
 ;*                                                                         *
 ;* WARNINGS:    none                                                       *
 ;*                                                                         *
 ;* HISTORY:                                                                *
 ;*   07/17/1992 PWG : Created.                                             *
 ;*   12/01/1992 MBL : Updated to work with latest mask data encoding.      *
-;*   17/01/1993 MCC : Updated for 386, and optimized			   *
+;*   17/01/1993 MCC : Updated for 386, and optimized                       *
 ;*=========================================================================*
 
 	PROC	NOLANGUAGE Priority_Transparent_Draw NEAR
@@ -4682,12 +4682,12 @@ LineTable	DW	WSA_Normal_Draw			;0
 ;***************************************************************************
 ;* GHOST_NORMAL_DRAW -- Function that writes a normal pixel line           *
 ;*                                                                         *
-;* INPUT:	cx    - number of pixels to write                          *
-;*		ds:si - buffer which holds the pixels to write		   *
-;*		es:di - place to put the pixels we are writing		   *
+;* INPUT:       cx    - number of pixels to write                          *
+;*              ds:si - buffer which holds the pixels to write             *
+;*              es:di - place to put the pixels we are writing             *
 ;*                                                                         *
 ;* OUTPUT:      ds:si - points to next pixel past last pixel read          *
-;*		es:di - points to next pixel past last pixel written	   *
+;*              es:di - points to next pixel past last pixel written       *
 ;*                                                                         *
 ;* WARNINGS:    none                                                       *
 ;*                                                                         *
@@ -4746,12 +4746,12 @@ LineTable	DW	WSA_Normal_Draw			;0
 ;***************************************************************************
 ;* GHOST_TRANSPARENT_DRAW -- Function that writes a transparent pixel line *
 ;*                                                                         *
-;* INPUT:	cx    - number of pixels to write                          *
-;*		ds:si - buffer which holds the pixels to write		   *
-;*		es:di - place to put the pixels we are writing		   *
+;* INPUT:       cx    - number of pixels to write                          *
+;*              ds:si - buffer which holds the pixels to write             *
+;*              es:di - place to put the pixels we are writing             *
 ;*                                                                         *
 ;* OUTPUT:      ds:si - points to next pixel past last pixel read          *
-;*		es:di - points to next pixel past last pixel written	   *
+;*              es:di - points to next pixel past last pixel written       *
 ;*                                                                         *
 ;* WARNINGS:    none                                                       *
 ;*                                                                         *
@@ -4809,22 +4809,22 @@ LineTable	DW	WSA_Normal_Draw			;0
 
 ;***************************************************************************
 ;* GHOST_PRIORITY_DRAW -- Function that writes a pixels if they are in fron*
-;*		    the given plate.					   *
+;*                  the given plate.                                       *
 ;*                                                                         *
-;* INPUT:	cx    - number of pixels to write                          *
-;*		ds:si - buffer which holds the pixels to write		   *
-;*		es:di - place to put the pixels we are writing		   *
+;* INPUT:       cx    - number of pixels to write                          *
+;*              ds:si - buffer which holds the pixels to write             *
+;*              es:di - place to put the pixels we are writing             *
 ;*                                                                         *
 ;* OUTPUT:      ds:si - points to next pixel past last pixel read          *
-;*		es:di - points to next pixel past last pixel written	   *
+;*              es:di - points to next pixel past last pixel written       *
 ;*                                                                         *
 ;* WARNINGS:    none                                                       *
 ;*                                                                         *
 ;* HISTORY:                                                                *
 ;*   07/17/1992 PWG : Created.                                             *
 ;*   12/01/1992 MBL : Updated to work with latest mask data encoding.      *
-;*   05/27/1993 MCC : Updated to use the new Ghosting fx		   *
-;*   17/01/1993 MCC : Updated for 386, and optimized			   *
+;*   05/27/1993 MCC : Updated to use the new Ghosting fx                   *
+;*   17/01/1993 MCC : Updated for 386, and optimized                       *
 ;*=========================================================================*
 	PROC	NOLANGUAGE Ghost_Priority_Draw NEAR
 
@@ -4855,23 +4855,23 @@ LineTable	DW	WSA_Normal_Draw			;0
 
 ;***************************************************************************
 ;* GHOST_PRIORITY_TRANSPARENT_DRAW -- Function that writes a pixels if they*
-;*		    in front of the given plate.  It also deals with	   *
-;*		    transparent pixels.					   *
+;*                  in front of the given plate.  It also deals with       *
+;*                  transparent pixels.                                    *
 ;*                                                                         *
-;* INPUT:	cx    - number of pixels to write                          *
-;*		ds:si - buffer which holds the pixels to write		   *
-;*		es:di - place to put the pixels we are writing		   *
+;* INPUT:       cx    - number of pixels to write                          *
+;*              ds:si - buffer which holds the pixels to write             *
+;*              es:di - place to put the pixels we are writing             *
 ;*                                                                         *
 ;* OUTPUT:      ds:si - points to next pixel past last pixel read          *
-;*		es:di - points to next pixel past last pixel written	   *
+;*              es:di - points to next pixel past last pixel written       *
 ;*                                                                         *
 ;* WARNINGS:    none                                                       *
 ;*                                                                         *
 ;* HISTORY:                                                                *
 ;*   07/17/1992 PWG : Created.                                             *
 ;*   12/01/1992 MBL : Updated to work with latest mask data encoding.      *
-;*   05/27/1993 MCC : Updated to use the new Ghosting fx		   *
-;*   17/01/1993 MCC : Updated for 386, and optimized			   *
+;*   05/27/1993 MCC : Updated to use the new Ghosting fx                   *
+;*   17/01/1993 MCC : Updated for 386, and optimized                       *
 ;*=========================================================================*
 	PROC	NOLANGUAGE Ghost_Priority_Transparent_Draw NEAR
 

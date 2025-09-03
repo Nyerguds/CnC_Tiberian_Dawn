@@ -196,7 +196,7 @@
 
 /* *** MemCheck Compiler Constant Definitions *** */
 
-/* 
+/*
     Compiler            Defines
     --------            -------
     Microsoft           _CC_MSC_, _CC_MSC_COMPATIBLE_
@@ -343,7 +343,7 @@ extern "C" {
 #   define _CC32_           /* flat model */
 
 #elif defined(__WATCOMC__) 
-/*  
+/*
         __WATCOMC__     Used to determine if the WATCOM C
                         or C/386 compiler is compiling
         __386__         identifies the target machine as an
@@ -446,7 +446,7 @@ extern "C" {
 /*******************************************************************/
 /*******************************************************************/
 
-/*  *** Code and Data Size Constants *** 
+/*  *** Code and Data Size Constants ***
     LCODE not used by this header file.
     LDATA *is* used, however.
 
@@ -787,7 +787,7 @@ extern "C" {
 #endif
 
 
-/* 
+/*
     'TOUCH' macro so high warning levels don't generate
     'unreferenced variable' warnings, especially when
     making Production libraries... All MemCheck code
@@ -1040,7 +1040,7 @@ typedef void _MCFAR * (_MCFAR *ROCKETALLOCF)    (size_t);
 typedef void          (_MCFAR *ROCKETFREEF)     (void _MCFAR *);
 
 #pragma pack(1)
-/* 
+/*
     Memory Tracking Structure (MEMREC)
 
     This is the data structure for buffers being
@@ -1149,7 +1149,7 @@ typedef struct {
 #define MCCS_ENTER(pMCCS)   ((*(pMCCS->pLocked))++) /* inc flag */
 #define MCCS_LEAVE(pMCCS)   ((*(pMCCS->pLocked))--) /* dec flag */
 
-/* 
+/*
     Critical section object - ptr to this passed to crit sect callback 
     WARNING:  access these fields ONLY via the MCCS_...() macros.
         To do otherwise subjects you to changes in implementation
@@ -1483,7 +1483,7 @@ extern "C" {
 #endif
 
 
-/* *** Standard ANSI C Includes *** 
+/* *** Standard ANSI C Includes ***
 
     For va_list function call args 
     Inclusion of this header won't change
@@ -1649,7 +1649,7 @@ extern  int     _MCAPI mc_check_transfer(
 extern void _MCCALLBACK mc_get_settings (MCSETTINGS *);
 
 
-/* ***  Callbacks / Functionality Extenders *** 
+/* ***  Callbacks / Functionality Extenders ***
 
     Function Type           Called...
     --------------          ------------------------------
@@ -1662,7 +1662,7 @@ extern void _MCCALLBACK mc_get_settings (MCSETTINGS *);
 
     Refer to your MemCheck 3.0 manual for further details.
 
-    *** STOCK FUNCTIONS *** 
+    *** STOCK FUNCTIONS ***
     These functions are available in the MemCheck
     libraries as "ready-made" for your programming 
     pleasure in the categories above.
@@ -2001,8 +2001,8 @@ _RTLDECL(_fstrcpy,  char far * _MCFARGLUE,  (char far *,const void far *));
 
 #endif  /* not STDC/ANSI */
 
-/***************************************************************** 
- * --------   Function Call Interception Definitions   --------- * 
+/*****************************************************************
+ * --------   Function Call Interception Definitions   --------- *
  *****************************************************************/
 
 #ifndef MEMCHECK_MODULE

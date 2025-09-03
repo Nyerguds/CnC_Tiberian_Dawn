@@ -51,7 +51,7 @@
  *   TriggerClass::Spring -- Trigger processing routine for house-based triggers               *
  *   TriggerClass::Spring -- Trigger processing routine for object-based triggers              *
  *   TriggerClass::TriggerClass -- constructor                                                 *
- *   TriggerClass::Validate -- validates trigger pointer													  *
+ *   TriggerClass::Validate -- validates trigger pointer                                       *
  *   TriggerClass::Write_INI -- writes triggers to the INI file                                *
  *   TriggerClass::operator delete -- 'delete' operator                                        *
  *   TriggerClass::operator new -- 'new' operator                                              *
@@ -114,16 +114,16 @@ static const char * ActionText[TriggerClass::ACTION_COUNT + 1] = {
 
 
 /***********************************************************************************************
- * TriggerClass::Validate -- validates trigger pointer													  *
+ * TriggerClass::Validate -- validates trigger pointer                                         *
  *                                                                                             *
  * INPUT:                                                                                      *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *		1 = ok, 0 = error																								  *
+ *    1 = ok, 0 = error                                                                        *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/09/1995 BRR : Created.                                                                 *

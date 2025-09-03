@@ -29,88 +29,88 @@
  *                                                                         *
  *                   Start Date : December 19, 1994                        *
  *                                                                         *
- *                  Last Update : April 3, 1995   [BR]                 		*
+ *                  Last Update : April 3, 1995   [BR]                     *
  *                                                                         *
  *-------------------------------------------------------------------------*
  *                                                                         *
- * This is the Connection Manager for IPX network communications.  It		*
- * creates, manages, & orchestrates multiple IPX connections, as well as	*
- * the "global" connection ("Global Channel"), which can talk to any 		*
- * system on the net.																		*
- *																									*
- * Use the Global Channel to query systems for their names, ID's, &			*
- * IPX addresses.  Then, create a Private Connection with each system		*
- * that joins your game, and use the Private Channel to send game packets	*
- * (the private channel will perform somewhat faster, & gives you better	*
- * control than the Global Channel; it can detect retries, and the Global	*
- * Channel can't).																			*
- * 																								*
- * HOW THIS CLASS WORKS:																	*
- * This class has to set up an IPX Event Service Routine in low (DOS)		*
- * memory.  So, it uses DPMI to allocate & lock a chunk of DOS memory;		*
- * this memory is used for all incoming packet buffers, the outgoing			*
- * packet buffer, and the actual code for the event handler.  The real-		*
- * mode handler code & this class share a portion of memory that's mapped	*
- * into a "RealModeDataType" structure.  As packets come in, the handler	*
- * points IPX to the next available packet buffer & restarts listening;		*
- * it sets a flag to tell this class that a packet is present at that		*
- * buffer slot.  This class must read all the packets & determine which		*
- * connection they go with (the Global Channel, or one of the Private		*
- * Channels).  This parsing is done in the Service routine for this class.	*
- * 																								*
- * Constructor:	Just inits some variables, checks to see if IPX is there	*
- * Destructor:		Complete shutdown; stops IPX listening, frees all memory	*
- * Init:				Should only be called once (but can be called more); 		*
- * 					allocates all memory, creates the Global Channel			*
- * 					connection, starts IPX listening.  By not placing this 	*
- * 					step in the constructor, the app can control when 			*
- * 					listening actually starts; also, you don't get a bunch	*
- *						of allocations just by declaring an IPXManagerClass		*
- *						instance.  You have to call Init() for the allocations	*
- *						to occur.																*
- * Connection utilities: Create & manage Private Connections.  Each 			*
- *						connection has its own IPX address, numerical ID, and		*
- *						character name (presumably the name of the other			*
- *						player).																	*
- * Send/Get_Global_Message: adds a packet to the Global Connection queue,	*
- *						or reads from the queue.  The caller should check the		*
- *						ProductID value from returned packets to be sure it's		*
- *						talking to the right product.										*
- * Send/Get_Private_Message: adds a packet to a Private Connection queue,	*
- *						or reads from the queue												*
- * Service:			Checks the Real-Mode-Memory packet array to see if any	*
- *						new packets have come in; if they have, it parses them	*
- *						& distributes them to the right connection queue.  The	*
- *						queue's Service routine handles ACK'ing or Resending		*
- *						packets.																	*
- *																									*
- *	Here's a memory map of the Real-Mode memory block.  'N' is the number	*
- * of packet buffers allocated in low memory:										*
- *																									*
- *						----------------------------------								*
- *						|       Shared-memory data       |								*
- *						|--------------------------------|								*
- *						|  Real-mode event handler code  |								*
- *						|--------------------------------|								*
- *						|  IPX Header & Packet Buffer 0  |								*
- *						|--------------------------------|								*
- *						|  IPX Header & Packet Buffer 1  |								*
- *						|--------------------------------|								*
- *						|  IPX Header & Packet Buffer 2  |								*
- *						|--------------------------------|								*
- *						|             . . .              |								*
- *						|--------------------------------|								*
- *						|  IPX Header & Packet Buffer N  |								*
- *						|--------------------------------|								*
- *						|    Send Event Control Block    |								*
- *						|--------------------------------|								*
- *						|         Send IPX Header        |								*
- *						|--------------------------------|								*
- *						|       Send Packet Buffer       |								*
- *						|--------------------------------|								*
- *						|        Flags Array [N]         |								*
- *						----------------------------------								*
- *																									*
+ * This is the Connection Manager for IPX network communications.  It      *
+ * creates, manages, & orchestrates multiple IPX connections, as well as   *
+ * the "global" connection ("Global Channel"), which can talk to any       *
+ * system on the net.                                                      *
+ *                                                                         *
+ * Use the Global Channel to query systems for their names, ID's, &        *
+ * IPX addresses.  Then, create a Private Connection with each system      *
+ * that joins your game, and use the Private Channel to send game packets  *
+ * (the private channel will perform somewhat faster, & gives you better   *
+ * control than the Global Channel; it can detect retries, and the Global  *
+ * Channel can't).                                                         *
+ *                                                                         *
+ * HOW THIS CLASS WORKS:                                                   *
+ * This class has to set up an IPX Event Service Routine in low (DOS)      *
+ * memory.  So, it uses DPMI to allocate & lock a chunk of DOS memory;     *
+ * this memory is used for all incoming packet buffers, the outgoing       *
+ * packet buffer, and the actual code for the event handler.  The real-    *
+ * mode handler code & this class share a portion of memory that's mapped  *
+ * into a "RealModeDataType" structure.  As packets come in, the handler   *
+ * points IPX to the next available packet buffer & restarts listening;    *
+ * it sets a flag to tell this class that a packet is present at that      *
+ * buffer slot.  This class must read all the packets & determine which    *
+ * connection they go with (the Global Channel, or one of the Private      *
+ * Channels).  This parsing is done in the Service routine for this class. *
+ *                                                                         *
+ * Constructor:   Just inits some variables, checks to see if IPX is there *
+ * Destructor:    Complete shutdown; stops IPX listening, frees all memory *
+ * Init:          Should only be called once (but can be called more);     *
+ *                allocates all memory, creates the Global Channel         *
+ *                connection, starts IPX listening.  By not placing this   *
+ *                step in the constructor, the app can control when        *
+ *                listening actually starts; also, you don't get a bunch   *
+ *                of allocations just by declaring an IPXManagerClass      *
+ *                instance.  You have to call Init() for the allocations   *
+ *                to occur.                                                *
+ * Connection utilities: Create & manage Private Connections.  Each        *
+ *                connection has its own IPX address, numerical ID, and    *
+ *                character name (presumably the name of the other         *
+ *                player).                                                 *
+ * Send/Get_Global_Message: adds a packet to the Global Connection queue,  *
+ *                or reads from the queue.  The caller should check the    *
+ *                ProductID value from returned packets to be sure it's    *
+ *                talking to the right product.                            *
+ * Send/Get_Private_Message: adds a packet to a Private Connection queue,  *
+ *                or reads from the queue                                  *
+ * Service:       Checks the Real-Mode-Memory packet array to see if any   *
+ *                new packets have come in; if they have, it parses them   *
+ *                & distributes them to the right connection queue.  The   *
+ *                queue's Service routine handles ACK'ing or Resending     *
+ *                packets.                                                 *
+ *                                                                         *
+ * Here's a memory map of the Real-Mode memory block.  'N' is the number   *
+ * of packet buffers allocated in low memory:                              *
+ *                                                                         *
+ *                ----------------------------------                       *
+ *                |       Shared-memory data       |                       *
+ *                |--------------------------------|                       *
+ *                |  Real-mode event handler code  |                       *
+ *                |--------------------------------|                       *
+ *                |  IPX Header & Packet Buffer 0  |                       *
+ *                |--------------------------------|                       *
+ *                |  IPX Header & Packet Buffer 1  |                       *
+ *                |--------------------------------|                       *
+ *                |  IPX Header & Packet Buffer 2  |                       *
+ *                |--------------------------------|                       *
+ *                |             . . .              |                       *
+ *                |--------------------------------|                       *
+ *                |  IPX Header & Packet Buffer N  |                       *
+ *                |--------------------------------|                       *
+ *                |    Send Event Control Block    |                       *
+ *                |--------------------------------|                       *
+ *                |         Send IPX Header        |                       *
+ *                |--------------------------------|                       *
+ *                |       Send Packet Buffer       |                       *
+ *                |--------------------------------|                       *
+ *                |        Flags Array [N]         |                       *
+ *                ----------------------------------                       *
+ *                                                                         *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #ifndef IPXMANAGER_H

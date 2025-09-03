@@ -18,7 +18,7 @@
 
 /* $Header:   F:\projects\c&c\vcs\code\savedlg.h_v   2.14   16 Oct 1995 16:45:12   JOE_BOSTIC  $ */
 /***********************************************************************************************
- ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               *** 
+ ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               ***
  ***********************************************************************************************
  *                                                                                             *
  *                 Project Name : Command & Conquer                                            *
@@ -27,7 +27,7 @@
  *                                                                                             *
  *                   Programmer : Maria del Mar McCready Legg, Joe L. Bostic                   *
  *                                                                                             *
- *                   Start Date : Jan 8, 1995                                                  * 
+ *                   Start Date : Jan 8, 1995                                                  *
  *                                                                                             *
  *                  Last Update : Jan 18, 1995   [MML]                                         *
  *                                                                                             *

@@ -18,7 +18,7 @@
 
 /* $Header:   F:\projects\c&c\vcs\code\reinf.cpv   2.17   16 Oct 1995 16:48:58   JOE_BOSTIC  $ */
 /***********************************************************************************************
- ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               *** 
+ ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               ***
  ***********************************************************************************************
  *                                                                                             *
  *                 Project Name : Command & Conquer                                            *
@@ -33,32 +33,32 @@
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
- *   Create_Air_Reinforcement -- Creates air strike reinforcement                              * 
- *   Create_Special_Reinforcement -- Ad hoc reinforcement handler.                             * 
- *   Do_Reinforcements -- Create and place a reinforcement team.                               * 
+ *   Create_Air_Reinforcement -- Creates air strike reinforcement                              *
+ *   Create_Special_Reinforcement -- Ad hoc reinforcement handler.                             *
+ *   Do_Reinforcements -- Create and place a reinforcement team.                               *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include	"function.h"
 
 
-/*********************************************************************************************** 
- * Do_Reinforcements -- Create and place a reinforcement team.                                 * 
- *                                                                                             * 
- *    This routine is called when a reinforcement team must be created and placed on the map.  * 
- *    It will create all members of the team and place them at the location determined from    * 
- *    the team composition. The reinforcement team should follow team orders until overriden   * 
- *    by AI or player intervention.                                                            * 
- *                                                                                             * 
- * INPUT:   teamtype -- Pointer to the team type to create as a reinforcement.                 * 
- *                                                                                             * 
- * OUTPUT:  Was the reinforcement successfully created and placed?                             * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   05/08/1995 JLB : Created.                                                                 * 
- *   05/18/1995 JLB : Returns success or failure condition.                                    * 
- *   06/19/1995 JLB : Announces reinforcements.                                                * 
+/***********************************************************************************************
+ * Do_Reinforcements -- Create and place a reinforcement team.                                 *
+ *                                                                                             *
+ *    This routine is called when a reinforcement team must be created and placed on the map.  *
+ *    It will create all members of the team and place them at the location determined from    *
+ *    the team composition. The reinforcement team should follow team orders until overriden   *
+ *    by AI or player intervention.                                                            *
+ *                                                                                             *
+ * INPUT:   teamtype -- Pointer to the team type to create as a reinforcement.                 *
+ *                                                                                             *
+ * OUTPUT:  Was the reinforcement successfully created and placed?                             *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   05/08/1995 JLB : Created.                                                                 *
+ *   05/18/1995 JLB : Returns success or failure condition.                                    *
+ *   06/19/1995 JLB : Announces reinforcements.                                                *
  *=============================================================================================*/
 bool Do_Reinforcements(TeamTypeClass *teamtype)
 {
@@ -430,31 +430,31 @@ bool Do_Reinforcements(TeamTypeClass *teamtype)
 }			
 
 
-/*********************************************************************************************** 
- * Create_Special_Reinforcement -- Ad hoc reinforcement handler.                               * 
- *                                                                                             * 
- *    Use this routine to bring on a reinforcement that hasn't been anticipated by the trigger * 
- *    system. An example of this would be replacement harvesters or airfield ordered units.    * 
- *    The appropriate transport is created (if necessary) and a mission is assigned such that  * 
- *    the object will legally bring itself onto the playing field.                             * 
- *                                                                                             * 
- * INPUT:   house    -- The owner of this reinforcement.                                       * 
- *                                                                                             * 
- *          type     -- The object to bring on.                                                * 
- *                                                                                             * 
- *          another  -- This is reserved for the transport class in those cases where the      * 
- *                      transport MUST be forced to a specific type.                           * 
- *                                                                                             * 
- *          mission  -- The mission to assign this reinforcement team.                         * 
- *                                                                                             * 
- *          argument -- Optional team mission argument (usually a waypoint).                   * 
- *                                                                                             * 
- * OUTPUT:  Was the special reinforcement created without error?                               * 
- *                                                                                             * 
- * WARNINGS:   This routine will fail if a team type cannot be created.                        * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   07/04/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * Create_Special_Reinforcement -- Ad hoc reinforcement handler.                               *
+ *                                                                                             *
+ *    Use this routine to bring on a reinforcement that hasn't been anticipated by the trigger *
+ *    system. An example of this would be replacement harvesters or airfield ordered units.    *
+ *    The appropriate transport is created (if necessary) and a mission is assigned such that  *
+ *    the object will legally bring itself onto the playing field.                             *
+ *                                                                                             *
+ * INPUT:   house    -- The owner of this reinforcement.                                       *
+ *                                                                                             *
+ *          type     -- The object to bring on.                                                *
+ *                                                                                             *
+ *          another  -- This is reserved for the transport class in those cases where the      *
+ *                      transport MUST be forced to a specific type.                           *
+ *                                                                                             *
+ *          mission  -- The mission to assign this reinforcement team.                         *
+ *                                                                                             *
+ *          argument -- Optional team mission argument (usually a waypoint).                   *
+ *                                                                                             *
+ * OUTPUT:  Was the special reinforcement created without error?                               *
+ *                                                                                             *
+ * WARNINGS:   This routine will fail if a team type cannot be created.                        *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/04/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 bool Create_Special_Reinforcement(HouseClass * house, TechnoTypeClass const * type, TechnoTypeClass const * another, TeamMissionType mission, int argument)
 {
@@ -549,32 +549,32 @@ bool Create_Special_Reinforcement(HouseClass * house, TechnoTypeClass const * ty
 }
 
 
-/*********************************************************************************************** 
- * Create_Air_Reinforcement -- Creates air strike reinforcement                                * 
- *                                                                                             * 
- *    This routine is used to launch an airstrike. It will create the necessary aircraft and   * 
- *    assign them to attack the target specified. This routine bypasses the normal             * 
- *    reinforcement logic since it doesn't need the sophistication of unloading and following  * 
- *    team mission lists.                                                                      * 
- *                                                                                             * 
- * INPUT:   house    -- The purpetrator of this air strike.                                    * 
- *                                                                                             * 
- *          air      -- The type of aircraft to make up this airstrike.                        * 
- *                                                                                             * 
- *          number   -- The number of aircraft in this airstrike.                              * 
- *                                                                                             * 
- *          mission  -- The mission to assign the aircraft.                                    * 
- *                                                                                             * 
- *          tarcom   -- The target to assign these aircraft.                                   * 
- *                                                                                             * 
- *          navcom   -- The navigation target to assign (if necessary).                        * 
- *                                                                                             * 
- * OUTPUT:  Returns the number of aircraft created for this airstrike.                         * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   07/04/1995 JLB : Commented.                                                               * 
+/***********************************************************************************************
+ * Create_Air_Reinforcement -- Creates air strike reinforcement                                *
+ *                                                                                             *
+ *    This routine is used to launch an airstrike. It will create the necessary aircraft and   *
+ *    assign them to attack the target specified. This routine bypasses the normal             *
+ *    reinforcement logic since it doesn't need the sophistication of unloading and following  *
+ *    team mission lists.                                                                      *
+ *                                                                                             *
+ * INPUT:   house    -- The purpetrator of this air strike.                                    *
+ *                                                                                             *
+ *          air      -- The type of aircraft to make up this airstrike.                        *
+ *                                                                                             *
+ *          number   -- The number of aircraft in this airstrike.                              *
+ *                                                                                             *
+ *          mission  -- The mission to assign the aircraft.                                    *
+ *                                                                                             *
+ *          tarcom   -- The target to assign these aircraft.                                   *
+ *                                                                                             *
+ *          navcom   -- The navigation target to assign (if necessary).                        *
+ *                                                                                             *
+ * OUTPUT:  Returns the number of aircraft created for this airstrike.                         *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/04/1995 JLB : Commented.                                                               *
  *=============================================================================================*/
 int Create_Air_Reinforcement(HouseClass *house, AircraftType air, int number, MissionType mission, TARGET tarcom, TARGET navcom)
 {
@@ -603,7 +603,7 @@ int Create_Air_Reinforcement(HouseClass *house, AircraftType air, int number, Mi
 		*/
 		obj->IsALoaner = true;
 
-		/* 
+		/*
 		** Find a cell for the object to come in on.  This is stolen from the
 		** the code that handles a SOURCE_AIR in the normal logic.
 		*/
@@ -621,7 +621,7 @@ int Create_Air_Reinforcement(HouseClass *house, AircraftType air, int number, Mi
 		}
 		CELL newcell = Map.Calculated_Cell(source, house->Class->House);
 
-		/* 
+		/*
 		** Try and place the object onto the map.
 		*/
 		ScenarioInit++;

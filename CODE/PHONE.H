@@ -17,18 +17,18 @@
 */
 
 /* $Header:   F:\projects\c&c\vcs\code\phone.h_v   1.9   16 Oct 1995 16:47:58   JOE_BOSTIC  $ */
-/*************************************************************************** 
- *                                                                         * 
- *                 Project Name : Command & Conquer                        * 
- *                                                                         * 
- *                    File Name : PHONE.H                                  * 
- *                                                                         * 
- *                   Programmer : Bill R. Randolph                         * 
- *                                                                         * 
- *                   Start Date : 04/28/95                                 * 
- *                                                                         * 
- *                  Last Update : April 28, 1995 [BRR]                     * 
- *                                                                         * 
+/***************************************************************************
+ *                                                                         *
+ *                 Project Name : Command & Conquer                        *
+ *                                                                         *
+ *                    File Name : PHONE.H                                  *
+ *                                                                         *
+ *                   Programmer : Bill R. Randolph                         *
+ *                                                                         *
+ *                   Start Date : 04/28/95                                 *
+ *                                                                         *
+ *                  Last Update : April 28, 1995 [BRR]                     *
+ *                                                                         *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #ifndef PHONE_H

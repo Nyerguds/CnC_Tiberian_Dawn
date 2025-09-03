@@ -119,9 +119,9 @@ FieldClass::FieldClass(char *id, void *data, int length)
 /**************************************************************************
  * PACKETCLASS::HOST_TO_NET_FIELD -- Converts host field to net format    *
  *                                                                        *
- * INPUT:		FIELD 	* to the data field we need to convert				  *
+ * INPUT:      FIELD    * to the data field we need to convert            *
  *                                                                        *
- * OUTPUT:     none																		  *
+ * OUTPUT:     none                                                       *
  *                                                                        *
  * HISTORY:                                                               *
  *   04/22/1996 PWG : Created.                                            *
@@ -165,9 +165,9 @@ void FieldClass::Host_To_Net(void)
 /**************************************************************************
  * PACKETCLASS::NET_TO_HOST_FIELD -- Converts net field to host format    *
  *                                                                        *
- * INPUT:		FIELD 	* to the data field we need to convert				  *
+ * INPUT:      FIELD    * to the data field we need to convert            *
  *                                                                        *
- * OUTPUT:     none																		  *
+ * OUTPUT:     none                                                       *
  *                                                                        *
  * HISTORY:                                                               *
  *   04/22/1996 PWG : Created.                                            *

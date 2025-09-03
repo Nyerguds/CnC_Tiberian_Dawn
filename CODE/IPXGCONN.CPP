@@ -31,14 +31,14 @@
  *                                                                         *
  *                  Last Update : July 6, 1995 [BRR]                       *
  *-------------------------------------------------------------------------*
- * Functions:    			                                                   *
+ * Functions:                                                              *
  *   IPXGlobalConnClass::IPXGlobalConnClass -- class constructor           *
  *   IPXGlobalConnClass::~IPXGlobalConnClass -- class destructor           *
- *   IPXGlobalConnClass::Send_Packet -- adds a packet to the send queue		*
+ *   IPXGlobalConnClass::Send_Packet -- adds a packet to the send queue    *
  *   IPXGlobalConnClass::Receive_Packet -- adds packet to the receive queue*
  *   IPXGlobalConnClass::Get_Packet -- gets a packet from the receive queue*
- *   IPXGlobalConnClass::Send -- sends a packet										*
- *   IPXGlobalConnClass::Service_Receive_Queue -- services recieve queue	*
+ *   IPXGlobalConnClass::Send -- sends a packet                            *
+ *   IPXGlobalConnClass::Service_Receive_Queue -- services recieve queue   *
  *   IPXGlobalConnClass::Set_Bridge -- Sets up connection to cross a bridge*
 * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
@@ -48,22 +48,22 @@
 /***************************************************************************
  * IPXGlobalConnClass::IPXGlobalConnClass -- class constructor             *
  *                                                                         *
- * This routine chains to the parent constructor, but it adjusts the size	*
- * of the packet by the added bytes in the GlobalHeaderType structure.  	*
- * This forces the parent classes to allocate the proper sized PacketBuf	*
- * for outgoing packets, and to set MaxPacketLen to the proper value.		*
+ * This routine chains to the parent constructor, but it adjusts the size  *
+ * of the packet by the added bytes in the GlobalHeaderType structure.     *
+ * This forces the parent classes to allocate the proper sized PacketBuf   *
+ * for outgoing packets, and to set MaxPacketLen to the proper value.      *
  *                                                                         *
  * INPUT:                                                                  *
- *		numsend			desired # of entries for the send queue					*
- *		numreceive		desired # of entries for the recieve queue				*
- *		maxlen			max length of an application packet							*
- *		product_id		unique ID for this product										*
+ *    numsend        desired # of entries for the send queue               *
+ *    numreceive     desired # of entries for the recieve queue            *
+ *    maxlen         max length of an application packet                   *
+ *    product_id     unique ID for this product                            *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -84,24 +84,24 @@ IPXGlobalConnClass::IPXGlobalConnClass (int numsend, int numreceive, int maxlen,
 
 
 /***************************************************************************
- * IPXGlobalConnClass::Send_Packet -- adds a packet to the send queue		*
+ * IPXGlobalConnClass::Send_Packet -- adds a packet to the send queue      *
  *                                                                         *
- * This routine prefixes the given buffer with a GlobalHeaderType and		*
- * queues the resulting packet into the Send Queue.  The packet's 			*
- * MagicNumber, Code, PacketID, destination Address and ProductID are set 	*
- * here. 																						*
+ * This routine prefixes the given buffer with a GlobalHeaderType and      *
+ * queues the resulting packet into the Send Queue.  The packet's          *
+ * MagicNumber, Code, PacketID, destination Address and ProductID are set  *
+ * here.                                                                   *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf			buffer to send															*
- *		buflen		length of buffer														*
- *		address		address to send the packet to (NULL = Broadcast)			*
- *		ack_req		true = ACK is required for this packet; false = isn't		*
+ *    buf         buffer to send                                           *
+ *    buflen      length of buffer                                         *
+ *    address     address to send the packet to (NULL = Broadcast)         *
+ *    ack_req     true = ACK is required for this packet; false = isn't    *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = error																		*
+ *    1 = OK, 0 = error                                                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -160,19 +160,19 @@ int IPXGlobalConnClass::Send_Packet (void * buf, int buflen,
 
 
 /***************************************************************************
- * IPXGlobalConnClass::Receive_Packet -- adds packet to the receive queue	*
+ * IPXGlobalConnClass::Receive_Packet -- adds packet to the receive queue  *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf		buffer to process (already includes GlobalHeaderType)			*
- *		buflen	length of buffer to process											*
- *		address	the address of the sender (the IPX Manager class must			*
- *					extract this from the IPX Header of the received packet.)	*
+ *    buf      buffer to process (already includes GlobalHeaderType)       *
+ *    buflen   length of buffer to process                                 *
+ *    address  the address of the sender (the IPX Manager class must       *
+ *             extract this from the IPX Header of the received packet.)   *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = error																		*
+ *    1 = OK, 0 = error                                                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -251,19 +251,19 @@ int IPXGlobalConnClass::Receive_Packet (void * buf, int buflen,
 
 
 /***************************************************************************
- * IPXGlobalConnClass::Get_Packet -- gets a packet from the receive queue	*
+ * IPXGlobalConnClass::Get_Packet -- gets a packet from the receive queue  *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf			location to store buffer											*
- *		buflen		filled in with length of 'buf'									*
- *		address		filled in with sender's address									*
- *		product_id	filled in with sender's ProductID								*
+ *    buf         location to store buffer                                 *
+ *    buflen      filled in with length of 'buf'                           *
+ *    address     filled in with sender's address                          *
+ *    product_id  filled in with sender's ProductID                        *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = error																		*
+ *    1 = OK, 0 = error                                                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -315,21 +315,21 @@ int IPXGlobalConnClass::Get_Packet (void * buf, int *buflen,
 
 
 /***************************************************************************
- * IPXGlobalConnClass::Send -- sends a packet										*
+ * IPXGlobalConnClass::Send -- sends a packet                              *
  *                                                                         *
- * This routine gets invoked by NonSequencedConn, when it's processing		*
- * the Send & Receive Queues.  The buffer provided will already have the	*
- * GlobalHeaderType header embedded in it.											*
+ * This routine gets invoked by NonSequencedConn, when it's processing     *
+ * the Send & Receive Queues.  The buffer provided will already have the   *
+ * GlobalHeaderType header embedded in it.                                 *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf		buffer to send																*
- *		buflen	length of buffer															*
+ *    buf      buffer to send                                              *
+ *    buflen   length of buffer                                            *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = error																		*
+ *    1 = OK, 0 = error                                                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -366,22 +366,22 @@ int IPXGlobalConnClass::Send(char *buf, int buflen)
 
 
 /***************************************************************************
- * IPXGlobalConnClass::Service_Receive_Queue -- services the recieve queue	*
+ * IPXGlobalConnClass::Service_Receive_Queue -- services the recieve queue *
  *                                                                         *
- * This routine is necessary because the Global Connection has to ACK		*
- * a packet differently from other types of connections; its Send routine	*
- * assumes that the destination address is embedded within the outgoing		*
- * packet, so we have to create our ACK Packet using the GlobalHeaderType,	*
- * not the CommHeaderType.																	*
+ * This routine is necessary because the Global Connection has to ACK      *
+ * a packet differently from other types of connections; its Send routine  *
+ * assumes that the destination address is embedded within the outgoing    *
+ * packet, so we have to create our ACK Packet using the GlobalHeaderType, *
+ * not the CommHeaderType.                                                 *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = error																		*
+ *    1 = OK, 0 = error                                                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -441,18 +441,18 @@ int IPXGlobalConnClass::Service_Receive_Queue (void)
 /***************************************************************************
  * Set_Bridge -- Sets up connection to cross a bridge                      *
  *                                                                         *
- * This routine is designed to prevent the connection from having to			*
- * call Get_Local_Target, except the minimum number of times, since that	*
- * routine is buggy & goes away for long periods sometimes.						*
+ * This routine is designed to prevent the connection from having to       *
+ * call Get_Local_Target, except the minimum number of times, since that   *
+ * routine is buggy & goes away for long periods sometimes.                *
  *                                                                         *
  * INPUT:                                                                  *
- *		bridge		network number of the destination bridge						*
+ *    bridge      network number of the destination bridge                 *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none																						*
+ *    none                                                                 *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none																						*
+ *    none                                                                 *
  *                                                                         *
  * HISTORY:                                                                *
  *   07/06/1995 BRR : Created.                                             *

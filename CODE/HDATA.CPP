@@ -18,7 +18,7 @@
 
 /* $Header:   F:\projects\c&c\vcs\code\hdata.cpv   2.17   16 Oct 1995 16:48:18   JOE_BOSTIC  $ */
 /***********************************************************************************************
- ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               *** 
+ ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               ***
  ***********************************************************************************************
  *                                                                                             *
  *                 Project Name : Command & Conquer                                            *
@@ -34,7 +34,7 @@
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *
  *   HouseTypeClass::From_Name -- Fetch house pointer from its name.                           *
- *   HouseTypeClass::As_Reference -- Fetches a reference to the house specified.               * 
+ *   HouseTypeClass::As_Reference -- Fetches a reference to the house specified.               *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include	"function.h"
@@ -267,20 +267,20 @@ void HouseTypeClass::One_Time(void)
 }
 
 
-/*********************************************************************************************** 
- * HouseTypeClass::As_Reference -- Fetches a reference to the house specified.                 * 
- *                                                                                             * 
- *    Use this routine to fetch a reference to the house number specified.                     * 
- *                                                                                             * 
- * INPUT:   house -- The house number (HousesType) to look up.                                 * 
- *                                                                                             * 
- * OUTPUT:  Returns with a reference to the HouseTypeClass object that matches the house       * 
- *          number specified.                                                                  * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   01/23/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * HouseTypeClass::As_Reference -- Fetches a reference to the house specified.                 *
+ *                                                                                             *
+ *    Use this routine to fetch a reference to the house number specified.                     *
+ *                                                                                             *
+ * INPUT:   house -- The house number (HousesType) to look up.                                 *
+ *                                                                                             *
+ * OUTPUT:  Returns with a reference to the HouseTypeClass object that matches the house       *
+ *          number specified.                                                                  *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   01/23/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 HouseTypeClass const & HouseTypeClass::As_Reference(HousesType house) 
 {

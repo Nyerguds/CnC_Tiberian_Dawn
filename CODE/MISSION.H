@@ -18,7 +18,7 @@
 
 /* $Header:   F:\projects\c&c\vcs\code\mission.h_v   2.16   16 Oct 1995 16:45:46   JOE_BOSTIC  $ */
 /***********************************************************************************************
- ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               *** 
+ ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               ***
  ***********************************************************************************************
  *                                                                                             *
  *                 Project Name : Command & Conquer                                            *
@@ -49,14 +49,14 @@ class MissionClass : public ObjectClass
 {
 	public:
 
-		/* 
+		/*
 		**	This the tactical strategy to use. It is used by the unit script. This
 		**	is a general guide for unit AI processing.
 		*/
 		MissionType Mission;
 		MissionType SuspendedMission;
 
-		/*	
+		/*
 		**	The order queue is used for orders that should take effect when the vehicle
 		**	has reached the center point of a cell. The queued order number is +1 when stored here
 		**	so that 0 will indicated there is no queued order.

@@ -40,7 +40,7 @@
  *   OverlayClass::new -- Allocates a overlay object from pool                                 *
  *   OverlayClass::OverlayClass -- Overlay object constructor.                                 *
  *   OverlayClass::Mark -- Marks the overlay down on the map.                                  *
- *   OverlayClass::Validate -- validates overlay															  *
+ *   OverlayClass::Validate -- validates overlay                                               *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include	"function.h"
@@ -57,16 +57,16 @@ OverlayClass::OverlayClass(void) : Class(0) {ToOwn = HOUSE_NONE;};
 
 
 /***********************************************************************************************
- * OverlayClass::Validate -- validates overlay																  *
+ * OverlayClass::Validate -- validates overlay                                                 *
  *                                                                                             *
  * INPUT:                                                                                      *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *		1 = ok, 0 = error																								  *
+ *    1 = ok, 0 = error                                                                        *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/09/1995 BRR : Created.                                                                 *

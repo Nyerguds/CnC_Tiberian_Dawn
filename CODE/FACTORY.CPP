@@ -51,23 +51,23 @@
  *   FactoryClass::operator delete -- Returns a factory to the free factory pool.              *
  *   FactoryClass::operator new -- Allocates a factory object from the free factory pool.      *
  *   FactoryClass::~FactoryClass -- Default destructor for factory objects.                    *
- *   FactoryClass::Validate -- validates factory pointer													  *
+ *   FactoryClass::Validate -- validates factory pointer                                       *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include	"function.h"
 
 
 /***********************************************************************************************
- * FactoryClass::Validate -- validates factory pointer													  *
+ * FactoryClass::Validate -- validates factory pointer                                         *
  *                                                                                             *
  * INPUT:                                                                                      *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *		1 = ok, 0 = error																								  *
+ *    1 = ok, 0 = error                                                                        *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/09/1995 BRR : Created.                                                                 *

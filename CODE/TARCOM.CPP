@@ -18,7 +18,7 @@
 
 /* $Header:   F:\projects\c&c\vcs\code\tarcom.cpv   2.17   16 Oct 1995 16:52:20   JOE_BOSTIC  $ */
 /***********************************************************************************************
- ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               *** 
+ ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               ***
  ***********************************************************************************************
  *                                                                                             *
  *                 Project Name : Command & Conquer                                            *
@@ -35,25 +35,25 @@
  * Functions:                                                                                  *
  *   TarComClass::Debug_Dump -- Displays the status of the tarcom class to the mono screen.    *
  *   TarComClass::AI -- Handles the logical AI for the tarcom class.                           *
- *   TarComClass::~TarComClass -- Destructor for turret object.                                * 
+ *   TarComClass::~TarComClass -- Destructor for turret object.                                *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include	"function.h"
 
 
-/*********************************************************************************************** 
- * TarComClass::~TarComClass -- Destructor for turret object.                                  * 
- *                                                                                             * 
- *    This is the destructor for turret objects.                                               * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   07/19/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * TarComClass::~TarComClass -- Destructor for turret object.                                  *
+ *                                                                                             *
+ *    This is the destructor for turret objects.                                               *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/19/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 TarComClass::~TarComClass(void) 
 {

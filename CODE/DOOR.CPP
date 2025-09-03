@@ -17,46 +17,46 @@
 */
 
 /* $Header:   F:\projects\c&c\vcs\code\door.cpv   1.4   16 Oct 1995 16:49:16   JOE_BOSTIC  $ */
-/*********************************************************************************************** 
- ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               *** 
- *********************************************************************************************** 
- *                                                                                             * 
- *                 Project Name : Command & Conquer                                            * 
- *                                                                                             * 
- *                    File Name : DOOR.CPP                                                     * 
- *                                                                                             * 
- *                   Programmer : Joe L. Bostic                                                * 
- *                                                                                             * 
- *                   Start Date : 06/11/95                                                     * 
- *                                                                                             * 
- *                  Last Update : June 14, 1995 [JLB]                                          * 
- *                                                                                             * 
- *---------------------------------------------------------------------------------------------* 
- * Functions:                                                                                  * 
- *   DoorClass::AI -- Handles the door processing logic.                                       * 
- *   DoorClass::Close_Door -- Try to close the unit's door.                                    * 
- *   DoorClass::DoorClass -- Constructor for the DoorClass object.                             * 
- *   DoorClass::Door_Stage -- Fetches the current door animation frame.                        * 
- *   DoorClass::Open_Door -- Opens the door for this unit.                                     * 
+/***********************************************************************************************
+ ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               ***
+ ***********************************************************************************************
+ *                                                                                             *
+ *                 Project Name : Command & Conquer                                            *
+ *                                                                                             *
+ *                    File Name : DOOR.CPP                                                     *
+ *                                                                                             *
+ *                   Programmer : Joe L. Bostic                                                *
+ *                                                                                             *
+ *                   Start Date : 06/11/95                                                     *
+ *                                                                                             *
+ *                  Last Update : June 14, 1995 [JLB]                                          *
+ *                                                                                             *
+ *---------------------------------------------------------------------------------------------*
+ * Functions:                                                                                  *
+ *   DoorClass::AI -- Handles the door processing logic.                                       *
+ *   DoorClass::Close_Door -- Try to close the unit's door.                                    *
+ *   DoorClass::DoorClass -- Constructor for the DoorClass object.                             *
+ *   DoorClass::Door_Stage -- Fetches the current door animation frame.                        *
+ *   DoorClass::Open_Door -- Opens the door for this unit.                                     *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 
 #include	"function.h"
 
 
-/*********************************************************************************************** 
- * DoorClass::DoorClass -- Constructor for the DoorClass object.                               * 
- *                                                                                             * 
- *    This constructor sets the door to an initial closed state.                               * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   06/14/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * DoorClass::DoorClass -- Constructor for the DoorClass object.                               *
+ *                                                                                             *
+ *    This constructor sets the door to an initial closed state.                               *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/14/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 DoorClass::DoorClass(void) 
 {
@@ -66,20 +66,20 @@ DoorClass::DoorClass(void)
 }
 
 
-/*********************************************************************************************** 
- * DoorClass::AI -- Handles the door processing logic.                                         * 
- *                                                                                             * 
- *    This routine should be called every game frame. It handles the door closing and opening  * 
- *    logic.                                                                                   * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   06/13/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * DoorClass::AI -- Handles the door processing logic.                                         *
+ *                                                                                             *
+ *    This routine should be called every game frame. It handles the door closing and opening  *
+ *    logic.                                                                                   *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/13/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 void DoorClass::AI(void)
 {
@@ -101,22 +101,22 @@ void DoorClass::AI(void)
 }
 
 
-/*********************************************************************************************** 
- * DoorClass::Open_Door -- Opens the door for this unit.                                       * 
- *                                                                                             * 
- *    This routine will perform the door open operation for this unit. It will control vehicle * 
- *    rotation if necessary.                                                                   * 
- *                                                                                             * 
- * INPUT:   rate     -- The animation rate (delay) to use for the door animation logic.        * 
- *                                                                                             * 
- *          stages   -- The number of animations stages that this door must pass through.      * 
- *                                                                                             * 
- * OUTPUT:  Was action initiated to open the door?                                             * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   05/08/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * DoorClass::Open_Door -- Opens the door for this unit.                                       *
+ *                                                                                             *
+ *    This routine will perform the door open operation for this unit. It will control vehicle *
+ *    rotation if necessary.                                                                   *
+ *                                                                                             *
+ * INPUT:   rate     -- The animation rate (delay) to use for the door animation logic.        *
+ *                                                                                             *
+ *          stages   -- The number of animations stages that this door must pass through.      *
+ *                                                                                             *
+ * OUTPUT:  Was action initiated to open the door?                                             *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   05/08/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 bool DoorClass::Open_Door(int rate, int stages)
 {
@@ -133,22 +133,22 @@ bool DoorClass::Open_Door(int rate, int stages)
 }
 
 
-/*********************************************************************************************** 
- * DoorClass::Close_Door -- Try to close the unit's door.                                      * 
- *                                                                                             * 
- *    This routine will attempt to close the unit's door. If the door is already closed or     * 
- *    in the process of closing, then no action is performed.                                  * 
- *                                                                                             * 
- * INPUT:   rate     -- The animation rate (delay) to use for the door animation logic.        * 
- *                                                                                             * 
- *          stages   -- The number of animations stages that this door must pass through.      * 
- *                                                                                             * 
- * OUTPUT:  Action was initiated to close the door?                                            * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   05/08/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * DoorClass::Close_Door -- Try to close the unit's door.                                      *
+ *                                                                                             *
+ *    This routine will attempt to close the unit's door. If the door is already closed or     *
+ *    in the process of closing, then no action is performed.                                  *
+ *                                                                                             *
+ * INPUT:   rate     -- The animation rate (delay) to use for the door animation logic.        *
+ *                                                                                             *
+ *          stages   -- The number of animations stages that this door must pass through.      *
+ *                                                                                             *
+ * OUTPUT:  Action was initiated to close the door?                                            *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   05/08/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 bool DoorClass::Close_Door(int rate, int stages)
 {
@@ -165,23 +165,23 @@ bool DoorClass::Close_Door(int rate, int stages)
 }
 
 
-/*********************************************************************************************** 
- * DoorClass::Door_Stage -- Fetches the current door animation frame.                          * 
- *                                                                                             * 
- *    Use this routine to fetch the current door animation frame number. Frame zero is the     * 
- *    closed frame and frame 'N' is the open frame. If the door is in the process of opening   * 
- *    or closing, the appropriate frame number is used. 'N' is defined as the number of        * 
- *    stages in the animation minus 1 (e.g., a four frame animation will return a door stage   * 
- *    number between 0 and 3, inclusive).                                                      * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  Returns with the door animation frame number.                                      * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   06/14/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * DoorClass::Door_Stage -- Fetches the current door animation frame.                          *
+ *                                                                                             *
+ *    Use this routine to fetch the current door animation frame number. Frame zero is the     *
+ *    closed frame and frame 'N' is the open frame. If the door is in the process of opening   *
+ *    or closing, the appropriate frame number is used. 'N' is defined as the number of        *
+ *    stages in the animation minus 1 (e.g., a four frame animation will return a door stage   *
+ *    number between 0 and 3, inclusive).                                                      *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with the door animation frame number.                                      *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/14/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 int DoorClass::Door_Stage(void) const 
 {

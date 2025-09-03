@@ -27,19 +27,19 @@
  *                                                                         *
  *                   Programmer : Bill Randolph                            *
  *                                                                         *
- *                   Start Date : April 5, 1995       	 						*
+ *                   Start Date : April 5, 1995                            *
  *                                                                         *
  *                  Last Update : May 1, 1995 [BRR]                        *
  *                                                                         *
  *-------------------------------------------------------------------------*
- * Functions:    			                                                   *
+ * Functions:                                                              *
  *   NullModemClass::NullModemClass -- class constructor                   *
  *   NullModemClass::~NullModemClass -- class destructor                   *
- *   NullModemClass::Init -- initialization											*
- *   NullModemClass::Send_Message -- sends a message								*
- *   NullModemClass::Get_Message -- polls the Queue for a message				*
- *   NullModemClass::Service -- main polling routine								*
- *   NullModemClass::Num_Send -- Returns # of unACK'd send entries			*
+ *   NullModemClass::Init -- initialization                                *
+ *   NullModemClass::Send_Message -- sends a message                       *
+ *   NullModemClass::Get_Message -- polls the Queue for a message          *
+ *   NullModemClass::Service -- main polling routine                       *
+ *   NullModemClass::Num_Send -- Returns # of unACK'd send entries         *
  *   NullModemClass::Num_Receive -- Returns # entries in the receive queue *
  *   NullModemClass::Response_Time -- Returns Queue's avg response time    *
  *   NullModemClass::Reset_Response_Time -- Resets response time computatio*
@@ -93,18 +93,18 @@ char ModemRXString[80];
  * NullModemClass::NullModemClass -- class constructor                     *
  *                                                                         *
  * INPUT:                                                                  *
- *		numsend			# desired entries for the send queue						*
- *		numreceive		# desired entries for the receive queue					*
- *		maxlen			application's max packet length								*
- *		magicnum			application-specific magic # (so we don't 				*
- *							accidentally end up talking to another one of our own	*
- *							products using the same protocol)							*
+ *    numsend        # desired entries for the send queue                  *
+ *    numreceive     # desired entries for the receive queue               *
+ *    maxlen         application's max packet length                       *
+ *    magicnum       application-specific magic # (so we don't             *
+ *                   accidentally end up talking to another one of our own *
+ *                   products using the same protocol)                     *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -160,13 +160,13 @@ NullModemClass::NullModemClass (int numsend, int numreceive, int maxlen,
  * NullModemClass::~NullModemClass -- class destructor                     *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -178,22 +178,22 @@ NullModemClass::~NullModemClass ()
 
 
 /***************************************************************************
- * NullModemClass::Init -- initialization												*
+ * NullModemClass::Init -- initialization                                  *
  *                                                                         *
  * INPUT:                                                                  *
- *		port				address  															*
- *		irq				2-15     															*
- *		baud				300, 1200, 9600, etc												*
- *		parity			'O' (odd), 'E' (even), 'N' (none), 'S' (space),			*
- *							'M' (mark)															*
- *		wordlength		5, 6, 7, or 8														*
- *		stopbits			1 or 2																*
+ *    port           address                                               *
+ *    irq            2-15                                                  *
+ *    baud           300, 1200, 9600, etc                                  *
+ *    parity         'O' (odd), 'E' (even), 'N' (none), 'S' (space),       *
+ *                   'M' (mark)                                            *
+ *    wordlength     5, 6, 7, or 8                                         *
+ *    stopbits       1 or 2                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = error																		*
+ *    1 = OK, 0 = error                                                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -611,21 +611,21 @@ void NullModemClass::Shutdown ( void )
 
 
 /***************************************************************************
- * NullModemClass::Set_Timing -- sets timing for all connections				*
+ * NullModemClass::Set_Timing -- sets timing for all connections           *
  *                                                                         *
- * This will set the timing parameters.  This allows an application to		*
- * measure the Response_Time while running, and adjust timing accordingly.	*
+ * This will set the timing parameters.  This allows an application to     *
+ * measure the Response_Time while running, and adjust timing accordingly. *
  *                                                                         *
  * INPUT:                                                                  *
- *		retrydelta	value to set for retry delta 										*
- *		maxretries	value to set for max # retries									*
- *		timeout		value to set for connection timeout								*
+ *    retrydelta  value to set for retry delta                             *
+ *    maxretries  value to set for max # retries                           *
+ *    timeout     value to set for connection timeout                      *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   08/07/1995 DRD : Created.                                             *
@@ -645,33 +645,33 @@ void NullModemClass::Set_Timing (unsigned long retrydelta,
 
 
 /***************************************************************************
- * NullModemClass::Send_Message -- sends a message									*
+ * NullModemClass::Send_Message -- sends a message                         *
  *                                                                         *
- * For clarity's sake, here's what happens to the buffer passed in:			*
- * - It gets passed to the Connection's Send_Packet() routine					*
- * - The CommHeaderType header gets tacked onto it									*
- * - The resulting buffer gets added to the Connection's Send Queue			*
- * - When Service() determines that it needs to send the data, it				*
- *   copies the entire packet (CommHeaderType and all) into its local 		*
+ * For clarity's sake, here's what happens to the buffer passed in:        *
+ * - It gets passed to the Connection's Send_Packet() routine              *
+ * - The CommHeaderType header gets tacked onto it                         *
+ * - The resulting buffer gets added to the Connection's Send Queue        *
+ * - When Service() determines that it needs to send the data, it          *
+ *   copies the entire packet (CommHeaderType and all) into its local      *
  *   SendBuf, adds the packet start ID, length, and CRC, then sends it out.*
  *                                                                         *
- * The ack_req argument will almost always be '1' (the default).  The only	*
- * reason to use 0 is if you don't know whether the other system is			*
- * ready or not, so you have to periodically send out a query packet,		*
- * and wait for a response.  (Using the connection's built-in retry			*
- * system would just blast out useless data if the other system isn't		*
- * even there.)																				*
+ * The ack_req argument will almost always be '1' (the default).  The only *
+ * reason to use 0 is if you don't know whether the other system is        *
+ * ready or not, so you have to periodically send out a query packet,      *
+ * and wait for a response.  (Using the connection's built-in retry        *
+ * system would just blast out useless data if the other system isn't      *
+ * even there.)                                                            *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf			buffer to send															*
- *		buflen		length of buffer														*
- *		ack_req		1 = ACK is required; 0 = not										*
+ *    buf         buffer to send                                           *
+ *    buflen      length of buffer                                         *
+ *    ack_req     1 = ACK is required; 0 = not                             *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK; 0 = error																		*
+ *    1 = OK; 0 = error                                                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -694,17 +694,17 @@ int NullModemClass::Send_Message (void *buf, int buflen, int ack_req)
 
 
 /***************************************************************************
- * NullModemClass::Get_Message -- polls the Queue for a message				*
+ * NullModemClass::Get_Message -- polls the Queue for a message            *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf			buffer to store message in											*
- *		buflen		ptr filled in with length of message							*
+ *    buf         buffer to store message in                               *
+ *    buflen      ptr filled in with length of message                     *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = message was received; 0 = wasn't											*
+ *    1 = message was received; 0 = wasn't                                 *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -719,16 +719,16 @@ int NullModemClass::Get_Message (void *buf, int *buflen)
 
 
 /***************************************************************************
- * NullModemClass::Service -- main polling routine									*
+ * NullModemClass::Service -- main polling routine                         *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = connection has gone bad												*
+ *    1 = OK, 0 = connection has gone bad                                  *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -943,7 +943,7 @@ Debug_Smart_Print = FALSE;
 
 
 /***************************************************************************
- * NullModemClass::Num_Send -- Returns # of unACK'd send entries				*
+ * NullModemClass::Num_Send -- Returns # of unACK'd send entries           *
  *                                                                         *
  * INPUT:                                                                  *
  *                                                                         *
@@ -1066,24 +1066,24 @@ void * NullModemClass::Oldest_Send(void)
 /***************************************************************************
  * NullModemClass::Configure_Debug -- sets up special debug values         *
  *                                                                         *
- * Mono_Debug_Print2() can look into a packet to pull out a particular		*
- * ID, and can print both that ID and a string corresponding to				*
- * that ID.  This routine configures these values so it can find				*
- * and decode the ID.  This ID is used in addition to the normal				*
- * CommHeaderType values.																	*
+ * Mono_Debug_Print2() can look into a packet to pull out a particular     *
+ * ID, and can print both that ID and a string corresponding to            *
+ * that ID.  This routine configures these values so it can find           *
+ * and decode the ID.  This ID is used in addition to the normal           *
+ * CommHeaderType values.                                                  *
  *                                                                         *
  * INPUT:                                                                  *
- *		index			connection index to configure (-1 = Global Channel)		*
- *		offset		ID's byte offset into packet										*
- *		size			size of ID, in bytes; 0 if none									*
- *		names			ptr to array of names; use ID as an index into this		*
- *		maxnames		max # in the names array; 0 if none.							*
+ *    index       connection index to configure (-1 = Global Channel)      *
+ *    offset      ID's byte offset into packet                             *
+ *    size        size of ID, in bytes; 0 if none                          *
+ *    names       ptr to array of names; use ID as an index into this      *
+ *    maxnames    max # in the names array; 0 if none.                     *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		Names shouldn't be longer than 12 characters.								*
+ *    Names shouldn't be longer than 12 characters.                        *
  *                                                                         *
  * HISTORY:                                                                *
  *   05/31/1995 BRR : Created.                                             *
@@ -1100,13 +1100,13 @@ void NullModemClass::Configure_Debug(int , int offset, int size,
  * Mono_Debug_Print -- Debug output routine                                *
  *                                                                         *
  * INPUT:                                                                  *
- *		refresh		1 = clear screen & completely refresh							*
+ *    refresh     1 = clear screen & completely refresh                    *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   05/02/1995 BRR : Created.                                             *
@@ -1182,15 +1182,15 @@ void Timer_Test (int line, char *file)
  * NullModemClass::Detect_Modem -- Detects and initializes the modem       *
  *                                                                         *
  * INPUT:                                                                  *
- *		settings		ptr to SerialSettings structure     							*
+ *    settings    ptr to SerialSettings structure                          *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		-1				init string invalid													*
- *		0				no modem found															*
- *		1				modem found			  													*
+ *    -1          init string invalid                                      *
+ *    0           no modem found                                           *
+ *    1           modem found                                              *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   06/02/1995 DRD : Created.                                             *
@@ -1449,13 +1449,13 @@ int NullModemClass::Detect_Modem( SerialSettingsType *settings, bool reconnect )
  * NullModemClass::Dial_Modem -- dials a number passed                     *
  *                                                                         *
  * INPUT:                                                                  *
- *		settings		ptr to SerialSettings structure     							*
+ *    settings    ptr to SerialSettings structure                          *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		status		DialStatus																*
+ *    status      DialStatus                                               *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   06/02/1995 DRD : Created.                                             *
@@ -1712,13 +1712,13 @@ DialStatusType NullModemClass::Dial_Modem( char *string, DialMethodType method, 
  * NullModemClass::Answer_Modem -- waits for call and answers              *
  *                                                                         *
  * INPUT:                                                                  *
- *		reconnect	whether this is to reconnect		     							*
+ *    reconnect   whether this is to reconnect                             *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		status		DialStatus																*
+ *    status      DialStatus                                               *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   06/02/1995 DRD : Created.                                             *
@@ -1960,13 +1960,13 @@ DialStatusType NullModemClass::Answer_Modem( bool reconnect )
  * NullModemClass::Hangup_Modem -- hangs up the modem                      *
  *                                                                         *
  * INPUT:                                                                  *
- *		none																					  *
+ *    none                                                                 *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		status		successful or not													  *
+ *    status      successful or not                                        *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																					  *
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   06/02/1995 DRD : Created.                                             *

@@ -35,12 +35,12 @@
  *   Queue_Options -- Queue the options event.                             *
  *   Queue_Exit -- Add the exit game event to the queue.                   *
  *                                                                         *
- * Functions for processing Queued Events:											*
+ * Functions for processing Queued Events:                                 *
  *   Queue_AI -- Process all queued events.                                *
  *   Queue_AI_Normal -- Process all queued events.                         *
  *   Queue_AI_Multiplayer -- Process all queued events.                    *
  *                                                                         *
- * Main Multiplayer Queue Logic:															*
+ * Main Multiplayer Queue Logic:                                           *
  *   Wait_For_Players -- Waits for other systems to come on-line           *
  *   Generate_Timing_Event -- computes & queues a RESPONSE_TIME event      *
  *   Process_Send_Period -- timing for sending packets every 'n' frames    *
@@ -51,26 +51,26 @@
  *   Can_Advance -- determines if it's OK to advance to the next frame     *
  *   Process_Reconnect_Dialog -- processes the reconnection dialog         *
  *   Handle_Timeout -- attempts to reconnect; if fails, bails.             *
- *   Stop_Game -- stops the game															*
+ *   Stop_Game -- stops the game                                           *
  *                                                                         *
- * Packet Compression / Decompression:													*
- *   Build_Send_Packet -- Builds a big packet from a bunch of little ones.	*
+ * Packet Compression / Decompression:                                     *
+ *   Build_Send_Packet -- Builds a big packet from a bunch of little ones. *
  *   Add_Uncompressed_Events -- adds uncompressed events to a packet       *
- *   Add_Compressed_Events -- adds compressed events to a packet        	*
- *   Breakup_Receive_Packet -- Splits a big packet into little ones.			*
- *   Extract_Uncompressed_Events -- extracts events from a packet				*
+ *   Add_Compressed_Events -- adds compressed events to a packet           *
+ *   Breakup_Receive_Packet -- Splits a big packet into little ones.       *
+ *   Extract_Uncompressed_Events -- extracts events from a packet          *
  *   Extract_Compressed_Events -- extracts events from a packet            *
  *                                                                         *
- * DoList Management:																		*
+ * DoList Management:                                                      *
  *   Execute_DoList -- Executes commands from the DoList                   *
  *   Clean_DoList -- Cleans out old events from the DoList                 *
  *   Queue_Record -- Records the DoList to disk                            *
  *   Queue_Playback -- plays back queue entries from a record file         *
  *                                                                         *
- * Debugging:																					*
- *   Compute_Game_CRC -- Computes a CRC value of the entire game.				*
+ * Debugging:                                                              *
+ *   Compute_Game_CRC -- Computes a CRC value of the entire game.          *
  *   Add_CRC -- Adds a value to a CRC                                      *
- *   Print_CRCs -- Prints a data file for finding Sync Bugs						*
+ *   Print_CRCs -- Prints a data file for finding Sync Bugs                *
  *   Init_Queue_Mono -- inits mono display                                 *
  *   Update_Queue_Mono -- updates mono display                             *
  *   Print_Framesync_Values -- displays frame-sync variables               *
@@ -208,21 +208,21 @@ extern void Send_Statistics_Packet(void);
 /***************************************************************************
  * Queue_Mission -- Queue a mega mission event.                            *
  *                                                                         *
- * This routine is called when the player causes a change to a game unit. 	*
- * The event that initiates the change is queued to as a result of a call 	*
- * to this routine.                 													*
+ * This routine is called when the player causes a change to a game unit.  *
+ * The event that initiates the change is queued to as a result of a call  *
+ * to this routine.                                                        *
  *                                                                         *
  * INPUT:                                                                  *
- *		whom		Whom this mission request applies to (a friendly unit).     *
- *    mission	The mission to assign to this object.                       *
- *    target	The target of this mission (if any).                        *
- *    dest		The movement destination for this mission (if any).         *
+ *    whom     Whom this mission request applies to (a friendly unit).     *
+ *    mission  The mission to assign to this object.                       *
+ *    target   The target of this mission (if any).                        *
+ *    dest     The movement destination for this mission (if any).         *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		Was the mission request queued successfully?                         *
+ *    Was the mission request queued successfully?                         *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.                                                                *
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   09/21/1995 JLB : Created.                                             *
@@ -244,13 +244,13 @@ bool Queue_Mission(TARGET whom, MissionType mission, TARGET target,
  * Queue_Options -- Queue the options event.                               *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		Was the options screen event queued successfully?                    *
+ *    Was the options screen event queued successfully?                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   09/21/1995 JLB : Created.                                             *
@@ -271,13 +271,13 @@ bool Queue_Options(void)
  * Queue_Exit -- Add the exit game event to the queue.                     *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		Was the exit event queued successfully?                              *
+ *    Was the exit event queued successfully?                              *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   09/21/1995 JLB : Created.                                             *
@@ -298,13 +298,13 @@ bool Queue_Exit(void)
  * Queue_AI -- Process all queued events.                                  *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   09/21/1995 JLB : Created.                                             *
@@ -343,21 +343,21 @@ void Queue_AI(void)
 /***************************************************************************
  * Queue_AI_Normal -- Process all queued events.                           *
  *                                                                         *
- * This is the "normal" version of the queue management routine.  It does 	*
- * the following:		  																		*
- * - Transfers items in the OutList to the DoList									*
- * - Executes any commands in the DoList that are supposed to be done on 	*
- *   this frame #			  																	*
- * - Cleans out the DoList																	*
+ * This is the "normal" version of the queue management routine.  It does  *
+ * the following:                                                          *
+ * - Transfers items in the OutList to the DoList                          *
+ * - Executes any commands in the DoList that are supposed to be done on   *
+ *   this frame #                                                          *
+ * - Cleans out the DoList                                                 *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   09/21/1995 JLB : Created.                                             *
@@ -405,102 +405,102 @@ static void Queue_AI_Normal(void)
 /***************************************************************************
  * Queue_AI_Multiplayer -- Process all queued events.                      *
  *                                                                         *
- * This is the network version of the queue management routine.  It does 	*
- * the following:																				*
- * - If this is the 1st frame, waits for other systems to signal ready		*
- * - Generates a timing event, to allow the connection time to be dynamic	*
- * - Handles timing related to sending packets every 'n' frames				*
- * - Sends outgoing events																	*
- * - Frame-syncs to the other systems (see below)									*
- * - Executes & cleans out the DoList													*
+ * This is the network version of the queue management routine.  It does   *
+ * the following:                                                          *
+ * - If this is the 1st frame, waits for other systems to signal ready     *
+ * - Generates a timing event, to allow the connection time to be dynamic  *
+ * - Handles timing related to sending packets every 'n' frames            *
+ * - Sends outgoing events                                                 *
+ * - Frame-syncs to the other systems (see below)                          *
+ * - Executes & cleans out the DoList                                      *
  *                                                                         *
- * The Frame-Sync'ing logic is the heart & soul of network play.  It works	*
- * by ensuring that any system won't out-run the other system by more than	*
- * 'MaxAhead' frames; this in turn ensures that a packet's 						*
- * execution frame # won't have been passed by the time that packet is 		*
- * received by all systems.																*
+ * The Frame-Sync'ing logic is the heart & soul of network play.  It works *
+ * by ensuring that any system won't out-run the other system by more than *
+ * 'MaxAhead' frames; this in turn ensures that a packet's                 *
+ * execution frame # won't have been passed by the time that packet is     *
+ * received by all systems.                                                *
  *                                                                         *
- * To achieve this, the system must keep track of all other system's 		*
+ * To achieve this, the system must keep track of all other system's       *
  * current frame #'s; these are stored in an array called 'their_frame[]'. *
  * However, because current frame #'s are sent in FRAMEINFO packets, which *
  * don't require an ACK, and command packets are sent in packets requiring *
- * an ACK, it's possible for a command packet to get lost, and the next 	*
- * frame's FRAMEINFO packet to not get lost; the other system may then 		*
- * advance past the frame # the command is to execute on!  So, to prevent 	*
- * this, all FRAMEINFO packets include a CommandCount field.  This value 	*
- * tells the other system how many events it should have received by this 	*
- * time.  This system can therefore keep track of how many commands it's	*
- * actually received, and compare it to the CommandCount field, to see if 	*
- * it's missed an event packet.  The # of events we've received from each 	*
- * system is stored in 'their_recv[]', and the # events they say they've 	*
- * sent is stored in 'their_sent[]'.													*
+ * an ACK, it's possible for a command packet to get lost, and the next    *
+ * frame's FRAMEINFO packet to not get lost; the other system may then     *
+ * advance past the frame # the command is to execute on!  So, to prevent  *
+ * this, all FRAMEINFO packets include a CommandCount field.  This value   *
+ * tells the other system how many events it should have received by this  *
+ * time.  This system can therefore keep track of how many commands it's   *
+ * actually received, and compare it to the CommandCount field, to see if  *
+ * it's missed an event packet.  The # of events we've received from each  *
+ * system is stored in 'their_recv[]', and the # events they say they've   *
+ * sent is stored in 'their_sent[]'.                                       *
  *                                                                         *
- * Thus, two conditions must be met in order to advance to the next frame:	*
- * - Our current frame # must be <= their_frame + MaxAhead						*
- * - their_recv[i] must be >= their_sent[i]											*
+ * Thus, two conditions must be met in order to advance to the next frame: *
+ * - Our current frame # must be <= their_frame + MaxAhead                 *
+ * - their_recv[i] must be >= their_sent[i]                                *
  *                                                                         *
- * 'their_frame[] is updated by Process_Receive_Packet()							*
- * 'their_recv[] is updated by Process_Receive_Packet()							*
- * 'their_sent[] is updated by Process_Receive_Packet()							*
- * 'my_sent' is updated by this routine.												*
+ * 'their_frame[] is updated by Process_Receive_Packet()                   *
+ * 'their_recv[] is updated by Process_Receive_Packet()                    *
+ * 'their_sent[] is updated by Process_Receive_Packet()                    *
+ * 'my_sent' is updated by this routine.                                   *
  *                                                                         *
- * The only routines allowed to pop up dialogs are:								*
- * 	Wait_For_Players() (only pops up the reconnect dialog)					*
- * 	Execute_DoList() (tells if out of sync, or packet recv'd too late)	*
+ * The only routines allowed to pop up dialogs are:                        *
+ *    Wait_For_Players() (only pops up the reconnect dialog)               *
+ *    Execute_DoList() (tells if out of sync, or packet recv'd too late)   *
  *                                                                         *
- * Sign-off's are detected by:															*
- * - Timing out while waiting for a packet											*
- * - Detecting that the other player is now at the score screen or 			*
- *   connection dialog (serial)															*
- * - If we see an EventClass::EXIT event on the private channel				*
+ * Sign-off's are detected by:                                             *
+ * - Timing out while waiting for a packet                                 *
+ * - Detecting that the other player is now at the score screen or         *
+ *   connection dialog (serial)                                            *
+ * - If we see an EventClass::EXIT event on the private channel            *
  *                                                                         *
- * The current communications protocol, COMM_PROTOCOL_MULTI_E_COMP, has 	*
- * the following properites:																*
- * - It compresses packets, so that the minimum number of bytes are 			*
+ * The current communications protocol, COMM_PROTOCOL_MULTI_E_COMP, has    *
+ * the following properites:                                               *
+ * - It compresses packets, so that the minimum number of bytes are        *
  *   transmitted.  Packets are compressed by extracting all info common to *
- *   the events into the packet header, and then sending only the bytes 	*
- *   relevant to each type of event.  For instance, if 100 infantry guys 	*
- *   are told to move to the same location, the command itself & the 		*
- *   location will be included in the 1st movement command only; after 		*
- *   that, there will be a rep count then 99 infantry TARGET numbers, 		*
- *   identifying all the infantry told to move.										*
+ *   the events into the packet header, and then sending only the bytes    *
+ *   relevant to each type of event.  For instance, if 100 infantry guys   *
+ *   are told to move to the same location, the command itself & the       *
+ *   location will be included in the 1st movement command only; after     *
+ *   that, there will be a rep count then 99 infantry TARGET numbers,      *
+ *   identifying all the infantry told to move.                            *
  * - The protocol also only sends packets out every 'n' frames.  This cuts *
- *   the data rate dramatically.  It means that 'MaxAhead' must be 			*
- *   divisible by 'n'; also, the minimum value for 'MaxAhead' is 				*
- *   'n * 2', to give both sides some "breathing" room in case a FRAMEINFO	*
- *   packet gets missed.																	*
+ *   the data rate dramatically.  It means that 'MaxAhead' must be         *
+ *   divisible by 'n'; also, the minimum value for 'MaxAhead' is           *
+ *   'n * 2', to give both sides some "breathing" room in case a FRAMEINFO *
+ *   packet gets missed.                                                   *
  *                                                                         *
  * Note:  For synchronization-waiting loops (like waiting to hear from all *
- * other players, waiting to advance to the next frame, etc), use 			*
- * Net.Num_Connections() rather than NumPlayers; this reflects the 			*
- * actual # of connections, and can be "faked" into playing even when 		*
- * there aren't any other players actually there.  A typical example of 	*
+ * other players, waiting to advance to the next frame, etc), use          *
+ * Net.Num_Connections() rather than NumPlayers; this reflects the         *
+ * actual # of connections, and can be "faked" into playing even when      *
+ * there aren't any other players actually there.  A typical example of    *
  * this is playing back a recorded game.  For command-execution loops, use *
- * NumPlayers.  This ensures all commands get executed, even if 				*
- * there isn't a human generating those commands.									*
+ * NumPlayers.  This ensures all commands get executed, even if            *
+ * there isn't a human generating those commands.                          *
  *                                                                         *
- * The modem works a little differently from the network in this respect:	*
- * - The connection has to stay "alive" even if the other player exits to 	*
+ * The modem works a little differently from the network in this respect:  *
+ * - The connection has to stay "alive" even if the other player exits to  *
  *   the join dialog.  This prevents each system from timing out & hanging *
  *   the modem up.  Thus, packets are sent back & forth & just thrown away,*
- *   but each system knows the other is still there.  Messages may be sent	*
- *   between systems, though. 															*
- * - Destroy_Null_Connection doesn't hang up the modem, so 						*
- *   Num_Connections() still reports a value of 1 even though the other 	*
- *   player has left.																		*
- * - Any waits on Num_Connections() must also check for 							*
- *   NumPlayers > 1, to keep from waiting forever if the other 				*
- *   guy has left																				*
- * - Packets sent to a player who's left require no ACK							*
+ *   but each system knows the other is still there.  Messages may be sent *
+ *   between systems, though.                                              *
+ * - Destroy_Null_Connection doesn't hang up the modem, so                 *
+ *   Num_Connections() still reports a value of 1 even though the other    *
+ *   player has left.                                                      *
+ * - Any waits on Num_Connections() must also check for                    *
+ *   NumPlayers > 1, to keep from waiting forever if the other             *
+ *   guy has left                                                          *
+ * - Packets sent to a player who's left require no ACK                    *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   11/21/1995 BRR : Created.                                             *
@@ -760,30 +760,30 @@ static void Queue_AI_Multiplayer(void)
 /***************************************************************************
  * Wait_For_Players -- Waits for other systems to come on-line             *
  *                                                                         *
- * This routine performs the most critical logic in multiplayer; that of	*
- * synchronizing my frame number with those of the other systems.				*
+ * This routine performs the most critical logic in multiplayer; that of   *
+ * synchronizing my frame number with those of the other systems.          *
  *                                                                         *
  * INPUT:                                                                  *
- *		first_time				1 = 1st time this routine is called					*
- *		net						ptr to connection manager								*
- *		resend_delta			time (ticks) between FRAMESYNC resends				*
- *		dialog_time				time (ticks) until pop up a reconnect dialog		*
- *		timeout					time (ticks) until we give up the ghost			*
- *		multi_packet_buf		buffer to store packets in								*
- *		my_sent					# commands I've sent so far							*
- *		their_frame				array of their frame #'s								*
- *		their_sent				array of their CommandCount values					*
- *		their_recv				array of # cmds I've received from them			*
+ *    first_time           1 = 1st time this routine is called             *
+ *    net                  ptr to connection manager                       *
+ *    resend_delta         time (ticks) between FRAMESYNC resends          *
+ *    dialog_time          time (ticks) until pop up a reconnect dialog    *
+ *    timeout              time (ticks) until we give up the ghost         *
+ *    multi_packet_buf     buffer to store packets in                      *
+ *    my_sent              # commands I've sent so far                     *
+ *    their_frame          array of their frame #'s                        *
+ *    their_sent           array of their CommandCount values              *
+ *    their_recv           array of # cmds I've received from them         *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		RC_NORMAL				OK to advance to the next frame						*
- *		RC_CANCEL				user hit 'Cancel' at the timeout countdown dlg	*
- *		RC_NOT_RESPONDING		other player(s) not responding						*
- *		RC_SCENARIO_MISMATCH	scenario's don't match (first_time only)			*
- *		RC_DOLIST_FULL			DoList was full											*
+ *    RC_NORMAL            OK to advance to the next frame                 *
+ *    RC_CANCEL            user hit 'Cancel' at the timeout countdown dlg  *
+ *    RC_NOT_RESPONDING    other player(s) not responding                  *
+ *    RC_SCENARIO_MISMATCH scenario's don't match (first_time only)        *
+ *    RC_DOLIST_FULL       DoList was full                                 *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   11/21/1995 BRR : Created.                                             *
@@ -1047,21 +1047,21 @@ static RetcodeType Wait_For_Players(int first_time, ConnManClass *net,
 /***************************************************************************
  * Generate_Timing_Event -- computes & queues a RESPONSE_TIME event        *
  *                                                                         *
- * This routine adjusts the connection timing on the local system; it also	*
- * optionally generates a RESPONSE_TIME event, to tell all systems to		*
- * dynamically adjust the current MaxAhead value.  This allows both the		*
- * MaxAhead & the connection retry logic to have dynamic timing, to adjust	*
- * to varying line conditions.															*
+ * This routine adjusts the connection timing on the local system; it also *
+ * optionally generates a RESPONSE_TIME event, to tell all systems to      *
+ * dynamically adjust the current MaxAhead value.  This allows both the    *
+ * MaxAhead & the connection retry logic to have dynamic timing, to adjust *
+ * to varying line conditions.                                             *
  *                                                                         *
  * INPUT:                                                                  *
- *		net			ptr to connection manager											*
- *		my_sent		# commands I've sent out so far									*
+ *    net         ptr to connection manager                                *
+ *    my_sent     # commands I've sent out so far                          *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   11/21/1995 BRR : Created.                                             *
@@ -1133,14 +1133,14 @@ CCDebugString (flip);
  * Generate_Real_Timing_Event -- Generates a TIMING event                  *
  *                                                                         *
  * INPUT:                                                                  *
- *		net			ptr to connection manager											*
- *		my_sent		# commands I've sent out so far									*
+ *    net         ptr to connection manager                                *
+ *    my_sent     # commands I've sent out so far                          *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   07/02/1996 BRR : Created.                                             *
@@ -1245,13 +1245,13 @@ static void Generate_Real_Timing_Event(ConnManClass *net, int my_sent)
  * Generate_Process_Time_Event -- Generates a PROCESS_TIME event           *
  *                                                                         *
  * INPUT:                                                                  *
- *		net			ptr to connection manager											*
+ *    net         ptr to connection manager                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   07/02/1996 BRR : Created.                                             *
@@ -1302,14 +1302,14 @@ CCDebugString (flip);
 /***************************************************************************
  * Process_Send_Period -- timing for sending packets every 'n' frames      *
  *                                                                         *
- * This function is for a CommProtocol of COMM_PROTOCOL_MULTI_E_COMP only.	*
- * It determines if it's time to send a packet or not.							*
- *																									*
+ * This function is for a CommProtocol of COMM_PROTOCOL_MULTI_E_COMP only. *
+ * It determines if it's time to send a packet or not.                     *
+ *                                                                         *
  * INPUT:                                                                  *
- *		net		ptr to connection manager												*
+ *    net      ptr to connection manager                                   *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = it's time to send a packet; 0 = don't send a packet this frame.	*
+ *    1 = it's time to send a packet; 0 = don't send a packet this frame.  *
  *                                                                         *
  * WARNINGS:                                                               *
  *                                                                         *
@@ -1342,23 +1342,23 @@ static int Process_Send_Period(ConnManClass *net)
 /***************************************************************************
  * Send_Packets -- sends out events from the OutList                       *
  *                                                                         *
- * This routine computes how many events can be sent this frame, and then	*
- * builds the "meta-packet" & sends it.												*
+ * This routine computes how many events can be sent this frame, and then  *
+ * builds the "meta-packet" & sends it.                                    *
  *                                                                         *
- * The 'cap' value is the max # of events we can send.  Ideally, it should	*
- * be based upon the bandwidth of our connection.  Currently, it's just		*
- * hardcoded to prevent the modem from having to resend "too much" data,	*
- * which is about 200 bytes per frame.													*
+ * The 'cap' value is the max # of events we can send.  Ideally, it should *
+ * be based upon the bandwidth of our connection.  Currently, it's just    *
+ * hardcoded to prevent the modem from having to resend "too much" data,   *
+ * which is about 200 bytes per frame.                                     *
  *                                                                         *
  * INPUT:                                                                  *
- *		net						ptr to connection manager								*
- *		multi_packet_buf		buffer to store packets in								*
- *		multi_packet_max		max size of multi_packet_buf							*
- *		max_ahead				current game MaxAhead value							*
- *		my_sent					# commands I've sent this game						*
+ *    net                  ptr to connection manager                       *
+ *    multi_packet_buf     buffer to store packets in                      *
+ *    multi_packet_max     max size of multi_packet_buf                    *
+ *    max_ahead            current game MaxAhead value                     *
+ *    my_sent              # commands I've sent this game                  *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		# events sent, NOT including the FRAMEINFO event							*
+ *    # events sent, NOT including the FRAMEINFO event                     *
  *                                                                         *
  * WARNINGS:                                                               *
  *                                                                         *
@@ -1476,19 +1476,19 @@ static int Send_Packets(ConnManClass *net, char *multi_packet_buf,
 /***************************************************************************
  * Send_FrameSync -- Sends a FRAMESYNC packet                              *
  *                                                                         *
- * This routine is used to periodically remind the other systems that 		*
- * we're still here, and to tell them what frame # we're on, in case			*
- * they've missed my FRAMEINFO packets.												*
+ * This routine is used to periodically remind the other systems that      *
+ * we're still here, and to tell them what frame # we're on, in case       *
+ * they've missed my FRAMEINFO packets.                                    *
  *                                                                         *
  * INPUT:                                                                  *
- *		net				ptr to connection manager										*
- *		cmd_count		# commands I've sent so far									*
+ *    net            ptr to connection manager                             *
+ *    cmd_count      # commands I've sent so far                           *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   11/21/1995 BRR : Created.                                             *
@@ -1532,33 +1532,33 @@ static void Send_FrameSync(ConnManClass *net, int cmd_count)
 /***************************************************************************
  * Process_Receive_Packet -- processes an incoming packet                  *
  *                                                                         *
- * This routine receives a packet from another system, adds it to our		*
- * execution queue (the DoList), and updates my arrays of their frame #,	*
- * their commands-sent, and their commands-received.								*
+ * This routine receives a packet from another system, adds it to our      *
+ * execution queue (the DoList), and updates my arrays of their frame #,   *
+ * their commands-sent, and their commands-received.                       *
  *                                                                         *
  * INPUT:                                                                  *
- *		net					ptr to connection manager									*
- *		multi_packet_buf	buffer containing packet(s) to parse					*
- *		id						id of sender													*
- *		their_frame			array containing frame #'s of other players			*
- *		their_sent			array containing command count of other players		*
- *		their_recv			array containing # recv'd cmds from other players	*
+ *    net               ptr to connection manager                          *
+ *    multi_packet_buf  buffer containing packet(s) to parse               *
+ *    id                id of sender                                       *
+ *    their_frame       array containing frame #'s of other players        *
+ *    their_sent        array containing command count of other players    *
+ *    their_recv        array containing # recv'd cmds from other players  *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		RC_NORMAL:					nothing unusual happened, although 				*
- * 									their_sent or their_recv may have been 		*
- *										altered													*
- *		RC_PLAYER_READY:			player has been heard from for the 1st time; *
- * 									this presumes that his original 					*
- * 									'their_frame[]' value was -1 when this 		*
- * 									routine was called									*
- *		RC_SCENARIO_MISMATCH:	FRAMEINFO scenario CRC doesn't match; 			*
- * 									normally only applies after loading a new 	*
- * 									scenario or save-game								*
- *		RC_DOLIST_FULL:			fatal error; unable to add events to DoList	*
+ *    RC_NORMAL:              nothing unusual happened, although           *
+ *                            their_sent or their_recv may have been       *
+ *                            altered                                      *
+ *    RC_PLAYER_READY:        player has been heard from for the 1st time; *
+ *                            this presumes that his original              *
+ *                            'their_frame[]' value was -1 when this       *
+ *                            routine was called                           *
+ *    RC_SCENARIO_MISMATCH:   FRAMEINFO scenario CRC doesn't match;        *
+ *                            normally only applies after loading a new    *
+ *                            scenario or save-game                        *
+ *    RC_DOLIST_FULL:         fatal error; unable to add events to DoList  *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   11/21/1995 BRR : Created.                                             *
@@ -1649,30 +1649,30 @@ static RetcodeType Process_Receive_Packet(ConnManClass *net,
 /***************************************************************************
  * Process_Serial_Packet -- Handles an incoming serial packet              *
  *                                                                         *
- * This routine is needed because the modem classes don't support a 			*
- * "global channel" like the network classes do, but that functionality is	*
- * still needed for modem communications.  Specifically, the modem dialogs	*
- * transmit their own special packets back & forth, and messages are sent	*
- * using a special packet type.  Thus, we have to call this routine when	*
- * we receive a modem packet, to allow it to process messages & dialog		*
- * packets.																						*
+ * This routine is needed because the modem classes don't support a        *
+ * "global channel" like the network classes do, but that functionality is *
+ * still needed for modem communications.  Specifically, the modem dialogs *
+ * transmit their own special packets back & forth, and messages are sent  *
+ * using a special packet type.  Thus, we have to call this routine when   *
+ * we receive a modem packet, to allow it to process messages & dialog     *
+ * packets.                                                                *
  *                                                                         *
  * INPUT:                                                                  *
- *		multi_packet_buf		packet buffer to process								*
- *		first_time				1 = this is the 1st game frame						*
+ *    multi_packet_buf     packet buffer to process                        *
+ *    first_time           1 = this is the 1st game frame                  *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		RC_NORMAL:				this wasn't a SERIAL-type packet						*
- *		RC_SERIAL_PROCESSED:	this was a SERIAL-type packet, and was 			*
- * 								processed; the other player is still connected,	*
- * 								even if he's not in the game.							*
- *		RC_PLAYER_LEFT:		other player has left the game						*
- *		RC_HUNG_UP:				we're getting our own packets back; thus, the 	*
- * 								modem is mirroring our packets, which means the *
- * 								modem hung up!												*
+ *    RC_NORMAL:           this wasn't a SERIAL-type packet                *
+ *    RC_SERIAL_PROCESSED: this was a SERIAL-type packet, and was          *
+ *                         processed; the other player is still connected, *
+ *                         even if he's not in the game.                   *
+ *    RC_PLAYER_LEFT:      other player has left the game                  *
+ *    RC_HUNG_UP:          we're getting our own packets back; thus, the   *
+ *                         modem is mirroring our packets, which means the *
+ *                         modem hung up!                                  *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   11/21/1995 BRR : Created.                                             *
@@ -1772,34 +1772,34 @@ static RetcodeType Process_Serial_Packet(char *multi_packet_buf,
 /***************************************************************************
  * Can_Advance -- determines if it's OK to advance to the next frame       *
  *                                                                         *
- * This routine uses the current values stored in their_frame[], 				*
- * their_send[], and their_recv[] to see if it's OK to advance to the next	*
- * game frame.  We must not advance if:												*
- * - If our frame # would be too far ahead of the slowest player (the 		*
- *   lowest their_frame[] value).  "Too far" means 								*
- *   (Frame > their_frame + MaxAhead).													*
- * - our current command count doesn't match the sent command count of one	*
- *   other player (meaning that we've missed a command packet from that 	*
- *   player, and thus the frame # we're receiving from him may be due to a	*
- *   FRAMEINFO packet sent later than the command, so we shouldn't use 		*
- *   this frame # to see if we should advance; we should wait until we 		*
- *   have all the commands before we advance.										*
+ * This routine uses the current values stored in their_frame[],           *
+ * their_send[], and their_recv[] to see if it's OK to advance to the next *
+ * game frame.  We must not advance if:                                    *
+ * - If our frame # would be too far ahead of the slowest player (the      *
+ *   lowest their_frame[] value).  "Too far" means                         *
+ *   (Frame > their_frame + MaxAhead).                                     *
+ * - our current command count doesn't match the sent command count of one *
+ *   other player (meaning that we've missed a command packet from that    *
+ *   player, and thus the frame # we're receiving from him may be due to a *
+ *   FRAMEINFO packet sent later than the command, so we shouldn't use     *
+ *   this frame # to see if we should advance; we should wait until we     *
+ *   have all the commands before we advance.                              *
  *                                                                         *
- * Of course, this routine assumes the values in their_frame[] etc are		*
- * kept current by the caller.															*
+ * Of course, this routine assumes the values in their_frame[] etc are     *
+ * kept current by the caller.                                             *
  *                                                                         *
  * INPUT:                                                                  *
- *		net				ptr to connection manager										*
- *		max_ahead		max frames ahead													*
- *		their_frame		array of their frame #'s										*
- *		their_sent		array of their sent command count							*
- *		their_recv		array of their # received commands							*
+ *    net            ptr to connection manager                             *
+ *    max_ahead      max frames ahead                                      *
+ *    their_frame    array of their frame #'s                              *
+ *    their_sent     array of their sent command count                     *
+ *    their_recv     array of their # received commands                    *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK to advance; 0 = not OK														*
+ *    1 = OK to advance; 0 = not OK                                        *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   11/21/1995 BRR : Created.                                             *
@@ -1853,19 +1853,19 @@ static int Can_Advance(ConnManClass *net, int max_ahead, long *their_frame,
 /***************************************************************************
  * Process_Reconnect_Dialog -- processes the reconnection dialog           *
  *                                                                         *
- * This routine [re]draws the reconnection dialog; if 'reconn' is set,		*
- * it tells the user who we're trying to reconnect to; otherwise, is just	*
- * says something generic like "Waiting for connections".						*
+ * This routine [re]draws the reconnection dialog; if 'reconn' is set,     *
+ * it tells the user who we're trying to reconnect to; otherwise, is just  *
+ * says something generic like "Waiting for connections".                  *
  *                                                                         *
  * INPUT:                                                                  *
- *		timeout_timer	ptr to count down timer, showing time remaining			*
- *		their_frame		array of other players' frame #'s							*
- *		num_conn			# connections in 'their_frame'								*
- *		reconn			1 = reconnect, 0 = waiting for first-time connection	*
- *		fresh				1 = draw from scratch, 0 = only update time counter	*
+ *    timeout_timer  ptr to count down timer, showing time remaining       *
+ *    their_frame    array of other players' frame #'s                     *
+ *    num_conn       # connections in 'their_frame'                        *
+ *    reconn         1 = reconnect, 0 = waiting for first-time connection  *
+ *    fresh          1 = draw from scratch, 0 = only update time counter   *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = user wants to cancel, 0 = not												*
+ *    1 = user wants to cancel, 0 = not                                    *
  *                                                                         *
  * WARNINGS:                                                               *
  *                                                                         *
@@ -1930,30 +1930,30 @@ static int Process_Reconnect_Dialog(CountDownTimerClass *timeout_timer,
 
 
 /***************************************************************************
- * Handle_Timeout -- handles a timeout in the wait-for-players loop			*
+ * Handle_Timeout -- handles a timeout in the wait-for-players loop        *
  *                                                                         *
- * This routine "gracefully" handles a timeout in the frame-sync loop.		*
- * The timeout must be handled differently by a modem game or network 		*
- * game.																							*
+ * This routine "gracefully" handles a timeout in the frame-sync loop.     *
+ * The timeout must be handled differently by a modem game or network      *
+ * game.                                                                   *
  *                                                                         *
- * The modem game must detect if the other player is still connected			*
- * physically, even if he's not playing the game any more; if so, this		*
- * routine returns an OK status.  If the other player isn't even 				*
- * physically connected, an error is returned.										*
+ * The modem game must detect if the other player is still connected       *
+ * physically, even if he's not playing the game any more; if so, this     *
+ * routine returns an OK status.  If the other player isn't even           *
+ * physically connected, an error is returned.                             *
  *                                                                         *
- * The network game must find the connection that's causing the timeout,	*
- * and destroy it.  The game continues, even if there are no more human		*
- * players left.																				*
+ * The network game must find the connection that's causing the timeout,   *
+ * and destroy it.  The game continues, even if there are no more human    *
+ * players left.                                                           *
  *                                                                         *
  * INPUT:                                                                  *
- *		net					ptr to connection manager									*
- *		their_frame			array containing frame #'s of other players			*
- *		their_sent			array containing command count of other players		*
- *		their_recv			array containing # recv'd cmds from other players	*
+ *    net               ptr to connection manager                          *
+ *    their_frame       array containing frame #'s of other players        *
+ *    their_sent        array containing command count of other players    *
+ *    their_recv        array containing # recv'd cmds from other players  *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = it's OK; reset timeout timers & keep processing						*
- *		0 = game over, man																	*
+ *    1 = it's OK; reset timeout timers & keep processing                  *
+ *    0 = game over, man                                                   *
  *                                                                         *
  * WARNINGS:                                                               *
  *                                                                         *
@@ -2024,19 +2024,19 @@ static int Handle_Timeout(ConnManClass *net, long *their_frame,
 
 
 /***************************************************************************
- * Stop_Game -- stops the game															*
+ * Stop_Game -- stops the game                                             *
  *                                                                         *
- * This routine clears any global flags that need it, in preparation for	*
- * halting the game prematurely.															*
+ * This routine clears any global flags that need it, in preparation for   *
+ * halting the game prematurely.                                           *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   11/22/1995 BRR : Created.                                             *
@@ -2063,29 +2063,29 @@ static void Stop_Game(void)
 
 
 /***************************************************************************
- * Build_Send_Packet -- Builds a big packet from a bunch of little ones.	*
+ * Build_Send_Packet -- Builds a big packet from a bunch of little ones.   *
  *                                                                         *
- * This routine takes events from the OutList, and puts them into a 			*
- * "meta-packet", which is transmitted to all systems we're connected to.	*
- * Also, these events are added to our own DoList.									*
+ * This routine takes events from the OutList, and puts them into a        *
+ * "meta-packet", which is transmitted to all systems we're connected to.  *
+ * Also, these events are added to our own DoList.                         *
  *                                                                         *
- * Every Meta-Packet we send uses a FRAMEINFO packet as a header; this 		*
- * tells the other systems what frame we're on, as well as serving as a 	*
- * standard packet header.																	*
+ * Every Meta-Packet we send uses a FRAMEINFO packet as a header; this     *
+ * tells the other systems what frame we're on, as well as serving as a    *
+ * standard packet header.                                                 *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf				buffer to store packet in										*
- *		bufsize			max size of buffer												*
- *		frame_delay		desired frame delay to attach to all outgoing packets	*
- *		num_cmds			value to use for the CommandCount field					*
- *		cap				max # events to send												*
+ *    buf            buffer to store packet in                             *
+ *    bufsize        max size of buffer                                    *
+ *    frame_delay    desired frame delay to attach to all outgoing packets *
+ *    num_cmds       value to use for the CommandCount field               *
+ *    cap            max # events to send                                  *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		new size of packet																	*
+ *    new size of packet                                                   *
  *                                                                         *
  * WARNINGS:                                                               *
  * 'num_cmds' should be the total of of commands, including all those sent *
- * this frame!																					*
+ * this frame!                                                             *
  *                                                                         *
  * HISTORY:                                                                *
  *   11/21/1995 BRR : Created.                                             *
@@ -2177,17 +2177,17 @@ static int Build_Send_Packet(void *buf, int bufsize, int frame_delay,
  * Add_Uncompressed_Events -- adds uncompressed events to a packet         *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf				buffer to store packet in										*
- *		bufsize			max size of buffer												*
- *		frame_delay		desired frame delay to attach to all outgoing packets	*
- *		size				current packet size												*
- *		cap				max # events to process											*
+ *    buf            buffer to store packet in                             *
+ *    bufsize        max size of buffer                                    *
+ *    frame_delay    desired frame delay to attach to all outgoing packets *
+ *    size           current packet size                                   *
+ *    cap            max # events to process                               *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		new size value																			*
+ *    new size value                                                       *
  *                                                                         *
  * WARNINGS:                                                               *
- *		This routine MUST check to be sure it doesn't overflow the buffer.	*
+ *    This routine MUST check to be sure it doesn't overflow the buffer.   *
  *                                                                         *
  * HISTORY:                                                                *
  *   11/21/1995 DRD : Created.                                             *
@@ -2253,17 +2253,17 @@ static int Add_Uncompressed_Events(void *buf, int bufsize, int frame_delay,
  * Add_Compressed_Events -- adds an compressed events to a packet          *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf				buffer to store packet in										*
- *		bufsize			max size of buffer												*
- *		frame_delay		desired frame delay to attach to all outgoing packets	*
- *		size				reference to current packet size								*
- *		cap				max # events to process											*
+ *    buf            buffer to store packet in                             *
+ *    bufsize        max size of buffer                                    *
+ *    frame_delay    desired frame delay to attach to all outgoing packets *
+ *    size           reference to current packet size                      *
+ *    cap            max # events to process                               *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		new size value																			*
+ *    new size value                                                       *
  *                                                                         *
  * WARNINGS:                                                               *
- *		This routine MUST check to be sure it doesn't overflow the buffer.	*
+ *    This routine MUST check to be sure it doesn't overflow the buffer.   *
  *                                                                         *
  * HISTORY:                                                                *
  *   11/21/1995 DRD : Created.                                             *
@@ -2506,19 +2506,19 @@ static int Add_Compressed_Events(void *buf, int bufsize, int frame_delay,
 
 
 /***************************************************************************
- * Breakup_Receive_Packet -- Splits a big packet into little ones.			*
+ * Breakup_Receive_Packet -- Splits a big packet into little ones.         *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf			buffer to break up													*
- *		bufsize		length of buffer														*
+ *    buf         buffer to break up                                       *
+ *    bufsize     length of buffer                                         *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		# events added to queue, -1 if fatal error (queue is full)				*
- *    (return value includes any FRAMEINFO packets encountered; 				*
- *		FRAMESYNC's are ignored)		  													*
+ *    # events added to queue, -1 if fatal error (queue is full)           *
+ *    (return value includes any FRAMEINFO packets encountered;            *
+ *    FRAMESYNC's are ignored)                                             *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   11/21/1995 BRR : Created.                                             *
@@ -2549,14 +2549,14 @@ static int Breakup_Receive_Packet(void *buf, int bufsize )
  * Extract_Uncompressed_Events -- extracts events from a packet            *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf			buffer containing events to extract								*
- *		bufsize		length of 'buf'														*
+ *    buf         buffer containing events to extract                      *
+ *    bufsize     length of 'buf'                                          *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		# events extracted																	*
+ *    # events extracted                                                   *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   11/21/1995 DRD : Created.                                             *
@@ -2604,17 +2604,17 @@ static int Extract_Uncompressed_Events(void *buf, int bufsize)
 
 
 /***************************************************************************
- * Extract_Compressed_Events -- extracts events from a packet   				*
+ * Extract_Compressed_Events -- extracts events from a packet              *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf			buffer containing events to extract								*
- *		bufsize		length of 'buf'														*
+ *    buf         buffer containing events to extract                      *
+ *    bufsize     length of 'buf'                                          *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		# events extracted																	*
+ *    # events extracted                                                   *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   11/21/1995 DRD : Created.                                             *
@@ -2793,28 +2793,28 @@ CCDebugString (flip);
 /***************************************************************************
  * Execute_DoList -- Executes commands from the DoList                     *
  *                                                                         *
- * This routine executes any events in the DoList that need to be executed	*
- * on the current game frame.  The events must be executed in a special		*
- * order, so that all systems execute all events in exactly the same			*
- * order.																						*
+ * This routine executes any events in the DoList that need to be executed *
+ * on the current game frame.  The events must be executed in a special    *
+ * order, so that all systems execute all events in exactly the same       *
+ * order.                                                                  *
  *                                                                         *
- * This routine also handles checking the Game CRC sent by other systems	*
- * against my own, to be sure we're still in sync.									*
+ * This routine also handles checking the Game CRC sent by other systems   *
+ * against my own, to be sure we're still in sync.                         *
  *                                                                         *
  * INPUT:                                                                  *
- *		max_houses	# houses to execute commands for									*
- *		base_house	HousesType to start with											*
- *		net			ptr to connection manager; NULL if none						*
- *		skip_crc		a frame-based countdown timer; if it's non-zero, the		*
- *						CRC check will be skipped.  Ignored if NULL.					*
- *		their_frame	array of their frame #'s											*
- *		their_sent	array of # commands they've sent									*
- *		their_recv	array of # commands I've received from them					*
+ *    max_houses  # houses to execute commands for                         *
+ *    base_house  HousesType to start with                                 *
+ *    net         ptr to connection manager; NULL if none                  *
+ *    skip_crc    a frame-based countdown timer; if it's non-zero, the     *
+ *                CRC check will be skipped.  Ignored if NULL.             *
+ *    their_frame array of their frame #'s                                 *
+ *    their_sent  array of # commands they've sent                         *
+ *    their_recv  array of # commands I've received from them              *
  *                                                                         *
- * (their_xxx are ignored if 'net' is NULL.)											*
+ * (their_xxx are ignored if 'net' is NULL.)                               *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = some error occurred (CRC error, packet rcv'd too late.)	*
+ *    1 = OK, 0 = some error occurred (CRC error, packet rcv'd too late.)  *
  *                                                                         *
  * WARNINGS:                                                               *
  *                                                                         *
@@ -3053,19 +3053,19 @@ CCDebugString ("C&C95 -  Received EXIT packet\n");
 /***************************************************************************
  * Clean_DoList -- Cleans out old events from the DoList                   *
  *                                                                         *
- * Currently, an event can only be removed from the DoList if it's at the	*
- * head of the list; and event can't be removed from the middle.  So,		*
- * this routine loops as long as the next event in the DoList has been		*
- * executed, it's removed.																	*
+ * Currently, an event can only be removed from the DoList if it's at the  *
+ * head of the list; and event can't be removed from the middle.  So,      *
+ * this routine loops as long as the next event in the DoList has been     *
+ * executed, it's removed.                                                 *
  *                                                                         *
  * INPUT:                                                                  *
- *		net		ptr to connection manager; ignored if NULL						*
+ *    net      ptr to connection manager; ignored if NULL                  *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   11/21/1995 BRR : Created.                                             *
@@ -3102,18 +3102,18 @@ static void Clean_DoList(ConnManClass *net)
 /***************************************************************************
  * Queue_Record -- Records the DoList to disk                              *
  *                                                                         *
- * This routine just saves any events in the DoList to disk; we can later	*
- * "play back" the recording just be pulling events from disk rather than	*
- * from the network!																			*
+ * This routine just saves any events in the DoList to disk; we can later  *
+ * "play back" the recording just be pulling events from disk rather than  *
+ * from the network!                                                       *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   08/14/1995 BRR : Created.                                             *
@@ -3149,21 +3149,21 @@ static void Queue_Record(void)
 /***************************************************************************
  * Queue_Playback -- plays back queue entries from a record file           *
  *                                                                         *
- * This routine reads events from disk, putting them into the DoList;		*
- * it then executes the DoList just like the network version does.  The		*
- * result is that the game "plays back" like a recording.						*
- *																									*
- * This routine detects mouse motion and stops playback, so it can work		*
- * like an "attract" mode, showing a demo of the game itself.					*
+ * This routine reads events from disk, putting them into the DoList;      *
+ * it then executes the DoList just like the network version does.  The    *
+ * result is that the game "plays back" like a recording.                  *
+ *                                                                         *
+ * This routine detects mouse motion and stops playback, so it can work    *
+ * like an "attract" mode, showing a demo of the game itself.              *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   05/15/1995 BRR : Created.                                             *
@@ -3288,16 +3288,16 @@ static void Queue_Playback(void)
 
 
 /***************************************************************************
- * Compute_Game_CRC -- Computes a CRC value of the entire game.				*
+ * Compute_Game_CRC -- Computes a CRC value of the entire game.            *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   05/09/1995 BRR : Created.                                             *
@@ -3369,14 +3369,14 @@ static void Compute_Game_CRC(void)
  * Add_CRC -- Adds a value to a CRC                                        *
  *                                                                         *
  * INPUT:                                                                  *
- *		crc		ptr to crc																	*
- *		val		value to add																*
+ *    crc      ptr to crc                                                  *
+ *    val      value to add                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none																						*
+ *    none                                                                 *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none																						*
+ *    none                                                                 *
  *                                                                         *
  * HISTORY:                                                                *
  *   05/09/1995 BRR : Created.                                             *
@@ -3400,16 +3400,16 @@ void Add_CRC(unsigned long *crc, unsigned long val)
 
 
 /***************************************************************************
- * Print_CRCs -- Prints a data file for finding Sync Bugs						*
+ * Print_CRCs -- Prints a data file for finding Sync Bugs                  *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none																						*
+ *    none                                                                 *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none																						*
+ *    none                                                                 *
  *                                                                         *
  * HISTORY:                                                                *
  *   05/09/1995 BRR : Created.                                             *
@@ -3960,19 +3960,19 @@ void Print_CRCs(EventClass *ev)
 /***************************************************************************
  * Init_Queue_Mono -- inits mono display                                   *
  *                                                                         *
- * This routine steals control of the mono screen away from the rest of		*
- * the engine, by setting the global IsMono; if IsMono is set, the other	*
- * routines in this module turn off the Mono display when they're done		*
- * with it, so the rest of the engine won't over-write what we're writing.	*
+ * This routine steals control of the mono screen away from the rest of    *
+ * the engine, by setting the global IsMono; if IsMono is set, the other   *
+ * routines in this module turn off the Mono display when they're done     *
+ * with it, so the rest of the engine won't over-write what we're writing. *
  *                                                                         *
  * INPUT:                                                                  *
- *		net		ptr to connection manager												*
+ *    net      ptr to connection manager                                   *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   11/21/1995 BRR : Created.                                             *
@@ -4044,15 +4044,15 @@ static void Init_Queue_Mono(ConnManClass *net)
  * Update_Queue_Mono -- updates mono display                               *
  *                                                                         *
  * INPUT:                                                                  *
- *		net				ptr to connection manager										*
- *		flow_index		index # for flow-count updates								*
- *							-1: display															*
+ *    net            ptr to connection manager                             *
+ *    flow_index     index # for flow-count updates                        *
+ *                   -1: display                                           *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   11/21/1995 BRR : Created.                                             *
@@ -4091,18 +4091,18 @@ static void Update_Queue_Mono(ConnManClass *net, int flow_index)
  * Print_Framesync_Values -- displays frame-sync variables                 *
  *                                                                         *
  * INPUT:                                                                  *
- *		curframe					current game Frame #										*
- *		max_ahead				max-ahead value											*
- *		num_connections		# connections												*
- *		their_recv				# commands I've received from my connections		*
- *		their_sent				# commands each connection claims to have sent	*
- *		my_sent					# commands I've sent										*
+ *    curframe             current game Frame #                            *
+ *    max_ahead            max-ahead value                                 *
+ *    num_connections      # connections                                   *
+ *    their_recv           # commands I've received from my connections    *
+ *    their_sent           # commands each connection claims to have sent  *
+ *    my_sent              # commands I've sent                            *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   11/21/1995 BRR : Created.                                             *
@@ -4152,13 +4152,13 @@ static void Print_Framesync_Values(long curframe, unsigned long max_ahead,
  * Dump_Packet_Too_Late_Stuff -- Dumps a debug file to disk                *
  *                                                                         *
  * INPUT:                                                                  *
- *		event		ptr to event to print													*
+ *    event    ptr to event to print                                       *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   06/28/1996 BRR : Created.                                             *

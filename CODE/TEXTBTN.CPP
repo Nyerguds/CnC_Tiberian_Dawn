@@ -62,7 +62,7 @@
  *                   should be set to true.                                                    *
  *                                                                                             *
  * OUTPUT:   none                                                                              *
- * WARNINGS: Call Set_Text & Set_Style, & init X,Y,Width,Height,ID before using this button.	  *
+ * WARNINGS: Call Set_Text & Set_Style, & init X,Y,Width,Height,ID before using this button.   *
  * HISTORY:  01/15/1995 JLB : Created.                                                         *
  *=============================================================================================*/
 TextButtonClass::TextButtonClass(unsigned id, char const * text, TextPrintType style, int x, int y, int w, int h, int blackborder) :

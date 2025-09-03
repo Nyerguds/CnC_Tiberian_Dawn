@@ -29,17 +29,17 @@
  *                                                                         *
  *                   Start Date : December 20, 1994                        *
  *                                                                         *
- *                  Last Update : April 9, 1995 [BRR]								*
+ *                  Last Update : April 9, 1995 [BRR]                      *
  *                                                                         *
  *-------------------------------------------------------------------------*
- * Functions:    			                                                   *
+ * Functions:                                                              *
  *   NonSequencedConnClass::NonSequencedConnClass -- class constructor     *
  *   NonSequencedConnClass::~NonSequencedConnClass -- class destructor     *
- *   NonSequencedConnClass::Init -- Initializes connection queue to empty	*
- *   NonSequencedConnClass::Send_Packet -- adds a packet to the send queue	*
- *   NonSequencedConnClass::Receive_Packet -- adds packet to receive queue	*
- *   NonSequencedConnClass::Get_Packet -- gets a packet from receive queue	*
- *   NonSequencedConnClass::Service_Send_Queue -- services the send queue	*
+ *   NonSequencedConnClass::Init -- Initializes connection queue to empty  *
+ *   NonSequencedConnClass::Send_Packet -- adds a packet to the send queue *
+ *   NonSequencedConnClass::Receive_Packet -- adds packet to receive queue *
+ *   NonSequencedConnClass::Get_Packet -- gets a packet from receive queue *
+ *   NonSequencedConnClass::Service_Send_Queue -- services the send queue  *
  *   NonSequencedConnClass::Service_Receive_Queue -- services recieve queue*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
@@ -50,21 +50,21 @@
  * NonSequencedConnClass::NonSequencedConnClass -- class constructor       *
  *                                                                         *
  * INPUT:                                                                  *
- *		numsend			desired # of entries for the send queue					*
- *		numreceive		desired # of entries for the recieve queue				*
- *		maxlen			max length of an application packet							*
- *		magicnum			the packet "magic number" for this connection			*
- *		retry_delta		the time to wait between sends								*
- *		max_retries		the max # of retries allowed for a packet					*
- *							(-1 means retry forever, based on this parameter)		*
- *		timeout			the max amount of time before we give up on a packet	*
- *							(-1 means retry forever, based on this parameter)		*
+ *    numsend        desired # of entries for the send queue               *
+ *    numreceive     desired # of entries for the recieve queue            *
+ *    maxlen         max length of an application packet                   *
+ *    magicnum       the packet "magic number" for this connection         *
+ *    retry_delta    the time to wait between sends                        *
+ *    max_retries    the max # of retries allowed for a packet             *
+ *                   (-1 means retry forever, based on this parameter)     *
+ *    timeout       the max amount of time before we give up on a packet   *
+ *                  (-1 means retry forever, based on this parameter)      *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -87,13 +87,13 @@ NonSequencedConnClass::NonSequencedConnClass (int numsend, int numreceive,
  * NonSequencedConnClass::~NonSequencedConnClass -- class destructor       *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -105,16 +105,16 @@ NonSequencedConnClass::~NonSequencedConnClass ()
 
 
 /***************************************************************************
- * NonSequencedConnClass::Init -- Initializes connection queue to empty		*
+ * NonSequencedConnClass::Init -- Initializes connection queue to empty    *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -134,23 +134,23 @@ void NonSequencedConnClass::Init (void)
 
 
 /***************************************************************************
- * NonSequencedConnClass::Send_Packet -- adds a packet to the send queue	*
+ * NonSequencedConnClass::Send_Packet -- adds a packet to the send queue   *
  *                                                                         *
- * This routine prefixes the given buffer with a CommHeaderType and			*
- * queues the resulting packet into the Send Queue.  (It's actually the		*
+ * This routine prefixes the given buffer with a CommHeaderType and        *
+ * queues the resulting packet into the Send Queue.  (It's actually the    *
  * Service() routine that handles the hardware-dependent Send of the data).*
- * The packet's MagicNumber, Code, and PacketID are set here.					*
+ * The packet's MagicNumber, Code, and PacketID are set here.              *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf			buffer to send															*
- *		buflen		length of buffer														*
- *		ack_req		true = ACK is required for this packet; false = isn't		*
+ *    buf         buffer to send                                           *
+ *    buflen      length of buffer                                         *
+ *    ack_req     true = ACK is required for this packet; false = isn't    *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = packet was queue'd OK, 0 = wasn't											*
+ *    1 = packet was queue'd OK, 0 = wasn't                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.						 																*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -199,17 +199,17 @@ int NonSequencedConnClass::Send_Packet (void * buf, int buflen, int ack_req)
 
 
 /***************************************************************************
- * NonSequencedConnClass::Receive_Packet -- adds packet to the receive queue	*
+ * NonSequencedConnClass::Receive_Packet -- adds packet to the receive queue*
  *                                                                         *
  * INPUT:                                                                  *
- *		buf		buffer to process (already includes CommHeaderType)			*
- *		buflen	length of buffer to process											*
+ *    buf      buffer to process (already includes CommHeaderType)         *
+ *    buflen   length of buffer to process                                 *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = packet was processed OK, 0 = error											*
+ *    1 = packet was processed OK, 0 = error                               *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -416,17 +416,17 @@ int NonSequencedConnClass::Receive_Packet (void * buf, int buflen)
 
 
 /***************************************************************************
- * NonSequencedConnClass::Get_Packet -- gets a packet from receive queue	*
+ * NonSequencedConnClass::Get_Packet -- gets a packet from receive queue   *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf		location to store buffer												*
- *		buflen	filled in with length of 'buf'										*
+ *    buf      location to store buffer                                    *
+ *    buflen   filled in with length of 'buf'                              *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = packet was read, 0 = wasn't													*
+ *    1 = packet was read, 0 = wasn't                                      *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -492,16 +492,16 @@ int NonSequencedConnClass::Get_Packet (void * buf, int *buflen)
 
 
 /***************************************************************************
- * NonSequencedConnClass::Service_Send_Queue -- services the send queue		*
+ * NonSequencedConnClass::Service_Send_Queue -- services the send queue    *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = error																		*
+ *    1 = OK, 0 = error                                                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -640,16 +640,16 @@ int NonSequencedConnClass::Service_Send_Queue (void)
 
 
 /***************************************************************************
- * NonSequencedConnClass::Service_Receive_Queue -- services recieve queue	*
+ * NonSequencedConnClass::Service_Receive_Queue -- services recieve queue  *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = error																		*
+ *    1 = OK, 0 = error                                                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *

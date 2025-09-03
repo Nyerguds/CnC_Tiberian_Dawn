@@ -18,7 +18,7 @@
 
 /* $Header:   F:\projects\c&c\vcs\code\mixfile.cpv   2.18   16 Oct 1995 16:48:46   JOE_BOSTIC  $ */
 /***********************************************************************************************
- ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               *** 
+ ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               ***
  ***********************************************************************************************
  *                                                                                             *
  *                 Project Name : Command & Conquer                                            *
@@ -43,7 +43,7 @@
  *   MixFileClass::Retrieve -- Retrieves a pointer to the specified data file.                 *
  *   MixFileClass::~MixFileClass -- Destructor for the mixfile object.                         *
  *   MixFileClass::Offset -- Determines the offset of the requested file from the mixfile system.*
- *   MixFileClass::Free -- Uncaches a cached mixfile.                                          * 
+ *   MixFileClass::Free -- Uncaches a cached mixfile.                                          *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 
@@ -71,19 +71,19 @@ template<class T> int Compare(T const *obj1, T const *obj2) {
 MixFileClass * MixFileClass::First = 0;
 
 
-/*********************************************************************************************** 
- * MixFileClass::Free -- Uncaches a cached mixfile.                                            * 
- *                                                                                             * 
- *    Use this routine to uncache a mixfile that has been cached.                              * 
- *                                                                                             * 
- * INPUT:   filename -- Pointer to the filename of the mixfile that is to be uncached.         * 
- *                                                                                             * 
- * OUTPUT:  bool; Was the mixfile found and freed?                                             * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   01/23/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * MixFileClass::Free -- Uncaches a cached mixfile.                                            *
+ *                                                                                             *
+ *    Use this routine to uncache a mixfile that has been cached.                              *
+ *                                                                                             *
+ * INPUT:   filename -- Pointer to the filename of the mixfile that is to be uncached.         *
+ *                                                                                             *
+ * OUTPUT:  bool; Was the mixfile found and freed?                                             *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   01/23/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 bool MixFileClass::Free(char const *filename)
 {
@@ -122,7 +122,7 @@ void MixFileClass::Free_All(void)
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/08/1994 JLB : Created.                                                                 *
- *   01/06/1995 JLB : Puts mixfile header table into EMS.                                      * 
+ *   01/06/1995 JLB : Puts mixfile header table into EMS.                                      *
  *=============================================================================================*/
 MixFileClass::~MixFileClass(void)
 {

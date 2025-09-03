@@ -18,7 +18,7 @@
 
 /* $Header:   F:\projects\c&c\vcs\code\radio.cpv   2.19   16 Oct 1995 16:50:12   JOE_BOSTIC  $ */
 /***********************************************************************************************
- ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               *** 
+ ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               ***
  ***********************************************************************************************
  *                                                                                             *
  *                 Project Name : Command & Conquer                                            *
@@ -35,8 +35,8 @@
  * Functions:                                                                                  *
  *   RadioClass::Debug_Dump -- Displays the current status of the radio to the mono monitor.   *
  *   RadioClass::Receive_Message -- Handles receipt of a radio message.                        *
- *   RadioClass::Transmit_Message -- Transmit message from one object to another.              * 
- *   RadioClass::Limbo -- When limboing a unit will always break radio contact.                * 
+ *   RadioClass::Transmit_Message -- Transmit message from one object to another.              *
+ *   RadioClass::Limbo -- When limboing a unit will always break radio contact.                *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include	"function.h"
@@ -115,7 +115,7 @@ void RadioClass::Debug_Dump(MonoClass *mono) const
  *    turns the radio off when the "OVER_OUT" message is received. All other messages are      *
  *    merely acknowledged with a "ROGER".                                                      *
  *                                                                                             *
- * INPUT:   from     -- The object that is initiating this radio message (always valid).        *
+ * INPUT:   from     -- The object that is initiating this radio message (always valid).       *
  *                                                                                             *
  *          message  -- The radio message received.                                            *
  *                                                                                             *
@@ -130,7 +130,7 @@ void RadioClass::Debug_Dump(MonoClass *mono) const
  * HISTORY:                                                                                    *
  *   05/28/1994 JLB : Created.                                                                 *
  *   09/24/1994 JLB : Streamlined to be only a communications carrier.                         *
- *   05/22/1995 JLB : Recognized who is sending the message                                    * 
+ *   05/22/1995 JLB : Recognized who is sending the message                                    *
  *=============================================================================================*/
 RadioMessageType RadioClass::Receive_Message(RadioClass * from, RadioMessageType message, long & param)
 {
@@ -168,25 +168,25 @@ RadioMessageType RadioClass::Receive_Message(RadioClass * from, RadioMessageType
 }
 
 
-/*********************************************************************************************** 
- * RadioClass::Transmit_Message -- Transmit message from one object to another.                * 
- *                                                                                             * 
- *    This routine is used to transmit a radio message from this object to another. Most       * 
- *    inter object coordination is handled through this mechanism.                             * 
- *                                                                                             * 
- * INPUT:   to       -- Pointer to the object that will receive the radio message.             * 
- *                                                                                             * 
- *          message  -- The message itself (see RadioType).                                    * 
- *                                                                                             * 
- *          param    -- Optional reference to parameter that might be used to pass or          * 
- *                      receive additional information.                                        * 
- *                                                                                             * 
- * OUTPUT:  Returns with the response radio message from the receiving object.                 * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   05/22/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * RadioClass::Transmit_Message -- Transmit message from one object to another.                *
+ *                                                                                             *
+ *    This routine is used to transmit a radio message from this object to another. Most       *
+ *    inter object coordination is handled through this mechanism.                             *
+ *                                                                                             *
+ * INPUT:   to       -- Pointer to the object that will receive the radio message.             *
+ *                                                                                             *
+ *          message  -- The message itself (see RadioType).                                    *
+ *                                                                                             *
+ *          param    -- Optional reference to parameter that might be used to pass or          *
+ *                      receive additional information.                                        *
+ *                                                                                             *
+ * OUTPUT:  Returns with the response radio message from the receiving object.                 *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   05/22/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 RadioMessageType RadioClass::Transmit_Message(RadioMessageType message, long & param, RadioClass * to)
 {
@@ -226,19 +226,19 @@ RadioMessageType RadioClass::Transmit_Message(RadioMessageType message, long & p
 }
 
 
-/*********************************************************************************************** 
- * RadioClass::Limbo -- When limboing a unit will always break radio contact.                  * 
- *                                                                                             * 
- *    This routine will break radio contact as the object is entering limbo state.             * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  Was the object successfully limboed?                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   06/25/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * RadioClass::Limbo -- When limboing a unit will always break radio contact.                  *
+ *                                                                                             *
+ *    This routine will break radio contact as the object is entering limbo state.             *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Was the object successfully limboed?                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/25/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 bool RadioClass::Limbo(void)
 {

@@ -440,13 +440,13 @@ int Do_Menu(char const **strings, bool blue)
  * Main_Menu -- Menu processing                                            *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		index of item selected, -1 if time out											*
+ *    index of item selected, -1 if time out                               *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   05/17/1995 BRR : Created.                                             *

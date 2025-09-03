@@ -18,7 +18,7 @@
 
 /* $Header:   F:\projects\c&c\vcs\code\cargo.cpv   2.18   16 Oct 1995 16:49:50   JOE_BOSTIC  $ */
 /***********************************************************************************************
- ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               *** 
+ ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               ***
  ***********************************************************************************************
  *                                                                                             *
  *                 Project Name : Command & Conquer                                            *
@@ -82,7 +82,7 @@ void CargoClass::Debug_Dump(MonoClass * mono) const
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   04/23/1994 JLB : Created.                                                                 *
- *   10/31/94   JLB : Handles chained objects.                                                 * 
+ *   10/31/94   JLB : Handles chained objects.                                                 *
  *=============================================================================================*/
 void CargoClass::Attach(FootClass * object)
 {

@@ -56,7 +56,7 @@
  *   TerrainClass::delete -- Deletes a terrain object.                                         *
  *   TerrainClass::new -- Creates a new terrain object.                                        *
  *   TerrainClass::~TerrainClass -- Default destructor for terrain class objects.              *
- *   TerrainClass::Validate -- validates terrain pointer													  *
+ *   TerrainClass::Validate -- validates terrain pointer                                       *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include	"function.h"
@@ -73,16 +73,16 @@ void * TerrainClass::VTable;
 
 
 /***********************************************************************************************
- * TerrainClass::Validate -- validates terrain pointer													  *
+ * TerrainClass::Validate -- validates terrain pointer                                         *
  *                                                                                             *
  * INPUT:                                                                                      *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *		1 = ok, 0 = error																								  *
+ *    1 = ok, 0 = error                                                                        *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/09/1995 BRR : Created.                                                                 *

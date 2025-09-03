@@ -29,16 +29,16 @@
  *                                                                         *
  *                   Start Date : December 19, 1994                        *
  *                                                                         *
- *                  Last Update : April 9, 1995   [BR]                 		*
+ *                  Last Update : April 9, 1995   [BR]                     *
  *                                                                         *
  *-------------------------------------------------------------------------*
  *                                                                         *
- * This is the Connection Class for IPX communications.  It inherits			*
- * a Queue, PacketBuf, timeout variables from ConnectionClass.  It 			*
- * inherits its Send_/Receive_/Get_Packet functions, and the sequenced		*
- * ACK/Retry logic in Service_Send_Queue & Service_Recieve_Queue from		*
- * SequencedConnClass.  It guarantees order of delivery of packets.			*
- *																									*
+ * This is the Connection Class for IPX communications.  It inherits       *
+ * a Queue, PacketBuf, timeout variables from ConnectionClass.  It         *
+ * inherits its Send_/Receive_/Get_Packet functions, and the sequenced     *
+ * ACK/Retry logic in Service_Send_Queue & Service_Recieve_Queue from      *
+ * SequencedConnClass.  It guarantees order of delivery of packets.        *
+ *                                                                         *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #ifndef IPXCONN_H

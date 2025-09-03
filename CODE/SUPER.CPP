@@ -17,56 +17,56 @@
 */
 
 /* $Header:   F:\projects\c&c\vcs\code\super.cpv   1.5   16 Oct 1995 16:49:04   JOE_BOSTIC  $ */
-/*********************************************************************************************** 
- ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               *** 
- *********************************************************************************************** 
- *                                                                                             * 
- *                 Project Name : Command & Conquer                                            * 
- *                                                                                             * 
- *                    File Name : SUPER.CPP                                                    * 
- *                                                                                             * 
- *                   Programmer : Joe L. Bostic                                                * 
- *                                                                                             * 
- *                   Start Date : 07/28/95                                                     * 
- *                                                                                             * 
- *                  Last Update : July 29, 1995 [JLB]                                          * 
- *                                                                                             * 
- *---------------------------------------------------------------------------------------------* 
- * Functions:                                                                                  * 
- *   SuperClass::AI -- Process the super weapon AI.                                            * 
- *   SuperClass::Anim_Stage -- Fetches the animation stage for this super weapon.              * 
- *   SuperClass::Discharged -- Handles discharged action for special super weapon.             * 
- *   SuperClass::Enable -- Enable this super special weapon.                                   * 
- *   SuperClass::Forced_Charge -- Force the super weapon to full charge state.                 * 
- *   SuperClass::Impatient_Click -- Called when player clicks on unfinished super weapon.      * 
- *   SuperClass::Recharge -- Starts the special super weapon recharging.                       * 
- *   SuperClass::Remove -- Removes super weapon availability.                                  * 
- *   SuperClass::SuperClass -- Constructor for special super weapon objects.                   * 
- *   SuperClass::Suspend -- Suspend the charging of the super weapon.                          * 
+/***********************************************************************************************
+ ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               ***
+ ***********************************************************************************************
+ *                                                                                             *
+ *                 Project Name : Command & Conquer                                            *
+ *                                                                                             *
+ *                    File Name : SUPER.CPP                                                    *
+ *                                                                                             *
+ *                   Programmer : Joe L. Bostic                                                *
+ *                                                                                             *
+ *                   Start Date : 07/28/95                                                     *
+ *                                                                                             *
+ *                  Last Update : July 29, 1995 [JLB]                                          *
+ *                                                                                             *
+ *---------------------------------------------------------------------------------------------*
+ * Functions:                                                                                  *
+ *   SuperClass::AI -- Process the super weapon AI.                                            *
+ *   SuperClass::Anim_Stage -- Fetches the animation stage for this super weapon.              *
+ *   SuperClass::Discharged -- Handles discharged action for special super weapon.             *
+ *   SuperClass::Enable -- Enable this super special weapon.                                   *
+ *   SuperClass::Forced_Charge -- Force the super weapon to full charge state.                 *
+ *   SuperClass::Impatient_Click -- Called when player clicks on unfinished super weapon.      *
+ *   SuperClass::Recharge -- Starts the special super weapon recharging.                       *
+ *   SuperClass::Remove -- Removes super weapon availability.                                  *
+ *   SuperClass::SuperClass -- Constructor for special super weapon objects.                   *
+ *   SuperClass::Suspend -- Suspend the charging of the super weapon.                          *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include	"function.h"
 
 
-/*********************************************************************************************** 
- * SuperClass::SuperClass -- Constructor for special super weapon objects.                     * 
- *                                                                                             * 
- *    This is the constructor for the super weapons.                                           * 
- *                                                                                             * 
- * INPUT:   recharge    -- The recharge delay time (in game frames).                           * 
- *                                                                                             * 
- *          charging    -- Voice to announce that the weapon is charging.                      * 
- *                                                                                             * 
- *          ready       -- Voice to announce that the weapon is fully charged.                 * 
- *                                                                                             * 
- *          impatient   -- Voice to announce current charging state.                           * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   07/28/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * SuperClass::SuperClass -- Constructor for special super weapon objects.                     *
+ *                                                                                             *
+ *    This is the constructor for the super weapons.                                           *
+ *                                                                                             *
+ * INPUT:   recharge    -- The recharge delay time (in game frames).                           *
+ *                                                                                             *
+ *          charging    -- Voice to announce that the weapon is charging.                      *
+ *                                                                                             *
+ *          ready       -- Voice to announce that the weapon is fully charged.                 *
+ *                                                                                             *
+ *          impatient   -- Voice to announce current charging state.                           *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/28/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 SuperClass::SuperClass(int recharge, VoxType ready, VoxType charging, VoxType impatient, VoxType suspend)
 {
@@ -85,20 +85,20 @@ SuperClass::SuperClass(int recharge, VoxType ready, VoxType charging, VoxType im
 }	
 
 
-/*********************************************************************************************** 
- * SuperClass::Suspend -- Suspend the charging of the super weapon.                            * 
- *                                                                                             * 
- *    This will temporarily put on hold the charging of the special weapon. This might be the  * 
- *    result of insufficient power.                                                            * 
- *                                                                                             * 
- * INPUT:   on -- Should the weapon charging be suspended? Else, it will unsuspend.            * 
- *                                                                                             * 
- * OUTPUT:  Was the weapon suspend state changed?                                              * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   07/28/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * SuperClass::Suspend -- Suspend the charging of the super weapon.                            *
+ *                                                                                             *
+ *    This will temporarily put on hold the charging of the special weapon. This might be the  *
+ *    result of insufficient power.                                                            *
+ *                                                                                             *
+ * INPUT:   on -- Should the weapon charging be suspended? Else, it will unsuspend.            *
+ *                                                                                             *
+ * OUTPUT:  Was the weapon suspend state changed?                                              *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/28/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 bool SuperClass::Suspend(bool on)
 {
@@ -117,26 +117,26 @@ bool SuperClass::Suspend(bool on)
 }	
 
 
-/*********************************************************************************************** 
- * SuperClass::Enable -- Enable this super special weapon.                                     * 
- *                                                                                             * 
- *    This routine is called when the special weapon needs to be activated. This is used for   * 
- *    both the normal super weapons and the speicial one-time super weapons (from crates).     * 
- *                                                                                             * 
- * INPUT:   onetime  -- Is this a special one time super weapon?                               * 
- *                                                                                             * 
- *          player   -- Is this weapon for the player? If true, then there might be a voice    * 
- *                      announcement of this weapon's availability.                            * 
- *                                                                                             * 
- *          quiet    -- Request that the weapon start in suspended state (quiet mode).         * 
- *                                                                                             * 
- * OUTPUT:  Was the special super weapon enabled? Failure might indicate that the weapon was   * 
- *          already available.                                                                 * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   07/28/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * SuperClass::Enable -- Enable this super special weapon.                                     *
+ *                                                                                             *
+ *    This routine is called when the special weapon needs to be activated. This is used for   *
+ *    both the normal super weapons and the speicial one-time super weapons (from crates).     *
+ *                                                                                             *
+ * INPUT:   onetime  -- Is this a special one time super weapon?                               *
+ *                                                                                             *
+ *          player   -- Is this weapon for the player? If true, then there might be a voice    *
+ *                      announcement of this weapon's availability.                            *
+ *                                                                                             *
+ *          quiet    -- Request that the weapon start in suspended state (quiet mode).         *
+ *                                                                                             *
+ * OUTPUT:  Was the special super weapon enabled? Failure might indicate that the weapon was   *
+ *          already available.                                                                 *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/28/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 bool SuperClass::Enable(bool onetime, bool player, bool quiet)
 {
@@ -151,21 +151,21 @@ bool SuperClass::Enable(bool onetime, bool player, bool quiet)
 }	
 
 
-/*********************************************************************************************** 
- * SuperClass::Remove -- Removes super weapon availability.                                    * 
- *                                                                                             * 
- *    Call this routine when the super weapon should be removed because of some outside        * 
- *    force. For one time special super weapons, they can never be removed except as the       * 
- *    result of discharging them.                                                              * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  Was the special weapon removed and disabled?                                       * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   07/28/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * SuperClass::Remove -- Removes super weapon availability.                                    *
+ *                                                                                             *
+ *    Call this routine when the super weapon should be removed because of some outside        *
+ *    force. For one time special super weapons, they can never be removed except as the       *
+ *    result of discharging them.                                                              *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Was the special weapon removed and disabled?                                       *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/28/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 bool SuperClass::Remove(bool forced) 
 {
@@ -178,21 +178,21 @@ bool SuperClass::Remove(bool forced)
 }
 
 
-/*********************************************************************************************** 
- * SuperClass::Recharge -- Starts the special super weapon recharging.                         * 
- *                                                                                             * 
- *    This routine is called when the special weapon is allowed to recharge. Suspension will   * 
- *    be disabled and the animation process will begin.                                        * 
- *                                                                                             * 
- * INPUT:   player   -- Is this for a player owned super weapon? If so, then a voice           * 
- *                      announcement might be in order.                                        * 
- *                                                                                             * 
- * OUTPUT:  Was the super weapon begun charging up?                                            * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   07/28/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * SuperClass::Recharge -- Starts the special super weapon recharging.                         *
+ *                                                                                             *
+ *    This routine is called when the special weapon is allowed to recharge. Suspension will   *
+ *    be disabled and the animation process will begin.                                        *
+ *                                                                                             *
+ * INPUT:   player   -- Is this for a player owned super weapon? If so, then a voice           *
+ *                      announcement might be in order.                                        *
+ *                                                                                             *
+ * OUTPUT:  Was the super weapon begun charging up?                                            *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/28/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 bool SuperClass::Recharge(bool player)
 {
@@ -217,22 +217,22 @@ bool SuperClass::Recharge(bool player)
 }
 
 
-/*********************************************************************************************** 
- * Superclass::Discharged -- Handles discharged action for special super weapon.               * 
- *                                                                                             * 
- *    This routine should be called when the special super weapon has been discharged. The     * 
- *    weapon will either begin charging anew or will be removed entirely -- depends on the     * 
- *    one time flag for the weapon.                                                            * 
- *                                                                                             * 
- * INPUT:   player   -- Is this special weapon for the player? If so, then there might be a    * 
- *                      voice announcement.                                                    * 
- *                                                                                             * 
- * OUTPUT:  Should the sidebar be reprocessed because the special weapon has been eliminated?  * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   07/28/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * Superclass::Discharged -- Handles discharged action for special super weapon.               *
+ *                                                                                             *
+ *    This routine should be called when the special super weapon has been discharged. The     *
+ *    weapon will either begin charging anew or will be removed entirely -- depends on the     *
+ *    one time flag for the weapon.                                                            *
+ *                                                                                             *
+ * INPUT:   player   -- Is this special weapon for the player? If so, then there might be a    *
+ *                      voice announcement.                                                    *
+ *                                                                                             *
+ * OUTPUT:  Should the sidebar be reprocessed because the special weapon has been eliminated?  *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/28/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 bool SuperClass::Discharged(bool player)
 {
@@ -249,23 +249,23 @@ bool SuperClass::Discharged(bool player)
 }
 
 
-/*********************************************************************************************** 
- * SuperClass::AI -- Process the super weapon AI.                                              * 
- *                                                                                             * 
- *    This routine will process the charge up AI for this super weapon object. If the weapon   * 
- *    has advanced far enough to change any sidebar graphic that might represent it, then      * 
- *    "true" will be returned. Use this return value to intelligenly update the sidebar.       * 
- *                                                                                             * 
- * INPUT:   player   -- Is this for the player? If it is and the weapon is now fully charged,  * 
- *                      then this fully charged state will be announced to the player.         * 
- *                                                                                             * 
- * OUTPUT:  Was the weapon's state changed such that a sidebar graphic update will be          * 
- *          necessary?                                                                         * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   07/28/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * SuperClass::AI -- Process the super weapon AI.                                              *
+ *                                                                                             *
+ *    This routine will process the charge up AI for this super weapon object. If the weapon   *
+ *    has advanced far enough to change any sidebar graphic that might represent it, then      *
+ *    "true" will be returned. Use this return value to intelligenly update the sidebar.       *
+ *                                                                                             *
+ * INPUT:   player   -- Is this for the player? If it is and the weapon is now fully charged,  *
+ *                      then this fully charged state will be announced to the player.         *
+ *                                                                                             *
+ * OUTPUT:  Was the weapon's state changed such that a sidebar graphic update will be          *
+ *          necessary?                                                                         *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/28/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 bool SuperClass::AI(bool player)
 {
@@ -294,21 +294,21 @@ bool SuperClass::AI(bool player)
 }
 
 
-/*********************************************************************************************** 
- * SuperClass::Anim_Stage -- Fetches the animation stage for this super weapon.                * 
- *                                                                                             * 
- *    This will return the current animation stage for this super weapon. The value will be    * 
- *    between zero (uncharged) to ANIMATION_STAGES (fully charged). Use this value to render   * 
- *    the appropriate graphic on the sidebar.                                                  * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  Returns with the current animation stage for this special super weapon powerup.    * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   07/28/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * SuperClass::Anim_Stage -- Fetches the animation stage for this super weapon.                *
+ *                                                                                             *
+ *    This will return the current animation stage for this super weapon. The value will be    *
+ *    between zero (uncharged) to ANIMATION_STAGES (fully charged). Use this value to render   *
+ *    the appropriate graphic on the sidebar.                                                  *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with the current animation stage for this special super weapon powerup.    *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/28/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 int SuperClass::Anim_Stage(void) const
 {
@@ -327,21 +327,21 @@ int SuperClass::Anim_Stage(void) const
 }	
 
 
-/*********************************************************************************************** 
- * SuperClass::Impatient_Click -- Called when player clicks on unfinished super weapon.        * 
- *                                                                                             * 
- *    This routine is called when the player clicks on the super weapon icon on the sidebar    * 
- *    when the super weapon is not ready yet. This results in a voice message feedback to the  * 
- *    player.                                                                                  * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   07/28/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * SuperClass::Impatient_Click -- Called when player clicks on unfinished super weapon.        *
+ *                                                                                             *
+ *    This routine is called when the player clicks on the super weapon icon on the sidebar    *
+ *    when the super weapon is not ready yet. This results in a voice message feedback to the  *
+ *    player.                                                                                  *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/28/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 void SuperClass::Impatient_Click(void) const
 {
@@ -357,22 +357,22 @@ void SuperClass::Impatient_Click(void) const
 }	
 
 
-/*********************************************************************************************** 
- * SuperClass::Forced_Charge -- Force the super weapon to full charge state.                   * 
- *                                                                                             * 
- *    This routine will force the special weapon to full charge state. Call it when the weapon * 
- *    needs to be instantly charged. The airstrike (when it first becomes available) is a      * 
- *    good example.                                                                            * 
- *                                                                                             * 
- * INPUT:   player   -- Is this for the player? If true, then the full charge state will be    * 
- *                      announced.                                                             * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   07/29/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * SuperClass::Forced_Charge -- Force the super weapon to full charge state.                   *
+ *                                                                                             *
+ *    This routine will force the special weapon to full charge state. Call it when the weapon *
+ *    needs to be instantly charged. The airstrike (when it first becomes available) is a      *
+ *    good example.                                                                            *
+ *                                                                                             *
+ * INPUT:   player   -- Is this for the player? If true, then the full charge state will be    *
+ *                      announced.                                                             *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/29/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 void SuperClass::Forced_Charge(bool player)
 {

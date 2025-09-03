@@ -24,9 +24,9 @@
 ;*                                                                         *
 ;*                    File Name : PAGFAULT.ASM                             *
 ;*                                                                         *
-;*                   Programmer : Julio R Jerez 	                   *
+;*                   Programmer : Julio R Jerez                            *
 ;*                                                                         *
-;*                   	   Date : April 25,1995                            *
+;*                         Date : April 25,1995                            *
 ;*                                                                         *
 ;*-------------------------------------------------------------------------*
 ;* Functions:                                                              *
@@ -69,19 +69,19 @@ DATASEG
 
 CODESEG
 ;***************************************************************************
-;* INSTALL_PAGE_FAULT_HANDLE -- Installs new page fault and div Error	   *
-;* 				handles.				   *
-;*	This function will install a new page fault handle and Div Error   *
-;*	so in the event that we have a program crash these handles will	   *
-;*	remove all interrupts and then will chain to the default Exception *
-;*	Handle							   	   *
-;*									   *
-;* INPUT:	none							   *
-;*									   *
+;* INSTALL_PAGE_FAULT_HANDLE -- Installs new page fault and div Error      *
+;*                              handles.                                   *
+;*      This function will install a new page fault handle and Div Error   *
+;*      so in the event that we have a program crash these handles will    *
+;*      remove all interrupts and then will chain to the default Exception *
+;*      Handle                                                             *
+;*                                                                         *
+;* INPUT:       none                                                       *
+;*                                                                         *
 ;*                                                                         *
 ;* OUTPUT:      none                                                       *
 ;*                                                                         *
-;* PROTO:	VOID Install_Page_Fault_Handle( void);  		   *
+;* PROTO:       VOID Install_Page_Fault_Handle( void);                     *
 ;*                                                                         *
 ;* HISTORY:  04/25/96 Created                                              *
 ;*=========================================================================*
@@ -220,6 +220,6 @@ PROC	Divide_Error_Handle far
 
 
 ;***************************************************************************
-;* End of File.								   *
+;* End of File.                                                            *
 ;***************************************************************************
 END

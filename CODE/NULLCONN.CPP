@@ -27,17 +27,17 @@
  *                                                                         *
  *                   Programmer : Bill Randolph                            *
  *                                                                         *
- *                   Start Date : April 5, 1995		                        *
+ *                   Start Date : April 5, 1995                            *
  *                                                                         *
  *                  Last Update : April 20, 1995   [DRD]                   *
  *                                                                         *
  *-------------------------------------------------------------------------*
- * Functions:    			                                                   *
+ * Functions:                                                              *
  *   NullModemConnClass::NullModemConnClass -- class constructor           *
  *   NullModemConnClass::~NullModemConnClass -- class destructor           *
- *   NullModemConnClass::Init -- hardware-dependent initialization			*
- *   NullModemConnClass::Send -- hardware-dependent packet sending			*
- *   NullModemConnClass::Compute_CRC -- computes CRC for given buffer		*
+ *   NullModemConnClass::Init -- hardware-dependent initialization         *
+ *   NullModemConnClass::Send -- hardware-dependent packet sending         *
+ *   NullModemConnClass::Compute_CRC -- computes CRC for given buffer      *
  *   NullModemConnClass::Packet_Overhead_Size -- number of extra bytes     *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
@@ -49,16 +49,16 @@
  * NullModemConnClass::NullModemConnClass -- class constructor             *
  *                                                                         *
  * INPUT:                                                                  *
- *		numsend			desired # send queue entries									*
- *		numreceive		desired # send receive entries								*
- *		maxlen			max length of application's packets							*
- *		magicnum			application-defined magic # for the packets				*
+ *    numsend        desired # send queue entries                          *
+ *    numreceive     desired # send receive entries                        *
+ *    maxlen         max length of application's packets                   *
+ *    magicnum       application-defined magic # for the packets           *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -91,10 +91,10 @@ NullModemConnClass::NullModemConnClass (int numsend, int numreceive,
  * INPUT:                                                                  *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -107,16 +107,16 @@ NullModemConnClass::~NullModemConnClass ()
 
 
 /***************************************************************************
- * NullModemConnClass::Init -- hardware-dependent initialization				*
+ * NullModemConnClass::Init -- hardware-dependent initialization           *
  *                                                                         *
  * INPUT:                                                                  *
- *		port		GreenLeaf port handle													*
+ *    port     GreenLeaf port handle                                       *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -130,16 +130,16 @@ void NullModemConnClass::Init (HANDLE port_handle)
 
 
 /***************************************************************************
- * NullModemConnClass::Send -- hardware-dependent packet sending				*
+ * NullModemConnClass::Send -- hardware-dependent packet sending           *
  *                                                                         *
  * INPUT:                                                                  *
- *		port		GreenLeaf port handle													*
+ *    port     GreenLeaf port handle                                       *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		1 = OK, 0 = error																		*
+ *    1 = OK, 0 = error                                                    *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -200,17 +200,17 @@ int NullModemConnClass::Send (char *buf, int buflen)
 
 
 /***************************************************************************
- * NullModemConnClass::Compute_CRC -- computes CRC for given buffer			*
+ * NullModemConnClass::Compute_CRC -- computes CRC for given buffer        *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf		buffer to compute CRC for												*
- *		buflen	length of buffer in bytes												*
+ *    buf      buffer to compute CRC for                                   *
+ *    buflen   length of buffer in bytes                                   *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -239,13 +239,13 @@ int NullModemConnClass::Compute_CRC (char *buf, int buflen)
  * NullModemConnClass::Packet_Overhead_Size -- number of extra bytes       *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		number of bytes used for communications only.								*
+ *    number of bytes used for communications only.                        *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   04/20/1995 DRD : Created.                                             *

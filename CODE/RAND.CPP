@@ -17,21 +17,21 @@
 */
 
 /* $Header:   F:\projects\c&c\vcs\code\rand.cpv   1.6   16 Oct 1995 16:51:10   JOE_BOSTIC  $ */
-/*************************************************************************** 
- *                                                                         * 
- *                 Project Name : Command & Conquer                        * 
- *                                                                         * 
- *                    File Name : RAND.CPP                                 * 
- *                                                                         * 
- *                   Programmer : Bill R. Randolph                         * 
- *                                                                         * 
- *                   Start Date : 04/25/95                                 * 
- *                                                                         * 
- *                  Last Update : June 17, 1995 [JLB]                      * 
- *                                                                         * 
- *-------------------------------------------------------------------------* 
- * Functions:                                                              * 
- *   Sim_Random -- Returns 0 - 255                                         * 
+/***************************************************************************
+ *                                                                         *
+ *                 Project Name : Command & Conquer                        *
+ *                                                                         *
+ *                    File Name : RAND.CPP                                 *
+ *                                                                         *
+ *                   Programmer : Bill R. Randolph                         *
+ *                                                                         *
+ *                   Start Date : 04/25/95                                 *
+ *                                                                         *
+ *                  Last Update : June 17, 1995 [JLB]                      *
+ *                                                                         *
+ *-------------------------------------------------------------------------*
+ * Functions:                                                              *
+ *   Sim_Random -- Returns 0 - 255                                         *
  *   Sim_IRandom -- Returns minval to maxval, inclusive                    *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
@@ -39,21 +39,21 @@
 
 int SimRandIndex = 0;
 
-/*************************************************************************** 
- * Sim_Random -- Returns 0 - 255                                           * 
- *                                                                         * 
- * INPUT:                                                                  * 
+/***************************************************************************
+ * Sim_Random -- Returns 0 - 255                                           *
+ *                                                                         *
+ * INPUT:                                                                  *
  *      none.                                                              *
- *                                                                         * 
- * OUTPUT:                                                                 * 
+ *                                                                         *
+ * OUTPUT:                                                                 *
  *      0 - 255, at random                                                 *
- *                                                                         * 
- * WARNINGS:                                                               * 
+ *                                                                         *
+ * WARNINGS:                                                               *
  *      none.                                                              *
- *                                                                         * 
- * HISTORY:                                                                * 
- *   04/25/1995 BRR : Created.                                             * 
- *   06/17/1995 JLB : Takes advantage of character math wrap.              * 
+ *                                                                         *
+ * HISTORY:                                                                *
+ *   04/25/1995 BRR : Created.                                             *
+ *   06/17/1995 JLB : Takes advantage of character math wrap.              *
  *=========================================================================*/
 int Sim_Random(void)
 {
@@ -88,21 +88,21 @@ int Sim_Random(void)
 }
 
 
-/*************************************************************************** 
+/***************************************************************************
  * Sim_IRandom -- returns minval to maxval, inclusive                      *
- *                                                                         * 
- * INPUT:                                                                  * 
+ *                                                                         *
+ * INPUT:                                                                  *
  *      minval,maxval      range limits                                    *
- *                                                                         * 
- * OUTPUT:                                                                 * 
+ *                                                                         *
+ * OUTPUT:                                                                 *
  *      random value                                                       *
- *                                                                         * 
- * WARNINGS:                                                               * 
+ *                                                                         *
+ * WARNINGS:                                                               *
  *      none.                                                              *
- *                                                                         * 
- * HISTORY:                                                                * 
- *   04/25/1995 BRR : Created.                                             * 
- *   06/17/1995 JLB : Uses fixed point math helper routine.                * 
+ *                                                                         *
+ * HISTORY:                                                                *
+ *   04/25/1995 BRR : Created.                                             *
+ *   06/17/1995 JLB : Uses fixed point math helper routine.                *
  *=========================================================================*/
 int Sim_IRandom(int minval, int maxval)
 {

@@ -722,13 +722,13 @@ extern int ShowCommand;
  * Select_Game -- The game's main menu                                                         *
  *                                                                                             *
  * INPUT:                                                                                      *
- *		fade		if true, will fade the palette in gradually												  *
+ *    fade     if true, will fade the palette in gradually                                     *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   06/05/1995 BRR : Created.                                                                 *
@@ -1723,16 +1723,16 @@ bool Select_Game(bool fade)
  * Play_Intro -- plays the introduction & logo movies                                          *
  *                                                                                             *
  * INPUT:                                                                                      *
- *		for_real			if true, this function plays the "real" intro; otherwise, it plays		  *
- *							a delicious smorgasbord of visual delights, guaranteed to titillate		  *
- *							the ocular & auditory nerve pathways.												  *
- *							Well, it plays movies, anyway.														  *
+ *    for_real       if true, this function plays the "real" intro; otherwise, it plays        *
+ *                   a delicious smorgasbord of visual delights, guaranteed to titillate       *
+ *                   the ocular & auditory nerve pathways.                                     *
+ *                   Well, it plays movies, anyway.                                            *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   06/06/1995 BRR : Created.                                                                 *
@@ -2482,13 +2482,13 @@ bool Parse_Command_Line(int argc, char *argv[])
  * Parse_INI_File -- Parses CONQUER.INI for certain options                                    *
  *                                                                                             *
  * INPUT:                                                                                      *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/18/1995 BRR : Created.                                                                 *
@@ -2866,7 +2866,7 @@ long Obfuscate(char const * string)
 
 	/*
 	**	Transform the buffer into a number. This transformation is character
-	**	order dependant.
+	**	order dependent.
 	*/
 	long code = Calculate_CRC(buffer, length);
 

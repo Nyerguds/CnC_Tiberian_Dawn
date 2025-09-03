@@ -67,14 +67,14 @@ LABEL	RealBinEnd	BYTE
 ;***************************************************************************
 ;* Get_RM_IPX_Address -- Return address of real mode code for copy.        *
 ;*                                                                         *
-;* INPUT:								   *
-;*	none                                                               *
+;* INPUT:                                                                  *
+;*      none                                                               *
 ;*                                                                         *
-;* OUTPUT:      							   *
-;*	VOID * to the address of the real mode IPX code			   *
+;* OUTPUT:                                                                 *
+;*      VOID * to the address of the real mode IPX code                    *
 ;*                                                                         *
-;* PROTO:								   *
-;*	VOID	*Get_RM_IPX_Address(VOID);			           *
+;* PROTO:                                                                  *
+;*      VOID    *Get_RM_IPX_Address(VOID);                                 *
 ;*                                                                         *
 ;* HISTORY:                                                                *
 ;*   07/06/1994 SKB : Created.                                             *
@@ -90,13 +90,13 @@ LABEL	RealBinEnd	BYTE
 ;* Get_RM_IPX_Size -- return size of real mode IPX code.                   *
 ;*                                                                         *
 ;* INPUT:					   			   *
-;*	none                                                               *
+;*      none                                                               *
 ;*                                                                         *
 ;* OUTPUT:      				   			   *
-;*	LONG size of the real mode IPX code                                *
+;*      LONG size of the real mode IPX code                                *
 ;*                                                                         *
 ;* PROTO:					   			   *
-;*	LONG	Get_RM_IPX_Size(VOID);				   	   *
+;*      LONG	Get_RM_IPX_Size(VOID);				   	   *
 ;*                                                                         *
 ;* HISTORY:                                                                *
 ;*   07/06/1994 SKB : Created.                                             *

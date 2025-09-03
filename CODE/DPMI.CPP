@@ -18,7 +18,7 @@
 
 /* $Header:   F:\projects\c&c\vcs\code\dpmi.cpv   2.17   16 Oct 1995 16:49:36   JOE_BOSTIC  $ */
 /***********************************************************************************************
- ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               *** 
+ ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               ***
  ***********************************************************************************************
  *                                                                                             *
  *                 Project Name : Command & Conquer                                            *

@@ -46,7 +46,7 @@
  *   TeamTypeClass::operator new -- 'new' operator                         *
  *   TeamTypeClass::operator delete -- 'delete' operator                   *
  *   TeamTypeClass::Suggested_New_Team -- Suggests a new team to create.   *
- *   TeamTypeClass::Validate -- validates teamtype pointer						*
+ *   TeamTypeClass::Validate -- validates teamtype pointer                 *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include "function.h"
@@ -78,16 +78,16 @@ void * TeamTypeClass::VTable;
 
 
 /***********************************************************************************************
- * TeamTypeClass::Validate -- validates teamtype pointer													  *
+ * TeamTypeClass::Validate -- validates teamtype pointer                                       *
  *                                                                                             *
  * INPUT:                                                                                      *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *		1 = ok, 0 = error																								  *
+ *    1 = ok, 0 = error                                                                        *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *		none.																												  *
+ *    none.                                                                                    *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/09/1995 BRR : Created.                                                                 *

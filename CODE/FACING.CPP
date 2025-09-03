@@ -17,46 +17,46 @@
 */
 
 /* $Header:   F:\projects\c&c\vcs\code\facing.cpv   1.9   16 Oct 1995 16:49:40   JOE_BOSTIC  $ */
-/*********************************************************************************************** 
- ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               *** 
- *********************************************************************************************** 
- *                                                                                             * 
- *                 Project Name : Command & Conquer                                            * 
- *                                                                                             * 
- *                    File Name : FACING.CPP                                                   * 
- *                                                                                             * 
- *                   Programmer : Joe L. Bostic                                                * 
- *                                                                                             * 
- *                   Start Date : 03/21/95                                                     * 
- *                                                                                             * 
- *                  Last Update : March 21, 1995 [JLB]                                         * 
- *                                                                                             * 
- *---------------------------------------------------------------------------------------------* 
- * Functions:                                                                                  * 
- *   FacingClass::Rotation_Adjust -- Perform a rotation adjustment to current facing.          * 
- *   FacingClass::Set_Current -- Sets the current rotation value.                              * 
- *   FacingClass::Set_Desired -- Sets the desired facing  value.                               * 
- *   FacingClass::FacingClass -- Default constructor for the facing class.                     * 
+/***********************************************************************************************
+ ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               ***
+ ***********************************************************************************************
+ *                                                                                             *
+ *                 Project Name : Command & Conquer                                            *
+ *                                                                                             *
+ *                    File Name : FACING.CPP                                                   *
+ *                                                                                             *
+ *                   Programmer : Joe L. Bostic                                                *
+ *                                                                                             *
+ *                   Start Date : 03/21/95                                                     *
+ *                                                                                             *
+ *                  Last Update : March 21, 1995 [JLB]                                         *
+ *                                                                                             *
+ *---------------------------------------------------------------------------------------------*
+ * Functions:                                                                                  *
+ *   FacingClass::Rotation_Adjust -- Perform a rotation adjustment to current facing.          *
+ *   FacingClass::Set_Current -- Sets the current rotation value.                              *
+ *   FacingClass::Set_Desired -- Sets the desired facing  value.                               *
+ *   FacingClass::FacingClass -- Default constructor for the facing class.                     *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include	"function.h"
 #include	"facing.h"
 
 
-/*********************************************************************************************** 
- * FacingClass::FacingClass -- Default constructor for the facing class.                       * 
- *                                                                                             * 
- *    This default constructor merely sets the desired and current facing values to be the     * 
- *    same (North).                                                                            * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   03/21/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * FacingClass::FacingClass -- Default constructor for the facing class.                       *
+ *                                                                                             *
+ *    This default constructor merely sets the desired and current facing values to be the     *
+ *    same (North).                                                                            *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   03/21/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 FacingClass::FacingClass(void) 
 {
@@ -65,23 +65,23 @@ FacingClass::FacingClass(void)
 }
 
 
-/*********************************************************************************************** 
- * FacingClass::Set_Desired -- Sets the desired facing  value.                                 * 
- *                                                                                             * 
- *    This routine is used to set the desired facing value without altering the current        * 
- *    facing setting. Typicall use of this routine is when a vehicle needs to face a           * 
- *    direction, but currently isn't facing the correct direction. After this routine is       * 
- *    called, it is presumed that subsequent calls to Rotation_Adjust() will result in the     * 
- *    eventual alignment of the current facing.                                                * 
- *                                                                                             * 
- * INPUT:   facing   -- The new facing to assign to the desired value.                         * 
- *                                                                                             * 
- * OUTPUT:  bool; Did the desired facing value actually change by this routine call?           * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   03/21/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * FacingClass::Set_Desired -- Sets the desired facing  value.                                 *
+ *                                                                                             *
+ *    This routine is used to set the desired facing value without altering the current        *
+ *    facing setting. Typicall use of this routine is when a vehicle needs to face a           *
+ *    direction, but currently isn't facing the correct direction. After this routine is       *
+ *    called, it is presumed that subsequent calls to Rotation_Adjust() will result in the     *
+ *    eventual alignment of the current facing.                                                *
+ *                                                                                             *
+ * INPUT:   facing   -- The new facing to assign to the desired value.                         *
+ *                                                                                             *
+ * OUTPUT:  bool; Did the desired facing value actually change by this routine call?           *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   03/21/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 int FacingClass::Set_Desired(DirType facing) 
 {
@@ -93,21 +93,21 @@ int FacingClass::Set_Desired(DirType facing)
 }
 
 
-/*********************************************************************************************** 
- * FacingClass::Set_Current -- Sets the current rotation value.                                * 
- *                                                                                             * 
- *    This routine will set the current rotation value. It is used to override the facing      * 
- *    value without adjusting the desired setting.                                             * 
- *                                                                                             * 
- * INPUT:   facing   -- The new facing to assign to the current facing value.                  * 
- *                                                                                             * 
- * OUTPUT:  bool; Was the current setting changed by this routine. Failure means that the      * 
- *                current setting was already at the value specified.                          * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   03/21/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * FacingClass::Set_Current -- Sets the current rotation value.                                *
+ *                                                                                             *
+ *    This routine will set the current rotation value. It is used to override the facing      *
+ *    value without adjusting the desired setting.                                             *
+ *                                                                                             *
+ * INPUT:   facing   -- The new facing to assign to the current facing value.                  *
+ *                                                                                             *
+ * OUTPUT:  bool; Was the current setting changed by this routine. Failure means that the      *
+ *                current setting was already at the value specified.                          *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   03/21/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 int FacingClass::Set_Current(DirType facing) 
 {
@@ -119,25 +119,25 @@ int FacingClass::Set_Current(DirType facing)
 }
 
 
-/*********************************************************************************************** 
- * FacingClass::Rotation_Adjust -- Perform a rotation adjustment to current facing.            * 
- *                                                                                             * 
- *    This routine is used when the current and desired facings differ but the current         * 
- *    facing should be adjusted toward the desired facing. The amount of rotation to adjust    * 
- *    is provided as a rotation rate parameter. Typical use of this routine is for turrets     * 
- *    and other vehicle related rotating.                                                      * 
- *                                                                                             * 
- * INPUT:   rate  -- The rotation rate to use when adjusting the current facing toward the     * 
- *                   desired facing. A value of 127 means instantaneous rotation.              * 
- *                                                                                             * 
- * OUTPUT:  bool; Did the rotation result in the current facing transitioning from one         * 
- *                1/32 zone to another? If true, then the owning object most likely will       * 
- *                need to be redrawn to reflect the change.                                    * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   03/21/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * FacingClass::Rotation_Adjust -- Perform a rotation adjustment to current facing.            *
+ *                                                                                             *
+ *    This routine is used when the current and desired facings differ but the current         *
+ *    facing should be adjusted toward the desired facing. The amount of rotation to adjust    *
+ *    is provided as a rotation rate parameter. Typical use of this routine is for turrets     *
+ *    and other vehicle related rotating.                                                      *
+ *                                                                                             *
+ * INPUT:   rate  -- The rotation rate to use when adjusting the current facing toward the     *
+ *                   desired facing. A value of 127 means instantaneous rotation.              *
+ *                                                                                             *
+ * OUTPUT:  bool; Did the rotation result in the current facing transitioning from one         *
+ *                1/32 zone to another? If true, then the owning object most likely will       *
+ *                need to be redrawn to reflect the change.                                    *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   03/21/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 int FacingClass::Rotation_Adjust(int rate)
 {

@@ -18,7 +18,7 @@
 
 /* $Header:   F:\projects\c&c\vcs\code\overlay.h_v   2.16   16 Oct 1995 16:44:50   JOE_BOSTIC  $ */
 /***********************************************************************************************
- ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               *** 
+ ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               ***
  ***********************************************************************************************
  *                                                                                             *
  *                 Project Name : Command & Conquer                                            *

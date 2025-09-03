@@ -32,38 +32,38 @@
  *                  Last Update : May 4, 1995 [BRR]                        *
  *                                                                         *
  *-------------------------------------------------------------------------*
- * Functions:                                                       			*
+ * Functions:                                                              *
  *   IPXManagerClass::IPXManagerClass -- class constructor                 *
  *   IPXManagerClass::~IPXManagerClass -- class destructor                 *
- *   IPXManagerClass::Init -- initialization routine								*
- *   IPXManagerClass::Is_IPX -- tells if IPX is installed or not				*
- *   IPXManagerClass::Set_Timing -- sets timing for all connections			*
+ *   IPXManagerClass::Init -- initialization routine                       *
+ *   IPXManagerClass::Is_IPX -- tells if IPX is installed or not           *
+ *   IPXManagerClass::Set_Timing -- sets timing for all connections        *
  *   IPXManagerClass::Create_Connection -- creates a new connection        *
  *   IPXManagerClass::Delete_Connection -- deletes a connection            *
- *   IPXManagerClass::Num_Connections -- gets the # of connections			*
+ *   IPXManagerClass::Num_Connections -- gets the # of connections         *
  *   IPXManagerClass::Connection_ID -- gets the given connection's ID      *
  *   IPXManagerClass::Connection_Name -- gets name for given connection    *
- *   IPXManagerClass::Connection_Address -- retrieves connection's address	*
+ *   IPXManagerClass::Connection_Address -- retrieves connection's address *
  *   IPXManagerClass::Connection_Index -- gets given connection's index    *
- *   IPXManagerClass::Send_Global_Message -- sends a Global Message			*
- *   IPXManagerClass::Get_Global_Message -- polls the Global Message queue	*
- *   IPXManagerClass::Send_Private_Message -- Sends a Private Message		*
- *   IPXManagerClass::Get_Private_Message -- Polls Private Message queue	*
- *   IPXManagerClass::Service -- main polling routine for IPX Connections	*
+ *   IPXManagerClass::Send_Global_Message -- sends a Global Message        *
+ *   IPXManagerClass::Get_Global_Message -- polls the Global Message queue *
+ *   IPXManagerClass::Send_Private_Message -- Sends a Private Message      *
+ *   IPXManagerClass::Get_Private_Message -- Polls Private Message queue   *
+ *   IPXManagerClass::Service -- main polling routine for IPX Connections  *
  *   IPXManagerClass::Get_Bad_Connection -- returns bad connection ID      *
- *   IPXManagerClass::Global_Num_Send	-- gets # entries in send queue	   *
+ *   IPXManagerClass::Global_Num_Send -- gets # entries in send queue      *
  *   IPXManagerClass::Global_Num_Receive -- gets # entries in recv queue   *
- *   IPXManagerClass::Private_Num_Send -- gets # entries in send queue	   *
+ *   IPXManagerClass::Private_Num_Send -- gets # entries in send queue     *
  *   IPXManagerClass::Private_Num_Receive -- gets # entries in recv queue  *
  *   IPXManagerClass::Set_Bridge -- prepares to cross a bridge             *
- *   IPXManagerClass::Set_Socket -- sets socket ID for all connections		*
+ *   IPXManagerClass::Set_Socket -- sets socket ID for all connections     *
  *   IPXManagerClass::Response_Time -- Returns largest Avg Response Time   *
  *   IPXManagerClass::Global_Response_Time -- Returns Avg Response Time    *
- *   IPXManagerClass::Reset_Response_Time -- Reset response time 				*
+ *   IPXManagerClass::Reset_Response_Time -- Reset response time           *
  *   IPXManagerClass::Oldest_Send -- gets ptr to oldest send buf           *
- *   IPXManagerClass::Mono_Debug_Print -- debug output routine					*
- *   IPXManagerClass::Alloc_RealMode_Mem -- allocates real-mode memory		*
- *   IPXManagerClass::Free_RealMode_Mem -- frees real-mode memory				*
+ *   IPXManagerClass::Mono_Debug_Print -- debug output routine             *
+ *   IPXManagerClass::Alloc_RealMode_Mem -- allocates real-mode memory     *
+ *   IPXManagerClass::Free_RealMode_Mem -- frees real-mode memory          *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include "function.h"
@@ -74,17 +74,17 @@
  * IPXManagerClass::IPXManagerClass -- class constructor                   *
  *                                                                         *
  * INPUT:                                                                  *
- *		glb_maxlen		Global Channel maximum packet length						*
- *		pvt_maxlen		Private Channel maximum packet length						*
- *		socket			socket ID to use													*
- *		product_id		a unique numerical ID for this product						*
+ *    glb_maxlen     Global Channel maximum packet length                  *
+ *    pvt_maxlen     Private Channel maximum packet length                 *
+ *    socket         socket ID to use                                      *
+ *    product_id     a unique numerical ID for this product                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		The socket number is byte-swapped, since IPX requires socket ID's		*
- *		to be stored high/low.																*
+ *    The socket number is byte-swapped, since IPX requires socket ID's    *
+ *    to be stored high/low.                                               *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -172,13 +172,13 @@ IPXManagerClass::IPXManagerClass (int glb_maxlen, int pvt_maxlen,
  * IPXManagerClass::~IPXManagerClass -- class destructor                   *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -220,18 +220,18 @@ IPXManagerClass::~IPXManagerClass()
 
 
 /***************************************************************************
- * IPXManagerClass::Init -- initialization routine									*
+ * IPXManagerClass::Init -- initialization routine                         *
  *                                                                         *
- * This routine allocates memory,
+ * This routine allocates memory,                                          *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = error																		*
+ *    1 = OK, 0 = error                                                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -324,16 +324,16 @@ int IPXManagerClass::Init()
 
 
 /***************************************************************************
- * IPXManagerClass::Is_IPX -- tells if IPX is installed or not					*
+ * IPXManagerClass::Is_IPX -- tells if IPX is installed or not             *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = IPX is installed; 0 = isn't													*
+ *    1 = IPX is installed; 0 = isn't                                      *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -346,22 +346,22 @@ int IPXManagerClass::Is_IPX(void)
 
 
 /***************************************************************************
- * IPXManagerClass::Set_Timing -- sets timing for all connections				*
+ * IPXManagerClass::Set_Timing -- sets timing for all connections          *
  *                                                                         *
- * This will set the timing parameters for all existing connections, and	*
- * all connections created from now on.  This allows an application to		*
- * measure the Response_Time while running, and adjust timing accordingly.	*
+ * This will set the timing parameters for all existing connections, and   *
+ * all connections created from now on.  This allows an application to     *
+ * measure the Response_Time while running, and adjust timing accordingly. *
  *                                                                         *
  * INPUT:                                                                  *
- *		retrydelta	value to set for retry delta 										*
- *		maxretries	value to set for max # retries									*
- *		timeout		value to set for connection timeout								*
+ *    retrydelta  value to set for retry delta                             *
+ *    maxretries  value to set for max # retries                           *
+ *    timeout     value to set for connection timeout                      *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   07/02/1995 BR : Created.                                              *
@@ -394,15 +394,15 @@ void IPXManagerClass::Set_Timing (unsigned long retrydelta,
  * IPXManagerClass::Create_Connection -- creates a new connection          *
  *                                                                         *
  * INPUT:                                                                  *
- *		id				application-specific numerical ID for this connection		*
- *		node			ptr to IPXNodeIDType (name & address)							*
- *		address		IPX address for this connection									*
+ *    id          application-specific numerical ID for this connection    *
+ *    node        ptr to IPXNodeIDType (name & address)                    *
+ *    address     IPX address for this connection                          *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = error																		*
+ *    1 = OK, 0 = error                                                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		Never create a connection with an 'id' of -1.								*
+ *    Never create a connection with an 'id' of -1.                        *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -468,13 +468,13 @@ bool IPXManagerClass::Create_Connection(int id, char *name, IPXAddressClass *add
  * IPXManagerClass::Delete_Connection -- deletes a connection              *
  *                                                                         *
  * INPUT:                                                                  *
- *		id		ID of connection to delete													*
+ *    id    ID of connection to delete                                     *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = error																		*
+ *    1 = OK, 0 = error                                                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -529,16 +529,16 @@ bool IPXManagerClass::Delete_Connection(int id)
 
 
 /***************************************************************************
- * IPXManagerClass::Num_Connections -- gets the # of connections				*
+ * IPXManagerClass::Num_Connections -- gets the # of connections           *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		# of connections																		*
+ *    # of connections                                                     *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/25/1995 BR : Created.                                              *
@@ -567,13 +567,13 @@ int IPXManagerClass::Num_Connections(void)
  * IPXManagerClass::Connection_ID -- gets the given connection's ID        *
  *                                                                         *
  * INPUT:                                                                  *
- *		index			index of connection to retrieve									*
+ *    index       index of connection to retrieve                          *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		ID for that connection, CONNECTION_NONE if invalid index					*
+ *    ID for that connection, CONNECTION_NONE if invalid index             *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/25/1995 BR : Created.                                              *
@@ -592,13 +592,13 @@ int IPXManagerClass::Connection_ID(int index)
  * IPXManagerClass::Connection_Name -- retrieves name for given connection *
  *                                                                         *
  * INPUT:                                                                  *
- *		id		ID of connection to get name of											*
+ *    id    ID of connection to get name of                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		ptr to connection's name, NULL if not found									*
+ *    ptr to connection's name, NULL if not found                          *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/19/1995 BR : Created.                                              *
@@ -619,16 +619,16 @@ char *IPXManagerClass::Connection_Name(int id)
 
 
 /***************************************************************************
- * IPXManagerClass::Connection_Address -- retrieves connection's address	*
+ * IPXManagerClass::Connection_Address -- retrieves connection's address   *
  *                                                                         *
  * INPUT:                                                                  *
- *		id		ID of connection to get address for										*
+ *    id    ID of connection to get address for                            *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		pointer to IXPAddressClass, NULL if not found								*
+ *    pointer to IXPAddressClass, NULL if not found                        *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/19/1995 BR : Created.                                              *
@@ -652,13 +652,13 @@ IPXAddressClass * IPXManagerClass::Connection_Address(int id)
  * IPXManagerClass::Connection_Index -- gets given connection's index      *
  *                                                                         *
  * INPUT:                                                                  *
- *		ID to retrieve index for															*
+ *    ID to retrieve index for                                             *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		index for this connection, CONNECTION_NONE if not found					*
+ *    index for this connection, CONNECTION_NONE if not found              *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/25/1995 BR : Created.                                              *
@@ -678,19 +678,19 @@ int IPXManagerClass::Connection_Index(int id)
 
 
 /***************************************************************************
- * IPXManagerClass::Send_Global_Message -- sends a Global Message				*
+ * IPXManagerClass::Send_Global_Message -- sends a Global Message          *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf			buffer to send															*
- *		buflen		length of buf															*
- *		ack_req		1 = ACK required; 0 = no ACK required							*
- *		address		address to send to; NULL = broadcast							*
+ *    buf         buffer to send                                           *
+ *    buflen      length of buf                                            *
+ *    ack_req     1 = ACK required; 0 = no ACK required                    *
+ *    address     address to send to; NULL = broadcast                     *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = error																		*
+ *    1 = OK, 0 = error                                                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/25/1995 BR : Created.                                              *
@@ -714,19 +714,19 @@ int IPXManagerClass::Send_Global_Message(void *buf, int buflen,
 
 
 /***************************************************************************
- * IPXManagerClass::Get_Global_Message -- polls the Global Message queue	*
+ * IPXManagerClass::Get_Global_Message -- polls the Global Message queue   *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf				buffer to store received packet								*
- *		buflen			length of data placed in 'buf'								*
- *		address			IPX address of sender											*
- *		product_id		product ID of sender												*
+ *    buf            buffer to store received packet                       *
+ *    buflen         length of data placed in 'buf'                        *
+ *    address        IPX address of sender                                 *
+ *    product_id     product ID of sender                                  *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = error																		*
+ *    1 = OK, 0 = error                                                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/25/1995 BR : Created.                                              *
@@ -744,19 +744,19 @@ int IPXManagerClass::Get_Global_Message(void *buf, int *buflen,
 
 
 /***************************************************************************
- * IPXManagerClass::Send_Private_Message -- Sends a Private Message			*
+ * IPXManagerClass::Send_Private_Message -- Sends a Private Message        *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf			buffer to send															*
- *		buflen		length of 'buf'														*
- *		conn_id		connection ID to send to (CONNECTION_NONE = all)			*
- *		ack_req		1 = ACK required; 0 = no ACK required							*
+ *    buf         buffer to send                                           *
+ *    buflen      length of 'buf'                                          *
+ *    conn_id     connection ID to send to (CONNECTION_NONE = all)         *
+ *    ack_req     1 = ACK required; 0 = no ACK required                    *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = error																		*
+ *    1 = OK, 0 = error                                                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/25/1995 BR : Created.                                              *
@@ -861,18 +861,18 @@ int IPXManagerClass::Send_Private_Message(void *buf, int buflen, int ack_req,
 
 
 /***************************************************************************
- * IPXManagerClass::Get_Private_Message -- Polls the Private Message queue	*
+ * IPXManagerClass::Get_Private_Message -- Polls the Private Message queue *
  *                                                                         *
  * INPUT:                                                                  *
- *		buf			buffer to store incoming packet									*
- *		buflen		length of data placed in 'buf'									*
- *		conn_id		filled in with connection ID of sender							*
+ *    buf         buffer to store incoming packet                          *
+ *    buflen      length of data placed in 'buf'                           *
+ *    conn_id     filled in with connection ID of sender                   *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = error																		*
+ *    1 = OK, 0 = error                                                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/25/1995 BR : Created.                                              *
@@ -946,16 +946,16 @@ int IPXManagerClass::Get_Private_Message(void *buf, int *buflen, int *conn_id)
 
 
 /***************************************************************************
- * IPXManagerClass::Service -- main polling routine for IPX Connections		*
+ * IPXManagerClass::Service -- main polling routine for IPX Connections    *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = error																		*
+ *    1 = OK, 0 = error                                                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/25/1995 BR : Created.                                              *
@@ -1227,13 +1227,13 @@ CCDebugString (tempbuf);
  * IPXManagerClass::Get_Bad_Connection -- returns bad connection ID        *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		ID of bad connection; CONNECTION_NONE if none.								*
+ *    ID of bad connection; CONNECTION_NONE if none.                       *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   05/04/1995 BRR : Created.                                             *
@@ -1246,16 +1246,16 @@ int IPXManagerClass::Get_Bad_Connection(void)
 
 
 /***************************************************************************
- * IPXManagerClass::Global_Num_Send	-- reports # entries in send queue		*
+ * IPXManagerClass::Global_Num_Send -- reports # entries in send queue     *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		# entries in the Global Send Queue												*
+ *    # entries in the Global Send Queue                                   *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/25/1995 BR : Created.                                              *
@@ -1274,16 +1274,16 @@ int IPXManagerClass::Global_Num_Send(void)
 
 
 /***************************************************************************
- * IPXManagerClass::Global_Num_Receive -- reports # entries in recv queue	*
+ * IPXManagerClass::Global_Num_Receive -- reports # entries in recv queue  *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		# entries in the Global Receive Queue											*
+ *    # entries in the Global Receive Queue                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/25/1995 BR : Created.                                              *
@@ -1302,16 +1302,16 @@ int IPXManagerClass::Global_Num_Receive(void)
 
 
 /***************************************************************************
- * IPXManagerClass::Private_Num_Send -- reports # entries in send queue		*
+ * IPXManagerClass::Private_Num_Send -- reports # entries in send queue    *
  *                                                                         *
  * INPUT:                                                                  *
- *		# entries in the Private Send Queue												*
+ *    # entries in the Private Send Queue                                  *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = error																		*
+ *    1 = OK, 0 = error                                                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/25/1995 BR : Created.                                              *
@@ -1353,16 +1353,16 @@ int IPXManagerClass::Private_Num_Send(int id)
 
 
 /***************************************************************************
- * IPXManagerClass::Private_Num_Receive -- reports # entries in recv queue	*
+ * IPXManagerClass::Private_Num_Receive -- reports # entries in recv queue *
  *                                                                         *
  * INPUT:                                                                  *
- *		id		ID of connection to query													*
+ *    id    ID of connection to query                                      *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		# entries in the Private Receive Queue											*
+ *    # entries in the Private Receive Queue                               *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/25/1995 BR : Created.                                              *
@@ -1404,19 +1404,19 @@ int IPXManagerClass::Private_Num_Receive(int id)
 
 
 /***************************************************************************
- * IPXManagerClass::Set_Socket -- sets socket ID for all connections			*
+ * IPXManagerClass::Set_Socket -- sets socket ID for all connections       *
  *                                                                         *
  * INPUT:                                                                  *
- *		socket	new socket ID to use														*
+ *    socket   new socket ID to use                                        *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		Do not call this function after communications have started; you		*
- *		must call it before calling Init().												*
- *		The socket number is byte-swapped, since IPX requires socket ID's		*
- *		to be stored high/low.																*
+ *    Do not call this function after communications have started; you     *
+ *    must call it before calling Init().                                  *
+ *    The socket number is byte-swapped, since IPX requires socket ID's    *
+ *    to be stored high/low.                                               *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/25/1995 BR : Created.                                              *
@@ -1433,13 +1433,13 @@ void IPXManagerClass::Set_Socket(unsigned short socket)
  * IPXManagerClass::Response_Time -- Returns largest Avg Response Time     *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		largest avg response time															*
+ *    largest avg response time                                            *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   05/04/1995 BRR : Created.                                             *
@@ -1473,13 +1473,13 @@ unsigned long IPXManagerClass::Response_Time(void)
  * IPXManagerClass::Global_Response_Time -- Returns Avg Response Time      *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		avg global channel response time													*
+ *    avg global channel response time                                     *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   05/04/1995 BRR : Created.                                             *
@@ -1495,16 +1495,16 @@ unsigned long IPXManagerClass::Global_Response_Time(void)
 
 
 /***************************************************************************
- * IPXManagerClass::Reset_Response_Time -- Reset response time					*
+ * IPXManagerClass::Reset_Response_Time -- Reset response time             *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   05/04/1995 BRR : Created.                                             *
@@ -1527,13 +1527,13 @@ void IPXManagerClass::Reset_Response_Time(void)
  * IPXManagerClass::Oldest_Send -- gets ptr to oldest send buf             *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		buf ptr																					*
+ *    buf ptr                                                              *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   05/04/1995 BRR : Created.                                             *
@@ -1582,18 +1582,18 @@ void * IPXManagerClass::Oldest_Send(void)
 /***************************************************************************
  * IPXManagerClass::Set_Bridge -- prepares to cross a bridge               *
  *                                                                         *
- * This routine is designed to prevent the connection from having to			*
- * call Get_Local_Target, except the minimum number of times, since that	*
- * routine is buggy & goes away for long periods sometimes.						*
+ * This routine is designed to prevent the connection from having to       *
+ * call Get_Local_Target, except the minimum number of times, since that   *
+ * routine is buggy & goes away for long periods sometimes.                *
  *                                                                         *
  * INPUT:                                                                  *
- *		bridge		network number of the destination bridge						*
+ *    bridge      network number of the destination bridge                 *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none																						*
+ *    none                                                                 *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none																						*
+ *    none                                                                 *
  *                                                                         *
  * HISTORY:                                                                *
  *   07/06/1995 BRR : Created.                                             *
@@ -1609,24 +1609,24 @@ void IPXManagerClass::Set_Bridge(NetNumType bridge)
 /***************************************************************************
  * IPXManagerClass::Configure_Debug -- sets up special debug values        *
  *                                                                         *
- * Mono_Debug_Print2() can look into a packet to pull out a particular		*
- * ID, and can print both that ID and a string corresponding to				*
- * that ID.  This routine configures these values so it can find				*
- * and decode the ID.  This ID is used in addition to the normal				*
- * CommHeaderType values.																	*
+ * Mono_Debug_Print2() can look into a packet to pull out a particular     *
+ * ID, and can print both that ID and a string corresponding to            *
+ * that ID.  This routine configures these values so it can find           *
+ * and decode the ID.  This ID is used in addition to the normal           *
+ * CommHeaderType values.                                                  *
  *                                                                         *
  * INPUT:                                                                  *
- *		index			connection index to configure (-1 = Global Channel)		*
- *		offset		ID's byte offset into packet										*
- *		size			size of ID, in bytes; 0 if none									*
- *		names			ptr to array of names; use ID as an index into this		*
- *		maxnames		max # in the names array; 0 if none.							*
+ *    index       connection index to configure (-1 = Global Channel)      *
+ *    offset      ID's byte offset into packet                             *
+ *    size        size of ID, in bytes; 0 if none                          *
+ *    names       ptr to array of names; use ID as an index into this      *
+ *    maxnames    max # in the names array; 0 if none.                     *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		Names shouldn't be longer than 12 characters.								*
+ *    Names shouldn't be longer than 12 characters.                        *
  *                                                                         *
  * HISTORY:                                                                *
  *   05/31/1995 BRR : Created.                                             *
@@ -1645,17 +1645,17 @@ void IPXManagerClass::Configure_Debug(int index, int offset, int size,
 
 
 /***************************************************************************
- * IPXManagerClass::Mono_Debug_Print -- debug output routine					*
+ * IPXManagerClass::Mono_Debug_Print -- debug output routine               *
  *                                                                         *
  * INPUT:                                                                  *
- *		index			index of connection to display (-1 = Global Channel)		*
- *		refresh		1 = complete screen refresh										*
+ *    index       index of connection to display (-1 = Global Channel)     *
+ *    refresh     1 = complete screen refresh                              *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = error																		*
+ *    1 = OK, 0 = error                                                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   01/25/1995 BR : Created.                                              *
@@ -1721,16 +1721,16 @@ void IPXManagerClass::Mono_Debug_Print(int index, int refresh)
 
 
 /***************************************************************************
- * IPXManagerClass::Alloc_RealMode_Mem -- allocates real-mode memory			*
+ * IPXManagerClass::Alloc_RealMode_Mem -- allocates real-mode memory       *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = error																		*
+ *    1 = OK, 0 = error                                                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -1912,16 +1912,16 @@ int IPXManagerClass::Alloc_RealMode_Mem(void)
 
 
 /***************************************************************************
- * IPXManagerClass::Free_RealMode_Mem -- frees real-mode memory				*
+ * IPXManagerClass::Free_RealMode_Mem -- frees real-mode memory            *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = error																		*
+ *    1 = OK, 0 = error                                                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *

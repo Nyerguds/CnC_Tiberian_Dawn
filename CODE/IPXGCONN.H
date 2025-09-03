@@ -29,24 +29,24 @@
  *                                                                         *
  *                   Start Date : December 19, 1994                        *
  *                                                                         *
- *                  Last Update : April 11, 1995   [BR]                 	*
+ *                  Last Update : April 11, 1995   [BR]                    *
  *                                                                         *
  *-------------------------------------------------------------------------*
  *                                                                         *
- * This class is a special type of IPX Connection.  It can talk to more		*
- * than one system at a time.  It can Broadcast packets to all systems,		*
- * or send a packet to one individual system.  The packets it sends to		*
- * individual systems can be DATA_NOACK or DATA_ACK packets, but the			*
- * packets broadcast have to be DATA_NOACK packets.  This class is for		*
- * only the crudest "Who-are-you" type of network communications.  Once		*
- * the IPX Address of another system is identified, a "real" IPX				*
- * Connection should be created, & further communications done through it.	*
- *																									*
- * This means that the packet ID field no longer can be used to detect		*
- * resends, since the receive queue may recieve a lot more packets than		*
- * we send out.  So, re-sends cannot be detected; the application must be	*
- * designed so that it can handle multiple copies of the same packet.		*
- *																									*
+ * This class is a special type of IPX Connection.  It can talk to more    *
+ * than one system at a time.  It can Broadcast packets to all systems,    *
+ * or send a packet to one individual system.  The packets it sends to     *
+ * individual systems can be DATA_NOACK or DATA_ACK packets, but the       *
+ * packets broadcast have to be DATA_NOACK packets.  This class is for     *
+ * only the crudest "Who-are-you" type of network communications.  Once    *
+ * the IPX Address of another system is identified, a "real" IPX           *
+ * Connection should be created, & further communications done through it. *
+ *                                                                         *
+ * This means that the packet ID field no longer can be used to detect     *
+ * resends, since the receive queue may recieve a lot more packets than    *
+ * we send out.  So, re-sends cannot be detected; the application must be  *
+ * designed so that it can handle multiple copies of the same packet.      *
+ *                                                                         *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #ifndef IPXGLOBALCONN_H

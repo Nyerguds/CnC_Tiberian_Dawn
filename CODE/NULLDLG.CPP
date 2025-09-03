@@ -36,16 +36,16 @@
  *   Init_Null_Modem -- Initializes Null Modem communications              *
  *   Shutdown_Modem -- Shuts down modem/null-modem communications          *
  *   Test_Null_Modem -- Null-Modem test routine                            *
- *   Reconnect_Null_Modem -- allows user to reconnect								*
- *   Destroy_Null_Connection -- destroys the given connection					*
+ *   Reconnect_Null_Modem -- allows user to reconnect                      *
+ *   Destroy_Null_Connection -- destroys the given connection              *
  *   Select_Serial_Dialog -- Serial Communications menu dialog             *
  *   Com_Settings_Dialog -- Lets user select serial port settings          *
- *   Com_Scenario_Dialog -- Serial game scenario selection dialog				*
+ *   Com_Scenario_Dialog -- Serial game scenario selection dialog          *
  *   Phone_Dialog -- Lets user edit phone directory & dial                 *
  *   Build_InitString_Listbox -- [re]builds the initstring entry listbox   *
- *   Init_String_Compare -- for qsort													*
+ *   Init_String_Compare -- for qsort                                      *
  *   Build_Phone_Listbox -- [re]builds the phone entry listbox             *
- *   Phone_Compare -- for qsort															*
+ *   Phone_Compare -- for qsort                                            *
  *   Edit_Phone_Dialog -- lets user edit a phone book entry                *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 #include "function.h"
@@ -102,13 +102,13 @@ static SerialSettingsType *DialSettings;
  * Init_Null_Modem -- Initializes Null Modem communications                *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		true = OK, false = error															*
+ *    true = OK, false = error                                             *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   04/29/1995 BRR : Created.                                             *
@@ -133,13 +133,13 @@ int Init_Null_Modem( SerialSettingsType *settings )
  * Shutdown_Modem -- Shuts down modem/null-modem communications            *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   04/29/1995 BRR : Created.                                             *
@@ -160,16 +160,16 @@ void Shutdown_Modem( void )
 
 
 /***************************************************************************
- * Modem_Signoff -- sends EXIT event										         *
+ * Modem_Signoff -- sends EXIT event                                       *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   08/03/1995 DRD : Created.                                             *
@@ -199,13 +199,13 @@ void Modem_Signoff( void )
  * Test_Null_Modem -- Null-Modem test routine                              *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		0 = failure to connect; 1 = I'm the game owner, 2 = I'm not				*
+ *    0 = failure to connect; 1 = I'm the game owner, 2 = I'm not          *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   04/29/1995 BRR : Created.                                             *
@@ -491,16 +491,16 @@ int Test_Null_Modem( void )
 
 
 /***************************************************************************
- * Reconnect_Modem -- allows user to reconnect										*
+ * Reconnect_Modem -- allows user to reconnect                             *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		0 = failure to connect; 1 = connect OK											*
+ *    0 = failure to connect; 1 = connect OK                               *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   04/29/1995 BRR : Created.                                             *
@@ -543,16 +543,16 @@ int Reconnect_Modem( void )
 
 
 /***************************************************************************
- * Reconnect_Null_Modem -- allows user to reconnect								*
+ * Reconnect_Null_Modem -- allows user to reconnect                        *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		0 = failure to connect; 1 = connect OK											*
+ *    0 = failure to connect; 1 = connect OK                               *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   04/29/1995 BRR : Created.                                             *
@@ -737,22 +737,22 @@ static int Reconnect_Null_Modem( void )
 
 
 /***********************************************************************************************
- * Destroy_Null_Connection -- destroys the given connection												  *
- *                                                                         						  *
- * Call this routine when a connection goes bad, or another player signs off.						  *
- *                                                                         						  *
- * INPUT:                                                                  						  *
- *		id			connection ID to destroy																		  *
- *		error		0 = user signed off; 1 = connection error													  *
- *                                                                         						  *
- * OUTPUT:                                                                 						  *
- *		none.																												  *
- *                                                                         						  *
- * WARNINGS:                                                               						  *
- *		none.																												  *
- *                                                                         						  *
- * HISTORY:                                                                						  *
- *   07/31/1995 DRD : Created.                                              						  *
+ * Destroy_Null_Connection -- destroys the given connection                                    *
+ *                                                                                             *
+ * Call this routine when a connection goes bad, or another player signs off.                  *
+ *                                                                                             *
+ * INPUT:                                                                                      *
+ *    id       connection ID to destroy                                                        *
+ *    error    0 = user signed off; 1 = connection error                                       *
+ *                                                                                             *
+ * OUTPUT:                                                                                     *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * WARNINGS:                                                                                   *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/31/1995 DRD : Created.                                                                 *
  *=============================================================================================*/
 void Destroy_Null_Connection(int id, int error)
 {
@@ -842,15 +842,15 @@ void Destroy_Null_Connection(int id, int error)
  * Select_Serial_Dialog -- Serial Communications menu dialog               *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		GAME_MODEM				user wants to play a modem game						*
- *		GAME_NULL_MODEM		user wants to play a null-modem game				*
- *		GAME_NORMAL				user hit Cancel											*
+ *    GAME_MODEM				user wants to play a modem game                    *
+ *    GAME_NULL_MODEM		user wants to play a null-modem game               *
+ *    GAME_NORMAL				user hit Cancel                                    *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   04/29/1995 BRR : Created.                                             *
@@ -1632,13 +1632,13 @@ Advanced_Modem_Settings (SerialSettingsType *settings)
  *  ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ               *
  *                                                                         *
  * INPUT:                                                                  *
- *		settings		ptr to SerialSettingsType structure								*
+ *    settings		ptr to SerialSettingsType structure                      *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		true = OK, false = Cancel															*
+ *    true = OK, false = Cancel                                            *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   04/29/1995 BRR : Created.                                             *
@@ -2952,19 +2952,19 @@ static int Com_Settings_Dialog( SerialSettingsType *settings )
 /***************************************************************************
  * Build_Init_String_Listbox -- [re]builds the initstring listbox          *
  *                                                                         *
- * This routine rebuilds the initstring list box from scratch; it also		*
- * updates the contents of the initstring edit field.								*
+ * This routine rebuilds the initstring list box from scratch; it also     *
+ * updates the contents of the initstring edit field.                      *
  *                                                                         *
  * INPUT:                                                                  *
- *		list		ptr to list box															*
- *		edit		ptr to edit box															*
- *		buf		ptr to buffer for initstring											*
+ *    list		ptr to list box                                              *
+ *    edit		ptr to edit box                                              *
+ *    buf		ptr to buffer for initstring                                   *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   06/08/1995 DRD : Created.                                             *
@@ -3026,16 +3026,16 @@ static void Build_Init_String_Listbox (ListClass *list, EditClass *edit, char *b
 
 
 /***************************************************************************
- * Init_String_Compare -- for qsort														*
+ * Init_String_Compare -- for qsort                                        *
  *                                                                         *
  * INPUT:                                                                  *
- *		p1,p2		ptrs to elements to compare											*
+ *    p1,p2		ptrs to elements to compare                                  *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		0 = same, -1 = (*p1) goes BEFORE (*p2), 1 = (*p1) goes AFTER (*p2)	*
+ *    0 = same, -1 = (*p1) goes BEFORE (*p2), 1 = (*p1) goes AFTER (*p2)	 *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   06/08/1995 DRD : Created.                                             *
@@ -3047,46 +3047,46 @@ static int Init_String_Compare (const void *p1, const void *p2)
 
 
 /***********************************************************************************************
- * Com_Scenario_Dialog -- Serial game scenario selection dialog										  *
- *                                                                         						  *
- *                                                                         						  *
- *    ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿                      	  *
- *    ³                        Serial Game                         ³                       	  *
- *    ³                                                            ³                      	  *
- *    ³     Your Name: __________          House: [GDI] [NOD]      ³                    	 	  *
- *    ³       Credits: ______      Desired Color: [ ][ ][ ][ ]     ³ 	   						  *
- *    ³      Opponent: Name                                        ³                    	 	  *
- *    ³                                                            ³                    	 	  *
- *    ³                         Scenario                           ³   								  *
- *    ³                  ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄ¿                    ³ 								  *
- *    ³                  ³ Hell's Kitchen   ³³                    ³ 								  *
- *    ³                  ³ Heaven's Gate    ÃÄ´                    ³									  *
- *    ³                  ³      ...         ³ ³                    ³									  *
- *    ³                  ³                  ÃÄ´                    ³ 								  *
- *    ³                  ³                  ³³                    ³ 								  *
- *    ³                  ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÙ                    ³ 								  *
+ * Com_Scenario_Dialog -- Serial game scenario selection dialog                                *
+ *                                                                                             *
+ *                                                                                             *
+ *    ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿                           *
+ *    ³                        Serial Game                         ³                           *
+ *    ³                                                            ³                           *
+ *    ³     Your Name: __________          House: [GDI] [NOD]      ³                           *
+ *    ³       Credits: ______      Desired Color: [ ][ ][ ][ ]     ³                           *
+ *    ³      Opponent: Name                                        ³                           *
+ *    ³                                                            ³                           *
+ *    ³                         Scenario                           ³                           *
+ *    ³                  ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄ¿                    ³                           *
+ *    ³                  ³ Hell's Kitchen   ³³                    ³                           *
+ *    ³                  ³ Heaven's Gate    ÃÄ´                    ³                           *
+ *    ³                  ³      ...         ³ ³                    ³                           *
+ *    ³                  ³                  ÃÄ´                    ³                           *
+ *    ³                  ³                  ³³                    ³                           *
+ *    ³                  ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÙ                    ³                           *
  *    ³                 [  Bases   ] [ Crates     ]                ³                           *
- *    ³                 [ Tiberium ] [ AI Players ]                ³           					  *
- *    ³                                                            ³                   	 	  *
- *    ³                      [OK]    [Cancel]                      ³                    	 	  *
- *    ³   ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿   ³                   	 	  *
- *    ³   ³                                                    ³   ³                   	 	  *
- *    ³   ³                                                    ³   ³                   	 	  *
- *    ³   ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ   ³                   	 	  *
- *    ³                       [Send Message]                       ³                   	 	  *
- *    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ                      	  *
- *                                                                         						  *
- * INPUT:                                                                  						  *
- *		none.																												  *
- *                                                                         						  *
- * OUTPUT:                                                                 						  *
- *		true = success, false = cancel																			  *
- *                                                                         						  *
- * WARNINGS:                                                               						  *
- *		MPlayerName & MPlayerGameName must contain this player's name.									  *
- *                                                                         						  *
- * HISTORY:                                                                						  *
- *   02/14/1995 BR : Created.                                              						  *
+ *    ³                 [ Tiberium ] [ AI Players ]                ³                           *
+ *    ³                                                            ³                           *
+ *    ³                      [OK]    [Cancel]                      ³                           *
+ *    ³   ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿   ³                           *
+ *    ³   ³                                                    ³   ³                           *
+ *    ³   ³                                                    ³   ³                           *
+ *    ³   ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ   ³                           *
+ *    ³                       [Send Message]                       ³                           *
+ *    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ                           *
+ *                                                                                             *
+ * INPUT:                                                                                      *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * OUTPUT:                                                                                     *
+ *    true = success, false = cancel                                                           *
+ *                                                                                             *
+ * WARNINGS:                                                                                   *
+ *    MPlayerName & MPlayerGameName must contain this player's name.                           *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/14/1995 BR : Created.                                                                  *
  *=============================================================================================*/
 #define TXT_HOST_INTERNET_GAME 4567+1
 #define TXT_JOIN_INTERNET_GAME 4567+2
@@ -4514,44 +4514,44 @@ CCDebugString (flip);
 
 
 /***********************************************************************************************
- * Com_Show_Scenario_Dialog -- Serial game scenario selection dialog									  *
- *                                                                         						  *
- *                                                                         						  *
- *    ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿                      	  *
- *    ³                        Serial Game                         ³                       	  *
- *    ³                                                            ³                      	  *
- *    ³                   Your Name: __________                    ³     							  *
- *    ³                       House: [GDI] [NOD]                   ³									  *
- *    ³               Desired Color: [ ][ ][ ][ ]                  ³ 	   						  *
- *    ³                                                            ³                    	 	  *
- *    ³                     Opponent: Name                         ³                    	 	  *
- *    ³                     Scenario: Description                  ³   								  *
- *    ³                      Credits: xxxx                         ³   								  *
- *    ³                        Bases: ON                           ³                   	 	  *
- *    ³                       Crates: ON                           ³                   	 	  *
- *    ³                     Tiberium: ON                           ³                   	 	  *
- *    ³                       Ghosts: ON                           ³                   	 	  *
- *    ³                                                            ³                   	 	  *
- *    ³                         [Cancel]                           ³                    	 	  *
- *    ³                                                            ³                   	 	  *
- *    ³   ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿   ³                   	 	  *
- *    ³   ³                                                    ³   ³                   	 	  *
- *    ³   ³                                                    ³   ³                   	 	  *
- *    ³   ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ   ³                   	 	  *
- *    ³                       [Send Message]                       ³                   	 	  *
- *    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ                      	  *
- *                                                                         						  *
- * INPUT:                                                                  						  *
- *		none.																												  *
- *                                                                         						  *
- * OUTPUT:                                                                 						  *
- *		true = success, false = cancel																			  *
- *                                                                         						  *
- * WARNINGS:                                                               						  *
- *		MPlayerName & MPlayerGameName must contain this player's name.									  *
- *                                                                         						  *
- * HISTORY:                                                                						  *
- *   02/14/1995 BR : Created.                                              						  *
+ * Com_Show_Scenario_Dialog -- Serial game scenario selection dialog                           *
+ *                                                                                             *
+ *                                                                                             *
+ *    ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿                           *
+ *    ³                        Serial Game                         ³                           *
+ *    ³                                                            ³                           *
+ *    ³                   Your Name: __________                    ³                           *
+ *    ³                       House: [GDI] [NOD]                   ³                           *
+ *    ³               Desired Color: [ ][ ][ ][ ]                  ³                           *
+ *    ³                                                            ³                           *
+ *    ³                     Opponent: Name                         ³                           *
+ *    ³                     Scenario: Description                  ³                           *
+ *    ³                      Credits: xxxx                         ³                           *
+ *    ³                        Bases: ON                           ³                           *
+ *    ³                       Crates: ON                           ³                           *
+ *    ³                     Tiberium: ON                           ³                           *
+ *    ³                       Ghosts: ON                           ³                           *
+ *    ³                                                            ³                           *
+ *    ³                         [Cancel]                           ³                           *
+ *    ³                                                            ³                           *
+ *    ³   ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿   ³                           *
+ *    ³   ³                                                    ³   ³                           *
+ *    ³   ³                                                    ³   ³                           *
+ *    ³   ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ   ³                           *
+ *    ³                       [Send Message]                       ³                           *
+ *    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ                           *
+ *                                                                                             *
+ * INPUT:                                                                                      *
+ *    none.                                                                                    *
+ *                                                                                             *
+ * OUTPUT:                                                                                     *
+ *    true = success, false = cancel                                                           *
+ *                                                                                             *
+ * WARNINGS:                                                                                   *
+ *    MPlayerName & MPlayerGameName must contain this player's name.                           *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/14/1995 BR : Created.                                                                  *
  *=============================================================================================*/
 int Com_Show_Scenario_Dialog(void)
 {
@@ -5686,13 +5686,13 @@ CCDebugString (flip);
  * Phone_Dialog -- Lets user edit phone directory & dial                   *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		true = dial the current phone book entry, false = cancel.				*
+ *    true = dial the current phone book entry, false = cancel.            *
  *                                                                         *
  * WARNINGS:                                                               *
- *		Serial options must have been read from CC.INI.								*
+ *    Serial options must have been read from CC.INI.                      *
  *                                                                         *
  * HISTORY:                                                                *
  *   04/29/1995 BRR : Created.                                             *
@@ -6168,19 +6168,19 @@ static int Phone_Dialog (void)
 /***************************************************************************
  * Build_Phone_Listbox -- [re]builds the phone entry listbox               *
  *                                                                         *
- * This routine rebuilds the phone list box from scratch; it also updates	*
- * the contents of the phone # edit field.											*
+ * This routine rebuilds the phone list box from scratch; it also updates  *
+ * the contents of the phone # edit field.                                 *
  *                                                                         *
  * INPUT:                                                                  *
- *		list		ptr to list box															*
- *		edit		ptr to edit box															*
- *		buf		ptr to buffer for phone #												*
+ *    list     ptr to list box                                             *
+ *    edit     ptr to edit box                                             *
+ *    buf      ptr to buffer for phone #                                   *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   04/29/1995 BRR : Created.                                             *
@@ -6264,16 +6264,16 @@ static void Build_Phone_Listbox (ListClass *list, EditClass *edit, char *buf)
 
 
 /***************************************************************************
- * Phone_Compare -- for qsort																*
+ * Phone_Compare -- for qsort                                              *
  *                                                                         *
  * INPUT:                                                                  *
- *		p1,p2		ptrs to elements to compare											*
+ *    p1,p2    ptrs to elements to compare                                 *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		0 = same, -1 = (*p1) goes BEFORE (*p2), 1 = (*p1) goes AFTER (*p2)	*
+ *    0 = same, -1 = (*p1) goes BEFORE (*p2), 1 = (*p1) goes AFTER (*p2)   *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   02/14/1995 BR : Created.                                              *
@@ -6302,13 +6302,13 @@ static int Phone_Compare (const void *p1, const void *p2)
  * Edit_Phone_Dialog -- lets user edit a phone book entry                  *
  *                                                                         *
  * INPUT:                                                                  *
- *		phone		entry to edit																*
+ *    phone    entry to edit                                               *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		true = OK, false = cancel															*
+ *    true = OK, false = cancel                                            *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   04/29/1995 BRR : Created.                                             *

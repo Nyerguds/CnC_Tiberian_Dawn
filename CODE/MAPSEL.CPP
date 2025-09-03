@@ -1183,7 +1183,7 @@ void Print_Statistics(int country, int xpos, int ypos)
  *                                                                         *
  * HISTORY:                                                                *
  *   07/17/1991 JLB : Created from Bit_It_In() (LJC code).                 *
- *   04/17/1995 BWG : Adapted to the C++ system.									*
+ *   04/17/1995 BWG : Adapted to the C++ system.                           *
  *=========================================================================*/
 void Fading_Byte_Blit(int srcx, int srcy, int destx, int desty, int w, int h, GraphicBufferClass *src, GraphicBufferClass *dest)
 {

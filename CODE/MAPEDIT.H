@@ -18,7 +18,7 @@
 
 /* $Header:   F:\projects\c&c\vcs\code\mapedit.h_v   2.19   16 Oct 1995 16:46:36   JOE_BOSTIC  $ */
 /***********************************************************************************************
- ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               *** 
+ ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               ***
  ***********************************************************************************************
  *                                                                                             *
  *                 Project Name : Command & Conquer                                            *
@@ -32,16 +32,16 @@
  *                  Last Update : May 14, 1994   [JLB]                                         *
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
- *	This class is derived from the normal display map class. It exists 		                    *
- * only to allow editing and adding items to the map.								                    *
+ * This class is derived from the normal display map class. It exists                          *
+ * only to allow editing and adding items to the map.                                          *
  *---------------------------------------------------------------------------------------------*
- * House-setting functions: The editor contains several house maintenance routines:				  *
- * Verify_House: tells if the given ObjectType can be owned by the given HousesType				  *
- * Cycle_House: Finds the next valid house for the given ObjectType; used when a new object	  *
- *              can't be owned by the current editor HousesType.										  *
- * Change_House: attempts to change the owner of the currently-selected object					  *
- * Toggle_House: cycles the HousesType of a pending placement object									  *
- * Set_House_Buttons: sets house buttons in accordance with the given HousesType					  *
+ * House-setting functions: The editor contains several house maintenance routines:            *
+ * Verify_House: tells if the given ObjectType can be owned by the given HousesType            *
+ * Cycle_House: Finds the next valid house for the given ObjectType; used when a new object    *
+ *              can't be owned by the current editor HousesType.                               *
+ * Change_House: attempts to change the owner of the currently-selected object                 *
+ * Toggle_House: cycles the HousesType of a pending placement object                           *
+ * Set_House_Buttons: sets house buttons in accordance with the given HousesType               *
  *---------------------------------------------------------------------------------------------*
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 

@@ -28,23 +28,23 @@
  *                                                                         *
  *                  Last Update : May 22, 1995 [BRR]                       *
  *                                                                         *
- * How the messages work:																	*
- * - MPlayerMessageList is a gadget list of all current messages				*
- * - MPlayerMessageX & Y are the upper left corner of the 1st message		*
- * - MPlayerMaxMessages is the max # of messages allowed, including			*
- *   the editable message; 0 = no limit.												*
- * - EditLabel points to the textmessage gadget for the current editable	*
- *   field.  EditBuf points to the char buffer being edited.  EditInitPos	*
- *   & EditCurPos define buffer index positions.									*
- * - EditSendAddress is the IPX Address to send the message to when RETURN	*
- *   is pressed.																				*
- *																									*
- * The UserData field in the TextLabelClass tells what the timeout for		*
- * each message is (0 = none).															*
- * When a message's timeout expires, it's deleted.  When a new message		*
- * is added, the top message is deleted if MPlayerMaxMessages is exceeded.	*
+ * How the messages work:                                                  *
+ * - MPlayerMessageList is a gadget list of all current messages           *
+ * - MPlayerMessageX & Y are the upper left corner of the 1st message      *
+ * - MPlayerMaxMessages is the max # of messages allowed, including        *
+ *   the editable message; 0 = no limit.                                   *
+ * - EditLabel points to the textmessage gadget for the current editable   *
+ *   field.  EditBuf points to the char buffer being edited.  EditInitPos  *
+ *   & EditCurPos define buffer index positions.                           *
+ * - EditSendAddress is the IPX Address to send the message to when RETURN *
+ *   is pressed.                                                           *
  *                                                                         *
- * The Edit-able message is never deleted until ESC or RETURN is pressed.	*
+ * The UserData field in the TextLabelClass tells what the timeout for     *
+ * each message is (0 = none).                                             *
+ * When a message's timeout expires, it's deleted.  When a new message     *
+ * is added, the top message is deleted if MPlayerMaxMessages is exceeded. *
+ *                                                                         *
+ * The Edit-able message is never deleted until ESC or RETURN is pressed.  *
  *                                                                         *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 

@@ -18,15 +18,15 @@
 
 /* $Header:   F:\projects\c&c\vcs\code\confdlg.h_v   2.18   16 Oct 1995 16:46:06   JOE_BOSTIC  $ */
 /***********************************************************************************************
- ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               *** 
+ ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               ***
  ***********************************************************************************************
  *                                                                                             *
  *                 Project Name : Command & Conquer                                            *
  *                                                                                             *
  *                    File Name : CONFDLG.H                                                    *
  *                                                                                             *
- *                   Programmer : Maria del Mar McCready Legg											  *
- *											 Joe L. Bostic                                                *
+ *                   Programmer : Maria del Mar McCready Legg                                  *
+ *                                Joe L. Bostic                                                *
  *                                                                                             *
  *                   Start Date : Jan 30, 1995                                                 *
  *                                                                                             *

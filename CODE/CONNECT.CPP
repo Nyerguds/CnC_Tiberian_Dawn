@@ -29,14 +29,14 @@
  *                                                                         *
  *                   Start Date : December 20, 1994                        *
  *                                                                         *
- *                  Last Update : May 31, 1995 [BRR]								*
+ *                  Last Update : May 31, 1995 [BRR]                       *
  *-------------------------------------------------------------------------*
- * Functions:    			                                                   *
+ * Functions:                                                              *
  *   ConnectionClass::ConnectionClass -- class constructor                 *
  *   ConnectionClass::~ConnectionClass -- class destructor                 *
- *   ConnectionClass::Service -- main polling routine; services packets		*
- *   ConnectionClass::Time -- gets current time										*
- *   ConnectionClass::Command_Name -- returns name for a packet command		* 
+ *   ConnectionClass::Service -- main polling routine; services packets    *
+ *   ConnectionClass::Time -- gets current time                            *
+ *   ConnectionClass::Command_Name -- returns name for a packet command    *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include "function.h"
@@ -59,26 +59,26 @@ static char *ConnectionClass::Commands[PACKET_COUNT] = {
 /***************************************************************************
  * ConnectionClass::ConnectionClass -- class constructor                   *
  *                                                                         *
- * If either max_retries or timeout is -1, that parameter is ignored in		*
- * timeout computations.  If both are -1, the connection will just keep		*
- * retrying forever.																			*
+ * If either max_retries or timeout is -1, that parameter is ignored in    *
+ * timeout computations.  If both are -1, the connection will just keep    *
+ * retrying forever.                                                       *
  *                                                                         *
  * INPUT:                                                                  *
- *		numsend			desired # of entries for the send queue					*
- *		numreceive		desired # of entries for the recieve queue				*
- *		maxlen			max length of an application packet							*
- *		magicnum			the packet "magic number" for this connection			*
- *		retry_delta		the time to wait between sends								*
- *		max_retries		the max # of retries allowed for a packet					*
- *							(-1 means retry forever, based on this parameter)		*
- *		timeout			the max amount of time before we give up on a packet	*
- *							(-1 means retry forever, based on this parameter)		*
+ *    numsend        desired # of entries for the send queue               *
+ *    numreceive     desired # of entries for the recieve queue            *
+ *    maxlen         max length of an application packet                   *
+ *    magicnum       the packet "magic number" for this connection         *
+ *    retry_delta    the time to wait between sends                        *
+ *    max_retries    the max # of retries allowed for a packet             *
+ *                   (-1 means retry forever, based on this parameter)     *
+ *    timeout        the max amount of time before we give up on a packet  *
+ *                   (-1 means retry forever, based on this parameter)     *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -124,13 +124,13 @@ ConnectionClass::ConnectionClass (int maxlen, unsigned short magicnum,
  * ConnectionClass::~ConnectionClass -- class destructor                   *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -146,16 +146,16 @@ ConnectionClass::~ConnectionClass ()
 
 
 /***************************************************************************
- * ConnectionClass::Service -- main polling routine; services packets		*
+ * ConnectionClass::Service -- main polling routine; services packets      *
  *                                                                         *
  * INPUT:                                                                  *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		1 = OK, 0 = error (connection is broken!)										*
+ *    1 = OK, 0 = error (connection is broken!)                            *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -191,15 +191,15 @@ int ConnectionClass::Service (void)
 
 
 /***************************************************************************
- * ConnectionClass::Time -- gets current time										*
+ * ConnectionClass::Time -- gets current time                              *
  *                                                                         *
  * INPUT:                                                                  *
  *                                                                         *
  * OUTPUT:                                                                 *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * WARNINGS:                                                               *
- *		none.																						*
+ *    none.                                                                *
  *                                                                         *
  * HISTORY:                                                                *
  *   12/20/1994 BR : Created.                                              *
@@ -220,20 +220,20 @@ unsigned long ConnectionClass::Time (void)
 }	/* end of Time */
 
 
-/*************************************************************************** 
- * ConnectionClass::Command_Name -- returns name for given packet command  * 
- *                                                                         * 
- * INPUT:                                                                  * 
- *		command		packet Command value to get name for							*
- *                                                                         * 
- * OUTPUT:                                                                 * 
- *		ptr to command name, NULL if invalid											*
- *                                                                         * 
- * WARNINGS:                                                               * 
- *		none.																						*
- *                                                                         * 
- * HISTORY:                                                                * 
- *   05/31/1995 BRR : Created.                                             * 
+/***************************************************************************
+ * ConnectionClass::Command_Name -- returns name for given packet command  *
+ *                                                                         *
+ * INPUT:                                                                  *
+ *    command     packet Command value to get name for                     *
+ *                                                                         *
+ * OUTPUT:                                                                 *
+ *    ptr to command name, NULL if invalid                                 *
+ *                                                                         *
+ * WARNINGS:                                                               *
+ *    none.                                                                *
+ *                                                                         *
+ * HISTORY:                                                                *
+ *   05/31/1995 BRR : Created.                                             *
  *=========================================================================*/
 char *ConnectionClass::Command_Name(int command)
 {

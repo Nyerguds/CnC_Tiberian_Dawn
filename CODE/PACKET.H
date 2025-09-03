@@ -31,10 +31,10 @@
  * This header defines the functions for the PacketClass.  The packet      *
  * class is used to create a linked list of field entries which can be     *
  * converted to a linear packet in a COMMS API compatible format.          *
- *																									*
+ *                                                                         *
  * Packets can be created empty and then have fields added to them or can  *
- * be created from an existing linear packet.  										*
- *																									*
+ * be created from an existing linear packet.                              *
+ *                                                                         *
  *-------------------------------------------------------------------------*
  * Functions:                                                              *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

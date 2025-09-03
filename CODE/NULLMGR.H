@@ -29,11 +29,11 @@
  *                                                                         *
  *                   Start Date : December 19, 1994                        *
  *                                                                         *
- *                  Last Update : April 3, 1995   [BR]                 		*
+ *                  Last Update : April 3, 1995   [BR]                     *
  *                                                                         *
  *-------------------------------------------------------------------------*
  *                                                                         *
- * This is the Connection Manager for a NULL-Modem connection.					*
+ * This is the Connection Manager for a NULL-Modem connection.             *
  *                                                                         *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 

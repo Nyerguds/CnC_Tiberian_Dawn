@@ -410,7 +410,7 @@ char const * ThemeClass::Theme_File_Name(ThemeType theme, bool variation)
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   01/16/1995 JLB : Created.                                                                 *
- *   06/12/2025 MM  : Added specific variation version.                                        * 
+ *   06/12/2025 MM  : Added specific variation version.                                        *
  *=============================================================================================*/
 int ThemeClass::Track_Length(ThemeType theme)
 {
@@ -580,7 +580,7 @@ ThemeType ThemeClass::From_Name(char const * name)
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   01/04/1996 JLB : Created.                                                                 *
- *   06/12/2025 MM  : Added specific variation scan.                                           * 
+ *   06/12/2025 MM  : Added specific variation scan.                                           *
  *=============================================================================================*/
 void ThemeClass::Scan(void)
 {

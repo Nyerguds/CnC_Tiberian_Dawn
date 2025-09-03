@@ -18,15 +18,15 @@
 
 /* $Header:   F:\projects\c&c\vcs\code\visudlg.h_v   2.15   16 Oct 1995 16:47:46   JOE_BOSTIC  $ */
 /***********************************************************************************************
- ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               *** 
+ ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               ***
  ***********************************************************************************************
  *                                                                                             *
  *                 Project Name : Command & Conquer                                            *
  *                                                                                             *
  *                    File Name : VISUDLG.H                                                    *
  *                                                                                             *
- *                   Programmer : Maria del Mar McCready Legg											  *
- *											 Joe L. Bostic                                                *
+ *                   Programmer : Maria del Mar McCready Legg                                  *
+ *                                Joe L. Bostic                                                *
  *                                                                                             *
  *                   Start Date : Jan 8, 1995                                                  *
  *                                                                                             *

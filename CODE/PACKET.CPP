@@ -48,9 +48,9 @@ typedef int bool;
 /**************************************************************************
  * PACKETCLASS::~PACKETCLASS -- destroys a packet class be freeing list   *
  *                                                                        *
- * INPUT:		none                                                       *
+ * INPUT:      none                                                       *
  *                                                                        *
- * OUTPUT:     none																		  *
+ * OUTPUT:     none                                                       *
  *                                                                        *
  * HISTORY:                                                               *
  *   04/24/1996 PWG : Created.                                            *
@@ -72,7 +72,7 @@ PacketClass::~PacketClass(void)
 /**************************************************************************
  * PACKETCLASS::ADD_FIELD -- Adds a FieldClass entry to head of packet li *
  *                                                                        *
- * INPUT:		FieldClass * - a properly constructed field class entry.	  *
+ * INPUT:      FieldClass * - a properly constructed field class entry.   *
  *                                                                        *
  * OUTPUT:     none                                                       *
  *                                                                        *
@@ -162,13 +162,13 @@ PacketClass::PacketClass(char *curbuf)
 /**************************************************************************
  * CREATE_COMMS_PACKET -- Walks field list creating a packet              *
  *                                                                        *
- * INPUT:		short - the id of the packet so the server can identify it *
- *					unsigned short & - the size of the packet returned here    *
+ * INPUT:      short - the id of the packet so the server can identify it *
+ *             unsigned short & - the size of the packet returned here    *
  *                                                                        *
  * OUTPUT:     void * pointer to the linear packet data                   *
  *                                                                        *
- * WARNINGS: 	This routine allocates memory that the user is responsible *
- *  				for freeing.															  *
+ * WARNINGS:   This routine allocates memory that the user is responsible *
+ *             for freeing.                                               *
  *                                                                        *
  * HISTORY:                                                               *
  *   04/22/1996 PWG : Created.                                            *
@@ -253,7 +253,7 @@ char *PacketClass::Create_Comms_Packet(int &size)
 /**************************************************************************
  * PACKETCLASS::FIND_FIELD -- Finds a field if it exists in the packets   *
  *                                                                        *
- * INPUT:		char *  - the id of the field we are looking for.			  *
+ * INPUT:      char *  - the id of the field we are looking for.          *
  *                                                                        *
  * OUTPUT:     FieldClass * pointer to the field class                    *
  *                                                                        *
@@ -273,13 +273,13 @@ FieldClass *PacketClass::Find_Field(char *id)
 /**************************************************************************
  * GET_FIELD -- Find specified name and returns data                      *
  *                                                                        *
- * INPUT:		char *   - the id of the field that holds the data.		  *
- *					char &   - the reference to store the data into				  *
+ * INPUT:      char *   - the id of the field that holds the data.        *
+ *             char &   - the reference to store the data into            *
  *                                                                        *
- * OUTPUT:		true if the field was found, false if it was not.			  *
+ * OUTPUT:     true if the field was found, false if it was not.          *
  *                                                                        *
- * WARNINGS:	The data reference is not changed if the field is not		  *
- *					found.																	  *
+ * WARNINGS:   The data reference is not changed if the field is not      *
+ *             found.                                                     *
  *                                                                        *
  * HISTORY:                                                               *
  *   04/23/1996 PWG : Created.                                            *
@@ -297,13 +297,13 @@ bool PacketClass::Get_Field(char *id, char &data)
 /**************************************************************************
  * GET_FIELD -- Find specified name and returns data                      *
  *                                                                        *
- * INPUT:		char *   - the id of the field that holds the data.		  *
- *					unsigned char &   - the reference to store the data into	  *
+ * INPUT:      char *   - the id of the field that holds the data.        *
+ *             unsigned char &   - the reference to store the data into   *
  *                                                                        *
- * OUTPUT:		true if the field was found, false if it was not.			  *
+ * OUTPUT:     true if the field was found, false if it was not.          *
  *                                                                        *
- * WARNINGS:	The data reference is not changed if the field is not		  *
- *					found.																	  *
+ * WARNINGS:   The data reference is not changed if the field is not      *
+ *             found.                                                     *
  *                                                                        *
  * HISTORY:                                                               *
  *   04/23/1996 PWG : Created.                                            *
@@ -321,13 +321,13 @@ bool PacketClass::Get_Field(char *id, unsigned char &data)
 /**************************************************************************
  * GET_FIELD -- Find specified name and returns data                      *
  *                                                                        *
- * INPUT:		char *   - the id of the field that holds the data.		  *
- *					short &   - the reference to store the data into	        *
+ * INPUT:      char *   - the id of the field that holds the data.        *
+ *             short &   - the reference to store the data into           *
  *                                                                        *
- * OUTPUT:		true if the field was found, false if it was not.			  *
+ * OUTPUT:     true if the field was found, false if it was not.          *
  *                                                                        *
- * WARNINGS:	The data reference is not changed if the field is not		  *
- *					found.																	  *
+ * WARNINGS:   The data reference is not changed if the field is not      *
+ *             found.                                                     *
  *                                                                        *
  * HISTORY:                                                               *
  *   04/23/1996 PWG : Created.                                            *
@@ -345,13 +345,13 @@ bool PacketClass::Get_Field(char *id, short &data)
 /**************************************************************************
  * GET_FIELD -- Find specified name and returns data                      *
  *                                                                        *
- * INPUT:		char *   - the id of the field that holds the data.		  *
- *					unsigned short &   - the reference to store the data into  *
+ * INPUT:      char *   - the id of the field that holds the data.        *
+ *             unsigned short &   - the reference to store the data into  *
  *                                                                        *
- * OUTPUT:		true if the field was found, false if it was not.			  *
+ * OUTPUT:     true if the field was found, false if it was not.          *
  *                                                                        *
- * WARNINGS:	The data reference is not changed if the field is not		  *
- *					found.																	  *
+ * WARNINGS:   The data reference is not changed if the field is not      *
+ *             found.                                                     *
  *                                                                        *
  * HISTORY:                                                               *
  *   04/23/1996 PWG : Created.                                            *
@@ -369,13 +369,13 @@ bool PacketClass::Get_Field(char *id, unsigned short &data)
 /**************************************************************************
  * GET_FIELD -- Find specified name and returns data                      *
  *                                                                        *
- * INPUT:		char *   - the id of the field that holds the data.		  *
- *					long &   - the reference to store the data into  			  *
+ * INPUT:      char *   - the id of the field that holds the data.        *
+ *             long &   - the reference to store the data into            *
  *                                                                        *
- * OUTPUT:		true if the field was found, false if it was not.			  *
+ * OUTPUT:     true if the field was found, false if it was not.          *
  *                                                                        *
- * WARNINGS:	The data reference is not changed if the field is not		  *
- *					found.																	  *
+ * WARNINGS:   The data reference is not changed if the field is not      *
+ *             found.                                                     *
  *                                                                        *
  * HISTORY:                                                               *
  *   04/23/1996 PWG : Created.                                            *
@@ -392,14 +392,14 @@ bool PacketClass::Get_Field(char *id, long &data)
 /**************************************************************************
  * GET_FIELD -- Find specified name and returns data as a string          *
  *                                                                        *
- * INPUT:		char *   - the id of the field that holds the data.		  *
- *					char *   - the string to store the data into					  *
+ * INPUT:      char *   - the id of the field that holds the data.        *
+ *             char *   - the string to store the data into               *
  *                                                                        *
- * OUTPUT:		true if the field was found, false if it was not.			  *
+ * OUTPUT:     true if the field was found, false if it was not.          *
  *                                                                        *
- * WARNINGS:	The string is not changed if the field is not found.  It   *
- *					is assumed that the string variabled specified by the      *
- *					pointer is large enough to hold the data.						  *
+ * WARNINGS:   The string is not changed if the field is not found.  It   *
+ *             is assumed that the string variabled specified by the      *
+ *             pointer is large enough to hold the data.                  *
  *                                                                        *
  * HISTORY:                                                               *
  *   04/23/1996 PWG : Created.                                            *
@@ -416,13 +416,13 @@ bool PacketClass::Get_Field(char *id, char *data)
 /**************************************************************************
  * GET_FIELD -- Find specified name and returns data                      *
  *                                                                        *
- * INPUT:		char *   - the id of the field that holds the data.		  *
- *					unsigned long &   - the reference to store the data into   *
+ * INPUT:      char *   - the id of the field that holds the data.        *
+ *             unsigned long &   - the reference to store the data into   *
  *                                                                        *
- * OUTPUT:		true if the field was found, false if it was not.			  *
+ * OUTPUT:     true if the field was found, false if it was not.          *
  *                                                                        *
- * WARNINGS:	The data reference is not changed if the field is not		  *
- *					found.																	  *
+ * WARNINGS:   The data reference is not changed if the field is not      *
+ *             found.                                                     *
  *                                                                        *
  * HISTORY:                                                               *
  *   04/23/1996 PWG : Created.                                            *
@@ -440,14 +440,14 @@ bool PacketClass::Get_Field(char *id, unsigned long &data)
 /**************************************************************************
  * GET_FIELD -- Find specified name and returns data                      *
  *                                                                        *
- * INPUT:		char *   - the id of the field that holds the data.		    *
- *				void * - the reference to store the data into                *
- *           int    - the length of the buffer passed in                  *
+ * INPUT:      char *   - the id of the field that holds the data.        *
+ *             void *   - the reference to store the data into            *
+ *             int   - the length of the buffer passed in                 *
  *                                                                        *
- * OUTPUT:		true if the field was found, false if it was not.			 *
+ * OUTPUT:     true if the field was found, false if it was not.          *
  *                                                                        *
- * WARNINGS:	The data reference is not changed if the field is not		    *
- *					found.																	 *
+ * WARNINGS:   The data reference is not changed if the field is not      *
+ *             found.                                                     *
  *                                                                        *
  * HISTORY:                                                               *
  *   6/4/96 4:46PM ST : Created                                           *

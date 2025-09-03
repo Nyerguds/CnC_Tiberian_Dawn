@@ -81,7 +81,7 @@
  *   TechnoClass::Record_The_Kill -- Records the death of this object.                         *
  *   TechnoClass::Remap_Table -- Fetches the appropriate remap table to use.                   *
  *   TechnoClass::Response_Attack -- Handles the voice response when given attack order.       *
- *   TechnoClass::Response_Sabotage -- Handles the voice response when given sabotage order.   * 
+ *   TechnoClass::Response_Sabotage -- Handles the voice response when given sabotage order.   *
  *   TechnoClass::Response_Move -- Handles the voice repsonse to a movement request.           *
  *   TechnoClass::Response_Select -- Handles the voice response when selected.                 *
  *   TechnoClass::Revealed -- Handles revealing an object to the house specified.              *
@@ -2633,7 +2633,7 @@ void TechnoClass::Override_Mission(MissionType mission, TARGET tarcom, TARGET na
 /***************************************************************************
  * TechnoClass::Restore_Mission -- Restores an overidden mission           *
  *                                                                         *
- * INPUT:		none                                                        *
+ * INPUT:      none                                                        *
  *                                                                         *
  * OUTPUT:     none                                                        *
  *                                                                         *

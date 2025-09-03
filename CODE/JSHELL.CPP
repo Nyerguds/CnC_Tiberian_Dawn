@@ -18,7 +18,7 @@
 
 /* $Header:   F:\projects\c&c\vcs\code\jshell.cpv   2.18   16 Oct 1995 16:51:12   JOE_BOSTIC  $ */
 /***********************************************************************************************
- ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               *** 
+ ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               ***
  ***********************************************************************************************
  *                                                                                             *
  *                 Project Name : Command & Conquer                                            *
@@ -39,31 +39,31 @@
  *   Load_Alloc_Data -- Allocates a buffer and loads the file into it.                         *
  *   Load_Uncompress -- Loads and uncompresses data to a buffer.                               *
  *   Fatal -- General purpose fatal error handler.                                             *
- *   Set_Window -- Sets the window dimensions to that specified.                               * 
- *   Small_Icon -- Create a small icon from a big one.                                         * 
+ *   Set_Window -- Sets the window dimensions to that specified.                               *
+ *   Small_Icon -- Create a small icon from a big one.                                         *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include	"function.h"
 #include	"wwfile.h"
 
 
-/*********************************************************************************************** 
- * Small_Icon -- Create a small icon from a big one.                                           * 
- *                                                                                             * 
- *    This routine will extract the specified icon from the icon data file and convert that    * 
- *    incon into a small (3x3) representation. Typicall use of this mini-icon is for the radar * 
- *    map.                                                                                     * 
- *                                                                                             * 
- * INPUT:   iconptr  -- Pointer to the icon data file.                                         * 
- *                                                                                             * 
- *          iconnum  -- The embedded icon number to convert into a small image.                * 
- *                                                                                             * 
- * OUTPUT:  Returns with a pointer to the small icon imagery. This is exactly 9 bytes long.    * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   05/11/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * Small_Icon -- Create a small icon from a big one.                                           *
+ *                                                                                             *
+ *    This routine will extract the specified icon from the icon data file and convert that    *
+ *    incon into a small (3x3) representation. Typicall use of this mini-icon is for the radar *
+ *    map.                                                                                     *
+ *                                                                                             *
+ * INPUT:   iconptr  -- Pointer to the icon data file.                                         *
+ *                                                                                             *
+ *          iconnum  -- The embedded icon number to convert into a small image.                *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the small icon imagery. This is exactly 9 bytes long.    *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   05/11/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 void * Small_Icon(void const * iconptr, int iconnum)
 {
@@ -95,27 +95,27 @@ void * Small_Icon(void const * iconptr, int iconnum)
 }	
 
 
-/*********************************************************************************************** 
- * Set_Window -- Sets the window dimensions to that specified.                                 * 
- *                                                                                             * 
- *    Use this routine to set the windows dimensions to the coordinates and dimensions         * 
- *    specified.                                                                               * 
- *                                                                                             * 
- * INPUT:   x     -- Window X pixel position.                                                  * 
- *                                                                                             * 
- *          y     -- Window Y pixel position.                                                  * 
- *                                                                                             * 
- *          w     -- Window width in pixels.                                                   * 
- *                                                                                             * 
- *          h     -- Window height in pixels.                                                  * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   The X and width values are truncated to an even 8 pixel boundary. This is       * 
- *             the same as stripping off the lower 3 bits.                                     * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   01/15/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * Set_Window -- Sets the window dimensions to that specified.                                 *
+ *                                                                                             *
+ *    Use this routine to set the windows dimensions to the coordinates and dimensions         *
+ *    specified.                                                                               *
+ *                                                                                             *
+ * INPUT:   x     -- Window X pixel position.                                                  *
+ *                                                                                             *
+ *          y     -- Window Y pixel position.                                                  *
+ *                                                                                             *
+ *          w     -- Window width in pixels.                                                   *
+ *                                                                                             *
+ *          h     -- Window height in pixels.                                                  *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   The X and width values are truncated to an even 8 pixel boundary. This is       *
+ *             the same as stripping off the lower 3 bits.                                     *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   01/15/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 void Set_Window(int window, int x, int y, int w, int h)
 {

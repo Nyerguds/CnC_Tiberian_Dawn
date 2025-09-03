@@ -25,11 +25,11 @@
  *                                                                                             *
  *                    File Name : TXTLABEL.H                                                   *
  *                                                                                             *
- *                   Programmer : Bill Randolph																  *
+ *                   Programmer : Bill Randolph                                                *
  *                                                                                             *
  *                   Start Date : 02/06/95                                                     *
  *                                                                                             *
- *                  Last Update : February 6, 1995 [BR]													  *
+ *                  Last Update : February 6, 1995 [BR]                                        *
  *                                                                                             *
  *---------------------------------------------------------------------------------------------*
  * Functions:                                                                                  *

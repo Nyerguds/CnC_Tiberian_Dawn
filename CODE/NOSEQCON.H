@@ -29,20 +29,20 @@
  *                                                                         *
  *                   Start Date : December 19, 1994                        *
  *                                                                         *
- *                  Last Update : April 9, 1995   [BR]                 		*
+ *                  Last Update : April 9, 1995   [BR]                     *
  *                                                                         *
  *-------------------------------------------------------------------------*
  *                                                                         *
- * This class provides a "Non-Sequenced" ACK/Retry approach to packet		*
- * transmission.  It sends out as many packets as are in the queue, whose	*
- * resend delta times have expired; and it ACK's any packets its received	*
- * who haven't been ACK'd yet.  Thus, order of delivery is NOT guaranteed;	*
- * however, the performance is better than the Sequenced approach.			*
- *																									*
- *	A derived class must provide:															*
- * - Init: Initialization of any hardware-specific values.						*
- * - Send: a hardware-dependent send routine.										*
- *																									*
+ * This class provides a "Non-Sequenced" ACK/Retry approach to packet      *
+ * transmission.  It sends out as many packets as are in the queue, whose  *
+ * resend delta times have expired; and it ACK's any packets its received  *
+ * who haven't been ACK'd yet.  Thus, order of delivery is NOT guaranteed; *
+ * however, the performance is better than the Sequenced approach.         *
+ *                                                                         *
+ * A derived class must provide:                                           *
+ * - Init: Initialization of any hardware-specific values.                 *
+ * - Send: a hardware-dependent send routine.                              *
+ *                                                                         *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #ifndef NONSEQCONN_H

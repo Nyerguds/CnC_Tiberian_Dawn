@@ -17,36 +17,36 @@
 */
 
 /* $Header:   F:\projects\c&c\vcs\code\heap.cpv   2.18   16 Oct 1995 16:49:56   JOE_BOSTIC  $ */
-/*********************************************************************************************** 
- ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               *** 
- *********************************************************************************************** 
- *                                                                                             * 
- *                 Project Name : Command & Conquer                                            * 
- *                                                                                             * 
- *                    File Name : HEAP.CPP                                                     * 
- *                                                                                             * 
- *                   Programmer : Joe L. Bostic                                                * 
- *                                                                                             * 
- *                   Start Date : 02/18/95                                                     * 
- *                                                                                             * 
- *                  Last Update : May 22, 1995 [JLB]                                           * 
- *                                                                                             * 
- *---------------------------------------------------------------------------------------------* 
- * Functions:                                                                                  * 
- *   FixedIHeapClass::Free -- Frees an object in the heap.                                     * 
- *   FixedHeapClass::FixedHeapClass -- Normal constructor for heap management class.           * 
- *   FixedHeapClass::~FixedHeapClass -- Destructor for the heap manager class.                 * 
- *   FixedHeapClass::Set_Heap -- Assigns a memory block for this heap manager.                 * 
- *   FixedHeapClass::Allocate -- Allocate a sub-block from the heap.                           * 
- *   FixedHeapClass::Free -- Frees a sub-block in the heap.                                    * 
- *   FixedHeapClass::ID -- Converts a pointer to a sub-block index number.                     * 
- *   FixedHeapClass::Clear -- Clears (and frees) the heap manager memory.                      * 
+/***********************************************************************************************
+ ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               ***
+ ***********************************************************************************************
+ *                                                                                             *
+ *                 Project Name : Command & Conquer                                            *
+ *                                                                                             *
+ *                    File Name : HEAP.CPP                                                     *
+ *                                                                                             *
+ *                   Programmer : Joe L. Bostic                                                *
+ *                                                                                             *
+ *                   Start Date : 02/18/95                                                     *
+ *                                                                                             *
+ *                  Last Update : May 22, 1995 [JLB]                                           *
+ *                                                                                             *
+ *---------------------------------------------------------------------------------------------*
+ * Functions:                                                                                  *
+ *   FixedIHeapClass::Free -- Frees an object in the heap.                                     *
+ *   FixedHeapClass::FixedHeapClass -- Normal constructor for heap management class.           *
+ *   FixedHeapClass::~FixedHeapClass -- Destructor for the heap manager class.                 *
+ *   FixedHeapClass::Set_Heap -- Assigns a memory block for this heap manager.                 *
+ *   FixedHeapClass::Allocate -- Allocate a sub-block from the heap.                           *
+ *   FixedHeapClass::Free -- Frees a sub-block in the heap.                                    *
+ *   FixedHeapClass::ID -- Converts a pointer to a sub-block index number.                     *
+ *   FixedHeapClass::Clear -- Clears (and frees) the heap manager memory.                      *
  *   TFixedIHeapClass::Save -- Saves all active objects                                        *
  *   TFixedIHeapClass::Load -- Loads all active objects                                        *
  *   TFixedIHeapClass::Code_Pointers -- codes pointers for every object, to prepare for save   *
  *   TFixedIHeapClass::Decode_Pointers -- Decodes all object pointers, for after loading       *
- *   FixedHeapClass::Free_All -- Frees all objects in the fixed heap.                          * 
- *   FixedIHeapClass::Free_All -- Frees all objects out of the indexed heap.                   * 
+ *   FixedHeapClass::Free_All -- Frees all objects in the fixed heap.                          *
+ *   FixedIHeapClass::Free_All -- Frees all objects out of the indexed heap.                   *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 
@@ -59,23 +59,23 @@
 #include	<string.h>
 
 
-/*********************************************************************************************** 
- * FixedHeapClass::FixedHeapClass -- Normal constructor for heap management class.             * 
- *                                                                                             * 
- *    This is the normal constructor used for the heap manager class. This initializes         * 
- *    the class but doesn't yet assign actual heap memory to this manager. That is handled     * 
- *    by the Set_Heap() function.                                                              * 
- *                                                                                             * 
- * INPUT:   size  -- The size of the individual sub-blocks in this heap. This value is         * 
- *                   typically the size of some class or structure.                            * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   The heap must first be assigned a block of memory to manage before it can       * 
- *             be used.                                                                        * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   02/21/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * FixedHeapClass::FixedHeapClass -- Normal constructor for heap management class.             *
+ *                                                                                             *
+ *    This is the normal constructor used for the heap manager class. This initializes         *
+ *    the class but doesn't yet assign actual heap memory to this manager. That is handled     *
+ *    by the Set_Heap() function.                                                              *
+ *                                                                                             *
+ * INPUT:   size  -- The size of the individual sub-blocks in this heap. This value is         *
+ *                   typically the size of some class or structure.                            *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   The heap must first be assigned a block of memory to manage before it can       *
+ *             be used.                                                                        *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/21/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 FixedHeapClass::FixedHeapClass(int size)
 {
@@ -87,20 +87,20 @@ FixedHeapClass::FixedHeapClass(int size)
 }	
 
 
-/*********************************************************************************************** 
- * FixedHeapClass::~FixedHeapClass -- Destructor for the heap manager class.                   * 
- *                                                                                             * 
- *    This is the default constructor for the heap manager class. It handles freeing the       * 
- *    memory assigned to this heap.                                                            * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   02/21/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * FixedHeapClass::~FixedHeapClass -- Destructor for the heap manager class.                   *
+ *                                                                                             *
+ *    This is the default constructor for the heap manager class. It handles freeing the       *
+ *    memory assigned to this heap.                                                            *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/21/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 FixedHeapClass::~FixedHeapClass(void)
 {
@@ -108,25 +108,25 @@ FixedHeapClass::~FixedHeapClass(void)
 }	
 
 
-/*********************************************************************************************** 
- * FixedHeapClass::Set_Heap -- Assigns a memory block for this heap manager.                   * 
- *                                                                                             * 
- *    This routine is used to assign a memory heap to this object. A memory heap so assigned   * 
- *    will start with all sub-blocks unallocated. After this routine is called, normal         * 
- *    allocation and freeing may occur. This routine will allocate necessary memory if the     * 
- *    buffer parameter is NULL.                                                                * 
- *                                                                                             * 
- * INPUT:   count    -- The number of objects that this heap should manage.                    * 
- *                                                                                             * 
- *          buffer   -- Pointer to pre-allocated buffer that this manager will use. If this    * 
- *                      parameter is NULL, then memory will be automatically allocated.        * 
- *                                                                                             * 
- * OUTPUT:  bool; Was the heap successfully initialized?                                       * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   02/21/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * FixedHeapClass::Set_Heap -- Assigns a memory block for this heap manager.                   *
+ *                                                                                             *
+ *    This routine is used to assign a memory heap to this object. A memory heap so assigned   *
+ *    will start with all sub-blocks unallocated. After this routine is called, normal         *
+ *    allocation and freeing may occur. This routine will allocate necessary memory if the     *
+ *    buffer parameter is NULL.                                                                *
+ *                                                                                             *
+ * INPUT:   count    -- The number of objects that this heap should manage.                    *
+ *                                                                                             *
+ *          buffer   -- Pointer to pre-allocated buffer that this manager will use. If this    *
+ *                      parameter is NULL, then memory will be automatically allocated.        *
+ *                                                                                             *
+ * OUTPUT:  bool; Was the heap successfully initialized?                                       *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/21/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 int FixedHeapClass::Set_Heap(int count, void * buffer)
 {
@@ -168,21 +168,21 @@ int FixedHeapClass::Set_Heap(int count, void * buffer)
 }	
 
 
-/*********************************************************************************************** 
- * FixedHeapClass::Allocate -- Allocate a sub-block from the heap.                             * 
- *                                                                                             * 
- *    Finds the first available sub-block in the heap and returns a pointer to it. The sub-    * 
- *    block is marked as allocated by this routine. If there are no more sub-blocks            * 
- *    available, then this routine will return NULL.                                           * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  Returns with a pointer to the newly allocated sub-block.                           * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   02/21/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * FixedHeapClass::Allocate -- Allocate a sub-block from the heap.                             *
+ *                                                                                             *
+ *    Finds the first available sub-block in the heap and returns a pointer to it. The sub-    *
+ *    block is marked as allocated by this routine. If there are no more sub-blocks            *
+ *    available, then this routine will return NULL.                                           *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the newly allocated sub-block.                           *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/21/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 void * FixedHeapClass::Allocate(void)
 {
@@ -199,21 +199,21 @@ void * FixedHeapClass::Allocate(void)
 }	
 
 
-/*********************************************************************************************** 
- * FixedHeapClass::Free -- Frees a sub-block in the heap.                                      * 
- *                                                                                             * 
- *    Use this routine to free a previously allocated sub-block in the heap.                   * 
- *                                                                                             * 
- * INPUT:   pointer  -- A pointer to the sub-block to free. This is the same pointer that      * 
- *                      was returned from the Allocate() function.                             * 
- *                                                                                             * 
- * OUTPUT:  bool; Was the deallocation successful? Failure could indicate a pointer that       * 
- *                doesn't refer to this heap or a null pointer.                                * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   02/21/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * FixedHeapClass::Free -- Frees a sub-block in the heap.                                      *
+ *                                                                                             *
+ *    Use this routine to free a previously allocated sub-block in the heap.                   *
+ *                                                                                             *
+ * INPUT:   pointer  -- A pointer to the sub-block to free. This is the same pointer that      *
+ *                      was returned from the Allocate() function.                             *
+ *                                                                                             *
+ * OUTPUT:  bool; Was the deallocation successful? Failure could indicate a pointer that       *
+ *                doesn't refer to this heap or a null pointer.                                *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/21/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 int FixedHeapClass::Free(void * pointer)
 {
@@ -232,22 +232,22 @@ int FixedHeapClass::Free(void * pointer)
 }	
 
 
-/*********************************************************************************************** 
- * FixedHeapClass::ID -- Converts a pointer to a sub-block index number.                       * 
- *                                                                                             * 
- *    Use this routine to convert a pointer (returned by Allocate) into the sub-block          * 
- *    index number. This index number can be used as a form of identifier for the block.       * 
- *                                                                                             * 
- * INPUT:   pointer  -- A pointer to the sub-block to conver into an ID number.                * 
- *                                                                                             * 
- * OUTPUT:  Returns with the index (ID) number for the sub-block specified. This number will   * 
- *          range between 0 and the sub-block max -1. If -1 is returned, then the pointer      * 
- *          was invalid.                                                                       * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   02/21/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * FixedHeapClass::ID -- Converts a pointer to a sub-block index number.                       *
+ *                                                                                             *
+ *    Use this routine to convert a pointer (returned by Allocate) into the sub-block          *
+ *    index number. This index number can be used as a form of identifier for the block.       *
+ *                                                                                             *
+ * INPUT:   pointer  -- A pointer to the sub-block to conver into an ID number.                *
+ *                                                                                             *
+ * OUTPUT:  Returns with the index (ID) number for the sub-block specified. This number will   *
+ *          range between 0 and the sub-block max -1. If -1 is returned, then the pointer      *
+ *          was invalid.                                                                       *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/21/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 int FixedHeapClass::ID(void const * pointer)
 {
@@ -258,21 +258,21 @@ int FixedHeapClass::ID(void const * pointer)
 }	
 
 
-/*********************************************************************************************** 
- * FixedHeapClass::Clear -- Clears (and frees) the heap manager memory.                        * 
- *                                                                                             * 
- *    This routine is used to bring the heap manager back into a non-functioning state. All    * 
- *    memory allocated by this manager is freeed. Any previous pointers to allocated blocks    * 
- *    from this heap are now invalid.                                                          * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   02/21/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * FixedHeapClass::Clear -- Clears (and frees) the heap manager memory.                        *
+ *                                                                                             *
+ *    This routine is used to bring the heap manager back into a non-functioning state. All    *
+ *    memory allocated by this manager is freeed. Any previous pointers to allocated blocks    *
+ *    from this heap are now invalid.                                                          *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/21/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 void FixedHeapClass::Clear(void)
 {
@@ -290,20 +290,20 @@ void FixedHeapClass::Clear(void)
 }	
 
 
-/*********************************************************************************************** 
- * FixedHeapClass::Free_All -- Frees all objects in the fixed heap.                            * 
- *                                                                                             * 
- *    This routine will free all previously allocated objects out of the heap. Use this        * 
- *    routine to ensure that the heap is empty.                                                * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  Was the heap successfully cleared of all objects?                                  * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   05/22/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * FixedHeapClass::Free_All -- Frees all objects in the fixed heap.                            *
+ *                                                                                             *
+ *    This routine will free all previously allocated objects out of the heap. Use this        *
+ *    routine to ensure that the heap is empty.                                                *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Was the heap successfully cleared of all objects?                                  *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   05/22/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 int FixedHeapClass::Free_All(void)
 {
@@ -316,20 +316,20 @@ int FixedHeapClass::Free_All(void)
 /////////////////////////////////////////////////////////////////////
 
 
-/*********************************************************************************************** 
- * FixedIHeapClass::Free_All -- Frees all objects out of the indexed heap.                     * 
- *                                                                                             * 
- *    Use this routine to free all previously allocated objects in the heap. This routine will * 
- *    also clear out the allocated object vector as well.                                      * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  Was the heap successfully cleared of objects?                                      * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   05/22/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * FixedIHeapClass::Free_All -- Frees all objects out of the indexed heap.                     *
+ *                                                                                             *
+ *    Use this routine to free all previously allocated objects in the heap. This routine will *
+ *    also clear out the allocated object vector as well.                                      *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Was the heap successfully cleared of objects?                                      *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   05/22/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 int FixedIHeapClass::Free_All(void)
 {
@@ -367,21 +367,21 @@ void * FixedIHeapClass::Allocate(void)
 }	
 
 
-/*********************************************************************************************** 
- * FixedIHeapClass::Free -- Frees an object in the heap.                                       * 
- *                                                                                             * 
- *    This routine is used to free an object in the heap. Freeing is accomplished by marking   * 
- *    the object's memory as free to be reallocated. The object is also removed from the       * 
- *    allocated object pointer vector.                                                         * 
- *                                                                                             * 
- * INPUT:   pointer  -- Pointer to the object that is to be removed from the heap.             * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   02/21/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * FixedIHeapClass::Free -- Frees an object in the heap.                                       *
+ *                                                                                             *
+ *    This routine is used to free an object in the heap. Freeing is accomplished by marking   *
+ *    the object's memory as free to be reallocated. The object is also removed from the       *
+ *    allocated object pointer vector.                                                         *
+ *                                                                                             *
+ * INPUT:   pointer  -- Pointer to the object that is to be removed from the heap.             *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/21/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 int FixedIHeapClass::Free(void * pointer)
 {
@@ -392,16 +392,16 @@ int FixedIHeapClass::Free(void * pointer)
 }	
 
 
-/*********************************************************************************************** 
+/***********************************************************************************************
  * TFixedIHeapClass::Save -- Saves all active objects                                          *
- *                                                                                             * 
+ *                                                                                             *
  * INPUT:   file      file to write to                                                         *
- *                                                                                             * 
+ *                                                                                             *
  * OUTPUT:  true = OK, false = error                                                           *
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
  *   03/15/1995 BRR : Created.                                                                 *
  *=============================================================================================*/
 template<class T>
@@ -442,16 +442,16 @@ int TFixedIHeapClass<T>::Save(FileClass &file)
 }	
 
 
-/*********************************************************************************************** 
+/***********************************************************************************************
  * TFixedIHeapClass::Load -- Loads all active objects                                          *
- *                                                                                             * 
+ *                                                                                             *
  * INPUT:   file      file to read from                                                        *
- *                                                                                             * 
+ *                                                                                             *
  * OUTPUT:  true = OK, false = error                                                           *
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
  *   03/15/1995 BRR : Created.                                                                 *
  *=============================================================================================*/
 template<class T>
@@ -507,16 +507,16 @@ int TFixedIHeapClass<T>::Load(FileClass &file)
 }	
 
 
-/*********************************************************************************************** 
+/***********************************************************************************************
  * TFixedIHeapClass::Code_Pointers -- codes pointers for every object, to prepare for save     *
- *                                                                                             * 
+ *                                                                                             *
  * INPUT:   file      file to read from                                                        *
- *                                                                                             * 
+ *                                                                                             *
  * OUTPUT:  true = OK, false = error                                                           *
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
  *   03/15/1995 BRR : Created.                                                                 *
  *=============================================================================================*/
 template<class T>
@@ -530,16 +530,16 @@ void TFixedIHeapClass<T>::Code_Pointers(void)
 }
 
 
-/*********************************************************************************************** 
+/***********************************************************************************************
  * TFixedIHeapClass::Decode_Pointers -- Decodes all object pointers, for after loading         *
- *                                                                                             * 
+ *                                                                                             *
  * INPUT:   file      file to read from                                                        *
- *                                                                                             * 
+ *                                                                                             *
  * OUTPUT:  true = OK, false = error                                                           *
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
  *   03/15/1995 BRR : Created.                                                                 *
  *=============================================================================================*/
 template<class T>

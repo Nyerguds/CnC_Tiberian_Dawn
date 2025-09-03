@@ -2025,7 +2025,7 @@ void InfantryTypeClass::One_Time(void)
 
 
 /***********************************************************************************************
- * ITC::Init -- load up terrain set dependant sidebar icons                                    *
+ * ITC::Init -- load up terrain set dependent sidebar icons                                    *
  *                                                                                             *
  *                                                                                             *
  *                                                                                             *

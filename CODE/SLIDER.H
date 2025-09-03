@@ -17,22 +17,22 @@
 */
 
 /* $Header:   F:\projects\c&c\vcs\code\slider.h_v   2.16   16 Oct 1995 16:45:38   JOE_BOSTIC  $ */
-/*********************************************************************************************** 
- ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               *** 
- *********************************************************************************************** 
- *                                                                                             * 
- *                 Project Name : Command & Conquer                                            * 
- *                                                                                             * 
- *                    File Name : SLIDER.H                                                     * 
- *                                                                                             * 
- *                   Programmer : Joe L. Bostic                                                * 
- *                                                                                             * 
- *                   Start Date : 01/15/95                                                     * 
- *                                                                                             * 
- *                  Last Update : January 15, 1995 [JLB]                                       * 
- *                                                                                             * 
- *---------------------------------------------------------------------------------------------* 
- * Functions:                                                                                  * 
+/***********************************************************************************************
+ ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               ***
+ ***********************************************************************************************
+ *                                                                                             *
+ *                 Project Name : Command & Conquer                                            *
+ *                                                                                             *
+ *                    File Name : SLIDER.H                                                     *
+ *                                                                                             *
+ *                   Programmer : Joe L. Bostic                                                *
+ *                                                                                             *
+ *                   Start Date : 01/15/95                                                     *
+ *                                                                                             *
+ *                  Last Update : January 15, 1995 [JLB]                                       *
+ *                                                                                             *
+ *---------------------------------------------------------------------------------------------*
+ * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #ifndef SLIDER_H
@@ -42,17 +42,17 @@
 #include "shapebtn.h"
 
 /***************************************************************************
- * SliderClass -- Like a Windows ListBox structure									*
+ * SliderClass -- Like a Windows ListBox structure                         *
  *                                                                         *
- * INPUT:      int id-- id of gadget													*
- *					int x -- x position of gadget											*
- *					int y -- y position of gadget											*
- *					int w -- width of gadget												*							
- *					int h -- height of gadget												*							
- *					int belong_to_list -- does this slider go with a listclass? *
+ * INPUT:      int id-- id of gadget                                       *
+ *             int x -- x position of gadget                               *
+ *             int y -- y position of gadget                               *
+ *             int w -- width of gadget                                    *
+ *             int h -- height of gadget                                   *
+ *             int belong_to_list -- does this slider go with a listclass? *
  *                                                                         *
- * OUTPUT:     none.																			*
- * WARNINGS:														   						*
+ * OUTPUT:     none.                                                       *
+ * WARNINGS:                                                               *
  * HISTORY:    01/03/1995 MML : Created.                                   *
  *=========================================================================*/
 class SliderClass : public GaugeClass

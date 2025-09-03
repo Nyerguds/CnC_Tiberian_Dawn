@@ -17,37 +17,37 @@
 */
 
 /* $Header:   F:\projects\c&c\vcs\code\vector.h_v   2.15   16 Oct 1995 16:47:38   JOE_BOSTIC  $ */
-/*********************************************************************************************** 
- ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               *** 
- *********************************************************************************************** 
- *                                                                                             * 
- *                 Project Name : Command & Conquer                                            * 
- *                                                                                             * 
- *                    File Name : VECTOR.H                                                     * 
- *                                                                                             * 
- *                   Programmer : Joe L. Bostic                                                * 
- *                                                                                             * 
- *                   Start Date : 02/19/95                                                     * 
- *                                                                                             * 
- *                  Last Update : March 13, 1995 [JLB]                                         * 
- *                                                                                             * 
- *---------------------------------------------------------------------------------------------* 
- * Functions:                                                                                  * 
- *   VectorClass<T>::VectorClass -- Constructor for vector class.                              * 
- *   VectorClass<T>::~VectorClass -- Default destructor for vector class.                      * 
- *   VectorClass<T>::VectorClass -- Copy constructor for vector object.                        * 
- *   VectorClass<T>::operator = -- The assignment operator.                                    * 
- *   VectorClass<T>::operator == -- Equality operator for vector objects.                      * 
- *   VectorClass<T>::Clear -- Frees and clears the vector.                                     * 
- *   VectorClass<T>::Resize -- Changes the size of the vector.                                 * 
- *   DynamicVectorClass<T>::DynamicVectorClass -- Constructor for dynamic vector.              * 
- *   DynamicVectorClass<T>::Resize -- Changes the size of a dynamic vector.                    * 
- *   DynamicVectorClass<T>::Add -- Add an element to the vector.                               * 
- *   DynamicVectorClass<T>::Delete -- Remove the specified object from the vector.             * 
- *   DynamicVectorClass<T>::Delete -- Deletes the specified index from the vector.             * 
- *   VectorClass<T>::ID -- Pointer based conversion to index number.                           * 
- *   VectorClass<T>::ID -- Finds object ID based on value.                                     * 
- *   DynamicVectorClass<T>::ID -- Find matching value in the dynamic vector.                   * 
+/***********************************************************************************************
+ ***             C O N F I D E N T I A L  ---  W E S T W O O D   S T U D I O S               ***
+ ***********************************************************************************************
+ *                                                                                             *
+ *                 Project Name : Command & Conquer                                            *
+ *                                                                                             *
+ *                    File Name : VECTOR.H                                                     *
+ *                                                                                             *
+ *                   Programmer : Joe L. Bostic                                                *
+ *                                                                                             *
+ *                   Start Date : 02/19/95                                                     *
+ *                                                                                             *
+ *                  Last Update : March 13, 1995 [JLB]                                         *
+ *                                                                                             *
+ *---------------------------------------------------------------------------------------------*
+ * Functions:                                                                                  *
+ *   VectorClass<T>::VectorClass -- Constructor for vector class.                              *
+ *   VectorClass<T>::~VectorClass -- Default destructor for vector class.                      *
+ *   VectorClass<T>::VectorClass -- Copy constructor for vector object.                        *
+ *   VectorClass<T>::operator = -- The assignment operator.                                    *
+ *   VectorClass<T>::operator == -- Equality operator for vector objects.                      *
+ *   VectorClass<T>::Clear -- Frees and clears the vector.                                     *
+ *   VectorClass<T>::Resize -- Changes the size of the vector.                                 *
+ *   DynamicVectorClass<T>::DynamicVectorClass -- Constructor for dynamic vector.              *
+ *   DynamicVectorClass<T>::Resize -- Changes the size of a dynamic vector.                    *
+ *   DynamicVectorClass<T>::Add -- Add an element to the vector.                               *
+ *   DynamicVectorClass<T>::Delete -- Remove the specified object from the vector.             *
+ *   DynamicVectorClass<T>::Delete -- Deletes the specified index from the vector.             *
+ *   VectorClass<T>::ID -- Pointer based conversion to index number.                           *
+ *   VectorClass<T>::ID -- Finds object ID based on value.                                     *
+ *   DynamicVectorClass<T>::ID -- Find matching value in the dynamic vector.                   *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #ifndef VECTOR_H

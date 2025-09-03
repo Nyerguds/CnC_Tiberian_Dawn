@@ -763,7 +763,7 @@ void ListClass::Draw_Entry(int index, int x, int y, int width, int selected)
  * - Up arrow (if active)                                                                      *
  * - Down arrow (if active)                                                                    *
  * - Scroll gadget (if active)                                                                 *
- *                                                                                             *                                                                                       *
+ *                                                                                             *
  * INPUT:   object   -- Pointer to the object to be added right after this one.                *
  *                                                                                             *
  * OUTPUT:  Returns with a pointer to the head of the list.                                    *
@@ -771,7 +771,7 @@ void ListClass::Draw_Entry(int index, int x, int y, int width, int selected)
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   01/19/1995 JLB : Created.                                                                 * 
+ *   01/19/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 LinkClass & ListClass::Add(LinkClass & list)
 {
@@ -791,18 +791,18 @@ LinkClass & ListClass::Add(LinkClass & list)
 }	
 
 
-/*********************************************************************************************** 
+/***********************************************************************************************
  * ListClass::Add_Head -- Adds myself to head of the given list                                *
- *                                                                                             * 
+ *                                                                                             *
  * INPUT:   list -- list to add myself to                                                      *
- *                                                                                             * 
- * OUTPUT:  Returns with a reference to the object at the head of the list. This should be     * 
- *          the same object that is passed in.                                                 * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   01/19/1995 JLB : Created.                                                                 * 
+ *                                                                                             *
+ * OUTPUT:  Returns with a reference to the object at the head of the list. This should be     *
+ *          the same object that is passed in.                                                 *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   01/19/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 LinkClass & ListClass::Add_Head(LinkClass & list) 
 {
@@ -822,24 +822,24 @@ LinkClass & ListClass::Add_Head(LinkClass & list)
 }
 
 
-/*********************************************************************************************** 
+/***********************************************************************************************
  * ListClass::Add_Tail -- Adds myself to tail of given list                                    *
- *                                                                                             * 
+ *                                                                                             *
  * Adds the list box to the tail of the give chain.  The order will be:                        *
  * - Listbox                                                                                   *
  * - Up arrow (if active)                                                                      *
  * - Down arrow (if active)                                                                    *
  * - Scroll gadget (if active)                                                                 *
- *                                                                                             * 
+ *                                                                                             *
  * INPUT:   list -- list to add myself to                                                      *
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   The previous and next pointers for the added object MUST have been properly     * 
- *             initialized for this routine to work correctly.                                 * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   01/15/1995 JLB : Created.                                                                 * 
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   The previous and next pointers for the added object MUST have been properly     *
+ *             initialized for this routine to work correctly.                                 *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   01/15/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 LinkClass & ListClass::Add_Tail(LinkClass & list) 
 {
@@ -861,22 +861,22 @@ LinkClass & ListClass::Add_Tail(LinkClass & list)
 }
 
 
-/*********************************************************************************************** 
- * ListClass::Remove -- Removes the specified object from the list.                            * 
- *                                                                                             * 
- *    This routine will remove the specified object from the list of objects. Because of the   * 
- *    previous and next pointers, it is possible to remove an object from the list without     * 
- *    knowing the head of the list. To do this, just call Remove() with the parameter of       * 
- *    "this".                                                                                  * 
- *                                                                                             * 
- * INPUT:   none                                                                               * 
- *                                                                                             * 
- * OUTPUT:  Returns with the new head of list.                                                 * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   01/15/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * ListClass::Remove -- Removes the specified object from the list.                            *
+ *                                                                                             *
+ *    This routine will remove the specified object from the list of objects. Because of the   *
+ *    previous and next pointers, it is possible to remove an object from the list without     *
+ *    knowing the head of the list. To do this, just call Remove() with the parameter of       *
+ *    "this".                                                                                  *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with the new head of list.                                                 *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   01/15/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 GadgetClass * ListClass::Remove(void) 
 {
@@ -896,19 +896,19 @@ GadgetClass * ListClass::Remove(void)
 }
 
 
-/*********************************************************************************************** 
- * ListClass::Set_Selected_Index -- Set the top of the listbox to index specified.             * 
- *                                                                                             * 
- *    This routine will set the top line of the listbox to the index value specified.          * 
- *                                                                                             * 
- * INPUT:   index -- The index to set the top of the listbox to.                               * 
- *                                                                                             * 
- * OUTPUT:  none                                                                               * 
- *                                                                                             * 
- * WARNINGS:   The requested index may be adjusted to fit within legal parameters.             * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   06/25/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * ListClass::Set_Selected_Index -- Set the top of the listbox to index specified.             *
+ *                                                                                             *
+ *    This routine will set the top line of the listbox to the index value specified.          *
+ *                                                                                             *
+ * INPUT:   index -- The index to set the top of the listbox to.                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   The requested index may be adjusted to fit within legal parameters.             *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/25/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 void ListClass::Set_Selected_Index(int index)
 { 
@@ -923,20 +923,20 @@ void ListClass::Set_Selected_Index(int index)
 }
 
 
-/*********************************************************************************************** 
- * ListClass::Step_Selected_Index -- Change the listbox top line in direction specified.       * 
- *                                                                                             * 
- *    This routine will scroll the top line of the listbox in the direction specified.         * 
- *                                                                                             * 
- * INPUT:   step  -- The direction (and amount) to adjust the listbox. If negative value, then * 
- *                   the top line is scrolled upward.                                          * 
- *                                                                                             * 
- * OUTPUT:  Returns with the original top line index number.                                   * 
- *                                                                                             * 
- * WARNINGS:   none                                                                            * 
- *                                                                                             * 
- * HISTORY:                                                                                    * 
- *   06/25/1995 JLB : Created.                                                                 * 
+/***********************************************************************************************
+ * ListClass::Step_Selected_Index -- Change the listbox top line in direction specified.       *
+ *                                                                                             *
+ *    This routine will scroll the top line of the listbox in the direction specified.         *
+ *                                                                                             *
+ * INPUT:   step  -- The direction (and amount) to adjust the listbox. If negative value, then *
+ *                   the top line is scrolled upward.                                          *
+ *                                                                                             *
+ * OUTPUT:  Returns with the original top line index number.                                   *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/25/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 int ListClass::Step_Selected_Index(int step)
 {
