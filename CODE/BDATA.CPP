@@ -865,8 +865,8 @@ static BuildingTypeClass const ClassCommand(
 	40,										// DRAIN:		Power points required.
 //	BSIZE_22, 								// SIZE:			Building size.
 	NULL,										// Preferred exit cell list.
-	(short const *)List22_0111,		// OCCUPYLIST:	List of active foundation squares.
-	(short const *)List22_1000		// OVERLAPLIST:List of overlap cell offset.
+	(short const *)List22_1011,		// OCCUPYLIST:	List of active foundation squares.
+	(short const *)List22_0100		// OVERLAPLIST:List of overlap cell offset.
 );
 
 static BuildingTypeClass const ClassSAM(

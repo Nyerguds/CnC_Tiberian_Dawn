@@ -38,12 +38,12 @@
  *   AircraftTypeClass::Create_One_Of -- Creates an aircraft object of the appropriate type.   *
  *   AircraftTypeClass::Dimensions -- Fetches the graphic dimensions of the aircraft type.     *
  *   AircraftTypeClass::Display -- Displays a generic version of the aircraft type.            *
- *   AircraftTypeClass::From_Name -- Converts an ASCIIto an aircraft type number.      *
+ *   AircraftTypeClass::From_Name -- Converts an ASCIIto an aircraft type number.              *
  *   AircraftTypeClass::Max_Pips -- Fetches the maximum number of pips allowed.                *
  *   AircraftTypeClass::Occupy_List -- Returns with occupation list for landed aircraft.       *
- *   AircraftTypeClass::One_Time -- Performs one time initialization of the aircraft type class.*
- *   AircraftTypeClass::Overlap_List --  the overlap list for a landed aircraft.     *
- *   AircraftTypeClass::Prep_For_Add -- Prepares the scenario editor for adding an aircraft objec*
+ *   AircraftTypeClass::One_Time -- Performs one time initialization of the aircraft type class*
+ *   AircraftTypeClass::Overlap_List --  the overlap list for a landed aircraft.               *
+ *   AircraftTypeClass::Prep_For_Add -- Prepares the scenario editor for adding an aircraft obj*
  *   AircraftTypeClass::Repair_Cost -- Fetchs the cost per repair step.                        *
  *   AircraftTypeClass::Repair_Step -- Fetches the number of health points per repair.         *
  *   AircraftTypeClass::Who_Can_Build_Me -- Determines which object can build the aircraft obje*

@@ -1179,6 +1179,9 @@ void BuildingClass::AI(void)
 		Mark(MARK_CHANGE);
 	}
 
+#ifdef OBSOLETE
+	// Nyerguds's C&C Patch Project v1.04
+	// Recoil state handling is now 100% migrated to TechnoClass, where it belongs.
 	/*
 	**	If the building was in a recoil state (as it would be just as it fires), then
 	**	restore the building.
@@ -1187,6 +1190,7 @@ void BuildingClass::AI(void)
 		IsInRecoilState = false;
 		Mark(MARK_CHANGE);
 	}
+#endif
 
 	/*
 	**	Turret equiped buildings must handle turret rotation logic here. This entails

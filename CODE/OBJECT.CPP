@@ -1405,13 +1405,15 @@ bool ObjectClass::Mark(MarkType mark)
 
 	if (!IsInLimbo && IsActive) {
 
+		// Nyerguds's C&C Patch Project v1.04
+		// Added RA1's MARK_CHANGE_REDRAW logic to make recoil work.
 		/*
 		**	A mark for change is always successful UNLESS the object
 		**	is not placed down or has already been flagged as changed
 		**	this game frame.
 		*/
-		if (mark == MARK_CHANGE) {
-			if (IsToDisplay) return(false);
+		if (mark == MARK_CHANGE || mark == MARK_CHANGE_REDRAW) {
+			if (IsToDisplay && mark != MARK_CHANGE_REDRAW) return(false);
 			if (IsDown == true) {
 				Mark_For_Redraw();
 				return(true);

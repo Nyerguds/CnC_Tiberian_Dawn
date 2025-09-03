@@ -1,7 +1,7 @@
 	page	,132
 
 ;Thunk Compiler Version 1.8  May 11 1995 13:16:19
-;File Compiled Wed Jun 11 02:22:31 2025
+;File Compiled Wed Sep 03 18:14:03 2025
 
 ;Command Line: C:\nw\bldcpp\CnC_Tiberian_Dawn\..\WATCOM\BINNT\thunk.exe Thipx.thk 
 

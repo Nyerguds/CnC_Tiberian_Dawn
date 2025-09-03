@@ -211,7 +211,7 @@
 #define VERSION_MAJOR   	1	// Major version will never change between languages.
 #define VERSION_MINOR    	7	// Win95 minor version number
 
-#define VERSION_PATCH_EXTRA	"CCPP v1.04 pre2"
+#define VERSION_PATCH_EXTRA	"CCPP v1.04 pre3"
 
 // Enable this to load the map screen strings from the strings file instead of using the hardcoded ones.
 //#define EXPANDED_STRINGS 1
@@ -2053,6 +2053,7 @@ typedef enum MarkType {
 	MARK_UP,					//	Removed from the map.
 	MARK_DOWN,				//	Placed on the map.
 	MARK_CHANGE,			//	Altered in place on the map.
+	MARK_CHANGE_REDRAW,	//	Redraw because of animation change. // Nyerguds's C&C Patch Project v1.04
 	MARK_OVERLAP_DOWN,	// Mark overlap cells on the map
 	MARK_OVERLAP_UP,		// Clear overlap cells on the map
 } MarkType;

@@ -168,3 +168,5 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Added "RemoveBuildExceptions" option for missions, to remove all singleplayer-specific build rules.
 * Fixed double-firing on aircraft getting disrupted by other orders, causing the aircraft to always fire per single shot.
 * Fixed Mammoth Tank showing its muzzle flashes on the wrong barrel.
+* Rocket Launchers will now pop up their launcher when they are in range of their target.
+* Fixed turret recoil logic. This was always in the game, but didn't get drawn correctly.

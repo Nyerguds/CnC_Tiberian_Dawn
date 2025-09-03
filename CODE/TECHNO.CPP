@@ -492,6 +492,7 @@ TechnoClass::TechnoClass(void) :
 	IsDiscoveredByPlayer = false;
 	IsDiscoveredByComputer = false;
 	IsInRecoilState = false;
+	IsInReadyState = false;
 	IsLeader = false;
 	IsLocked = false;
 	IsOwnedByPlayer = false;
@@ -794,6 +795,7 @@ TechnoClass::TechnoClass(HousesType house) :
 	IsOwnedByPlayer = (house == PlayerPtr->Class->House);
 	IsDiscoveredByPlayer = false;
 	IsInRecoilState = false;
+	IsInReadyState = false;
 	IsLeader = false;
 	IsLocked = false;
 	IsSecondShot = false;
@@ -1648,6 +1650,16 @@ void TechnoClass::Clicked_As_Target(int count)
  *=============================================================================================*/
 void TechnoClass::AI(void)
 {
+	// Nyerguds's C&C Patch Project v1.04
+	// Recoil state handling is now 100% migrated to TechnoClass
+	/*
+	**	Handle recoil recovery here.
+	*/
+	if (IsInRecoilState) {
+		IsInRecoilState = false;
+		Mark(MARK_CHANGE_REDRAW);
+	}
+
 	CargoClass::AI();
 	RadioClass::AI();
 	DoorClass::AI();
@@ -1755,6 +1767,20 @@ void TechnoClass::AI(void)
 					break;
 			}
 		}
+	}
+
+	// Nyerguds's C&C Patch Project v1.04
+	// Logic for popping up the Rocket Launcher weapon
+	/*
+	**	Handle ready state; if it changes, flag the unit to redraw.
+	*/
+	bool hasTarget =
+		Target_Legal(TarCom) &&
+	 	((Techno_Type_Class()->Primary != WEAPON_NONE && In_Range(TarCom, 0)) ||
+		 (Techno_Type_Class()->Secondary != WEAPON_NONE && In_Range(TarCom, 1)));
+	if (IsInReadyState != hasTarget) {
+		IsInReadyState = hasTarget;
+		Mark(MARK_CHANGE_REDRAW);
 	}
 
 	/*
@@ -2097,11 +2123,12 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
 //Mono_Printf("object=%p, Strength=%d, IsActive=%d, IsInLimbo=%d.\n", object, (long)object->Strength, object->IsActive, object->IsInLimbo);Get_Key();
 			bullet->Payback = this;
 			bullet->Strength = weapon->Attack;
+			if (!bullet->Class->IsFueled) {
+				IsInRecoilState = true;
+				Mark(MARK_CHANGE_REDRAW);
+			}
 		} else {
 			delete bullet;
-		}
-		if (!bullet->Class->IsFueled) {
-			IsInRecoilState = true;
 		}
 		Arm = Rearm_Delay(IsSecondShot);
 		if (tclass.IsTwoShooter) {

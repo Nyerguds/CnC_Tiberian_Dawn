@@ -470,6 +470,9 @@ void UnitClass::AI(void)
 		Commence();
 	}
 
+#ifdef OBSOLETE
+	// Nyerguds's C&C Patch Project v1.04
+	// Recoil state handling is now 100% migrated to TechnoClass, where it belongs.
 	/*
 	**	Handle recoil recovery here.
 	*/
@@ -477,6 +480,7 @@ void UnitClass::AI(void)
 		IsInRecoilState = false;
 		Mark(MARK_CHANGE);
 	}
+#endif
 
 	/*
 	** For animating objects such as Visceroids, max-out their animation
@@ -557,7 +561,7 @@ FireErrorType UnitClass::Can_Fire(TARGET target, int which) const
 				nonconst = (UnitClass *)this;
 				nonconst->Set_Rate(Options.Normalize_Delay(2));
 				nonconst->Set_Stage(0);
-				IsFiring = true;
+				nonconst->IsFiring = true;
 				cf = FIRE_BUSY;
 			} else {
 				if (Fetch_Stage() < 4) cf = FIRE_BUSY;
@@ -2077,6 +2081,15 @@ void UnitClass::Draw_It(int x, int y, WindowNumberType window)
 			if (*this == UNIT_MSAM) {
 				if (Ammo == 0) shapenum += 64;
 				if (Ammo == 1) shapenum += 32;
+			}
+
+			// Nyerguds's C&C Patch Project v1.04
+			/*
+			**	If a rocket launcher is in range of its target, 
+			**	deploy its launcher so it looks ready to fire.
+			*/
+			if (*this == UNIT_MLRS && IsInReadyState) {
+				shapenum += 32;
 			}
 
 			/*
