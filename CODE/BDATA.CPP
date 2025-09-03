@@ -4034,6 +4034,7 @@ BuildingTypeClass::BuildingTypeClass(
 													is_theater,
 													is_twoshooter,
 													is_turret_equipped,
+													false,
 													is_repairable,
 													is_buildable,
 													is_crew,

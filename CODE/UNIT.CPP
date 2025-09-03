@@ -2040,7 +2040,7 @@ void UnitClass::Draw_It(int x, int y, WindowNumberType window)
 		/*
 		**	The artillery unit should have its entire body recoil when it fires.
 		*/
-		if (*this == UNIT_ARTY && IsInRecoilState) {
+		if (*this == UNIT_ARTY && IsInRecoilState && !Options.NoTurretRecoil) {
 			Recoil_Adjust(PrimaryFacing.Current(), x, y);
 		}
 
@@ -2074,28 +2074,35 @@ void UnitClass::Draw_It(int x, int y, WindowNumberType window)
 			*/
 			shapenum = TechnoClass::BodyShape[tfacing]+32;
 
+			// Nyerguds's C&C Patch Project v1.04
+			// Setting Ammo on UnitType now triggers multi-turret logic.
 			/*
 			**	The shape to use for the rocket launcher is dependent on the
 			**	ammo remaining.
 			*/
+			if (Class->MaxAmmo > 0) {
+				shapenum += 32 * (Class->MaxAmmo - Ammo);
+			}
+#ifdef OBSOLETE
 			if (*this == UNIT_MSAM) {
 				if (Ammo == 0) shapenum += 64;
 				if (Ammo == 1) shapenum += 32;
 			}
+#endif
 
 			// Nyerguds's C&C Patch Project v1.04
 			/*
-			**	If a rocket launcher is in range of its target, 
-			**	deploy its launcher so it looks ready to fire.
+			**	If an MLRS is in range of its target, pop
+			**	up its launcher so it looks ready to fire.
 			*/
-			if (*this == UNIT_MLRS && IsInReadyState) {
-				shapenum += 32;
+			if (Class->IsActiveTargeter && IsInActiveState && !Options.NoLauncherPopup) {
+				shapenum += 32 * (MAX(Class->MaxAmmo, 0) + 1);
 			}
 
 			/*
 			**	A recoiling turret moves "backward" one pixel.
 			*/
-			if (IsInRecoilState) {
+			if (IsInRecoilState && !Options.NoTurretRecoil) {
 				Recoil_Adjust(SecondaryFacing.Current(), x1, y1);
 			}
 

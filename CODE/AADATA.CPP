@@ -364,6 +364,7 @@ AircraftTypeClass::AircraftTypeClass(
 										is_theater,
 										is_twoshooter,
 										false,
+										false,
 										is_repairable,
 										is_buildable,
 										is_crew,

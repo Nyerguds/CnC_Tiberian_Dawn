@@ -524,7 +524,7 @@ void BuildingClass::Draw_It(int x, int y, WindowNumberType window)
 					shapenum = Fetch_Stage();
 				}
 			} else {
-				if (IsInRecoilState) {
+				if (IsInRecoilState && !Options.NoTurretRecoil) {
 					shapenum += 32;
 				}
 			}

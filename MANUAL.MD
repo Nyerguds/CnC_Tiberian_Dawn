@@ -29,7 +29,7 @@ These hotkeys have been added or changed:
 * **\[T\]**: Select all units on the current screen of the type(s) you already have selected. This can be combined with the \[Shift\] key to add these to the selection. If no units of the selected types were found on the screen, the old selection is retained.
 * **\[Ctrl\]+\[Alt\]**: This modifier key combination for mouse clicks already existed to target objects, but can now be targeted at the ground, as targeted version of the Area Guard command. As with the hotkey, this also works for harvesters. Note that some units, such as Commandos and Helicopters, do not support Area Guard orders at all.
 * **\[Alt\]+\[Shift\]+\[0-9\]**: Adds the numbered team to the selection and then centers on the selection.
-* **\[Ctrl\]+\[S\]**: Saves a screenshot to the game folder, in PCX format. The message shown when taking a screenshot can be disabled by adding "NoScreenshotMessage" into conquer.ini's \[Options\] section.
+* **\[Ctrl\]+\[S\]**: Saves a screenshot to the game folder, in PCX format. A "click" sound will indicate that a screenshot was taken, and a message will show what filename it was saved to. The message can be disabled by adding "NoScreenshotMessage" into conquer.ini, under \[Patch\].
 
 General upgrades to selection and giving orders:
 
@@ -55,13 +55,25 @@ This patch adds a number of extra features into the game. These are generally un
 
 On the sidebar, the building tooltips will now give extra info behind the price, in the format "~+##/-##", with the ## parts indicating respectively the amount of power the building produces and drains. Additionally, " (!)" will be added to the end of this if adding this building to your base would cause a blackout.
 
-This behaviour is enabled by default, but can be disabled by adding the option "NoPowerToolTips=true" in conquer.ini, under \[Options\].
+This behaviour is enabled by default, but can be disabled by adding the option "NoPowerToolTips=true" in conquer.ini, under \[Patch\].
 
 ### Nod-specific map and score screen music
 
 The game contains two unused music tracks that were intended to be Nod-specific music for the mission selection map and the score screen. These tracks always existed in the game, but were never enabled. This patch implements that music as it was intended.
 
-This behaviour is enabled by default, but can be disabled by adding the option "NoNodSceneMusic=true" in conquer.ini, under \[Options\].
+This behaviour is enabled by default, but can be disabled by adding the option "NoNodSceneMusic=true" in conquer.ini, under \[Patch\].
+
+### Rocket Launcher targeting
+
+The Rocket Launcher vehicle contains two stages for its launcher; collapsed onto the flatbed, and popped up to fire. However, the second stage is never used in the PC version of the game. In console versions, this was amended by making it always use the popped up stage. I thought an actual logic would be more interesting, so now, the Rocket Launcher will specifically pop up its launcher if it is in range of a target it wants to fire at.
+
+This behaviour is enabled by default, but can be disabled by adding the option "NoLauncherPopup=true" in conquer.ini, under \[Patch\].
+
+### Turret recoil
+
+In beta footage of the game, gun turrets and vehicles with rotating cannon or machinegun turrets had a small one-frame recoil animation when firing. This logic is also seen in Red alert, but it is broken in the retail version of Tiberian Dawn. This has now been fixed.
+
+This behaviour is enabled by default, but can be disabled by adding the option "NoTurretRecoil=true" in conquer.ini, under \[Patch\].
 
 ## Extra usage notes
 

@@ -96,6 +96,8 @@ class OptionsClass {
 		unsigned NoPowerBuildToolTips:1;	// Don't add extra power info on building tooltips?
 		unsigned NoNodSceneMusic:1;	// Don't use Nod-specific sore and map music?
 		unsigned NoScreenshotMessage:1;	// Don't show a message when taking a screenshot?
+		unsigned NoLauncherPopup:1;	// Don't pop up the rocket launcher's turret in Attack mode?
+		unsigned NoTurretRecoil:1;	// Don't show recoil on turrets?
 
 	protected:
 

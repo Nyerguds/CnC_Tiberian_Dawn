@@ -165,6 +165,7 @@ TechnoTypeClass::TechnoTypeClass(
 		bool is_theater,
 		bool is_twoshooter,
 		bool is_turret_equipped,
+		bool is_active_targeter,
 		bool is_repairable,
 		bool is_buildable,
 		bool is_crew,
@@ -209,7 +210,8 @@ TechnoTypeClass::TechnoTypeClass(
 	IsCrew = is_crew;
 	IsTheater = is_theater;
 	IsRepairable = is_repairable;
-	IsTurretEquipped= is_turret_equipped;
+	IsTurretEquipped = is_turret_equipped;
+	IsActiveTargeter= is_active_targeter;
 	IsNominal = is_nominal;
 	Ownable = ownable;
 	Reward = reward;
@@ -492,7 +494,7 @@ TechnoClass::TechnoClass(void) :
 	IsDiscoveredByPlayer = false;
 	IsDiscoveredByComputer = false;
 	IsInRecoilState = false;
-	IsInReadyState = false;
+	IsInActiveState = false;
 	IsLeader = false;
 	IsLocked = false;
 	IsOwnedByPlayer = false;
@@ -795,7 +797,7 @@ TechnoClass::TechnoClass(HousesType house) :
 	IsOwnedByPlayer = (house == PlayerPtr->Class->House);
 	IsDiscoveredByPlayer = false;
 	IsInRecoilState = false;
-	IsInReadyState = false;
+	IsInActiveState = false;
 	IsLeader = false;
 	IsLocked = false;
 	IsSecondShot = false;
@@ -1772,15 +1774,21 @@ void TechnoClass::AI(void)
 	// Nyerguds's C&C Patch Project v1.04
 	// Logic for popping up the Rocket Launcher weapon
 	/*
-	**	Handle ready state; if it changes, flag the unit to redraw.
+	**	Handle active state; if it changes, flag the unit to redraw.
+	**	A unit can go to active state instantly, but if it fired, then after
+	**	losing its target, it will remain in active state until it reloaded.
+	**	This means it remains in active state if it immediately finds a new target.
 	*/
-	bool hasTarget =
-		Target_Legal(TarCom) &&
-	 	((Techno_Type_Class()->Primary != WEAPON_NONE && In_Range(TarCom, 0)) ||
-		 (Techno_Type_Class()->Secondary != WEAPON_NONE && In_Range(TarCom, 1)));
-	if (IsInReadyState != hasTarget) {
-		IsInReadyState = hasTarget;
-		Mark(MARK_CHANGE_REDRAW);
+	TechnoTypeClass const * tt = Techno_Type_Class();
+	if (tt->IsActiveTargeter) {
+		bool hasTarget =
+						Target_Legal(TarCom) &&
+						((tt->Primary != WEAPON_NONE && In_Range(TarCom, 0)) ||
+						(tt->Secondary != WEAPON_NONE && In_Range(TarCom, 1)));
+		if (IsInActiveState != hasTarget && (!IsInActiveState || Arm == 0)) {
+			IsInActiveState = hasTarget;
+			Mark(MARK_CHANGE_REDRAW);
+		}
 	}
 
 	/*

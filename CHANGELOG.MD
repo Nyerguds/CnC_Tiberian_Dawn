@@ -1,4 +1,4 @@
-# Command & Conquer Patch Project - Version history
+﻿# Command & Conquer Patch Project - Version history
 
 Note that the older versions of this project (up to v1.03) were released as edited binaries. They can be found in the 'files' section of the [Command & Conquer Unofficial Patch 1.06 project on ModDb](https://www.moddb.com/mods/command-conquer-unofficial-patch-106/). They are the entries indicated as "C&C95 TUC quick fix patch".
 
@@ -79,7 +79,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * \[Remaster\] Added "D" as Deploy/Unload hotkey. Unlike in the Remaster, this works even when having multiple units selected, and will only affect the units that can perform the deploy action.
 * Added "E" as hotkey to select all units on the screen. This can be combined with the \[Shift\] key.
 * Added "T" as shortcut for selecting all units on the screen of the same types as the already-selected units. This can be combined with the \[Shift\] key. If the current screen contains no units of these types to select, the original selection is retained.
-* Added power balance info on the power output and building tooltips. This is enabled by default, but can be disabled by adding the option "NoPowerToolTips=true" in conquer.ini, under \[Options\].
+* Added power balance info on the power output and building tooltips. This is enabled by default, but can be disabled by adding the option "NoPowerToolTips=true" in conquer.ini, under \[Patch\].
 * The keyboard-given orders for Area Guard, Scatter, Deploy and Stop will now give unit responses.
 * Deploying units by clicking on them now works even if you have multiple units selected. This will not affect the other units in the selection.
 * \[Remaster\] Multiple infantry can now be loaded into a transport with a single click.
@@ -139,8 +139,8 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * \[Remaster\] Buildings that are in the process of selling and have already evacuated their crew will not spawn more infantry when destroyed.
 * The map selection's "Click to continue" end screen now filters on specific keyboard input ranges, allowing screen capture keys to still work on this scene.
 * Pressing \[Escape\] on the score or map screen will now speed up the animations to rapidly skip to the end state.
-* Implemented the Nod-specific map and score screen music. This is enabled by default, but can be disabled by adding the option "NoNodSceneMusic=true" in conquer.ini, under \[Options\].
-* Added \[Ctrl\]+\[S\] as in-game screenshot key. This does not work on menus or between missions, though.
+* Implemented the Nod-specific map and score screen music. This is enabled by default, but can be disabled by adding the option "NoNodSceneMusic=true" in conquer.ini, under \[Patch\].
+* Added \[Ctrl\]+\[S\] as in-game screenshot key. This does not work on menus or between missions, though. You can disable the UI message of the saved filename by adding the option "NoScreenshotMessage=true" in conquer.ini, under \[Patch\].
 * Added new option to enable the debug option IsBarOn, as "BarOn=harkonnen" ;)
 * Added the ability to customize color schemes from mission files using the "ColorScheme" / "SecondaryScheme" / "RadarScheme" options under the House ini sections.
 * Added support for extra destroyable triggers named UUUU, VVVV and WWWW.
@@ -168,5 +168,5 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Added "RemoveBuildExceptions" option for missions, to remove all singleplayer-specific build rules.
 * Fixed double-firing on aircraft getting disrupted by other orders, causing the aircraft to always fire per single shot.
 * Fixed Mammoth Tank showing its muzzle flashes on the wrong barrel.
-* Rocket Launchers will now pop up their launcher when they are in range of their target.
-* Fixed turret recoil logic. This was always in the game, but didn't get drawn correctly.
+* Rocket Launchers will now pop up their launcher when they are in range of their target. You can disable this behaviour by adding the option "NoLauncherPopup=true" in conquer.ini, under \[Patch\].
+* Re-enabled broken turret recoil logic. This was always in the game, but didn't get drawn correctly. You can disable this behaviour by adding the option "NoTurretRecoil=true" in conquer.ini, under \[Patch\].

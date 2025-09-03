@@ -63,7 +63,7 @@ static UnitTypeClass const UnitVisceroid(
 		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		true, 			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		false,			// Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
 		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
@@ -73,6 +73,7 @@ static UnitTypeClass const UnitVisceroid(
 		true, 			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
+		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
 		false,			// Can it be repaired in a repair facility?
 		false,			// Can the player construct or order this unit?
@@ -126,7 +127,7 @@ static UnitTypeClass const UnitFTank(
 		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		false,			// Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
 		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
@@ -136,6 +137,7 @@ static UnitTypeClass const UnitFTank(
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
+		false,			// Does this unit have a special active state when a target is in range?
 		true, 			// Fires multiple shots in quick succession?
 		true, 			// Can it be repaired in a repair facility?
 		true, 			// Can the player construct or order this unit?
@@ -187,7 +189,7 @@ static UnitTypeClass const UnitSTank(
 		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		false,			// Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
 		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
@@ -197,6 +199,7 @@ static UnitTypeClass const UnitSTank(
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
+		false,			// Does this unit have a special active state when a target is in range?
 		true, 			// Fires multiple shots in quick succession?
 		true, 			// Can it be repaired in a repair facility?
 		true, 			// Can the player construct or order this unit?
@@ -248,7 +251,7 @@ static UnitTypeClass const UnitLTank(
 		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		false,			// Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
 		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
@@ -258,6 +261,7 @@ static UnitTypeClass const UnitLTank(
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		true, 			// Is it equipped with a combat turret?
+		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
 		true, 			// Can it be repaired in a repair facility?
 		true, 			// Can the player construct or order this unit?
@@ -309,7 +313,7 @@ static UnitTypeClass const UnitMTank(
 		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		false,			// Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
 		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
@@ -319,6 +323,7 @@ static UnitTypeClass const UnitMTank(
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		true, 			// Is it equipped with a combat turret?
+		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
 		true, 			// Can it be repaired in a repair facility?
 		true, 			// Can the player construct or order this unit?
@@ -370,7 +375,7 @@ static UnitTypeClass const UnitHTank(
 		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		false,			// Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
 		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
@@ -380,6 +385,7 @@ static UnitTypeClass const UnitHTank(
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		true, 			// Is it equipped with a combat turret?
+		false,			// Does this unit have a special active state when a target is in range?
 		true, 			// Fires multiple shots in quick succession?
 		true, 			// Can it be repaired in a repair facility?
 		true, 			// Can the player construct or order this unit?
@@ -431,7 +437,7 @@ static UnitTypeClass const UnitMHQ(
 		false,			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		false,			// Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
 		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
@@ -441,6 +447,7 @@ static UnitTypeClass const UnitMHQ(
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
+		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
 		true, 			// Can it be repaired in a repair facility?
 		true, 			// Can the player construct or order this unit?
@@ -493,7 +500,7 @@ static UnitTypeClass const UnitHover(
 		false,			// Is a leader type?
 		false,			// Only has eight facings?
 		true, 			// Always use the given name for the vehicle?
-		true, 			//	Is this a typical transport vehicle?
+		true, 			// Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
 		false,			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
@@ -504,6 +511,7 @@ static UnitTypeClass const UnitHover(
 		true, 			// Is it insignificant (won't be announced)?
 		true, 			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
+		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
 		false,			// Can it be repaired in a repair facility?
 		false,			// Can the player construct or order this unit?
@@ -556,7 +564,7 @@ static UnitTypeClass const UnitSAM(
 		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		false,			// Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
 		false,			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
@@ -566,6 +574,7 @@ static UnitTypeClass const UnitSAM(
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		true, 			// Is it equipped with a combat turret?
+		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
 		true, 			// Can it be repaired in a repair facility?
 		true, 			// Can the player construct or order this unit?
@@ -618,7 +627,7 @@ static UnitTypeClass const UnitArty(
 		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		false,			// Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
 		false,			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
@@ -628,6 +637,7 @@ static UnitTypeClass const UnitArty(
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
+		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
 		true, 			// Can it be repaired in a repair facility?
 		true, 			// Can the player construct or order this unit?
@@ -679,7 +689,7 @@ static UnitTypeClass const UnitHarvester(
 		false,			// Is a leader type?
 		false,			// Only has eight facings?
 		true, 			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		false,			// Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
 		true, 			// Can this unit squash infantry?
 		true, 			// Does this unit harvest Tiberium?
@@ -689,6 +699,7 @@ static UnitTypeClass const UnitHarvester(
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
+		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
 		true, 			// Can it be repaired in a repair facility?
 		true, 			// Can the player construct or order this unit?
@@ -742,7 +753,7 @@ static UnitTypeClass const UnitMCV(
 		false,			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		false,			// Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
 		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
@@ -752,6 +763,7 @@ static UnitTypeClass const UnitMCV(
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
+		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
 		false,			// Can it be repaired in a repair facility?
 		true, 			// Can the player construct or order this unit?
@@ -804,7 +816,7 @@ static UnitTypeClass const UnitJeep(
 		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		false,			// Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
 		false,			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
@@ -814,6 +826,7 @@ static UnitTypeClass const UnitJeep(
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		true, 			// Is it equipped with a combat turret?
+		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
 		true, 			// Can it be repaired in a repair facility?
 		true, 			// Can the player construct or order this unit?
@@ -865,7 +878,7 @@ static UnitTypeClass const UnitBuggy(
 		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		false,			// Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
 		false,			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
@@ -875,6 +888,7 @@ static UnitTypeClass const UnitBuggy(
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		true, 			// Is it equipped with a combat turret?
+		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
 		true, 			// Can it be repaired in a repair facility?
 		true, 			// Can the player construct or order this unit?
@@ -926,7 +940,7 @@ static UnitTypeClass const UnitBike(
 		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		false,			// Is this a typical transport vehicle?
 		true, 			// Can it be crushed by a heavy vehicle?
 		false,			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
@@ -936,6 +950,7 @@ static UnitTypeClass const UnitBike(
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
+		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
 		true, 			// Can it be repaired in a repair facility?
 		true, 			// Can the player construct or order this unit?
@@ -991,7 +1006,7 @@ static UnitTypeClass const UnitMLRS(
 		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		false,			// Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
 		false,			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
@@ -1001,6 +1016,7 @@ static UnitTypeClass const UnitMLRS(
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		true, 			// Is it equipped with a combat turret?
+		true, 			// Does this unit have a special active state when a target is in range?
 		true, 			// Fires multiple shots in quick succession?
 		true, 			// Can it be repaired in a repair facility?
 		true, 			// Can the player construct or order this unit?
@@ -1053,7 +1069,7 @@ static UnitTypeClass const UnitAPC(
 		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		false,			// Always use the given name for the vehicle?
-		true, 			//	Is this a typical transport vehicle?
+		true, 			// Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
 		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
@@ -1063,6 +1079,7 @@ static UnitTypeClass const UnitAPC(
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
+		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
 		true, 			// Can it be repaired in a repair facility?
 		true, 			// Can the player construct or order this unit?
@@ -1115,7 +1132,7 @@ static UnitTypeClass const UnitGunBoat(
 		true, 			// Is a leader type?
 		false,			// Only has eight facings?
 		true, 			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		false,			// Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
 		false,			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
@@ -1125,6 +1142,7 @@ static UnitTypeClass const UnitGunBoat(
 		true, 			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		true, 			// Is it equipped with a combat turret?
+		false,			// Does this unit have a special active state when a target is in range?
 		true, 			// Fires multiple shots in quick succession?
 		false,			// Can it be repaired in a repair facility?
 		false,			// Can the player construct or order this unit?
@@ -1177,7 +1195,7 @@ static UnitTypeClass const UnitTric(
 		true, 			// Is a leader type?
 		true, 			// Only has eight facings?
 		true, 			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		false,			// Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
 		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
@@ -1187,6 +1205,7 @@ static UnitTypeClass const UnitTric(
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
+		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
 		false,			// Can it be repaired in a repair facility?
 		false,			// Can the player construct or order this unit?
@@ -1231,7 +1250,7 @@ static UnitTypeClass const UnitTrex(
 		true, 			// Is a leader type?
 		true, 			// Only has eight facings?
 		true, 			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		false,			// Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
 		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
@@ -1241,6 +1260,7 @@ static UnitTypeClass const UnitTrex(
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
+		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
 		false,			// Can it be repaired in a repair facility?
 		false,			// Can the player construct or order this unit?
@@ -1285,7 +1305,7 @@ static UnitTypeClass const UnitRapt(
 		true, 			// Is a leader type?
 		true, 			// Only has eight facings?
 		true, 			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		false,			// Is this a typical transport vehicle?
 		true, 			// Can it be crushed by a heavy vehicle?
 		false,			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
@@ -1295,6 +1315,7 @@ static UnitTypeClass const UnitRapt(
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
+		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
 		false,			// Can it be repaired in a repair facility?
 		false,			// Can the player construct or order this unit?
@@ -1339,7 +1360,7 @@ static UnitTypeClass const UnitSteg(
 		true, 			// Is a leader type?
 		true, 			// Only has eight facings?
 		true, 			// Always use the given name for the vehicle?
-		false,			//	Is this a typical transport vehicle?
+		false,			// Is this a typical transport vehicle?
 		false,			// Can it be crushed by a heavy vehicle?
 		true, 			// Can this unit squash infantry?
 		false,			// Does this unit harvest Tiberium?
@@ -1349,6 +1370,7 @@ static UnitTypeClass const UnitSteg(
 		false,			// Is it insignificant (won't be announced)?
 		false,			// Is it immune to normal combat damage?
 		false,			// Is it equipped with a combat turret?
+		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
 		false,			// Can it be repaired in a repair facility?
 		false,			// Can the player construct or order this unit?
@@ -1449,6 +1471,7 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 				bool is_insignificant,
 				bool is_immune,
 				bool is_turret_equipped,
+				bool is_active_targeter,
 				bool is_twoshooter,
 				bool is_repairable,
 				bool is_buildable,
@@ -1498,6 +1521,7 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 										false,
 										is_twoshooter,
 										is_turret_equipped,
+										is_active_targeter,
 										is_repairable,
 										is_buildable,
 										is_crew,

@@ -105,9 +105,10 @@ class TechnoClass :	public RadioClass,
 
 		/*
 		**	Some objects have a special state shown only when a target is acquired
-		**	and in range. This keeps track of that state.
+		**	and in range. This keeps track of that state, so a redraw can be forced
+		**	when it changes.
 		*/
-		unsigned IsInReadyState:1;
+		unsigned IsInActiveState:1;
 
 		/*
 		**	If this unit is "loosely attached" to another unit it is given special

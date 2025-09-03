@@ -447,6 +447,12 @@ class TechnoTypeClass : public ObjectTypeClass
 		unsigned IsTurretEquipped:1;
 
 		/*
+		**	Does this object have a special active state when its target is in range?
+		**	This will affect whether the IsInActiveState logic is executed for this object.
+		*/
+		unsigned IsActiveTargeter:1;
+
+		/*
 		**	Certain units and buildings fire two shots in quick succession. If this is
 		**	the case, then this flag is true.
 		*/
@@ -570,6 +576,7 @@ class TechnoTypeClass : public ObjectTypeClass
 				bool is_theater,
 				bool is_twoshooter,
 				bool is_turret_equipped,
+				bool is_active_targeter,
 				bool is_repairable,
 				bool is_buildable,
 				bool is_crew,
@@ -1056,6 +1063,7 @@ class UnitTypeClass : public TechnoTypeClass
 						bool is_insignificant,
 						bool is_immune,
 						bool is_turret_equipped,
+						bool is_active_targeter,
 						bool is_twoshooter,
 						bool is_repairable,
 						bool is_buildable,
