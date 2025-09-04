@@ -29,7 +29,7 @@ These hotkeys have been added or changed:
 * **\[T\]**: Select all units on the current screen of the type(s) you already have selected. This can be combined with the \[Shift\] key to add these to the selection. If no units of the selected types were found on the screen, the old selection is retained.
 * **\[Ctrl\]+\[Alt\]**: This modifier key combination for mouse clicks already existed to target objects, but can now be targeted at the ground, as targeted version of the Area Guard command. As with the hotkey, this also works for harvesters. Note that some units, such as Commandos and Helicopters, do not support Area Guard orders at all.
 * **\[Alt\]+\[Shift\]+\[0-9\]**: Adds the numbered team to the selection and then centers on the selection.
-* **\[Ctrl\]+\[S\]**: Saves a screenshot to the game folder, in PCX format. A "click" sound will indicate that a screenshot was taken, and a message will show what filename it was saved to. The message can be disabled by adding "NoScreenshotMessage" into conquer.ini, under \[Patch\].
+* **\[Ctrl\]+\[S\]**: Saves a screenshot to the game folder, in PCX format. A "click" sound will indicate that a screenshot was taken, and a message will show what filename it was saved to. The message can be disabled by adding "NoScreenshotMessage=true" into conquer.ini, under \[Patch\].
 
 General upgrades to selection and giving orders:
 
@@ -44,7 +44,7 @@ General upgrades to selection and giving orders:
 Other control upgrades:
 
 * You can now press \[Escape\] to fast-forward the animations on the map selection screen and the score screen.
-* You can use the mouse scroll wheel to go through the sidebar items. This will scroll the specific strip you're hovering the mouse over:
+* You can use the mouse scroll wheel to go through the sidebar items. This will scroll the specific strip you're hovering the mouse over.
 * Item lists such as the New Missions menu and the music list now support PageUp, PageDown, Home, End, and the mouse scroll wheel.
 
 ## Added features that can be disabled
@@ -168,3 +168,4 @@ Craters can be added to a mission in the \[Smudge\] section, and this system nor
 ## Full list of changes
 
 See [CHANGELOG.MD](CHANGELOG.MD)
+
