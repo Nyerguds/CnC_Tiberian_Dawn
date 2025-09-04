@@ -608,6 +608,7 @@ AnimClass::AnimClass(AnimType animnum, COORDINATE coord, unsigned char timedelay
 	IsToDelete = false;
 	IsBrandNew = true;
 #ifdef OBSOLETE
+	// MM 20250701: Disabled; this is not used anywhere at all
 	IsAlternate = alt;
 #endif
 	IsInvisible = false;

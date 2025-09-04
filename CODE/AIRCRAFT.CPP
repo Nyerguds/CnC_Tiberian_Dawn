@@ -1488,7 +1488,8 @@ bool AircraftClass::Exit_Object(TechnoClass * unit)
 	/*
 	**	Find a free cell to drop the unit off at.
 	*/
-	for (FacingType face = FACING_N; face < FACING_COUNT; face++) {
+	FacingType face;
+	for (face = FACING_N; face < FACING_COUNT; face++) {
 		cell = Adjacent_Cell(Coord_Cell(Coord), _toface[face]);
 		if (unit->Can_Enter_Cell(cell) == MOVE_OK) break;
 	}
@@ -1866,17 +1867,28 @@ void AircraftClass::Enter_Idle_Mode(bool )
 				if (Ammo == 0 && !House->IsHuman && IsALoaner) {
 					mission = MISSION_RETREAT;
 				} else {
-
+					// Nyerguds's C&C Patch Project v1.04
+					// Fixes bug that helis land on the corner of the helipad when given
+					// a Stop order while already returning. Copied from the remaster.
 					/*
-					**	Normal aircraft try to find a good landing spot to rest.
+					**	Continue with the current helipad if there is one.
 					*/
-					BuildingClass * building = Find_Docking_Bay(STRUCT_HELIPAD, false);
-					Assign_Destination(TARGET_NONE);
-					if (building && Transmit_Message(RADIO_HELLO, building) == RADIO_ROGER) {
-						mission = MISSION_ENTER;
+					if (!In_Radio_Contact() ||
+						Contact_With_Whom()->What_Am_I() != RTTI_BUILDING ||
+						*((BuildingClass*)Contact_With_Whom()) != STRUCT_HELIPAD) {
+						/*
+						**	Normal aircraft try to find a good landing spot to rest.
+						*/
+						BuildingClass * building = Find_Docking_Bay(STRUCT_HELIPAD, false);
+						Assign_Destination(TARGET_NONE);
+						if (building && Transmit_Message(RADIO_HELLO, building) == RADIO_ROGER) {
+							mission = MISSION_ENTER;
+						} else {
+							Assign_Destination(Good_LZ());
+							mission = MISSION_MOVE;
+						}
 					} else {
-						Assign_Destination(Good_LZ());
-						mission = MISSION_MOVE;
+						mission = MISSION_ENTER;
 					}
 				}
 			} else {
@@ -2015,8 +2027,22 @@ void AircraftClass::Active_Click_With(ActionType action, ObjectClass * object)
 {
 	Validate();
 	// Nyerguds's TUC Quick Fix Patch v1.03: aircraft-dock-unload
-	// Nothing in this function was any different from the default behaviour, and, in fact
+	// Nothing here any different from the default FootClass behaviour, and, in fact
 	// the default behaviour always overrode the specific code here in the retail game.
+#ifdef OBSOLETE
+	switch (action) {
+		case ACTION_ENTER:
+			Player_Assign_Mission(MISSION_ENTER, TARGET_NONE, object->As_Target());
+			break;
+
+		case ACTION_SELF:
+			Player_Assign_Mission(MISSION_UNLOAD, TARGET_NONE, TARGET_NONE);
+			break;
+
+		default:
+			break;
+	}
+#endif
 	FootClass::Active_Click_With(action, object);
 }
 
@@ -2172,6 +2198,26 @@ ActionType AircraftClass::What_Action(CELL cell) const
 	return(action);
 }
 
+
+/***********************************************************************************************
+ * AircraftClass::Can_Capture -- Queries whether this object can be captured by other players. *
+ *                                                                                             *
+ *    This routine is used to determine if this object can be taken over by a different        *
+ *    player. For aircraft, this only applied to empty transport helicopters.                  *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Can this object be captured? Typically, the answer is no.                          *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   09/04/2025 MM : Created.                                                                  *
+ *=============================================================================================*/
+bool AircraftClass::Can_Capture(void) const
+{
+	return !Class->IsFixedWing && Class->IsTransporter && Pip_Count() == 0;
+}
 
 /***********************************************************************************************
  * AircraftClass::Pose_Dir -- Fetches the natural landing facing.                              *
@@ -2347,14 +2393,13 @@ int AircraftClass::Mission_Attack(void)
 					}
 					Fire_At(TarCom, 0);
 					Map[::As_Cell(TarCom)].Incoming(Coord, true);
-					Status = FIRE_AT_TARGET2;
-					break;
+					// Fall through to ammo check.
 
 				default:
-					if (!Ammo) {
-						Status = RETURN_TO_BASE;
-					} else {
+					if (Ammo) {
 						Status = FIRE_AT_TARGET2;
+					} else {
+						Status = RETURN_TO_BASE;
 					}
 					break;
 			}
@@ -2387,19 +2432,13 @@ int AircraftClass::Mission_Attack(void)
 					}
 					Fire_At(TarCom, 0);
 					Map[::As_Cell(TarCom)].Incoming(Coord, true);
+					// Fall through to ammo check.
 
+				default:
 					if (Ammo) {
 						Status = PICK_ATTACK_LOCATION;
 					} else {
 						Status = RETURN_TO_BASE;
-					}
-					break;
-
-				default:
-					if (!Ammo) {
-						Status = RETURN_TO_BASE;
-					} else {
-						Status = PICK_ATTACK_LOCATION;
 					}
 					break;
 			}
@@ -2412,6 +2451,10 @@ int AircraftClass::Mission_Attack(void)
 			// Nyerguds's C&C Patch Project v1.04
 			// Don't land on the helipad facing the direction of the last target.
 			Assign_Target(TARGET_NONE);
+			// Reset this.
+			if (Techno_Type_Class()->IsTwoShooter && IsSecondShot) {
+				IsSecondShot = false;
+			}
 			Assign_Destination(TARGET_NONE);
 			Enter_Idle_Mode();
 			break;
@@ -2479,7 +2522,8 @@ TARGET AircraftClass::New_LZ(TARGET oldlz) const
  *    This routine is used to find the exact coordinate where the bullet should appear if      *
  *    fired from this object.                                                                  *
  *                                                                                             *
- * INPUT:   which -- Which weapon to consider.                                                 *
+ * INPUT:   totarget -- if given, the facing will always be assumed to be towards this         *
+ *                      target. This is used to perform facing-independent range checks.       *
  *                                                                                             *
  * OUTPUT:  Returns with the coordinate of where the projectile will appear if fired.          *
  *                                                                                             *
@@ -2488,13 +2532,30 @@ TARGET AircraftClass::New_LZ(TARGET oldlz) const
  * HISTORY:                                                                                    *
  *   06/15/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-COORDINATE AircraftClass::Fire_Coord(int ) const
+COORDINATE AircraftClass::Fire_Coord(int /*which*/, TARGET totarget) const
 {
 	Validate();
-	return(Coord_Move(Coord_Add(XYP_Coord(0, -Altitude), Coord), SecondaryFacing, 0x040));
+	DirType facing = (Target_Legal(totarget)) ? ::Direction(Coord, As_Coord(totarget)) : SecondaryFacing.Current();
+	return(Coord_Move(Coord_Add(XYP_Coord(0, -Altitude), Coord), facing, 0x040));
 }
 
 
+/***********************************************************************************************
+ * AircraftClass::Target_Coord -- Fetches the coordinate if this aircraft is a target.         *
+ *                                                                                             *
+ *    When the coordinate to use when firing at this aircraft is needed, this routine will     *
+ *    provide it. Normally this just returns the center of the aircraft, but if the cell of    *
+ *    that center point is not occupied by the aircraft, a better one is found.                *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with the coordinate to fire at if this object is a target.                 *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   ??/??/???? ?? : Created.                                                                  *
+ *=============================================================================================*/
 COORDINATE AircraftClass::Target_Coord() const
 {
 	Validate();
@@ -2837,29 +2898,78 @@ TARGET AircraftClass::Good_Fire_Location(TARGET target) const
 	if (Target_Legal(target)) {
 		int range = Weapon_Range(0);
 		COORDINATE tcoord = As_Coord(target);
+
+#ifdef EXPERIMENTAL
+		// Nyerguds's C&C Patch Project v1.04
+		// Allow aircraft to find a position in the shroud to fire from,
+		// as long as the actual target is at least partially visible.
+		CELL currcell = Coord_Cell(tcoord);
+		ObjectClass * obj = As_Object(target);
+		if (obj && obj->IsActive) {
+			bool anyVisible = false;
+			// Get top left corner, walk the occupy list.
+			CELL objcell = Coord_Cell(obj->Coord);
+			short const *list = obj->Occupy_List();
+			while (*list != REFRESH_EOL) {
+				CELL newcell = objcell + *list++;
+				if (Map.In_Radar(newcell) && Map[newcell].IsVisible) {
+					anyVisible = true;
+				}
+			}
+			if (!anyVisible) {
+				return(TARGET_NONE);
+			}
+		} else if (!Map.In_Radar(currcell) || !Map[currcell].IsVisible) {
+				return(TARGET_NONE);
+		}
+#endif
+
 		CELL bestcell = 0;
 		CELL best2cell = 0;
 		int bestval = -1;
 		int best2val = -1;
 
-		for (int r = range-0x0180; r > 0x0180; r -= 0x0100) {
-			for (int face = 0; face < 255; face += 16) {
-				COORDINATE newcoord = Coord_Move(tcoord, (DirType)face, r);
-				CELL newcell = Coord_Cell(newcoord);
-
-				// Nyerguds's C&C Patch Project v1.04
-				// Do not allow aircraft to enter shroud in multiplay. It can be abused.
-				if (Map.In_Radar(newcell) && (/*GameToPlay != GAME_NORMAL ||*/ Map[newcell].IsVisible) && Cell_Seems_Ok(newcell, true)) {
-					int dist = Distance(newcoord);
-					if (bestval == -1 || dist < bestval) {
-						best2val = bestval;
-						best2cell = bestcell;
-						bestval = dist;
-						bestcell = newcell;
+		// Nyerguds's C&C Patch Project v1.04
+		// If it is too crowded, the aircraft will make a second attempt, where it
+		// considers retaining its current spot. This reduces aircraft promptly
+		// deciding to return home after firing only a single shot.
+		bool edgetouched = false;
+		for (int noshuffle = 0; noshuffle < 2; noshuffle++) {
+			// If edges were touched in the first scan, compensate by allowing aircraft
+			// to come closer. Map edge should not limit the size of the airforce.
+			int rangemin = edgetouched ? 0x0080 : 0x0180;
+			for (int r = range-0x0180; r > rangemin; r -= 0x0100) {
+				for (int face = 0; face < 255; face += 16) {
+					COORDINATE newcoord = Coord_Move(tcoord, (DirType)face, r);
+					if (Coord_X(newcoord) < 0 || Coord_X(newcoord) / 0x100 > MAP_CELL_W
+						|| Coord_Y(newcoord) < 0 || Coord_Y(newcoord) / 0x100 > MAP_CELL_H) {
+							edgetouched = true;
+							continue;
+						}
+					CELL newcell = Coord_Cell(newcoord);
+					if ((unsigned)newcell >= MAP_CELL_TOTAL) {
+						edgetouched = true;
+						continue;
+					}
+					bool hasSpace = Map.In_Radar(newcell) && (GameToPlay != GAME_NORMAL || Map[newcell].IsVisible)	;
+					if (!hasSpace) {
+						edgetouched = true;
+					} else if (Cell_Seems_Ok(newcell, noshuffle == 0)) {
+						int dist = Distance(newcoord);
+						if (bestval == -1 || dist < bestval) {
+							best2val = bestval;
+							best2cell = bestcell;
+							bestval = dist;
+							bestcell = newcell;
+						}
 					}
 				}
+				if (bestval != -1) break;
 			}
-			if (bestval != -1) break;
+			// If no edges are touched, don't repeat the process?
+			//if (!edgetouched) {
+			//	break;
+			//}
 		}
 
 		if (best2val == -1) {
@@ -3037,11 +3147,18 @@ int AircraftClass::Mission_Enter(void)
 				int distance = Process_Fly_To(true);
 
 				if (distance < 0x0080) {
+#ifdef OBSOLETE
+					// Nyerguds's C&C Patch Project v1.04
+					// Don't land on the helipad facing the direction of the last target.
+					// No idea why this was ever a thing. It only happens as weird edge case
+					// when they run out of ammo, but the target is irreleant then anyway.
 					if (Target_Legal(TarCom)) {
 						SecondaryFacing.Set_Desired(Direction(TarCom));
 					} else {
 						SecondaryFacing.Set_Desired(Pose_Dir());
 					}
+#endif
+					SecondaryFacing.Set_Desired(Pose_Dir());
 
 					if (distance < 0x0010) {
 						Status = LANDING;

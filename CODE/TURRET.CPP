@@ -37,8 +37,8 @@
  *   TurretClass::Can_Fire -- Determines if turret can fire upon target.                       *
  *   TurretClass::Debug_Dump -- Debug printing of turret values.                               *
  *   TurretClass::Fire_At -- Try to fire upon the target specified.                            *
- *   TurretClass::Fire_Coord -- Determines the coorindate that projectile would appear.        *
- *   TurretClass::Fire_Direction -- Determines the directinon of firing.                       *
+ *   TurretClass::Fire_Coord -- Determines the coordinate that projectile would appear.        *
+ *   TurretClass::Fire_Direction -- Determines the direction of firing.                        *
  *   TurretClass::Ok_To_Move -- Queries whether the vehicle can move.                          *
  *   TurretClass::TurretClass -- Normal constructor for the turret class.                      *
  *   TurretClass::TurretClass -- The default constructor for turret class objects.             *
@@ -348,13 +348,16 @@ FireErrorType TurretClass::Can_Fire(TARGET target, int which) const
 
 
 /***********************************************************************************************
- * TurretClass::Fire_Coord -- Determines the coorindate that projectile would appear.          *
+ * TurretClass::Fire_Coord -- Determines the coordinate that projectile would appear.          *
  *                                                                                             *
  *    Use this routine to determine the exact coordinate that a projectile would appear if it  *
  *    were fired from this unit. For units with turrets, typically, this would be at the end   *
  *    of the barrel.                                                                           *
  *                                                                                             *
- * INPUT:   none                                                                               *
+ * INPUT:   which    -- Which weapon to use in the attack. 0=primary, 1=secondary.             *
+ *                                                                                             *
+ *          totarget -- if given, the facing will always be assumed to be towards this         *
+ *                      target. This is used to perform facing-independent range checks.       *
  *                                                                                             *
  * OUTPUT:  Returns with coordinate of where a projectile should appear if this unit were      *
  *          to fire one.                                                                       *
@@ -364,14 +367,16 @@ FireErrorType TurretClass::Can_Fire(TARGET target, int which) const
  * HISTORY:                                                                                    *
  *   12/28/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-COORDINATE TurretClass::Fire_Coord(int which) const
+COORDINATE TurretClass::Fire_Coord(int which, TARGET totarget) const
 {
 	COORDINATE coord = Center_Coord();
 	int dist = 0;
 	int lateral = 0;
 	DirType dir = PrimaryFacing.Current();
 
-	if (Class->IsTurretEquipped) {
+	if (Target_Legal(totarget)) {
+		dir = ::Direction(coord, As_Coord(totarget));
+	} else if (Class->IsTurretEquipped) {
 		dir = SecondaryFacing.Current();
 	}
 
@@ -465,7 +470,7 @@ bool TurretClass::Unlimbo(COORDINATE coord, DirType dir)
 
 
 /***********************************************************************************************
- * TurretClass::Fire_Direction -- Determines the directinon of firing.                         *
+ * TurretClass::Fire_Direction -- Determines the direction of firing.                          *
  *                                                                                             *
  *    This routine will return with the facing that a projectile will travel if it was         *
  *    fired at this instant. The facing should match the turret facing for those units         *

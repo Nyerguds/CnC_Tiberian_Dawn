@@ -3464,6 +3464,40 @@ void UnitClass::Response_Attack(void)
 
 
 /***********************************************************************************************
+ * UnitClass::Player_Assign_Mission -- Assigns a mission as result of player input.            *
+ *                                                                                             *
+ *    This routine is called when the mission for a unit needs to change as a result of        *
+ *    player input. The basic operation would be to queue the event and let the action         *
+ *    occur at the frame dictated by the queing system. However, if a voice response is        *
+ *    indicated, then perform it at this time. This will give a greater illusion of            *
+ *    immediate response.                                                                      *
+ *                                                                                             *
+ * INPUT:   order       -- The mission order to assign to this object.                         *
+ *                                                                                             *
+ *          target      -- The target of this object. This will be used for combat and attack. *
+ *                                                                                             *
+ *          destination -- The movement destination for this object.                           *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   04/09/2025 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void UnitClass::Player_Assign_Mission(MissionType mission, TARGET target, TARGET destination)
+{
+	Validate();
+	// Nyerguds's C&C Patch Project v1.04
+	// Copied from Remaster: harvest logic upgrade.
+	if (mission == MISSION_HARVEST) {
+		ArchiveTarget = TARGET_NONE;
+	}
+	TarComClass::Player_Assign_Mission(mission, target, destination);
+}
+
+
+/***********************************************************************************************
  * UnitClass::What_Action -- Determines what action would occur if clicked on object.          *
  *                                                                                             *
  *    Use this function to determine what action would likely occur if the specified object    *

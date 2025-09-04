@@ -408,7 +408,7 @@ int MapClass::Cell_Distance(CELL cell1, CELL cell2)
  *=============================================================================================*/
 bool MapClass::In_Radar(CELL cell) const
 {
-	if (cell & 0xF000) return(false);
+	if ((unsigned)cell >= MAP_CELL_TOTAL) return(false);
 	return((unsigned)(Cell_X(cell) - MapCellX) < (unsigned)MapCellWidth && (unsigned)(Cell_Y(cell) - MapCellY) < (unsigned)MapCellHeight);
 }
 

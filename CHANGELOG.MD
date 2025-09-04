@@ -170,3 +170,10 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Fixed Mammoth Tank showing its muzzle flashes on the wrong barrel.
 * Rocket Launchers will now pop up their launcher when they are in range of their target. You can disable this behaviour by adding the option "NoLauncherPopup=true" in conquer.ini, under \[Patch\].
 * Re-enabled broken turret recoil logic. This was always in the game, but didn't get drawn correctly. You can disable this behaviour by adding the option "NoTurretRecoil=true" in conquer.ini, under \[Patch\].
+* \[Remaster\] Infantry in Area Guard mode no longer freezes in place, but will instead animate normally.
+* \[Remaster\] Fixed range checks to be independent from the direction the unit/building is currently facing.
+* Fixed unarmed civilians giving an Attack cursor when targeting enemies.
+* \[Remaster\] Any building will now be considered capturable in singleplayer if it has a trigger attached that activates when it is captured. This applies to both the "Cap=Win/Des=Lose" action, and the "Player Enters" event.
+* \[Remaster\] Fixed bug where pressing \[S\] on an aircraft that was already returning to its helipad would make it land on an incorrect spot on the pad.
+* Reduced the behaviour where helicopters return home after barely attacking because they find no place to shuffle to. If the air is too crowded, they will consider staying in place, and if the target is too close to the map edge or shroud and that limits the available airspace, they are now allowed to come closer to compensate.
+* Aircraft will now always immediately return to base when they run out of ammo mid-salvo.

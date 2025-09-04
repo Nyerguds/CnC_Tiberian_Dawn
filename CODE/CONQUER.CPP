@@ -3317,6 +3317,8 @@ void Handle_Team(int team, int action)
 			// The whole following check on the first selected item is unreliable nonsense, and the proper equivalent,
 			// namely a check looping through all team members, wouldn't be any more efficient than just calling the
 			// unselect in the first place. Additionally, this fails when a building is selected. So, just call it.
+			// The only side effect of this is that pressing a team number twice will make them respond twice, which
+			// is honestly fine.
 			if (action == 0 || action == 3) {
 				/*
 				**	Not additive selection.

@@ -251,7 +251,7 @@ TechnoClass * CellClass::Cell_Techno(int x, int y) const
 
 	if (Cell_Occupier()) {
 		object = Cell_Occupier();
-		while (object) {
+		while (object && object->IsActive) {
 			if (object->Is_Techno()) {
 				COORDINATE		coord;		// Coordinate relative to cell corner.
 				long		dist;
@@ -288,7 +288,7 @@ ObjectClass * CellClass::Cell_Find_Object(RTTIType rtti) const
 	Validate();
 	ObjectClass * object = Cell_Occupier();
 
-	while (object) {
+	while (object && object->IsActive) {
 		if (object->What_Am_I() == rtti) {
 			return(object);
 		}
@@ -1888,7 +1888,7 @@ CellClass const & CellClass::Adjacent_Cell(FacingType face) const
 	CellClass const * ptr = this + AdjacentCell[face];
 	int cell = ptr->Cell_Number();
 	
-	if (cell < 0 || cell > MAP_CELL_TOTAL) return(*this);
+	if ((unsigned)cell >= MAP_CELL_TOTAL) return(*this);
 
 	// prevent wraparound
 	int currx = Cell_Number() % MAP_CELL_W;

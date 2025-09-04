@@ -89,6 +89,7 @@ class AircraftClass : public FootClass, public FlyClass
 		virtual ObjectTypeClass const & Class_Of(void) const {return *Class;};
 		virtual ActionType What_Action(ObjectClass * object) const;
 		virtual ActionType What_Action(CELL cell) const;
+		virtual bool Can_Capture(void) const;
 		virtual DirType Desired_Load_Dir(ObjectClass * passenger, CELL & moveto) const;
 		virtual int Pip_Count(void) const;
 		TARGET  Good_Fire_Location(TARGET target) const;
@@ -108,7 +109,7 @@ class AircraftClass : public FootClass, public FlyClass
 		**	combat purposes.
 		*/
 		virtual COORDINATE Sort_Y(void) const;
-		virtual COORDINATE Fire_Coord(int which) const;
+		virtual COORDINATE Fire_Coord(int /*which*/, TARGET totarget = TARGET_NONE) const;
 		virtual COORDINATE Target_Coord() const;
 
 		/*

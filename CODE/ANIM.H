@@ -135,6 +135,7 @@ class AnimClass : public ObjectClass, private StageClass {
 		unsigned IsBrandNew:1;
 
 #ifdef OBSOLETE
+		// MM 20250701: Disabled; this is not used anywhere at all
 		// Use alternate color when drawing?
 		unsigned IsAlternate:1;
 #endif

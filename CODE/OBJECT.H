@@ -152,6 +152,7 @@ class ObjectClass : public AbstractClass
 		virtual int Full_Name(void) const;
 		virtual bool Can_Repair(void) const;
 		virtual bool Can_Demolish(void) const;
+		virtual bool Can_Capture(void) const;
 		virtual bool Can_Player_Fire(void) const;
 		virtual bool Can_Player_Move(void) const;
 
@@ -164,7 +165,7 @@ class ObjectClass : public AbstractClass
 		virtual COORDINATE Center_Coord(void) const;
 		virtual COORDINATE Render_Coord(void) const;
 		virtual COORDINATE Sort_Y(void) const;
-		virtual COORDINATE Fire_Coord(int ) const;
+		virtual COORDINATE Fire_Coord(int /*which*/, TARGET /*totarget*/ = TARGET_NONE) const;
 
 		/*
 		**	Object entry and exit from the game system.

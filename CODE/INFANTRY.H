@@ -133,7 +133,7 @@ class InfantryClass : public FootClass
 		**	Coordinate inquiry functions. These are used for both display and
 		**	combat purposes.
 		*/
-		virtual COORDINATE Fire_Coord(int which) const;
+		virtual COORDINATE Fire_Coord(int /*which*/, TARGET /*totarget*/ = TARGET_NONE) const;
 
 		/*
 		**	Object entry and exit from the game system.

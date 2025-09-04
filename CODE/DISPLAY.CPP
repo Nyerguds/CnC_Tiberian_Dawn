@@ -42,7 +42,7 @@
  *   DisplayClass::Cursor_Mark -- Set or resets the cursor display flag bits.                  *
  *   DisplayClass::DisplayClass -- Default constructor for display class.                      *
  *   DisplayClass::Draw_It -- Draws the tactical map.                                          *
- *   DisplayClass::Flag_To_Redraw -- Flags the display so that it will be redrawn as soon as poss*
+ *   DisplayClass::Flag_To_Redraw -- Flags the display so that it will be redrawn as soon as po*
  *   DisplayClass::Get_Occupy_Dimensions -- computes width & height of the given occupy list   *
  *   DisplayClass::Init_Clear -- Clears the display to a known state.                          *
  *   DisplayClass::Init_IO -- Creates the map's button list                                    *
@@ -55,8 +55,8 @@
  *   DisplayClass::Mouse_Right_Press -- Handles the right mouse button press.                  *
  *   DisplayClass::Next_Object -- Searches for next object on display.                         *
  *   DisplayClass::One_Time -- Performs any special one time initializations.                  *
- *   DisplayClass::Passes_Proximity_Check -- Determines if building placement is near friendly sq*
- *   DisplayClass::Pixel_To_Coord -- converts screen coord to COORDINATE                            *
+ *   DisplayClass::Passes_Proximity_Check -- Determines if building placement is near friendly *
+ *   DisplayClass::Pixel_To_Coord -- converts screen coord to COORDINATE                       *
  *   DisplayClass::Read_INI -- Reads map control data from INI file.                           *
  *   DisplayClass::Redraw_Icons -- Draws all terrain icons necessary.                          *
  *   DisplayClass::Redraw_Shadow -- Draw the shadow overlay.                                   *
@@ -2370,13 +2370,13 @@ ObjectClass * DisplayClass::Prev_Object(ObjectClass * object)
 
 
 /***********************************************************************************************
- * DisplayClass::Pixel_To_Coord -- converts screen coord to COORDINATE                              *
+ * DisplayClass::Pixel_To_Coord -- converts screen coord to COORDINATE                         *
  *                                                                                             *
  * INPUT:                                                                                      *
  *      x,y      pixel coordinates to convert                                                  *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *      COORDINATE of pixel                                                                         *
+ *      COORDINATE of pixel                                                                    *
  *                                                                                             *
  * WARNINGS:                                                                                   *
  *      none.                                                                                  *
@@ -2389,7 +2389,7 @@ ObjectClass * DisplayClass::Prev_Object(ObjectClass * object)
 COORDINATE DisplayClass::Pixel_To_Coord(int x, int y)
 {
 	/*
-	**	Normalize the pixel coorindates to be relative to the upper left corner
+	**	Normalize the pixel coordinates to be relative to the upper left corner
 	**	of the tactical map. The coordinates are expressed in leptons.
 	*/
 	x -= TacPixelX;

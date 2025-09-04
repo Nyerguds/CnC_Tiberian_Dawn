@@ -187,6 +187,7 @@ class BuildingClass : public TechnoClass
 		virtual ActionType What_Action(ObjectClass * object) const;
 		virtual ActionType What_Action(CELL cell) const;
 		virtual bool Can_Demolish(void) const;
+		virtual bool Can_Capture(void) const;
 		virtual ObjectTypeClass const & Class_Of(void) const {return *Class;};
 		virtual int Refund_Amount(void) const;
 		virtual DirType Fire_Direction(void) const;
@@ -197,7 +198,7 @@ class BuildingClass : public TechnoClass
 		**	combat purposes.
 		*/
 		virtual COORDINATE Docking_Coord(void) const;
-		virtual COORDINATE Fire_Coord(int which) const;
+		virtual COORDINATE Fire_Coord(int /*which*/, TARGET totarget = TARGET_NONE) const;
 		virtual COORDINATE Center_Coord(void) const;
 		virtual COORDINATE Sort_Y(void) const;
 		virtual COORDINATE Target_Coord() const;

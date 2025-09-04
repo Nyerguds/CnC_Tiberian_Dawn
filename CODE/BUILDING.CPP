@@ -2436,7 +2436,8 @@ bool BuildingClass::Limbo(void)
  *    were to fire. The location usually depends on the current rotation setting of the        *
  *    turret or else on the direction of the target that will be fired upon.                   *
  *                                                                                             *
- * INPUT:   none                                                                               *
+ * INPUT:   totarget -- if given, the facing will always be assumed to be towards this         *
+ *                      target. This is used to perform facing-independent range checks.       *
  *                                                                                             *
  * OUTPUT:  Returns with coordinate that the projectile should appear at if the building       *
  *          were to fire.                                                                      *
@@ -2446,7 +2447,7 @@ bool BuildingClass::Limbo(void)
  * HISTORY:                                                                                    *
  *   12/24/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-COORDINATE BuildingClass::Fire_Coord(int ) const
+COORDINATE BuildingClass::Fire_Coord(int /*which*/, TARGET totarget) const
 {
 	Validate();
 	COORDINATE coord = Center_Coord();			// Center of firing building.
@@ -2455,13 +2456,19 @@ COORDINATE BuildingClass::Fire_Coord(int ) const
 	**	Make adjustments to the firing coordinate to account for turret
 	**	position. This depends on building type and turret facing.
 	*/
+	TARGET target = TARGET_NONE;
 	switch (Class->Type) {
 		default:
 		case STRUCT_GTOWER:
 		case STRUCT_ATOWER:
 			coord = Coord_Move(coord, DIR_N, 0x0030);
-			if (Target_Legal(TarCom)) {
-				coord = Coord_Move(coord, ::Direction(coord, As_Coord(TarCom)), 0x0040);
+			if (Target_Legal(totarget)) {
+				target = totarget;
+			} else if (Target_Legal(TarCom)) {
+				target = TarCom;
+			}
+			if (Target_Legal(target)) {
+				coord = Coord_Move(coord, ::Direction(coord, As_Coord(target)), 0x0040);
 			}
 			break;
 		case STRUCT_OBELISK:
@@ -2473,7 +2480,8 @@ COORDINATE BuildingClass::Fire_Coord(int ) const
 		case STRUCT_SAM:
 		case STRUCT_TURRET:
 			coord = Coord_Move(coord, DIR_N, 0x0030);
-			coord = Coord_Move(coord, PrimaryFacing.Current(), 0x0080);
+			DirType facing = (Target_Legal(totarget)) ? ::Direction(coord, As_Coord(totarget)) : PrimaryFacing.Current();
+			coord = Coord_Move(coord, facing, 0x0080);
 			break;
 	}
 
@@ -3241,7 +3249,7 @@ bool BuildingClass::Toggle_Primary(void)
 bool BuildingClass::Captured(HouseClass * newowner)
 {
 	Validate();
-	if (Class->IsCaptureable && newowner != House) {
+	if (Can_Capture() && newowner != House) {
 		// Only announce in singleplayer if the player has seen it, or if the player is involved.
 		if ((GameToPlay == GAME_NORMAL && IsDiscoveredByPlayer) || House == PlayerPtr || newowner == PlayerPtr) {
 			switch (House->ActLike) {
@@ -3521,6 +3529,37 @@ bool BuildingClass::Can_Demolish(void) const
 		return(true);
 	}
 	return(false);
+}
+
+
+/***********************************************************************************************
+ * ObjectClass::Can_Capture -- Queries whether this object can be captured by other players.   *
+ *                                                                                             *
+ *    This routine is used to determine if this object can be taken over by a different        *
+ *    player. Typically, this applied to military buildings that aren't fortified.             *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Can this object be captured? Typically, the answer is no.                          *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   09/04/2025 MM : Copied from Remaster code, with added support for "Player Enters" event.  *
+ *=============================================================================================*/
+bool BuildingClass::Can_Capture(void) const
+{
+	bool can_capture = Class->IsCaptureable && Mission != MISSION_DECONSTRUCTION;
+
+	// Nyerguds's C&C Patch Project v1.04
+	// Override capturable state if this building has any type of capture trigger
+	if (GameToPlay == GAME_NORMAL) {
+		if (Trigger != NULL && (Trigger->Action == TriggerClass::ACTION_WINLOSE || Trigger->Event == EVENT_PLAYER_ENTERED)) {
+			can_capture = true;
+		}
+	}
+
+	return(can_capture);
 }
 
 

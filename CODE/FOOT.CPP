@@ -664,7 +664,12 @@ int FootClass::Mission_Hunt(void)
 	if (!Target_Something_Nearby(THREAT_NORMAL)) {
 		Random_Animate();
 	} else {
-		if (What_Am_I() == RTTI_INFANTRY && ((InfantryTypeClass const &)Class_Of()).Type == INFANTRY_E7) {
+		bool iscapture = false;
+		if (What_Am_I() == RTTI_INFANTRY) {
+		 	InfantryTypeClass const * icl = (InfantryTypeClass const *)Techno_Type_Class();
+			iscapture = icl->IsCapture && icl->Primary == WEAPON_NONE;
+		}
+		if (iscapture) {
 			Assign_Destination(TarCom);
 			Assign_Mission(MISSION_CAPTURE);
 		} else {
@@ -1013,6 +1018,9 @@ int FootClass::Mission_Guard_Area(void)
 		Target_Something_Nearby(THREAT_AREA);
 		Coord = old;
 		if (Target_Legal(TarCom)) return(1);
+		// Nyerguds's C&C Patch Project v1.04
+		// Fix from remaster: infantry in Area Guard mode no longer freezes in place.
+		Random_Animate();
 	} else {
 		Approach_Target();
 	}
@@ -1256,7 +1264,9 @@ void FootClass::Active_Click_With(ActionType action, ObjectClass * object)
 
 		case ACTION_SELF:
 		// Nyerguds's C&C Patch Project v1.04
-		// "NO_SELF" is purely visual; it will still allow the order so it can give its feedback.
+		// "NO_SELF" is purely cosmetic; it will still allow the order so it can give its feedback.
+		// This is more intuitive, since it tells the player why the action doesn't work, rather
+		// than not showing the action at all.
 		case ACTION_NO_SELF:
 			Player_Assign_Mission(MISSION_UNLOAD);
 			break;

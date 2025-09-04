@@ -507,6 +507,26 @@ bool ObjectClass::Can_Demolish(void) const
 
 
 /***********************************************************************************************
+ * ObjectClass::Can_Capture -- Queries whether this object can be captured by other players.   *
+ *                                                                                             *
+ *    This routine is used to determine if this object can be taken over by a different        *
+ *    player. Typically, this applied to military buildings that aren't fortified.             *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Can this object be sold back? Typically, the answer is no.                         *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   09/04/2025 MM : Copied from Remaster code.                                                *
+ *=============================================================================================*/
+bool ObjectClass::Can_Capture(void) const
+{
+	return(false);
+}
+
+/***********************************************************************************************
  * ObjectClass::Can_Player_Fire -- Can the player give this object an attack mission?          *
  *                                                                                             *
  *    This routine is used to determine if attacking is an option under player control with    *
@@ -575,7 +595,7 @@ COORDINATE ObjectClass::Center_Coord(void) const {return Coord;};
 COORDINATE ObjectClass::Render_Coord(void) const {return(Center_Coord());}
 COORDINATE ObjectClass::Docking_Coord(void) const {return(Center_Coord());}
 COORDINATE ObjectClass::Sort_Y(void) const {return Coord;};
-COORDINATE ObjectClass::Fire_Coord(int ) const {return Coord;};
+COORDINATE ObjectClass::Fire_Coord(int /*which*/, TARGET /*totarget*/) const {return Coord;};
 void ObjectClass::Record_The_Kill(TechnoClass * ) {};
 void ObjectClass::Do_Shimmer(void) {};
 int ObjectClass::Exit_Object(TechnoClass *) {return 0;};

@@ -888,13 +888,12 @@ void TechnoClass::Per_Cell_Process(bool /*center*/)
 void TechnoClass::Draw_It(int x, int y, WindowNumberType window)
 {
 	Clear_Redraw_Flag();
-	if (IsSelected || (Special.IsBarOn && (House->Is_Ally(PlayerPtr) || Cloak != CLOAKED))) {
+	if (IsSelected || (Special.IsBarOn && (House == PlayerPtr || Cloak != CLOAKED))) {
 		GraphicViewPortClass draw_window(	LogicPage->Get_Graphic_Buffer(),
 														WindowList[window][WINDOWX] << 3 + LogicPage->Get_XPos(),
 														WindowList[window][WINDOWY] + LogicPage->Get_YPos(),
 														WindowList[window][WINDOWWIDTH] << 3,
 														WindowList[window][WINDOWHEIGHT]);
-
 
 		/*
 		**	The infantry select box should be a bit higher than normal.
@@ -1067,7 +1066,8 @@ bool TechnoClass::In_Range(TARGET target, int which) const
 		if (building) {
 			range += ((building->Class->Width() + building->Class->Height()) * (ICON_LEPTON_W / 4));
 		}
-		if (::Distance(Fire_Coord(which), As_Coord(target)) <= range) {
+
+		if (::Distance(Fire_Coord(which, target), As_Coord(target)) <= range) {
 			return(true);
 		}
 	}
@@ -1101,7 +1101,7 @@ bool TechnoClass::In_Range(ObjectClass const * target, int which) const
 			range += ((building->Class->Width() + building->Class->Height()) * (ICON_LEPTON_W / 4));
 		}
 
-		if (::Distance(Fire_Coord(which), target->Center_Coord()) <= range) {
+		if (::Distance(Fire_Coord(which, target->As_Target()), target->Center_Coord()) <= range) {
 			return(true);
 		}
 	}
@@ -1239,7 +1239,7 @@ bool TechnoClass::Evaluate_Object(ThreatType method, int mask, int range, Techno
 	**	If the scan is limited to capturable buildings only, then bail if the examined
 	**	object isn't a capturable building.
 	*/
-	if ((method & THREAT_CAPTURE) && (otype != RTTI_BUILDING || !((BuildingTypeClass const *)tclass)->IsCaptureable)) {
+	if ((method & THREAT_CAPTURE) && (otype != RTTI_BUILDING || !object->Can_Capture())) {
 		return(false);
 	}
 
@@ -1354,7 +1354,6 @@ bool TechnoClass::Evaluate_Cell(ThreatType method, int mask, CELL cell, int rang
 	/*
 	**	If the cell is not on the legal map, then always ignore it.
 	*/
-	if (cell & 0xF000) return(false);
 	if (!Map.In_Radar(cell)) return(false);
 
 	/*
@@ -2071,6 +2070,12 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
 	COORDINATE				fire_coord;			// Coordinate of firing position.
 	TechnoTypeClass const & tclass = *Techno_Type_Class();
 	ObjectClass		*object;
+
+	// [from Remaster] Completely block this logic if techno is unarmed.
+	if ((which == 0 && tclass.Primary == WEAPON_NONE) || (which == 1 && tclass.Secondary == WEAPON_NONE)) {
+		return(NULL);
+	}
+
 	WeaponTypeClass const *weapon = (which == 0) ? &Weapons[tclass.Primary] : &Weapons[tclass.Secondary];
 	BulletTypeClass const &btype = BulletTypeClass::As_Reference(weapon->Fires);
 
@@ -2408,7 +2413,9 @@ ActionType TechnoClass::What_Action(ObjectClass * object) const
 		/*
 		**	If firing is possible and legal, then return this action potential.
 		*/
-		if (IsOwnedByPlayer && (ctrldown || !House->Is_Ally(object)) && (ctrldown || object->Class_Of().IsLegalTarget || (Special.IsTreeTarget && object->What_Am_I() == RTTI_TERRAIN))) {
+		if (IsOwnedByPlayer
+			&& (ctrldown || !House->Is_Ally(object))
+			&& (ctrldown || object->Class_Of().IsLegalTarget || (Special.IsTreeTarget && object->What_Am_I() == RTTI_TERRAIN))) {
 			if (Can_Player_Move() || In_Range(object, 0)) {
 				return(ACTION_ATTACK);
 			}

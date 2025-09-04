@@ -257,7 +257,7 @@ static BuildingTypeClass const ClassEye(
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
-		true,			// Can this building be captured?
+		false,		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
@@ -4164,9 +4164,19 @@ void BuildingTypeClass::Max_Dimensions(short const *occupylist, short const *ove
 COORDINATE BuildingTypeClass::Valid_Target_Center(COORDINATE center, short const *occupylist)
 {
 	// Edge values for cells facing a specific direction away from the center
-	static const unsigned char _edge_x[FACING_COUNT] = { 0x80, 0x00, 0x00, 0x00, 0x80, 0xFF, 0xFF, 0xFF};
-	static const unsigned char _edge_y[FACING_COUNT] = { 0xFF, 0xFF, 0x80, 0x00, 0x00, 0x00, 0x80, 0xFF};
-  //                                                     N     NE    E     SE    S     SW    W     NW
+	static const struct {
+		unsigned char Y;
+		unsigned char X;
+	} _edge[FACING_COUNT] = {
+		{0xFF, 0x80}, // N  : bottom center
+		{0xFF, 0x00}, // NE : bottom left
+		{0x80, 0x00}, // E  : center left
+		{0x00, 0x00}, // SE : top left
+		{0x00, 0x80}, // S  : top center
+		{0x00, 0xFF}, // SW : top right
+		{0x80, 0xFF}, // W  : center right
+		{0xFF, 0xFF}, // NW : bottom right
+	};
 
 	if (!occupylist) {
 		return(center);
@@ -4182,7 +4192,7 @@ COORDINATE BuildingTypeClass::Valid_Target_Center(COORDINATE center, short const
 	}
 
 	/*
-	** "center" cell is not part of the building cells. Fix coords.
+	** "center" cell is not part of the building cells. Find closest valid cell to target.
 	*/
 
 	COORDINATE target = center;
@@ -4202,7 +4212,8 @@ COORDINATE BuildingTypeClass::Valid_Target_Center(COORDINATE center, short const
 		}
 	}
 	if (facing != FACING_NONE && target != center) {
-		target = (target & 0xFF00FF00l) | _edge_x[facing] | (_edge_y[facing] << 16);
+		// Adjust to the very edge of the cell, so it's as closely as possible to the original center.
+		target = (target & 0xFF00FF00l) | (_edge[facing].Y << 16 | _edge[facing].X);
 	}
 	return target;
 }

@@ -932,16 +932,19 @@ void InfantryClass::Assign_Target(TARGET target)
 	Path[0] = FACING_NONE;
 	FootClass::Assign_Target(target);
 
+#ifdef OBSOLETE
+	// Pointless; Capture missions only assign a Destination anyway.
 	/*
 	**	If this is an infantry that can only capture, then also assign its destination to the
 	**	target specified.
 	*/
 	if (!Target_Legal(NavCom) && Class->IsCapture && Class->Primary == WEAPON_NONE) {
-		BuildingClass const * building = As_Building(target);
-		if (building && building->Class->IsCaptureable && (GameToPlay != GAME_NORMAL || *building != STRUCT_EYE && Scenario < 13)) {
+		ObjectClass const * obj = As_Object(target);
+		if (obj && obj->Can_Capture()) {
 			Assign_Destination(target);
 		}
 	}
+#endif
 }
 
 
@@ -2383,7 +2386,7 @@ TARGET InfantryClass::Greatest_Threat(ThreatType threat) const
 
 	switch (Class->Primary) {
 		case WEAPON_NONE:
-			if (*this != INFANTRY_E7) {
+			if (!Class->IsCapture) {
 				return(TARGET_NONE);
 			}
 			// Nyerguds's C&C Patch Project v1.04
@@ -2634,7 +2637,7 @@ void InfantryClass::Response_Sabotage(void)
  * HISTORY:                                                                                    *
  *   01/04/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-COORDINATE InfantryClass::Fire_Coord(int) const
+COORDINATE InfantryClass::Fire_Coord(int /*which*/, TARGET /*totarget*/) const
 {
 	Validate();
 	if (Class->Type == INFANTRY_E4) {
@@ -2815,23 +2818,17 @@ ActionType InfantryClass::What_Action(ObjectClass * object) const
 		action != ACTION_ATTACK && action != ACTION_GUARD_AREA &&
 		IsOwnedByPlayer && House->Is_Ally(object) && object->Is_Techno() &&
 		((InfantryClass *)this)->Transmit_Message(RADIO_CAN_LOAD, (TechnoClass*)object) == RADIO_ROGER) {
-//	if (object->Owner() == Owner() && object->What_Am_I() == RTTI_UNIT && ((UnitClass *)object)->Class->IsTransporter && ((UnitClass *)object)->How_Many() < 5) {
 		action = ACTION_ENTER;
 	}
-
-	if (Class->IsCapture && action == ACTION_ATTACK) {
-		if (object->Owner() != Owner() &&
-			((object->What_Am_I() == RTTI_AIRCRAFT && ((AircraftClass *)object)->Pip_Count() == 0 && *((AircraftClass *)object) == AIRCRAFT_TRANSPORT) ||
-			(object->What_Am_I() == RTTI_BUILDING &&
-				((BuildingClass *)object)->Class->IsCaptureable && (GameToPlay != GAME_NORMAL || *((BuildingClass *)object) != STRUCT_EYE || Scenario < 13) ))
-			) {
-
-			action = ACTION_CAPTURE;
-		} else {
-			if (Class->Primary == WEAPON_NONE) {
-				action = ACTION_NONE;
-			}
-		}
+	// Nyerguds's C&C Patch Project v1.04
+	// Simplified due to new Remaster capture logic.
+	if (Class->IsCapture && action == ACTION_ATTACK && object->Owner() != Owner() && object->Can_Capture()) {
+		action = ACTION_CAPTURE;
+	}
+	// Nyerguds's C&C Patch Project v1.04
+	// Fix civilians getting an Attack cursor if they are unarmed.
+	if (action == ACTION_ATTACK && !Can_Player_Fire()) {
+		action = ACTION_NONE;
 	}
 	return(action);
 }
@@ -3095,6 +3092,11 @@ int InfantryClass::Made_A_Kill(void)
 void InfantryClass::Set_Occupy_Bit(CELL cell, int spot_index)
 {
 	Validate();
+
+	if ((unsigned)cell >= MAP_CELL_TOTAL) {
+		return;
+	}
+
 	/*
 	** Set the occupy postion for the spot that we passed in
 	*/
@@ -3122,6 +3124,11 @@ void InfantryClass::Set_Occupy_Bit(CELL cell, int spot_index)
 void InfantryClass::Clear_Occupy_Bit(CELL cell, int spot_index)
 {
 	Validate();
+
+	if ((unsigned)cell >= MAP_CELL_TOTAL) {
+		return;
+	}
+
 	/*
 	** Clear the occupy bit for the infantry in that cell
 	*/
@@ -3186,6 +3193,11 @@ int InfantryClass::Mission_Attack(void)
 	if (*this == INFANTRY_E7 && As_Building(TarCom)) {
 		Assign_Destination(TarCom);
 		Assign_Mission(MISSION_CAPTURE);
+		return(1);
+	}
+	if (*this == INFANTRY_RAMBO && As_Building(TarCom)) {
+		Assign_Destination(TarCom);
+		Assign_Mission(MISSION_SABOTAGE);
 		return(1);
 	}
 	return(FootClass::Mission_Attack());

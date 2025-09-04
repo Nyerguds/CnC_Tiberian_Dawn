@@ -1542,12 +1542,18 @@ void DriveClass::Mark_Track(COORDINATE headto, MarkType type)
 
 					if (TrackIndex < cellidx && cellidx != -1) {
 						COORDINATE offset = Smooth_Turn(ptr[cellidx].Offset, &dir);
-						Map[Coord_Cell(offset)].Flag.Occupy.Vehicle = value;
+						CELL cell = Coord_Cell(offset);
+						if ((unsigned)cell < MAP_CELL_TOTAL) {
+							Map[cell].Flag.Occupy.Vehicle = value;
+						}
 					}
 				}
 			}
 		}
-		Map[Coord_Cell(headto)].Flag.Occupy.Vehicle = value;
+		CELL headcell = Coord_Cell(headto);
+		if ((unsigned)headcell < MAP_CELL_TOTAL) {
+			Map[Coord_Cell(headto)].Flag.Occupy.Vehicle = value;
+		}
 	}
 }
 
