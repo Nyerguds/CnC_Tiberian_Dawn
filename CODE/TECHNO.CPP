@@ -482,6 +482,7 @@ TechnoClass::TechnoClass(void) :
 	House(0)
 {
 	Arm = 0;
+	ActiveDetection = 0;
 	Ammo = -1;
 	PurchasePrice = 0;
 	IsTickedOff = false;
@@ -494,7 +495,6 @@ TechnoClass::TechnoClass(void) :
 	IsDiscoveredByPlayer = false;
 	IsDiscoveredByComputer = false;
 	IsInRecoilState = false;
-	IsInActiveState = false;
 	IsLeader = false;
 	IsLocked = false;
 	IsOwnedByPlayer = false;
@@ -784,6 +784,7 @@ TechnoClass::TechnoClass(HousesType house) :
 	TarCom(TARGET_NONE)
 {
 	Arm = 0;
+	ActiveDetection = 0;
 	Ammo = -1;
 	PurchasePrice = 0;
 	IsTickedOff = false;
@@ -797,7 +798,6 @@ TechnoClass::TechnoClass(HousesType house) :
 	IsOwnedByPlayer = (house == PlayerPtr->Class->House);
 	IsDiscoveredByPlayer = false;
 	IsInRecoilState = false;
-	IsInActiveState = false;
 	IsLeader = false;
 	IsLocked = false;
 	IsSecondShot = false;
@@ -1775,18 +1775,23 @@ void TechnoClass::AI(void)
 	// Logic for popping up the Rocket Launcher weapon
 	/*
 	**	Handle active state; if it changes, flag the unit to redraw.
-	**	A unit can go to active state instantly, but if it fired, then after
-	**	losing its target, it will remain in active state until it reloaded.
-	**	This means it remains in active state if it immediately finds a new target.
+	**	A unit can go to active state instantly, but after losing a
+	**	target, it will remain in active state for a while longer.
 	*/
 	TechnoTypeClass const * tt = Techno_Type_Class();
 	if (tt->IsActiveTargeter) {
-		bool hasTarget =
-						Target_Legal(TarCom) &&
-						((tt->Primary != WEAPON_NONE && In_Range(TarCom, 0)) ||
-						(tt->Secondary != WEAPON_NONE && In_Range(TarCom, 1)));
-		if (IsInActiveState != hasTarget && (!IsInActiveState || Arm == 0)) {
-			IsInActiveState = hasTarget;
+		bool wasActive = ActiveDetection > 0;
+		if (Target_Legal(TarCom) &&
+				((tt->Primary != WEAPON_NONE && In_Range(TarCom, 0)) ||
+				(tt->Secondary != WEAPON_NONE && In_Range(TarCom, 1)))) {
+			// Refresh active status to maximum reload delay.
+			ActiveDetection = Rearm_Delay(true);
+		} else if (wasActive) {
+			// Fade out
+			ActiveDetection--;
+		}
+		bool isActive = ActiveDetection > 0;
+		if (isActive != wasActive) {
 			Mark(MARK_CHANGE_REDRAW);
 		}
 	}

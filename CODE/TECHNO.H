@@ -104,13 +104,6 @@ class TechnoClass :	public RadioClass,
 		unsigned IsInRecoilState:1;
 
 		/*
-		**	Some objects have a special state shown only when a target is acquired
-		**	and in range. This keeps track of that state, so a redraw can be forced
-		**	when it changes.
-		*/
-		unsigned IsInActiveState:1;
-
-		/*
 		**	If this unit is "loosely attached" to another unit it is given special
 		**	processing. A unit is in such a condition when it is in the process of
 		**	unloading from a transport type object. During the unloading process
@@ -181,6 +174,13 @@ class TechnoClass :	public RadioClass,
 		**	to reload the weapon.
 		*/
 		unsigned char Arm;
+
+		/*
+		**	Some objects have a special state shown only when a target is acquired
+		**	and in range. Once the target is lost, this will fade out to zero until
+		**	the active state is disabled.
+		*/
+		unsigned char ActiveDetection;
 
 		/*
 		**	The number of shot this object can fire before running out of ammo. If this

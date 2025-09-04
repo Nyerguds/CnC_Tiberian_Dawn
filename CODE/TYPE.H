@@ -448,7 +448,7 @@ class TechnoTypeClass : public ObjectTypeClass
 
 		/*
 		**	Does this object have a special active state when its target is in range?
-		**	This will affect whether the IsInActiveState logic is executed for this object.
+		**	This will affect whether the ActiveDetection logic is executed for this object.
 		*/
 		unsigned IsActiveTargeter:1;
 

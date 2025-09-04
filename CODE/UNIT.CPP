@@ -2095,7 +2095,7 @@ void UnitClass::Draw_It(int x, int y, WindowNumberType window)
 			**	If an MLRS is in range of its target, pop
 			**	up its launcher so it looks ready to fire.
 			*/
-			if (Class->IsActiveTargeter && IsInActiveState && !Options.NoLauncherPopup) {
+			if (Class->IsActiveTargeter && ActiveDetection > 0 && !Options.NoLauncherPopup) {
 				shapenum += 32 * (MAX(Class->MaxAmmo, 0) + 1);
 			}
 
