@@ -1035,7 +1035,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 			**	player. In hard mode, they always do. In normal mode, they only overrun past
 			**	mission #8.
 			*/
-			if ((Class->Primary == WEAPON_NONE || (Distance(source) < 0x0180 && BulletTypeClass::As_Reference(Weapons[Class->Primary].Fires).Warhead != WARHEAD_FIRE)) &&
+			if ((Class->Primary == WEAPON_NONE || (Distance(source) < 0x0180 && Class->Primary != WEAPON_FLAME_TONGUE)) &&
 						(GameToPlay != GAME_NORMAL ||
 						*this != UNIT_HARVESTER ||
 						BuildLevel > 8 ||
@@ -3106,6 +3106,9 @@ MoveType UnitClass::Can_Enter_Cell(CELL cell, FacingType ) const
 		}
 	}
 
+	// Nyerguds's C&C Patch Project v1.04
+	// This pointless check caused vehicle crushing to malfunction.
+#ifdef OBSOLETE
 	/*
 	** If its ok to move into the cell because we can crush whats in the cell, then
 	** make sure no one else is already moving into the cell to crush something.
@@ -3126,6 +3129,7 @@ MoveType UnitClass::Can_Enter_Cell(CELL cell, FacingType ) const
 		return(MOVE_MOVING_BLOCK);
 #endif
 	}
+#endif
 
 	/*
 	**	Return with the most severe reason why this cell would be impassable.

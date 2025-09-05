@@ -1707,7 +1707,8 @@ class AnimTypeClass : public ObjectTypeClass
 
 		/*
 		**	This is the normal loop count for this animation. Usually this is one, but
-		**	for some animations, it may be larger.
+		**	for some animations, it may be larger. Setting this to 0xFF makes it loop
+		**	indefinitely.
 		*/
 		unsigned char Loops;
 

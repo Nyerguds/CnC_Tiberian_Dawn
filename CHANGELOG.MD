@@ -176,4 +176,6 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * \[Remaster\] Any building will now be considered capturable in singleplayer if it has a trigger attached that activates when it is captured. This applies to both the "Cap=Win/Des=Lose" action, and the "Player Enters" event.
 * \[Remaster\] Fixed bug where pressing \[S\] on an aircraft that was already returning to its helipad would make it land on an incorrect spot on the pad.
 * Reduced the behaviour where helicopters return home after barely attacking because they find no place to shuffle to. If the air is too crowded, they will consider staying in place, and if the target is too close to the map edge or shroud and that limits the available airspace, they are now allowed to come closer to compensate.
-* Aircraft will now always immediately return to base when they run out of ammo mid-salvo.
+* Aircraft will now always immediately return to base when they run out of ammo mid-salvo instead of waiting for a second shot they don't have.
+* Fixed the infantry squish sound increasing in volume if multiple infantry was on the squished cell.
+* Fixed vehicle crushing, and tweaked it so they don't play the infantry squish sound but instead play their normal death animation, along with a little "roadkill bump" sound.

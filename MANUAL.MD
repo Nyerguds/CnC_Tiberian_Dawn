@@ -1,4 +1,4 @@
-# Command & Conquer Patch Project - Manual
+﻿# Command & Conquer Patch Project - Manual
 
 <p align="center">version 1.04<br/>
 Created by Nyerguds<br/>
@@ -116,7 +116,7 @@ These are mostly features that were originally implemented in the 1.06 patch.
 
 New options are available in the house sections in missions ([Goodguy], [Badguy], [Neutral], etc.) that allow tweaking their colors.
 
-The following keys are available Each more specific one will override parts of the more general ones:
+The following keys are available. Each more specific one will override parts of the more general ones:
 
 * **ColorScheme**: Makes this house use a different color scheme (see list below). Each color scheme is a complete set of unit color, building color, unit radar color and building radar color. All the following keys will add exceptions to that basic profile.
 * **SecondaryScheme**: Takes the primary color of a different scheme and uses it for its buildings, like Nod does. You can use 'None' to disable Nod's secondary color, but do note that the (blue/grey) Nod will still have red radar colors then. It's probably better to just put the normal ColorScheme to Blue or Red.
@@ -161,9 +161,19 @@ These three triggers were mainly added for multiplayer purposes: when experiment
 
 The **Civ. Evac.** trigger can now be looped to detect multiple evacuations. Before, such triggers would activate endlessly, since the internal "was a civilian evacuated?" status wasn't reset after the triggers were handled.
 
-### Smudge upgrades
+#### Capture triggers
 
-Craters can be added to a mission in the \[Smudge\] section, and this system normally allows setting the size of the crater. However, due to a bug in the game, only CR1 worked correctly; all other craters would revert to the smallest size of CR1. With this bug fixed, all sizes of all six crater types (CR1-CR6) are now available for use.
+There are two trigger types in the game that can check for a building being captured; the special **Cap=Win/Des=Lose** trigger Action, and the **Player Enters** trigger Event. Both of these, when used in a trigger attached to a building, will now cause that specific building to become capturable, regardless of whether the building type can normally be captured.
+
+### Map decoration upgrades
+
+### Craters
+
+Craters (CR1-RC6) can be added to a mission in the \[Smudge\] section, and this system normally allows setting the size of the crater. However, due to a bug in the game, only CR1 worked correctly; all other craters would revert to the smallest size of CR1. With this bug fixed, all sizes of all six crater types are now available for use.
+
+### Crushed corpse
+
+There is a map decoration called SQUISH in the game, representing a crushed corpse. This is an item like tiberium and walls, which can be added under the \[Overlay\] section. Originally, access to this overlay was completely blocked unless a special option was enabled to show corpses when crushing infantry with tanks. This has now been unlinked, meaning the item is available to place on maps.
 
 ## Full list of changes
 

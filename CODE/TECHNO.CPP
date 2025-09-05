@@ -2071,6 +2071,7 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
 	TechnoTypeClass const & tclass = *Techno_Type_Class();
 	ObjectClass		*object;
 
+	// Nyerguds's C&C Patch Project v1.04
 	// [from Remaster] Completely block this logic if techno is unarmed.
 	if ((which == 0 && tclass.Primary == WEAPON_NONE) || (which == 1 && tclass.Secondary == WEAPON_NONE)) {
 		return(NULL);

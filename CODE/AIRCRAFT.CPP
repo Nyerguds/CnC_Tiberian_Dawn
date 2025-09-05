@@ -2027,7 +2027,7 @@ void AircraftClass::Active_Click_With(ActionType action, ObjectClass * object)
 {
 	Validate();
 	// Nyerguds's TUC Quick Fix Patch v1.03: aircraft-dock-unload
-	// Nothing here any different from the default FootClass behaviour, and, in fact
+	// Nothing here is any different from the default FootClass behaviour, and, in fact
 	// the default behaviour always overrode the specific code here in the retail game.
 #ifdef OBSOLETE
 	switch (action) {
