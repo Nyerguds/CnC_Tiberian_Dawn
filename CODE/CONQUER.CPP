@@ -84,9 +84,7 @@ void *Get_Shape_Header_Data(void *ptr);
 *****************************************/
 bool Main_Loop();
 void Keyboard_Process(KeyNumType & input);
-#pragma off (unreferenced)
-static void ShowUIMessage(bool mute, char* message, ...);
-#pragma on (unreferenced)
+void ShowUIMessage(bool mute, bool forcenew, char* message, ...);
 #ifndef DEMO
 static void Message_Input(KeyNumType &input);
 #endif
@@ -509,7 +507,7 @@ void Keyboard_Process(KeyNumType &input)
 		for (int lp = 0; lp <= 9999; lp++) {
 			sprintf(filename, "scrn%04d.pcx", lp);
 			int acc = access(filename, F_OK);
-			//ShowUIMessage(false, "File access for\"%s\" returned %d.", filename, acc);
+			//ShowUIMessage(false, true, "File access for\"%s\" returned %d.", filename, acc);
 			if (acc == -1) {
 				fileAvailable = true;
 				break;
@@ -519,12 +517,12 @@ void Keyboard_Process(KeyNumType &input)
 			Write_PCX_File(filename, temp_page, (unsigned char *)CurrentPalette);
 			Sound_Effect(VOC_RELOAD);
 			if (!Options.NoScreenshotMessage) {
-				ShowUIMessage(true, "\"%s\" %s.", filename, Text_String(TXT_OK));
+				ShowUIMessage(true, true, "\"%s\" %s.", filename, Text_String(TXT_OK));
 			}
 		} else {
 			Sound_Effect(VOC_SCOLD);
 			if (!Options.NoScreenshotMessage) {
-				ShowUIMessage(true, "scrn####.pcx: %s", Text_String(TXT_NO_FILES));
+				ShowUIMessage(true, true, "scrn####.pcx: %s", Text_String(TXT_NO_FILES));
 			}
 		}
 		input = KN_NONE;
@@ -716,7 +714,7 @@ void Keyboard_Process(KeyNumType &input)
 			Handle_Team(8, action);
 			break;
 		case VK_0:
-			//ShowUIMessage("Ctrl=%d, Alt=%d, Shift=%d", ctrldown ? 1 : 0, altdown? 1 : 0, shiftdown? 1 : 0);
+			//ShowUIMessage(false, true, "Ctrl=%d, Alt=%d, Shift=%d", ctrldown ? 1 : 0, altdown? 1 : 0, shiftdown? 1 : 0);
 			Handle_Team(9, action);
 			break;
 
@@ -944,8 +942,7 @@ void Keyboard_Process(KeyNumType &input)
 #endif
 }
 
-#pragma off (unreferenced)
-static void ShowUIMessage(bool mute, char* message, ...) {
+void ShowUIMessage(bool mute, bool forcenew, char* message, ...) {
 	va_list	va;
 	char txt[128];
 	va_start(va, message);
@@ -954,10 +951,9 @@ static void ShowUIMessage(bool mute, char* message, ...) {
 	va_end(va);
 
 	Messages.Add_Message(txt, CC_GREEN,
-		TPF_6PT_GRAD|TPF_USE_GRAD_PAL|TPF_FULLSHADOW, 1200, 0, 0, true, mute);
+		TPF_6PT_GRAD|TPF_USE_GRAD_PAL|TPF_FULLSHADOW, 1200, 0, 0, forcenew, mute);
 	Map.Flag_To_Redraw(false);
 }
-#pragma on (unreferenced)
 
 #ifndef DEMO
 /***********************************************************************************************
@@ -3300,7 +3296,7 @@ void Handle_Team(int team, int action)
 {
 	int index;
 
-	//ShowUIMessage(false, "Action is %d", action);
+	//ShowUIMessage(false, true, "Action is %d", action);
 
 	AllowVoice = true;
 	switch (action) {

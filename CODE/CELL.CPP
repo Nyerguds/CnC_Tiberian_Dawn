@@ -1715,7 +1715,7 @@ int CellClass::Spot_Index(COORDINATE coord)
  *             data is altered.                                                                *
  *                                                                                             *
  * WARNINGS:                                                                                   *
- *  none.                                                                                      *
+ *  Infantry often needs to spawn from buildings, so building occupation is ignored in this.   *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   11/08/1994 BR : Created.                                                                  *
@@ -1754,7 +1754,8 @@ COORDINATE CellClass::Closest_Free_Spot(COORDINATE coord, bool any) const
 	coord &= 0xFF00FF00L;
 
 	/*
-	**	Cells occupied by buildings or vehicles don't have any free spots.
+	**	Cells occupied by terrain or vehicles don't have any free spots.
+	**	Buildings are ignored in this because infantry often needs to spawn from buildings.
 	*/
 	if (!any && (Flag.Occupy.Vehicle || Flag.Occupy.Monolith)) {
 		return(NULL);

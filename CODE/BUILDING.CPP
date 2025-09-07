@@ -3793,9 +3793,17 @@ int BuildingClass::Mission_Deconstruction(void)
 						if (infantry) {
 							ScenarioInit++;
 							COORDINATE coord = Coord_Add(Center_Coord(), XYP_COORD(0, -12));
-							coord = Map[Coord_Cell(coord)].Closest_Free_Spot(coord, false);
-
-							if (infantry->Unlimbo(coord, DIR_N)) {
+							// Nyerguds's C&C Patch Project v1.04
+							// Fixes infantry spawning from non-building cells.
+							if (Map[Coord_Cell(coord)].Cell_Building() != this) {
+								// Target coords were corrected to always be on the building.
+								coord = Target_Coord();
+							}
+							COORDINATE infcoord = Map[Coord_Cell(coord)].Closest_Free_Spot(coord, false);
+							if (infcoord == 0L) {
+								infcoord = coord;
+							}
+							if (infantry->Unlimbo(infcoord, DIR_N)) {
 								if (infantry->Class->IsNominal) infantry->IsTechnician = true;
 								ScenarioInit--;
 								infantry->Scatter(0, true);

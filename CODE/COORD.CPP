@@ -392,7 +392,7 @@ COORDINATE Coord_Scatter(COORDINATE coord, unsigned distance, bool lock)
 
 	newcoord = Coord_Move(coord, Random_Pick(DIR_N, DIR_MAX), distance);
 
-	if (newcoord & 0xC000C000L) newcoord = coord;
+	if (newcoord & MAP_COORDS_TEST) newcoord = coord;
 
 	if (lock) {
 		newcoord = Coord_Snap(newcoord);

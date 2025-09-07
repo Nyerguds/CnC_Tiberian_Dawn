@@ -294,8 +294,12 @@ typedef enum RTTIType {
 //	cell width.
 #define	MAP_CELL_MAX_X_BITS		6
 #define	MAP_CELL_MAX_Y_BITS		6
-#define	MAP_CELL_X_MASK			(~(~0 << MAP_CELL_MAX_X_BITS))
-#define	MAP_CELL_Y_MASK			((~(~0 << MAP_CELL_MAX_Y_BITS)) << MAP_CELL_MAX_Y_BITS)
+#define	MAP_BITS_X_MASK			(~(~0 << MAP_CELL_MAX_X_BITS))
+#define	MAP_BITS_Y_MASK			(~(~0 << MAP_CELL_MAX_Y_BITS))
+#define	MAP_CELL_X_MASK			MAP_BITS_X_MASK
+#define	MAP_CELL_Y_MASK			(MAP_BITS_Y_MASK << MAP_CELL_MAX_X_BITS)
+#define MAP_COORDS_MASK			(0x00FF00FF | (MAP_BITS_Y_MASK << 24) | (MAP_BITS_X_MASK << 8))
+#define MAP_COORDS_TEST			(~MAP_COORDS_MASK)
 
 // Size of the map in cells.
 #define	MAP_CELL_W				(1<<MAP_CELL_MAX_X_BITS)

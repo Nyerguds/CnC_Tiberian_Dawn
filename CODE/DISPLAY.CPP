@@ -4077,7 +4077,7 @@ bool DisplayClass::In_View(register CELL cell)
 
 COORDINATE DisplayClass::Closest_Free_Spot(COORDINATE coord, bool any) const
 {
-	if (coord & 0xC000C000) {
+	if (coord & MAP_COORDS_TEST) {
 		return(0x00800080);
 	}
 	return (*this)[Coord_Cell(coord)].Closest_Free_Spot(coord, any);
@@ -4086,7 +4086,7 @@ COORDINATE DisplayClass::Closest_Free_Spot(COORDINATE coord, bool any) const
 
 bool DisplayClass::Is_Spot_Free(COORDINATE coord) const
 {
-	if (coord & 0xC000C000) {
+	if (coord & MAP_COORDS_TEST) {
 		return(0x00800080);
 	}
 	return (*this)[Coord_Cell(coord)].Is_Spot_Free(CellClass::Spot_Index(coord));
