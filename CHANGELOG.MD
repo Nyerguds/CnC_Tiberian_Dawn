@@ -111,6 +111,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * The map number in multiplayer will no longer affect logic regarding difficulty and tooltips that is only meant for singleplayer.
 * Fixed the fact the chance of an AI selling a building was affected by the mission number in Covert Ops missions. It is now affected by the set build level, capped at 20.
 * Oil Derricks that are preplaced on the map as damaged below 50% will now also get the flame spout animation.
+* The Oil Derrick's flame spout animation now properly overlaps vehicles objects next to it.
 * The Oil Derrick and Flare animations are now truly endless, rather than stopping after 255 loops.
 * Fixed the bug that the special GDI ending unlock status would re-lock if another building was destroyed after the Temple, and would linger in memory when starting or loading another mission.
 * Fixed the special GDI ending unlock status not getting saved in savegames.
@@ -179,3 +180,6 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Aircraft will now always immediately return to base when they run out of ammo mid-salvo instead of waiting for a second shot they don't have.
 * Fixed the infantry squish sound increasing in volume if multiple infantry was on the squished cell.
 * Fixed vehicle crushing, and tweaked it so they don't play the infantry squish sound but instead play their normal death animation, along with a little "roadkill bump" sound.
+* Enabled translucent colors on the vehicle smoke and oil derrick smoke animations, so they can be enhanced to truly semitranspareny smoke.
+* Enabled special translucent state on rocket exhaust smoke puff so it can use the previously unused filters set intended for the mouse cursor.
+* Added ini option to disable the grenade throw sound.

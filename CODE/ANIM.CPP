@@ -183,6 +183,11 @@ COORDINATE AnimClass::Sort_Y(void) const
 {
 	Validate();
 	if (Object) {
+		// Nyerguds's C&C Patch Project v1.04
+		// Fixed overlap on oil derrick flame.
+		if (*this == ANIM_OILFIELD_BURN) {
+			return(Coord_Add(Center_Coord(), XYP_COORD(-12, 20)));
+		}
 		return(Coord_Add(Object->Sort_Y(), 0x00010000L));
 	}
 	if (*this == ANIM_MOVE_FLASH) {
@@ -293,12 +298,16 @@ void AnimClass::Draw_It(int x, int y, WindowNumberType window)
 					break;
 			}
 
+			// Nyerguds's C&C Patch Project v1.04
+			// Added support for using MouseTranslucentTable by enabling both.
+			// Mouse has a nice bright smoky gray filter by using color index 14.
 			/*
 			**	If the translucent table hasn't been determined yet, then check to see if it
 			**	should use the white or normal translucent tables.
 			*/
-			if (!transtable && Class->IsWhiteTrans) transtable = Map.WhiteTranslucentTable;
-			if (!transtable && Class->IsTranslucent) transtable = Map.TranslucentTable;
+			if (!transtable && Class->IsWhiteTrans && Class->IsTranslucent) transtable = Map.MouseTranslucentTable;
+			else if (!transtable && Class->IsWhiteTrans) transtable = Map.WhiteTranslucentTable;
+			else if (!transtable && Class->IsTranslucent) transtable = Map.TranslucentTable;
 
 			/*
 			**	Set the shape flags to properly take into account any fading or ghosting

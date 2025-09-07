@@ -75,6 +75,10 @@ In beta footage of the game, gun turrets and vehicles with rotating cannon or ma
 
 This behaviour is enabled by default, but can be disabled by adding the option "NoTurretRecoil=true" in conquer.ini, under \[Patch\].
 
+### Grenade sound
+
+As part of the fixes done in this patch, the previously unused grenade throw sound is now played. If this bothers anyone, the sound can be disabled by adding the option "NoGrenadeToss=true" in conquer.ini, under \[Patch\].
+
 ## Extra usage notes
 
 ### "Funpark" dinosaur campaign
@@ -93,15 +97,19 @@ Note that the Nintendo 64 missions do not completely match the original console 
 
 Also note that these missions only have mission briefings in English.
 
+### Transparent smoke
+
+One of the interesting bits I noticed when digging into the code was the existence of options to use "translucent colors" on animations. This system turned out to be incredibly versatile, but in the retail game, it is only used for a very slight darkening effect around the tank barrel flash animation, and for a brightening filter on the circles shown when clicking to give a Move order. So I decided to expand that.
+
+This system works by taking certain reserved colours on the graphics, and instead of painting these, it applies a special effect, such as brightening, darkening, or recolouring, to whatever graphics are under these parts of the animation. This same system can already be seen in action in other parts of the game, such as the shadows under units, and the gradual darkening on the shroud edges. Although the amount of filters in the game is fairly limited, I managed to use the available ones to vastly upgrade all smoke animations in the game to become more transparent.
+
+However, these changes won't activate just by tweaking the code; they need edits on the actual game sprites, to make them use these special reserved colours. In the "**extras**" folder, you can find a file called "**sc-smoky.mix**" Add that into your folder to replace the smoke effects with versions that use these translucent colors. These include rocket exhaust, the smoke shown on damaged vehicles, and oil derricks on fire. Note that this will make the smoke coming from vehicles considerably darker than before.
+
 ### Extra remix tracks
 
 In the official soundtrack of the game, a bunch of the tracks have extra voices mixed into them. If the special CONQUER.INI option "**Scores=remix**" is enabled, the game will unlock these original mixes, making them replace the standard in-game versions. However, there are three tracks with such alternate soundtrack versions which are not included in the game, namely, "Just Do It Up!", "No Mercy" and "Deception" (aka, "We Will Stop Them"). In fact, in the Ion Cannon video, you can hear a short fragment of this version of "No Mercy".
 
 The "**extras**" folder contains a file called "**sc-remix.mix**" which can be added into the game folder to amend this. The game itself is already adapted to recognise these tracks as possibly having a remix, so it will substitute them automatically when found, and show the correct length for the alternate version in the playlist.
-
-### Grenade sound
-
-As part of the fixes done in this patch, the previously unused grenade throw sound is now played. If this bothers anyone, the sound can be disabled by taking the file "**ssnogren.mix**" from the "**extras**" folder and putting it in the game folder.
 
 ### Special CONQUER.INI options
 

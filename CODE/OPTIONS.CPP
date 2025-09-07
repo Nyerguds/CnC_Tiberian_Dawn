@@ -558,6 +558,11 @@ void OptionsClass::Load_Settings (void)
 	NoScreenshotMessage = WWGetPrivateProfileBool("Patch", "NoScreenshotMessage", false, buffer);
 	NoLauncherPopup = WWGetPrivateProfileBool("Patch", "NoLauncherPopup", false, buffer);
 	NoTurretRecoil = WWGetPrivateProfileBool("Patch", "NoTurretRecoil", false, buffer);
+	// This is not an actual setting to store; it just clears the sound in the weapons array right here.
+	if (WWGetPrivateProfileBool("Patch", "NoGrenadeToss", false, buffer)) {
+		WeaponTypeClass* nonconstw = (WeaponTypeClass*)(Weapons);
+		nonconstw[WEAPON_GRENADE].Sound = VOC_NONE;
+	}
 
 	char workbuf[128];
 
