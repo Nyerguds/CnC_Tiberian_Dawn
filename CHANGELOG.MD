@@ -185,6 +185,5 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Added ini option to disable the grenade throw sound.
 * Fixed misalignment on SAM Site launch smoke animations
 * Enabled translucent colors on the SAM Site launch smoke animations, so the hard-baked Nod colours on the animation can be fixed.
-* Fixed the player not receiving money from capturing a silo or refinery if they don't rnough extra storage to hold the captured tiberium contents.
 * Fixed the issue where capturing tiberium storage would transfer the contained tiberium to the player before the storage capacity itself was added to the player's storage pool.
 * When selling a building, the infantry will now always come out of an actual cell that was part of the building.
