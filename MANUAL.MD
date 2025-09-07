@@ -103,7 +103,7 @@ One of the interesting bits I noticed when digging into the code was the existen
 
 This system works by taking certain reserved colours on the graphics, and instead of painting these, it applies a special effect, such as brightening, darkening, or recolouring, to whatever graphics are under these parts of the animation. This same system can already be seen in action in other parts of the game, such as the shadows under units, and the gradual darkening on the shroud edges. Although the amount of filters in the game is fairly limited, I managed to use the available ones to vastly upgrade all smoke animations in the game to become more transparent.
 
-However, these changes won't activate just by tweaking the code; they need edits on the actual game sprites, to make them use these special reserved colours. In the "**extras**" folder, you can find a file called "**sc-smoky.mix**" Add that into your folder to replace the smoke effects with versions that use these translucent colors. These include rocket exhaust, the smoke shown on damaged vehicles, and oil derricks on fire. Note that this will make the smoke coming from vehicles considerably darker than before.
+However, these changes won't activate just by tweaking the code; they need edits on the actual game sprites, to make them use these special reserved colours. In the "**extras**" folder, you can find a file called "**sc-smoky.mix**" Add that into your folder to replace the smoke effects with versions that use these translucent colors. These include rocket exhaust, the smoke shown on damaged vehicles, oil derricks on fire, and the Nod SAM Site's firing exhaust. Note that this will make the smoke coming from vehicles considerably darker than before.
 
 ### Extra remix tracks
 

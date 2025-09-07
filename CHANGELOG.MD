@@ -183,3 +183,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Enabled translucent colors on the vehicle smoke and oil derrick smoke animations, so they can be enhanced to truly semitranspareny smoke.
 * Enabled special translucent state on rocket exhaust smoke puff so it can use the previously unused filters set intended for the mouse cursor.
 * Added ini option to disable the grenade throw sound.
+* Fixed misalignment on SAM Site launch smoke animations
+* Enabled translucent colors on the SAM Site launch smoke animations, so the hard-baked Nod colours on the animation can be fixed.
+* Fixed the player not receiving money from capturing a silo or refinery if they don't rnough extra storage to hold the captured tiberium contents.
+* Fixed captured tiberium storage transferring the contained tiberium to the player before the storage capacity itself is added to the player's available storage pool.

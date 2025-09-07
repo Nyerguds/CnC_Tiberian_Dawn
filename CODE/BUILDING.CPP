@@ -3275,7 +3275,7 @@ bool BuildingClass::Captured(HouseClass * newowner)
 		** Add this building to the list of buildings captured this game. For internet stats purposes
 		*/
 		if (GameToPlay == GAME_INTERNET){
-			newowner->CapturedBuildings->Increment_Unit_Total (Class->Type);
+			newowner->CapturedBuildings->Increment_Unit_Total(Class->Type);
 		}
 
 		House->Adjust_Power(-Power_Output());
@@ -3357,8 +3357,6 @@ bool BuildingClass::Captured(HouseClass * newowner)
 			new SmudgeClass(bib, Cell_Coord(cell), House->Class->House);
 		}
 
-		House->Harvested(booty);
-
 		/*
 		**	Increment the factory count for the new owner.
 		*/
@@ -3385,6 +3383,10 @@ bool BuildingClass::Captured(HouseClass * newowner)
 
 		IsRepairing = false;
 		Grand_Opening(true);
+
+		// Nyerguds's C&C Patch Project v1.04
+		// Only give back the tiberium after Grand_Opening, so the receiving House's capacity is updated to include the new storage space.
+		House->Harvested(booty);
 
 		Mark(MARK_CHANGE);
 
