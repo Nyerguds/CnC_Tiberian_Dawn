@@ -785,7 +785,9 @@ BulletClass * BuildingClass::Fire_At(TARGET target, int which)
 		Sound_Effect(weapon->Sound, Coord);
 
 		if (*this == STRUCT_SAM) {
-			AnimClass *anim = new AnimClass((AnimType)(ANIM_SAM_N + Dir_Facing(PrimaryFacing.Current())), Center_Coord());
+			// Nyerguds's C&C Patch Project v1.04
+			// Fixed alignment of SAM Site launch smoke
+			AnimClass *anim = new AnimClass((AnimType)(ANIM_SAM_N + Dir_Facing(PrimaryFacing.Current())), Coord_Add(Center_Coord(), XYP_COORD(1, -1)));
 			if (anim) {
 				anim->Attach_To(this);
 			}

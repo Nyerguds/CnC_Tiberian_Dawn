@@ -1543,7 +1543,7 @@ bool ObjectClass::Revealed(HouseClass * house)
 
 // These can't be made inline (for various reasons).
 short const * ObjectClass::Occupy_List(bool placement) const {return(Class_Of().Occupy_List(placement));};
-short const * ObjectClass::Overlap_List(void) const {return(Class_Of().Overlap_List());};
+short const * ObjectClass::Overlap_List(bool /*redraw*/) const {return(Class_Of().Overlap_List());};
 BuildingClass * ObjectClass::Who_Can_Build_Me(bool intheory, bool legal) const {return(Class_Of().Who_Can_Build_Me(intheory, legal, Owner()));};
 unsigned ObjectClass::Health_Ratio(void) const {return(Cardinal_To_Fixed(Class_Of().MaxStrength, Strength));};
 int ObjectClass::Full_Name(void) const {return Class_Of().Full_Name();};

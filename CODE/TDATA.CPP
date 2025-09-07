@@ -1020,7 +1020,7 @@ ObjectClass * TerrainTypeClass::Create_One_Of(HouseClass *) const
 }
 
 
-short const * TerrainTypeClass::Occupy_List(bool ) const
+short const * TerrainTypeClass::Occupy_List(bool /*placement*/) const
 {
 	if (Occupy) return(Occupy);
 

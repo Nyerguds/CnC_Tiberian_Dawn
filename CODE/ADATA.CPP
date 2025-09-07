@@ -45,13 +45,12 @@ static AnimTypeClass const TricDie(
 	"TRIC",									// Data name of animation.
 	32,										// Maximum dimension of animation.
 	4,											// Biggest animation stage.
+	TRANS_UNITS,						// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
-	true, 									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,											// Delay between frames.
@@ -69,13 +68,12 @@ static AnimTypeClass const TRexDie(
 	"TREX",									// Data name of animation.
 	48,										// Maximum dimension of animation.
 	4,											// Biggest animation stage.
+	TRANS_UNITS,						// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
-	true, 									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,											// Delay between frames.
@@ -93,13 +91,12 @@ static AnimTypeClass const StegDie(
 	"STEG",									// Data name of animation.
 	33,										// Maximum dimension of animation.
 	4,											// Biggest animation stage.
+	TRANS_UNITS,						// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
-	true, 									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,											// Delay between frames.
@@ -117,13 +114,12 @@ static AnimTypeClass const RaptDie(
 	"RAPT",									// Data name of animation.
 	24,										// Maximum dimension of animation.
 	4,											// Biggest animation stage.
+	TRANS_UNITS,						// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
-	true, 									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,											// Delay between frames.
@@ -141,13 +137,12 @@ static AnimTypeClass const SAMN(
 	"SAMFIRE",								// Data name of animation.
 	55,										// Maximum dimension of animation.
 	4,											// Biggest animation stage.
+	TRANS_MOUSE,						// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -159,18 +154,18 @@ static AnimTypeClass const SAMN(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const SAMNW(
 	ANIM_SAM_NW,							// Animation number.
 	"SAMFIRE",								// Data name of animation.
 	55,										// Maximum dimension of animation.
 	22,										// Biggest animation stage.
+	TRANS_MOUSE,						// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -182,18 +177,18 @@ static AnimTypeClass const SAMNW(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const SAMW(
 	ANIM_SAM_W,								// Animation number.
 	"SAMFIRE",								// Data name of animation.
 	55,										// Maximum dimension of animation.
 	40,										// Biggest animation stage.
+	TRANS_MOUSE,						// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -205,18 +200,18 @@ static AnimTypeClass const SAMW(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const SAMSW(
 	ANIM_SAM_SW,							// Animation number.
 	"SAMFIRE",								// Data name of animation.
 	55,										// Maximum dimension of animation.
 	58,										// Biggest animation stage.
+	TRANS_MOUSE,						// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -228,18 +223,18 @@ static AnimTypeClass const SAMSW(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const SAMS(
 	ANIM_SAM_S,								// Animation number.
 	"SAMFIRE",								// Data name of animation.
 	55,										// Maximum dimension of animation.
 	76,										// Biggest animation stage.
+	TRANS_MOUSE,						// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -251,18 +246,18 @@ static AnimTypeClass const SAMS(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const SAMSE(
 	ANIM_SAM_SE,							// Animation number.
 	"SAMFIRE",								// Data name of animation.
 	55,										// Maximum dimension of animation.
 	94,										// Biggest animation stage.
+	TRANS_MOUSE,						// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -274,18 +269,18 @@ static AnimTypeClass const SAMSE(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const SAME(
 	ANIM_SAM_E,								// Animation number.
 	"SAMFIRE",								// Data name of animation.
 	55,										// Maximum dimension of animation.
 	112,										// Biggest animation stage.
+	TRANS_MOUSE,						// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -297,18 +292,18 @@ static AnimTypeClass const SAME(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const SAMNE(
 	ANIM_SAM_NE,							// Animation number.
 	"SAMFIRE",								// Data name of animation.
 	55,										// Maximum dimension of animation.
 	130,										// Biggest animation stage.
+	TRANS_MOUSE,						// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -326,13 +321,12 @@ static AnimTypeClass const LZSmoke(
 	"SMOKLAND",								// Data name of animation.
 	32,										// Maximum dimension of animation.
 	72,										// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -353,13 +347,12 @@ static AnimTypeClass const BurnSmall(
 	"BURN-S",								// Data name of animation.
 	11,										// Maximum dimension of animation.
 	13,										// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0008,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -371,18 +364,18 @@ static AnimTypeClass const BurnSmall(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const BurnMed(
 	ANIM_BURN_MED,							// Animation number.
 	"BURN-M",								// Data name of animation.
 	14,										// Maximum dimension of animation.
 	13,										// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0010,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -394,18 +387,18 @@ static AnimTypeClass const BurnMed(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const BurnBig(
 	ANIM_BURN_BIG,							// Animation number.
 	"BURN-L",								// Data name of animation.
 	23,										// Maximum dimension of animation.
 	13,										// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	true, 									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0018,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -427,13 +420,12 @@ static AnimTypeClass const OnFireSmall(
 	"BURN-S",								// Data name of animation.
 	11,										// Maximum dimension of animation.
 	13,										// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0008,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -445,18 +437,18 @@ static AnimTypeClass const OnFireSmall(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_SMOKE_M
 );
+
 static AnimTypeClass const OnFireMed(
 	ANIM_ON_FIRE_MED,						// Animation number.
 	"BURN-M",								// Data name of animation.
 	14,										// Maximum dimension of animation.
 	13,										// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0010,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -468,18 +460,18 @@ static AnimTypeClass const OnFireMed(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_ON_FIRE_SMALL
 );
+
 static AnimTypeClass const OnFireBig(
 	ANIM_ON_FIRE_BIG,						// Animation number.
 	"BURN-L",								// Data name of animation.
 	23,										// Maximum dimension of animation.
 	13,										// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	true, 									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0018,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -500,13 +492,12 @@ static AnimTypeClass const FlameN(
 	"FLAME-N",								// Data name of animation.
 	0,											// Maximum dimension of animation.
 	9,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	true, 									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -518,18 +509,18 @@ static AnimTypeClass const FlameN(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const FlameNW(
 	ANIM_FLAME_NW,							// Animation number.
 	"FLAME-NW",								// Data name of animation.
 	0,											// Maximum dimension of animation.
 	9,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	true, 									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -541,18 +532,18 @@ static AnimTypeClass const FlameNW(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const FlameW(
 	ANIM_FLAME_W,							// Animation number.
 	"FLAME-W",								// Data name of animation.
 	0,											// Maximum dimension of animation.
 	9,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	true, 									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -564,18 +555,18 @@ static AnimTypeClass const FlameW(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const FlameSW(
 	ANIM_FLAME_SW,							// Animation number.
 	"FLAME-SW",								// Data name of animation.
 	0,											// Maximum dimension of animation.
 	9,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	true, 									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -587,18 +578,18 @@ static AnimTypeClass const FlameSW(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const FlameS(
 	ANIM_FLAME_S,							// Animation number.
 	"FLAME-S",								// Data name of animation.
 	0,											// Maximum dimension of animation.
 	9,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	true, 									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -610,18 +601,18 @@ static AnimTypeClass const FlameS(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const FlameSE(
 	ANIM_FLAME_SE,							// Animation number.
 	"FLAME-SE",								// Data name of animation.
 	0,											// Maximum dimension of animation.
 	9,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	true, 									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -633,18 +624,18 @@ static AnimTypeClass const FlameSE(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const FlameE(
 	ANIM_FLAME_E,							// Animation number.
 	"FLAME-E",								// Data name of animation.
 	0,											// Maximum dimension of animation.
 	9,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	true, 									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -656,18 +647,18 @@ static AnimTypeClass const FlameE(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const FlameNE(
 	ANIM_FLAME_NE,							// Animation number.
 	"FLAME-NE",								// Data name of animation.
 	0,											// Maximum dimension of animation.
 	9,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	true, 									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -688,13 +679,12 @@ static AnimTypeClass const ChemN(
 	"CHEM-N",								// Data name of animation.
 	0,											// Maximum dimension of animation.
 	9,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -706,18 +696,18 @@ static AnimTypeClass const ChemN(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const ChemNW(
 	ANIM_CHEM_NW,							// Animation number.
 	"CHEM-NW",								// Data name of animation.
 	0,											// Maximum dimension of animation.
 	9,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -729,18 +719,18 @@ static AnimTypeClass const ChemNW(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const ChemW(
 	ANIM_CHEM_W,							// Animation number.
 	"CHEM-W",								// Data name of animation.
 	0,											// Maximum dimension of animation.
 	9,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -752,18 +742,18 @@ static AnimTypeClass const ChemW(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const ChemSW(
 	ANIM_CHEM_SW,							// Animation number.
 	"CHEM-SW",								// Data name of animation.
 	0,											// Maximum dimension of animation.
 	9,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -775,18 +765,18 @@ static AnimTypeClass const ChemSW(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const ChemS(
 	ANIM_CHEM_S,							// Animation number.
 	"CHEM-S",								// Data name of animation.
 	0,											// Maximum dimension of animation.
 	9,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -798,18 +788,18 @@ static AnimTypeClass const ChemS(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const ChemSE(
 	ANIM_CHEM_SE,							// Animation number.
 	"CHEM-SE",								// Data name of animation.
 	0,											// Maximum dimension of animation.
 	9,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -821,18 +811,18 @@ static AnimTypeClass const ChemSE(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const ChemE(
 	ANIM_CHEM_E,							// Animation number.
 	"CHEM-E",								// Data name of animation.
 	0,											// Maximum dimension of animation.
 	9,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -844,18 +834,18 @@ static AnimTypeClass const ChemE(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const ChemNE(
 	ANIM_CHEM_NE,							// Animation number.
 	"CHEM-NE",								// Data name of animation.
 	0,											// Maximum dimension of animation.
 	9,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -873,13 +863,12 @@ static AnimTypeClass const Grenade(
 	"VEH-HIT2",								// Data name of animation.
 	21,										// Maximum dimension of animation.
 	1,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	true, 									// Forms a crater?
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -897,13 +886,12 @@ static AnimTypeClass const FBall1(
 	"FBALL1",								// Data name of animation.
 	67,										// Maximum dimension of animation.
 	6,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	true, 									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -921,13 +909,12 @@ static AnimTypeClass const Frag1(
 	"FRAG1",									// Data name of animation.
 	45,										// Maximum dimension of animation.
 	3,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	true, 									// Forms a crater?
 	true, 									// Sticks to unit in square?
 	true, 									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -945,13 +932,12 @@ static AnimTypeClass const Frag3(
 	"FRAG3",									// Data name of animation.
 	41,										// Maximum dimension of animation.
 	3,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	true, 									// Forms a crater?
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -969,13 +955,12 @@ static AnimTypeClass const VehHit1(
 	"VEH-HIT1",								// Data name of animation.
 	30,										// Maximum dimension of animation.
 	4,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	true, 									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -993,13 +978,12 @@ static AnimTypeClass const VehHit2(
 	"VEH-HIT2",								// Data name of animation.
 	21,										// Maximum dimension of animation.
 	1,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	true, 									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1017,13 +1001,12 @@ static AnimTypeClass const VehHit3(
 	"VEH-HIT3",								// Data name of animation.
 	19,										// Maximum dimension of animation.
 	3,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	true, 									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1041,13 +1024,12 @@ static AnimTypeClass const ArtExp1(
 	"ART-EXP1",								// Data name of animation.
 	41,										// Maximum dimension of animation.
 	1,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	true, 									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1065,13 +1047,12 @@ static AnimTypeClass const Napalm1(
 	"NAPALM1",								// Data name of animation.
 	21,										// Maximum dimension of animation.
 	5,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	true, 									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1089,13 +1070,12 @@ static AnimTypeClass const Napalm2(
 	"NAPALM2",								// Data name of animation.
 	41,										// Maximum dimension of animation.
 	5,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	true, 									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1113,13 +1093,12 @@ static AnimTypeClass const Napalm3(
 	"NAPALM3",								// Data name of animation.
 	78,										// Maximum dimension of animation.
 	5,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	true, 									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1137,13 +1116,12 @@ static AnimTypeClass const SmokePuff(
 	"SMOKEY",								// Data name of animation.
 	24,										// Maximum dimension of animation.
 	2,											// Biggest animation stage.
+	TRANS_MOUSE,						// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	true, 									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	true, 									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1161,13 +1139,12 @@ static AnimTypeClass const Piff(
 	"PIFF",									// Data name of animation.
 	13,										// Maximum dimension of animation.
 	1,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1185,13 +1162,12 @@ static AnimTypeClass const PiffPiff(
 	"PIFFPIFF",								// Data name of animation.
 	20,										// Maximum dimension of animation.
 	2,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1209,13 +1185,12 @@ static AnimTypeClass const Fire3(
 	"FIRE3",									// Data name of animation.
 	23,										// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0008,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1233,13 +1208,12 @@ static AnimTypeClass const Fire1(
 	"FIRE1",									// Data name of animation.
 	23,										// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	true, 									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0010,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1257,13 +1231,12 @@ static AnimTypeClass const Fire4(
 	"FIRE4",									// Data name of animation.
 	7,											// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0008,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1281,13 +1254,12 @@ static AnimTypeClass const Fire2(
 	"FIRE2",									// Data name of animation.
 	23,										// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	true, 									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0010,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1305,13 +1277,12 @@ static AnimTypeClass const OilFieldBurn(
 	"FLMSPT",								// Data name of animation.
 	42,										// Maximum dimension of animation.
 	58,										// Biggest animation stage.
+	TRANS_ANIM,							// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
-	true, 									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1329,13 +1300,12 @@ static AnimTypeClass const Gunfire(
 	"GUNFIRE",								// Data name of animation.
 	16,										// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_ANIM,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
-	true, 									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1713,13 +1683,12 @@ static AnimTypeClass const SmokeM(
 	"SMOKE_M",								// Data name of animation.
 	28,										// Maximum dimension of animation.
 	30,										// Biggest animation stage.
+	TRANS_ANIM,							// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
-	true, 									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1740,13 +1709,12 @@ static AnimTypeClass const GUNN(
 	"MINIGUN",								// Data name of animation.
 	18,										// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1758,18 +1726,18 @@ static AnimTypeClass const GUNN(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const GUNNW(
 	ANIM_GUN_NW,							// Animation number.
 	"MINIGUN",								// Data name of animation.
 	18,										// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1781,18 +1749,18 @@ static AnimTypeClass const GUNNW(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const GUNW(
 	ANIM_GUN_W,								// Animation number.
 	"MINIGUN",								// Data name of animation.
 	18,										// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1804,18 +1772,18 @@ static AnimTypeClass const GUNW(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const GUNSW(
 	ANIM_GUN_SW,							// Animation number.
 	"MINIGUN",								// Data name of animation.
 	18,										// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1827,18 +1795,18 @@ static AnimTypeClass const GUNSW(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const GUNS(
 	ANIM_GUN_S,								// Animation number.
 	"MINIGUN",								// Data name of animation.
 	18,										// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1850,18 +1818,18 @@ static AnimTypeClass const GUNS(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const GUNSE(
 	ANIM_GUN_SE,							// Animation number.
 	"MINIGUN",								// Data name of animation.
 	18,										// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1873,18 +1841,18 @@ static AnimTypeClass const GUNSE(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const GUNE(
 	ANIM_GUN_E,								// Animation number.
 	"MINIGUN",								// Data name of animation.
 	18,										// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1896,18 +1864,18 @@ static AnimTypeClass const GUNE(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const GUNNE(
 	ANIM_GUN_NE,							// Animation number.
 	"MINIGUN",								// Data name of animation.
 	18,										// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1919,18 +1887,18 @@ static AnimTypeClass const GUNNE(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const IonCannon(
 	ANIM_ION_CANNON,						// Animation number.
 	"IONSFX",								// Data name of animation.
 	48,										// Maximum dimension of animation.
 	11,										// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	true, 									// Scorches the ground?
 	true, 									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1948,13 +1916,12 @@ static AnimTypeClass const AtomBomb(
 	"ATOMSFX",								// Data name of animation.
 	72,										// Maximum dimension of animation.
 	19,										// Biggest animation stage.
+	TRANS_UNITS,						// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	true, 									// Scorches the ground?
 	true, 									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1966,18 +1933,18 @@ static AnimTypeClass const AtomBomb(
 	VOC_NUKE_EXPLODE,						// Sound effect to play.
 	ANIM_NONE
 );
+
 static AnimTypeClass const AtomDoor(
 	ANIM_ATOM_DOOR,						// Animation number.
 	"ATOMDOOR",								// Data name of animation.
 	48,										// Maximum dimension of animation.
 	19,										// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	true, 									// Scorches the ground?
 	true, 									// Forms a crater?
 	true, 									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -1995,13 +1962,12 @@ static AnimTypeClass const CDeviator(
 	"DEVIATOR",								// Data name of animation.
 	48,										// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,											// Delay between frames.
@@ -2013,18 +1979,18 @@ static AnimTypeClass const CDeviator(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE								// Follow up animation.
 );
+
 static AnimTypeClass const CDollar(
 	ANIM_CRATE_DOLLAR,					// Animation number.
 	"DOLLAR",								// Data name of animation.
 	48,										// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,											// Delay between frames.
@@ -2036,18 +2002,18 @@ static AnimTypeClass const CDollar(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE								// Follow up animation.
 );
+
 static AnimTypeClass const CEarth(
 	ANIM_CRATE_EARTH,						// Animation number.
 	"EARTH",									// Data name of animation.
 	48,										// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,											// Delay between frames.
@@ -2059,18 +2025,18 @@ static AnimTypeClass const CEarth(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE								// Follow up animation.
 );
+
 static AnimTypeClass const CEmpulse(
 	ANIM_CRATE_EMPULSE,					// Animation number.
 	"EMPULSE",								// Data name of animation.
 	48,										// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,											// Delay between frames.
@@ -2082,18 +2048,18 @@ static AnimTypeClass const CEmpulse(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE								// Follow up animation.
 );
+
 static AnimTypeClass const CInvun(
 	ANIM_CRATE_INVUN,						// Animation number.
 	"INVUN",									// Data name of animation.
 	48,										// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,											// Delay between frames.
@@ -2105,18 +2071,18 @@ static AnimTypeClass const CInvun(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE								// Follow up animation.
 );
+
 static AnimTypeClass const CMine(
 	ANIM_CRATE_MINE,						// Animation number.
 	"MINE",									// Data name of animation.
 	48,										// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,											// Delay between frames.
@@ -2128,18 +2094,18 @@ static AnimTypeClass const CMine(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE								// Follow up animation.
 );
+
 static AnimTypeClass const CRapid(
 	ANIM_CRATE_RAPID,						// Animation number.
 	"RAPID",									// Data name of animation.
 	48,										// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,											// Delay between frames.
@@ -2151,18 +2117,18 @@ static AnimTypeClass const CRapid(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE								// Follow up animation.
 );
+
 static AnimTypeClass const CStealth(
 	ANIM_CRATE_STEALTH,					// Animation number.
 	"STEALTH2",								// Data name of animation.
 	48,										// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,											// Delay between frames.
@@ -2174,18 +2140,18 @@ static AnimTypeClass const CStealth(
 	VOC_NONE,								// Sound effect to play.
 	ANIM_NONE								// Follow up animation.
 );
+
 static AnimTypeClass const CMissile(
 	ANIM_CRATE_MISSILE,					// Animation number.
 	"MISSILE2",								// Data name of animation.
 	48,										// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,											// Delay between frames.
@@ -2203,13 +2169,12 @@ static AnimTypeClass const MoveFlash(
 	"MOVEFLSH",								// Data name of animation.
 	24,										// Maximum dimension of animation.
 	0,											// Biggest animation stage.
+	TRANS_WHITE,						// Translucency for this animation?
 	true, 									// Normalized animation rate?
-	true, 									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -2227,13 +2192,12 @@ static AnimTypeClass const ChemBall(
 	"CHEMBALL",								// Data name of animation.
 	21,										// Maximum dimension of animation.
 	5,											// Biggest animation stage.
+	TRANS_NONE,							// Translucency for this animation?
 	false,									// Normalized animation rate?
-	false,									// Uses white translucent table?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
-	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,											// Delay between frames.
@@ -2363,9 +2327,9 @@ AnimTypeClass const * const AnimTypeClass::Pointers[ANIM_COUNT] = {
  * HISTORY:                                                                                    *
  *   08/23/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-AnimTypeClass::AnimTypeClass(AnimType anim, char const *name, int size, int biggest,
-		bool isnormal, bool iswhitetrans, bool isscorcher, bool iscrater, bool issticky, bool ground,
-		bool istrans, bool isflame, unsigned int damage,
+AnimTypeClass::AnimTypeClass(AnimType anim, char const *name, int size, int biggest, TransType trans,
+		bool isnormal, bool isscorcher, bool iscrater, bool issticky, bool ground,
+		bool isflame, unsigned int damage,
 		int delaytime, int start, int loopstart, int loopend, int stages, int loops, 
 		VocType sound, AnimType chainto) :
 	ObjectTypeClass(true, false, false, true, false, false, true, true, TXT_NONE, name, ARMOR_NONE, 0)
@@ -2380,8 +2344,7 @@ AnimTypeClass::AnimTypeClass(AnimType anim, char const *name, int size, int bigg
 	IsNormalized = isnormal;
 	IsScorcher = isscorcher;
 	IsSticky = issticky;
-	IsTranslucent = istrans;
-	IsWhiteTrans = iswhitetrans;
+	Translucency = trans;
 	LoopEnd = loopend;
 	LoopStart = loopstart;
 	Loops = (unsigned char)MIN(0xFF, loops);

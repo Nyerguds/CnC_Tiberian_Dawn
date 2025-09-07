@@ -1558,6 +1558,25 @@ typedef enum AnimType {
 inline AnimType operator++(AnimType &, int);
 
 
+/**********************************************************************
+**	Translucency types used by animations are enumerated here. These provide
+**  translucent effects.
+*/
+typedef enum TransType {
+	TRANS_NONE = -1, // No translucency.
+	TRANS_ANIM, // Default animation translucency. (15-14-13-12 are increasingly darker) (32-39 are bright fades, but with errors on pure white and water)
+	TRANS_WHITE, // White flash translucency. (2 is translucent white) (errors on pure white and water)
+	TRANS_MOUSE, // Mouse translucency. (12-13-14-15 fade towards the black/dark grey/light grey/white colours) (white has errors on pure white and water)
+	TRANS_UNITS, // Unit shadow translucency. (4 is shadow)
+	TRANS_GHOST, // Special "ghost" table. Maps the entire sprite to its table. Unsure if really used.
+	TRANS_SHADOW, // Fade to black around map shroud. (16 and 15 are increasingly darker shades. 14 and 13 are practically completely black.)
+	TRANS_COUNT,
+	TRANS_FIRST=0
+} TransType;
+
+inline TransType operator++(TransType &, int);
+
+
 /****************************************************************************
 **	Infantry can be performing various activities. These can range from simple
 **	idle animations to physical hand to hand combat.

@@ -2765,13 +2765,13 @@ void UnitClass::Look(bool incremental)
  * OUTPUT:  Returns with the overlap list pointer for the unit at its                          *
  *          present position.                                                                  *
  *                                                                                             *
- * WARNINGS:   none                                                                            *
+ * WARNINGS:   This does not include the occupied cells.                                       *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   05/26/1994 JLB : Created.                                                                 *
  *   06/19/1994 JLB : Uses Coord_Spillable_List function.                                      *
  *=============================================================================================*/
-short const * UnitClass::Overlap_List(void) const
+short const * UnitClass::Overlap_List(bool redraw) const
 {
 	Validate();
 	static short const _gunboat[] = {-3, -2, 2, 3, REFRESH_EOL};
@@ -2785,10 +2785,7 @@ short const * UnitClass::Overlap_List(void) const
 	}
 
 	size = ICON_PIXEL_W;
-	if (IsSelected || IsFiring) {
-		size += 24;
-	}
-	if (IsSelected || Class->IsGigundo || IsAnimAttached) {
+	if (IsSelected || IsFiring || redraw || Class->IsGigundo || IsAnimAttached) {
 		size = ICON_PIXEL_W*2;
 	}
 	return(Coord_Spillage_List(Coord, size)+1);

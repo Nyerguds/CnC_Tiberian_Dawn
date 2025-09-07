@@ -113,7 +113,7 @@ class UnitClass :	public TarComClass
 		*/
 		virtual void const * Remap_Table(void);
 		virtual void Look(bool incremental=false);
-		virtual short const * Overlap_List(void) const;
+		virtual short const * Overlap_List(bool redraw = false) const;
 		virtual void Draw_It(int x, int y, WindowNumberType window);
 
 		/*

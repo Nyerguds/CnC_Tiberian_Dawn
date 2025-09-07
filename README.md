@@ -5,7 +5,7 @@ This repository contains buildable and working source code for Command & Conquer
 
 This repository was forked from [a branch made by tomsons26](https://github.com/tomsons26/CnC_Tiberian_Dawn/tree/temp), in which he did most of the work of figuring out exactly how to set this up to get it all building.
 
-The purpose of the Command & Conquer patch project is to fix bugs in the game, and possibly port in some Quality-Of-Life features from the C&C: Remastered source code.
+The purpose of the Command & Conquer patch project is to fix bugs in the game, restore cut or bugged features if they enhance gameplay, and possibly port in some Quality-Of-Life features from the C&C: Remastered source code.
 
 ## Compiling and Dependencies
 

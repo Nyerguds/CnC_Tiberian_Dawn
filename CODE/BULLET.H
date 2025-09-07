@@ -91,7 +91,7 @@ class BulletClass :	public ObjectClass,
 		virtual bool Mark(MarkType mark=MARK_CHANGE);
 		virtual void AI(void);
 		virtual short const * Occupy_List(void) const;
-		virtual short const * Overlap_List(void) const {return Occupy_List();};
+		virtual short const * Overlap_List(bool /*redraw*/ = false) const {return Occupy_List();};
 		virtual TARGET As_Target(void) const;
 
 		/*

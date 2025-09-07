@@ -185,7 +185,7 @@ class ObjectClass : public AbstractClass
 		virtual int Exit_Object(TechnoClass *);
 		virtual bool Render(bool forced);
 		virtual short const * Occupy_List(bool placement=false) const;
-		virtual short const * Overlap_List(void) const;
+		virtual short const * Overlap_List(bool /*redraw*/ = false) const;
 		virtual unsigned Health_Ratio(void) const;
 		virtual void Draw_It(int x, int y, WindowNumberType ) = 0;
 		virtual void Hidden(void);

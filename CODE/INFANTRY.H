@@ -146,7 +146,7 @@ class InfantryClass : public FootClass
 		**	Display and rendering support functionality. Supports imagery and how
 		**	object interacts with the map and thus indirectly controls rendering.
 		*/
-		virtual short const * Overlap_List(void) const;
+		virtual short const * Overlap_List(bool /*redraw*/ = false) const;
 		virtual void Draw_It(int x, int y, WindowNumberType window);
 		//virtual void Look(bool incremental=false);
 

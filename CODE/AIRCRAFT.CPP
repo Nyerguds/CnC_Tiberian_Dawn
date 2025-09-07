@@ -940,7 +940,7 @@ bool AircraftClass::Mark(MarkType mark)
  * HISTORY:                                                                                    *
  *   07/26/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-short const *AircraftClass::Overlap_List(void) const
+short const *AircraftClass::Overlap_List(bool /*redraw*/) const
 {
 	Validate();
 	static short const _list[] = {

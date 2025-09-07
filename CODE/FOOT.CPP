@@ -320,6 +320,14 @@ bool FootClass::Mark(MarkType mark)
 				Map.Place_Down(cell, this);
 				break;
 
+			// Nyerguds's C&C Patch Project v1.04
+			// Added RA1's MARK_CHANGE_REDRAW logic to make recoil work.
+			// Give redraw a larger refresh area, since recoil offset can make units exceed normal boundaries.
+			case MARK_CHANGE_REDRAW:
+				Map.Refresh_Cells(cell, Overlap_List(true));
+				Map.Refresh_Cells(cell, Occupy_List());
+				break;
+
 			default:
 				Map.Refresh_Cells(cell, Overlap_List());
 				Map.Refresh_Cells(cell, Occupy_List());

@@ -283,6 +283,14 @@ void AnimClass::Draw_It(int x, int y, WindowNumberType window)
 			/*
 			**	Some animations require special fixups.
 			*/
+			if (Class->Type == ANIM_ION_CANNON) {
+					y -= Get_Build_Frame_Height(shapefile) >> 1;
+					y += 12;
+			}
+
+			// Nyerguds's C&C Patch Project v1.04
+			// transtable exceptions were migrated to the data, as the "Translucency" setting.
+#ifdef OBSOLETE
 			switch (Class->Type) {
 				case ANIM_ION_CANNON:
 					y -= Get_Build_Frame_Height(shapefile) >> 1;
@@ -297,25 +305,33 @@ void AnimClass::Draw_It(int x, int y, WindowNumberType window)
 					transtable = Map.UnitShadow;
 					break;
 			}
+#endif
 
 			// Nyerguds's C&C Patch Project v1.04
-			// Added support for using MouseTranslucentTable by enabling both.
+			// Added support for all translucent tables available in DisplayClass.
 			// Mouse has a nice bright smoky gray filter by using color index 14.
 			/*
 			**	If the translucent table hasn't been determined yet, then check to see if it
 			**	should use the white or normal translucent tables.
 			*/
-			if (!transtable && Class->IsWhiteTrans && Class->IsTranslucent) transtable = Map.MouseTranslucentTable;
-			else if (!transtable && Class->IsWhiteTrans) transtable = Map.WhiteTranslucentTable;
-			else if (!transtable && Class->IsTranslucent) transtable = Map.TranslucentTable;
+			if (Class->Translucency != TRANS_NONE) {
+				transtable = Map.TranslucencyTables[Class->Translucency];
+			}
 
+			// Nyerguds's C&C Patch Project v1.04
+			// These were changed into a TransType enum.
+#ifdef OBSOLETE
+			if (!transtable && Class->IsWhiteTrans) transtable = Map.WhiteTranslucentTable;
+			if (!transtable && Class->IsTranslucent) transtable = Map.TranslucentTable;
+#endif
 			/*
 			**	Set the shape flags to properly take into account any fading or ghosting
 			**	table necessary.
 			*/
 			ShapeFlags_Type flags = SHAPE_CENTER|SHAPE_WIN_REL;
 
-#ifdef OBSOLETE			
+		// MM 20250701: Disabled; this does nothing, and is not used anywhere at all
+#ifdef OBSOLETE
 			if (IsAlternate) {
 				flags = flags | SHAPE_FADING;
 				remap = Map.RemapTables[HOUSE_GOOD][0];
@@ -375,7 +391,7 @@ bool AnimClass::Mark(MarkType mark)
  * HISTORY:                                                                                    *
  *   03/19/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-short const * AnimClass::Overlap_List(void) const
+short const * AnimClass::Overlap_List(bool /*redraw*/) const
 {
 	Validate();
 	static short const OverlapN[] = {0, -MAP_CELL_W, -(MAP_CELL_W+1), -(MAP_CELL_W-1), -(2*MAP_CELL_W), -(2*MAP_CELL_W-1), -(2*MAP_CELL_W+1), REFRESH_EOL};
@@ -667,7 +683,8 @@ AnimClass::~AnimClass(void)
 			**	this animation is attached to. If there are no others, then inform the
 			**	attached object of this fact.
 			*/
-			for (int index = 0; index < Anims.Count(); index++) {
+			int index;
+			for (index = 0; index < Anims.Count(); index++) {
 				if (Anims.Ptr(index)->Object == to) break;
 			}
 

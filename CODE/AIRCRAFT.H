@@ -123,7 +123,7 @@ class AircraftClass : public FootClass, public FlyClass
 		*/
 		virtual bool Exit_Object(TechnoClass *);
 		virtual bool Mark(MarkType mark=MARK_CHANGE);
-		virtual short const * Overlap_List(void) const;
+		virtual short const * Overlap_List(bool /*redraw*/ = false) const;
 		virtual void Draw_It(int x, int y, WindowNumberType window);
 		virtual void Set_Speed(int speed);
 

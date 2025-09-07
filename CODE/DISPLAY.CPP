@@ -89,24 +89,33 @@ LayerClass DisplayClass::Layer[LAYER_COUNT];
 /*
 ** Fading tables
 */
-unsigned char DisplayClass::FadingBrighten[256];
-unsigned char DisplayClass::FadingShade[256];
-unsigned char DisplayClass::FadingLight[256];
+unsigned char DisplayClass::FadingBrighten[256]; // Radar brightening
+unsigned char DisplayClass::FadingShade[256]; // Aircraft shadow + stealth effect
+unsigned char DisplayClass::FadingLight[256]; // 'blushing' color for targeted objects flashing
 #ifdef OBSOLETE
 unsigned char DisplayClass::RemapTables[HOUSE_COUNT][3][256];
 #endif
-unsigned char DisplayClass::FadingGreen[256];
-unsigned char DisplayClass::FadingYellow[256];
-unsigned char DisplayClass::FadingRed[256];
-unsigned char DisplayClass::TranslucentTable[(MAGIC_COL_COUNT+1)*256];
-unsigned char DisplayClass::WhiteTranslucentTable[(1+1)*256];
-unsigned char DisplayClass::MouseTranslucentTable[(4+1)*256];
-void const * DisplayClass::TransIconset;
-unsigned char DisplayClass::UnitShadow[(USHADOW_COL_COUNT+1)*256];
-unsigned char DisplayClass::SpecialGhost[2*256];
+unsigned char DisplayClass::FadingGreen[256]; // Map editor passable + radar tiberium graphics modifier
+unsigned char DisplayClass::FadingYellow[256]; // Map editor mostly passable
+unsigned char DisplayClass::FadingRed[256]; // Map editor impassable
+unsigned char DisplayClass::TranslucentTable[(MAGIC_COL_COUNT+1)*256]; // Default translucent colors table set for animations
+unsigned char DisplayClass::WhiteTranslucentTable[(1+1)*256]; // Special brightening translucent color table for animations (targeting flash)
+unsigned char DisplayClass::MouseTranslucentTable[(4+1)*256]; // Translucent colors table for mouse cursor?
+void const * DisplayClass::TransIconset; // Pointer for ground hashing icons set (building placement)
+unsigned char DisplayClass::UnitShadow[(USHADOW_COL_COUNT+1)*256]; // translucent table for unit shadow
+unsigned char DisplayClass::SpecialGhost[2*256]; // Supposed to be "for aircraft and bullets", but I don't think it's used.
 
-void const * DisplayClass::ShadowShapes;
-unsigned char DisplayClass::ShadowTrans[(SHADOW_COL_COUNT+1)*256];
+void const * DisplayClass::ShadowShapes; // Pointer for map shroud shape
+unsigned char DisplayClass::ShadowTrans[(SHADOW_COL_COUNT+1)*256]; // Fade to black around map shroud
+
+unsigned char * const DisplayClass::TranslucencyTables[TRANS_COUNT] = {
+	DisplayClass::TranslucentTable,
+	DisplayClass::WhiteTranslucentTable,
+	DisplayClass::MouseTranslucentTable,
+	DisplayClass::UnitShadow,
+	DisplayClass::SpecialGhost,
+	DisplayClass::ShadowTrans,
+};
 
 /*
 ** Bit array of cell redraw flags

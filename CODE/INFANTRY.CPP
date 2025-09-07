@@ -1694,7 +1694,7 @@ MoveType InfantryClass::Can_Enter_Cell(CELL cell, FacingType ) const
  * HISTORY:                                                                                    *
  *   09/01/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-short const * InfantryClass::Overlap_List(void) const
+short const * InfantryClass::Overlap_List(bool /*redraw*/) const
 {
 	Validate();
 	//return(Coord_Spillage_List(Coord, 24 + ((IsSelected || Doing > DO_WALK)?12:0)));

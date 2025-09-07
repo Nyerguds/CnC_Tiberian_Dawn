@@ -1493,7 +1493,7 @@ class TerrainTypeClass : public ObjectTypeClass
 		virtual COORDINATE  Coord_Fixup(COORDINATE coord) const {return coord & 0xFF00FF00L;}
 		virtual bool  Create_And_Place(CELL cell, HousesType house) const;
 		virtual ObjectClass *  Create_One_Of(HouseClass *) const;
-		virtual short const *  Occupy_List(bool placement=false) const;
+		virtual short const *  Occupy_List(bool /*placement*/ = false) const;
 		virtual short const *  Overlap_List(void) const;
 
 		#ifdef SCENARIO_EDITOR
@@ -1604,17 +1604,11 @@ class AnimTypeClass : public ObjectTypeClass
 		unsigned IsGroundLayer:1;
 
 		/*
-		**	If this animation should be rendered in a translucent fashion, this flag
-		**	will be true. Translucent colors are some of the reds and some of the
-		**	greys. Typically, smoke and some fire effects have this flag set.
+		**	If this animation should be rendered in a translucent fashion, the table
+		**	to use will be set here. Translucent colors are some of the reds and some
+		**	of the greys. Typically, smoke and some fire effects have this flag set.
 		*/
-		unsigned IsTranslucent:1;
-
-		/*
-		**	If this animation uses the white translucent table, then this flag
-		**	will be true.
-		*/
-		unsigned IsWhiteTrans:1;
+		TransType Translucency;
 
 		/*
 		**	If this is the special flame thrower animation, then custom affects
@@ -1729,13 +1723,12 @@ class AnimTypeClass : public ObjectTypeClass
 							char const *name,
 							int size,
 							int biggest,
+							TransType trans,
 							bool isnormal,
-							bool iswhite,
 							bool isscorcher,
 							bool iscrater,
 							bool issticky,
 							bool ground,
-							bool istrans,
 							bool isflame,
 							unsigned int damage,
 							int delaytime,

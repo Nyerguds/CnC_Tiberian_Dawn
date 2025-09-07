@@ -124,6 +124,8 @@ class DisplayClass: public MapClass
 		static unsigned char UnitShadow[(USHADOW_COL_COUNT+1)*256];
 		static unsigned char SpecialGhost[2*256];
 
+		static unsigned char * const TranslucencyTables[TRANS_COUNT];
+
 		//-------------------------------------------------------------------------
 		DisplayClass(void);
 

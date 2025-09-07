@@ -72,7 +72,7 @@ class AnimClass : public ObjectClass, private StageClass {
 		virtual LayerType In_Which_Layer(void) const;
 		virtual ObjectTypeClass const & Class_Of(void) const {return *Class;};
 		virtual short const * Occupy_List(void) const;
-		virtual short const * Overlap_List(void) const;
+		virtual short const * Overlap_List(bool /*redraw*/ = false) const;
 		virtual void Draw_It(int x, int y, WindowNumberType window);
 		virtual void AI(void);
 		virtual TARGET As_Target(void) const;
