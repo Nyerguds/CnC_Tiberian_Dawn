@@ -1057,7 +1057,7 @@ void TeamClass::Calc_Center(CELL &center, CELL &obj_center) const
  *                                                                                             *
  *          result   -- The severity of the damage taken.                                      *
  *                                                                                             *
- *          source   -- The purpetrator of the damage.                                         *
+ *          source   -- The perpetrator of the damage.                                         *
  *                                                                                             *
  * OUTPUT:  none                                                                               *
  *                                                                                             *

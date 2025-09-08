@@ -2708,6 +2708,8 @@ bool HouseClass::Manual_Place(BuildingClass * builder,  BuildingClass * object)
 		Map.Repair_Mode_Control(0);
 		Map.Sell_Mode_Control(0);
 
+		// Nyerguds's C&C Patch Project v1.04
+		// Placing a building cancels superweapon targeting mode.
 		Map.IsTargettingMode = SPC_NONE;
 		Map.PendingObject = object->Class;
 		Map.PendingObjectPtr = object;

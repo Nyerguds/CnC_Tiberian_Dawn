@@ -493,8 +493,8 @@ void AircraftClass::Read_INI(char *buffer)
 
 						air->Strength = Fixed_To_Cardinal(air->Class->MaxStrength, strength);
 						// Nyerguds's C&C Patch Project v1.04
-						// Do not spawn in the air.
-						air->Altitude = 0;
+						// Do not spawn helicopters in the air.
+						air->Altitude = air->Class->IsFixedWing ? FLIGHT_LEVEL : 0;
 						if (air->Unlimbo(coord, dir)) {
 							air->Assign_Mission(AircraftClass::Mission_From_Name(strtok(NULL, ",\n\r")));
 						} else {

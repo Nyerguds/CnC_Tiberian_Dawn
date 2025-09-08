@@ -448,6 +448,13 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 	UnitClass::Read_INI(buffer);
 	Call_Back();
 
+	// Nyerguds's C&C Patch Project v1.04
+	/*
+	**	Read in and place aircraft (all sides).
+	*/
+	AircraftClass::Read_INI(buffer);
+	Call_Back();
+
 	/*
 	**	Read in and place the infantry units (all sides).
 	*/

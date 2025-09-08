@@ -557,7 +557,7 @@ bool Create_Special_Reinforcement(HouseClass * house, TechnoTypeClass const * ty
  *    reinforcement logic since it doesn't need the sophistication of unloading and following  *
  *    team mission lists.                                                                      *
  *                                                                                             *
- * INPUT:   house    -- The purpetrator of this air strike.                                    *
+ * INPUT:   house    -- The perpetrator of this air strike.                                    *
  *                                                                                             *
  *          air      -- The type of aircraft to make up this airstrike.                        *
  *                                                                                             *

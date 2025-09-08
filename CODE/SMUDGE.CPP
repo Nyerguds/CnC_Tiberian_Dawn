@@ -231,7 +231,9 @@ bool SmudgeClass::Mark(MarkType mark)
 							cell->SmudgeData = w + (h*Class->Width);
 							cell->Owner = ToOwn;
 						} else {
-							if (cell->Is_Generally_Clear()) {
+							// Nyerguds's C&C Patch Project v1.04
+							// Allow smudge to spawn under mobile objects.
+							if (cell->Is_Generally_Clear(true)) {
 								if (Class->IsCrater && cell->Smudge != SMUDGE_NONE && SmudgeTypeClass::As_Reference(cell->Smudge).IsCrater) {
 									cell->SmudgeData++;
 									cell->SmudgeData = (int)MIN((int)cell->SmudgeData, (int)4);

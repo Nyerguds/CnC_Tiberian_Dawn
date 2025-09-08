@@ -3325,7 +3325,8 @@ void TechnoClass::Kill_Cargo(TechnoClass * source)
  *                                                                                             *
  *          select  -- True if the ejected crew should be selected.                            *
  *                                                                                             *
- *          killer  -- If any crew dies, or unlimbo fails, this Techno wil be marked as killer.*
+ *          source  -- If any crew dies, or unlimbo fails, this Techno wil be marked as        *
+ *                     killer. If null, the dumping is not seen as the result of damage.       *
  *                                                                                             *
  * OUTPUT:  none                                                                               *
  *                                                                                             *
@@ -3335,7 +3336,7 @@ void TechnoClass::Kill_Cargo(TechnoClass * source)
  * HISTORY:                                                                                    *
  *   09/08/2025 MM  : Created.                                                                 *
  *=============================================================================================*/
-void TechnoClass::Dump_Cargo(bool damage, bool select, TechnoClass * killer)
+void TechnoClass::Dump_Cargo(bool damage, bool select, TechnoClass * source)
 {
 	// Nyerguds's C&C Patch Project v1.04
 	// General function for dumping passengers.	
@@ -3376,7 +3377,7 @@ void TechnoClass::Dump_Cargo(bool damage, bool select, TechnoClass * killer)
 						int hurt = 400;
 						// Artificially lower HP first, so it absolutely dies.
 						passenger->Strength = 1;
-						passenger->Take_Damage(hurt, 0, WARHEAD_AP, killer);
+						passenger->Take_Damage(hurt, 0, WARHEAD_AP, source);
 					} else {
 						passenger->Look(false);
 						passenger->Assign_Mission(MISSION_MOVE);
@@ -3391,9 +3392,7 @@ void TechnoClass::Dump_Cargo(bool damage, bool select, TechnoClass * killer)
 			}
 		}
 		if (!exited) {
-			if (killer) {
-				passenger -> Record_The_Kill(killer);
-			}
+			passenger -> Record_The_Kill(source);
 			delete passenger;
 		}
 	}

@@ -452,7 +452,7 @@ void CellClass::Redraw_Objects(bool forced)
  *    This determines if the cell can become a proper foundation for                           *
  *    building placement.                                                                      *
  *                                                                                             *
- * INPUT:   none                                                                               *
+ * INPUT:   ignoremobile -- ignore temporary occupiers that can move off the cell.             *
  *                                                                                             *
  * OUTPUT:  bool; Can the cell be built upon?                                                  *
  *                                                                                             *
@@ -461,11 +461,16 @@ void CellClass::Redraw_Objects(bool forced)
  * HISTORY:                                                                                    *
  *   05/18/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-bool CellClass::Is_Generally_Clear(void) const
+bool CellClass::Is_Generally_Clear(bool ignoremobile) const
 {
 	Validate();
 	if (ScenarioInit) return(true);
-	if (Flag.Composite || IsFlagged || Cell_Occupier()) {
+	// Nyerguds's C&C Patch Project v1.04
+	// Check ignoring temporary occupiers, to allow placing down smudge.
+	if (!ignoremobile && (Flag.Composite || IsFlagged || Cell_Occupier())) {
+		return(false);
+	}
+	if (Flag.Occupy.Monolith || Flag.Occupy.Building || IsFlagged || Cell_Building()|| Cell_Terrain()) {
 		return(false);
 	}
 	if (Smudge != SMUDGE_NONE && SmudgeTypeClass::As_Reference(Smudge).IsBib && Owner != HOUSE_NONE) {

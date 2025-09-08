@@ -313,11 +313,15 @@ bool FootClass::Mark(MarkType mark)
 		*/
 		switch (mark) {
 			case MARK_UP:
-				Map.Pick_Up(cell, this);
+				if (What_Am_I() != RTTI_AIRCRAFT || !((AircraftClass*)this)->Class->IsFixedWing) {
+					Map.Pick_Up(cell, this);
+				}
 				break;
 
 			case MARK_DOWN:
-				Map.Place_Down(cell, this);
+				if (What_Am_I() != RTTI_AIRCRAFT || !((AircraftClass*)this)->Class->IsFixedWing) {			
+					Map.Place_Down(cell, this);
+				}
 				break;
 
 			// Nyerguds's C&C Patch Project v1.04
@@ -1139,7 +1143,7 @@ bool FootClass::Limbo(void)
  *                                                                                             *
  *          warhead     -- The type of damage that is inflicted.                               *
  *                                                                                             *
- *          source      -- The purpitrator of the damage. By knowing who caused the damage,    *
+ *          source      -- The perpetrator of the damage. By knowing who caused the damage,    *
  *                         the team know's who to "get even with".                             *
  *                                                                                             *
  * OUTPUT:  Returns with the result type of the damage.                                        *
@@ -1801,7 +1805,7 @@ int FootClass::Rescue_Mission(TARGET tarcom)
  *                                                                                             *
  *    This routine is called when a unit (infantry, vehicle, or aircraft) is destroyed.        *
  *                                                                                             *
- * INPUT:   source   -- The purpetrator of this death.                                         *
+ * INPUT:   source   -- The perpetrator of this death.                                         *
  *                                                                                             *
  * OUTPUT:  none                                                                               *
  *                                                                                             *

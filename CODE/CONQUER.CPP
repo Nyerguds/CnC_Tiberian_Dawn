@@ -630,6 +630,9 @@ void Keyboard_Process(KeyNumType &input)
 				obj = Map.Next_Object(CurrentObject.Count() ? CurrentObject[0] : NULL);
 			}
 			if (obj) {
+				Map.Repair_Mode_Control(0);
+				Map.Sell_Mode_Control(0);
+				Map.IsTargettingMode = SPC_NONE;
 				Unselect_All();
 			 	obj->Select();
 				Map.Center_Map();
@@ -826,6 +829,8 @@ void Keyboard_Process(KeyNumType &input)
 				memset(done_units, 0, sizeof(done_units));
 				bool done_aircraft[AIRCRAFT_COUNT];
 				memset(done_aircraft, 0, sizeof(done_aircraft));
+				bool done_structs[STRUCT_COUNT];
+				memset(done_structs, 0, sizeof(done_structs));
 				for (index = 0; index < CurrentObject.Count(); index++) {
 					selectedTypes.Add(CurrentObject[index]);
 				}
@@ -857,6 +862,14 @@ void Keyboard_Process(KeyNumType &input)
 								id = -1;
 							} else {
 								done_aircraft[id] = true;
+							}
+							break;
+						case RTTI_BUILDING:
+							id = (int)((BuildingClass*)sel)->Class->Type;
+							if (done_structs[id]) {
+								id = -1;
+							} else {
+								done_structs[id] = true;
 							}
 							break;
 					}

@@ -182,7 +182,7 @@ class CellClass
 		bool  Is_Spot_Free(int spot_index) const {return (! (Flag.Composite & (1 << spot_index)) ); }
 		COORDINATE  Closest_Free_Spot(COORDINATE coord, bool any=false) const;
 		COORDINATE  Free_Spot(void) const {return Closest_Free_Spot(Cell_Coord());};
-		bool  Is_Generally_Clear(void) const;
+		bool  Is_Generally_Clear(bool ignoremobile = false) const;
 		TARGET  As_Target(void) const {return ::As_Target(Cell_Number());};
 		BuildingClass *  Cell_Building(void) const;
 		CellClass const &  Adjacent_Cell(FacingType face) const;
@@ -200,7 +200,7 @@ class CellClass
 		TriggerClass *  Get_Trigger(void) const;
 		int  Clear_Icon(void) const;
 		bool  Goodie_Check(FootClass * object);
-		ObjectClass *  Fetch_Occupier(void) const;
+		//ObjectClass *  Fetch_Occupier(void) const;
 
 		/*
 		**	Object placement and removal flag operations.

@@ -2655,7 +2655,7 @@ CELL DisplayClass::Calculated_Cell(SourceType dir, HousesType house)
  *                                                                                             *
  *          rttifilter -- In combination with typefilter; filters on a specific object type.   *
  *                                                                                             *
- *          typefilter -- In combination with rttifilter; filters on a specific unit type.     *
+ *          typefilter -- In combination with rttifilter; filters on a specific object type.   *
  *                                                                                             *
  * OUTPUT:  Returns true if any new unit was actually selected, meaning that if "allowvoice"   *
  *          was enabled, a response voice was played. If this is called from a loop, this      *
@@ -2742,12 +2742,13 @@ bool DisplayClass::Select_These(COORDINATE coord1, COORDINATE coord2, bool allow
 
 		/*
 		**	Only try to select objects that are owned by the player, are allowed to be
-		**	selected, and are within the bouding box.
+		**	selected, and are within the bounding box. Do not select buildings unless
+		**  the type to filter is specifically set to a building type.
 		*/
 		RTTIType objtype = obj->What_Am_I();
 		if (obj->Owner() == PlayerPtr->Class->House &&
 				obj->Class_Of().IsSelectable &&
-				objtype != RTTI_BUILDING &&
+				(objtype != RTTI_BUILDING || rttifilter == RTTI_BUILDING) &&
 				x >= x1 && x <= x2 && y >= y1 && y <= y2) {
 			if (rttifilter != RTTI_NONE) {
 				// If filtering out a specific unit type, first filter on the object type.
@@ -2765,6 +2766,9 @@ bool DisplayClass::Select_These(COORDINATE coord1, COORDINATE coord2, bool allow
 						break;
 					case RTTI_AIRCRAFT:
 						id = (int)((AircraftClass*)obj)->Class->Type;
+						break;
+					case RTTI_BUILDING:
+						id = (int)((BuildingClass*)obj)->Class->Type;
 						break;
 					default:
 						id = -1;

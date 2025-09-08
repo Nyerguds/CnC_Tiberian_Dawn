@@ -3388,6 +3388,10 @@ bool BuildingClass::Captured(HouseClass * newowner)
 		// Only give back the tiberium after Grand_Opening, so the receiving House's capacity is updated to include the new storage space.
 		House->Harvested(booty);
 
+		if (Map.PendingObject){
+			Map.ProximityCheck = Map.Passes_Proximity_Check(Map.PendingObject);
+		}
+
 		Mark(MARK_CHANGE);
 
 		/*

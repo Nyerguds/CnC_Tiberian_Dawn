@@ -39,7 +39,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Fixed Power Plant and Advanced Power Plant not animating when damaged.
 * Fixed Oil Tanker not using its damaged state when below 50% strength.
 * Fixed the names of Chan and the Hospital not getting shown to the enemy.
-* Fixed multiplayer names exceeding 9 characters getting abbreviated to 10 characters. They can now be 10 characters.
+* Fixed multiplayer names that are 10 characters long getting abbreviated to 9 characters followed by a dot. They can now be 10 characters before getting abbreviated.
 * Fixed German "Abort mission" dialog having an "Abort" option which was actually the "Cancel" one.
 * Fixed safe-scrolling ("Scrolling=restricted" in conquer.ini) only restricting half of the top buttons' width.
 * Fixed grenade throw sound not working.
@@ -180,13 +180,17 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Aircraft will now always immediately return to base when they run out of ammo mid-salvo instead of waiting for a second shot they don't have.
 * Fixed the infantry squish sound increasing in volume if multiple infantry was on the squished cell.
 * Fixed vehicle crushing, and tweaked it so they don't play the infantry squish sound but instead play their normal death animation, along with a little "roadkill bump" sound.
-* Enabled translucent colors on the vehicle smoke and oil derrick smoke animations, so they can be enhanced to truly semitranspareny smoke.
-* Enabled special translucent state on rocket exhaust smoke puff so it can use the previously unused filters set intended for the mouse cursor.
-* Added ini option to disable the grenade throw sound.
-* Fixed misalignment on SAM Site launch smoke animations
+* Enabled translucent colors on the vehicle smoke and oil derrick smoke animations, so they can be enhanced to truly semitransparent smoke.
+* Enabled translucent colors on rocket exhaust smoke puff so it can use the previously unused filters set intended for the mouse cursor.
 * Enabled translucent colors on the SAM Site launch smoke animations, so the hard-baked Nod colours on the animation can be fixed.
+* Fixed misalignment on SAM Site launch smoke animations.
+* Added ini option to disable the grenade throw sound.
 * Fixed the issue where capturing tiberium storage would transfer the contained tiberium to the player before the storage capacity itself was added to the player's storage pool.
 * When selling a building, the infantry will now always come out of an actual cell that was part of the building.
 * Selling an APC or transport helicopter on the Repair Bay will no longer lose the passengers; they will get dumped out and walk off the platform.
-* A landed Transport Helicopter that gets destroyed will no longer automatically make all crew die. They can get heavily damaged though, and might die if not at full health.
+* When a landed Transport Helicopter gets destroyed, the passengers don't simply all get killed off. They can get heavily damaged though, and might die if not at full health.
 * Selling a Harvester on a Repair Bay now refunds 50% of the tiberium stored inside. Before, this was divided twice, giving only 25%.
+* Craters and scorch marks can now appear on spots occupied by units.
+* Aircraft are now placeable from missions. Helicopters will be placed down on the ground, fixed-wing airplanes will start in the air.
+* Pressing \[N\] or \[Shift\]+\[N\] to select a previous or next unit while in Sell or Repair mode, or having superweapon targeting active, will now properly cancel these modes.
+* When a building is captured while the building placement grid is shown, the placement grid will automatically update with the ownership change.
