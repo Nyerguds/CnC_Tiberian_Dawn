@@ -3387,7 +3387,7 @@ bool BuildingClass::Captured(HouseClass * newowner)
 		// Nyerguds's C&C Patch Project v1.04
 		// Only give back the tiberium after Grand_Opening, so the receiving House's capacity is updated to include the new storage space.
 		House->Harvested(booty);
-
+		// Reset building placement proximity check since something has changed ownership.
 		if (Map.PendingObject){
 			Map.ProximityCheck = Map.Passes_Proximity_Check(Map.PendingObject);
 		}

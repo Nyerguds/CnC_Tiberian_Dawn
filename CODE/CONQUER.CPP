@@ -630,6 +630,8 @@ void Keyboard_Process(KeyNumType &input)
 				obj = Map.Next_Object(CurrentObject.Count() ? CurrentObject[0] : NULL);
 			}
 			if (obj) {
+				// Nyerguds's C&C Patch Project v1.04
+				// Selecting objects with the N key cancels repair, sell and superweapon targeting modes.
 				Map.Repair_Mode_Control(0);
 				Map.Sell_Mode_Control(0);
 				Map.IsTargettingMode = SPC_NONE;

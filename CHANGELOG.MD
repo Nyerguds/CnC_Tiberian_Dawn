@@ -194,3 +194,4 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Aircraft are now placeable from missions. Helicopters will be placed down on the ground, fixed-wing airplanes will start in the air.
 * Pressing \[N\] or \[Shift\]+\[N\] to select a previous or next unit while in Sell or Repair mode, or having superweapon targeting active, will now properly cancel these modes.
 * When a building is captured while the building placement grid is shown, the placement grid will automatically update with the ownership change.
+* Improved the alignment of cargo / ammo indicator pips inside selection box.

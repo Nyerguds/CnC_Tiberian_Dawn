@@ -4174,18 +4174,22 @@ void TechnoClass::Draw_Pips(int x, int y, WindowNumberType window)
 				}
 				object = object->Next;
 			}
-			CC_Draw_Shape(Class_Of().PipShapes, pip, x+index*3, y, window, SHAPE_CENTER|SHAPE_WIN_REL);
+			// Nyerguds's C&C Patch Project v1.04
+			// Improved pip positions so they no longer get drawn over the edge of the selection box.
+			CC_Draw_Shape(Class_Of().PipShapes, pip, x+3+index*3, y, window, SHAPE_CENTER|SHAPE_WIN_REL);
 		}
 
 	} else {
 
 		/*
-		**	Display number of how many attached objects there are. This is also used
+		**	Display number of how stocked up on ammo the unit is. This is also used
 		**	to display the fullness rating for a harvester.
 		*/
 		int pips = Pip_Count();
 		for (int index = 0; index < Class_Of().Max_Pips(); index++) {
-			CC_Draw_Shape(Class_Of().PipShapes, (index < pips) ? PIP_FULL : PIP_EMPTY, x+index*3, y, window, SHAPE_CENTER|SHAPE_WIN_REL);
+			// Nyerguds's C&C Patch Project v1.04
+			// Improved pip positions so they no longer get drawn over the edge of the selection box.
+			CC_Draw_Shape(Class_Of().PipShapes, (index < pips) ? PIP_FULL : PIP_EMPTY, x+3+index*3, y, window, SHAPE_CENTER|SHAPE_WIN_REL);
 		}
 	}
 
