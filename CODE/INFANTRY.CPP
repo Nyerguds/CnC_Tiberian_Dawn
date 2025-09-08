@@ -385,6 +385,7 @@ ResultType InfantryClass::Take_Damage(int & damage, int distance, WarheadType wa
 	/*
 	**	Prone infantry take only half damage, but never below one damage point.
 	*/
+	// Tecnically this includes panicky "Fraidycat" civilians, lol...
 	if (IsProne && damage) {
 		damage >>= 1;
 //		damage = MAX(damage, 1);

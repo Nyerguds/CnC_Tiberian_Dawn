@@ -1704,10 +1704,10 @@ int CellClass::Spot_Index(COORDINATE coord)
  * that spot if it's available, NULL if it's not.                                              *
  *                                                                                             *
  * INPUT:                                                                                      *
- *  coord   coordinate to check (only sub cell position examined)                              *
+ *      coord  -- coordinate to check (only sub cell position examined)                        *
  *                                                                                             *
- *          any   -- If only the closest spot is desired regardless of whether it is free or   *
- *                   not, then this parameter will be true.                                    *
+ *      any    -- If only the closest spot is desired regardless of whether it is free or      *
+ *                not, then this parameter will be true.                                       *
  *                                                                                             *
  * OUTPUT:                                                                                     *
  *  COORD of free spot, NULL if none. The coordinate return value does not alter the cell      *

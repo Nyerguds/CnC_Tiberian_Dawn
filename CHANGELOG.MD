@@ -187,3 +187,6 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Enabled translucent colors on the SAM Site launch smoke animations, so the hard-baked Nod colours on the animation can be fixed.
 * Fixed the issue where capturing tiberium storage would transfer the contained tiberium to the player before the storage capacity itself was added to the player's storage pool.
 * When selling a building, the infantry will now always come out of an actual cell that was part of the building.
+* Selling an APC or transport helicopter on the Repair Bay will no longer lose the passengers; they will get dumped out and walk off the platform.
+* A landed Transport Helicopter that gets destroyed will no longer automatically make all crew die. They can get heavily damaged though, and might die if not at full health.
+* Selling a Harvester on a Repair Bay now refunds 50% of the tiberium stored inside. Before, this was divided twice, giving only 25%.

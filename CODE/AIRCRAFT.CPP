@@ -1588,6 +1588,12 @@ ResultType AircraftClass::Take_Damage(int & damage, int distance, WarheadType wa
 	ResultType res = RESULT_NONE;
 
 	/*
+	**	Remember if this object was selected. If it was and it gets destroyed and it has
+	**	passengers that pop out, then the passengers will inherit the select state.
+	*/
+	bool select = (IsSelected && IsOwnedByPlayer);
+
+	/*
 	**	Flying aircraft take half damage.
 	*/
 	if (Altitude) {
@@ -1602,7 +1608,12 @@ ResultType AircraftClass::Take_Damage(int & damage, int distance, WarheadType wa
 
 	switch (res) {
 		case RESULT_DESTROYED:
-			Kill_Cargo(source);
+			if (Altitude == 0) {
+				Mark(MARK_UP);
+				Dump_Cargo(true, select, source);
+			} else {
+				Kill_Cargo(source);
+			}
 			Death_Announcement();
 			new AnimClass(ANIM_FBALL1, Target_Coord());
 			delete this;

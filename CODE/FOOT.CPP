@@ -2052,6 +2052,10 @@ void FootClass::Sell_Back(int control)
 		if (House == PlayerPtr) {
 			Sound_Effect(VOC_CASHTURN);
 		}
+		Mark(MARK_UP);
+		// Nyerguds's C&C Patch Project v1.04
+		// Selling transports will now evacuate their crew.
+		Dump_Cargo();
 		House->Refund_Money(Refund_Amount());
 		Stun();
 		Limbo();

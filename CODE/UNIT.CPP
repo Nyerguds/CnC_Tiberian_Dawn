@@ -956,7 +956,11 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 						} else {
 							i->Assign_Mission(MISSION_GUARD);
 						}
-						if (select) i->Select();
+						
+						if (select) {
+							AllowVoice = true;
+							i->Select();
+						}
 					} else {
 						delete i;
 					}
@@ -964,6 +968,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 			}
 		} else {
 			if (*this != UNIT_HOVER) {
+#ifdef OBSOLETE
 				while (Is_Something_Attached()) {
 					FootClass * object = Detach_Object();
 
@@ -981,12 +986,18 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 						object->Record_The_Kill(source);
 						delete object;
 					}
+#endif
+				if (select) {
+					AllowVoice = true;
 				}
+				Dump_Cargo(false, select, source);
 			} else {
 				Kill_Cargo(source);
 			}
 		}
-
+		if (select) {
+			AllowVoice = true;
+		}
 		/*
 		**	When the mobile head quarters blows up, the entire side blows up.
 		*/

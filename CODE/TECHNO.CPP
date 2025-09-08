@@ -3316,6 +3316,91 @@ void TechnoClass::Kill_Cargo(TechnoClass * source)
 
 
 /***********************************************************************************************
+ * TechnoClass::Dump_Cargo -- Makes this object dump its passengers on the current location.   *
+ *                                                                                             *
+ *    When an object is sold or dies, and it contains passengers, they usually don't just      *
+ *     vanish. This routine takes care of putting them on the map.                             *
+ *                                                                                             *
+ * INPUT:   damage  -- True if the ejected crew should be damaged.                             *
+ *                                                                                             *
+ *          select  -- True if the ejected crew should be selected.                            *
+ *                                                                                             *
+ *          killer  -- If any crew dies, or unlimbo fails, this Techno wil be marked as killer.*
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   This function will only work correctly if Mark(MARK_UP) is called before it,    *
+ *             so the object itself is not obstructing the cell.                               *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   09/08/2025 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void TechnoClass::Dump_Cargo(bool damage, bool select, TechnoClass * killer)
+{
+	// Nyerguds's C&C Patch Project v1.04
+	// General function for dumping passengers.	
+
+	while (Is_Something_Attached()) {
+		FootClass * passenger = Detach_Object();
+		if (!passenger) continue; // Not sure how this can happen
+		if(select) AllowVoice = true;
+		
+		bool exited = false;
+		if (passenger->Is_Infantry()) {
+			FacingType toface = FACING_N + Random_Pick(0, 7);
+			for (FacingType face = FACING_N; face < FACING_COUNT; face++) {
+				FacingType newface = toface + face;
+				CELL newcell = Adjacent_Cell(Coord_Cell(Coord), newface);
+
+				if (passenger->Can_Enter_Cell(newcell) == MOVE_OK) {
+					ScenarioInit++;
+					COORDINATE infcoord = Map[Coord_Cell(Coord)].Closest_Free_Spot(Coord, false);
+					if (infcoord == 0L) {
+						infcoord = Coord;
+					}
+					int strength = passenger->Strength;
+					if (damage) {
+						// Maximum damage is 7/8
+						int maxhurt = Fixed_To_Cardinal(passenger->Techno_Type_Class()->MaxStrength, 224);
+						int hurt = Random_Pick(0, maxhurt) - 1;
+						strength -= hurt;
+						if (strength > 0) {
+							passenger->Strength = strength;
+						}
+					}
+					passenger->Unlimbo(infcoord);
+					ScenarioInit--;
+					exited = true;
+					if (strength <= 0) {
+						// Visibly kill off the unit, so the player knows why it's gone.
+						int hurt = 400;
+						// Artificially lower HP first, so it absolutely dies.
+						passenger->Strength = 1;
+						passenger->Take_Damage(hurt, 0, WARHEAD_AP, killer);
+					} else {
+						passenger->Look(false);
+						passenger->Assign_Mission(MISSION_MOVE);
+						passenger->Assign_Destination(::As_Target(newcell));
+						if (select) {
+							bool selectok = passenger->Select();
+							AllowVoice = false;
+						}
+					}
+					break;
+				}
+			}
+		}
+		if (!exited) {
+			if (killer) {
+				passenger -> Record_The_Kill(killer);
+			}
+			delete passenger;
+		}
+	}
+}
+
+
+/***********************************************************************************************
  * TechnoClass::Crew_Type -- Fetches the kind of crew this object contains.                    *
  *                                                                                             *
  *    This routine is called when generating survivors to this object. This routine returns    *
@@ -4225,7 +4310,9 @@ int TechnoClass::Refund_Amount(void) const
 	**	If the object is carrying Tiberium directly (i.e., the harvester), then
 	**	account for the credits of the load.
 	*/
-	cost += Fixed_To_Cardinal(UnitTypeClass::FULL_LOAD_CREDITS, Tiberium_Load())/2;
+	// Nyerguds's C&C Patch Project v1.04
+	// Fixed tiberium getting divided twice.
+	cost += Fixed_To_Cardinal(UnitTypeClass::FULL_LOAD_CREDITS, Tiberium_Load());
 
 	if (House->IsHuman) {
 		cost /= 2;
