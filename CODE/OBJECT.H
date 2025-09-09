@@ -175,7 +175,7 @@ class ObjectClass : public AbstractClass
 		virtual void Detach(TARGET, bool) {};
 		virtual void Detach_All(bool all=true);
 		static void Detach_This_From_All(TARGET target, bool all=true);
-		virtual void Record_The_Kill(TechnoClass * );
+		virtual void Record_The_Kill(TechnoClass * /*source*/, bool /*sold*/ = false);
 
 		/*
 		**	Display and rendering support functionality. Supports imagery and how

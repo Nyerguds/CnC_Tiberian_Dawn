@@ -2864,7 +2864,7 @@ int TechnoTypeClass::Max_Passengers(void) const
  *   07/08/1995 JLB : Created.                                                                 *
  *   08/23/1995 JLB : Building loss is only counted if it received damage.                     *
  *=============================================================================================*/
-void TechnoClass::Record_The_Kill(TechnoClass * source)
+void TechnoClass::Record_The_Kill(TechnoClass * source, bool sold)
 {
 	/*
 	**	Handle any trigger event associated with this object.
@@ -2904,9 +2904,14 @@ void TechnoClass::Record_The_Kill(TechnoClass * source)
 
 	switch (What_Am_I()) {
 		case RTTI_BUILDING:
+			// Nyerguds's C&C Patch Project v1.04
+			// Changed the losses suppression system for sales to be usable for all types.
+			if (!sold) House->BuildingsLost++;
+#ifdef OBSOLETE
 			if ( ((BuildingClass *)this)->WhoLastHurtMe != HOUSE_NONE) {
 				House->BuildingsLost++;
 			}
+#endif
 			if (source){
 				if (GameToPlay == GAME_INTERNET){
 					source->House->DestroyedBuildings->Increment_Unit_Total( ((BuildingClass*)this)->Class->Type );
@@ -2925,7 +2930,7 @@ void TechnoClass::Record_The_Kill(TechnoClass * source)
 
 
 		case RTTI_AIRCRAFT:
-			House->UnitsLost++;
+			if (!sold) House->UnitsLost++;
 			if (source){
 				if (GameToPlay == GAME_INTERNET){
 					source->House->DestroyedAircraft->Increment_Unit_Total( ((AircraftClass*)this)->Class->Type );
@@ -2943,7 +2948,7 @@ void TechnoClass::Record_The_Kill(TechnoClass * source)
 
 
 		case RTTI_INFANTRY:
-			House->UnitsLost++;
+			if (!sold) House->UnitsLost++;
 			if (source){
 				if (GameToPlay == GAME_INTERNET){
 					source->House->DestroyedInfantry->Increment_Unit_Total( ((InfantryClass*)this)->Class->Type );
@@ -2961,7 +2966,7 @@ void TechnoClass::Record_The_Kill(TechnoClass * source)
 
 
 		case RTTI_UNIT:
-			House->UnitsLost++;
+			if (!sold) House->UnitsLost++;
 			if (source){
 				if (GameToPlay == GAME_INTERNET){
 					source->House->DestroyedUnits->Increment_Unit_Total( ((UnitClass*)this)->Class->Type );

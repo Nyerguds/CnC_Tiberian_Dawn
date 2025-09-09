@@ -2064,7 +2064,7 @@ void FootClass::Sell_Back(int control)
 		**	A sold unit still counts as a kill, but it just isn't directly
 		**	attributed to the enemy. This ensures that triggers fire correctly.
 		*/
-		Record_The_Kill(NULL);
+		Record_The_Kill(NULL, true);
 
 		House->Refund_Money(Refund_Amount());
 		

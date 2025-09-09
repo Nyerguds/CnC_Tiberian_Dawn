@@ -3886,10 +3886,10 @@ int BuildingClass::Mission_Deconstruction(void)
 
 					/*
 					**	A sold building still counts as a kill, but it just isn't directly
-					**	attributed to the enemy.
+					**	attributed to the enemy. This ensures that triggers fire correctly.
 					*/
 					WhoLastHurtMe = HOUSE_NONE;
-					Record_The_Kill(NULL);
+					Record_The_Kill(NULL, true);
 
 					/*
 					**	The player gets part of the money back for the sell.
