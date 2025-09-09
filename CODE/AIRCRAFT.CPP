@@ -1610,7 +1610,8 @@ ResultType AircraftClass::Take_Damage(int & damage, int distance, WarheadType wa
 		case RESULT_DESTROYED:
 			if (Altitude == 0) {
 				Mark(MARK_UP);
-				Dump_Cargo(true, select, source);
+				// 224 = 7/8th
+				Dump_Cargo(224, select, source);
 			} else {
 				Kill_Cargo(source);
 			}

@@ -247,7 +247,7 @@ class TechnoClass :	public RadioClass,
 		*/
 		void  Base_Is_Attacked(TechnoClass const *enemy);
 		void  Kill_Cargo(TechnoClass * source);
-		void  Dump_Cargo(bool damage = false, bool select = false, TechnoClass * killer = NULL);
+		void  Dump_Cargo(int damage = 0, bool select = false, TechnoClass * killer = NULL);
 		virtual void Record_The_Kill(TechnoClass * source);
 		virtual bool Target_Something_Nearby(ThreatType threat=THREAT_NORMAL);
 		virtual void Stun(void);

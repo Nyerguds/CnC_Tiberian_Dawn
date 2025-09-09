@@ -880,7 +880,10 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 	**	Special case: If this is a laser attacking a gunboat, then the gunboat is ALWAYS toasted.
 	*/
 	if (*this == UNIT_GUNBOAT && warhead == WARHEAD_LASER) {
-		damage = Class->MaxStrength*3;
+		// Nyerguds's C&C Patch Project v1.04
+		// Ensure this is 100% completely murdered.
+		Strength = 1;
+		damage = 1000;
 	}
 
 	/*
@@ -987,10 +990,12 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 						delete object;
 					}
 #endif
+				// Nyerguds's C&C Patch Project v1.04
+				// Use Dump_Cargo to ensure passengers are properly ejected when standing on a repair pad.
 				if (select) {
 					AllowVoice = true;
 				}
-				Dump_Cargo(false, select, source);
+				Dump_Cargo(0, select, source);
 			} else {
 				Kill_Cargo(source);
 			}

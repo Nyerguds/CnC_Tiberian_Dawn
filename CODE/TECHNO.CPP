@@ -3319,62 +3319,69 @@ void TechnoClass::Kill_Cargo(TechnoClass * source)
  * TechnoClass::Dump_Cargo -- Makes this object dump its passengers on the current location.   *
  *                                                                                             *
  *    When an object is sold or dies, and it contains passengers, they usually don't just      *
- *     vanish. This routine takes care of putting them on the map.                             *
+ *    vanish. This routine takes care of putting them on the map and making them spread out.   *
  *                                                                                             *
- * INPUT:   damage  -- True if the ejected crew should be damaged.                             *
+ * INPUT:   damage  -- Maximum damage % (fixed point 0-256) taken by the ejected passengers.   *
  *                                                                                             *
  *          select  -- True if the ejected crew should be selected.                            *
  *                                                                                             *
- *          source  -- If any crew dies, or unlimbo fails, this Techno wil be marked as        *
- *                     killer. If null, the dumping is not seen as the result of damage.       *
+ *          source  -- If any crew dies or unlimbo fails, this Techno wil be marked as killer. *
  *                                                                                             *
  * OUTPUT:  none                                                                               *
  *                                                                                             *
- * WARNINGS:   This function will only work correctly if Mark(MARK_UP) is called before it,    *
- *             so the object itself is not obstructing the cell.                               *
+ * WARNINGS:   - This function will only work correctly if Mark(MARK_UP) is called before it,  *
+ *               so the object itself is not obstructing the cell. Usually, this is called     *
+ *               when the unit will vanish anyway, so it is pointless to include any logic     *
+ *               here to mark it up at the start and down again at the end.                    *
+ *                                                                                             *
+ *             - If "select" is enabled, the calling function needs to take care of enabling   *
+ *               AllowVoice. This function will disable AllowVoice after selecting one unit.   *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   09/08/2025 MM  : Created.                                                                 *
  *=============================================================================================*/
-void TechnoClass::Dump_Cargo(bool damage, bool select, TechnoClass * source)
+void TechnoClass::Dump_Cargo(int damage, bool select, TechnoClass * source)
 {
 	// Nyerguds's C&C Patch Project v1.04
 	// General function for dumping passengers.	
 
 	while (Is_Something_Attached()) {
-		FootClass * passenger = Detach_Object();
-		if (!passenger) continue; // Not sure how this can happen
-		if(select) AllowVoice = true;
-		
+		FootClass * foot = Detach_Object();
+		if (!foot) continue; // Not sure how this can happen		
 		bool exited = false;
-		if (passenger->Is_Infantry()) {
+		if (foot->Is_Infantry()) {
+			InfantryClass * passenger = (InfantryClass *) foot;
 			FacingType toface = FACING_N + Random_Pick(0, 7);
 			for (FacingType face = FACING_N; face < FACING_COUNT; face++) {
 				FacingType newface = toface + face;
 				CELL newcell = Adjacent_Cell(Coord_Cell(Coord), newface);
 
 				if (passenger->Can_Enter_Cell(newcell) == MOVE_OK) {
-					ScenarioInit++;
 					COORDINATE infcoord = Map[Coord_Cell(Coord)].Closest_Free_Spot(Coord, false);
 					if (infcoord == 0L) {
 						infcoord = Coord;
 					}
 					int strength = passenger->Strength;
-					if (damage) {
-						// Maximum damage is 7/8
-						int maxhurt = Fixed_To_Cardinal(passenger->Techno_Type_Class()->MaxStrength, 224);
-						int hurt = Random_Pick(0, maxhurt) - 1;
+					if (damage >= 256) {
+						strength = 0;
+					} else if (damage > 0) {
+						int randomdamage = Random_Pick(0, damage);
+						int maxstr = passenger->Techno_Type_Class()->MaxStrength;
+						int hurt = Fixed_To_Cardinal(maxstr, randomdamage);
+						// Damage was not 100%, so never deal 100% damage, regardless of rounding.
+						if (hurt >= maxstr) hurt--;
 						strength -= hurt;
 						if (strength > 0) {
 							passenger->Strength = strength;
 						}
 					}
-					passenger->Unlimbo(infcoord);
+					ScenarioInit++;
+					passenger->Unlimbo(infcoord, DIR_N);
 					ScenarioInit--;
 					exited = true;
 					if (strength <= 0) {
 						// Visibly kill off the unit, so the player knows why it's gone.
-						int hurt = 400;
+						int hurt = 1000;
 						// Artificially lower HP first, so it absolutely dies.
 						passenger->Strength = 1;
 						passenger->Take_Damage(hurt, 0, WARHEAD_AP, source);
@@ -3383,8 +3390,11 @@ void TechnoClass::Dump_Cargo(bool damage, bool select, TechnoClass * source)
 						passenger->Assign_Mission(MISSION_MOVE);
 						passenger->Assign_Destination(::As_Target(newcell));
 						if (select) {
+							// Calling function needs to take care of enabling AllowVoice.
 							bool selectok = passenger->Select();
-							AllowVoice = false;
+							if (AllowVoice && selectok) {
+								AllowVoice = false;
+							}
 						}
 					}
 					break;
@@ -3392,8 +3402,8 @@ void TechnoClass::Dump_Cargo(bool damage, bool select, TechnoClass * source)
 			}
 		}
 		if (!exited) {
-			passenger -> Record_The_Kill(source);
-			delete passenger;
+			foot -> Record_The_Kill(source);
+			delete foot;
 		}
 	}
 }

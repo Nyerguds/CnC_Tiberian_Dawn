@@ -2060,7 +2060,15 @@ void FootClass::Sell_Back(int control)
 		// Nyerguds's C&C Patch Project v1.04
 		// Selling transports will now evacuate their crew.
 		Dump_Cargo();
+		/*
+		**	A sold unit still counts as a kill, but it just isn't directly
+		**	attributed to the enemy. This ensures that triggers fire correctly.
+		*/
+		Record_The_Kill(NULL);
+
 		House->Refund_Money(Refund_Amount());
+		
+
 		Stun();
 		Limbo();
 		delete this;

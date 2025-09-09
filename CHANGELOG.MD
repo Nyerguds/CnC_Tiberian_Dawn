@@ -187,9 +187,11 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Added ini option to disable the grenade throw sound.
 * Fixed the issue where capturing tiberium storage would transfer the contained tiberium to the player before the storage capacity itself was added to the player's storage pool.
 * When selling a building, the infantry will now always come out of an actual cell that was part of the building.
-* Selling an APC or transport helicopter on the Repair Bay will no longer lose the passengers; they will get dumped out and walk off the platform.
+* When a loaded APC is destroyed while on the Repair Bay, it now properly ejects its passengers, rather than them all vanishing and be considered dead.
+* Selling an APC or transport helicopter on the Repair Bay will no longer make the passengers vanish; they will get dumped out and walk off the platform. This also removes an exploit allowing mission-critical infantry to be removed without the game noticing their disappearance.
 * When a landed Transport Helicopter gets destroyed, the passengers don't simply all get killed off. They can get heavily damaged though, and might die if not at full health.
 * Selling a Harvester on a Repair Bay now refunds 50% of the tiberium stored inside. Before, this was divided twice, giving only 25%.
+* Selling a unit on a repair bay will now mark it as "destroyed", as it happens with sold buildings, meaning destruction triggers on such units can't be circumvented by selling them.
 * Craters and scorch marks can now appear on spots occupied by units.
 * Aircraft are now placeable from missions. Helicopters will be placed down on the ground, fixed-wing airplanes will start in the air.
 * Pressing \[N\] or \[Shift\]+\[N\] to select a previous or next unit while in Sell or Repair mode, or having superweapon targeting active, will now properly cancel these modes.
