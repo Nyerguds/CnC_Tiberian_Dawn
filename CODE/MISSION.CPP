@@ -195,11 +195,16 @@ void MissionClass::AI(void)
 	if (Timer.Expired() && Strength > 0) {
 		switch (Mission) {
 			default:
-			case MISSION_STICKY:
 			case MISSION_SLEEP:
 				Timer = Mission_Sleep();
 				break;
 
+			// Nyerguds's C&C Patch Project v1.04
+			// Sticky mode is basically Guard mode, shooting at any targets in
+			// range, but unrecruitable and without movement. All usage in missions
+			// shows that this is the intended behaviour, and yet it was coded as
+			// "sleep until attacked and snapped out of it".
+			case MISSION_STICKY:
 			case MISSION_GUARD:
 				Timer = Mission_Guard();
 				break;

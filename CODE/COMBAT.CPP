@@ -161,12 +161,10 @@ void Explosion_Damage(COORDINATE coord, unsigned strength, TechnoClass * source,
 		**	an adjacent cell or the center cell. Damage never spills
 		**	further than one cell away.
 		*/
-		if (i != FACING_NONE) {
-			cellptr = &thiscell->Adjacent_Cell(i);
+		cellptr = &thiscell->Adjacent_Cell(i);
+		if (i != FACING_NONE && cellptr == thiscell) {
 			// off the map; ignore.
-			if (cellptr == thiscell) {
-				continue;
-			}
+			continue;
 		}
 
 		/*

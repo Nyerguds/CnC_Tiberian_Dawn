@@ -2660,16 +2660,23 @@ void BuildingClass::Repair(int control)
 	**	appropriate action.
 	*/
 	VocType sound = VOC_NONE;
+	VoxType response = VOX_NONE;
 	if (IsRepairing) {
 		if (Strength == Class->MaxStrength) {
 			sound = VOC_SCOLD;
+		} else if (House->Available_Money() == 0) {
+			IsRepairing = false;
+			Clicked_As_Target();
+			sound = VOC_SCOLD;
+			response = VOX_NEED_MO_MONEY;
 		} else {
-			if (IsOwnedByPlayer) {
-				Speak(VOX_REPAIRING);
-			}
+			response = VOX_REPAIRING;
 			sound = VOC_BUTTON;
 			Clicked_As_Target();
 			IsWrenchVisible = true;
+		}
+		if (IsOwnedByPlayer && response != VOX_NONE && !Options.NoRepairAnnounce) {
+			Speak(response);
 		}
 	} else {
 		sound = VOC_BUTTON;
@@ -4272,9 +4279,11 @@ int BuildingClass::Mission_Repair(void)
 				if (Transmit_Message(RADIO_NEED_TO_MOVE) == RADIO_ROGER) {
 					if (Contact_With_Whom()->Health_Ratio() < 0x0100 && Transmit_Message(RADIO_REPAIR) == RADIO_ROGER) {
 						TARGET astarget = Contact_With_Whom()->As_Target();
-						if (IsOwnedByPlayer && LastRepaired != astarget) {
-							Speak(VOX_REPAIRING);
+						if (LastRepaired != astarget) {
 							LastRepaired = astarget;
+							if (IsOwnedByPlayer && !Options.NoRepairAnnounce) {
+								Speak(VOX_REPAIRING);
+							}
 						}
 						Status = DURING;
 						Begin_Mode(BSTATE_ACTIVE);

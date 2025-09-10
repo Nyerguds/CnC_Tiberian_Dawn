@@ -3977,6 +3977,7 @@ void DisplayClass::Sell_Mode_Control(int control)
 
 	if (mode != IsSellMode && !PendingObject) {
 		IsRepairMode = false;
+		IsTargettingMode = SPC_NONE;
 		if (mode && PlayerPtr->BScan) {
 			IsSellMode = true;
 			Unselect_All();
@@ -4024,6 +4025,7 @@ void DisplayClass::Repair_Mode_Control(int control)
 
 	if (mode != IsRepairMode && !PendingObject) {
 		IsSellMode = false;
+		IsTargettingMode = SPC_NONE;
 		if (mode && PlayerPtr->BScan) {
 			IsRepairMode = true;
 			Unselect_All();

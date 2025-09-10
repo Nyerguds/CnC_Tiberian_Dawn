@@ -1095,6 +1095,62 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 
 
 /***********************************************************************************************
+ * UnitClass::Death_Announcement -- Announces the death of a unit.                             *
+ *                                                                                             *
+ *    This routine is called when a vehicle is destroyed.                                      *
+ *                                                                                             *
+ * INPUT:   source   -- The perpetrator of this death.                                         *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   09/11/2025 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void UnitClass::Death_Announcement(TechnoClass const * source) const
+{
+	// Nyerguds's C&C Patch Project v1.04
+	// Whoops, looks like somebody's in the market for a new harvester!
+	if (*this == UNIT_HARVESTER && IsOwnedByPlayer) {
+		bool reffound = false;
+		bool harvfound = false;
+		for (int bld_index = 0; bld_index < Buildings.Count(); bld_index++) {
+			BuildingClass * bld = Buildings.Ptr(bld_index);
+			// Also scan allied refineries; they may have a player owned harvester inside.
+			if (bld && !bld->IsInLimbo && *bld == STRUCT_REFINERY && (House == bld->House || House->Is_Ally(bld))) {
+				if (House == bld->House) {
+					reffound = true;
+				}
+				FootClass * attached = bld->Attached_Object();
+				// Since unloading into a different player's refinery is a thing in C&C, recheck the House.
+				if (attached && attached->House == House && attached->What_Am_I() == RTTI_UNIT && *((UnitClass const *)attached) == UNIT_HARVESTER) {
+					harvfound = true;
+					// Abort scan; a docked harvester was found, so there's nothing more to do.
+					break;
+				}
+			}
+		}
+		if (reffound && !harvfound) {
+			for (int unit_index = 0; unit_index < Units.Count(); unit_index++) {
+				UnitClass * unit = Units.Ptr(unit_index);
+				if (unit != this && unit && !unit->IsInLimbo && unit->House == House && *unit == UNIT_HARVESTER) {
+					harvfound = true;
+					break;
+				}
+			}
+		}
+		if (reffound && !harvfound) {
+			Speak(VOX_NEED_HARVESTER);
+			return;
+		}
+	}
+	// Continue to normal logic. Yes, this "no harvesters" warning circumvents the Commando Schneakiness.
+	FootClass::Death_Announcement(source);
+}
+
+
+/***********************************************************************************************
  * UnitClass::new -- Allocate a unit slot and adjust access arrays.                            *
  *                                                                                             *
  *    This routine will allocate a unit from the available unit pool and                       *
@@ -3226,26 +3282,32 @@ COORDINATE UnitClass::Target_Coord() const
 void UnitClass::Scatter(COORDINATE threat, bool forced)
 {
 	Validate();
-	if (*this != UNIT_GUNBOAT && *this != UNIT_HOVER) {
-		if ((!Target_Legal(TarCom) && !Target_Legal(NavCom)) || forced || Random_Pick(1, 4) == 1) {
-			FacingType	toface;
-			FacingType	newface;
-			CELL			newcell;
+	
+	/*
+	** Units in Sleep or Sticky mode do not scatter.
+	*/
+	if (Mission == MISSION_SLEEP || Mission == MISSION_STICKY) return;
 
-			if (threat) {
-				toface = Dir_Facing(Direction8(threat, Coord));
-				toface = toface + (Random_Pick(0, 2)-1);
-			} else {
-				toface = Dir_Facing(PrimaryFacing.Current());
-			}
+	if (*this == UNIT_GUNBOAT || *this == UNIT_HOVER) return;
 
-			for (FacingType face = FACING_N; face < FACING_COUNT; face++) {
-				newface = toface + face;
-				newcell = Adjacent_Cell(Coord_Cell(Coord), newface);
+	if ((!Target_Legal(TarCom) && !Target_Legal(NavCom)) || forced || Random_Pick(1, 4) == 1) {
+		FacingType	toface;
+		FacingType	newface;
+		CELL			newcell;
 
-				if (Map.In_Radar(newcell) && Can_Enter_Cell(newcell) == MOVE_OK) {
-					Assign_Destination(::As_Target(newcell));
-				}
+		if (threat) {
+			toface = Dir_Facing(Direction8(threat, Coord));
+			toface = toface + (Random_Pick(0, 2)-1);
+		} else {
+			toface = Dir_Facing(PrimaryFacing.Current());
+		}
+
+		for (FacingType face = FACING_N; face < FACING_COUNT; face++) {
+			newface = toface + face;
+			newcell = Adjacent_Cell(Coord_Cell(Coord), newface);
+
+			if (Map.In_Radar(newcell) && Can_Enter_Cell(newcell) == MOVE_OK) {
+				Assign_Destination(::As_Target(newcell));
 			}
 		}
 	}

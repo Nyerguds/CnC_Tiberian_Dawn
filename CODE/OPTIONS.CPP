@@ -563,6 +563,7 @@ void OptionsClass::Load_Settings (void)
 		WeaponTypeClass* nonconstw = (WeaponTypeClass*)(Weapons);
 		nonconstw[WEAPON_GRENADE].Sound = VOC_NONE;
 	}
+	NoRepairAnnounce = WWGetPrivateProfileBool("Patch", "NoRepairAnnounce", false, buffer);
 
 	char workbuf[128];
 

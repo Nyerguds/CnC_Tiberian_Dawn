@@ -659,7 +659,7 @@ int FootClass::Mission_Guard(void)
  * FootClass::Mission_Hunt -- Handles the default hunt order.                                  *
  *                                                                                             *
  *    This routine is the default hunt order for game objects. It handles searching for a      *
- *    nearby object and heading toward it. The act of targetting will cause it to attack       *
+ *    nearby object and heading toward it. The act of targeting will cause it to attack        *
  *    the target it selects.                                                                   *
  *                                                                                             *
  * INPUT:   none                                                                               *
@@ -1177,6 +1177,11 @@ ResultType FootClass::Take_Damage(int & damage, int distance, WarheadType warhea
 			}
 			bool tweap = (weap != WEAPON_NONE && weap != WEAPON_NIKE);
 
+			// Nyerguds's C&C Patch Project v1.04
+			// Sticky mode is supposed to keep units on their assigned place no matter what.
+			// Treat it as equal to human controlled Guard mode in the code below.
+			// Note that Scatter is blocked for Sticky units anyway, so it doesn't affect them.
+#ifdef OBSOLETE
 			/*
 			**	This ensures that if a unit is in sticky mode, then it will snap out of
 			**	it when it takes damage.
@@ -1184,6 +1189,7 @@ ResultType FootClass::Take_Damage(int & damage, int distance, WarheadType warhea
 			if (source && Mission == MISSION_STICKY) {
 				Enter_Idle_Mode();
 			}
+#endif
 
 			/*
 			**	If this object is not part of a team and it can retaliate for the damage, then have
@@ -1197,6 +1203,7 @@ ResultType FootClass::Take_Damage(int & damage, int distance, WarheadType warhea
 				(!Target_Legal(TarCom) || ((!House->IsHuman || Special.IsSmartDefense) && (!tweap || !In_Range(TarCom)))) &&
 //				!Target_Legal(NavCom) &&
 					(Mission == MISSION_AMBUSH ||
+					Mission == MISSION_STICKY ||
 					Mission == MISSION_GUARD ||
 					Mission == MISSION_RESCUE ||
 					Mission == MISSION_GUARD_AREA ||
@@ -1208,7 +1215,7 @@ ResultType FootClass::Take_Damage(int & damage, int distance, WarheadType warhea
 				**	controled units. For the player, this only occurs if the source of the damage
 				**	is within range.
 				*/
-				if (!House->IsHuman) {
+				if (!House->IsHuman && Mission != MISSION_STICKY) {
 
 					/*
 					** If this unit is in TIMED_HUNT (multiplayer computer-controlled)
@@ -1819,39 +1826,37 @@ void FootClass::Death_Announcement(TechnoClass const * source) const
 	if (!IsDiscoveredByPlayer && !IsOwnedByPlayer) {
 		return;
 	}
-	// Commando suppresses this for some reason?
+	// Commando kills suppress death announcements for some reason. Apparently they are Verra Schneaky.
 	if (source && source->What_Am_I() == RTTI_INFANTRY && *((InfantryClass const *)source) != INFANTRY_RAMBO) {
 		return;
 	}
-	if (!Options.IsDeathAnnounce) {
-		if (House == PlayerPtr) {
-			Speak(VOX_UNIT_LOST);
-		}
+
+	if (!Options.IsDeathAnnounce && IsOwnedByPlayer) {
+		Speak(VOX_UNIT_LOST);
+		return;
+	}
+	if (What_Am_I() == RTTI_INFANTRY && ((InfantryTypeClass const &)Class_Of()).IsCivilian && !((InfantryClass *)this)->IsTechnician) {
+		Speak(VOX_DEAD_CIV);
+		return;
+	}
+	bool enemy = !PlayerPtr->Is_Ally(this);
+	if (enemy && GameToPlay != GAME_NORMAL) {
+		Speak(VOX_ENEMY_UNIT);
 	} else {
-		if (What_Am_I() == RTTI_INFANTRY && ((InfantryTypeClass const &)Class_Of()).IsCivilian && !((InfantryClass *)this)->IsTechnician) {
-			Speak(VOX_DEAD_CIV);
-			return;
-		}
-		bool enemy = !PlayerPtr->Is_Ally(this);
-		if (enemy && GameToPlay != GAME_NORMAL) {
-			Speak(VOX_ENEMY_UNIT);
-		} else {
-			switch (House->ActLike) {
-				case HOUSE_GOOD:
-					Speak(VOX_DEAD_GDI);
-					break;
+		switch (House->ActLike) {
+			case HOUSE_GOOD:
+				Speak(VOX_DEAD_GDI);
+				break;
 
-				case HOUSE_BAD:
-					Speak(VOX_DEAD_NOD);
-					break;
+			case HOUSE_BAD:
+				Speak(VOX_DEAD_NOD);
+				break;
 
-				default:
-					if (enemy) {
-						Speak(VOX_ENEMY_UNIT);
-					}
-					break;
-			}
-		
+			default:
+				if (enemy) {
+					Speak(VOX_ENEMY_UNIT);
+				}
+				break;
 		}
 	}
 }

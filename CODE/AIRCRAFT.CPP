@@ -3361,6 +3361,12 @@ AircraftClass::~AircraftClass(void)
 void AircraftClass::Scatter(COORDINATE , bool )
 {
 	Validate();
+
+	/*
+	** Units in Sleep or Sticky mode do not scatter.
+	*/
+	if (Mission == MISSION_SLEEP || Mission == MISSION_STICKY) return;
+
 	if (IsLanding || Altitude == 0) {
 		IsLanding = false;
 		IsTakingOff = true;
@@ -3446,6 +3452,9 @@ int AircraftClass::Threat_Range(int control) const
 int AircraftClass::Mission_Guard(void)
 {
 	Validate();
+	// No sticky mode available for aircraft.
+	if (Mission == MISSION_STICKY) return Mission_Sleep();
+
 	if (Altitude == FLIGHT_LEVEL) {
 
 		/*

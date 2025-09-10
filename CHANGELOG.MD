@@ -103,7 +103,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Capturing a building will now refresh all of its cells on the radar to the new color.
 * EVA now announces when the player loses a building. The "DeathAnnounce" option now also works for buildings.
 * When "DeathAnnounce" is enabled, a destroyed unit or structure in singleplayer that is not GDI or Nod, and is not allied with the player, is now reported as destroyed "enemy".
-* EVA now announces when repairs have started on a building or unit.
+* EVA now announces when repairs have started on a building or unit. This is enabled by default, but can be disabled by adding the option "NoRepairAnnounce=true" in conquer.ini, under \[Patch\].
 * Drag-selecting will now show the default cursor instead of keeping an incorrect cursor from where the drag action started.
 * Drag-selecting will no longer pop up a tooltip of the thing the mouse was pressed down on.
 * The minimap will now only respond to clicks at the moment the mouse is released, like how it works on the main map.
@@ -153,7 +153,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Added constraint checks on strings file reading, with any unknown string returning "&lt;&lt;UNKNOWN STRING&gt;&gt;".
 * The AI behaviour to run from incoming threats is now enabled at BuildLevel 8, rather than at Scenario 8, making it equivalent to other difficulty increase tweaks that happen at that level.
 * Units that are damaged below 50% will not start smoking again when attacked by a weapon that deals no damage to them (e.g. tank vs Technician gun or Blossom Tree).
-* Clicking to place down a building when having superweapon targeting active will now cancel the superweapon targeting rather than remembering it until after the building placement is done or cancelled.
+* Clicking to place down a building, activating Repair or Sell mode, or clicking the icon of a charged superweapon, will now always properly cancel any other such special targeting mode if it was active, rather than setting the mouse in a strange state where multiple such modes are active at the same time. This bug caused strange behaviour where you had to click multiple times to cancel the targeting.
 * In the Save menu, when clicking on an obsolete savegame to overwrite it, the "(old)" status at the start will no longer be included in the savegame description.
 * \[Remaster\] After unloading in a Refinery, Harvesters will now return to the first spot where they started harvesting the previous time, rather than the last one, reducing top-left harvester drifting.
 * \[Remaster\] Harvesters will randomise their starting point when scanning for tiberium, reducing top-left harvester drifting.
@@ -165,7 +165,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * For the purpose of checking build prerequisites, owning an Advanced Communication Center will now act as if you own a normal Communications Center.
 * The Advanced Communications Center can now detect stealth units, since its non-advanced variant can do that too.
 * Build levels can now be customized in the campaign missions.
-* The "New Missions" menu only shows mission variants with the EA suffix, but these missions will now attempt to continue to other variants to act as campaign up to 15 missions. The order is EA/EB/EC/ED/EE, WA/WB/WC/WD/WE, XA/XB/XC/XD/XE.
+* The "New Missions" menu only shows mission variants with the EA suffix, but these missions will now attempt to continue to other variants to act as campaign up to 15 missions.10/Sep/2025 23:1910/Sep/2025 23:19 The order is EA/EB/EC/ED/EE, WA/WB/WC/WD/WE, XA/XB/XC/XD/XE.
 * Added "RemoveBuildExceptions" option for missions, to remove all singleplayer-specific build rules.
 * Fixed double-firing on aircraft getting disrupted by other orders, causing the aircraft to always fire per single shot.
 * Fixed Mammoth Tank showing its muzzle flashes on the wrong barrel.
@@ -177,23 +177,30 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * \[Remaster\] Any building will now be considered capturable in singleplayer if it has a trigger attached that activates when it is captured. This applies to both the "Cap=Win/Des=Lose" action, and the "Player Enters" event.
 * \[Remaster\] Fixed bug where pressing \[S\] on an aircraft that was already returning to its helipad would make it land on an incorrect spot on the pad.
 * Reduced the behaviour where helicopters return home after barely attacking because they find no place to shuffle to. If the air is too crowded, they will consider staying in place, and if the target is too close to the map edge or shroud and that limits the available airspace, they are now allowed to come closer to compensate.
-* Aircraft will now always immediately return to base when they run out of ammo mid-salvo instead of waiting for a second shot they don't have.
-* Fixed the infantry squish sound increasing in volume if multiple infantry was on the squished cell.
+* Aircraft will now always immediately return to base when they run out of ammo mid-salvo, instead of waiting for a second shot they don't have.
+* Fixed the infantry squish sound increasing in volume if multiple infantry units are on the same squished cell.
 * Fixed vehicle crushing, and tweaked it so they don't play the infantry squish sound but instead play their normal death animation, along with a little "roadkill bump" sound.
-* Enabled translucent colors on the vehicle smoke and oil derrick smoke animations, so they can be enhanced to truly semitransparent smoke.
-* Enabled translucent colors on rocket exhaust smoke puff so it can use the previously unused filters set intended for the mouse cursor.
+* Enabled translucent colors on the vehicle smoke and oil derrick smoke animations, so they can be enhanced to semitransparent smoke.
+* Enabled translucent colors on rocket exhaust smoke puff, so they can be enhanced to semitransparent smoke.
 * Enabled translucent colors on the SAM Site launch smoke animations, so the hard-baked Nod colours on the animation can be fixed.
 * Fixed misalignment on SAM Site launch smoke animations.
 * Added ini option to disable the grenade throw sound.
-* Fixed the issue where capturing tiberium storage would transfer the contained tiberium to the player before the storage capacity itself was added to the player's storage pool.
+* Fixed the issue where capturing tiberium storage would try to transfer the contained tiberium to the player before the storage capacity itself was added to the player's storage pool, often resulting in an unintuitive loss of the captured money.
 * When selling a building, the infantry will now always come out of an actual cell that was part of the building.
-* When a loaded APC is destroyed while on the Repair Bay, it now properly ejects its passengers, rather than them all vanishing and be considered dead.
 * Selling an APC or transport helicopter on the Repair Bay will no longer make the passengers vanish; they will get dumped out and walk off the platform. This also removes an exploit allowing mission-critical infantry to be removed without the game noticing their disappearance.
-* When a landed Transport Helicopter gets destroyed, the passengers don't simply all get killed off. They can get heavily damaged though, and might die if not at full health.
+* A unit sold on a repair bay will now be marked as "destroyed" internally, as it happens with sold buildings, meaning destruction triggers on such units can't be circumvented by selling them. As with buildings, this does not count towards the losses on the score screen.
 * Selling a Harvester on a Repair Bay now refunds 50% of the tiberium stored inside. Before, this was divided twice, giving only 25%.
-* Selling a unit on a repair bay will now mark it as "destroyed", as it happens with sold buildings, meaning destruction triggers on such units can't be circumvented by selling them.
+* When a loaded APC is destroyed while on the Repair Bay, it now properly ejects its passengers, rather than them all vanishing and be considered dead.
+* When a landed Transport Helicopter gets destroyed, the passengers don't simply all get killed off. They can get heavily damaged though, and might die if not at full health. This also functions correctly when it is docked to a Repair Bay or helipad.
 * Craters and scorch marks can now appear on spots occupied by units.
 * Aircraft are now placeable from missions. Helicopters will be placed down on the ground, fixed-wing airplanes will start in the air.
 * Pressing \[N\] or \[Shift\]+\[N\] to select a previous or next unit while in Sell or Repair mode, or having superweapon targeting active, will now properly cancel these modes.
 * When a building is captured while the building placement grid is shown, the placement grid will automatically update with the ownership change.
 * Improved the alignment of cargo / ammo indicator pips inside selection box.
+* Fixed "Sticky" orders; in the original implementation it acted like "Sleep until attacked", but its intended purpose was always to have units that acted like player units in Guard mode, never moving from their position but attacking anything in range.
+* Fixed units in "Sleep" or "Sticky" mode still being able to scatter in certain conditions, e.g. to evade incoming damage.
+* Construction no longer starts as "On Hold" if no money is available.
+* Construction in "On Hold" status can now be told to continue even if the player currently has no money.
+* Impatient clicks while lacking money will now make EVA explain to players the basic principle that they cannot construct things if they are broke.
+* Clicking to repair a building while lacking money will now make EVA explain to players the basic principle that they cannot repair things if they are broke.
+* If you own a refinery, losing your last harvester will now give a "Need Harvester" announcement instead of the usual "Unit Lost".

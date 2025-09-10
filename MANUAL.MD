@@ -79,6 +79,10 @@ This behaviour is enabled by default, but can be disabled by adding the option "
 
 As part of the fixes done in this patch, the previously unused grenade throw sound is now played. If this bothers anyone, the sound can be disabled by adding the option "NoGrenadeToss=true" in conquer.ini, under \[Patch\].
 
+### Repair announcements
+
+The game contains an unused voice clip to announce that repairs were started. This has been reactivated, for both unit and building repairs. If this bothers anyone, the sound can be disabled by adding the option "NoRepairAnnounce=true" in conquer.ini, under \[Patch\].
+
 ## Extra usage notes
 
 ### "Funpark" dinosaur campaign

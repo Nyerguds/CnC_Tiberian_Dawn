@@ -1969,6 +1969,11 @@ void InfantryClass::Scatter(COORDINATE threat, bool forced)
 	*/
 	if (!Special.IsScatter && House->IsHuman && !forced && !Team) return;
 
+	/*
+	** Units in Sleep or Sticky mode do not scatter.
+	*/
+	if (Mission == MISSION_SLEEP || Mission == MISSION_STICKY) return;
+
 	if (forced || Class->IsFraidyCat /*|| !(Random_Pick(1, 4) == 1)*/) {
 		FacingType	toface;
 		FacingType	newface;

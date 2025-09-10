@@ -61,10 +61,10 @@ class TechnoClass :	public RadioClass,
 	public:
 
 		/*
-		**	This flag will be true if the object has been damaged with malace.
+		**	This flag will be true if the object has been damaged with malice.
 		**	Damage received due to friendly fire or wear and tear does not count.
 		**	The computer is not allowed to sell a building unless it has been
-		**	damaged with malace.
+		**	damaged with malice.
 		*/
 		unsigned IsTickedOff:1;
 

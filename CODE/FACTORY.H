@@ -63,6 +63,7 @@ class FactoryClass : private StageClass
 		bool  Has_Changed(void);
 		bool  Has_Completed(void);
 		bool  Is_Building(void) const {return(Fetch_Rate() != 0);};
+		bool  Is_Waiting_For_Funds() {return(IsWaitingForFunds);};
 		bool  Set(TechnoTypeClass const & object, HouseClass & house);
 		bool  Set(int const & type, HouseClass & house);
 		bool  Start(void);
@@ -106,10 +107,19 @@ class FactoryClass : private StageClass
 		/*
 		**	If the AI process detected that the production process has advanced far enough
 		**	that a change in the building animation would occur, this flag will be true.
-		**	Examination of this flag (through the Has_Chaged function) allows intelligent
+		**	Examination of this flag (through the Has_Changed function) allows intelligent
 		**	updating of any production graphic.
 		*/
 		unsigned IsDifferent:1;
+
+		/*
+		**	If the construction is currently not progressing because there is not enough
+		**	money available, this flag will be set to "true". This way, a lack of money
+		**	can be checked by external classes through Is_Waiting_For_Funds(), and reported
+		**	to the player. This flag is updated any time the Graphic_Logic() call in the
+		**	AI() function succeeds.
+		*/
+		unsigned IsWaitingForFunds:1;
 
 		/*
 		**	This records the balance due on the current production item. This value will

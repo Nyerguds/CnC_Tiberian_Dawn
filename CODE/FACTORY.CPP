@@ -109,6 +109,7 @@ FactoryClass::FactoryClass(void)
 {
 	IsSuspended = false;
 	IsDifferent = false;
+	IsWaitingForFunds = false;
 	Balance		= 0;
 	SpecialItem = SPC_NONE;
 	Object 		= NULL;
@@ -267,6 +268,8 @@ void FactoryClass::AI(void)
 		for (int index = 0; index < stages; index++) {
 			if (!Has_Completed() && Graphic_Logic()) {
 				IsDifferent = true;
+				// Reset this in here, after Graphic_Logic() ticked.
+				IsWaitingForFunds = false;
 
 				int cost = Cost_Per_Tick();
 
@@ -279,6 +282,9 @@ void FactoryClass::AI(void)
 				**	production step occurs, there may be sufficient funds available.
 				*/
 				if (cost > House->Available_Money()) {
+					// Nyerguds's C&C Patch Project v1.04
+					// Keep specific status indicating the construction is waiting for more credits.
+					IsWaitingForFunds = true;
 					Set_Stage(Fetch_Stage()-1);
 				} else {
 					House->Spend_Money(cost);
@@ -362,6 +368,7 @@ bool FactoryClass::Set(TechnoTypeClass const & object, HouseClass & house)
 	*/
 	IsDifferent = true;
 	IsSuspended = true;
+	IsWaitingForFunds = false;
 	Set_Rate(0);
 	Set_Stage(0);
 
@@ -374,6 +381,7 @@ bool FactoryClass::Set(TechnoTypeClass const & object, HouseClass & house)
 		House  = Object->House;
 		Balance = object.Cost_Of();
 		Object->PurchasePrice = Balance;
+		IsWaitingForFunds = House->Available_Money() < Cost_Per_Tick();
 	}
 
 	/*
@@ -413,6 +421,7 @@ bool FactoryClass::Set(int const & type, HouseClass & house)
 	*/
 	IsDifferent = true;
 	IsSuspended = true;
+	IsWaitingForFunds = false;
 	Set_Rate(0);
 	Set_Stage(0);
 
@@ -458,6 +467,7 @@ void FactoryClass::Set(TechnoClass & object)
 	Set_Stage(STEP_COUNT);
 	IsDifferent = true;
 	IsSuspended = true;
+	IsWaitingForFunds = House->Available_Money() < Cost_Per_Tick();
 }
 
 
@@ -510,26 +520,29 @@ bool FactoryClass::Start(void)
 {
 	Validate();
 	if ((Object || SpecialItem) && IsSuspended && !Has_Completed()) {
-		if (House->Available_Money() >= Cost_Per_Tick()) {
-			int time;
+		// Nyerguds's C&C Patch Project v1.04
+		// * Construction no longer starts as "On Hold" if no money is available.
+		// * "On Hold" status can be resumed even if no money is currently available.
+		//if (House->Available_Money() >= Cost_Per_Tick()) {
+		int time;
 
-			if (Object) {
-				time = Object->Class_Of().Time_To_Build(House->Class->House);
-			} else {
-				time = TICKS_PER_MINUTE * 5;
-			}
-
-			int frac = House->Power_Fraction();
-			frac = Bound(frac, 0x0010, 0x0100);
-			int rate = (time*256) / frac;
-
-			rate /= STEP_COUNT;
-			rate = Bound(rate, 1, 255);
-
-			Set_Rate(rate);
-			IsSuspended = false;
-			return(true);
+		if (Object) {
+			time = Object->Class_Of().Time_To_Build(House->Class->House);
+		} else {
+			time = TICKS_PER_MINUTE * 5;
 		}
+
+		int frac = House->Power_Fraction();
+		frac = Bound(frac, 0x0010, 0x0100);
+		int rate = (time*256) / frac;
+
+		rate /= STEP_COUNT;
+		rate = Bound(rate, 1, 255);
+
+		Set_Rate(rate);
+		IsSuspended = false;
+		return(true);
+		//}
 	}
 	return(false);
 }
@@ -731,6 +744,7 @@ bool FactoryClass::Completed(void)
 		Object = NULL;
 		IsSuspended = true;
 		IsDifferent = true;
+		IsWaitingForFunds = false;
 		Set_Stage(0);
 		Set_Rate(0);
 		return(true);
@@ -740,6 +754,7 @@ bool FactoryClass::Completed(void)
 		SpecialItem = SPC_NONE;
 		IsSuspended = true;
 		IsDifferent = true;
+		IsWaitingForFunds = false;
 		Set_Stage(0);
 		Set_Rate(0);
 		return(true);

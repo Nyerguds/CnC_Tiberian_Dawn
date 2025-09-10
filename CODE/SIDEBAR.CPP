@@ -2276,7 +2276,7 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 		}
 
 		/*
-		**	A right mouse button signals "cancel".  If we are in targetting
+		**	A right mouse button signals "cancel".  If we are in targeting
 		** mode then we don't want to be any more.
 		*/
 		if (flags & RIGHTPRESS) {
@@ -2286,13 +2286,12 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 		**	A left mouse press signal "activate".  If our weapon type is
 		** available then we should activate it.
 		*/
+		int newspc = SPC_NONE;
 		if (flags & LEFTPRESS) {
 			switch (spc) {
 				case SPC_ION_CANNON:
 					if (PlayerPtr->IonCannon.Is_Ready()) {
-						Map.IsTargettingMode = spc;
-						Unselect_All();
-						Speak(VOX_SELECT_TARGET);
+						newspc = spc;
 					} else {
 						PlayerPtr->IonCannon.Impatient_Click();
 					}
@@ -2300,9 +2299,7 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 
 				case SPC_AIR_STRIKE:
 					if (PlayerPtr->AirStrike.Is_Ready()) {
-						Map.IsTargettingMode = spc;
-						Unselect_All();
-						Speak(VOX_SELECT_TARGET);
+						newspc = spc;
 					} else {
 						PlayerPtr->AirStrike.Impatient_Click();
 					}
@@ -2310,16 +2307,29 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 
 				case SPC_NUCLEAR_BOMB:
 					if (PlayerPtr->NukeStrike.Is_Ready()) {
-						Map.IsTargettingMode = spc;
-						Unselect_All();
-						Speak(VOX_SELECT_TARGET);
+						newspc = spc;
 					} else {
 						PlayerPtr->NukeStrike.Impatient_Click();
 					}
 					break;
 			}
 		}
-
+		if (newspc != SPC_NONE) {
+			// Nyerguds's C&C Patch Project v1.04
+			// To activate a superweapon, cancel building placement, repair and sell modes.
+			Map.Override_Mouse_Shape(MOUSE_NORMAL);
+			if (Map.PendingObjectPtr && Map.PendingObjectPtr->Is_Techno()) {
+				Map.PendingObjectPtr = 0;
+				Map.PendingObject = 0;
+				Map.PendingHouse = HOUSE_NONE;
+				Map.Set_Cursor_Shape(NULL);
+			}
+			Map.Repair_Mode_Control(0);
+			Map.Sell_Mode_Control(0);
+			Unselect_All();
+			Map.IsTargettingMode = spc;
+			Speak(VOX_SELECT_TARGET);
+		}
 	} else {
 
 		if (choice) {
@@ -2333,13 +2343,9 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 				int powerprod = 0;
 				if (otype == RTTI_BUILDINGTYPE && !Options.NoPowerBuildToolTips) {
 					BuildingTypeClass * choicebld = (BuildingTypeClass *)choice;
+					showpower = true;
 					powerdrain = choicebld->Drain;
 					powerprod = choicebld->Power;
-					showpower = powerdrain != 0 || powerprod != 0;
-					if (!showpower) {
-						powerdrain = 0;
-						powerprod = 0;
-					}
 				}
 				Map.Help_Text(choice->Full_Name(), X, Y, CC_GREEN, true, choice->Cost_Of(), true, powerdrain, powerprod, showpower);
 				flags &= ~LEFTUP;
@@ -2399,7 +2405,14 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 					**	bail.
 					*/
 					if (factory->Is_Building()) {
-						Speak(VOX_NO_FACTORY);
+						// Nyerguds's C&C Patch Project v1.04
+						// Let EVA explain to impatient players the basic principle that
+						// their construction will not progress if they're frickin' broke.
+						if (factory->Is_Waiting_For_Funds()) {
+							Speak(VOX_NEED_MO_MONEY);
+						} else {
+							Speak(VOX_NO_FACTORY);
+						}
 					} else {
 
 						/*
@@ -2410,7 +2423,8 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 
 							TechnoClass * pending = factory->Get_Object();
 							if (!pending && factory->Get_Special_Item()) {
-								Map.IsTargettingMode = true;
+								// Never handled here, but whatev.
+								Map.IsTargettingMode = factory->Get_Special_Item();
 							} else {
 								BuildingClass * builder = pending->Who_Can_Build_Me(false, false);
 								if (!builder) {
@@ -2443,8 +2457,9 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 							**	The factory must have been in a suspended state. Resume construction
 							**	normally.
 							*/
+							// This actually changes a state, so don't annoy the player with the "need more funds" message here.
 							Speak(VOX_BUILDING);
-							OutList.Add(EventClass(EventClass::PRODUCE, Strip->Buildables[index].BuildableType, Strip->Buildables[index].BuildableID));
+							OutList.Add(EventClass(EventClass::PRODUCE, otype, oid));
 						}
 					}
 
@@ -2457,8 +2472,8 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 //					if (Strip->IsBuilding) {
 //						Speak(VOX_NO_FACTORY);
 //					} else {
-						Speak(VOX_BUILDING);
-						OutList.Add(EventClass(EventClass::PRODUCE, Strip->Buildables[index].BuildableType, Strip->Buildables[index].BuildableID));
+					Speak(VOX_BUILDING);
+					OutList.Add(EventClass(EventClass::PRODUCE, otype, oid));
 //					}
 				}
 			}

@@ -214,7 +214,7 @@ void TeamClass::Assign_Mission_Target(TARGET new_target)
 {
 	Validate();
 	/*
-	** First go through and find anyone who is currently targetting
+	** First go through and find anyone who is currently targeting
 	** the old mission target and clear their Tarcom.
 	*/
 	FootClass * unit = Member;

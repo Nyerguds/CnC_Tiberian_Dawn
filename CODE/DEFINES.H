@@ -327,7 +327,7 @@ typedef enum ProdFailType {
 	PROD_OK,						//	Production request successful.
 	PROD_LIMIT,					//	Failed with production capacity limit reached.
 	PROD_ILLEGAL,				//	Failed because of illegal request.
-	PROD_CANT,					//	Faile because unable to comply (busy or occupied).
+	PROD_CANT,					//	Failed because unable to comply (busy or occupied).
 } ProdFailType;
 
 
@@ -519,10 +519,10 @@ typedef enum MissionType {
 	MISSION_CAPTURE,			//	Move into in order to capture.
 	MISSION_HARVEST,			// Hunt for and collect nearby Tiberium.
 	MISSION_GUARD_AREA,		// Active guard of area.
-	MISSION_RETURN,			// Head back to refinery.
+	MISSION_RETURN,			// Head back to refinery. -- This freezes infantry, in a recruitable state.
 	MISSION_STOP,				// Sit still.
 	MISSION_AMBUSH,			// Wait until discovered.
-	MISSION_HUNT,				// Active search and destroy.
+	MISSION_HUNT,				// Active search and destroy. -- Makes MCVs find a place to deploy at.
 	MISSION_TIMED_HUNT,		// Wait a while, then go into HUNT (multiplayer AI)
 	MISSION_UNLOAD,			// Search for and deliver cargo.
 	MISSION_SABOTAGE,			//	Move into in order to destroy.
