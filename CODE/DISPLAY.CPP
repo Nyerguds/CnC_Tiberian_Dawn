@@ -101,10 +101,10 @@ unsigned char DisplayClass::FadingRed[256]; // Map editor impassable
 unsigned char DisplayClass::TranslucentTable[(MAGIC_COL_COUNT+1)*256]; // Default translucent colors table set for animations
 unsigned char DisplayClass::WhiteTranslucentTable[(1+1)*256]; // Special brightening translucent color table for animations (targeting flash)
 unsigned char DisplayClass::MouseTranslucentTable[(4+1)*256]; // Translucent colors table for mouse cursor?
+unsigned char DisplayClass::SmokeTranslucentTable[(SMOKE_COL_COUNT+1)*256]; // Smoke translucency
 void const * DisplayClass::TransIconset; // Pointer for ground hashing icons set (building placement)
 unsigned char DisplayClass::UnitShadow[(USHADOW_COL_COUNT+1)*256]; // translucent table for unit shadow
 unsigned char DisplayClass::SpecialGhost[2*256]; // Supposed to be "for aircraft and bullets", but I don't think it's used.
-
 void const * DisplayClass::ShadowShapes; // Pointer for map shroud shape
 unsigned char DisplayClass::ShadowTrans[(SHADOW_COL_COUNT+1)*256]; // Fade to black around map shroud
 
@@ -112,6 +112,7 @@ unsigned char * const DisplayClass::TranslucencyTables[TRANS_COUNT] = {
 	DisplayClass::TranslucentTable,
 	DisplayClass::WhiteTranslucentTable,
 	DisplayClass::MouseTranslucentTable,
+	DisplayClass::SmokeTranslucentTable,
 	DisplayClass::UnitShadow,
 	DisplayClass::SpecialGhost,
 	DisplayClass::ShadowTrans,
@@ -126,13 +127,6 @@ BooleanVectorClass DisplayClass::CellRedraw;
 ** The main button that intercepts user input to the map
 */
 DisplayClass::TacticalClass DisplayClass::TacButton;
-
-/*
-**	Define "_RETRIEVE" if the palette morphing tables are part of the loaded data. If this
-**	is undefined, then the files will be created.
-*/
-#define	_RETRIEVE
-
 
 static int const TEX_X = 0;
 static int const TEX_Y = 6;
@@ -353,7 +347,8 @@ void DisplayClass::Init_Theater(TheaterType theater)
 {
 	char			fullname[16];
 	char			iconname[16];
-#ifndef _RETRIEVE
+	unsigned char colorpal[768];
+#ifdef FADING_GENERATE
 	static TLucentType const MouseCols[4] = {
 		{BLACK, BLACK, 110, 0},
 		{WHITE, WHITE, 110, 0},
@@ -387,6 +382,13 @@ void DisplayClass::Init_Theater(TheaterType theater)
 		{LTGREEN,	BLACK,130,0}
 	};
 #endif
+
+	static TLucentType const SmokeCols[SMOKE_COL_COUNT] = {
+		{YELLOW, BLACK, 110, 0},
+		{PINK, WHITE, 110, 0},
+		{BROWN, LTGREY, 110, 0},
+		{RED, DKGREY, 110, 0}
+	};
 
 	/*
 	---------------------- Invoke parent's init routine ----------------------
@@ -440,43 +442,65 @@ void DisplayClass::Init_Theater(TheaterType theater)
 
 	Mem_Copy(GamePalette, OriginalPalette, 768);
 
-#ifndef _RETRIEVE
+	// Nyerguds's C&C Patch Project v1.04
+	// Fixed errors in table generating caused by blanking out of water colors.
+	// Separate color source and fade target palettes solve this issue.
+	/*
+	**	Treat all animated water colors as the same color.
+	*/
+	Mem_Copy(OriginalPalette, colorpal, sizeof(colorpal));
+	unsigned char cyclered = colorpal[CYCLE_COLOR_START*3 + 0];
+	unsigned char cyclegrn = colorpal[CYCLE_COLOR_START*3 + 1];
+	unsigned char cycleblu = colorpal[CYCLE_COLOR_START*3 + 2];
+	int cycleend = CYCLE_COLOR_START + CYCLE_COLOR_COUNT;
+	for (int col = CYCLE_COLOR_START; col < cycleend; ++col){
+		colorpal[col*3 + 0] = cyclered;
+		colorpal[col*3 + 1] = cyclegrn;
+		colorpal[col*3 + 2] = cycleblu;
+	}
 	/*
 	**	Make sure that remapping doesn't occur on the colors that cycle.
 	*/
 	memset(&GamePalette[CYCLE_COLOR_START*3], 0x3F, CYCLE_COLOR_COUNT*3);
-#endif
 
 
-#ifdef _RETRIEVE
+#ifndef FADING_GENERATE
 	CCFileClass(Fading_Table_Name("GREEN", theater)).Read(FadingGreen, sizeof(FadingGreen));
 #else
-	Build_Fading_Table(GamePalette, FadingGreen, GREEN, 110);
+	Build_Fading_Table(colorpal, GamePalette, FadingGreen, GREEN, 110);
+#ifdef FADING_WRITE
 	CCFileClass(Fading_Table_Name("GREEN", theater)).Write(FadingGreen, sizeof(FadingGreen));
+#endif
 #endif
 	if (theater == THEATER_DESERT) {
 		FadingGreen[196] = 160;
 	}
 
-#ifdef _RETRIEVE
+#ifndef FADING_GENERATE
 	CCFileClass(Fading_Table_Name("YELLOW", theater)).Read(FadingYellow, sizeof(FadingYellow));
 #else
-	Build_Fading_Table(GamePalette, FadingYellow, YELLOW, 140);
+	Build_Fading_Table(colorpal, GamePalette, FadingYellow, YELLOW, 140);
+#ifdef FADING_WRITE
 	CCFileClass(Fading_Table_Name("YELLOW", theater)).Write(FadingYellow, sizeof(FadingYellow));
 #endif
-
-#ifdef _RETRIEVE
-	CCFileClass(Fading_Table_Name("RED", theater)).Read(FadingRed, sizeof(FadingRed));
-#else
-	Build_Fading_Table(GamePalette, FadingRed, RED, 140);
-	CCFileClass(Fading_Table_Name("RED", theater)).Write(FadingRed, sizeof(FadingRed));
 #endif
 
-#ifdef _RETRIEVE
+#ifndef FADING_GENERATE
+	CCFileClass(Fading_Table_Name("RED", theater)).Read(FadingRed, sizeof(FadingRed));
+#else
+	Build_Fading_Table(colorpal, GamePalette, FadingRed, RED, 140);
+#ifdef FADING_WRITE
+	CCFileClass(Fading_Table_Name("RED", theater)).Write(FadingRed, sizeof(FadingRed));
+#endif
+#endif
+
+#ifndef FADING_GENERATE
 	CCFileClass(Fading_Table_Name("MOUSE", theater)).Read(MouseTranslucentTable, sizeof(MouseTranslucentTable));
 #else
-	Build_Translucent_Table(GamePalette, &MouseCols[0], 4, MouseTranslucentTable);
+	Build_Translucent_Table(colorpal, GamePalette, &MouseCols[0], 4, MouseTranslucentTable);
+#ifdef FADING_WRITE
 	CCFileClass(Fading_Table_Name("MOUSE", theater)).Write(MouseTranslucentTable, sizeof(MouseTranslucentTable));
+#endif
 #endif
 
 //	MouseDrawPtr = MouseTranslucentTable;
@@ -484,68 +508,95 @@ void DisplayClass::Init_Theater(TheaterType theater)
 //	MouseDrawVal = 1;
 //	MouseDrawFlags = (int)SHAPE_GHOST;
 
-#ifdef _RETRIEVE
+#ifndef FADING_GENERATE
 	CCFileClass(Fading_Table_Name("TRANS", theater)).Read(TranslucentTable, sizeof(TranslucentTable));
 #else
-	Build_Translucent_Table(GamePalette, &MagicCols[0], MAGIC_COL_COUNT, TranslucentTable);
+	Build_Translucent_Table(colorpal, GamePalette, &MagicCols[0], MAGIC_COL_COUNT, TranslucentTable);
+#ifdef FADING_WRITE
 	CCFileClass(Fading_Table_Name("TRANS", theater)).Write(TranslucentTable, sizeof(TranslucentTable));
 #endif
+#endif
 
-#ifdef _RETRIEVE
+// Nyerguds's C&C Patch Project v1.04
+/*
+**	Extra filter specifically for smoke. This mirrors the MOUSE one, but is set on
+**	colors that typically don't exist in the vanilla smoke graphics. These are never
+**	loaded from file, since the original game does not contain them.
+*/
+	Build_Translucent_Table(colorpal, GamePalette, &SmokeCols[0], SMOKE_COL_COUNT, SmokeTranslucentTable);
+#ifdef FADING_WRITE
+	CCFileClass(Fading_Table_Name("SMOKE", theater)).Write(SmokeTranslucentTable, sizeof(SmokeTranslucentTable));
+#endif
+
+#ifndef FADING_GENERATE
 	CCFileClass(Fading_Table_Name("WHITE", theater)).Read(WhiteTranslucentTable, sizeof(WhiteTranslucentTable));
 #else
-	Build_Translucent_Table(GamePalette, &WhiteCols[0], 1, WhiteTranslucentTable);
+	Build_Translucent_Table(colorpal, GamePalette, &WhiteCols[0], 1, WhiteTranslucentTable);
+#ifdef FADING_WRITE
 	CCFileClass(Fading_Table_Name("WHITE", theater)).Write(WhiteTranslucentTable, sizeof(WhiteTranslucentTable));
 #endif
+#endif
 
-#ifdef _RETRIEVE
+#ifndef FADING_GENERATE
 	CCFileClass(Fading_Table_Name("SHADOW", theater)).Read(ShadowTrans, sizeof(ShadowTrans));
 #else
-	Build_Translucent_Table(GamePalette, &ShadowCols[0], SHADOW_COL_COUNT, ShadowTrans);
+	Build_Translucent_Table(colorpal, GamePalette, &ShadowCols[0], SHADOW_COL_COUNT, ShadowTrans);
+#ifdef FADING_WRITE
 	CCFileClass(Fading_Table_Name("SHADOW", theater)).Write(ShadowTrans, sizeof(ShadowTrans));
 #endif
+#endif
 
-#ifdef _RETRIEVE
+#ifndef FADING_GENERATE
 	CCFileClass(Fading_Table_Name("UNITS", theater)).Read(UnitShadow, sizeof(UnitShadow));
 #else
-	Conquer_Build_Translucent_Table(GamePalette, &UShadowCols[0], USHADOW_COL_COUNT, UnitShadow);
+	Conquer_Build_Translucent_Table(colorpal, GamePalette, &UShadowCols[0], USHADOW_COL_COUNT, UnitShadow);
+#ifdef FADING_WRITE
 	CCFileClass(Fading_Table_Name("UNITS", theater)).Write(UnitShadow, sizeof(UnitShadow));
 #endif
-
-#ifdef _RETRIEVE
-	CCFileClass(Fading_Table_Name("SHADE", theater)).Read(FadingShade, sizeof(FadingShade));
-#else
-	Conquer_Build_Fading_Table(GamePalette, FadingShade, BLACK, 150);
-	CCFileClass(Fading_Table_Name("SHADE", theater)).Write(FadingShade, sizeof(FadingShade));
 #endif
 
-#ifdef _RETRIEVE
+#ifndef FADING_GENERATE
+	CCFileClass(Fading_Table_Name("SHADE", theater)).Read(FadingShade, sizeof(FadingShade));
+#else
+	Conquer_Build_Fading_Table(colorpal, GamePalette, FadingShade, BLACK, 150);
+#ifdef FADING_WRITE
+	CCFileClass(Fading_Table_Name("SHADE", theater)).Write(FadingShade, sizeof(FadingShade));
+#endif
+#endif
+
+#ifndef FADING_GENERATE
 	CCFileClass(Fading_Table_Name("LIGHT", theater)).Read(FadingLight, sizeof(FadingLight));
 #else
-	Conquer_Build_Fading_Table(GamePalette, FadingLight, WHITE, 85);
+	Conquer_Build_Fading_Table(colorpal, GamePalette, FadingLight, WHITE, 85);
+#ifdef FADING_WRITE
 	CCFileClass(Fading_Table_Name("LIGHT", theater)).Write(FadingLight, sizeof(FadingLight));
+#endif
 #endif
 
 	/*
-	**	Create the shadow color used by aircraft.
+	**	Create the shadow color used by aircraft. All color indices get affected
+	**	by this filter, to create a ghost copy of the entire object.
 	*/
-	Conquer_Build_Fading_Table(GamePalette, &SpecialGhost[256], BLACK, 100);
+	Conquer_Build_Fading_Table(colorpal, GamePalette, &SpecialGhost[256], BLACK, 100);
 	for (int index = 0; index < 256; index++) {
 		SpecialGhost[index] = 0;
 	}
 
-	Build_Fading_Table(GamePalette, FadingBrighten, WHITE, 25);
+	Build_Fading_Table(colorpal, GamePalette, FadingBrighten, WHITE, 25);
 
 
-#ifndef _RETRIEVE
 	/*
 	**	Restore the palette since it was mangled while building the fading tables.
 	*/
+#ifdef OBSOLETE
+	// Re-reading the file while the original is still in OriginalPalette? Doesn't seem very useful. -Nyer
 	sprintf(fullname, "%s.PAL", Theaters[theater].Root);
 	ptr = MixFileClass::Retrieve(fullname);
 	Mem_Copy((void *)ptr, GamePalette, 768);
 	Mem_Copy(GamePalette, OriginalPalette, 768);
 #endif
+	// Not really necessary since Fixup_Palette will also rebuild it based on OriginalPalette.
+	Mem_Copy(OriginalPalette, GamePalette, 768);
 
 	/*
 	**	Adjust the palette according to the visual control option settings.

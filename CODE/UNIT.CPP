@@ -2199,17 +2199,24 @@ void UnitClass::Draw_It(int x, int y, WindowNumberType window)
 		**	If this unit has "piggy back" unit(s), then render it at the same time.
 		*/
 		if (*this == UNIT_HOVER && Is_Something_Attached()) {
-			TechnoClass * u = (TechnoClass *)Attached_Object();
-
+			// Nyerguds's C&C Patch Project v1.04
+			// Don't render more than 5 units or it overflows the positioning.
+			ObjectClass * ob = Attached_Object();
+			int maxpos = sizeof(StoppingCoordAbs) / sizeof(StoppingCoordAbs[0]);
 			int counter = 0;
 			for (;;) {
+				if (!ob || counter >= maxpos) break;
+				if (!ob->Is_Techno()) {
+					ob = ob->Next;
+					continue;
+				}
+				TechnoClass * u = (TechnoClass *)ob;
 				int x1,y1;
 
 				if (Map.Coord_To_Pixel(Coord_Add(Coord_Add(Coord, 0xFF80FF80L), StoppingCoordAbs[counter++]), x1, y1)) {
 					u->Draw_It(x1, y1, WINDOW_TACTICAL);
 				}
-				if (!u->Next) break;
-				u = (TechnoClass *)u->Next;
+				ob = ob->Next;
 			}
 		}
 	}

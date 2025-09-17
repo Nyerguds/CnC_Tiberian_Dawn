@@ -1831,8 +1831,10 @@ void FootClass::Death_Announcement(TechnoClass const * source) const
 		return;
 	}
 
-	if (!Options.IsDeathAnnounce && IsOwnedByPlayer) {
-		Speak(VOX_UNIT_LOST);
+	if (!Options.IsDeathAnnounce) {
+		if (IsOwnedByPlayer) {
+			Speak(VOX_UNIT_LOST);
+		}
 		return;
 	}
 	if (What_Am_I() == RTTI_INFANTRY && ((InfantryTypeClass const &)Class_Of()).IsCivilian && !((InfantryClass *)this)->IsTechnician) {

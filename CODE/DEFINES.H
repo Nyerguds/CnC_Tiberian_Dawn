@@ -1568,11 +1568,12 @@ inline AnimType operator++(AnimType &, int);
 */
 typedef enum TransType {
 	TRANS_NONE = -1, // No translucency.
-	TRANS_ANIM, // Default animation translucency. (15-14-13-12 are increasingly darker) (32-39 are bright fades, but with errors on pure white and water)
-	TRANS_WHITE, // White flash translucency. (2 is translucent white) (errors on pure white and water)
-	TRANS_MOUSE, // Mouse translucency. (12-13-14-15 fade towards the black/dark grey/light grey/white colours) (white has errors on pure white and water)
-	TRANS_UNITS, // Unit shadow translucency. (4 is shadow)
-	TRANS_GHOST, // Special "ghost" table. Maps the entire sprite to its table. Unsure if really used.
+	TRANS_ANIM,   // Default animation translucency. (15-14-13-12 are increasingly darker) (32-39 are bright fades, but with errors on pure white and water)
+	TRANS_WHITE,  // White flash translucency. (2 is translucent white) (errors on pure white and water)
+	TRANS_MOUSE,  // Mouse translucency. (12-13-14-15 fade towards the black/dark grey/light grey/white colours) (white has errors on pure white and water)
+	TRANS_SMOKE,  // Smoke translucency.
+	TRANS_UNITS,  // Unit shadow translucency. (4 is shadow)
+	TRANS_GHOST,  // Special "ghost" table. Maps the entire sprite to its table. Unsure if really used.
 	TRANS_SHADOW, // Fade to black around map shroud. (16 and 15 are increasingly darker shades. 14 and 13 are practically completely black.)
 	TRANS_COUNT,
 	TRANS_FIRST=0
@@ -1895,13 +1896,27 @@ typedef enum ArmorType {
 } ArmorType;
 
 
+/*
+**	Define "FADING_GENERATE" if the palette morphing tables are part of the loaded data. If this
+**	is undefined, then the tables will be generated and the files will be created.
+*/
+//#define	FADING_GENERATE
+
+/*
+**	If "FADING_GENERATE" is defined, and tables are generated on-the-fly, define "FADING_WRITE"
+**	to write the generated tables to disk.
+*/
+//#define	FADING_WRITE
+
+
 /**********************************************************************
 **	Working MCGA colors that give a pleasing effect for beveled edges and
 **	other purposes.
 */
-#define	MAGIC_COL_COUNT	12		// Translucent color count.
-#define	SHADOW_COL_COUNT	4		// Terrain shroud translucent color count.
-#define	USHADOW_COL_COUNT	1		// Unit shadow special ghost colors.
+#define	MAGIC_COL_COUNT	  12		// Translucent color count.
+#define	SHADOW_COL_COUNT   4		// Terrain shroud translucent color count.
+#define	USHADOW_COL_COUNT  1		// Unit shadow special ghost colors.
+#define	SMOKE_COL_COUNT    4		// Smoke translucency colors.
 
 
 /**********************************************************************

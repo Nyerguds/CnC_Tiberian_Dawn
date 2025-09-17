@@ -359,7 +359,11 @@ long Translucent_Table_Size(int count)
  *    affect only alters the background color toward a single destination                      *
  *    color.                                                                                   *
  *                                                                                             *
- * INPUT:   palette  -- Pointer to the control palette.                                        *
+ * INPUT:   sourcepal  -- Pointer to the 768 byte IBM palette to base the colors on.           *
+ *                                                                                             *
+ *          targetpal  -- Pointer to the 768 byte IBM palette to look up the colors to         *
+ *                        fade towards. This is often edited to exclude certain indices        *
+ *                        from being remapped.                                                 *
  *                                                                                             *
  *          control  -- Pointer to array of structures that control how                        *
  *                      the translucent table will be built.                                   *
@@ -377,12 +381,12 @@ long Translucent_Table_Size(int count)
  * HISTORY:                                                                                    *
  *   04/02/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-void *Build_Translucent_Table(void const *palette, TLucentType const *control, int count, void *buffer)
+void *Build_Translucent_Table(void const *sourcepal, void const *targetpal, TLucentType const *control, int count, void *buffer)
 {
 	unsigned char	const *table;		// Remap table pointer.
 	int			index;		// Working color index.
 
-	if (count && control && palette) {
+	if (count && control && sourcepal && targetpal) {
 		if (!buffer) {
 			buffer = new char [Translucent_Table_Size(count)];
 		}
@@ -396,7 +400,7 @@ void *Build_Translucent_Table(void const *palette, TLucentType const *control, i
 			*/
 			for (index = 0; index < count; index++) {
 				((unsigned char*)buffer)[control[index].SourceColor] = index;
-				Build_Fading_Table(palette, (void*)table, control[index].DestColor, control[index].Fading);
+				Build_Fading_Table(sourcepal, targetpal, (void*)table, control[index].DestColor, control[index].Fading);
 				table = (unsigned char*)Add_Long_To_Pointer((void*)table, 256);
 			}
 		}
@@ -413,7 +417,11 @@ void *Build_Translucent_Table(void const *palette, TLucentType const *control, i
  *    This means that a shape can be overlapped any number of times and the imagery will       *
  *    remain deterministic (and constant).                                                     *
  *                                                                                             *
- * INPUT:   palette  -- Pointer to the palette to base the translucent process on.             *
+ * INPUT:   sourcepal  -- Pointer to the 768 byte IBM palette to base the colors on.           *
+ *                                                                                             *
+ *          targetpal  -- Pointer to the 768 byte IBM palette to look up the colors to         *
+ *                        fade towards. This is often edited to exclude certain indices        *
+ *                        from being remapped.                                                 *
  *                                                                                             *
  *          control  -- Pointer to special control structure that specifies the                *
  *                      target color, and percentage of fade.                                  *
@@ -431,12 +439,12 @@ void *Build_Translucent_Table(void const *palette, TLucentType const *control, i
  * HISTORY:                                                                                    *
  *   06/27/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-void *Conquer_Build_Translucent_Table(void const *palette, TLucentType const *control, int count, void *buffer)
+void *Conquer_Build_Translucent_Table(void const *sourcepal, void const *targetpal, TLucentType const *control, int count, void *buffer)
 {
 	unsigned char	const *table;		// Remap table pointer.
 	int			index;		// Working color index.
 
-	if (count && control && palette) {
+	if (count && control && sourcepal && targetpal) {
 		if (!buffer) {
 			buffer = new char [Translucent_Table_Size(count)];
 		}
@@ -450,7 +458,7 @@ void *Conquer_Build_Translucent_Table(void const *palette, TLucentType const *co
 			*/
 			for (index = 0; index < count; index++) {
 				((unsigned char*)buffer)[control[index].SourceColor] = index;
-				Conquer_Build_Fading_Table(palette, (void*)table, control[index].DestColor, control[index].Fading);
+				Conquer_Build_Fading_Table(sourcepal, targetpal, (void*)table, control[index].DestColor, control[index].Fading);
 				table = (unsigned char*)Add_Long_To_Pointer((void*)table, 256);
 			}
 		}
@@ -459,3 +467,146 @@ void *Conquer_Build_Translucent_Table(void const *palette, TLucentType const *co
 }
 
 
+/***********************************************************************************************
+ * Build_Fading_Table -- General purpose function for building fading tables.                  *
+ *                                                                                             *
+ *    This routine will create the fading effect table used to coerce colors                   *
+ *    toward a common value.  These tables are used when translucent effects                   *
+ *    are needed.                                                                              *
+ *                                                                                             *
+ * INPUT:   sourcepal  -- Pointer to the 768 byte IBM palette to base the colors on.           *
+ *                                                                                             *
+ *          targetpal  -- Pointer to the 768 byte IBM palette to look up the colors to         *
+ *                        fade towards. This is often edited to exclude certain indices        *
+ *                        from being remapped.                                                 *
+ *                                                                                             *
+ *          dest       -- Pointer to the 256 byte remap table.                                 *
+ *                                                                                             *
+ *          color      -- Color index of the color to "fade to".                               *
+ *                                                                                             *
+ *          frac       -- The fraction to fade to the specified color                          *
+ *                                                                                             *
+ *          rangestart -- Start of the range on "targetpal" that should be used to find        *
+ *                        valid target colors.                                                 *
+ *                                                                                             *
+ *          rangecount -- Amount of colors starting from "rangestart" on "targetpal" to        *
+ *                        use as valid target colors.                                          *
+ *                                                                                             *
+ *          freezerange -- If true, the indices inside the defined range will be ignored       *
+ *                         by the remapping process, and will always map to themselves.        *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the translucent table data.                              *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+;*   10/07/1992 JLB : Created.                                                                 *
+ *   09/17/2025 MM  : Translated from asm and unified with Conquer_Build_Fading_Table.         *
+ *=============================================================================================*/
+void *Build_Fading_Table(void const *sourcepal, void const *targetpal, void *dest, long color, long frac, int rangestart, int rangecount, bool freezerange)
+{
+	// Nyerguds's C&C Patch Project v1.04
+	// Fixes in translucent table generation
+	unsigned char *trgpal = (unsigned char *)targetpal;
+	unsigned char *srcpal = (unsigned char *)sourcepal;
+	unsigned char *table = (unsigned char *)dest;
+
+	// Input checks
+	if (srcpal == NULL || trgpal == NULL || dest == NULL
+			|| frac < 0 || frac > 0x100
+			|| rangestart < 0 || rangecount > 256 || rangestart + rangecount > 256) {
+		// Clear and leave.
+		for (int index = 1; index < 256; ++index) {
+			table[index] = index;
+		}
+		return(dest);
+	}
+
+	// Target RGB
+	int targetred = srcpal[color * 3 + 0];
+	int targetgreen = srcpal[color * 3 + 1];
+	int targetblue = srcpal[color * 3 + 2];
+
+	// Transparent black always maps to itself
+	table[0] = 0;
+
+	int rangeend = MIN(256, rangestart + rangecount);
+
+	// Main loop: each palette entry 1..255
+	for (int index = 1; index < 256; ++index)
+	{
+		// Shadow does not remap onto itself.
+		if (freezerange && index >= rangestart && index < rangeend) {
+		 table[index] = index;
+		 continue;
+		}
+
+		int origred = srcpal[index * 3 + 0];
+		int origgreen = srcpal[index * 3 + 1];
+		int origblue = srcpal[index * 3 + 2];
+
+		int idealred = MIN(255, MAX(0, (origred - (int)(((origred - targetred) * frac) >> 8))));
+		int idealgreen = MIN(255, MAX(0, (origgreen - (int)(((origgreen - targetgreen) * frac) >> 8))));
+		int idealblue = MIN(255, MAX(0, (origblue - (int)(((origblue - targetblue) * frac) >> 8))));
+
+		// Default: map to the fade target
+		unsigned char matchcolor = (unsigned char)color;
+		long matchvalue = LONG_MAX;
+
+		// Find closest palette entry
+		for (int i = rangestart; i < rangeend; ++i)
+		{
+			// DO NOT skip index itself; this bug caused pure white to become blue.
+			//if (i == index)
+			//	continue;
+
+			int dr = trgpal[i * 3 + 0] - idealred;
+			int dg = trgpal[i * 3 + 1] - idealgreen;
+			int db = trgpal[i * 3 + 2] - idealblue;
+
+			int dist = dr * dr + dg * dg + db * db;
+
+			if (dist < matchvalue)
+			{
+				matchvalue = dist;
+				matchcolor = (unsigned char)i;
+				if (dist == 0)
+					break; // perfect match
+			}
+		}
+		table[index] = matchcolor;
+	}
+
+	return(dest);
+}
+
+/***********************************************************************************************
+ * Conquer_Build_Fading_Table -- Builds custom shadow/light fading table.                      *
+ *                                                                                             *
+ *    This routine is used to build a special fading table for C&C.  There are certain         *
+ *    colors that get faded to and cannot be faded again.  With this rule, it is possible      *
+ *    to draw a shadow multiple times and not have it get any lighter or darker.               *
+ *                                                                                             *
+ * INPUT:   sourcepal  -- Pointer to the 768 byte IBM palette to base the colors on.           *
+ *                                                                                             *
+ *          targetpal  -- Pointer to the 768 byte IBM palette to look up the colors to         *
+ *                        fade towards. This is often edited to exclude certain indices        *
+ *                        from being remapped.                                                 *
+ *                                                                                             *
+ *          dest       -- Pointer to the 256 byte remap table.                                 *
+ *                                                                                             *
+ *          color      -- Color index of the color to "fade to".                               *
+ *                                                                                             *
+ *          frac       -- The fraction to fade to the specified color                          *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the translucent table data.                              *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+;*   10/07/1992 JLB : Created.                                                                 *
+ *   09/17/2025 MM  : Unified with Build_Fading_Table.                                         *
+ *=============================================================================================*/
+void *Conquer_Build_Fading_Table(void const *sourcepal, void const *targetpal, void *dest, int color, int frac) {
+	return Build_Fading_Table(sourcepal, targetpal, dest, color, frac, 240, 15, true);
+}

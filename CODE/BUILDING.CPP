@@ -4645,29 +4645,29 @@ void BuildingClass::Death_Announcement(TechnoClass const * ) const
 		return;
 	}
 	if (!Options.IsDeathAnnounce) {
-		if (House == PlayerPtr) {
+		if (IsOwnedByPlayer) {
 			Speak(VOX_STRUCTURE_LOST);
 		}
+		return;
+	}
+	bool enemy = !PlayerPtr->Is_Ally(this);
+	if (enemy && GameToPlay != GAME_NORMAL) {
+		Speak(VOX_ENEMY_STRUCTURE);
 	} else {
-		bool enemy = !PlayerPtr->Is_Ally(this);
-		if (enemy && GameToPlay != GAME_NORMAL) {
-			Speak(VOX_ENEMY_STRUCTURE);
-		} else {
-			switch (House->ActLike) {
-				case HOUSE_GOOD:
-					Speak(VOX_GDI_STRUCTURE);
-					break;
+		switch (House->ActLike) {
+			case HOUSE_GOOD:
+				Speak(VOX_GDI_STRUCTURE);
+				break;
 
-				case HOUSE_BAD:
-					Speak(VOX_NOD_STRUCTURE);
-					break;
+			case HOUSE_BAD:
+				Speak(VOX_NOD_STRUCTURE);
+				break;
 
-				default:
-					if (enemy) {
-						Speak(VOX_ENEMY_STRUCTURE);
-					}
-					break;
-			}
+			default:
+				if (enemy) {
+					Speak(VOX_ENEMY_STRUCTURE);
+				}
+				break;
 		}
 	}
 }

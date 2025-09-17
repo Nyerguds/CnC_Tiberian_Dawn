@@ -502,8 +502,10 @@ void * Load_Alloc_Data(FileClass &file);
 void * Load_Alloc_Data_Size(FileClass &file, long *filesize);
 long Load_Uncompress(FileClass &file, BuffType &uncomp_buff, BuffType &dest_buff, void *reserved_data);
 long Translucent_Table_Size(int count);
-void *Build_Translucent_Table(void const *palette, TLucentType const *control, int count, void *buffer);
-void *Conquer_Build_Translucent_Table(void const *palette, TLucentType const *control, int count, void *buffer);
+void *Build_Translucent_Table(void const *sourcepal, void const *targetpal, TLucentType const *control, int count, void *buffer);
+void *Conquer_Build_Translucent_Table(void const *sourcepal, void const *targetpal, TLucentType const *control, int count, void *buffer);
+void *Build_Fading_Table(void const *sourcepal, void const *targetpal, void *dest, long color, long frac, int rangestart = 1, int rangecount = 255, bool freezerange = false);
+void *Conquer_Build_Fading_Table(void const *sourcepal, void const *targetpal, void *dest, int color, int frac);
 
 /*
 **	KEYFBUFF.ASM

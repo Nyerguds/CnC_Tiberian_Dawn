@@ -111,12 +111,13 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * The map number in multiplayer will no longer affect logic regarding difficulty and tooltips that is only meant for singleplayer.
 * Fixed the fact the chance of an AI selling a building was affected by the mission number in Covert Ops missions. It is now affected by the set build level, capped at 20.
 * Oil Derricks that are preplaced on the map as damaged below 50% will now also get the flame spout animation.
-* The Oil Derrick's flame spout animation now properly overlaps vehicles objects next to it.
+* The Oil Derrick's flame spout animation now properly overlaps objects next to it.
 * The Oil Derrick and Flare animations are now truly endless, rather than stopping after 255 loops.
 * Fixed the bug that the special GDI ending unlock status would re-lock if another building was destroyed after the Temple, and would linger in memory when starting or loading another mission.
 * Fixed the special GDI ending unlock status not getting saved in savegames.
 * Fixed the bombing target in GDI mission 6 not getting saved in savegames.
 * Infantry code to look for nearby targets no longer reads outside the valid weapons array when checking weapon info for unarmed units.
+* [Remaster] Units without weapons that somehow try to attack things will now be completely blocked from firing, instead of attacking with a weapon composed of junk data.
 * The presence of civilian building V21 (Abdul's House) can no longer cause C17 delivery planes to stay on the map indefinitely if no airstrips were found.
 * When Aircraft return to base due to lack of ammo, they will no longer face towards their last target.
 * Fixed the bug allowing selling units from the sell cursor shown when hovering over a wall.
@@ -165,7 +166,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * For the purpose of checking build prerequisites, owning an Advanced Communication Center will now act as if you own a normal Communications Center.
 * The Advanced Communications Center can now detect stealth units, since its non-advanced variant can do that too.
 * Build levels can now be customized in the campaign missions.
-* The "New Missions" menu only shows mission variants with the EA suffix, but these missions will now attempt to continue to other variants to act as campaign up to 15 missions.10/Sep/2025 23:1910/Sep/2025 23:19 The order is EA/EB/EC/ED/EE, WA/WB/WC/WD/WE, XA/XB/XC/XD/XE.
+* The "New Missions" menu only shows mission variants with the EA suffix, but these missions will now attempt to continue to other variants to act as campaign up to 15 missions. The order is EA/EB/EC/ED/EE, WA/WB/WC/WD/WE, XA/XB/XC/XD/XE.
 * Added "RemoveBuildExceptions" option for missions, to remove all singleplayer-specific build rules.
 * Fixed double-firing on aircraft getting disrupted by other orders, causing the aircraft to always fire per single shot.
 * Fixed Mammoth Tank showing its muzzle flashes on the wrong barrel.
@@ -184,7 +185,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Enabled translucent colors on rocket exhaust smoke puff, so they can be enhanced to semitransparent smoke.
 * Enabled translucent colors on the SAM Site launch smoke animations, so the hard-baked Nod colours on the animation can be fixed.
 * Fixed misalignment on SAM Site launch smoke animations.
-* Added ini option to disable the grenade throw sound.
+* The grenade throw sound can now be disabled by enabling the option "NoGrenadeToss=true" in conquer.ini, under \[Patch\].
 * Fixed the issue where capturing tiberium storage would try to transfer the contained tiberium to the player before the storage capacity itself was added to the player's storage pool, often resulting in an unintuitive loss of the captured money.
 * When selling a building, the infantry will now always come out of an actual cell that was part of the building.
 * Selling an APC or transport helicopter on the Repair Bay will no longer make the passengers vanish; they will get dumped out and walk off the platform. This also removes an exploit allowing mission-critical infantry to be removed without the game noticing their disappearance.
@@ -202,5 +203,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Construction no longer starts as "On Hold" if no money is available.
 * Construction in "On Hold" status can now be told to continue even if the player currently has no money.
 * Impatient clicks while lacking money will now make EVA explain to players the basic principle that they cannot construct things if they are broke.
-* Clicking to repair a building while lacking money will now make EVA explain to players the basic principle that they cannot repair things if they are broke.
+* Clicking to repair a building while lacking money will now make EVA explain to players the basic principle that they cannot repair things if they are broke. Note that the "NoRepairAnnounce" ini option disables this.
 * If you own a refinery, losing your last harvester will now give a "Need Harvester" announcement instead of the usual "Unit Lost".
+* The game now generates translucent effects in memory, rather than reading them from .MRF files. This allowed several minor bugs in the translucency effects to be corrected.
+* Restricted the amount of units rendered on a Hovercraft to five, to avoid the game using out-of-bounds program data to determine the locations for further units.

@@ -1,5 +1,5 @@
 /*
-**	Command & Conquer Red Alert(tm)
+**	Command & Conquer(tm)
 **	Copyright 2025 Electronic Arts Inc.
 **
 **	This program is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@
  *-------------------------------------------------------------------------*
  * Functions:                                                              *
  *   Add_Long_To_Pointer -- Pointer arithmatic when pointer could be XMS.  *
- *   Find_Argv -- Checks to see if string is in arguement              		*
+ *   Find_Argv -- Checks to see if string is in arguement                  *
  *   Mono_Mem_Dump -- Dumps memory to mono monitor with hex and char.      *
  *   Convert_HSV_To_RGB -- Converts HSV cordinates to RGB values           *
  *   Convert_RGB_To_HSV -- Converts RGB to RSV coordinates.                *
@@ -53,8 +53,8 @@
 /***************************************************************************
  * Divide_With_Round -- Divides integers and round to nearest integer.     *
  *                                                                         *
- * INPUT:         int numberator.                                         *
- *                int denominator.                                        *
+ * INPUT:         int num -- numerator.                                    *
+ *                int den -- denominator.                                  *
  *                                                                         *
  * OUTPUT:        Returns value rounded.                                   *
  *                                                                         *
@@ -69,27 +69,27 @@ static unsigned Divide_With_Round(unsigned num, unsigned den)
 	return( (num / den) + (unsigned)((num % den) >= ((den + 1) >> 1)) );
 }
 
-#define HSV_BASE 255 // This is used to get a little better persion on HSV conversion.
+#define HSV_BASE 255 // This is used to get a little better precision on HSV conversion.
 #define RGB_BASE 63  // Not 64, this is really the max value.
 
 
 /***************************************************************************
  * Convert_RGB_To_HSV -- Converts RGB to RSV coordinates.                  *
  *                                                                         *
- * INPUT:      int r,g, and b values.                                     *
- *             int *h, *s, and *v pointers.                              	*
+ * INPUT:      int r,g, and b values.                                      *
+ *             int *h, *s, and *v pointers.                                *
  *                                                                         *
  * OUTPUT:     Assigns values to *h, *s, and *v.                           *
  *                                                                         *
- * WARNINGS:   The reason we use a different base for HSV then RGB is      *
- *             because we loose alot of persision by not using floating    *
+ * WARNINGS:   The reason we use a different base for HSV than RGB is      *
+ *             because we lose a lot of precision by not using floating    *
  *             point.  Using the same base value (63) made it so that      *
  *             about 50% of the time one RGB value would be one different  *
- *             then the original if you went from RGB to HSV to RGB.       *
- *             Using 255 drop it down to about 9% of the time we get an    *
+ *             than the original if you went from RGB to HSV to RGB.       *
+ *             Using 255 drops it down to about 9% of the time we get an   *
  *             off value.  To get it perfect, we would have to make the    *
  *             HSV base larger - but then you need to do all calculations  *
- *             in long instead of unsigned int.                                   *
+ *             in long instead of unsigned int.                            *
  * HISTORY:                                                                *
  *   02/11/1992  SB : Created.                                             *
  *=========================================================================*/
@@ -160,8 +160,8 @@ void Convert_RGB_To_HSV(unsigned int r, unsigned int g, unsigned int b, unsigned
 /***************************************************************************
  * Convert_HSV_To_RGB -- Converts HSV cordinates to RGB values             *
  *                                                                         *
- * INPUT:      int h,s, and v coordinates                                 *
- *             int *r, *g, and *b pointers.                              	*
+ * INPUT:      int h,s, and v coordinates                                  *
+ *             int *r, *g, and *b pointers.                                *
  *                                                                         *
  * OUTPUT:     Assigns values to *r, *g, and *b.                           *
  *                                                                         *

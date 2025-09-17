@@ -120,6 +120,7 @@ class DisplayClass: public MapClass
 		static unsigned char TranslucentTable[(MAGIC_COL_COUNT+1)*256];
 		static unsigned char WhiteTranslucentTable[(1+1)*256];
 		static unsigned char MouseTranslucentTable[(4+1)*256];
+		static unsigned char SmokeTranslucentTable[(SMOKE_COL_COUNT+1)*256];
 		static void const *TransIconset;
 		static unsigned char UnitShadow[(USHADOW_COL_COUNT+1)*256];
 		static unsigned char SpecialGhost[2*256];

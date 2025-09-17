@@ -78,13 +78,6 @@
 
 #include	"function.h"
 
-/*
-**	Define "_RETRIEVE" if the palette morphing tables are part of the loaded data. If this
-**	is undefined, then the files will be created.
-*/
-#define	_RETRIEVE
-
-
 /***************************************************************************
 **	This holds the translucent table for use with the construction clock
 **	animation.
@@ -1289,25 +1282,41 @@ void SidebarClass::StripClass::Init_Theater(TheaterType theater)
 			SpecialShapes[lp] = cameo_ptr;
 		}
 
-
-#ifndef _RETRIEVE
+#ifdef FADING_GENERATE
 		static TLucentType const ClockCols[1] = {
 //			{LTGREEN, BLACK, 0, 0},
 			{GREEN, LTGREY, 180, 0}
 		};
+		// Retrieve original palette from backup.
+		unsigned char targetpal[768];
+		Mem_Copy(OriginalPalette, targetpal, sizeof(targetpal));
+		/*
+		**	Treat all animated water colors as the same color.
+		**	DO NOT USE GamePalette: it might have hue/sat/lum adjustments at this point!
+		*/
+		unsigned char colorpal[768];
+		Mem_Copy(OriginalPalette, colorpal, sizeof(colorpal));
+		unsigned char cyclered = colorpal[CYCLE_COLOR_START*3 + 0];
+		unsigned char cyclegrn = colorpal[CYCLE_COLOR_START*3 + 1];
+		unsigned char cycleblu = colorpal[CYCLE_COLOR_START*3 + 2];
+		int cycleend = CYCLE_COLOR_START + CYCLE_COLOR_COUNT;
+		for (int col = CYCLE_COLOR_START; col < cycleend; ++col){
+			colorpal[col*3 + 0] = cyclered;
+			colorpal[col*3 + 1] = cyclegrn;
+			colorpal[col*3 + 2] = cycleblu;
+		}
 
 		/*
 		**	Make sure that remapping doesn't occur on the colors that cycle.
 		*/
-		Mem_Copy(GamePalette, OriginalPalette, 768);
-		memset(&GamePalette[CYCLE_COLOR_START*3], 0x3f, CYCLE_COLOR_COUNT*3);
-
+		memset(&targetpal[CYCLE_COLOR_START*3], 0x3f, CYCLE_COLOR_COUNT*3);
 		/*
 		**	Create the translucent table used for the sidebar.
 		*/
-		Build_Translucent_Table(GamePalette, &ClockCols[0], 1, (void*)ClockTranslucentTable);
+		Build_Translucent_Table(colorpal, targetpal, &ClockCols[0], 1, (void*)ClockTranslucentTable);
+#ifdef FADING_WRITE
 		CCFileClass(Fading_Table_Name("CLOCK", theater)).Write(ClockTranslucentTable, sizeof(ClockTranslucentTable));
-		Mem_Copy(OriginalPalette, GamePalette, 768);
+#endif
 #else
 		CCFileClass(Fading_Table_Name("CLOCK", theater)).Read(ClockTranslucentTable, sizeof(ClockTranslucentTable));
 #endif
