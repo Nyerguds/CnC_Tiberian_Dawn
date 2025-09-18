@@ -1197,19 +1197,31 @@ void ScoreClass::Do_Nod_Buildings_Graph(void)
 		WWMouse->Erase_Mouse(&HidPage, TRUE);
 		//Interpolate_2X_Scale( PseudoSeenBuff , &SeenBuff , NULL);
 
-		if (!Check_Key()) Call_Back_Delay(1);
+		if (!Check_Key()) {
+			Call_Back_Delay(1);
+		} else if (!ControlQ) {
+			KeyNumType keypress = (Keyboard::Check() & (~KN_SHIFT_BIT));
+			if (keypress && KN_ESC) {
+				ControlQ = 1;
+			}
+		}
 	}
 
-	i = MAX(GBKilled, NBKilled);
-	i = MAX(i, CBKilled);
+	int killed = MAX(GBKilled, NBKilled);
+	killed = MAX(killed, CBKilled);
 
-	for (int q = 0; q <= i; q++) {
+	for (int q = 0; q <= killed; q++) {
 		Count_Up_Print( "%d", q, GBKilled,BUILDING_X + 8,BUILDING_Y     );
 		Count_Up_Print( "%d", q, NBKilled,BUILDING_X + 8,BUILDING_Y + 12);
 		Count_Up_Print( "%d", q, CBKilled,BUILDING_X + 8,BUILDING_Y + 24);
 		if (!Check_Key()) {
 			Play_Sample(Beepy6, 255, Options.Normalize_Sound(110));
 			Call_Back_Delay(1);
+		} else if (!ControlQ) {
+			KeyNumType keypress = (Keyboard::Check() & (~KN_SHIFT_BIT));
+			if (keypress && KN_ESC) {
+				ControlQ = 1;
+			}
 		}
 	}
 }
@@ -1267,11 +1279,17 @@ void ScoreClass::Do_GDI_Graph(void const * yellowptr, void const * redptr, int g
 		if (!Check_Key()) {
 			Play_Sample(Beepy6, 255, Options.Normalize_Sound(110));
 			Call_Back_Delay(2);
+		} else if (!ControlQ && (Keyboard::Check() & (~KN_SHIFT_BIT)) == KN_ESC) {
+			ControlQ = 1;
 		}
 	}
 	CC_Draw_Shape(yellowptr,gdikilled, 172,ypos   , WINDOW_MAIN,SHAPE_WIN_REL, 0, 0);
 	Count_Up_Print("%d", gkilled, gkilled, 297, ypos+ 2);
-	if (!Check_Key()) Call_Back_Delay(40);
+	if (!Check_Key()) {
+		Call_Back_Delay(40);
+	} else if (!ControlQ && (Keyboard::Check() & (~KN_SHIFT_BIT)) == KN_ESC) {
+		ControlQ = 1;
+	}
 
 	BlitList.Add (2* 297, 2* (ypos+14), 2* 297, 2* (ypos+14), 5*12 , 12);
 	for (i = 1; i <= nodkilled; i++) {
@@ -1285,6 +1303,8 @@ void ScoreClass::Do_GDI_Graph(void const * yellowptr, void const * redptr, int g
 		if (!Check_Key()) {
 			Play_Sample(Beepy6, 255, Options.Normalize_Sound(110));
 			Call_Back_Delay(2);
+		} else if (!ControlQ && (Keyboard::Check() & (~KN_SHIFT_BIT)) == KN_ESC) {
+			ControlQ = 1;
 		}
 	}
 
@@ -1295,7 +1315,11 @@ void ScoreClass::Do_GDI_Graph(void const * yellowptr, void const * redptr, int g
 	*/
 	CC_Draw_Shape(   redptr,nodkilled, 172,ypos+12, WINDOW_MAIN,SHAPE_WIN_REL, 0, 0);
 	Count_Up_Print("%d", nkilled, nkilled, 297, ypos+14);
-	if (!Check_Key()) Call_Back_Delay(40);
+	if (!Check_Key()) {
+		Call_Back_Delay(40);
+	} else if (!ControlQ && (Keyboard::Check() & (~KN_SHIFT_BIT)) == KN_ESC) {
+		ControlQ = 1;
+	}
 }
 
 
@@ -1388,12 +1412,20 @@ void ScoreClass::Do_Nod_Casualties_Graph(void)
 			Count_Up_Print("%d", (i*GKilled) / max, GKilled, SCORETEXT_X+64, CASUALTY_Y +  2);
 			Count_Up_Print("%d", (i*NKilled) / max, NKilled, SCORETEXT_X+64, CASUALTY_Y + 14);
 			Count_Up_Print("%d", (i*CKilled) / max, CKilled, SCORETEXT_X+64, CASUALTY_Y + 26);
-			if (!Check_Key()) Call_Back_Delay(3);
+			if (!Check_Key()) {
+				Call_Back_Delay(3);
+			} else if (!ControlQ && (Keyboard::Check() & (~KN_SHIFT_BIT)) == KN_ESC) {
+				ControlQ = 1;
+			}
 		}
 		Play_Sample(Beepy6, 255, Options.Normalize_Sound(110));
 	}
-	if (Check_Key()) Keyboard::Clear();
-
+	if (Check_Key()) {
+		 if (!ControlQ && (Keyboard::Check() & (~KN_SHIFT_BIT)) == KN_ESC) {
+				ControlQ = 1;
+			}
+			Keyboard::Clear();
+	}
 	/*
 	** Make sure accurate count is printed at end
 	*/
@@ -1461,6 +1493,9 @@ void ScoreClass::Show_Credits(int house, char const pal[])
 		Count_Up_Print("%d", i, PlayerPtr->Available_Money(), _credpx[house], _credpy[house]);
 		Call_Back_Delay(2);
 		if (!skipping && (Check_Key() || ControlQ)) {
+			 if (!ControlQ && (Keyboard::Check() & (~KN_SHIFT_BIT)) == KN_ESC) {
+				ControlQ = 1;
+			}
 			skipping = true;
 			i=PlayerPtr->Available_Money() - 5;
 			Keyboard::Clear();
@@ -1859,7 +1894,9 @@ void Draw_Bar_Graphs(int i, int gkilled, int nkilled, int ckilled)
  *                                                                         *
  *    This is just to cut down on code size and typing a little.           *
  *                                                                         *
- * INPUT:                                                                  *
+ * INPUT:   time:      amount of time to delay.                            *
+ *          clickskip: true if in addition to the ESC key, mouse clicks    *
+ *                     also activate the skip logic.                       *
  *                                                                         *
  * OUTPUT:                                                                 *
  *                                                                         *
@@ -1868,13 +1905,13 @@ void Draw_Bar_Graphs(int i, int gkilled, int nkilled, int ckilled)
  * HISTORY:                                                                *
  *   04/13/1995 BWG : Created.                                             *
  *=========================================================================*/
-void Call_Back_Delay(int time)
+void Call_Back_Delay(int time, bool clickskip)
 {
 	CountDownTimerClass cd;
 
-	KeyNumType keypress = Keyboard::Check();
+	KeyNumType keypress = (Keyboard::Check() & (~KN_SHIFT_BIT));
 	if (keypress) {
-		if (!ControlQ && keypress == KN_ESC) {
+		if (!ControlQ && (keypress == KN_ESC || (clickskip && (keypress == KN_LMOUSE || keypress == KN_RMOUSE)))) {
 			ControlQ = 1;
 		}
 		Keyboard::Clear();
@@ -1892,9 +1929,9 @@ void Call_Back_Delay(int time)
 		//	Interpolate_2X_Scale(PseudoSeenBuff , &SeenBuff ,NULL);
 			//BlitList.Update();
 		//}else{
-		keypress = Keyboard::Check();
+		keypress = (Keyboard::Check() & (~KN_SHIFT_BIT));
 		if (keypress) {
-			if (!ControlQ && keypress == KN_ESC) {
+		if (!ControlQ && (keypress == KN_ESC || (clickskip && (keypress == KN_LMOUSE || keypress == KN_RMOUSE)))) {
 				ControlQ = 1;
 				cd.Set(0);
 			}

@@ -137,7 +137,7 @@ static AnimTypeClass const SAMN(
 	"SAMFIRE",								// Data name of animation.
 	55,										// Maximum dimension of animation.
 	4,											// Biggest animation stage.
-	TRANS_MOUSE,						// Translucency for this animation?
+	TRANS_SMOKE,						// Translucency for this animation?
 	false,									// Normalized animation rate?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
@@ -160,7 +160,7 @@ static AnimTypeClass const SAMNW(
 	"SAMFIRE",								// Data name of animation.
 	55,										// Maximum dimension of animation.
 	22,										// Biggest animation stage.
-	TRANS_MOUSE,						// Translucency for this animation?
+	TRANS_SMOKE,						// Translucency for this animation?
 	false,									// Normalized animation rate?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
@@ -183,7 +183,7 @@ static AnimTypeClass const SAMW(
 	"SAMFIRE",								// Data name of animation.
 	55,										// Maximum dimension of animation.
 	40,										// Biggest animation stage.
-	TRANS_MOUSE,						// Translucency for this animation?
+	TRANS_SMOKE,						// Translucency for this animation?
 	false,									// Normalized animation rate?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
@@ -206,7 +206,7 @@ static AnimTypeClass const SAMSW(
 	"SAMFIRE",								// Data name of animation.
 	55,										// Maximum dimension of animation.
 	58,										// Biggest animation stage.
-	TRANS_MOUSE,						// Translucency for this animation?
+	TRANS_SMOKE,						// Translucency for this animation?
 	false,									// Normalized animation rate?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
@@ -229,7 +229,7 @@ static AnimTypeClass const SAMS(
 	"SAMFIRE",								// Data name of animation.
 	55,										// Maximum dimension of animation.
 	76,										// Biggest animation stage.
-	TRANS_MOUSE,						// Translucency for this animation?
+	TRANS_SMOKE,						// Translucency for this animation?
 	false,									// Normalized animation rate?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
@@ -252,7 +252,7 @@ static AnimTypeClass const SAMSE(
 	"SAMFIRE",								// Data name of animation.
 	55,										// Maximum dimension of animation.
 	94,										// Biggest animation stage.
-	TRANS_MOUSE,						// Translucency for this animation?
+	TRANS_SMOKE,						// Translucency for this animation?
 	false,									// Normalized animation rate?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
@@ -275,7 +275,7 @@ static AnimTypeClass const SAME(
 	"SAMFIRE",								// Data name of animation.
 	55,										// Maximum dimension of animation.
 	112,										// Biggest animation stage.
-	TRANS_MOUSE,						// Translucency for this animation?
+	TRANS_SMOKE,						// Translucency for this animation?
 	false,									// Normalized animation rate?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
@@ -298,7 +298,7 @@ static AnimTypeClass const SAMNE(
 	"SAMFIRE",								// Data name of animation.
 	55,										// Maximum dimension of animation.
 	130,										// Biggest animation stage.
-	TRANS_MOUSE,						// Translucency for this animation?
+	TRANS_SMOKE,						// Translucency for this animation?
 	false,									// Normalized animation rate?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
@@ -1116,7 +1116,7 @@ static AnimTypeClass const SmokePuff(
 	"SMOKEY",								// Data name of animation.
 	24,										// Maximum dimension of animation.
 	2,											// Biggest animation stage.
-	TRANS_MOUSE,						// Translucency for this animation?
+	TRANS_SMOKE,						// Translucency for this animation?
 	true, 									// Normalized animation rate?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?
@@ -1683,7 +1683,7 @@ static AnimTypeClass const SmokeM(
 	"SMOKE_M",								// Data name of animation.
 	28,										// Maximum dimension of animation.
 	30,										// Biggest animation stage.
-	TRANS_ANIM,							// Translucency for this animation?
+	TRANS_SMOKE,						// Translucency for this animation?
 	true, 									// Normalized animation rate?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?

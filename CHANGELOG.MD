@@ -141,6 +141,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * \[Remaster\] Buildings that are in the process of selling and have already evacuated their crew will not spawn more infantry when destroyed.
 * The map selection's "Click to continue" end screen now filters on specific keyboard input ranges, allowing screen capture keys to still work on this scene.
 * Pressing \[Escape\] on the score or map screen will now speed up the animations to rapidly skip to the end state.
+* After selecting a location on the map screen, both the \[Escape\] key and clicking the mouse will make the text animation speed up.
 * Implemented the Nod-specific map and score screen music. This is enabled by default, but can be disabled by adding the option "NoNodSceneMusic=true" in conquer.ini, under \[Patch\].
 * Added \[Ctrl\]+\[S\] as in-game screenshot key. This does not work on menus or between missions, though. You can disable the UI message of the saved filename by adding the option "NoScreenshotMessage=true" in conquer.ini, under \[Patch\].
 * Added new option to enable the debug option IsBarOn, as "BarOn=harkonnen" ;)
@@ -155,9 +156,9 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * The AI behaviour to run from incoming threats is now enabled at BuildLevel 8, rather than at Scenario 8, making it equivalent to other difficulty increase tweaks that happen at that level.
 * Units that are damaged below 50% will not start smoking again when attacked by a weapon that deals no damage to them (e.g. tank vs Technician gun or Blossom Tree).
 * Clicking to place down a building, activating Repair or Sell mode, or clicking the icon of a charged superweapon, will now always properly cancel any other such special targeting mode if it was active, rather than setting the mouse in a strange state where multiple such modes are active at the same time. This bug caused strange behaviour where you had to click multiple times to cancel the targeting.
-* In the Save menu, when clicking on an obsolete savegame to overwrite it, the "(old)" status at the start will no longer be included in the savegame description.
-* \[Remaster\] After unloading in a Refinery, Harvesters will now return to the first spot where they started harvesting the previous time, rather than the last one, reducing top-left harvester drifting.
-* \[Remaster\] Harvesters will randomise their starting point when scanning for tiberium, reducing top-left harvester drifting.
+* In the Save menu, when clicking on a savegame from a previous game version to overwrite it, the "(old)" status at the start will no longer be included in the savegame description.
+* \[Remaster\] After unloading in a Refinery, Harvesters will now return to the first spot where they started harvesting the previous time, rather than the last one, reducing harvester drifting.
+* \[Remaster\] Harvesters will randomize their starting point when scanning for tiberium, removing top-left harvester drifting issues.
 * \[Remaster\] Harvesters will prefer higher-value cells when scanning around themselves looking for tiberium.
 * Changes in discovered terrain, walls and tiberium will now immediately get updated correctly on the minimap.
 * Engineers and Commandos are now able to enter buildings from the north even if the buildings' northern cells are unoccupied.
@@ -167,7 +168,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * The Advanced Communications Center can now detect stealth units, since its non-advanced variant can do that too.
 * Build levels can now be customized in the campaign missions.
 * The "New Missions" menu only shows mission variants with the EA suffix, but these missions will now attempt to continue to other variants to act as campaign up to 15 missions. The order is EA/EB/EC/ED/EE, WA/WB/WC/WD/WE, XA/XB/XC/XD/XE.
-* Added "RemoveBuildExceptions" option for missions, to remove all singleplayer-specific build rules.
+* Added "RemoveBuildExceptions" option for missions. This will remove all singleplayer-specific build rules, such as disallowing construction of the Helipad and APC for Nod, and the building of superweapons from captured Construction Yards.
 * Fixed double-firing on aircraft getting disrupted by other orders, causing the aircraft to always fire per single shot.
 * Fixed Mammoth Tank showing its muzzle flashes on the wrong barrel.
 * Rocket Launchers will now pop up their launcher when they are in range of their target. You can disable this behaviour by adding the option "NoLauncherPopup=true" in conquer.ini, under \[Patch\].
@@ -180,7 +181,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Reduced the behaviour where helicopters return home after barely attacking because they find no place to shuffle to. If the air is too crowded, they will consider staying in place, and if the target is too close to the map edge or shroud and that limits the available airspace, they are now allowed to come closer to compensate.
 * Aircraft will now always immediately return to base when they run out of ammo mid-salvo, instead of waiting for a second shot they don't have.
 * Fixed the infantry squish sound increasing in volume if multiple infantry units are on the same squished cell.
-* Fixed vehicle crushing, and tweaked it so they don't play the infantry squish sound but instead play their normal death animation, along with a little "roadkill bump" sound.
+* Fixed ability to crush light vehicles, and tweaked it so this doesn't play the infantry squish sound, but instead plays the destroyed unit's normal death animation, along with a little "roadkill bump" sound.
 * Enabled translucent colors on the vehicle smoke and oil derrick smoke animations, so they can be enhanced to semitransparent smoke.
 * Enabled translucent colors on rocket exhaust smoke puff, so they can be enhanced to semitransparent smoke.
 * Enabled translucent colors on the SAM Site launch smoke animations, so the hard-baked Nod colours on the animation can be fixed.
@@ -207,3 +208,4 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * If you own a refinery, losing your last harvester will now give a "Need Harvester" announcement instead of the usual "Unit Lost".
 * The game now generates translucent effects in memory, rather than reading them from .MRF files. This allowed several minor bugs in the translucency effects to be corrected.
 * Restricted the amount of units rendered on a Hovercraft to five, to avoid the game using out-of-bounds program data to determine the locations for further units.
+* Stealth units placed in missions no longer need to cloak on mission start; they now start fully cloaked.

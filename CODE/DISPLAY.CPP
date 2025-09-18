@@ -384,10 +384,10 @@ void DisplayClass::Init_Theater(TheaterType theater)
 #endif
 
 	static TLucentType const SmokeCols[SMOKE_COL_COUNT] = {
-		{YELLOW, BLACK, 110, 0},
-		{PINK, WHITE, 110, 0},
+		{YELLOW, LTGREY, 210, 0},
+		{PINK, LTGREY, 160, 0},
 		{BROWN, LTGREY, 110, 0},
-		{RED, DKGREY, 110, 0}
+		{RED, LTGREY, 60, 0}
 	};
 
 	/*
@@ -519,7 +519,7 @@ void DisplayClass::Init_Theater(TheaterType theater)
 
 // Nyerguds's C&C Patch Project v1.04
 /*
-**	Extra filter specifically for smoke. This mirrors the MOUSE one, but is set on
+**	Extra filter specifically for smoke. This contains the light gray MOUSE one, but is set on
 **	colors that typically don't exist in the vanilla smoke graphics. These are never
 **	loaded from file, since the original game does not contain them.
 */

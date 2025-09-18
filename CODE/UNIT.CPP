@@ -3764,6 +3764,12 @@ void UnitClass::Read_INI(char *buffer)
 							unit->Enter_Idle_Mode();
 						}
 
+						// Nyerguds's C&C Patch Project v1.04
+						// Units with cloaking ability start off as cloaked.
+						if (unit->Class->IsCloakable){
+							unit->Cloak = CLOAKED;
+						}
+
 						/*
 						**	The gunboat is a special case: It must "drive" off the edge of the map.
 						**	Just pick the map edge that it is facing and set that as the destination

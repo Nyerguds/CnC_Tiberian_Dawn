@@ -660,7 +660,7 @@ bool Restate_Mission(char const * name, int button1, int button2);
 void Map_Selection(void);
 void Bit_It_In_Scale(int x, int y, int w, int h, GraphicBufferClass *src, GraphicBufferClass *dest, GraphicViewPortClass *seen , int delay=0, int dagger=0);
 void Bit_It_In(int x, int y, int w, int h, GraphicBufferClass *src, GraphicBufferClass *dest, int delay=0, int dagger=0);
-void Call_Back_Delay(int time);
+void Call_Back_Delay(int time, bool clickskip = false);
 int Alloc_Object(ScoreAnimClass *obj);
 extern GraphicBufferClass *PseudoSeenBuff;
 

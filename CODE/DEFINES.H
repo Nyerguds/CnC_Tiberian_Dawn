@@ -1568,10 +1568,10 @@ inline AnimType operator++(AnimType &, int);
 */
 typedef enum TransType {
 	TRANS_NONE = -1, // No translucency.
-	TRANS_ANIM,   // Default animation translucency. (15-14-13-12 are increasingly darker) (32-39 are bright fades, but with errors on pure white and water)
-	TRANS_WHITE,  // White flash translucency. (2 is translucent white) (errors on pure white and water)
-	TRANS_MOUSE,  // Mouse translucency. (12-13-14-15 fade towards the black/dark grey/light grey/white colours) (white has errors on pure white and water)
-	TRANS_SMOKE,  // Smoke translucency.
+	TRANS_ANIM,   // Default animation translucency. (12-13-14-15 are increasingly more transparent black) (32-39 are bright fades, but all identical)
+	TRANS_WHITE,  // White flash translucency. (2 is translucent white)
+	TRANS_MOUSE,  // Mouse translucency. (12-13-14-15 are semitransparent black, dark grey, light grey, and white)
+	TRANS_SMOKE,  // Smoke translucency. (5-6-7-8 are increasingly less transparent light gray) Added for Nyerguds's C&C Patch Project v1.04.
 	TRANS_UNITS,  // Unit shadow translucency. (4 is shadow)
 	TRANS_GHOST,  // Special "ghost" table. Maps the entire sprite to its table. Unsure if really used.
 	TRANS_SHADOW, // Fade to black around map shroud. (16 and 15 are increasingly darker shades. 14 and 13 are practically completely black.)
@@ -1899,8 +1899,10 @@ typedef enum ArmorType {
 /*
 **	Define "FADING_GENERATE" if the palette morphing tables are part of the loaded data. If this
 **	is undefined, then the tables will be generated and the files will be created.
+**	Nyerguds's C&C Patch Project v1.04
+**	Enabled this to fix errors in the generated files.
 */
-//#define	FADING_GENERATE
+#define	FADING_GENERATE
 
 /*
 **	If "FADING_GENERATE" is defined, and tables are generated on-the-fly, define "FADING_WRITE"

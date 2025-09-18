@@ -1030,11 +1030,11 @@ void Print_Statistics(int country, int xpos, int ypos)
 	ypos = (ypos > 100) ? 8 : 104-6;
 	if (ScenPlayer == SCEN_PLAYER_GDI) {
 		Alloc_Object(new ScorePrintClass(_countryname[GDIStats[country].nameindex],xpos,ypos,_greenpal));
-		Call_Back_Delay(strlen(Text_String(_countryname[GDIStats[country].nameindex]))*3);
+		Call_Back_Delay(strlen(Text_String(_countryname[GDIStats[country].nameindex]))*3, true);
 		ypos += 16;
 		for (index = 0; index < 7; index ++) {
 			Alloc_Object(new ScorePrintClass(_gdistatnames[index],xpos,ypos,_greenpal));
-			Call_Back_Delay(strlen(Text_String(_gdistatnames[index]+3)));
+			Call_Back_Delay(strlen(Text_String(_gdistatnames[index]+3)), true);
 			newx = xpos + 6*strlen(Text_String(_gdistatnames[index]));
 			switch (index) {
 				case 0:
@@ -1071,11 +1071,11 @@ void Print_Statistics(int country, int xpos, int ypos)
 		country++;
 
 		Alloc_Object(new ScorePrintClass(_countryname[NodStats[country].nameindex],xpos,ypos,_greenpal));
-		Call_Back_Delay(strlen(Text_String(_countryname[NodStats[country].nameindex]))*3);
+		Call_Back_Delay(strlen(Text_String(_countryname[NodStats[country].nameindex]))*3, true);
 		ypos += 16;
 		for (index = 0; index < 9; index ++) {
 			Alloc_Object(new ScorePrintClass(_nodstatnames[index],xpos,ypos,_greenpal));
-			Call_Back_Delay(strlen(Text_String(_nodstatnames[index]+3)));
+			Call_Back_Delay(strlen(Text_String(_nodstatnames[index]+3)), true);
 			newx = xpos + 6*strlen(Text_String(_nodstatnames[index]));
 			switch (index) {
 				case 0:
@@ -1128,16 +1128,14 @@ void Print_Statistics(int country, int xpos, int ypos)
 		for (int x = 0; x < MAXSCOREOBJS; x++) {
 			if (ScoreObjs[x]) {
 				done = 0;
-				Call_Back_Delay(1);
+				Call_Back_Delay(1, true);
 			}
 		}
 	}
 	Keyboard::Clear();
 	KeyNumType keypress = (Keyboard::Check() & (~KN_SHIFT_BIT));
 	while (keypress != KN_ESC && keypress != KN_SPACE && keypress != KN_RETURN
-		 && keypress != KN_LMOUSE && keypress != KN_RMOUSE
-		 && !(keypress >= KN_A && keypress <= KN_Z)
-		 && !(keypress >= KN_0 && keypress <= KN_9)) {
+		 && keypress != KN_LMOUSE && keypress != KN_RMOUSE) {
 		Call_Back_Delay(1);
 		Keyboard::Clear();
 		keypress = (Keyboard::Check() & (~KN_SHIFT_BIT));
