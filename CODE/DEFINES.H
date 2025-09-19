@@ -1918,7 +1918,7 @@ typedef enum ArmorType {
 #define	MAGIC_COL_COUNT	  12		// Translucent color count.
 #define	SHADOW_COL_COUNT   4		// Terrain shroud translucent color count.
 #define	USHADOW_COL_COUNT  1		// Unit shadow special ghost colors.
-#define	SMOKE_COL_COUNT    4		// Smoke translucency colors.
+#define	SMOKE_COL_COUNT    8		// Smoke translucency colors.
 
 
 /**********************************************************************

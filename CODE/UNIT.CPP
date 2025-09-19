@@ -4060,13 +4060,17 @@ DirType UnitClass::Desired_Load_Dir(ObjectClass * passenger, CELL & moveto) cons
 		**	least roundabout movement for the potential passenger.
 		*/
 		value -= (int)ABS(Dir_Diff(Facing_Dir(face), faceto));
-		if (face == FACING_S) {
+		// Nyerguds's C&C Patch Project v1.04
+		// Give less value to directions you have no animation for.
+		if (face == FACING_S || face == FACING_E || face == FACING_W) {
 			value -= 100;
 		}
-		if (face == FACING_SW || face == FACING_SE) value += 64;
+		// No clue why this was a thing, but it made loading from the north-west
+		// malfunction unless the south-west cell was blocked.
+		//if (face == FACING_SW || face == FACING_SE) value += 64;
 
 		/*
-		**	If the value for the potiential cell is greater than the last recorded potential
+		**	If the value for the potential cell is greater than the last recorded potential
 		**	value, then record this cell as the best candidate.
 		*/
 		if (bestval == -1 || value > bestval) {
@@ -4080,6 +4084,7 @@ DirType UnitClass::Desired_Load_Dir(ObjectClass * passenger, CELL & moveto) cons
 	*/
 	moveto = 0;
 	if (bestval > 0) {
+		//                                                     N      NE      E       SE      S       SW      W       NW
 		static DirType _desired_to_actual[FACING_COUNT] = {DIR_S, DIR_SW, DIR_NW, DIR_NW, DIR_NE, DIR_NE, DIR_NE, DIR_SE};
 
 		moveto = Adjacent_Cell(Coord_Cell(Coord), bestdir);

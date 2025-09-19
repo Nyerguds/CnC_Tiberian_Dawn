@@ -375,19 +375,31 @@ void DisplayClass::Init_Theater(TheaterType theater)
 	static TLucentType const ShadowCols[SHADOW_COL_COUNT] = {
 		{WHITE+1,	BLACK,130,0},
 		{WHITE,		BLACK,170,0},
-		{LTGRAY,		BLACK,250,0},
-		{DKGRAY,		BLACK,250,0}
+		{LTGREY,		BLACK,250,0},
+		{DKGREY,		BLACK,250,0}
 	};
 	static TLucentType const UShadowCols[USHADOW_COL_COUNT] = {
 		{LTGREEN,	BLACK,130,0}
 	};
 #endif
 
+	// These colors are specifically chosen because they do not appear
+	// on the original sprites of these animations. This means that without
+	// the addon to make the animations use these specific color indices,
+	// these tables do nothing.
 	static TLucentType const SmokeCols[SMOKE_COL_COUNT] = {
-		{YELLOW, LTGREY, 210, 0},
-		{PINK, LTGREY, 160, 0},
-		{BROWN, LTGREY, 110, 0},
-		{RED, LTGREY, 60, 0}
+		// For vehicle smoke (SMOKE_M)
+		{PURPLE,  193,    210, 0},
+		{CYAN,    194,    160, 0},
+		{GREEN,   195,    110, 0},
+		{LTGREEN, 196,     60, 0},
+		// For missile smoke (SMOKEY)
+		{YELLOW,  195,    210, 0},
+		{PINK,    196,    160, 0},
+		// For SAM Site translucency (SAMFIRE)
+		{BROWN,   LTGREY, 160, 0},
+		// Unused so far.
+		{RED,     LTGREY,  60, 0}
 	};
 
 	/*
@@ -581,6 +593,9 @@ void DisplayClass::Init_Theater(TheaterType theater)
 	for (int index = 0; index < 256; index++) {
 		SpecialGhost[index] = 0;
 	}
+	// If the source graphics contain shadow color (even though they shouldn't), it's probably to use it
+	// as translucent effect, so make it transparent on the shadow.
+	SpecialGhost[256+LTGREEN] = 0;
 
 	Build_Fading_Table(colorpal, GamePalette, FadingBrighten, WHITE, 25);
 

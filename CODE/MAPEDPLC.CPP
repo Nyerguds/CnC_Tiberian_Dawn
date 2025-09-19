@@ -1052,7 +1052,7 @@ int MapEditClass::Place_Object(void)
 					............ make adjacent cells recalc attrib's .............
 					*/
 					(*this)[template_cell].Recalc_Attributes();
-					(*this)[template_cell].Wall_Update();
+					(*this)[template_cell].Wall_Update((*this)[template_cell].Overlay);
 					(*this)[template_cell].Concrete_Calc();
 
 					occupy++;
