@@ -671,6 +671,11 @@ class BuildingTypeClass : public TechnoTypeClass {
 		unsigned IsRegulated:1;
 
 		/*
+		**	If this flag is true, then the building cannot be sold even if it could have been built.
+		*/
+		unsigned IsUnsellable:1;
+
+		/*
 		**	This flag specifies the type of object this factory building can "produce". For non
 		**	factory buildings, this value will be RTTI_NONE.
 		*/
@@ -797,6 +802,7 @@ class BuildingTypeClass : public TechnoTypeClass {
 						bool is_buildable,
 						bool is_crew,
 						bool is_sturdy,
+						bool is_unsellable,
 						RTTIType tobuild,
 						DirType sframe,
 						unsigned short strength,

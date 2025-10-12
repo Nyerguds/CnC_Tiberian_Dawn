@@ -217,6 +217,7 @@ static BuildingTypeClass const ClassTemple(
 		true,			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	1000,										// STRNTH:		Full strength of building.
@@ -272,6 +273,7 @@ static BuildingTypeClass const ClassEye(
 		true,			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	(DirType)160,							// Starting idle frame to match construction.
 	500,										// STRNTH:		Full strength of building.
@@ -327,6 +329,7 @@ static BuildingTypeClass const ClassWeapon(
 		true,			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_UNITTYPE,							// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 #ifdef ADVANCED
@@ -386,6 +389,7 @@ static BuildingTypeClass const ClassGTower(
 		true,			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -442,6 +446,7 @@ static BuildingTypeClass const ClassATower(
 		true,			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	300,										// STRNTH:		Full strength of building.
@@ -498,6 +503,7 @@ static BuildingTypeClass const ClassObelisk(
 		true,			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -553,6 +559,7 @@ static BuildingTypeClass const ClassTurret(
 		true,			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	(DirType)208,							// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -616,6 +623,7 @@ static BuildingTypeClass const ClassConst(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_BUILDINGTYPE,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,										// STRNTH:		Full strength of building.
@@ -672,6 +680,7 @@ static BuildingTypeClass const ClassRefinery(
 		true,			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	450,										// STRNTH:		Full strength of building.
@@ -728,6 +737,7 @@ static BuildingTypeClass const ClassStorage(
 		true,			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	150,										// STRNTH:		Full strength of building.
@@ -785,6 +795,7 @@ static BuildingTypeClass const ClassHelipad(
 		true,			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_AIRCRAFTTYPE,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,										// STRNTH:		Full strength of building.
@@ -841,6 +852,7 @@ static BuildingTypeClass const ClassCommand(
 		true,			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	(DirType)160,							// Starting idle frame to match construction.
 	500,										// STRNTH:		Full strength of building.
@@ -897,6 +909,7 @@ static BuildingTypeClass const ClassSAM(
 		true,			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -952,6 +965,7 @@ static BuildingTypeClass const ClassAirStrip(
 		true,			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_UNITTYPE,							// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	500,										// STRNTH:		Full strength of building.
@@ -1007,6 +1021,7 @@ static BuildingTypeClass const ClassPower(
 		true,			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -1063,6 +1078,7 @@ static BuildingTypeClass const ClassAdvancedPower(
 		true,			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	300,										// STRNTH:		Full strength of building.
@@ -1119,6 +1135,7 @@ static BuildingTypeClass const ClassHospital(
 		true,			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		true,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -1175,6 +1192,7 @@ static BuildingTypeClass const ClassBioLab(
 		true,			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	300,										// STRNTH:		Full strength of building.
@@ -1230,6 +1248,7 @@ static BuildingTypeClass const ClassBarracks(
 		true,			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_INFANTRYTYPE,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,										// STRNTH:		Full strength of building.
@@ -1285,6 +1304,7 @@ static BuildingTypeClass const ClassHand(
 		true,			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_INFANTRYTYPE,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,										// STRNTH:		Full strength of building.
@@ -1340,6 +1360,7 @@ static BuildingTypeClass const ClassTanker(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	100,										// STRNTH:		Full strength of building.
@@ -1395,6 +1416,7 @@ static BuildingTypeClass const ClassRepair(
 		true,			// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,										// STRNTH:		Full strength of building.
@@ -1453,6 +1475,7 @@ static BuildingTypeClass const ClassRoad(
 		true,			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	1,											// STRNTH:		Full strength of building.
@@ -1510,6 +1533,7 @@ static BuildingTypeClass const ClassV01(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -1565,6 +1589,7 @@ static BuildingTypeClass const ClassV02(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -1620,6 +1645,7 @@ static BuildingTypeClass const ClassV03(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -1675,6 +1701,7 @@ static BuildingTypeClass const ClassV04(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -1730,6 +1757,7 @@ static BuildingTypeClass const ClassV05(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -1785,6 +1813,7 @@ static BuildingTypeClass const ClassV06(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -1840,6 +1869,7 @@ static BuildingTypeClass const ClassV07(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -1895,6 +1925,7 @@ static BuildingTypeClass const ClassV08(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -1950,6 +1981,7 @@ static BuildingTypeClass const ClassV09(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -2005,6 +2037,7 @@ static BuildingTypeClass const ClassV10(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -2060,6 +2093,7 @@ static BuildingTypeClass const ClassV11(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -2115,6 +2149,7 @@ static BuildingTypeClass const ClassV12(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -2170,6 +2205,7 @@ static BuildingTypeClass const ClassV13(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -2225,6 +2261,7 @@ static BuildingTypeClass const ClassV14(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -2280,6 +2317,7 @@ static BuildingTypeClass const ClassV15(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -2335,6 +2373,7 @@ static BuildingTypeClass const ClassV16(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -2390,6 +2429,7 @@ static BuildingTypeClass const ClassV17(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -2445,6 +2485,7 @@ static BuildingTypeClass const ClassV18(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -2500,6 +2541,7 @@ static BuildingTypeClass const ClassV19(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -2556,6 +2598,7 @@ static BuildingTypeClass const ClassV20(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -2612,6 +2655,7 @@ static BuildingTypeClass const ClassV21(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -2668,6 +2712,7 @@ static BuildingTypeClass const ClassV22(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -2724,6 +2769,7 @@ static BuildingTypeClass const ClassV23(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -2780,6 +2826,7 @@ static BuildingTypeClass const ClassV24(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -2836,6 +2883,7 @@ static BuildingTypeClass const ClassV25(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -2892,6 +2940,7 @@ static BuildingTypeClass const ClassV26(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -2948,6 +2997,7 @@ static BuildingTypeClass const ClassV27(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -3004,6 +3054,7 @@ static BuildingTypeClass const ClassV28(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -3060,6 +3111,7 @@ static BuildingTypeClass const ClassV29(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -3116,6 +3168,7 @@ static BuildingTypeClass const ClassV30(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -3172,6 +3225,7 @@ static BuildingTypeClass const ClassV31(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -3228,6 +3282,7 @@ static BuildingTypeClass const ClassV32(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -3284,6 +3339,7 @@ static BuildingTypeClass const ClassV33(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -3340,6 +3396,7 @@ static BuildingTypeClass const ClassV34(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -3396,6 +3453,7 @@ static BuildingTypeClass const ClassV35(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -3452,6 +3510,7 @@ static BuildingTypeClass const ClassV36(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -3508,6 +3567,7 @@ static BuildingTypeClass const ClassV37(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	300,										// STRNTH:		Full strength of building.
@@ -3564,6 +3624,7 @@ static BuildingTypeClass const ClassMission(
 		false,		// Can it be manufactured by the player?
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,										// STRNTH:		Full strength of building.
@@ -3622,6 +3683,7 @@ static BuildingTypeClass const Sandbag(
 		true,			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	1,											// STRNTH:		Full strength of building.
@@ -3679,6 +3741,7 @@ static BuildingTypeClass const Cyclone(
 		true,			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	1,											// STRNTH:		Full strength of building.
@@ -3736,6 +3799,7 @@ static BuildingTypeClass const Brick(
 		true,			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	1,											// STRNTH:		Full strength of building.
@@ -3793,6 +3857,7 @@ static BuildingTypeClass const Barbwire(
 		true,			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	1,											// STRNTH:		Full strength of building.
@@ -3851,6 +3916,7 @@ static BuildingTypeClass const Wood(
 		true,			// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
+		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	1,											// STRNTH:		Full strength of building.
@@ -3997,6 +4063,7 @@ BuildingTypeClass::BuildingTypeClass(
 						bool is_buildable,
 						bool is_crew,
 						bool is_sturdy,
+						bool is_unsellable,
 						RTTIType tobuild,
 						DirType sframe,
 						unsigned short strength,
@@ -4060,6 +4127,7 @@ BuildingTypeClass::BuildingTypeClass(
 	IsCaptureable = is_captureable;
 	IsFactory = is_factory;
 	IsRegulated = is_regulated;
+	IsUnsellable = is_unsellable;
 	IsSimpleDamage = is_simpledamage;
 	IsSturdy = is_sturdy;
 	IsWall = is_wall;

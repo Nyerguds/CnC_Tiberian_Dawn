@@ -4372,42 +4372,48 @@ void HouseClass::Sell_Wall(CELL cell)
 
 			if (optr.IsWall) {
 				int cost = 0;
+				BuildingTypeClass const * btype = NULL;
 				switch (overlay) {
 					case OVERLAY_SANDBAG_WALL:
-						cost = BuildingTypeClass::As_Reference(STRUCT_SANDBAG_WALL).Cost_Of();
+						btype = &BuildingTypeClass::As_Reference(STRUCT_SANDBAG_WALL);
 						break;
 
 					case OVERLAY_CYCLONE_WALL:
-						cost = BuildingTypeClass::As_Reference(STRUCT_CYCLONE_WALL).Cost_Of();
+						btype = &BuildingTypeClass::As_Reference(STRUCT_CYCLONE_WALL);
 						break;
 
 					case OVERLAY_BRICK_WALL:
-						cost = BuildingTypeClass::As_Reference(STRUCT_BRICK_WALL).Cost_Of();
+						btype = &BuildingTypeClass::As_Reference(STRUCT_BRICK_WALL);
 						break;
 
 					case OVERLAY_BARBWIRE_WALL:
-						cost = BuildingTypeClass::As_Reference(STRUCT_BARBWIRE_WALL).Cost_Of();
+						btype = &BuildingTypeClass::As_Reference(STRUCT_BARBWIRE_WALL);
 						break;
 
 					case OVERLAY_WOOD_WALL:
-						cost = BuildingTypeClass::As_Reference(STRUCT_WOOD_WALL).Cost_Of();
+						btype = &BuildingTypeClass::As_Reference(STRUCT_WOOD_WALL);
 						break;
 
 					default:
-						cost = 0;
 						break;
 				}
-				Refund_Money(cost/2);
-				CellClass * cellptr = &Map[cell];
-				OverlayType overlay = cellptr->Overlay;
-				cellptr->Owner = HOUSE_NONE;
-				cellptr->Overlay = OVERLAY_NONE;
-				cellptr->OverlayData = 0;
-				cellptr->Wall_Update(overlay);
-				ObjectClass::Detach_This_From_All(::As_Target(cell), true);
-				cellptr->Recalc_Attributes();
-				cellptr->Redraw_Objects();
-				Map.Radar_Pixel(cellptr->Cell_Number());
+				if (btype != NULL && !btype->IsUnsellable) {
+					
+					if (PlayerPtr == this) {
+						Sound_Effect(VOC_CASHTURN);
+					}
+					Refund_Money(btype->Cost_Of()/2);
+					CellClass * cellptr = &Map[cell];
+					OverlayType overlay = cellptr->Overlay;
+					cellptr->Owner = HOUSE_NONE;
+					cellptr->Overlay = OVERLAY_NONE;
+					cellptr->OverlayData = 0;
+					cellptr->Wall_Update(overlay);
+					ObjectClass::Detach_This_From_All(::As_Target(cell), true);
+					cellptr->Recalc_Attributes();
+					cellptr->Redraw_Objects();
+					Map.Radar_Pixel(cellptr->Cell_Number());
+				}
 			}
 		}
 	}

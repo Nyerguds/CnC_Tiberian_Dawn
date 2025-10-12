@@ -210,3 +210,5 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Restricted the amount of units rendered on a Hovercraft to five, to avoid the game using out-of-bounds program data to determine the locations for further units.
 * Stealth units placed in missions no longer need to cloak on mission start; they now start fully cloaked.
 * Removed extra tendency of APCs to load from the south-east or south-west, which would make it never load units from the north-west unless the south-west cell was blocked.
+* The Hospital can no longer be sold.
+* Selling a wall now gives a sell sound.

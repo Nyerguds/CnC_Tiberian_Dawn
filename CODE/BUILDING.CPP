@@ -3539,6 +3539,7 @@ void BuildingClass::Flame_Out(void)
 bool BuildingClass::Can_Demolish(void) const
 {
 	Validate();
+	if (Class->IsUnsellable) return(false);
 	if (Class->Get_Buildup_Data() && BState != BSTATE_CONSTRUCTION && !Mission != MISSION_DECONSTRUCTION && Mission != MISSION_CONSTRUCTION) {
 		if (*this == STRUCT_REFINERY && Is_Something_Attached()) return(false);
 		return(true);
