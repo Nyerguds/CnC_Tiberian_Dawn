@@ -106,6 +106,7 @@ static struct {
 //	{"SIR1",			10,	IN_VAR},	//	VOC_SIR1				"sir?"
 //	{"SQUAD1",		10,	IN_VAR},	//	VOC_SQUAD1			"squad reporting"
 //	{"TARGET1",		10,	IN_VAR},	//	VOC_PRACTICE		"target practice"
+	{"OVEROUT",		10,	IN_VAR},	// VOC_OVEROUT			"Over and out"
 	{"UGOTIT",		10,	IN_VAR},	// VOC_UGOTIT			"you got it"
 	{"UNIT1",		10,	IN_VAR},	//	VOC_UNIT1			"unit reporting"
 	{"VEHIC1",		10,	IN_VAR},	//	VOC_VEHIC1			"vehicle reporting"
@@ -199,7 +200,8 @@ static struct {
 	{"MTHANKS1", 	10,	IN_NOVAR},	//	VOC_THANKS			"Thank you."
 
 	{"CASHTURN", 	1,		IN_NOVAR},	//	VOC_CASHTURN		Sound of money being piled up.
-	{"BLEEP2", 		10,	IN_NOVAR},	//	VOC_BLEEPY3			Clean computer bleep sound.
+// Nyerguds's C&C Patch Project v1.04: this DOES in fact have a juv sound.
+	{"BLEEP2", 		10,	IN_JUV},	//	VOC_BLEEPY3			Clean computer bleep sound.
 	{"DINOMOUT", 	10,	IN_NOVAR},	//	VOC_DINOMOUT		Movin' out in dino-speak.
 	{"DINOYES", 	10,	IN_NOVAR},	//	VOC_DINOYES			Yes Sir in dino-speak.
 	{"DINOATK1", 	10,	IN_NOVAR},	//	VOC_DINOATK1		Dino attack sound.

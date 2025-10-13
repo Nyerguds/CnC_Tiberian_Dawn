@@ -2537,6 +2537,9 @@ void InfantryClass::Response_Move(void)
 				VOC_ROGER,
 				VOC_RIGHT_AWAY,
 				VOC_UGOTIT,
+				// Nyerguds's C&C Patch Project v1.04
+				// reactivated unused sound "Over and out"
+				VOC_OVEROUT,
 				VOC_AFFIRM,
 				VOC_AFFIRM
 			};
@@ -2586,19 +2589,21 @@ void InfantryClass::Response_Attack(void)
 			}
 		} else {
 			static VocType _response[] = {
-				VOC_RIGHT_AWAY,
-				VOC_AFFIRM,
-				VOC_AFFIRM,
-				VOC_UGOTIT,
+				VOC_YESSIR,
+				VOC_YESSIR,
+				VOC_YESSIR,
 				VOC_NO_PROB,
-				VOC_YESSIR,
-				VOC_YESSIR,
-				VOC_YESSIR
+				VOC_RIGHT_AWAY,
+				VOC_UGOTIT,
+				// Nyerguds's C&C Patch Project v1.04
+				// reactivated unused sound "Over and out"
+				VOC_OVEROUT,
+				VOC_AFFIRM,
+				VOC_AFFIRM
 			};
 			response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
 		}
 	}
-
 	if (AllowVoice) {
 		Sound_Effect(response, 0, Infantry.ID(this)+1);
 	}
