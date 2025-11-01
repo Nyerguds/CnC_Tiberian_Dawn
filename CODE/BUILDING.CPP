@@ -2453,12 +2453,14 @@ bool BuildingClass::Limbo(void)
  *   12/24/1994 JLB : Created.                                                                 *
  *   09/04/2025 MM  : Added arg to correctly calculate range to target regardless of facing.   *
  *=============================================================================================*/
-COORDINATE BuildingClass::Fire_Coord(int /*which*/, TARGET totarget, COORDINATE coords) const
+COORDINATE BuildingClass::Fire_Coord(int which, TARGET totarget, COORDINATE coords) const
 {
 	Validate();
 	// Nyerguds's C&C Patch Project v1.04
 	// Allow getting the fire coords for any given target to correctly calculate range.
-	COORDINATE coord = Center_Coord();			// Center of firing building.
+	bool forrange = Target_Legal(totarget);
+	COORDINATE coord = Center_Coord();
+	int barrellen = 0;
 
 	/*
 	**	Make adjustments to the firing coordinate to account for turret
@@ -2467,12 +2469,12 @@ COORDINATE BuildingClass::Fire_Coord(int /*which*/, TARGET totarget, COORDINATE 
 	TARGET target = TARGET_NONE;
 
 	// Guard Towers automatically face the current target.
-	if (!Target_Legal(totarget) && !Class->IsTurretEquipped) {
+	if (!forrange && !Class->IsTurretEquipped) {
 		totarget = TarCom;
 		coords = COORDINATE_OFFMAP;
 	}
 	// Determine the facing. If "totarget" is a map cell, switch to the more accurate "coords" instead.
-	DirType facing;
+	DirType barreldir;
 	if (Target_Legal(totarget)) {
 		COORDINATE toface;
 		if (Is_Target_Cell(totarget)) {
@@ -2485,25 +2487,21 @@ COORDINATE BuildingClass::Fire_Coord(int /*which*/, TARGET totarget, COORDINATE 
 		} else {
 			toface = As_Coord(totarget);
 		}
-		facing = ::Direction(Coord, toface);
+		barreldir = ::Direction(Coord, toface);
 	} else {
-		facing = PrimaryFacing.Current();
+		barreldir = PrimaryFacing.Current();
 	}
-	// TODO migrate this to BuildingType definitions.
-	if (Class->Type == STRUCT_OBELISK) {
-		coord = Coord_Move(coord, DIR_N, 0x00A8);
-//		coord = Coord_Move(coord, DIR_N, 0x0058);
-	} else if (Class->IsTurretEquipped) {
-		//case STRUCT_SAM:
-		//case STRUCT_TURRET:
-		coord = Coord_Move(coord, DIR_N, 0x0030);
-		coord = Coord_Move(coord, facing, 0x0080);
+	// For range calculations, remove the north shift
+	if (Class->WeaponOffset && !forrange) {
+		coord = Coord_Move(coord, DIR_N, Class->WeaponOffset);
+	}
+	if (which == 0) {
+		barrellen = Class->BarrelLengthPrimary;
 	} else {
-		//default:
-		//case STRUCT_GTOWER:
-		//case STRUCT_ATOWER:
-		coord = Coord_Move(coord, DIR_N, 0x0030);
-		coord = Coord_Move(coord, facing, 0x0040);
+		barrellen = Class->BarrelLengthSecondary;
+	}
+	if (barrellen) {
+		coord = Coord_Move(coord, barreldir, barrellen);
 	}
 	return(coord);
 }

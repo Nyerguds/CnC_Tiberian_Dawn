@@ -556,6 +556,13 @@ class TechnoTypeClass : public ObjectTypeClass
 		WeaponType Primary;
 		WeaponType Secondary;
 
+		/*
+		**	This is the distance to the North from the body that the weapon origin point
+		**	is located. This affects the projectile spawn point, but should be ignored
+		**	for range checks. This distance is in leptons.
+		*/
+		int WeaponOffset;
+
 		//--------------------------------------------------------------------
 		TechnoTypeClass(
 				int name,
@@ -591,6 +598,7 @@ class TechnoTypeClass : public ObjectTypeClass
 				int ownable,
 				WeaponType primary,
 				WeaponType secondary,
+				int weaponoffs,
 				ArmorType armor);
 
 		virtual int  Raw_Cost(void) const;
@@ -733,6 +741,18 @@ class BuildingTypeClass : public TechnoTypeClass {
 		int Drain;
 
 		/*
+		**	This is the distance away from the turret center point that the projectiles
+		**	for the primary weapon will spawn. This distance is in leptons.
+		*/
+		int BarrelLengthPrimary;
+
+		/*
+		**	This is the distance away from the turret center point that the projectiles
+		**	for the secondary weapon will spawn. This distance is in leptons.
+		*/
+		int BarrelLengthSecondary;
+
+		/*
 		**	This is the size of the building. This size value is a rough indication
 		**	of the building's "footprint". It is derived from OccupyList and OverlapList.
 		*/
@@ -819,6 +839,9 @@ class BuildingTypeClass : public TechnoTypeClass {
 						unsigned capacity,
 						int power,
 						int drain,
+						int weapoffs,
+						int pribarlen,
+						int secbarlen,
 						//BSizeType size,
 						short const *exitlist,
 						short const *sizelist,
@@ -1030,17 +1053,16 @@ class UnitTypeClass : public TechnoTypeClass
 		int TurretShift;
 
 		/*
-		**	This is the distance to the North from the body that the turret center point
-		**	is located. This only affects the projectile spawn point, not the turret
-		**	drawing. This distance is in leptons.
-		*/
-		int TurretOffset;
-
-		/*
 		**	This is the distance away from the turret center point that the projectiles
 		**	for the primary weapon will spawn. This distance is in leptons.
 		*/
 		int BarrelLengthPrimary;
+
+		/*
+		**	This is the distance away from the turret center point that the projectiles
+		**	for the secondary weapon will spawn. This distance is in leptons.
+		*/
+		int BarrelLengthSecondary;
 
 		/*
 		**	This is the lateral distance away from the center that the barrels of this
@@ -1048,16 +1070,9 @@ class UnitTypeClass : public TechnoTypeClass
 		**	in a salvo. This distance is in leptons.
 		*/
 		int BarrelLateralPrimary;
-
-		/*
-		**	This is the distance away from the turret center point that the projectiles
-		**	for the primary weapon will spawn. This distance is in leptons.
-		*/
-		int BarrelLengthSecondary;
-
 		/*
 		**	This is the lateral distance away from the center that the barrels of this
-		**	unit's primary weapon are offset, to distinguish the first and second shot
+		**	unit's secondary weapon are offset, to distinguish the first and second shot
 		**	in a salvo. This distance is in leptons.
 		*/
 		int BarrelLateralSecondary;
@@ -1133,12 +1148,12 @@ class UnitTypeClass : public TechnoTypeClass
 						SpeedType speed,
 						MPHType maxSpeed,
 						unsigned rot,
-						int toffset,
-						int tshift,
-						int primarytlen,
-						int primarytlat,
-						int secondarytlen,
-						int secondarytlat,
+						int turshift,
+						int weapoffs,
+						int pribarlen,
+						int secbarlen,
+						int pribarlat,
+						int secbarlat,
 						MissionType order);
 		virtual RTTIType  What_Am_I(void) const {return RTTI_UNITTYPE;};
 
@@ -1267,6 +1282,7 @@ class InfantryTypeClass : public TechnoTypeClass
 						int ownable,
 						WeaponType primary,
 						WeaponType secondary,
+						int weapoffs,
 						MPHType maxSpeed);
 		virtual RTTIType  What_Am_I(void) const {return RTTI_INFANTRYTYPE;};
 

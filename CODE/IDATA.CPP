@@ -63,7 +63,7 @@
  *
  */
 
-// Minigunners
+// Minigunner
 
 int MiniGunnerDos [DO_COUNT][3]={
 	0,		1,	1,					// DO_STAND_READY
@@ -136,13 +136,11 @@ static InfantryTypeClass const E1(
  	HOUSEF_GOOD|
  	HOUSEF_BAD,					// Who can own this infantry unit.
  	WEAPON_M16,WEAPON_NONE,
+	0x35,									// Weapon perspective offset from body towards the north.
 	MPH_SLOW						// Maximum speed of infantry.
 );
 
-
-// Grenadiers
-
-
+// Grenadier
 int GrenadierDos [DO_COUNT][3]={
 	0,		1,	1,					// DO_STAND_READY
 	8,		1,	1,					// DO_STAND_GUARD
@@ -212,14 +210,11 @@ static InfantryTypeClass const E2(
 	HOUSEF_JP|
 	HOUSEF_GOOD,				// Who can own this infantry unit.
 	WEAPON_GRENADE,WEAPON_NONE,
+	0x35,									// Weapon perspective offset from body towards the north.
 	MPH_SLOW_ISH			// Maximum speed of infantry.
 );
 
-
-
-
 // Bazooka
-
 int BazookaDos [DO_COUNT][3]={
 	0,		1,	1,					// DO_STAND_READY
 	8,		1,	1,					// DO_STAND_GUARD
@@ -292,11 +287,11 @@ static InfantryTypeClass const E3(
 	HOUSEF_GOOD|
 	HOUSEF_BAD,					// Who can own this infantry unit.
 	WEAPON_DRAGON,WEAPON_NONE,
+	0x35,									// Weapon perspective offset from body towards the north.
 	MPH_KINDA_SLOW				// Maximum speed of infantry.
 );
 
 // Flamethrower
-
 int FlamethrowerDos [DO_COUNT][3]={
 	0,		1,	1,					// DO_STAND_READY
 	8,		1,	1,					// DO_STAND_GUARD
@@ -368,12 +363,11 @@ static InfantryTypeClass const E4(
 	HOUSEF_JP|
 	HOUSEF_BAD,					// Who can own this infantry unit.
 	WEAPON_FLAMETHROWER,WEAPON_NONE,
+	0x00,									// Weapon perspective offset from body towards the north.
 	MPH_SLOW_ISH
 );
 
-
 // Chemwarrior
-
 int ChemwarriorDos [DO_COUNT][3]={
 	0,		1,	1,					// DO_STAND_READY
 	8,		1,	1,					// DO_STAND_GUARD
@@ -445,12 +439,11 @@ static InfantryTypeClass const E5(
 //	HOUSEF_GOOD|
 	HOUSEF_BAD,					// Who can own this infantry unit.
 	WEAPON_CHEMSPRAY,WEAPON_NONE,
+	0x35,									// Weapon perspective offset from body towards the north.
 	MPH_SLOW
 );
 
-
 // Engineer
-
 int EngineerDos[DO_COUNT][3]={
 	0,		1,	1,					// DO_STAND_READY
 	8,		1,	1,					// DO_STAND_GUARD
@@ -521,11 +514,11 @@ static InfantryTypeClass const E7(
 	HOUSEF_BAD|
 	HOUSEF_GOOD,				// Who can own this infantry unit.
 	WEAPON_NONE,WEAPON_NONE,
+	0x00,									// Weapon perspective offset from body towards the north.
 	MPH_SLOW						// Maximum speed of infantry.
 );
 
-// Commandos
-
+// Commando
 int CommandoDos[DO_COUNT][3]={
 	0,		1,	1,					// DO_STAND_READY
 	8,		1,	1,					// DO_STAND_GUARD
@@ -596,11 +589,11 @@ static InfantryTypeClass const Commando(
 	HOUSEF_GOOD|
 	HOUSEF_BAD,					// Who can own this infantry unit.
 	WEAPON_RIFLE,WEAPON_NONE,
+	0x35,									// Weapon perspective offset from body towards the north.
 	MPH_SLOW_ISH			// Maximum speed of infantry.
 );
 
 // Civilians
-
 int CivilianDos1[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
 	0,			1,	1,				// DO_STAND_GUARD
@@ -672,9 +665,9 @@ static InfantryTypeClass const C1(
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	WEAPON_PISTOL,WEAPON_NONE,
+	0x35,									// Weapon perspective offset from body towards the north.
 	MPH_SLOW_ISH
 );
-
 
 int CivilianDos2[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
@@ -747,9 +740,9 @@ static InfantryTypeClass const C2(
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	WEAPON_NONE,WEAPON_NONE,
+	0x00,									// Weapon perspective offset from body towards the north.
 	MPH_SLOW_ISH
 );
-
 
 int CivilianDos3[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
@@ -823,9 +816,9 @@ static InfantryTypeClass const C3(
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	WEAPON_NONE,WEAPON_NONE,
+	0x00,									// Weapon perspective offset from body towards the north.
 	MPH_SLOW_ISH
 );
-
 
 int CivilianDos4[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
@@ -899,9 +892,9 @@ static InfantryTypeClass const C4(
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	WEAPON_NONE,WEAPON_NONE,
+	0x00,									// Weapon perspective offset from body towards the north.
 	MPH_SLOW_ISH
 );
-
 
 int CivilianDos5[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
@@ -974,9 +967,9 @@ static InfantryTypeClass const C5(
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	WEAPON_NONE,WEAPON_NONE,
+	0x00,									// Weapon perspective offset from body towards the north.
 	MPH_SLOW_ISH
 );
-
 
 int CivilianDos6[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
@@ -1049,9 +1042,9 @@ static InfantryTypeClass const C6(
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	WEAPON_NONE,WEAPON_NONE,
+	0x00,									// Weapon perspective offset from body towards the north.
 	MPH_SLOW_ISH
 );
-
 
 int CivilianDos7[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
@@ -1124,6 +1117,7 @@ static InfantryTypeClass const C7(
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	WEAPON_PISTOL,WEAPON_NONE,
+	0x00,									// Weapon perspective offset from body towards the north.
 	MPH_SLOW_ISH
 );
 
@@ -1198,9 +1192,9 @@ static InfantryTypeClass const C8(
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	WEAPON_NONE,WEAPON_NONE,
+	0x00,									// Weapon perspective offset from body towards the north.
 	MPH_SLOW_ISH
 );
-
 
 int CivilianDos9[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
@@ -1273,9 +1267,9 @@ static InfantryTypeClass const C9(
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	WEAPON_NONE,WEAPON_NONE,
+	0x00,									// Weapon perspective offset from body towards the north.
 	MPH_SLOW_ISH
 );
-
 
 int NikoombaDos[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
@@ -1350,6 +1344,7 @@ static InfantryTypeClass const C10(
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	WEAPON_NONE,WEAPON_NONE,
+	0x00,									// Weapon perspective offset from body towards the north.
 	MPH_SLOW_ISH
 );
 
@@ -1424,6 +1419,7 @@ static InfantryTypeClass const Moebius(
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	WEAPON_NONE,WEAPON_NONE,
+	0x00,									// Weapon perspective offset from body towards the north.
 	MPH_SLOW_ISH
 );
 
@@ -1497,9 +1493,9 @@ static InfantryTypeClass const Delphi(
 	HOUSEF_GOOD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	WEAPON_PISTOL,WEAPON_NONE,
+	0x35,									// Weapon perspective offset from body towards the north.
 	MPH_SLOW_ISH
 );
-
 
 int DrChanDos[DO_COUNT][3]={
 	0,			1,	1,				// DO_STAND_READY
@@ -1571,9 +1567,9 @@ static InfantryTypeClass const DrChan(
 	HOUSEF_GOOD|
 	HOUSEF_NEUTRAL,				// Who can own this infantry unit.
 	WEAPON_NONE,WEAPON_NONE,
+	0x00,									// Weapon perspective offset from body towards the north.
 	MPH_SLOW_ISH
 );
-
 
 /*
 **	This is the array of pointers to the static data associated with each
@@ -1636,13 +1632,14 @@ InfantryTypeClass::InfantryTypeClass	(
 						unsigned short strength, int sightrange,
 						int cost, int scenario, int risk, int reward, int ownable,
 						WeaponType primary, WeaponType secondary,
+						int weapoffs,
 						MPHType maxspeed)
 	: TechnoTypeClass(name, ininame, level, pre,
 							is_leader, true, is_nominal, false, false, true, true, true, true, false, false,
 							is_theater, false, false, false, false, true, false,
 							ammo, strength, maxspeed, sightrange, cost,
 							scenario, risk, reward, ownable,
-							primary, secondary,
+							primary, secondary, weapoffs,
 							ARMOR_NONE)
 {
 	IsFemale = is_female;

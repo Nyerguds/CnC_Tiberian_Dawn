@@ -112,7 +112,7 @@ static UnitTypeClass const UnitVisceroid(
 	MPH_MEDIUM,								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
-	0,											// Turret perspective offset from body towards the north.
+	0,											// Weapon perspective offset from body towards the north.
 	0,0,										// Primary / secondary weapon barrel lengths
 	0,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -177,7 +177,7 @@ static UnitTypeClass const UnitFTank(
 	MPH_MEDIUM,								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
-	0,											// Turret perspective offset from body towards the north.
+	0,											// Weapon perspective offset from body towards the north.
 	0x30,0,										// Primary / secondary weapon barrel lengths
 	0x20,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -242,7 +242,7 @@ static UnitTypeClass const UnitSTank(
 	MPH_MEDIUM_FAST,						// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
-	0,											// Turret perspective offset from body towards the north.
+	0,											// Weapon perspective offset from body towards the north.
 	0,0,										// Primary / secondary weapon barrel lengths
 	0,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -307,7 +307,7 @@ static UnitTypeClass const UnitLTank(
 	MPH_MEDIUM,								// SPEED:		Miles per hour.
 	5,												// ROT:			Rate of turn (degrees per tick).
 	0,												// Turret center offset along body centerline.
-	0x20,											// Turret perspective offset from body towards the north.
+	0x20,											// Weapon perspective offset from body towards the north.
 	0xC0,0,										// Primary / secondary weapon barrel lengths
 	0,0,											// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -372,7 +372,7 @@ static UnitTypeClass const UnitMTank(
 	MPH_MEDIUM,								// SPEED:		Miles per hour.
 	5,												// ROT:			Rate of turn (degrees per tick).
 	0,												// Turret center offset along body centerline.
-	0x30,											// Turret perspective offset from body towards the north.
+	0x30,											// Weapon perspective offset from body towards the north.
 	0xC0,0,										// Primary / secondary weapon barrel lengths
 	0,0,											// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -437,7 +437,7 @@ static UnitTypeClass const UnitHTank(
 	MPH_MEDIUM_SLOW,						// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
-	0x40,											// Turret perspective offset from body towards the north.
+	0x40,											// Weapon perspective offset from body towards the north.
 	0xC0,0x08,								// Primary / secondary weapon barrel lengths
 	0x28,0x40,								// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -503,7 +503,7 @@ static UnitTypeClass const UnitMHQ(
 	MPH_MEDIUM,								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
-	0,											// Turret perspective offset from body towards the north.
+	0,											// Weapon perspective offset from body towards the north.
 	0,0,										// Primary / secondary weapon barrel lengths
 	0,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -570,7 +570,7 @@ static UnitTypeClass const UnitHover(
 	MPH_MEDIUM_FAST,						// SPEED:		Miles per hour.
 	127,										// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
-	0,											// Turret perspective offset from body towards the north.
+	0,											// Weapon perspective offset from body towards the north.
 	0,0,										// Primary / secondary weapon barrel lengths
 	0,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -636,7 +636,7 @@ static UnitTypeClass const UnitSAM(
 	MPH_MEDIUM,								// SPEED:		Miles per hour.
 	5,												// ROT:			Rate of turn (degrees per tick).
 	0,												// Turret center offset along body centerline.
-	0,												// Turret perspective offset from body towards the north.
+	0,												// Weapon perspective offset from body towards the north.
 	0,0,											// Primary / secondary weapon barrel lengths
 	0,0,											// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -701,7 +701,7 @@ static UnitTypeClass const UnitArty(
 	MPH_MEDIUM_SLOW,					// SPEED:		Miles per hour.
 	2,												// ROT:			Rate of turn (degrees per tick).
 	0,												// Turret center offset along body centerline.
-	0x40,											// Turret perspective offset from body towards the north.
+	0x40,											// Weapon perspective offset from body towards the north.
 	0x60,0,										// Primary / secondary weapon barrel lengths
 	0,0,											// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -768,7 +768,7 @@ static UnitTypeClass const UnitHarvester(
 	MPH_MEDIUM_SLOW,					// SPEED:		Miles per hour.
 	5,												// ROT:			Rate of turn (degrees per tick).
 	0,												// Turret center offset along body centerline.
-	0,												// Turret perspective offset from body towards the north.
+	0,												// Weapon perspective offset from body towards the north.
 	0,0,											// Primary / secondary weapon barrel lengths
 	0,0,											// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HARVEST						// ORDERS:		Default order to give new unit.
@@ -834,7 +834,7 @@ static UnitTypeClass const UnitMCV(
 	MPH_MEDIUM_SLOW,					// SPEED:		Miles per hour.
 	5,												// ROT:			Rate of turn (degrees per tick).
 	0,												// Turret center offset along body centerline.
-	0,												// Turret perspective offset from body towards the north.
+	0,												// Weapon perspective offset from body towards the north.
 	0,0,											// Primary / secondary weapon barrel lengths
 	0,0,											// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -899,7 +899,7 @@ static UnitTypeClass const UnitJeep(
 	MPH_MEDIUM_FAST,					// SPEED:		Miles per hour.
 	10,												// ROT:			Rate of turn (degrees per tick).
 	0,												// Turret center offset along body centerline.
-	0x30,											// Turret perspective offset from body towards the north.
+	0x30,											// Weapon perspective offset from body towards the north.
 	0x30,0,										// Primary / secondary weapon barrel lengths
 	0,0,											// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -964,7 +964,7 @@ static UnitTypeClass const UnitBuggy(
 	MPH_MEDIUM_FAST,					// SPEED:		Miles per hour.
 	10,												// ROT:			Rate of turn (degrees per tick).
 	0,												// Turret center offset along body centerline.
-	0x30,											// Turret perspective offset from body towards the north.
+	0x30,											// Weapon perspective offset from body towards the north.
 	0x30,0,										// Primary / secondary weapon barrel lengths
 	0,0,											// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -1033,7 +1033,7 @@ static UnitTypeClass const UnitBike(
 	MPH_FAST,								// SPEED:		Miles per hour.
 	10,										// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
-	0,											// Turret perspective offset from body towards the north.
+	0,											// Weapon perspective offset from body towards the north.
 	0,0,										// Primary / secondary weapon barrel lengths
 	0,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -1099,7 +1099,7 @@ static UnitTypeClass const UnitMLRS(
 	MPH_MEDIUM,								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
-	0,											// Turret perspective offset from body towards the north.
+	0,											// Weapon perspective offset from body towards the north.
 	0,0,										// Primary / secondary weapon barrel lengths
 	0,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
@@ -1165,7 +1165,7 @@ static UnitTypeClass const UnitAPC(
 	MPH_MEDIUM_FASTER,				// SPEED:		Miles per hour.
 	5,												// ROT:			Rate of turn (degrees per tick).
 	0,												// Turret center offset along body centerline.
-	0x30,											// Turret perspective offset from body towards the north.
+	0x30,											// Weapon perspective offset from body towards the north.
 	0x30,0,										// Primary / secondary weapon barrel lengths
 	0,0,											// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -1231,7 +1231,7 @@ static UnitTypeClass const UnitGunBoat(
 	MPH_SLOW,									// SPEED:		Miles per hour.
 	1,												// ROT:			Rate of turn (degrees per tick).
 	0x95,											// Turret center offset along body centerline.
-	0,												// Turret perspective offset from body towards the north.
+	0,												// Weapon perspective offset from body towards the north.
 	0x60,0,										// Primary / secondary weapon barrel lengths
 	0,0,											// Primary / secondary weapon offset from center for double barrels 
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
@@ -1289,7 +1289,7 @@ static UnitTypeClass const UnitTric(
 	MPH_SLOW,								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
-	0,											// Turret perspective offset from body towards the north.
+	0,											// Weapon perspective offset from body towards the north.
 	0,0,										// Primary / secondary weapon barrel lengths
 	0,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
@@ -1347,7 +1347,7 @@ static UnitTypeClass const UnitTrex(
 	MPH_MEDIUM,								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
-	0,											// Turret perspective offset from body towards the north.
+	0,											// Weapon perspective offset from body towards the north.
 	0,0,										// Primary / secondary weapon barrel lengths
 	0,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
@@ -1405,7 +1405,7 @@ static UnitTypeClass const UnitRapt(
 	MPH_FAST,								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
-	0,											// Turret perspective offset from body towards the north.
+	0,											// Weapon perspective offset from body towards the north.
 	0,0,										// Primary / secondary weapon barrel lengths
 	0,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
@@ -1463,7 +1463,7 @@ static UnitTypeClass const UnitSteg(
 	MPH_SLOW,								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
-	0,											// Turret perspective offset from body towards the north.
+	0,											// Weapon perspective offset from body towards the north.
 	0,0,										// Primary / secondary weapon barrel lengths
 	0,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
@@ -1567,12 +1567,12 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 				SpeedType speed,
 				MPHType maxSpeed,
 				unsigned rot,
-				int tshift,
-				int toffset,
-				int primaryblen,
-				int secondaryblen,
-				int primaryblat,
-				int secondaryblat,
+				int turshift,
+				int weapoffs,
+				int pribarlen,
+				int secbarlen,
+				int pribarlat,
+				int secbarlat,
 				MissionType order) :
 					TechnoTypeClass(name,
 										ininame,
@@ -1606,6 +1606,7 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 										reward,
 										ownable,
 										primary,secondary,
+										weapoffs,
 										armor)
 {
 	Explosion = exp;
@@ -1628,12 +1629,11 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 	Mission = order;
 	ROT = rot;
 	Speed = speed;
-	TurretShift = tshift;
-	TurretOffset = toffset;
-	BarrelLengthPrimary = primaryblen;
-	BarrelLengthSecondary = secondaryblen;
-	BarrelLateralPrimary = primaryblat;
-	BarrelLateralSecondary = secondaryblat;
+	TurretShift = turshift;
+	BarrelLengthPrimary = pribarlen;
+	BarrelLengthSecondary = secbarlen;
+	BarrelLateralPrimary = pribarlat;
+	BarrelLateralSecondary = secbarlat;
 
 	Type = type;
 }

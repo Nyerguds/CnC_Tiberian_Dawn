@@ -405,7 +405,7 @@ COORDINATE TurretClass::Fire_Coord(int which, TARGET totarget, COORDINATE coords
 	// In this example, the unit is facing to the east, with its turret aimed towards the north-east.
 	// C = coord (unit center coords)
 	// S = TurretShift (Shift of turret coords towards front facing of unit)
-	// O = TurretOffset (perspective shift of turret towards the north. The cause of all South Advantage bugs!)
+	// O = WeaponOffset (perspective shift of turret towards the north. The cause of all South Advantage bugs!)
 	// B = BarrelLength (barrel length; shift towards facing)
 	// L = BarrelLateral (adjustment to the left/right for double barreled units)
 	//      L
@@ -421,9 +421,9 @@ COORDINATE TurretClass::Fire_Coord(int which, TARGET totarget, COORDINATE coords
 		// Chunky units are typically not rotatable. Only apply shift in optimal direction if unit can rotate.
 		coord = Coord_Move(coord, Class->IsChunkyShape ? PrimaryFacing.Current() : shiftdir, Class->TurretShift);
 	}
-	// For range calculations, remove the north shift?
-	if (Class->TurretOffset /*&& !forrange*/) {
-		coord = Coord_Move(coord, DIR_N, Class->TurretOffset);
+	// For range calculations, remove the north shift. Bye-bye, South Advantage!
+	if (Class->WeaponOffset && !forrange) {
+		coord = Coord_Move(coord, DIR_N, Class->WeaponOffset);
 	}
 	if (which == 0) {
 		barrellen = Class->BarrelLengthPrimary;

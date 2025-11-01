@@ -180,6 +180,7 @@ TechnoTypeClass::TechnoTypeClass(
 		int ownable,
 		WeaponType primary,
 		WeaponType secondary,
+		int weaponoffs,
 		ArmorType armor) :
 	ObjectTypeClass(	true,
 							is_flammable,
@@ -201,6 +202,7 @@ TechnoTypeClass::TechnoTypeClass(
 	CameoData = NULL;
 	Primary = primary,
 	Secondary = secondary,
+	WeaponOffset = weaponoffs;
 	Cost = cost;
 	IsLeader = is_leader;
 	IsScanner = is_scanner;

@@ -2639,7 +2639,8 @@ void InfantryClass::Response_Sabotage(void)
  *    this only includes the rocket launcher and the grenade thrower. The other infantry       *
  *    have either invisible projectiles or special animations.                                 *
  *                                                                                             *
- * INPUT:   none                                                                               *
+ * INPUT:   totarget -- if given, the facing will always be assumed to be towards this         *
+ *                      target. This is used to perform facing-independent range checks.       *
  *                                                                                             *
  * OUTPUT:  Returns with the coordinate where the projectile will appear as it is fired.       *
  *                                                                                             *
@@ -2648,14 +2649,18 @@ void InfantryClass::Response_Sabotage(void)
  * HISTORY:                                                                                    *
  *   01/04/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-COORDINATE InfantryClass::Fire_Coord(int /*which*/, TARGET /*totarget*/, COORDINATE /*coords*/) const
+COORDINATE InfantryClass::Fire_Coord(int /*which*/, TARGET totarget, COORDINATE /*coords*/) const
 {
 	Validate();
-	if (Class->Type == INFANTRY_E4) {
-		return(Coord);	// special case for flame thrower guy
-	} else {
-		return(Coord_Add(Coord, XYP_COORD(0, -5)));
+	// Nyerguds's C&C Patch Project v1.04
+	// Allow getting the fire coords for any given target to correctly calculate range.
+	bool forrange = Target_Legal(totarget);
+	COORDINATE coord = Center_Coord();
+	// For range calculations, remove the north shift.
+	if (Class->WeaponOffset && !forrange) {
+		coord = Coord_Move(coord, DIR_N, Class->WeaponOffset);
 	}
+	return(coord);
 }
 
 

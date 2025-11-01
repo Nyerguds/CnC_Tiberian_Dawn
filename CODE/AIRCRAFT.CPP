@@ -2573,6 +2573,10 @@ COORDINATE AircraftClass::Fire_Coord(int /*which*/, TARGET totarget, COORDINATE 
 	} else {
 		facing = SecondaryFacing.Current();
 	}
+	// normally never used for aircraft.
+	if (Class->WeaponOffset && !forrange) {
+		coord = Coord_Move(coord, DIR_N, Class->WeaponOffset);
+	}	
 	coord = Coord_Add(XYP_Coord(0, -Altitude), coord);
 	return(Coord_Move(coord, facing, 0x040));
 }

@@ -379,6 +379,7 @@ AircraftTypeClass::AircraftTypeClass(
 										ownable,
 										primary,
 										secondary,
+										0,
 										armor)
 {
 	IsRotorEquipped = is_rotorequipped;

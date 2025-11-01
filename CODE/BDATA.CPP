@@ -240,6 +240,8 @@ static BuildingTypeClass const ClassTemple(
 	0,											// POWER:		Power points generated.
 	150,										// DRAIN:		Power points required.
 //	BSIZE_33, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List33_000111111,		// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List33_111000000		// OVERLAPLIST:List of overlap cell offset.
@@ -296,6 +298,8 @@ static BuildingTypeClass const ClassEye(
 	0,											// POWER:		Power points required.
 	200,										// DRAIN:		Power points required.
 //	BSIZE_22, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List22_1011,		// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List22_0100		// OVERLAPLIST:List of overlap cell offset.
@@ -356,6 +360,8 @@ static BuildingTypeClass const ClassWeapon(
 	0,											// POWER:		Power points required.
 	30,										// DRAIN:		Power points required.
 //	BSIZE_33, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	(short const *)ExitWeap,		// Preferred exit cell list.
 	(short const *)List33_000111111,		// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List33_111000000		// OVERLAPLIST:List of overlap cell offset.
@@ -413,6 +419,8 @@ static BuildingTypeClass const ClassGTower(
 	00,										// POWER:		Power points required.
 	10,										// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0x30,										// Weapon perspective offset from body towards the north.
+	0x40,0,									// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL			// OVERLAPLIST:List of overlap cell offset.
@@ -470,6 +478,8 @@ static BuildingTypeClass const ClassATower(
 	0,											// POWER:		Power points required.
 	20,										// DRAIN:		Power points required.
 //	BSIZE_12, 								// SIZE:			Building size.
+	0x30,										// Weapon perspective offset from body towards the north.
+	0x40,0,									// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List12_01,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List12_10			// OVERLAPLIST:List of overlap cell offset.
@@ -526,6 +536,8 @@ static BuildingTypeClass const ClassObelisk(
 	0,											// POWER:		Power points required.
 	150,										// DRAIN:		Power points required.
 //	BSIZE_12, 								// SIZE:			Building size.
+	0xA8,										// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List12_01,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List12_10			// OVERLAPLIST:List of overlap cell offset.
@@ -590,6 +602,8 @@ static BuildingTypeClass const ClassTurret(
 	0,											// POWER:		Power points required.
 	20,										// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0x30,										// Weapon perspective offset from body towards the north.
+	0x80,0,									// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL			// OVERLAPLIST:List of overlap cell offset.
@@ -647,6 +661,8 @@ static BuildingTypeClass const ClassConst(
 	30,										// POWER:		Power points required.
 	15,										// DRAIN:		Power points required.
 //	BSIZE_32, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List32_111111,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL			// OVERLAPLIST:List of overlap cell offset.
@@ -704,6 +720,8 @@ static BuildingTypeClass const ClassRefinery(
 	10,										// POWER:		Power points required.
 	40,										// DRAIN:		Power points required.
 //	BSIZE_33, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List33_010111000,		// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List33_101000111		// OVERLAPLIST:List of overlap cell offset.
@@ -762,6 +780,8 @@ static BuildingTypeClass const ClassStorage(
 	0,											// POWER:		Power points required.
 	10,										// DRAIN:		Power points required.
 //	BSIZE_21, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List21_11,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -819,6 +839,8 @@ static BuildingTypeClass const ClassHelipad(
 	0,											// POWER:		Power points required.
 	10,										// DRAIN:		Power points required.
 //	BSIZE_22, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List22_1111,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL			// OVERLAPLIST:List of overlap cell offset.
@@ -876,6 +898,8 @@ static BuildingTypeClass const ClassCommand(
 	0,											// POWER:		Power points required.
 	40,										// DRAIN:		Power points required.
 //	BSIZE_22, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List22_1011,		// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List22_0100		// OVERLAPLIST:List of overlap cell offset.
@@ -932,6 +956,8 @@ static BuildingTypeClass const ClassSAM(
 	0,											// POWER:		Power points required.
 	20,										// DRAIN:		Power points required.
 //	BSIZE_21, 								// SIZE:			Building size.
+	0x30,										// Weapon perspective offset from body towards the north.
+	0x80,0,									// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List21_11,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL				// OVERLAPLIST:List of overlap cell offset.
@@ -988,6 +1014,8 @@ static BuildingTypeClass const ClassAirStrip(
 	0,											// POWER:		Power points required.
 	30,										// DRAIN:		Power points required.
 //	BSIZE_42, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	ExitAirstrip,							// Preferred exit cell list.
 	(short const *)List42_11111111,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -1045,6 +1073,8 @@ static BuildingTypeClass const ClassPower(
 	100,										// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_22, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List22_1011,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List22_0100				// OVERLAPLIST:List of overlap cell offset.
@@ -1102,6 +1132,8 @@ static BuildingTypeClass const ClassAdvancedPower(
 	200,										// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_22, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List22_1011,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List22_0100				// OVERLAPLIST:List of overlap cell offset.
@@ -1159,6 +1191,8 @@ static BuildingTypeClass const ClassHospital(
 	0,											// POWER:		Power points required.
 	20,										// DRAIN:		Power points required.
 //	BSIZE_22, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List22_1111,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL			// OVERLAPLIST:List of overlap cell offset.
@@ -1215,6 +1249,8 @@ static BuildingTypeClass const ClassBioLab(
 	0,											// POWER:		Power points required.
 	40,										// DRAIN:		Power points required.
 //	BSIZE_22, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List22_1111,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL			// OVERLAPLIST:List of overlap cell offset.
@@ -1271,6 +1307,8 @@ static BuildingTypeClass const ClassBarracks(
 	0,											// POWER:		Power points required.
 	20,										// DRAIN:		Power points required.
 //	BSIZE_22, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	(short const *)ExitPyle,			// Preferred exit cell list.
 	(short const *)List22_1100,		// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List22_0011			// OVERLAPLIST:List of overlap cell offset.
@@ -1327,6 +1365,8 @@ static BuildingTypeClass const ClassHand(
 	0,											// POWER:		Power points required.
 	20,										// DRAIN:		Power points required.
 //	BSIZE_23, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	(short const *)ExitHand,		// Preferred exit cell list.
 	(short const *)List23_001101,		// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List23_110010		// OVERLAPLIST:List of overlap cell offset.
@@ -1383,6 +1423,8 @@ static BuildingTypeClass const ClassTanker(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_21, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List21_11,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL			// OVERLAPLIST:List of overlap cell offset.
@@ -1440,6 +1482,8 @@ static BuildingTypeClass const ClassRepair(
 	0,											// POWER:		Power points required.
 	30,										// DRAIN:		Power points required.
 //	BSIZE_33, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List33_010111010,		// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List33_101000101		// OVERLAPLIST:List of overlap cell offset.
@@ -1499,6 +1543,8 @@ static BuildingTypeClass const ClassRoad(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL			// OVERLAPLIST:List of overlap cell offset.
@@ -1556,6 +1602,8 @@ static BuildingTypeClass const ClassV01(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_22, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List22_0011,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List22_1100				// OVERLAPLIST:List of overlap cell offset.
@@ -1612,6 +1660,8 @@ static BuildingTypeClass const ClassV02(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_22, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List22_0011,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List22_1100				// OVERLAPLIST:List of overlap cell offset.
@@ -1668,6 +1718,8 @@ static BuildingTypeClass const ClassV03(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_22, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List22_0111,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List22_1000				// OVERLAPLIST:List of overlap cell offset.
@@ -1724,6 +1776,8 @@ static BuildingTypeClass const ClassV04(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_22, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List22_0011,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List22_1100				// OVERLAPLIST:List of overlap cell offset.
@@ -1780,6 +1834,8 @@ static BuildingTypeClass const ClassV05(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_21, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List21_11,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -1836,6 +1892,8 @@ static BuildingTypeClass const ClassV06(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_21, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List21_11,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -1892,6 +1950,8 @@ static BuildingTypeClass const ClassV07(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_21, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List21_11,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -1948,6 +2008,8 @@ static BuildingTypeClass const ClassV08(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2004,6 +2066,8 @@ static BuildingTypeClass const ClassV09(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2060,6 +2124,8 @@ static BuildingTypeClass const ClassV10(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2116,6 +2182,8 @@ static BuildingTypeClass const ClassV11(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2172,6 +2240,8 @@ static BuildingTypeClass const ClassV12(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2228,6 +2298,8 @@ static BuildingTypeClass const ClassV13(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2284,6 +2356,8 @@ static BuildingTypeClass const ClassV14(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2340,6 +2414,8 @@ static BuildingTypeClass const ClassV15(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2396,6 +2472,8 @@ static BuildingTypeClass const ClassV16(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2452,6 +2530,8 @@ static BuildingTypeClass const ClassV17(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2508,6 +2588,8 @@ static BuildingTypeClass const ClassV18(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2565,6 +2647,8 @@ static BuildingTypeClass const ClassV19(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2622,6 +2706,8 @@ static BuildingTypeClass const ClassV20(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_22, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List22_0011,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List22_1100				// OVERLAPLIST:List of overlap cell offset.
@@ -2679,6 +2765,8 @@ static BuildingTypeClass const ClassV21(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_22, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List22_1101,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List22_0010				// OVERLAPLIST:List of overlap cell offset.
@@ -2736,6 +2824,8 @@ static BuildingTypeClass const ClassV22(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_21, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List21_11,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2793,6 +2883,8 @@ static BuildingTypeClass const ClassV23(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -2850,6 +2942,8 @@ static BuildingTypeClass const ClassV24(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_22, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List22_0011,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List22_1100				// OVERLAPLIST:List of overlap cell offset.
@@ -2907,6 +3001,8 @@ static BuildingTypeClass const ClassV25(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_22, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List22_0111,			// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List22_1000				// OVERLAPLIST:List of overlap cell offset.
@@ -2964,6 +3060,8 @@ static BuildingTypeClass const ClassV26(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_21, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List21_11,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3021,6 +3119,8 @@ static BuildingTypeClass const ClassV27(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3078,6 +3178,8 @@ static BuildingTypeClass const ClassV28(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3135,6 +3237,8 @@ static BuildingTypeClass const ClassV29(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3192,6 +3296,8 @@ static BuildingTypeClass const ClassV30(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_21, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List21_11,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3249,6 +3355,8 @@ static BuildingTypeClass const ClassV31(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_21, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List21_11,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3306,6 +3414,8 @@ static BuildingTypeClass const ClassV32(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_21, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List21_11,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3363,6 +3473,8 @@ static BuildingTypeClass const ClassV33(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_21, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List21_11,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3420,6 +3532,8 @@ static BuildingTypeClass const ClassV34(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3477,6 +3591,8 @@ static BuildingTypeClass const ClassV35(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3534,6 +3650,8 @@ static BuildingTypeClass const ClassV36(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3591,6 +3709,8 @@ static BuildingTypeClass const ClassV37(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_42, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List42_01110111,		// OCCUPYLIST:	List of active foundation squares.
 	(short const *)List42_10001000		// OVERLAPLIST:List of overlap cell offset.
@@ -3649,6 +3769,8 @@ static BuildingTypeClass const ClassMission(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_32, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List32_111111,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3707,6 +3829,8 @@ static BuildingTypeClass const Sandbag(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3765,6 +3889,8 @@ static BuildingTypeClass const Cyclone(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3823,6 +3949,8 @@ static BuildingTypeClass const Brick(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3882,6 +4010,8 @@ static BuildingTypeClass const Barbwire(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -3940,6 +4070,8 @@ static BuildingTypeClass const Wood(
 	0,											// POWER:		Power points required.
 	0,											// DRAIN:		Power points required.
 //	BSIZE_11, 								// SIZE:			Building size.
+	0,											// Weapon perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths.
 	NULL,										// Preferred exit cell list.
 	(short const *)List11_1,				// OCCUPYLIST:	List of active foundation squares.
 	(short const *)NULL					// OVERLAPLIST:List of overlap cell offset.
@@ -4079,7 +4211,9 @@ BuildingTypeClass::BuildingTypeClass(
 						unsigned capacity,
 						int power,
 						int drain,
-						//BSizeType size,
+						int turoffset,
+						int pribarlen,
+						int secbarlen,
 						short const *exitlist,
 						short const *sizelist,
 						short const *overlap) :
@@ -4116,6 +4250,7 @@ BuildingTypeClass::BuildingTypeClass(
 													ownable,
 													primary,
 													secondary,
+													turoffset,
 													armor)
 {
 	CanEnter = canenter;
@@ -4135,6 +4270,9 @@ BuildingTypeClass::BuildingTypeClass(
 	OverlapList = overlap;
 	Power = power;
 	// Nyerguds's C&C Patch Project v1.04
+	// Migrated turret info to BuildingTypeClass.
+	BarrelLengthPrimary = pribarlen;
+	BarrelLengthSecondary = secbarlen;
 	// Dimensions are derived from the occupy and overlap lists.
 	Max_Dimensions(sizelist, overlap, &SizeX, &SizeY);
 	// Center is derived from dimensions
