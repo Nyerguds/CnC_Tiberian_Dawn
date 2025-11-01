@@ -1025,9 +1025,42 @@ class UnitTypeClass : public TechnoTypeClass
 		/*
 		**	This is the distance along the centerline heading in the direction the body
 		**	is facing used to reach the center point of the turret. This distance is
-		**	in leptons.
+		**	in leptons. (This is only used for the Gunboat.)
 		*/
-		signed char TurretOffset;
+		int TurretShift;
+
+		/*
+		**	This is the distance to the North from the body that the turret center point
+		**	is located. This only affects the projectile spawn point, not the turret
+		**	drawing. This distance is in leptons.
+		*/
+		int TurretOffset;
+
+		/*
+		**	This is the distance away from the turret center point that the projectiles
+		**	for the primary weapon will spawn. This distance is in leptons.
+		*/
+		int BarrelLengthPrimary;
+
+		/*
+		**	This is the lateral distance away from the center that the barrels of this
+		**	unit's primary weapon are offset, to distinguish the first and second shot
+		**	in a salvo. This distance is in leptons.
+		*/
+		int BarrelLateralPrimary;
+
+		/*
+		**	This is the distance away from the turret center point that the projectiles
+		**	for the primary weapon will spawn. This distance is in leptons.
+		*/
+		int BarrelLengthSecondary;
+
+		/*
+		**	This is the lateral distance away from the center that the barrels of this
+		**	unit's primary weapon are offset, to distinguish the first and second shot
+		**	in a salvo. This distance is in leptons.
+		*/
+		int BarrelLateralSecondary;
 
 		/*
 		**	This value is used to provide the unit with a default mission order when
@@ -1101,6 +1134,11 @@ class UnitTypeClass : public TechnoTypeClass
 						MPHType maxSpeed,
 						unsigned rot,
 						int toffset,
+						int tshift,
+						int primarytlen,
+						int primarytlat,
+						int secondarytlen,
+						int secondarytlat,
 						MissionType order);
 		virtual RTTIType  What_Am_I(void) const {return RTTI_UNITTYPE;};
 

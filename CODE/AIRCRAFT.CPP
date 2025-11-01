@@ -2537,18 +2537,44 @@ TARGET AircraftClass::New_LZ(TARGET oldlz) const
  * INPUT:   totarget -- if given, the facing will always be assumed to be towards this         *
  *                      target. This is used to perform facing-independent range checks.       *
  *                                                                                             *
+ *          coords   -- if not COORDINATE_OFFMAP, and "totarget" is a cell type with the same  *
+ *                      cell as this, this contains more precise coordinates to use instead.   *
+ *                                                                                             *
  * OUTPUT:  Returns with the coordinate of where the projectile will appear if fired.          *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   06/15/1995 JLB : Created.                                                                 *
+ *   09/04/2025 MM  : Added arg to correctly calculate range to target regardless of facing.   *
  *=============================================================================================*/
-COORDINATE AircraftClass::Fire_Coord(int /*which*/, TARGET totarget) const
+COORDINATE AircraftClass::Fire_Coord(int /*which*/, TARGET totarget, COORDINATE coords) const
 {
 	Validate();
-	DirType facing = (Target_Legal(totarget)) ? ::Direction(Coord, As_Coord(totarget)) : SecondaryFacing.Current();
-	return(Coord_Move(Coord_Add(XYP_Coord(0, -Altitude), Coord), facing, 0x040));
+	COORDINATE coord = Center_Coord();
+	// Nyerguds's C&C Patch Project v1.04
+	// Allow getting the fire coords for any given target to correctly calculate range.
+	bool forrange = Target_Legal(totarget);
+	// Determine the facing. If "totarget" is a map cell, switch to the more accurate "coords" instead.
+	DirType facing;
+	if (forrange) {
+		COORDINATE toface = 0l;
+		if (Is_Target_Cell(totarget)) {
+			CELL cell = (CELL)Target_Value(totarget);
+			if (coords != COORDINATE_OFFMAP && cell == Coord_Cell(coords)) {
+				toface = coords;
+			} else {
+				toface = Cell_Coord((CELL)Target_Value(totarget));
+			}
+		} else {
+			toface = As_Coord(totarget);
+		}
+		facing = ::Direction(Coord, toface);
+	} else {
+		facing = SecondaryFacing.Current();
+	}
+	coord = Coord_Add(XYP_Coord(0, -Altitude), coord);
+	return(Coord_Move(coord, facing, 0x040));
 }
 
 
@@ -2556,8 +2582,7 @@ COORDINATE AircraftClass::Fire_Coord(int /*which*/, TARGET totarget) const
  * AircraftClass::Target_Coord -- Fetches the coordinate if this aircraft is a target.         *
  *                                                                                             *
  *    When the coordinate to use when firing at this aircraft is needed, this routine will     *
- *    provide it. Normally this just returns the center of the aircraft, but if the cell of    *
- *    that center point is not occupied by the aircraft, a better one is found.                *
+ *    provide it.                                                                              *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *

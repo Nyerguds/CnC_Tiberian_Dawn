@@ -359,6 +359,9 @@ FireErrorType TurretClass::Can_Fire(TARGET target, int which) const
  *          totarget -- if given, the facing will always be assumed to be towards this         *
  *                      target. This is used to perform facing-independent range checks.       *
  *                                                                                             *
+ *          coords   -- if not COORDINATE_OFFMAP, and "totarget" is a cell type with the same  *
+ *                      cell as this, this contains more precise coordinates to use instead.   *
+ *                                                                                             *
  * OUTPUT:  Returns with coordinate of where a projectile should appear if this unit were      *
  *          to fire one.                                                                       *
  *                                                                                             *
@@ -366,76 +369,85 @@ FireErrorType TurretClass::Can_Fire(TARGET target, int which) const
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   12/28/1994 JLB : Created.                                                                 *
+ *   09/04/2025 MM  : Added arg to correctly calculate range to target regardless of facing.   *
  *=============================================================================================*/
-COORDINATE TurretClass::Fire_Coord(int which, TARGET totarget) const
+COORDINATE TurretClass::Fire_Coord(int which, TARGET totarget, COORDINATE coords) const
 {
 	COORDINATE coord = Center_Coord();
-	int dist = 0;
+	int barrellen = 0;
 	int lateral = 0;
-	DirType dir = PrimaryFacing.Current();
+	DirType shiftdir = PrimaryFacing.Current();
+	DirType barreldir = PrimaryFacing.Current();
 
-	if (Target_Legal(totarget)) {
-		dir = ::Direction(coord, As_Coord(totarget));
+	// Nyerguds's C&C Patch Project v1.04
+	// Allow getting the fire coords for any given target to correctly calculate range.
+	bool forrange = Target_Legal(totarget);
+	// Determine the facing. If "totarget" is a map cell, switch to the more accurate "coords" instead.
+	if (forrange) {
+		COORDINATE toface;
+		if (Is_Target_Cell(totarget)) {
+			CELL cell = (CELL)Target_Value(totarget);
+			if (coords != COORDINATE_OFFMAP && cell == Coord_Cell(coords)) {
+				toface = coords;
+			} else {
+				toface = Cell_Coord(cell);
+			}
+		} else {
+			toface = As_Coord(totarget);
+		}
+		barreldir = ::Direction(Coord, toface);
+		shiftdir = barreldir;
 	} else if (Class->IsTurretEquipped) {
-		dir = SecondaryFacing.Current();
+		barreldir = SecondaryFacing.Current();
 	}
 
-	switch (Class->Type) {
-		case UNIT_GUNBOAT:
-			coord = Coord_Move(coord, PrimaryFacing.Current(), Pixel2Lepton[Class->TurretOffset]);
-			dist = 0x0060;
-			break;
+	// Visual representation of coordinate adjustments.
+	// In this example, the unit is facing to the east, with its turret aimed towards the north-east.
+	// C = coord (unit center coords)
+	// S = TurretShift (Shift of turret coords towards front facing of unit)
+	// O = TurretOffset (perspective shift of turret towards the north. The cause of all South Advantage bugs!)
+	// B = BarrelLength (barrel length; shift towards facing)
+	// L = BarrelLateral (adjustment to the left/right for double barreled units)
+	//      L
+	//     / \
+	//    /   T
+	//    \  / \
+	//     \/   L
+	//     O\  /
+	//     | \/
+	//  C--S
 
-		case UNIT_ARTY:
-			coord = Coord_Move(coord, DIR_N, 0x0040);
-			dist = 0x0060;
-			break;
-
-		case UNIT_FTANK:
-			dist = 0x30;
-			if (IsSecondShot) {
-				coord = Coord_Move(coord, (DirType)(dir+DIR_E), 0x20);
-			} else {
-				coord = Coord_Move(coord, (DirType)(dir+DIR_W), 0x20);
-			}
-			break;
-
-		case UNIT_HTANK:
-			coord = Coord_Move(coord, DIR_N, 0x0040);
-			if (which == 0) {
-				dist = 0x00C0;
-				lateral = 0x0028;
-			} else {
-				dist = 0x0008;
-				lateral = 0x0040;
-			}
-			if (IsSecondShot) {
-				coord = Coord_Move(coord, (DirType)(dir+DIR_E), lateral);
-			} else {
-				coord = Coord_Move(coord, (DirType)(dir+DIR_W), lateral);
-			}
-			break;
-
-		case UNIT_LTANK:
-			coord = Coord_Move(coord, DIR_N, 0x0020);
-			dist = 0x00C0;
-			break;
-
-		case UNIT_MTANK:
-			coord = Coord_Move(coord, DIR_N, 0x0030);
-			dist = 0x00C0;
-			break;
-
-		case UNIT_APC:
-		case UNIT_JEEP:
-		case UNIT_BUGGY:
-			coord = Coord_Move(coord, DIR_N, 0x0030);
-			dist = 0x0030;
-			break;
+	if (Class->TurretShift) {
+		// Chunky units are typically not rotatable. Only apply shift in optimal direction if unit can rotate.
+		coord = Coord_Move(coord, Class->IsChunkyShape ? PrimaryFacing.Current() : shiftdir, Class->TurretShift);
 	}
-
-	if (dist) {
-		coord = Coord_Move(coord, dir, dist);
+	// For range calculations, remove the north shift?
+	if (Class->TurretOffset /*&& !forrange*/) {
+		coord = Coord_Move(coord, DIR_N, Class->TurretOffset);
+	}
+	if (which == 0) {
+		barrellen = Class->BarrelLengthPrimary;
+		lateral = Class->BarrelLateralPrimary;
+	} else {
+		barrellen = Class->BarrelLengthSecondary;
+		lateral = Class->BarrelLateralSecondary;
+	}
+	if (barrellen) {
+		coord = Coord_Move(coord, barreldir, barrellen);
+	}
+	// For range calculations, remove the side shift.
+	if (lateral && !forrange) {
+		int yval1 = Coord_Y(coord);
+		if (IsSecondShot) {
+			coord = Coord_Move(coord, (DirType)(barreldir+DIR_E), lateral);
+		} else {
+			coord = Coord_Move(coord, (DirType)(barreldir+DIR_W), lateral);
+		}
+		int xval2 = Coord_X(coord);
+		int yval2 = Coord_Y(coord);
+		// Adjust to perspective by dividing the vertical difference by 2.
+		int yvalpersp = yval1 + (yval2 - yval1) / 2;
+		coord = XY_Coord(xval2, yvalpersp);
 	}
 
 	return(coord);

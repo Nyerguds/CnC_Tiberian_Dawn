@@ -103,7 +103,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Capturing a building will now refresh all of its cells on the radar to the new color.
 * EVA now announces when the player loses a building. The "DeathAnnounce" option now also works for buildings.
 * When "DeathAnnounce" is enabled, a destroyed unit or structure in singleplayer that is not GDI or Nod, and is not allied with the player, is now reported as destroyed "enemy".
-* EVA now announces when repairs have started on a building or unit. This is enabled by default, but can be disabled by adding the option "NoRepairAnnounce=true" in conquer.ini, under \[Patch\].
+* EVA now announces when repairs have started on a building or unit. This is enabled by default, but can be disabled by adding the option "NoRepairAnnounce=true" in conquer.ini, under \[Patch\]. If repairs on the same vehicle get halted and restarted due to lack of funds, this will not be announced multiple times.
 * Drag-selecting will now show the default cursor instead of keeping an incorrect cursor from where the drag action started.
 * Drag-selecting will no longer pop up a tooltip of the thing the mouse was pressed down on.
 * The minimap will now only respond to clicks at the moment the mouse is released, like how it works on the main map.
@@ -143,14 +143,14 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Pressing \[Escape\] on the score or map screen will now speed up the animations to rapidly skip to the end state.
 * After selecting a location on the map screen, both the \[Escape\] key and clicking the mouse will make the text animation speed up.
 * Implemented the Nod-specific map and score screen music. This is enabled by default, but can be disabled by adding the option "NoNodSceneMusic=true" in conquer.ini, under \[Patch\].
-* Added \[Ctrl\]+\[S\] as in-game screenshot key. This does not work on menus or between missions, though. You can disable the UI message of the saved filename by adding the option "NoScreenshotMessage=true" in conquer.ini, under \[Patch\].
-* Added new option to enable the debug option IsBarOn, as "BarOn=harkonnen" ;)
+* Added \[Ctrl\]+\[S\] as in-game screenshot key, writing a .pcx file into the game folder. This does not work on menus or between missions, though. You can disable the UI message of the saved filename by adding the option "NoScreenshotMessage=true" in conquer.ini, under \[Patch\].
+* Added new ini key to enable the debug option IsBarOn, as "BarOn=harkonnen" ;)
 * Added the ability to customize color schemes from mission files using the "ColorScheme" / "SecondaryScheme" / "RadarScheme" options under the House ini sections.
 * Added support for extra destroyable triggers named UUUU, VVVV and WWWW.
 * Civilian evacuation triggers in missions can now be looped to detect multiple evacuations.
 * Added proper mouse scroll wheel support to the sidebar; it now scrolls the list you hover over.
 * Item lists such as the New Missions menu and the music list now support PageUp, PageDown, Home, End, and the mouse scroll wheel.
-* The prefix shown on items in the New Missions menu now actually matches the player set in the mission file.
+* The prefix shown on items in the New Missions menu now always automatically matches the player set in the mission file.
 * Items in the New Missions menu now load missions for campaign side "J" too, from SCJ20EA to SCJ99EA.
 * Added constraint checks on strings file reading, with any unknown string returning "&lt;&lt;UNKNOWN STRING&gt;&gt;".
 * The AI behaviour to run from incoming threats is now enabled at BuildLevel 8, rather than at Scenario 8, making it equivalent to other difficulty increase tweaks that happen at that level.
@@ -182,8 +182,9 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Aircraft will now always immediately return to base when they run out of ammo mid-salvo, instead of waiting for a second shot they don't have.
 * Fixed the infantry squish sound increasing in volume if multiple infantry units are on the same squished cell.
 * Fixed ability to crush light vehicles, and tweaked it so this doesn't play the infantry squish sound, but instead plays the destroyed unit's normal death animation, along with a little "roadkill bump" sound.
+* The game now generates translucent effects in memory, rather than reading them from .MRF files. This allowed several minor bugs in the translucency effects to be corrected.
 * Enabled translucent colors on the vehicle smoke and oil derrick smoke animations, so they can be enhanced to semitransparent smoke.
-* Enabled translucent colors on rocket exhaust smoke puff, so they can be enhanced to semitransparent smoke.
+* Enabled translucent colors on rocket exhaust smoke puff, so it can be enhanced to semitransparent smoke.
 * Enabled translucent colors on the SAM Site launch smoke animations, so the hard-baked Nod colours on the animation can be fixed.
 * Fixed misalignment on SAM Site launch smoke animations.
 * The grenade throw sound can now be disabled by enabling the option "NoGrenadeToss=true" in conquer.ini, under \[Patch\].
@@ -200,17 +201,18 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * When a building is captured while the building placement grid is shown, the placement grid will automatically update with the ownership change.
 * Improved the alignment of cargo / ammo indicator pips inside selection box.
 * Fixed "Sticky" orders; in the original implementation it acted like "Sleep until attacked", but its intended purpose was always to have units that acted like player units in Guard mode, never moving from their position but attacking anything in range.
-* Fixed units in "Sleep" or "Sticky" mode still being able to scatter in certain conditions, e.g. to evade incoming damage.
+* Fixed units in "Sleep" or "Sticky" mode still being able to scatter under certain conditions, e.g. to evade incoming damage.
 * Construction no longer starts as "On Hold" if no money is available.
 * Construction in "On Hold" status can now be told to continue even if the player currently has no money.
 * Impatient clicks while lacking money will now make EVA explain to players the basic principle that they cannot construct things if they are broke.
 * Clicking to repair a building while lacking money will now make EVA explain to players the basic principle that they cannot repair things if they are broke. Note that the "NoRepairAnnounce" ini option disables this.
 * If you own a refinery, losing your last harvester will now give a "Need Harvester" announcement instead of the usual "Unit Lost".
-* The game now generates translucent effects in memory, rather than reading them from .MRF files. This allowed several minor bugs in the translucency effects to be corrected.
 * Restricted the amount of units rendered on a Hovercraft to five, to avoid the game using out-of-bounds program data to determine the locations for further units.
 * Stealth units placed in missions no longer need to cloak on mission start; they now start fully cloaked.
-* Removed extra tendency of APCs to load from the south-east or south-west, which would make it never load units from the north-west unless the south-west cell was blocked.
-* The Hospital can no longer be sold.
-* Selling a wall now gives a sell sound.
+* Removed extra tendency of APCs to load from the south-east or south-west, which would make them never load units from the north-west unless the south-west cell was blocked.
+* \[Remaster\] The Hospital can no longer be sold. This fixes a bug that had been in the game since the release of C&C95; in the DOS version it was indeed unsellable.
+* \[Remaster\] Selling a wall now gives a sell sound.
 * Enabled Juvenile version of the sound volume test sound.
 * Re-enabled unused "Over and out!" infantry voice.
+* Double-barreled units such as the Mammoth Tank and Flame Tank have their firing offsets adjusted to perspective, so the shots no longer look too far apart when firing towards east-west direction.
+* The distance between the barrels on double-barreled units no longer affects their weapon range calculations. Barrel length still affects it, but the sideways offset doesn't.

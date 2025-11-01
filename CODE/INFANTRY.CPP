@@ -2648,7 +2648,7 @@ void InfantryClass::Response_Sabotage(void)
  * HISTORY:                                                                                    *
  *   01/04/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-COORDINATE InfantryClass::Fire_Coord(int /*which*/, TARGET /*totarget*/) const
+COORDINATE InfantryClass::Fire_Coord(int /*which*/, TARGET /*totarget*/, COORDINATE /*coords*/) const
 {
 	Validate();
 	if (Class->Type == INFANTRY_E4) {

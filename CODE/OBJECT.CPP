@@ -595,7 +595,7 @@ COORDINATE ObjectClass::Center_Coord(void) const {return Coord;};
 COORDINATE ObjectClass::Render_Coord(void) const {return(Center_Coord());}
 COORDINATE ObjectClass::Docking_Coord(void) const {return(Center_Coord());}
 COORDINATE ObjectClass::Sort_Y(void) const {return Coord;};
-COORDINATE ObjectClass::Fire_Coord(int /*which*/, TARGET /*totarget*/) const {return Coord;};
+COORDINATE ObjectClass::Fire_Coord(int /*which*/, TARGET /*totarget*/, COORDINATE /*coords*/) const {return Coord;};
 void ObjectClass::Record_The_Kill(TechnoClass * /*source*/, bool /*sold*/) {};
 void ObjectClass::Do_Shimmer(void) {};
 int ObjectClass::Exit_Object(TechnoClass *) {return 0;};

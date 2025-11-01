@@ -109,7 +109,7 @@ class AircraftClass : public FootClass, public FlyClass
 		**	combat purposes.
 		*/
 		virtual COORDINATE Sort_Y(void) const;
-		virtual COORDINATE Fire_Coord(int /*which*/, TARGET totarget = TARGET_NONE) const;
+		virtual COORDINATE Fire_Coord(int /*which*/, TARGET totarget = TARGET_NONE, COORDINATE coords = 0l) const;
 		virtual COORDINATE Target_Coord() const;
 
 		/*

@@ -1057,6 +1057,7 @@ void TechnoClass::Look(bool incremental)
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   11/14/1994 JLB : Created.                                                                 *
+ *   09/04/2025 MM  : Fixed range checks to be facing independent.                             *
  *=============================================================================================*/
 bool TechnoClass::In_Range(TARGET target, int which) const
 {
@@ -1066,7 +1067,8 @@ bool TechnoClass::In_Range(TARGET target, int which) const
 		if (building) {
 			range += ((building->Class->Width() + building->Class->Height()) * (ICON_LEPTON_W / 4));
 		}
-
+		// Nyerguds's C&C Patch Project v1.04
+		// Fixed range checks to be facing independent.
 		if (::Distance(Fire_Coord(which, target), As_Coord(target)) <= range) {
 			return(true);
 		}
@@ -1091,6 +1093,7 @@ bool TechnoClass::In_Range(TARGET target, int which) const
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   11/14/1994 JLB : Created.                                                                 *
+ *   09/04/2025 MM  : Fixed range checks to be facing independent.                             *
  *=============================================================================================*/
 bool TechnoClass::In_Range(ObjectClass const * target, int which) const
 {
@@ -1100,7 +1103,8 @@ bool TechnoClass::In_Range(ObjectClass const * target, int which) const
 			BuildingClass const * building = (BuildingClass const *)target;
 			range += ((building->Class->Width() + building->Class->Height()) * (ICON_LEPTON_W / 4));
 		}
-
+		// Nyerguds's C&C Patch Project v1.04
+		// Fixed range checks to be facing independent.
 		if (::Distance(Fire_Coord(which, target->As_Target()), target->Center_Coord()) <= range) {
 			return(true);
 		}
@@ -1124,10 +1128,14 @@ bool TechnoClass::In_Range(ObjectClass const * target, int which) const
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   03/16/1995 JLB : Created.                                                                 *
+ *   09/04/2025 MM  : Fixed range checks to be facing independent.                             *
  *=============================================================================================*/
 bool TechnoClass::In_Range(COORDINATE coord, int which) const
 {
-	return(IsLocked && ::Distance(Fire_Coord(which), coord) <= Weapon_Range(which));
+	// Nyerguds's C&C Patch Project v1.04
+	// Fixed range checks to be facing independent.
+	// TARGET on spot can only take a cell number, not coords, so add extra arg to correct that to the real coords.
+	return(IsLocked && ::Distance(Fire_Coord(which, ::As_Target(Coord_Cell(coord)), coord), coord) <= Weapon_Range(which));
 }
 
 

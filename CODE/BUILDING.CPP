@@ -2441,6 +2441,9 @@ bool BuildingClass::Limbo(void)
  * INPUT:   totarget -- if given, the facing will always be assumed to be towards this         *
  *                      target. This is used to perform facing-independent range checks.       *
  *                                                                                             *
+ *          coords   -- if not COORDINATE_OFFMAP, and "totarget" is a cell type with the same  *
+ *                      cell as this, this contains more precise coordinates to use instead.   *
+ *                                                                                             *
  * OUTPUT:  Returns with coordinate that the projectile should appear at if the building       *
  *          were to fire.                                                                      *
  *                                                                                             *
@@ -2448,10 +2451,13 @@ bool BuildingClass::Limbo(void)
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   12/24/1994 JLB : Created.                                                                 *
+ *   09/04/2025 MM  : Added arg to correctly calculate range to target regardless of facing.   *
  *=============================================================================================*/
-COORDINATE BuildingClass::Fire_Coord(int /*which*/, TARGET totarget) const
+COORDINATE BuildingClass::Fire_Coord(int /*which*/, TARGET totarget, COORDINATE coords) const
 {
 	Validate();
+	// Nyerguds's C&C Patch Project v1.04
+	// Allow getting the fire coords for any given target to correctly calculate range.
 	COORDINATE coord = Center_Coord();			// Center of firing building.
 
 	/*
@@ -2459,34 +2465,46 @@ COORDINATE BuildingClass::Fire_Coord(int /*which*/, TARGET totarget) const
 	**	position. This depends on building type and turret facing.
 	*/
 	TARGET target = TARGET_NONE;
-	switch (Class->Type) {
-		default:
-		case STRUCT_GTOWER:
-		case STRUCT_ATOWER:
-			coord = Coord_Move(coord, DIR_N, 0x0030);
-			if (Target_Legal(totarget)) {
-				target = totarget;
-			} else if (Target_Legal(TarCom)) {
-				target = TarCom;
-			}
-			if (Target_Legal(target)) {
-				coord = Coord_Move(coord, ::Direction(coord, As_Coord(target)), 0x0040);
-			}
-			break;
-		case STRUCT_OBELISK:
-			coord = Coord_Move(coord, DIR_N, 0x00A8);
-//			coord = Coord_Move(coord, DIR_N, 0x0058);
-			coord = Coord_Move(coord, DIR_W, 0x0018);
-			break;
 
-		case STRUCT_SAM:
-		case STRUCT_TURRET:
-			coord = Coord_Move(coord, DIR_N, 0x0030);
-			DirType facing = (Target_Legal(totarget)) ? ::Direction(coord, As_Coord(totarget)) : PrimaryFacing.Current();
-			coord = Coord_Move(coord, facing, 0x0080);
-			break;
+	// Guard Towers automatically face the current target.
+	if (!Target_Legal(totarget) && !Class->IsTurretEquipped) {
+		totarget = TarCom;
+		coords = COORDINATE_OFFMAP;
 	}
-
+	// Determine the facing. If "totarget" is a map cell, switch to the more accurate "coords" instead.
+	DirType facing;
+	if (Target_Legal(totarget)) {
+		COORDINATE toface;
+		if (Is_Target_Cell(totarget)) {
+			CELL cell = (CELL)Target_Value(totarget);
+			if (coords != COORDINATE_OFFMAP && cell == Coord_Cell(coords)) {
+				toface = coords;
+			} else {
+				toface = Cell_Coord(cell);
+			}
+		} else {
+			toface = As_Coord(totarget);
+		}
+		facing = ::Direction(Coord, toface);
+	} else {
+		facing = PrimaryFacing.Current();
+	}
+	// TODO migrate this to BuildingType definitions.
+	if (Class->Type == STRUCT_OBELISK) {
+		coord = Coord_Move(coord, DIR_N, 0x00A8);
+//		coord = Coord_Move(coord, DIR_N, 0x0058);
+	} else if (Class->IsTurretEquipped) {
+		//case STRUCT_SAM:
+		//case STRUCT_TURRET:
+		coord = Coord_Move(coord, DIR_N, 0x0030);
+		coord = Coord_Move(coord, facing, 0x0080);
+	} else {
+		//default:
+		//case STRUCT_GTOWER:
+		//case STRUCT_ATOWER:
+		coord = Coord_Move(coord, DIR_N, 0x0030);
+		coord = Coord_Move(coord, facing, 0x0040);
+	}
 	return(coord);
 }
 
@@ -2664,19 +2682,20 @@ void BuildingClass::Repair(int control)
 	if (IsRepairing) {
 		if (Strength == Class->MaxStrength) {
 			sound = VOC_SCOLD;
-		} else if (House->Available_Money() == 0) {
-			IsRepairing = false;
-			Clicked_As_Target();
-			sound = VOC_SCOLD;
-			response = VOX_NEED_MO_MONEY;
 		} else {
-			response = VOX_REPAIRING;
-			sound = VOC_BUTTON;
 			Clicked_As_Target();
-			IsWrenchVisible = true;
-		}
-		if (IsOwnedByPlayer && response != VOX_NONE && !Options.NoRepairAnnounce) {
-			Speak(response);
+			if (House->Available_Money() < Class->Repair_Cost()) {
+				IsRepairing = false;
+				sound = VOC_SCOLD;
+				response = VOX_NEED_MO_MONEY;
+			} else {
+				sound = VOC_BUTTON;
+				response = VOX_REPAIRING;
+				IsWrenchVisible = true;
+			}
+			if (IsOwnedByPlayer && response != VOX_NONE && !Options.NoRepairAnnounce) {
+				Speak(response);
+			}
 		}
 	} else {
 		sound = VOC_BUTTON;

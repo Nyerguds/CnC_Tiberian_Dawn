@@ -198,7 +198,7 @@ class BuildingClass : public TechnoClass
 		**	combat purposes.
 		*/
 		virtual COORDINATE Docking_Coord(void) const;
-		virtual COORDINATE Fire_Coord(int /*which*/, TARGET totarget = TARGET_NONE) const;
+		virtual COORDINATE Fire_Coord(int /*which*/, TARGET totarget = TARGET_NONE, COORDINATE coords = COORDINATE_OFFMAP) const;
 		virtual COORDINATE Center_Coord(void) const;
 		virtual COORDINATE Sort_Y(void) const;
 		virtual COORDINATE Target_Coord() const;

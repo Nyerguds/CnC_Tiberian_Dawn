@@ -106,12 +106,15 @@ static UnitTypeClass const UnitVisceroid(
 	HOUSEF_BAD|
 	HOUSEF_NEUTRAL|
 	HOUSEF_JP,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_CHEMSPRAY,WEAPON_NONE,
+	WEAPON_CHEMSPRAY,WEAPON_NONE,	// Primary / secondary weapon
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
 	MPH_MEDIUM,								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
-	0,							// Turret center offset along body centerline.
+	0,											// Turret center offset along body centerline.
+	0,											// Turret perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths
+	0,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
 
@@ -168,12 +171,15 @@ static UnitTypeClass const UnitFTank(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_FLAME_TONGUE,WEAPON_NONE,
+	WEAPON_FLAME_TONGUE,WEAPON_NONE,	// Primary / secondary weapon
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
 	MPH_MEDIUM,								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
-	0,							// Turret center offset along body centerline.
+	0,											// Turret center offset along body centerline.
+	0,											// Turret perspective offset from body towards the north.
+	0x30,0,										// Primary / secondary weapon barrel lengths
+	0x20,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
 
@@ -230,12 +236,15 @@ static UnitTypeClass const UnitSTank(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_DRAGON,WEAPON_NONE,
+	WEAPON_DRAGON,WEAPON_NONE,	// Primary / secondary weapon
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
 	MPH_MEDIUM_FAST,						// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
-	0,							// Turret center offset along body centerline.
+	0,											// Turret center offset along body centerline.
+	0,											// Turret perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths
+	0,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
 
@@ -292,12 +301,15 @@ static UnitTypeClass const UnitLTank(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_75MM,WEAPON_NONE,
+	WEAPON_75MM,WEAPON_NONE,	// Primary / secondary weapon
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
 	MPH_MEDIUM,								// SPEED:		Miles per hour.
-	5,											// ROT:			Rate of turn (degrees per tick).
-	0,							// Turret center offset along body centerline.
+	5,												// ROT:			Rate of turn (degrees per tick).
+	0,												// Turret center offset along body centerline.
+	0x20,											// Turret perspective offset from body towards the north.
+	0xC0,0,										// Primary / secondary weapon barrel lengths
+	0,0,											// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
 
@@ -354,12 +366,15 @@ static UnitTypeClass const UnitMTank(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_105MM,WEAPON_NONE,
+	WEAPON_105MM,WEAPON_NONE,	// Primary / secondary weapon
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
 	MPH_MEDIUM,								// SPEED:		Miles per hour.
-	5,											// ROT:			Rate of turn (degrees per tick).
-	0,							// Turret center offset along body centerline.
+	5,												// ROT:			Rate of turn (degrees per tick).
+	0,												// Turret center offset along body centerline.
+	0x30,											// Turret perspective offset from body towards the north.
+	0xC0,0,										// Primary / secondary weapon barrel lengths
+	0,0,											// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
 
@@ -416,12 +431,15 @@ static UnitTypeClass const UnitHTank(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_120MM,WEAPON_MAMMOTH_TUSK,
+	WEAPON_120MM,WEAPON_MAMMOTH_TUSK,	// Primary / secondary weapon
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
 	MPH_MEDIUM_SLOW,						// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
-	0,							// Turret center offset along body centerline.
+	0,											// Turret center offset along body centerline.
+	0x40,											// Turret perspective offset from body towards the north.
+	0xC0,0x08,								// Primary / secondary weapon barrel lengths
+	0x28,0x40,								// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
 
@@ -479,12 +497,15 @@ static UnitTypeClass const UnitMHQ(
 	HOUSEF_JP|
 	HOUSEF_GOOD|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	WEAPON_NONE,WEAPON_NONE,	// Primary / secondary weapon
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
 	MPH_MEDIUM,								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
-	0,							// Turret center offset along body centerline.
+	0,											// Turret center offset along body centerline.
+	0,											// Turret perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths
+	0,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
 
@@ -543,12 +564,15 @@ static UnitTypeClass const UnitHover(
 	HOUSEF_JP|
 	HOUSEF_GOOD|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	WEAPON_NONE,WEAPON_NONE,	// Primary / secondary weapon
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_HOVER,							// MOVE:			Locomotion type.
 	MPH_MEDIUM_FAST,						// SPEED:		Miles per hour.
 	127,										// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
+	0,											// Turret perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths
+	0,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
 
@@ -606,12 +630,15 @@ static UnitTypeClass const UnitSAM(
 	HOUSEF_JP|
 //	HOUSEF_GOOD|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_HONEST_JOHN,WEAPON_NONE,
+	WEAPON_HONEST_JOHN,WEAPON_NONE,	// Primary / secondary weapon
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
 	MPH_MEDIUM,								// SPEED:		Miles per hour.
-	5,											// ROT:			Rate of turn (degrees per tick).
-	0,							// Turret center offset along body centerline.
+	5,												// ROT:			Rate of turn (degrees per tick).
+	0,												// Turret center offset along body centerline.
+	0,												// Turret perspective offset from body towards the north.
+	0,0,											// Primary / secondary weapon barrel lengths
+	0,0,											// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
 
@@ -668,12 +695,15 @@ static UnitTypeClass const UnitArty(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_155MM,WEAPON_NONE,
+	WEAPON_155MM,WEAPON_NONE,	// Primary / secondary weapon
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	MPH_MEDIUM_SLOW,						// SPEED:		Miles per hour.
-	2,											// ROT:			Rate of turn (degrees per tick).
-	0,							// Turret center offset along body centerline.
+	MPH_MEDIUM_SLOW,					// SPEED:		Miles per hour.
+	2,												// ROT:			Rate of turn (degrees per tick).
+	0,												// Turret center offset along body centerline.
+	0x40,											// Turret perspective offset from body towards the north.
+	0x60,0,										// Primary / secondary weapon barrel lengths
+	0,0,											// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
 
@@ -732,12 +762,15 @@ static UnitTypeClass const UnitHarvester(
 	HOUSEF_JP|
 	HOUSEF_GOOD|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	WEAPON_NONE,WEAPON_NONE,	// Primary / secondary weapon
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_WHEEL,							// MOVE:			Locomotion type.
-	MPH_MEDIUM_SLOW,						// SPEED:		Miles per hour.
-	5,											// ROT:			Rate of turn (degrees per tick).
-	0,							// Turret center offset along body centerline.
+	MPH_MEDIUM_SLOW,					// SPEED:		Miles per hour.
+	5,												// ROT:			Rate of turn (degrees per tick).
+	0,												// Turret center offset along body centerline.
+	0,												// Turret perspective offset from body towards the north.
+	0,0,											// Primary / secondary weapon barrel lengths
+	0,0,											// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HARVEST						// ORDERS:		Default order to give new unit.
 );
 
@@ -795,12 +828,15 @@ static UnitTypeClass const UnitMCV(
 	HOUSEF_JP|
 	HOUSEF_GOOD|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_NONE,WEAPON_NONE,
+	WEAPON_NONE,WEAPON_NONE,	// Primary / secondary weapon
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_WHEEL,							// MOVE:			Locomotion type.
-	MPH_MEDIUM_SLOW,						// SPEED:		Miles per hour.
-	5,											// ROT:			Rate of turn (degrees per tick).
-	0,							// Turret center offset along body centerline.
+	MPH_MEDIUM_SLOW,					// SPEED:		Miles per hour.
+	5,												// ROT:			Rate of turn (degrees per tick).
+	0,												// Turret center offset along body centerline.
+	0,												// Turret perspective offset from body towards the north.
+	0,0,											// Primary / secondary weapon barrel lengths
+	0,0,											// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
 
@@ -857,12 +893,15 @@ static UnitTypeClass const UnitJeep(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_M60MG,WEAPON_NONE,
+	WEAPON_M60MG,WEAPON_NONE,	// Primary / secondary weapon
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_WHEEL,							// MOVE:			Locomotion type.
-	MPH_MEDIUM_FAST,						// SPEED:		Miles per hour.
-	10,										// ROT:			Rate of turn (degrees per tick).
-	0,							// Turret center offset along body centerline.
+	MPH_MEDIUM_FAST,					// SPEED:		Miles per hour.
+	10,												// ROT:			Rate of turn (degrees per tick).
+	0,												// Turret center offset along body centerline.
+	0x30,											// Turret perspective offset from body towards the north.
+	0x30,0,										// Primary / secondary weapon barrel lengths
+	0,0,											// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
 
@@ -919,12 +958,15 @@ static UnitTypeClass const UnitBuggy(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_M60MG,WEAPON_NONE,
+	WEAPON_M60MG,WEAPON_NONE,	// Primary / secondary weapon
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_WHEEL,							// MOVE:			Locomotion type.
-	MPH_MEDIUM_FAST,						// SPEED:		Miles per hour.
-	10,										// ROT:			Rate of turn (degrees per tick).
-	0,							// Turret center offset along body centerline.
+	MPH_MEDIUM_FAST,					// SPEED:		Miles per hour.
+	10,												// ROT:			Rate of turn (degrees per tick).
+	0,												// Turret center offset along body centerline.
+	0x30,											// Turret perspective offset from body towards the north.
+	0x30,0,										// Primary / secondary weapon barrel lengths
+	0,0,											// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
 
@@ -985,12 +1027,15 @@ static UnitTypeClass const UnitBike(
 	HOUSEF_MULTI6|
 	HOUSEF_JP|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_DRAGON,WEAPON_NONE,
+	WEAPON_DRAGON,WEAPON_NONE,	// Primary / secondary weapon
 	ARMOR_WOOD,								// ARMOR:		Armor type
 	SPEED_WHEEL,							// MOVE:			Locomotion type.
 	MPH_FAST,								// SPEED:		Miles per hour.
 	10,										// ROT:			Rate of turn (degrees per tick).
-	0,							// Turret center offset along body centerline.
+	0,											// Turret center offset along body centerline.
+	0,											// Turret perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths
+	0,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
 
@@ -1048,12 +1093,15 @@ static UnitTypeClass const UnitMLRS(
 	HOUSEF_JP|
 	HOUSEF_BAD|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_MLRS,WEAPON_NONE,
+	WEAPON_MLRS,WEAPON_NONE,	// Primary / secondary weapon
 	ARMOR_ALUMINUM,						// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
 	MPH_MEDIUM,								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
+	0,											// Turret perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths
+	0,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
 );
 
@@ -1111,12 +1159,15 @@ static UnitTypeClass const UnitAPC(
 	HOUSEF_BAD|
 	HOUSEF_JP|
 	HOUSEF_GOOD,							// OWNABLE:		Ownable by house (bit field).
-	WEAPON_M60MG,WEAPON_NONE,
+	WEAPON_M60MG,WEAPON_NONE,	// Primary / secondary weapon
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
-	MPH_MEDIUM_FASTER,					// SPEED:		Miles per hour.
-	5,											// ROT:			Rate of turn (degrees per tick).
-	0,											// Turret center offset along body centerline.
+	MPH_MEDIUM_FASTER,				// SPEED:		Miles per hour.
+	5,												// ROT:			Rate of turn (degrees per tick).
+	0,												// Turret center offset along body centerline.
+	0x30,											// Turret perspective offset from body towards the north.
+	0x30,0,										// Primary / secondary weapon barrel lengths
+	0,0,											// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
 
@@ -1174,12 +1225,15 @@ static UnitTypeClass const UnitGunBoat(
 	HOUSEF_JP|
 	HOUSEF_GOOD|
 	HOUSEF_BAD,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_TOMAHAWK,WEAPON_NONE,
+	WEAPON_TOMAHAWK,WEAPON_NONE,	// Primary / secondary weapon
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_FLOAT,							// MOVE:			Locomotion type.
-	MPH_SLOW,								// SPEED:		Miles per hour.
-	1,											// ROT:			Rate of turn (degrees per tick).
-	14,										// Turret center offset along body centerline.
+	MPH_SLOW,									// SPEED:		Miles per hour.
+	1,												// ROT:			Rate of turn (degrees per tick).
+	0x95,											// Turret center offset along body centerline.
+	0,												// Turret perspective offset from body towards the north.
+	0x60,0,										// Primary / secondary weapon barrel lengths
+	0,0,											// Primary / secondary weapon offset from center for double barrels 
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
 );
 
@@ -1229,12 +1283,15 @@ static UnitTypeClass const UnitTric(
 	99,										// SCENARIO:	Starting availability scenario.
 	50,50,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_JP,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_STEG,WEAPON_NONE,
+	WEAPON_STEG,WEAPON_NONE,	// Primary / secondary weapon
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
 	MPH_SLOW,								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
+	0,											// Turret perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths
+	0,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
 );
 
@@ -1284,12 +1341,15 @@ static UnitTypeClass const UnitTrex(
 	99,										// SCENARIO:	Starting availability scenario.
 	50,50,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_JP,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_TREX,WEAPON_NONE,
+	WEAPON_TREX,WEAPON_NONE,	// Primary / secondary weapon
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
 	MPH_MEDIUM,								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
+	0,											// Turret perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths
+	0,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
 );
 
@@ -1339,12 +1399,15 @@ static UnitTypeClass const UnitRapt(
 	99,										// SCENARIO:	Starting availability scenario.
 	50,50,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_JP,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_TREX,WEAPON_NONE,
+	WEAPON_TREX,WEAPON_NONE,	// Primary / secondary weapon
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
 	MPH_FAST,								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
+	0,											// Turret perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths
+	0,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
 );
 
@@ -1394,12 +1457,15 @@ static UnitTypeClass const UnitSteg(
 	99,										// SCENARIO:	Starting availability scenario.
 	50,50,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_JP,								// OWNABLE:		Ownable by house (bit field).
-	WEAPON_STEG,WEAPON_NONE,
+	WEAPON_STEG,WEAPON_NONE,	// Primary / secondary weapon
 	ARMOR_STEEL,							// ARMOR:		Armor type
 	SPEED_TRACK,							// MOVE:			Locomotion type.
 	MPH_SLOW,								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
+	0,											// Turret perspective offset from body towards the north.
+	0,0,										// Primary / secondary weapon barrel lengths
+	0,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_GUARD							// ORDERS:		Default order to give new unit.
 );
 
@@ -1501,7 +1567,12 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 				SpeedType speed,
 				MPHType maxSpeed,
 				unsigned rot,
+				int tshift,
 				int toffset,
+				int primaryblen,
+				int secondaryblen,
+				int primaryblat,
+				int secondaryblat,
 				MissionType order) :
 					TechnoTypeClass(name,
 										ininame,
@@ -1557,7 +1628,13 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 	Mission = order;
 	ROT = rot;
 	Speed = speed;
+	TurretShift = tshift;
 	TurretOffset = toffset;
+	BarrelLengthPrimary = primaryblen;
+	BarrelLengthSecondary = secondaryblen;
+	BarrelLateralPrimary = primaryblat;
+	BarrelLateralSecondary = secondaryblat;
+
 	Type = type;
 }
 
