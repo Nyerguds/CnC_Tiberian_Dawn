@@ -181,6 +181,8 @@ TechnoTypeClass::TechnoTypeClass(
 		WeaponType primary,
 		WeaponType secondary,
 		int weaponoffs,
+		int pribarlen,
+		int secbarlen,
 		ArmorType armor) :
 	ObjectTypeClass(	true,
 							is_flammable,
@@ -202,7 +204,11 @@ TechnoTypeClass::TechnoTypeClass(
 	CameoData = NULL;
 	Primary = primary,
 	Secondary = secondary,
+	// Nyerguds's C&C Patch Project v1.04
+	// Migrated turret info to TechnoTypeClass.
 	WeaponOffset = weaponoffs;
+	BarrelLengthPrimary = pribarlen;
+	BarrelLengthSecondary = secbarlen;
 	Cost = cost;
 	IsLeader = is_leader;
 	IsScanner = is_scanner;
@@ -1071,7 +1077,8 @@ bool TechnoClass::In_Range(TARGET target, int which) const
 		}
 		// Nyerguds's C&C Patch Project v1.04
 		// Fixed range checks to be facing independent.
-		if (::Distance(Fire_Coord(which, target), As_Coord(target)) <= range) {
+		COORDINATE tarcoord = As_Coord(target);
+		if (::Distance(Fire_Coord(which, true, tarcoord), tarcoord) <= range) {
 			return(true);
 		}
 	}
@@ -1107,7 +1114,8 @@ bool TechnoClass::In_Range(ObjectClass const * target, int which) const
 		}
 		// Nyerguds's C&C Patch Project v1.04
 		// Fixed range checks to be facing independent.
-		if (::Distance(Fire_Coord(which, target->As_Target()), target->Center_Coord()) <= range) {
+		COORDINATE tarcoord = target->Center_Coord();
+		if (::Distance(Fire_Coord(which, true, tarcoord), tarcoord) <= range) {
 			return(true);
 		}
 	}
@@ -1136,8 +1144,9 @@ bool TechnoClass::In_Range(COORDINATE coord, int which) const
 {
 	// Nyerguds's C&C Patch Project v1.04
 	// Fixed range checks to be facing independent.
-	// TARGET on spot can only take a cell number, not coords, so add extra arg to correct that to the real coords.
-	return(IsLocked && ::Distance(Fire_Coord(which, ::As_Target(Coord_Cell(coord)), coord), coord) <= Weapon_Range(which));
+	// Creating a TARGET for a location can only take a cell number, not coords,
+	// so an extra arg was added to correct that to the real coords.
+	return(IsLocked && ::Distance(Fire_Coord(which, true, coord), coord) <= Weapon_Range(which));
 }
 
 
@@ -1376,8 +1385,21 @@ bool TechnoClass::Evaluate_Cell(ThreatType method, int mask, CELL cell, int rang
 		if (tentative->Is_Techno() && !House->Is_Ally(tentative)) break;
 		tentative = (TechnoClass const *)tentative->Next;
 	}
-
-	if (!tentative) return(false);
+	
+	// Nyerguds's C&C Patch Project v1.04
+	/*
+	** Buildings give extra range inside their bounds. To compensate, check if any are present in the overlaps of the cell.
+	*/
+	if (!tentative) {
+		for (int index = 0; index < sizeof(cellptr->Overlapper)/sizeof(cellptr->Overlapper[0]); index++) {
+			ObjectClass const * overlapper = cellptr->Overlapper[index];
+			if (overlapper && overlapper->What_Am_I() == RTTI_BUILDING) {
+				tentative = (TechnoClass const *)overlapper;
+				//ShowUIMessage(false, true, "building found");
+			}
+		}
+	}
+	if (!tentative ) return(false);
 //	if (!tentative->Is_Techno()) return(false);
 	*object = tentative;
 
@@ -1433,13 +1455,17 @@ TARGET TechnoClass::Greatest_Threat(ThreatType method) const
 //		int range = MAX(Weapon_Range(0), Weapon_Range(1));
 //		if (!(method & THREAT_RANGE)) range *= 2;
 //		range = Bound(range, 0x0100, 0x1400);			// Limit maximum scan distance.
-		int crange = range / ICON_LEPTON_W;
+		int crange;
 		if (range == 0) {
-			crange = MAX(Weapon_Range(0), Weapon_Range(1)) / ICON_LEPTON_W;
-			crange++;
+			crange = MAX(Weapon_Range(0, true), Weapon_Range(1, true)) / ICON_LEPTON_W;
+			crange+=2;
+		} else {
+			crange = range / ICON_LEPTON_W;
 		}
-		CELL cell = Coord_Cell(Fire_Coord(0));
-//		CELL cell = Coord_Cell(Center_Coord());
+		// Nyerguds's C&C Patch Project v1.04
+		// restored this to combat south advantage.
+//		CELL cell = Coord_Cell(Fire_Coord(0));
+		CELL cell = Coord_Cell(Center_Coord());
 
 		/*
 		**	If aircraft are a legal target, then scan through all of them at this time.
@@ -2632,6 +2658,10 @@ bool TechnoClass::Can_Repair(void) const
  *                                                                                             *
  * INPUT:   which -- Which weapon to use when determining the range. 0=primary, 1=secondary.   *
  *                                                                                             *
+ *          withbarrel -- include the barrel length in the length value. Don't enable this     *
+ *                        for calculations that use Fire_Coord(), since that already includes  *
+ *                        the barrel length.                                                   *
+ *                                                                                             *
  * OUTPUT:  Returns with the range of the weapon (in leptons).                                 *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
@@ -2639,27 +2669,31 @@ bool TechnoClass::Can_Repair(void) const
  * HISTORY:                                                                                    *
  *   03/19/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-int TechnoClass::Weapon_Range(int which) const
+int TechnoClass::Weapon_Range(int which, bool withbarrel) const
 {
 	WeaponType weapon = WEAPON_NONE;
 	TechnoTypeClass const & ttype = *Techno_Type_Class();
-
+	int barrel = 0;
 	switch (which) {
 		case 0:
 			weapon = ttype.Primary;
+			barrel = ttype.BarrelLengthPrimary;
 			break;
 
 		case 1:
 			weapon = ttype.Secondary;
+			barrel = ttype.BarrelLengthSecondary;
 			break;
 	}
+	int range = withbarrel ? barrel : 0;
 	if (weapon != WEAPON_NONE) {
 		if (weapon == WEAPON_NIKE && GameToPlay == GAME_NORMAL) {
-			return(Weapons[weapon].Range*2);
+			range += Weapons[weapon].Range*2;
+		} else {
+			range += Weapons[weapon].Range;
 		}
-		return(Weapons[weapon].Range);
 	}
-	return(0);
+	return(range);
 }
 
 

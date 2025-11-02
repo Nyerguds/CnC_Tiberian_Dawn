@@ -684,7 +684,7 @@ bool BulletClass::Unlimbo(COORDINATE coord, DirType dir)
 			*/
 			if (Payback) {
 				if (!Payback->In_Range(tcoord, 0) && !Payback->In_Range(tcoord, 1)) {
-					tcoord = Coord_Move(tcoord, ::Direction(tcoord, Coord), Distance(tcoord) - MAX(Payback->Weapon_Range(0), Payback->Weapon_Range(1)));
+					tcoord = Coord_Move(tcoord, ::Direction(tcoord, Coord), Distance(tcoord) - MAX(Payback->Weapon_Range(0, true), Payback->Weapon_Range(1, true)));
 				}
 			}
 		}

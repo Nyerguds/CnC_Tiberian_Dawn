@@ -4251,6 +4251,8 @@ BuildingTypeClass::BuildingTypeClass(
 													primary,
 													secondary,
 													turoffset,
+													pribarlen,
+													secbarlen,
 													armor)
 {
 	CanEnter = canenter;
@@ -4269,10 +4271,6 @@ BuildingTypeClass::BuildingTypeClass(
 	OccupyList = sizelist;
 	OverlapList = overlap;
 	Power = power;
-	// Nyerguds's C&C Patch Project v1.04
-	// Migrated turret info to BuildingTypeClass.
-	BarrelLengthPrimary = pribarlen;
-	BarrelLengthSecondary = secbarlen;
 	// Dimensions are derived from the occupy and overlap lists.
 	Max_Dimensions(sizelist, overlap, &SizeX, &SizeY);
 	// Center is derived from dimensions

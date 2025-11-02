@@ -2639,8 +2639,13 @@ void InfantryClass::Response_Sabotage(void)
  *    this only includes the rocket launcher and the grenade thrower. The other infantry       *
  *    have either invisible projectiles or special animations.                                 *
  *                                                                                             *
- * INPUT:   totarget -- if given, the facing will always be assumed to be towards this         *
- *                      target. This is used to perform facing-independent range checks.       *
+ * INPUT:   which    -- Which weapon to use in the attack. 0=primary, 1=secondary.             *
+ *                                                                                             *
+ *          forrange -- if true, the facing will always be assumed to be towards the given     *
+ *                      coordinates This is used to perform facing- independent range checks.  *
+ *                                                                                             *
+ *          coords   -- The coordinates to face when calculating the fire coords. Only used    *
+ *                      when forrange is true.                                                 *
  *                                                                                             *
  * OUTPUT:  Returns with the coordinate where the projectile will appear as it is fired.       *
  *                                                                                             *
@@ -2649,12 +2654,11 @@ void InfantryClass::Response_Sabotage(void)
  * HISTORY:                                                                                    *
  *   01/04/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-COORDINATE InfantryClass::Fire_Coord(int /*which*/, TARGET totarget, COORDINATE /*coords*/) const
+COORDINATE InfantryClass::Fire_Coord(int /*which*/, bool forrange, COORDINATE /*coords*/) const
 {
 	Validate();
 	// Nyerguds's C&C Patch Project v1.04
 	// Allow getting the fire coords for any given target to correctly calculate range.
-	bool forrange = Target_Legal(totarget);
 	COORDINATE coord = Center_Coord();
 	// For range calculations, remove the north shift.
 	if (Class->WeaponOffset && !forrange) {

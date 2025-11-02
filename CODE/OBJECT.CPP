@@ -595,7 +595,7 @@ COORDINATE ObjectClass::Center_Coord(void) const {return Coord;};
 COORDINATE ObjectClass::Render_Coord(void) const {return(Center_Coord());}
 COORDINATE ObjectClass::Docking_Coord(void) const {return(Center_Coord());}
 COORDINATE ObjectClass::Sort_Y(void) const {return Coord;};
-COORDINATE ObjectClass::Fire_Coord(int /*which*/, TARGET /*totarget*/, COORDINATE /*coords*/) const {return Coord;};
+COORDINATE ObjectClass::Fire_Coord(int /*which*/, bool /*forrange*/, COORDINATE /*coords*/) const {return Coord;};
 void ObjectClass::Record_The_Kill(TechnoClass * /*source*/, bool /*sold*/) {};
 void ObjectClass::Do_Shimmer(void) {};
 int ObjectClass::Exit_Object(TechnoClass *) {return 0;};
@@ -605,7 +605,7 @@ void ObjectClass::Active_Click_With(ActionType , ObjectClass *) {};
 void ObjectClass::Active_Click_With(ActionType , CELL ) {};
 void ObjectClass::Clicked_As_Target(int) {};
 bool ObjectClass::In_Range(COORDINATE , int) const {return false;};
-int ObjectClass::Weapon_Range(int) const {return 0x0000;};
+int ObjectClass::Weapon_Range(int /*which*/, bool /*withbarrel*/) const {return 0x0000;};
 TARGET ObjectClass::As_Target(void) const {return TARGET_NONE;};
 void ObjectClass::Scatter(COORDINATE , bool) {};
 bool ObjectClass::Catch_Fire(void) {return false;};

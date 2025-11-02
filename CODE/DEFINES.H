@@ -1700,7 +1700,6 @@ typedef enum RadioMessageType {
 **	have a lepton resolution.
 */
 typedef unsigned long	COORDINATE;
-#define	COORDINATE_OFFMAP 	((COORDINATE)0xFFFFFFFFl)
 typedef signed short		CELL;
 
 typedef unsigned short	TARGET;

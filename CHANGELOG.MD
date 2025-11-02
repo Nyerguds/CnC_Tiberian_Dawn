@@ -217,3 +217,4 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Double-barreled units such as the Mammoth Tank and Flame Tank have their firing offsets adjusted to perspective, so the shots no longer look too far apart when firing towards east-west direction.
 * The distance between the barrels on double-barreled units no longer affects their weapon range calculations. Barrel length still affects it, but the sideways offset doesn't.
 * Fixed all south advantage bugs caused by turrets and firing positions being cosmetically shifted to the north. These northward shifts are no longer applied to perform weapon range checks.
+* Fixed objects not detecting targets that are technically in their range but are located behind them.

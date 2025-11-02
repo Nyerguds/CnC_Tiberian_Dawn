@@ -348,7 +348,7 @@ FireErrorType TurretClass::Can_Fire(TARGET target, int which) const
 
 
 /***********************************************************************************************
- * TurretClass::Fire_Coord -- Determines the coordinate that projectile would appear.          *
+ * TurretClass::Fire_Coord -- Calculates the origin point for projectiles fired.               *
  *                                                                                             *
  *    Use this routine to determine the exact coordinate that a projectile would appear if it  *
  *    were fired from this unit. For units with turrets, typically, this would be at the end   *
@@ -356,11 +356,11 @@ FireErrorType TurretClass::Can_Fire(TARGET target, int which) const
  *                                                                                             *
  * INPUT:   which    -- Which weapon to use in the attack. 0=primary, 1=secondary.             *
  *                                                                                             *
- *          totarget -- if given, the facing will always be assumed to be towards this         *
- *                      target. This is used to perform facing-independent range checks.       *
+ *          forrange -- if true, the facing will always be assumed to be towards the given     *
+ *                      coordinates. This is used to perform facing-independent range checks.  *
  *                                                                                             *
- *          coords   -- if not COORDINATE_OFFMAP, and "totarget" is a cell type with the same  *
- *                      cell as this, this contains more precise coordinates to use instead.   *
+ *          coords   -- The coordinates to face when calculating the fire coords. Only used    *
+ *                      when forrange is true.                                                 *
  *                                                                                             *
  * OUTPUT:  Returns with coordinate of where a projectile should appear if this unit were      *
  *          to fire one.                                                                       *
@@ -371,7 +371,7 @@ FireErrorType TurretClass::Can_Fire(TARGET target, int which) const
  *   12/28/1994 JLB : Created.                                                                 *
  *   09/04/2025 MM  : Added arg to correctly calculate range to target regardless of facing.   *
  *=============================================================================================*/
-COORDINATE TurretClass::Fire_Coord(int which, TARGET totarget, COORDINATE coords) const
+COORDINATE TurretClass::Fire_Coord(int which, bool forrange, COORDINATE coords) const
 {
 	COORDINATE coord = Center_Coord();
 	int barrellen = 0;
@@ -381,21 +381,8 @@ COORDINATE TurretClass::Fire_Coord(int which, TARGET totarget, COORDINATE coords
 
 	// Nyerguds's C&C Patch Project v1.04
 	// Allow getting the fire coords for any given target to correctly calculate range.
-	bool forrange = Target_Legal(totarget);
-	// Determine the facing. If "totarget" is a map cell, switch to the more accurate "coords" instead.
 	if (forrange) {
-		COORDINATE toface;
-		if (Is_Target_Cell(totarget)) {
-			CELL cell = (CELL)Target_Value(totarget);
-			if (coords != COORDINATE_OFFMAP && cell == Coord_Cell(coords)) {
-				toface = coords;
-			} else {
-				toface = Cell_Coord(cell);
-			}
-		} else {
-			toface = As_Coord(totarget);
-		}
-		barreldir = ::Direction(Coord, toface);
+		barreldir = ::Direction(Coord, coords);
 		shiftdir = barreldir;
 	} else if (Class->IsTurretEquipped) {
 		barreldir = SecondaryFacing.Current();

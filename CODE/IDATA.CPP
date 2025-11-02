@@ -1639,7 +1639,7 @@ InfantryTypeClass::InfantryTypeClass	(
 							is_theater, false, false, false, false, true, false,
 							ammo, strength, maxspeed, sightrange, cost,
 							scenario, risk, reward, ownable,
-							primary, secondary, weapoffs,
+							primary, secondary, weapoffs, 0, 0,
 							ARMOR_NONE)
 {
 	IsFemale = is_female;

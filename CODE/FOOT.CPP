@@ -908,7 +908,7 @@ void FootClass::Approach_Target(void)
 		/*
 		**	If the target is too far away then head toward it.
 		*/
-		int maxrange = MAX(Weapon_Range(0), Weapon_Range(1));
+		int maxrange = MAX(Weapon_Range(0, true), Weapon_Range(1, true));
 
 		if (!Target_Legal(NavCom) && (!In_Range(TarCom) || !IsLocked)) {
 //		if (!Target_Legal(NavCom) && (Distance(TarCom) > maxrange || !IsLocked)) {

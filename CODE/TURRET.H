@@ -78,7 +78,7 @@ class TurretClass : public DriveClass
 		virtual FireErrorType Can_Fire(TARGET target, int which) const;
 		virtual bool Ok_To_Move(DirType facing);
 		virtual void AI(void);
-		virtual COORDINATE Fire_Coord(int which, TARGET totarget = TARGET_NONE, COORDINATE coords = COORDINATE_OFFMAP) const;
+		virtual COORDINATE Fire_Coord(int which, bool forrange = false, COORDINATE coords = 0l) const;
 };
 
 

@@ -165,7 +165,7 @@ class ObjectClass : public AbstractClass
 		virtual COORDINATE Center_Coord(void) const;
 		virtual COORDINATE Render_Coord(void) const;
 		virtual COORDINATE Sort_Y(void) const;
-		virtual COORDINATE Fire_Coord(int /*which*/, TARGET /*totarget*/ = TARGET_NONE, COORDINATE /*coords*/ = COORDINATE_OFFMAP) const;
+		virtual COORDINATE Fire_Coord(int /*which*/, bool  /*forrange*/ = false, COORDINATE /*coords*/ = 0l) const;
 
 		/*
 		**	Object entry and exit from the game system.
@@ -210,7 +210,7 @@ class ObjectClass : public AbstractClass
 		**	Combat related.
 		*/
 		virtual bool In_Range(COORDINATE , int=0) const;
-		virtual int Weapon_Range(int =0) const;
+		virtual int Weapon_Range(int /*which*/=0, bool /*withbarrel*/=false) const;
 		virtual ResultType Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source=0);
 		virtual TARGET As_Target(void) const;
 		virtual void Scatter(COORDINATE , bool=false);

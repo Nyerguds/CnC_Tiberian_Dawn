@@ -1607,6 +1607,8 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 										ownable,
 										primary,secondary,
 										weapoffs,
+										pribarlen,
+										secbarlen,
 										armor)
 {
 	Explosion = exp;
@@ -1630,8 +1632,8 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 	ROT = rot;
 	Speed = speed;
 	TurretShift = turshift;
-	BarrelLengthPrimary = pribarlen;
-	BarrelLengthSecondary = secbarlen;
+	// Nyerguds's C&C Patch Project v1.04
+	// Migrated turret info to UnitTypeClass.
 	BarrelLateralPrimary = pribarlat;
 	BarrelLateralSecondary = secbarlat;
 

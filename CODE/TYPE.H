@@ -563,6 +563,18 @@ class TechnoTypeClass : public ObjectTypeClass
 		*/
 		int WeaponOffset;
 
+		/*
+		**	This is the distance away from the center point that the projectiles
+		**	for the primary weapon will spawn. This distance is in leptons.
+		*/
+		int BarrelLengthPrimary;
+
+		/*
+		**	This is the distance away from the center point that the projectiles
+		**	for the secondary weapon will spawn. This distance is in leptons.
+		*/
+		int BarrelLengthSecondary;
+
 		//--------------------------------------------------------------------
 		TechnoTypeClass(
 				int name,
@@ -599,6 +611,8 @@ class TechnoTypeClass : public ObjectTypeClass
 				WeaponType primary,
 				WeaponType secondary,
 				int weaponoffs,
+				int pribarlen,
+				int secbarlen,
 				ArmorType armor);
 
 		virtual int  Raw_Cost(void) const;
@@ -739,18 +753,6 @@ class BuildingTypeClass : public TechnoTypeClass {
 		*/
 		int Power;
 		int Drain;
-
-		/*
-		**	This is the distance away from the turret center point that the projectiles
-		**	for the primary weapon will spawn. This distance is in leptons.
-		*/
-		int BarrelLengthPrimary;
-
-		/*
-		**	This is the distance away from the turret center point that the projectiles
-		**	for the secondary weapon will spawn. This distance is in leptons.
-		*/
-		int BarrelLengthSecondary;
 
 		/*
 		**	This is the size of the building. This size value is a rough indication
@@ -1051,18 +1053,6 @@ class UnitTypeClass : public TechnoTypeClass
 		**	in leptons. (This is only used for the Gunboat.)
 		*/
 		int TurretShift;
-
-		/*
-		**	This is the distance away from the turret center point that the projectiles
-		**	for the primary weapon will spawn. This distance is in leptons.
-		*/
-		int BarrelLengthPrimary;
-
-		/*
-		**	This is the distance away from the turret center point that the projectiles
-		**	for the secondary weapon will spawn. This distance is in leptons.
-		*/
-		int BarrelLengthSecondary;
 
 		/*
 		**	This is the lateral distance away from the center that the barrels of this

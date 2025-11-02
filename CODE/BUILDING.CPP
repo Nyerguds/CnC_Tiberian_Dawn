@@ -2432,17 +2432,19 @@ bool BuildingClass::Limbo(void)
 
 
 /***********************************************************************************************
- * BuildingClass::Fire_Coord -- Calculates the coordinate that projectile would appear.        *
+ * BuildingClass::Fire_Coord -- Calculates the origin point for projectiles fired.             *
  *                                                                                             *
  *    This routine is used to determine where a projectile would appear if this building       *
  *    were to fire. The location usually depends on the current rotation setting of the        *
  *    turret or else on the direction of the target that will be fired upon.                   *
  *                                                                                             *
- * INPUT:   totarget -- if given, the facing will always be assumed to be towards this         *
- *                      target. This is used to perform facing-independent range checks.       *
+ * INPUT:   which    -- Which weapon to use in the attack. 0=primary, 1=secondary.             *
  *                                                                                             *
- *          coords   -- if not COORDINATE_OFFMAP, and "totarget" is a cell type with the same  *
- *                      cell as this, this contains more precise coordinates to use instead.   *
+ *          forrange -- if true, the facing will always be assumed to be towards the given     *
+ *                      coordinates This is used to perform facing- independent range checks.  *
+ *                                                                                             *
+ *          coords   -- The coordinates to face when calculating the fire coords. Only used    *
+ *                      when forrange is true.                                                 *
  *                                                                                             *
  * OUTPUT:  Returns with coordinate that the projectile should appear at if the building       *
  *          were to fire.                                                                      *
@@ -2453,12 +2455,11 @@ bool BuildingClass::Limbo(void)
  *   12/24/1994 JLB : Created.                                                                 *
  *   09/04/2025 MM  : Added arg to correctly calculate range to target regardless of facing.   *
  *=============================================================================================*/
-COORDINATE BuildingClass::Fire_Coord(int which, TARGET totarget, COORDINATE coords) const
+COORDINATE BuildingClass::Fire_Coord(int which, bool forrange, COORDINATE coords) const
 {
 	Validate();
 	// Nyerguds's C&C Patch Project v1.04
 	// Allow getting the fire coords for any given target to correctly calculate range.
-	bool forrange = Target_Legal(totarget);
 	COORDINATE coord = Center_Coord();
 	int barrellen = 0;
 
@@ -2466,28 +2467,12 @@ COORDINATE BuildingClass::Fire_Coord(int which, TARGET totarget, COORDINATE coor
 	**	Make adjustments to the firing coordinate to account for turret
 	**	position. This depends on building type and turret facing.
 	*/
-	TARGET target = TARGET_NONE;
-
-	// Guard Towers automatically face the current target.
-	if (!forrange && !Class->IsTurretEquipped) {
-		totarget = TarCom;
-		coords = COORDINATE_OFFMAP;
-	}
-	// Determine the facing. If "totarget" is a map cell, switch to the more accurate "coords" instead.
 	DirType barreldir;
-	if (Target_Legal(totarget)) {
-		COORDINATE toface;
-		if (Is_Target_Cell(totarget)) {
-			CELL cell = (CELL)Target_Value(totarget);
-			if (coords != COORDINATE_OFFMAP && cell == Coord_Cell(coords)) {
-				toface = coords;
-			} else {
-				toface = Cell_Coord(cell);
-			}
-		} else {
-			toface = As_Coord(totarget);
-		}
-		barreldir = ::Direction(Coord, toface);
+	if (forrange) {
+		barreldir = ::Direction(Coord, coords);
+	} else if (!Class->IsTurretEquipped) {
+	// Guard Towers automatically face the current target.
+		barreldir = ::Direction(Coord, As_Coord(TarCom));
 	} else {
 		barreldir = PrimaryFacing.Current();
 	}
@@ -3149,6 +3134,7 @@ COORDINATE BuildingClass::Target_Coord() const
 {
 	return(Coord_Add(Coord, Class->TargetCenter));
 }
+
 
 /***********************************************************************************************
  * BuildingClass::Can_Fire -- Determines if this building can fire.                            *

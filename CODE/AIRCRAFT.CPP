@@ -2529,16 +2529,18 @@ TARGET AircraftClass::New_LZ(TARGET oldlz) const
 
 
 /***********************************************************************************************
- * AircraftClass::Fire_Coord -- Calculates the point of origin for a bullet.                   *
+ * AircraftClass::Fire_Coord -- Calculates the origin point for projectiles fired.             *
  *                                                                                             *
  *    This routine is used to find the exact coordinate where the bullet should appear if      *
  *    fired from this object.                                                                  *
  *                                                                                             *
- * INPUT:   totarget -- if given, the facing will always be assumed to be towards this         *
- *                      target. This is used to perform facing-independent range checks.       *
+ * INPUT:   which    -- Which weapon to use in the attack. 0=primary, 1=secondary.             *
  *                                                                                             *
- *          coords   -- if not COORDINATE_OFFMAP, and "totarget" is a cell type with the same  *
- *                      cell as this, this contains more precise coordinates to use instead.   *
+ *          forrange -- if true, the facing will always be assumed to be towards the given     *
+ *                      coordinates This is used to perform facing- independent range checks.  *
+ *                                                                                             *
+ *          coords   -- The coordinates to face when calculating the fire coords. Only used    *
+ *                      when forrange is true.                                                 *
  *                                                                                             *
  * OUTPUT:  Returns with the coordinate of where the projectile will appear if fired.          *
  *                                                                                             *
@@ -2548,28 +2550,15 @@ TARGET AircraftClass::New_LZ(TARGET oldlz) const
  *   06/15/1995 JLB : Created.                                                                 *
  *   09/04/2025 MM  : Added arg to correctly calculate range to target regardless of facing.   *
  *=============================================================================================*/
-COORDINATE AircraftClass::Fire_Coord(int /*which*/, TARGET totarget, COORDINATE coords) const
+COORDINATE AircraftClass::Fire_Coord(int /*which*/, bool forrange, COORDINATE coords) const
 {
 	Validate();
 	COORDINATE coord = Center_Coord();
 	// Nyerguds's C&C Patch Project v1.04
 	// Allow getting the fire coords for any given target to correctly calculate range.
-	bool forrange = Target_Legal(totarget);
-	// Determine the facing. If "totarget" is a map cell, switch to the more accurate "coords" instead.
 	DirType facing;
 	if (forrange) {
-		COORDINATE toface = 0l;
-		if (Is_Target_Cell(totarget)) {
-			CELL cell = (CELL)Target_Value(totarget);
-			if (coords != COORDINATE_OFFMAP && cell == Coord_Cell(coords)) {
-				toface = coords;
-			} else {
-				toface = Cell_Coord((CELL)Target_Value(totarget));
-			}
-		} else {
-			toface = As_Coord(totarget);
-		}
-		facing = ::Direction(Coord, toface);
+		facing = ::Direction(Coord, coords);
 	} else {
 		facing = SecondaryFacing.Current();
 	}
@@ -2937,33 +2926,8 @@ TARGET AircraftClass::Good_Fire_Location(TARGET target) const
 {
 	Validate();
 	if (Target_Legal(target)) {
-		int range = Weapon_Range(0);
+		int range = Weapon_Range(0, true);
 		COORDINATE tcoord = As_Coord(target);
-
-#ifdef EXPERIMENTAL
-		// Nyerguds's C&C Patch Project v1.04
-		// Allow aircraft to find a position in the shroud to fire from,
-		// as long as the actual target is at least partially visible.
-		CELL currcell = Coord_Cell(tcoord);
-		ObjectClass * obj = As_Object(target);
-		if (obj && obj->IsActive) {
-			bool anyVisible = false;
-			// Get top left corner, walk the occupy list.
-			CELL objcell = Coord_Cell(obj->Coord);
-			short const *list = obj->Occupy_List();
-			while (*list != REFRESH_EOL) {
-				CELL newcell = objcell + *list++;
-				if (Map.In_Radar(newcell) && Map[newcell].IsVisible) {
-					anyVisible = true;
-				}
-			}
-			if (!anyVisible) {
-				return(TARGET_NONE);
-			}
-		} else if (!Map.In_Radar(currcell) || !Map[currcell].IsVisible) {
-				return(TARGET_NONE);
-		}
-#endif
 
 		CELL bestcell = 0;
 		CELL best2cell = 0;
