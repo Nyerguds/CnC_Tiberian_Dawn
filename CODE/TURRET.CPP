@@ -397,7 +397,7 @@ COORDINATE TurretClass::Fire_Coord(int which, bool forrange, COORDINATE coords) 
 	// L = BarrelLateral (adjustment to the left/right for double barreled units)
 	//      L
 	//     / \
-	//    /   T
+	//    /   B
 	//    \  / \
 	//     \/   L
 	//     O\  /
