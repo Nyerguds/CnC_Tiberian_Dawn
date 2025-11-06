@@ -109,13 +109,13 @@ void const * DisplayClass::ShadowShapes; // Pointer for map shroud shape
 unsigned char DisplayClass::ShadowTrans[(SHADOW_COL_COUNT+1)*256]; // Fade to black around map shroud
 
 unsigned char * const DisplayClass::TranslucencyTables[TRANS_COUNT] = {
-	DisplayClass::TranslucentTable,
-	DisplayClass::WhiteTranslucentTable,
-	DisplayClass::MouseTranslucentTable,
-	DisplayClass::SmokeTranslucentTable,
-	DisplayClass::UnitShadow,
-	DisplayClass::SpecialGhost,
-	DisplayClass::ShadowTrans,
+	DisplayClass::TranslucentTable,       // TRANS_ANIM
+	DisplayClass::WhiteTranslucentTable,  // TRANS_WHITE
+	DisplayClass::MouseTranslucentTable,  // TRANS_MOUSE
+	DisplayClass::SmokeTranslucentTable,  // TRANS_SMOKE
+	DisplayClass::UnitShadow,             // TRANS_UNITS
+	DisplayClass::SpecialGhost,           // TRANS_GHOST
+	DisplayClass::ShadowTrans,            // TRANS_SHADOW
 };
 
 /*
