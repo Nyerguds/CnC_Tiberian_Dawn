@@ -908,11 +908,14 @@ void FootClass::Approach_Target(void)
 		/*
 		**	If the target is too far away then head toward it.
 		*/
-		int maxrange = MAX(Weapon_Range(0, true), Weapon_Range(1, true));
+		int maxrange = MAX(Weapon_Range(0, true, TarCom), Weapon_Range(1, true, TarCom));
 
 		if (!Target_Legal(NavCom) && (!In_Range(TarCom) || !IsLocked)) {
 //		if (!Target_Legal(NavCom) && (Distance(TarCom) > maxrange || !IsLocked)) {
 
+#ifdef OBSOLETE
+			// Nyerguds's C&C Patch Project v1.04
+			// Migrated to Weapon_Range arg.
 			/*
 			** If the object that we are attacking is a building adjust the units
 			** max range so that people can stand far away from the buildings and
@@ -922,6 +925,7 @@ void FootClass::Approach_Target(void)
 			if (obj) {
 				maxrange += ((obj->Class->Width() + obj->Class->Height()) * (0x100 / 4));
 			}
+#endif
 
 			/*
 			** Adjust the max range of an infantry unit for where he is standing

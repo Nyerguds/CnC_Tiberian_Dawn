@@ -2926,6 +2926,8 @@ TARGET AircraftClass::Good_Fire_Location(TARGET target) const
 {
 	Validate();
 	if (Target_Legal(target)) {
+		// Seems air units do not take the bonus distance for buildings into account.
+		// Of course, they don't actually need it, either.
 		int range = Weapon_Range(0, true);
 		COORDINATE tcoord = As_Coord(target);
 

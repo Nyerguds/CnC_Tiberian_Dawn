@@ -1650,7 +1650,7 @@ bool Select_Game(bool fade)
 
 		Special.IsFromInstall = 0;
 		CCDebugString ("C&C95 - Starting scenario.\n");
-		if (!Start_Scenario(ScenarioName)) {
+		if (!Start_Scenario(ScenarioName, 0)) {
 			return(false);
 		}
 		CCDebugString ("C&C95 - Scenario started OK.\n");
@@ -2839,7 +2839,8 @@ long Obfuscate(char const * string)
 	**	Ensure that only visible ASCII characters compose the key phrase. This
 	**	discourages the direct forced illegal character input method of attack.
 	*/
-	for (int index = 0; index < length; index++) {
+	int index;
+	for (index = 0; index < length; index++) {
 		if (!isgraph(buffer[index])) {
 			buffer[index] = 'A' + (index%26);
 		}

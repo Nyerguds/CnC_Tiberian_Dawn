@@ -221,3 +221,11 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Fixed targets in range not getting detected because the scanned radius started at the tip of the barrel, making it ignore objects located exactly opposite from the barrel's facing.
 * Fixed targets in range not getting detected due to the barrel length not being included in the scan range.
 * Fixed targets in range not getting detected because the cell to detect was a building cell that wasn't part of its solid occupied cells.
+* Fixed ballistic and homing projectiles limiting their range to the range of the firing unit, without taking the bonus range against buildings into account.
+* Fixed the Temple being able to fire a missile while selling.
+* Losing the Nuclear Missile or Ion Cannon ability while you are targeting the superweapon in question will now disable the targeting mode.
+* Any House can now collect three steel crates for "nuke pieces" to get an additional nuke from the Temple of Nod. Before, this was limited to Nod, but now the Temple can be made capturable by mission triggers, this was expanded.
+* The player in a mission can now start with a specific amount of nuke pieces by putting "PlayerNukePieces" in the mission's \[Basic\] section. Every multiple of three is one nuke, and -1 gives infinite nukes. This defaults to 3, giving one nuke, as per the game's original behavior.
+* Custom campaigns can enable the Steel Crate Collect-a-Thon logic by setting "PlayerNukeInherit=true" in a mission's \[Basic\] section.
+* Added ini key to reactivate the Nod campaign's Steel Crate Collect-a-Thon logic, by setting "NodCrateCollectNuke=true" in conquer.ini, under \[Patch\]. This overrides the two mission-specific nuke crate settings for all Nod campaign missions.
+* Fixed amount of collected crates resetting when restarting a mission.

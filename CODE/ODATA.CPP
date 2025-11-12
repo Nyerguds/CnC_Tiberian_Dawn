@@ -626,7 +626,7 @@ OverlayTypeClass::OverlayTypeClass(
 	bool istiberium,
 	bool high,
 	bool theater,
-	bool walltype,
+	bool iswall,
 	bool iscrate) :
 		ObjectTypeClass(false,
 							false,
@@ -649,7 +649,7 @@ OverlayTypeClass::OverlayTypeClass(
 	IsTiberium = istiberium;
 	Type = iconset;
 	Land = ground;
-	IsWall = walltype;
+	IsWall = iswall;
 	DamageLevels = damagelevels;
 	DamagePoints = damagepoints;
 }
@@ -909,7 +909,7 @@ void OverlayTypeClass::Init(TheaterType theater)
 {
 	//if (theater != LastTheater){
 	for (OverlayType index = OVERLAY_FIRST; index < OVERLAY_COUNT; index++) {
-		OverlayTypeClass const & overlay = As_Reference(index);
+		OverlayTypeClass & overlay = (OverlayTypeClass)As_Reference(index);
 		char fullname[_MAX_FNAME+_MAX_EXT];	// Fully constructed iconset name.
 
 		if (overlay.IsTheater) {
@@ -923,6 +923,12 @@ void OverlayTypeClass::Init(TheaterType theater)
 		if (overlay.RadarIcon) delete[] (char *)overlay.RadarIcon;
 		((void const *&)overlay.RadarIcon) = Get_Radar_Icon(overlay.Get_Image_Data(), 0, -1, 3);
 		IsTheaterShape = false;
+
+		if (overlay.IsWall) {
+			overlay.WallStructureType = BuildingTypeClass::From_Name(overlay.IniName);
+		} else {
+			overlay.WallStructureType = STRUCT_NONE;
+		}
 	}
 	//}
 }

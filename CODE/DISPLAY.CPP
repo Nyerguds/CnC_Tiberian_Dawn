@@ -3033,11 +3033,56 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 //			}
 		}
 
-		/*
-		**	If there is a currently selected object, then the action to perform if
-		**	the left mouse button were clicked must be determined.
-		*/
-		if (CurrentObject.Count()) {
+		// Nyerguds's C&C Patch Project v1.04
+		// Fixed priority on this, and made all cases mutually exclusive.
+		if (Map.PendingObject) {
+			action = ACTION_NONE;
+		} else if (Map.IsTargettingMode == SPC_ION_CANNON) {
+			action = ACTION_ION;
+		} else if (Map.IsTargettingMode == SPC_NUCLEAR_BOMB) {
+			action = ACTION_NUKE_BOMB;
+		} else if (Map.IsTargettingMode == SPC_AIR_STRIKE) {
+			action = ACTION_AIR_STRIKE;
+		} else if (Map.IsSellMode) {
+			if (object && object->Owner() == PlayerPtr->Class->House && object->Can_Demolish()) {
+				if (object->What_Am_I() == RTTI_BUILDING) {
+					action = ACTION_SELL;
+				} else {
+					action = ACTION_SELL_UNIT;
+				}
+			} else {
+				action = ACTION_NO_SELL;
+				/*
+				**	Check to see if the cursor is over an owned wall.
+				*/
+				OverlayType ovlt = Map[cell].Overlay;
+				if (ovlt != OVERLAY_NONE && ovlt < OVERLAY_COUNT && Map[cell].Owner == PlayerPtr->Class->House) {
+					OverlayTypeClass otc = OverlayTypeClass::As_Reference(ovlt);
+					// Nyerguds's C&C Patch Project v1.04
+					// The Overlay<->building link for walls is now always looked up on ini name.
+					// This is initialised in OverlayTypeClass::Init()
+					if (otc.IsWall) {
+						action = ACTION_SELL;
+						if (otc.WallStructureType != STRUCT_NONE) {
+							BuildingTypeClass const * btype = &BuildingTypeClass::As_Reference(otc.WallStructureType);
+							if (btype != NULL && btype->IsUnsellable) {
+								action = ACTION_NO_SELL;
+							}
+						}
+					}
+				}
+			}
+		} else if (Map.IsRepairMode) {
+			if (object && object->Owner() == PlayerPtr->Class->House && object->Can_Repair()) {
+				action = ACTION_REPAIR;
+			} else {
+				action = ACTION_NO_REPAIR;
+			}
+		} else if (CurrentObject.Count()) {
+			/*
+			**	If there is a currently selected object, then the action to perform if
+			**	the left mouse button were clicked must be determined.
+			*/
 			if (object) {
 				// Nyerguds's C&C Patch Project v1.04
 				// If shift is held over an object, ALWAYS switch to select toggle.
@@ -3085,52 +3130,8 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 				}
 				//action = CurrentObject[0]->What_Action(cell);
 			}
-		} else {
-			if (object && object->Class_Of().IsSelectable) {
-				action = ACTION_SELECT;
-			}
-
-			if (Map.IsRepairMode) {
-				if (object && object->Owner() == PlayerPtr->Class->House && object->Can_Repair()) {
-					action = ACTION_REPAIR;
-				} else {
-					action = ACTION_NO_REPAIR;
-				}
-			}
-
-			if (Map.IsSellMode) {
-				if (object && object->Owner() == PlayerPtr->Class->House && object->Can_Demolish()) {
-					if (object->What_Am_I() == RTTI_BUILDING) {
-						action = ACTION_SELL;
-					} else {
-						action = ACTION_SELL_UNIT;
-					}
-				} else {
-
-					/*
-					**	Check to see if the cursor is over an owned wall.
-					*/
-					if (Map[cell].Overlay != OVERLAY_NONE &&
-						OverlayTypeClass::As_Reference(Map[cell].Overlay).IsWall &&
-						Map[cell].Owner == PlayerPtr->Class->House) {
-							action = ACTION_SELL;
-					} else {
-						action = ACTION_NO_SELL;
-					}
-				}
-			}
-
-			if (Map.IsTargettingMode == SPC_ION_CANNON) {
-				action = ACTION_ION;
-			} else if (Map.IsTargettingMode == SPC_NUCLEAR_BOMB) {
-				action = ACTION_NUKE_BOMB;
-			} else if (Map.IsTargettingMode == SPC_AIR_STRIKE) {
-				action = ACTION_AIR_STRIKE;
-			}
-
-			if (Map.PendingObject) {
-				action = ACTION_NONE;
-			}
+		} else if (object && object->Class_Of().IsSelectable) {
+			action = ACTION_SELECT;
 		}
 
 		/*

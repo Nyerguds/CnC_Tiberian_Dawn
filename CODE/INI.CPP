@@ -199,9 +199,11 @@ void Set_Scenario_Name(char *buf, int scenario, ScenarioPlayerType player, Scena
  *    The remaining necessary interpolated data is generated elsewhere.                        *
  *                                                                                             *
  * INPUT:                                                                                      *
- *          root      root filename for scenario file to read                                  *
+ *          root         root filename for scenario file to read                               *
  *                                                                                             *
- *          fresh      true = should the current scenario be cleared?                          *
+ *          nukepieces   Inherited nuke pieces from the previous scenario.                     *
+ *                                                                                             *
+ *          fresh        true = should the current scenario be cleared?                        *
  *                                                                                             *
  * OUTPUT:  bool; Was the scenario read successful?                                            *
  *                                                                                             *
@@ -210,7 +212,7 @@ void Set_Scenario_Name(char *buf, int scenario, ScenarioPlayerType player, Scena
  * HISTORY:                                                                                    *
  *   10/07/1992 JLB : Created.                                                                 *
  *=============================================================================================*/
-bool Read_Scenario_Ini(char *root, bool fresh)
+bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 {
 	char *buffer;				// Scenario.ini staging buffer pointer.
 	char fname[_MAX_FNAME+_MAX_EXT];			// full INI filename
@@ -377,9 +379,20 @@ bool Read_Scenario_Ini(char *root, bool fresh)
 		CarryOverPercent = WWGetPrivateProfileInt("Basic", "CarryOverMoney", 100, buffer);
 		CarryOverPercent = Cardinal_To_Fixed(100, CarryOverPercent);
 		CarryOverCap = WWGetPrivateProfileInt("Basic", "CarryOverCap", -1, buffer);
-
+		// Nyerguds's C&C Patch Project v1.04
+		// Added ini keys for controlling nuke pieces.
+		bool nukeInherit = WWGetPrivateProfileBool("Basic", "PlayerNukeInherit", false, buffer);
+		int newpieces = WWGetPrivateProfileInt("Basic", "PlayerNukePieces", 3, buffer);
 		PlayerPtr = HouseClass::As_Pointer(HouseTypeClass::From_Name(buf));
 		PlayerPtr->IsHuman = true;
+		if (Options.NodCollectathon && ScenPlayer == SCEN_PLAYER_NOD && Scenario < 20) {
+			nukeInherit = true;
+			if (Scenario == 1) {
+				nukepieces = 0;
+			}
+		}
+		PlayerPtr->NukePieces = nukeInherit ? nukepieces : newpieces;
+		PlayerPtr->NukePiecesStart = PlayerPtr->NukePieces;
 		int carryover;
 		if (CarryOverCap != -1) {
 			carryover = MIN(Fixed_To_Cardinal(CarryOverMoney, CarryOverPercent), CarryOverCap);

@@ -360,6 +360,12 @@ class ObjectTypeClass : public AbstractTypeClass
 		bool ImageIsTheaterShape;
 
 		/*
+		**	Nyerguds's C&C Patch Project v1.04
+		**	This caches the structure type if this is a wall.
+		*/
+		StructType WallStructureType;
+
+		/*
 		**	This points to the radar imagery for this object.
 		*/
 		void const * RadarIcon;

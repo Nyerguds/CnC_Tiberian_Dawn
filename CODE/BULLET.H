@@ -67,6 +67,13 @@ class BulletClass :	public ObjectClass,
 		*/
 		FacingClass PrimaryFacing;
 
+		/*
+		**	Nyerguds's C&C Patch Project v1.04
+		**	Maximum range this bullet can go when fired at a specific target.
+		**	This value is used to limit the scatter distance.
+		*/
+		int MaxScatterRange;
+
 		/*---------------------------------------------------------------------
 		**	Constructors, Destructors, and overloaded operators.
 		*/

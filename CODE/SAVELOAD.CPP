@@ -880,9 +880,13 @@ void Decode_All_Pointers(ScenarioPlayerType campaign)
 	**	PlayerPtr.
 	*/
 	PlayerPtr = HouseClass::As_Pointer((HousesType)PlayerPtr);
-	// Nyerguds's C&C Patch Project v1.04
-	// Set the player choice, not the player house. Needed for Funpark.
-	Whom = PlayerPtr->ActLike;
+	if (campaign == SCEN_PLAYER_JP && Scenario < 20) {
+		// Nyerguds's C&C Patch Project v1.04
+		// For Funpark, set the player choice, not the player house.
+		Whom = PlayerPtr->ActLike;
+	} else {
+		Whom = PlayerPtr->Class->House;
+	}
 	// Nyerguds's C&C Patch Project v1.04
 	// Actually save and load campaign ID from the savegame's header, rather than this messy lookup from house type.
 	// The original code could cause a GDI mission inserted in the Nod campaign to make the player switch campaigns.

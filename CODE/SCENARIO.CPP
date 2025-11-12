@@ -56,10 +56,12 @@ extern int PreserveVQAScreen;
  *    This routine will start the scenario. In addition to loading the scenario data, it will  *
  *    play the briefing and action movies.                                                     *
  *                                                                                             *
- * INPUT:   root     -- Pointer to the filename root for this scenario (e.g., "SCG01EA").      *
+ * INPUT:   root       -- Pointer to the filename root for this scenario (e.g., "SCG01EA").    *
  *                                                                                             *
- *          briefing -- Should the briefing be played? Normally this is true except when the   *
- *                      scenario is restarting.                                                *
+ *          nukepieces -- Amount of nuke pieces collected in previous missions.                *
+ *                                                                                             *
+ *          briefing   -- Should the briefing be played? Normally this is true except when the *
+ *                        scenario is restarting.                                              *
  *                                                                                             *
  * OUTPUT:  Was the scenario started without error?                                            *
  *                                                                                             *
@@ -68,10 +70,10 @@ extern int PreserveVQAScreen;
  * HISTORY:                                                                                    *
  *   07/04/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-bool Start_Scenario(char *root, bool briefing)
+bool Start_Scenario(char *root, int nukepieces, bool briefing)
 {
 
-	if (!Read_Scenario(root)) {
+	if (!Read_Scenario(root, nukepieces)) {
 		CCDebugString ("C&C95 - Failed to read scenario.\n");
 		return(false);
 	}
@@ -164,7 +166,9 @@ bool Start_Scenario(char *root, bool briefing)
  *    with the proper data. Setting of the right game state will start                         *
  *    the scenario running.                                                                    *
  *                                                                                             *
- * INPUT:   root     -- Scenario root filename                                                 *
+ * INPUT:   root       -- Scenario root filename.                                              *
+ *                                                                                             *
+ *          nukepieces -- Amount of nuke pieces collected in previous missions.                *
  *                                                                                             *
  * OUTPUT:     none                                                                            *
  *                                                                                             *
@@ -176,13 +180,13 @@ bool Start_Scenario(char *root, bool briefing)
  *   07/22/1991     : Created.                                                                 *
  *   02/03/1992 JLB : Uses house identification.                                               *
  *=============================================================================================*/
-bool Read_Scenario(char *root)
+bool Read_Scenario(char *root, int nukepieces)
 {
 	CCDebugString ("C&C95 - In Read_Scenario.\n");
 	Clear_Scenario();
 	ScenarioInit++;
 	Patsux = false;
-	if (Read_Scenario_Ini(root)) {
+	if (Read_Scenario_Ini(root, nukepieces)) {
 
 		Fill_In_Data();
 
@@ -524,9 +528,9 @@ void Do_Win(void)
 	** Generate a new scenario filename
 	*/
 	Set_Scenario_Name(ScenarioName, Scenario, ScenPlayer, ScenDir, ScenVar);
-	Start_Scenario(ScenarioName);
-
-	PlayerPtr->NukePieces = pieces;
+	// Nyerguds's C&C Patch Project v1.04:
+	// nuke pieces are passed on to Start_Scenario
+	Start_Scenario(ScenarioName, pieces);
 
 	/*
 	**	Destroy the building that was sabotaged in the previous scenario. This only
@@ -644,6 +648,8 @@ void Do_Lose(void)
 
 	Play_Movie(LoseMovie);
 
+	int pieces = PlayerPtr->NukePiecesStart;
+
 	/*
 	** Start same scenario again
 	*/
@@ -652,7 +658,7 @@ void Do_Lose(void)
 	if (!PlaybackGame && !CCMessageBox().Process(TXT_TO_REPLAY, TXT_YES, TXT_NO)) {
 		Hide_Mouse();
 		Keyboard::Clear();
-		Start_Scenario(ScenarioName, false);
+		Start_Scenario(ScenarioName, pieces, false);
 		Map.Render();
 	} else {
 		Hide_Mouse();
@@ -688,7 +694,8 @@ void Do_Restart(void)
 	CCMessageBox().Process(TXT_RESTARTING, TXT_NONE);
 	Map.Set_Default_Mouse(MOUSE_NORMAL);
 	Keyboard::Clear();
-	Start_Scenario(ScenarioName, false);
+	int pieces = PlayerPtr->NukePiecesStart;
+	Start_Scenario(ScenarioName, pieces, false);
 	if (hidden) Hide_Mouse();
 	Keyboard::Clear();
 	Map.Render();

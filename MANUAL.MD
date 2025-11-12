@@ -119,14 +119,31 @@ The "**extras**" folder contains a file called "**sc-remix.mix**" which can be a
 
 In the "**extras**" folder, you can find "**special-options.txt**", which contains a set of secret developer switches that can be activated in the game by putting them in your CONQUER.INI file, under the \[Options\] section. A few of these are generally neat, such as the music remixes and showing true civilian names, but be warned that others, like disabling the "bib" pieces of buildings, can seriously mess up the game. Use these at your own risk.
 
+### Reactivated logic
+
+Since this is logic that was deliberately removed in patches, it is not enabled by default. But it could be fun to play around with.
+
+### Nod Campaign Steel Crate Collect-a-Thon
+
+In the original release of the game, three steel crates had to be collected throughout the campaign. If not all three were collected, the player would not be granted the nuke in the final mission. This behaviour had bugs and was incompatible with single missions, so it was removed.
+
+However, now, the option "NodCrateCollectNuke=true" can be added in conquer.ini, under \[Patch\], to re-enable this old behaviour.
 
 ## Mission making upgrades
 
 These are mostly features that were originally implemented in the 1.06 patch.
 
+### General mission options
+
+These options are available under \[Basic\]:
+
+* **RadarLogo**: Custom radar logo graphics to load. This is the extension of an HRADAR.??? file, where ??? is typically the House identifier. The game contains one for "GDI", "NOD" and "JP", but custom campaigns could add their own.
+* **PlayerNukePieces**: Amount of nuke pieces (steel crates) the player is considered to have collected at the mission start. The Temple of Nod will grant you one nuclear missile superweapon for each three nuke pieces. This defaults to three, to give the normal logic of one nuke per mission. Setting it to -1 gives infinite nukes.
+* **PlayerNukeInherit**: If true, the amount of nuke pieces is inherited from the previous scenario. This means the **PlayerNukePieces** value is not used.
+
 ### House colors
 
-New options are available in the house sections in missions ([Goodguy], [Badguy], [Neutral], etc.) that allow tweaking their colors.
+New options are available in the house sections in missions (\[Goodguy\], \[Badguy\], \[Neutral\], etc.) that allow tweaking their colors.
 
 The following keys are available. Each more specific one will override parts of the more general ones:
 
@@ -151,8 +168,8 @@ Campaign house colors:
 
 * **GDI**: GDI yellow. Has slightly different radar colors than the multiplayer yellow.
 * **Nod**: Nod's scheme, with blue/grey units, red buildings and red radar colors. Note that specifying this as SecondaryScheme will take its primary blue/grey for that, not the red.
-* **Neutral**: Standard yellow, but with grey radar colors. Used by [Neutral] and [Special].
-* **Jurassic**: Standard yellow, but with red radar colors. Used by the [Special] side dinosaurs in the Funpark missions.
+* **Neutral**: Standard yellow, but with grey radar colors. Used by \[Neutral\] and \[Special\].
+* **Jurassic**: Standard yellow, but with red radar colors. Used by the \[Special\] side dinosaurs in the Funpark missions.
 
 Extra colors:
 

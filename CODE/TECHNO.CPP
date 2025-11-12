@@ -1070,11 +1070,7 @@ void TechnoClass::Look(bool incremental)
 bool TechnoClass::In_Range(TARGET target, int which) const
 {
 	if (IsLocked && Target_Legal(target)) {
-		int range = Weapon_Range(which);
-		BuildingClass const * building = As_Building(target);
-		if (building) {
-			range += ((building->Class->Width() + building->Class->Height()) * (ICON_LEPTON_W / 4));
-		}
+		int range = Weapon_Range(which, false, target);
 		// Nyerguds's C&C Patch Project v1.04
 		// Fixed range checks to be facing independent.
 		COORDINATE tarcoord = As_Coord(target);
@@ -1107,11 +1103,7 @@ bool TechnoClass::In_Range(TARGET target, int which) const
 bool TechnoClass::In_Range(ObjectClass const * target, int which) const
 {
 	if (IsLocked && target) {
-		int range = Weapon_Range(which);
-		if (target->What_Am_I() == RTTI_BUILDING) {
-			BuildingClass const * building = (BuildingClass const *)target;
-			range += ((building->Class->Width() + building->Class->Height()) * (ICON_LEPTON_W / 4));
-		}
+		int range = Weapon_Range(which, false, target->As_Target());
 		// Nyerguds's C&C Patch Project v1.04
 		// Fixed range checks to be facing independent.
 		COORDINATE tarcoord = target->Center_Coord();
@@ -1458,6 +1450,9 @@ TARGET TechnoClass::Greatest_Threat(ThreatType method) const
 		int crange;
 		if (range == 0) {
 			crange = MAX(Weapon_Range(0, true), Weapon_Range(1, true)) / ICON_LEPTON_W;
+			// Nyerguds's C&C Patch Project v1.04
+			// Increased to account for large buildings. Max for 3x3 or 2x4 is 1.5 cells.
+			// In the range==0 case it will be checked against actual weapon range anyway.
 			crange+=2;
 		} else {
 			crange = range / ICON_LEPTON_W;
@@ -2162,6 +2157,9 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
 		bullet->Assign_Target(target);
 		bullet->Payback = this;
 		bullet->Strength = weapon->Attack;
+		// Nyerguds's C&C Patch Project v1.04
+		// Add actual range as max scatter range, to fix attacks against buildings falling short.
+		bullet->MaxScatterRange = Weapon_Range(which, true, target);
 
 		/*
 		**	If this is firing from a moving platform, then the projectile is inaccurate.
@@ -2658,9 +2656,12 @@ bool TechnoClass::Can_Repair(void) const
  *                                                                                             *
  * INPUT:   which -- Which weapon to use when determining the range. 0=primary, 1=secondary.   *
  *                                                                                             *
- *          withbarrel -- include the barrel length in the length value. Don't enable this     *
- *                        for calculations that use Fire_Coord(), since that already includes  *
- *                        the barrel length.                                                   *
+ *          withbarrel -- (Optional) Include the barrel length in the length value. Don't      *
+ *                        enable this for calculations that use Fire_Coord(), since that       *
+ *                        already includes the barrel length.                                  *
+ *                                                                                             *
+ *          target -- (Optional) Target to attack. If this is a building, the range will be    *
+ *                    adjusted to account for the building dimensions.                         *
  *                                                                                             *
  * OUTPUT:  Returns with the range of the weapon (in leptons).                                 *
  *                                                                                             *
@@ -2669,7 +2670,7 @@ bool TechnoClass::Can_Repair(void) const
  * HISTORY:                                                                                    *
  *   03/19/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-int TechnoClass::Weapon_Range(int which, bool withbarrel) const
+int TechnoClass::Weapon_Range(int which, bool withbarrel, TARGET target) const
 {
 	WeaponType weapon = WEAPON_NONE;
 	TechnoTypeClass const & ttype = *Techno_Type_Class();
@@ -2691,6 +2692,15 @@ int TechnoClass::Weapon_Range(int which, bool withbarrel) const
 			range += Weapons[weapon].Range*2;
 		} else {
 			range += Weapons[weapon].Range;
+		}
+	}
+	// Nyerguds's C&C Patch Project v1.04
+	// Refactored to centralize the logic in one function only.
+	if (target != TARGET_NONE) {
+		BuildingClass * const bld = As_Building(target);
+		if (bld) {
+			BuildingTypeClass const * btype = bld->Class;
+			range += ((btype->Width() + btype->Height()) * (ICON_LEPTON_W / 4));
 		}
 	}
 	return(range);

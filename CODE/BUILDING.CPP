@@ -693,26 +693,14 @@ bool BuildingClass::Mark(MarkType mark)
 				**	actual building object itself is destroyed.
 				*/
 				if (Class->IsWall) {
-					switch (Class->Type) {
-						case STRUCT_BRICK_WALL:
-							new OverlayClass(OVERLAY_BRICK_WALL, cell, House->Class->House);
-							break;
-
-						case STRUCT_BARBWIRE_WALL:
-							new OverlayClass(OVERLAY_BARBWIRE_WALL, cell, House->Class->House);
-							break;
-
-						case STRUCT_SANDBAG_WALL:
-							new OverlayClass(OVERLAY_SANDBAG_WALL, cell, House->Class->House);
-							break;
-
-						case STRUCT_WOOD_WALL:
-							new OverlayClass(OVERLAY_WOOD_WALL, cell, House->Class->House);
-							break;
-
-						case STRUCT_CYCLONE_WALL:
-							new OverlayClass(OVERLAY_CYCLONE_WALL, cell, House->Class->House);
-							break;
+					// Nyerguds's C&C Patch Project v1.04
+					// The Overlay<->building link for walls is now always looked up on ini name.
+					OverlayType ovl = OverlayTypeClass::From_Name(Class->IniName);
+					if (ovl != OVERLAY_NONE) {
+						OverlayTypeClass otc = OverlayTypeClass::As_Reference(ovl);
+						if (otc.IsWall) {
+							new OverlayClass(ovl, cell, House->Class->House);
+						}
 					}
 					Transmit_Message(RADIO_OVER_OUT);
 					delete this;
@@ -1263,31 +1251,13 @@ bool BuildingClass::Unlimbo(COORDINATE coord, DirType dir)
 	**	converted to an overlay type.
 	*/
 	if (Class->IsWall) {
-		if (Can_Enter_Cell(Coord_Cell(coord), FACING_NONE) == MOVE_OK) {
-			OverlayType otype = OVERLAY_NONE;
-			switch (Class->Type) {
-				case STRUCT_SANDBAG_WALL:
-					otype	= OVERLAY_SANDBAG_WALL;
-					break;
-
-				case STRUCT_CYCLONE_WALL:
-					otype = OVERLAY_CYCLONE_WALL;
-					break;
-
-				case STRUCT_BRICK_WALL:
-					otype = OVERLAY_BRICK_WALL;
-					break;
-
-				case STRUCT_BARBWIRE_WALL:
-					otype = OVERLAY_BARBWIRE_WALL;
-					break;
-
-				case STRUCT_WOOD_WALL:
-					otype = OVERLAY_WOOD_WALL;
-					break;
-			}
-			if (otype != OVERLAY_NONE) {
-				ObjectClass * o = OverlayTypeClass::As_Reference(otype).Create_One_Of(House);
+		// Nyerguds's C&C Patch Project v1.04
+		// The Overlay<->building link for walls is now always looked up on ini name.
+		OverlayType ovl = OverlayTypeClass::From_Name(Class->IniName);
+		if (ovl != OVERLAY_NONE) {
+			OverlayTypeClass otc = OverlayTypeClass::As_Reference(ovl);
+			if (otc.IsWall && Can_Enter_Cell(Coord_Cell(coord), FACING_NONE) == MOVE_OK) {
+				ObjectClass * o = otc.Create_One_Of(House);
 				if (o && o->Unlimbo(coord)) {
 					Map[Coord_Cell(coord)].Owner = House->Class->House;
 					Transmit_Message(RADIO_OVER_OUT);

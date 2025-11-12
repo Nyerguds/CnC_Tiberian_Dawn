@@ -98,6 +98,7 @@ class OptionsClass {
 		unsigned NoScreenshotMessage:1;	// Don't show a message when taking a screenshot?
 		unsigned NoLauncherPopup:1;	// Don't pop up the rocket launcher's turret in Attack mode?
 		unsigned NoTurretRecoil:1;	// Don't show recoil on turrets?
+		unsigned NodCollectathon:1;	// Enable Nod campaign crate collecting to unlock the nuke.
 		unsigned NoRepairAnnounce:1;	// Don't announce whenever a player starts repairing something?
 
 	protected:

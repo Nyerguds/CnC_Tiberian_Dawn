@@ -661,7 +661,7 @@ bool BulletClass::Unlimbo(COORDINATE coord, DirType dir)
 
 			/*
 			**	Inaccuracy for low velocity or homing projectiles manifests itself as a standard
-			**	Cicular Error of Probability (CEP) algorithm. High speed projectiles usually
+			**	Circular Error of Probability (CEP) algorithm. High speed projectiles usually
 			**	just overshoot the target by extending the straight line flight.
 			*/
 			if (Class->IsHoming || Class->IsArcing) {
@@ -682,9 +682,12 @@ bool BulletClass::Unlimbo(COORDINATE coord, DirType dir)
 			/*
 			**	Limit scatter to the weapon range of the firer.
 			*/
-			if (Payback) {
-				if (!Payback->In_Range(tcoord, 0) && !Payback->In_Range(tcoord, 1)) {
-					tcoord = Coord_Move(tcoord, ::Direction(tcoord, Coord), Distance(tcoord) - MAX(Payback->Weapon_Range(0, true), Payback->Weapon_Range(1, true)));
+			// Nyerguds's C&C Patch Project v1.04
+			// Add actual range as max scatter range, to fix attacks against buildings falling short.
+			if (MaxScatterRange) {
+				int overflow = Distance(tcoord) - MaxScatterRange;
+				if (overflow > 0) {
+					tcoord = Coord_Move(tcoord, ::Direction(tcoord, Coord), overflow);
 				}
 			}
 		}

@@ -210,7 +210,7 @@ class ObjectClass : public AbstractClass
 		**	Combat related.
 		*/
 		virtual bool In_Range(COORDINATE , int=0) const;
-		virtual int Weapon_Range(int /*which*/=0, bool /*withbarrel*/=false) const;
+		virtual int Weapon_Range(int /*which*/=0, bool /*withbarrel*/=false, TARGET /*target*/=TARGET_NONE) const;
 		virtual ResultType Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source=0);
 		virtual TARGET As_Target(void) const;
 		virtual void Scatter(COORDINATE , bool=false);

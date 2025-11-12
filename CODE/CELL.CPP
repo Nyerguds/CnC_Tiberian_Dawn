@@ -2074,7 +2074,9 @@ bool CellClass::Goodie_Check(FootClass * object)
 		OverlayData = 0;
 
 		if (steel) {
-			if (object->Owner() == HOUSE_BAD) {
+			// Nyerguds's C&C Patch Project v1.04
+			// Made nuke piece logic available for all, because why not?
+			if (GameToPlay == GAME_NORMAL) {
 				object->House->Add_Nuke_Piece();
 			}
 			// Nyerguds's TUC Quick Fix Patch v1.02: steelcrate-anim

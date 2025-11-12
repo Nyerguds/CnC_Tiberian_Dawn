@@ -376,7 +376,8 @@ HouseClass::HouseClass(HousesType house) :
 	NewBScan = 0;
 	NewIScan = 0;
 	NewUScan = 0;
-	NukePieces = 0x07;
+	NukePieces = 0;
+	NukePiecesStart = 0;
 	Power = 0;
 	Init_Color(Class->RemapColor);
 	Resigned = false;
@@ -1092,7 +1093,12 @@ void HouseClass::AI(void)
 			**	Note that this will not remove the one time created ion cannon.
 			*/
 			if (IonCannon.Remove()) {
-				if (this == PlayerPtr) Map.Column[1].Flag_To_Redraw();
+				if (this == PlayerPtr) {
+					Map.Column[1].Flag_To_Redraw();
+					if (Map.IsTargettingMode == SPC_ION_CANNON) {
+						Map.IsTargettingMode = false;
+					}
+				}
 				IsRecalcNeeded = true;
 			}
 		} else {
@@ -1155,7 +1161,12 @@ void HouseClass::AI(void)
 			*/
 			if (NukeStrike.Remove(true)) {
 				IsRecalcNeeded = true;
-				if (this == PlayerPtr) Map.Column[1].Flag_To_Redraw();
+				if (this == PlayerPtr) {
+					Map.Column[1].Flag_To_Redraw();
+					if (Map.IsTargettingMode == SPC_NUCLEAR_BOMB) {
+						Map.IsTargettingMode = false;
+					}
+				}
 			}
 		} else {
 
@@ -2437,11 +2448,11 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 			if (IonCannon.Is_Ready()) {
 				anim = new AnimClass(ANIM_ION_CANNON, Cell_Coord(cell));
 				if (anim) anim->Owner = Class->House;
-				if (this == PlayerPtr) {
-					Map.IsTargettingMode = false;
-				}
 				IonCannon.Discharged(PlayerPtr == this);
 				IsRecalcNeeded = true;
+			}
+			if (this == PlayerPtr) {
+				Map.IsTargettingMode = false;
 			}
 			break;
 
@@ -2467,7 +2478,9 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 				*/
 				for (index = 0; index < Buildings.Count(); index++) {
 					BuildingClass * b = Buildings.Ptr(index);
-					if (b && !b->IsInLimbo && b->House == this && *b == STRUCT_TEMPLE) {
+					// Nyerguds's C&C Patch Project v1.04
+					// A selling temple cannot start the launch progress since it would revert to normal state.
+					if (b && !b->IsInLimbo && b->House == this && *b == STRUCT_TEMPLE && b->BState != BSTATE_CONSTRUCTION) {
 						launchsite = b;
 						break;
 					}
@@ -2481,7 +2494,11 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 					launchsite->Assign_Mission(MISSION_MISSILE);
 					launchsite->Commence();
 					NukeDest = cell;
-					NukePieces = 0;
+					// Nyerguds's C&C Patch Project v1.04
+					// Don't clear nuke pieces; decrease as int.
+					if (GameToPlay == GAME_NORMAL && NukePieces >= 0) {
+						NukePieces = MAX(0, NukePieces - 3);
+					}
 
 				} else {
 
@@ -2489,7 +2506,14 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 					**	Only in the multiplayer version can the nuclear bomb be
 					**	sent from some off screen source.
 					*/
-					if (GameToPlay == GAME_NORMAL) return(false);
+					if (GameToPlay == GAME_NORMAL) {
+						// Nyerguds's C&C Patch Project v1.04
+						// Abort cursor too.
+						if (this == PlayerPtr) {
+							Map.IsTargettingMode = false;
+						}
+						 return(false);
+					}
 
 					/*
 					**	Since no launch site was found, just bring the missile in
@@ -2510,11 +2534,11 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 						Sound_Effect(VOC_NUKE_FIRE, start);
 					}
 				}
-				if (this == PlayerPtr) {
-					Map.IsTargettingMode = false;
-				}
 				NukeStrike.Discharged(this == PlayerPtr);
 				IsRecalcNeeded = true;
+			}
+			if (this == PlayerPtr) {
+				Map.IsTargettingMode = false;
 			}
 			break;
 
@@ -2527,11 +2551,11 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 					strike = Bound(MPlayerUnitCount/5, 1, 3);
 				}
 				Create_Air_Reinforcement(this, AIRCRAFT_A10, strike, MISSION_HUNT, ::As_Target(cell), TARGET_NONE);
-				if (this == PlayerPtr) {
-					Map.IsTargettingMode = false;
-				}
 				AirStrike.Discharged(this == PlayerPtr);
 				IsRecalcNeeded = true;
+			}
+			if (this == PlayerPtr) {
+				Map.IsTargettingMode = false;
 			}
 			break;
 	}
@@ -3135,6 +3159,13 @@ void HouseClass::Make_Air_Strike_Available(bool present, bool one_time_effect)
 void HouseClass::Add_Nuke_Piece(int piece)
 {
 	Validate();
+	// Nyerguds's C&C Patch Project v1.04
+	// Treat nuke pieces as int, without limit. Treat -1 as infinite.
+	if (NukePieces >= 0) {
+		NukePieces++;
+	}
+
+#ifdef OBSOLETE
 	if (piece == -1) {
 		piece = 1;
 		if (!(NukePieces & 0x01)) {
@@ -3149,6 +3180,7 @@ void HouseClass::Add_Nuke_Piece(int piece)
 	}
 	NukePieces |= 1 << (piece - 1);
 //	Init_Nuke_Bomb(false);
+#endif
 }
 
 
@@ -4342,7 +4374,13 @@ bool HouseClass::Has_Nuke_Device(void)
 {
 	Validate();
 	if (GameToPlay != GAME_NORMAL || !IsHuman) return(true);
+	// Nyerguds's C&C Patch Project v1.04
+	// Treat nuke pieces as int, without limit. Treat -1 as infinite.
+	return(NukePieces < 0 || NukePieces >= 3);
+
+#ifdef OBSOLETE
 	return((NukePieces & 0x07) == 0x07);
+#endif
 }
 
 
@@ -4365,56 +4403,39 @@ void HouseClass::Sell_Wall(CELL cell)
 {
 	Validate();
 	if ((unsigned)cell > 0) {
-		OverlayType overlay = Map[cell].Overlay;
-
-		if (overlay != OVERLAY_NONE && Map[cell].Owner == Class->House) {
-			OverlayTypeClass const & optr = OverlayTypeClass::As_Reference(overlay);
-
-			if (optr.IsWall) {
-				int cost = 0;
-				BuildingTypeClass const * btype = NULL;
-				switch (overlay) {
-					case OVERLAY_SANDBAG_WALL:
-						btype = &BuildingTypeClass::As_Reference(STRUCT_SANDBAG_WALL);
-						break;
-
-					case OVERLAY_CYCLONE_WALL:
-						btype = &BuildingTypeClass::As_Reference(STRUCT_CYCLONE_WALL);
-						break;
-
-					case OVERLAY_BRICK_WALL:
-						btype = &BuildingTypeClass::As_Reference(STRUCT_BRICK_WALL);
-						break;
-
-					case OVERLAY_BARBWIRE_WALL:
-						btype = &BuildingTypeClass::As_Reference(STRUCT_BARBWIRE_WALL);
-						break;
-
-					case OVERLAY_WOOD_WALL:
-						btype = &BuildingTypeClass::As_Reference(STRUCT_WOOD_WALL);
-						break;
-
-					default:
-						break;
+		CellClass * cellptr = &Map[cell];
+		OverlayType overlay = cellptr->Overlay;
+		if (overlay == OVERLAY_NONE || Map[cell].Owner != Class->House) {
+			return;
+		}
+		OverlayTypeClass const & optr = OverlayTypeClass::As_Reference(overlay);
+		if (!optr.IsWall) {
+			return;
+		}
+		// Nyerguds's C&C Patch Project v1.04
+		// The Overlay<->building link for walls is now always looked up on ini name.
+		// This is initialised in OverlayTypeClass::Init()
+		int refund = 0;
+		if (optr.WallStructureType != STRUCT_NONE) {
+			BuildingTypeClass const * btype = &BuildingTypeClass::As_Reference(optr.WallStructureType);
+			if (btype != NULL) {
+				if (btype->IsUnsellable) {
+					return;
 				}
-				if (btype != NULL && !btype->IsUnsellable) {
-					
-					if (PlayerPtr == this) {
-						Sound_Effect(VOC_CASHTURN);
-					}
-					Refund_Money(btype->Cost_Of()/2);
-					CellClass * cellptr = &Map[cell];
-					OverlayType overlay = cellptr->Overlay;
-					cellptr->Owner = HOUSE_NONE;
-					cellptr->Overlay = OVERLAY_NONE;
-					cellptr->OverlayData = 0;
-					cellptr->Wall_Update(overlay);
-					ObjectClass::Detach_This_From_All(::As_Target(cell), true);
-					cellptr->Recalc_Attributes();
-					cellptr->Redraw_Objects();
-					Map.Radar_Pixel(cellptr->Cell_Number());
-				}
+				refund = btype->Cost_Of()/2;
 			}
 		}
+		if (PlayerPtr == this) {
+			Sound_Effect(VOC_CASHTURN);
+		}
+		Refund_Money(refund);
+		cellptr->Owner = HOUSE_NONE;
+		cellptr->Overlay = OVERLAY_NONE;
+		cellptr->OverlayData = 0;
+		cellptr->Wall_Update(overlay);
+		ObjectClass::Detach_This_From_All(::As_Target(cell), true);
+		cellptr->Recalc_Attributes();
+		cellptr->Redraw_Objects();
+		Map.Radar_Pixel(cellptr->Cell_Number());
 	}
 }

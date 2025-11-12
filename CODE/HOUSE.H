@@ -149,9 +149,16 @@ class HouseClass {
 		unsigned IsAirstrikePending:1;
 
 		/*
-		**	This records the existance of the three nuke weapon pieces.
+		**	This records the existence of the three nuke weapon pieces.
 		*/
-		unsigned	NukePieces:3;
+		int	NukePieces;
+
+		/*
+		**	Nyerguds's C&C Patch Project v1.04
+		**	This remembers the amount of nuke pieces the player had at the
+		**	start of this scenario.
+		*/
+		int	NukePiecesStart;
 
 		/*
 		**	This flag indicates that a free harvester is pending and will be
@@ -514,8 +521,7 @@ class HouseClass {
 		TCountDownTimerClass BlitzTime;
 
 		/*
-		**	This count down timer class decrements and then changes
-		** the Atomic Bomb state.
+		**	This cell indicates the Atomic Bomb target.
 		*/
 		CELL NukeDest;
 

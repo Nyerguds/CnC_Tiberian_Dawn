@@ -605,7 +605,7 @@ void ObjectClass::Active_Click_With(ActionType , ObjectClass *) {};
 void ObjectClass::Active_Click_With(ActionType , CELL ) {};
 void ObjectClass::Clicked_As_Target(int) {};
 bool ObjectClass::In_Range(COORDINATE , int) const {return false;};
-int ObjectClass::Weapon_Range(int /*which*/, bool /*withbarrel*/) const {return 0x0000;};
+int ObjectClass::Weapon_Range(int /*which*/, bool /*withbarrel*/, TARGET /*target*/) const {return 0x0000;};
 TARGET ObjectClass::As_Target(void) const {return TARGET_NONE;};
 void ObjectClass::Scatter(COORDINATE , bool) {};
 bool ObjectClass::Catch_Fire(void) {return false;};
