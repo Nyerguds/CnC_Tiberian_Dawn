@@ -206,6 +206,7 @@ extern ScenarioVarType 		ScenVar;
 extern int						CarryOverMoney;
 extern int						CarryOverCap;
 extern int						CarryOverPercent;
+extern int						RequiredNukePieces;
 extern char 						ScenarioName[_MAX_FNAME+_MAX_EXT];
 extern unsigned					BuildLevel;
 extern unsigned long			ScenarioCRC;

@@ -486,7 +486,7 @@ class HouseClass {
 //		void  Remove_Air_Strike(void);
 //		void  Remove_Nuke_Bomb(void);
 		void  Detach(TARGET target, bool all);
-		void  Add_Nuke_Piece(int piece=-1);
+		void  Add_Nuke_Piece();
 //		void  Make_Air_Strike_Available(bool present, bool one_time_effect = false);
 		bool  Has_Nuke_Device(void);
 

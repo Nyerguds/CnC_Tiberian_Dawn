@@ -177,9 +177,7 @@ void Debug_Key(unsigned input)
 			case KN_C:
 				Debug_Cheat = (Debug_Cheat == false);
 				PlayerPtr->IsRecalcNeeded = true;
-				PlayerPtr->Add_Nuke_Piece();
-				PlayerPtr->Add_Nuke_Piece();
-				PlayerPtr->Add_Nuke_Piece();
+				PlayerPtr->NukePieces = Debug_Cheat ? -1 : RequiredNukePieces;
 
 				/*
 				**	This placement might affect any prerequisite requirements for construction

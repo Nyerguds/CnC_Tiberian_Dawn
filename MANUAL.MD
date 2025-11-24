@@ -138,7 +138,8 @@ These are mostly features that were originally implemented in the 1.06 patch.
 These options are available under \[Basic\]:
 
 * **RadarLogo**: Custom radar logo graphics to load. This is the extension of an HRADAR.??? file, where ??? is typically the House identifier. The game contains one for "GDI", "NOD" and "JP", but custom campaigns could add their own.
-* **PlayerNukePieces**: Amount of nuke pieces (steel crates) the player is considered to have collected at the mission start. The Temple of Nod will grant you one nuclear missile superweapon for each three nuke pieces. This defaults to three, to give the normal logic of one nuke per mission. Setting it to -1 gives infinite nukes.
+* **RequiredNukePieces**: Amount of nuke pieces (steel crates) required to fire a single nuclear missile in this mission. This defaults to three.
+* **PlayerNukePieces**: Amount of nuke pieces (steel crates) the player is considered to have collected at the mission start. The Temple of Nod will grant you one nuclear missile superweapon for each batch of collected nuke pieces, as specified in **RequiredNukePieces**. This defaults to three, to give the normal logic of one nuke per mission. Setting it to -1 gives infinite nukes.
 * **PlayerNukeInherit**: If true, the amount of nuke pieces is inherited from the previous scenario. This means the **PlayerNukePieces** value is not used.
 
 ### House colors
@@ -175,7 +176,9 @@ Extra colors:
 
 * **DarkGrey**: Dark grey scheme. Also works as **DarkGray**.
 * **Brown**: Brown scheme.
+* **Burgundy**: Dark purple scheme.
 * **Fire**: Yellow/orange scheme.
+* **Pink**: Fleshy pink scheme.
 * **WarmSilver**: Pale brown scheme.
 
 ### Trigger upgrades

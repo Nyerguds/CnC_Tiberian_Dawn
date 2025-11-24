@@ -2497,7 +2497,7 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 					// Nyerguds's C&C Patch Project v1.04
 					// Don't clear nuke pieces; decrease as int.
 					if (GameToPlay == GAME_NORMAL && NukePieces >= 0) {
-						NukePieces = MAX(0, NukePieces - 3);
+						NukePieces = MAX(0, NukePieces - RequiredNukePieces);
 					}
 
 				} else {
@@ -3156,7 +3156,7 @@ void HouseClass::Make_Air_Strike_Available(bool present, bool one_time_effect)
  * HISTORY:                                                                                    *
  *   06/20/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-void HouseClass::Add_Nuke_Piece(int piece)
+void HouseClass::Add_Nuke_Piece()
 {
 	Validate();
 	// Nyerguds's C&C Patch Project v1.04
@@ -4376,7 +4376,7 @@ bool HouseClass::Has_Nuke_Device(void)
 	if (GameToPlay != GAME_NORMAL || !IsHuman) return(true);
 	// Nyerguds's C&C Patch Project v1.04
 	// Treat nuke pieces as int, without limit. Treat -1 as infinite.
-	return(NukePieces < 0 || NukePieces >= 3);
+	return(NukePieces < 0 || NukePieces >= RequiredNukePieces);
 
 #ifdef OBSOLETE
 	return((NukePieces & 0x07) == 0x07);

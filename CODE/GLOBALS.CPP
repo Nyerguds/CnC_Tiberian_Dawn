@@ -340,7 +340,8 @@ ScenarioVarType ScenVar;				// variation A/B/C/D/E
 char ScenarioName[_MAX_FNAME+_MAX_EXT];	// name of scenario
 int CarryOverMoney;						// Carry over money from last scenario.
 int CarryOverPercent;					// Carry over money percentage control.
-int CarryOverCap;							// Maxmimum carry over money allowed.
+int CarryOverCap;						// Maxmimum carry over money allowed.
+int RequiredNukePieces;					// Nuke pieces required for one nuclear missile.
 int ScenarioInit;
 bool SpecialFlag = false;
 

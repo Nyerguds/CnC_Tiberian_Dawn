@@ -381,10 +381,14 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 		CarryOverCap = WWGetPrivateProfileInt("Basic", "CarryOverCap", -1, buffer);
 		// Nyerguds's C&C Patch Project v1.04
 		// Added ini keys for controlling nuke pieces.
+		RequiredNukePieces = WWGetPrivateProfileInt("Basic", "RequiredNukePieces", 3, buffer);
+		RequiredNukePieces = MAX(0, RequiredNukePieces);
 		bool nukeInherit = WWGetPrivateProfileBool("Basic", "PlayerNukeInherit", false, buffer);
 		int newpieces = WWGetPrivateProfileInt("Basic", "PlayerNukePieces", 3, buffer);
+
 		PlayerPtr = HouseClass::As_Pointer(HouseTypeClass::From_Name(buf));
 		PlayerPtr->IsHuman = true;
+		
 		if (Options.NodCollectathon && ScenPlayer == SCEN_PLAYER_NOD && Scenario < 20) {
 			nukeInherit = true;
 			if (Scenario == 1) {
@@ -393,6 +397,7 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 		}
 		PlayerPtr->NukePieces = nukeInherit ? nukepieces : newpieces;
 		PlayerPtr->NukePiecesStart = PlayerPtr->NukePieces;
+
 		int carryover;
 		if (CarryOverCap != -1) {
 			carryover = MIN(Fixed_To_Cardinal(CarryOverMoney, CarryOverPercent), CarryOverCap);
@@ -704,6 +709,9 @@ void Write_Scenario_Ini(char *root)
 	WWWritePrivateProfileInt("Basic", "BuildLevel", BuildLevel, buffer);
 	WWWritePrivateProfileInt("Basic", "CarryOverMoney", Fixed_To_Cardinal(100, CarryOverPercent), buffer);
 	WWWritePrivateProfileInt("Basic", "CarryOverCap", CarryOverCap, buffer);
+	if (RequiredNukePieces != 3) {
+		WWWritePrivateProfileInt("Basic", "RequiredNukePieces", RequiredNukePieces, buffer);
+	}
 
 	TeamTypeClass::Write_INI(buffer, true);
 	TriggerClass::Write_INI(buffer, true);

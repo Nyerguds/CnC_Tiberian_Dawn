@@ -92,7 +92,8 @@
 										sizeof(SabotagedType) + \
 										sizeof(TempleIoned) + \
 										sizeof(Patsux) + \
-										sizeof(RemoveBuildExceptions)))
+										sizeof(RemoveBuildExceptions) + \
+										sizeof(RequiredNukePieces)))
 
 
 /***************************************************************************
@@ -629,6 +630,8 @@ bool Save_Misc_Values(FileClass &file)
 	file.Write(&Patsux, sizeof(Patsux));
 	// Added tech unlock to savegame data
 	file.Write(&RemoveBuildExceptions, sizeof(RemoveBuildExceptions));
+	// Added amount of nuke pices required for one nuke
+	file.Write(&RequiredNukePieces, sizeof(RequiredNukePieces));
 	return(true);
 }
 
@@ -730,6 +733,8 @@ bool Load_Misc_Values(FileClass &file)
 	file.Read(&Patsux, sizeof(Patsux));
 	// Added tech unlock to savegame data
 	file.Read(&RemoveBuildExceptions, sizeof(RemoveBuildExceptions));
+	// Added amount of nuke pices required for one nuke
+	file.Read(&RequiredNukePieces, sizeof(RequiredNukePieces));
 	return(true);
 }
 

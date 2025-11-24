@@ -476,7 +476,7 @@ void Set_Scenario_Name(char *buf, int scenario, ScenarioPlayerType player, Scena
 #ifdef SCENARIO_EDITOR
 void Write_Scenario_Ini(char *root);
 #endif // SCENARIO_EDITOR
-bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh=true);
+bool Read_Scenario_Ini(char *root, int nukepieces=0, bool fresh=true);
 int Scan_Place_Object(ObjectClass *obj, CELL cell);
 
 /*
@@ -643,8 +643,8 @@ void Set_VTable(void *ptr, int base_size, void *vtable);
 ** SCENARIO.CPP
 */
 bool End_Game(void);
-bool Read_Scenario(char *root, int nukepieces);
-bool Start_Scenario(char *root, int nukepieces, bool briefing=true);
+bool Read_Scenario(char *root, int nukepieces=0);
+bool Start_Scenario(char *root, int nukepieces=0, bool briefing=true);
 HousesType Select_House(void);
 void Clear_Scenario(void);
 void Do_Briefing(char const * text);
