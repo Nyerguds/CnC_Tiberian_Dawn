@@ -236,6 +236,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Fixed trees remaining on fire forever until they died, because the damage taken from the burning always set them on fire again.
 * Fixed trees being immune to non-fire damage while they were burning.
 * Fixed trees not getting properly cleaned up when dying from fire damage, and remaining as dead but damage-immune husks.
+* Fixed buildings on fire spawning increasingly more fire when they get repaired above the halfway point but then get reduced below it again by the fire damage.
 * Superweapon triggers ("Ion Cannon" and "Nuclear Missile") for the owner's native superweapon will now produce a one-time shot that works regardless of owned superweapon building, and which does not consume nuke pieces.
 * Computer player superweapon strikes from triggers will now be blocked if they do not own the required superweapon building. This behaviour can be disabled by adding "AllowDetachedAISupers=true" in a mission's \[Basic\] section. This affects both the Ion Cannon and the Buclear Strike.
 * The Ion Cannon is no longer restricted to players identifying as GDI. This allows captured Advanced Communications Centers to give the player access to the Ion Cannon.

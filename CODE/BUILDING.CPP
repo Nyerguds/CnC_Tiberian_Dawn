@@ -1462,6 +1462,11 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 
 			case RESULT_MAJOR:
 				Sound_Effect(VOC_XPLOBIG4, Coord);
+				// Nyerguds's C&C Patch Project v1.04
+				// Do not re-ignite the building if the damage came from burning down.
+				if (fromburn) {
+					break;
+				}
 				while (*offset != REFRESH_EOL) {
 					CELL cell = Coord_Cell(Coord) + *offset++;
 					AnimClass * anim = NULL;
