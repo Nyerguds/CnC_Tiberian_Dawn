@@ -106,9 +106,9 @@ class TerrainClass : public ObjectClass, public StageClass
 		/*
 		**	Combat related.
 		*/
-		virtual void Fire_Out(void);
-		virtual bool Catch_Fire(void);
-		virtual ResultType Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, bool fromburn = false);
+		virtual void Fire_Out(bool fromdetach);
+		virtual bool Catch_Fire(TechnoClass * source=0, HousesType house = HOUSE_NONE);
+		virtual ResultType Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house=HOUSE_NONE, bool fromburn = false);
 		virtual TARGET As_Target(void) const;
 
 		/*

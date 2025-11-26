@@ -366,6 +366,8 @@ void InfantryClass::operator delete(void *ptr)
  *                                                                                             *
  *          source   -- The source of the damage. This is used to change targeting.            *
  *                                                                                             *
+ *          house    -- Source of the damage if no techno is available to blame.               *
+ *                                                                                             *
  *          fromburn -- The damage is a result of an animation burning the object.             *
  *                                                                                             *
  * OUTPUT:  Returns the ResultType that indicates what the effect of the damage was.           *
@@ -378,7 +380,7 @@ void InfantryClass::operator delete(void *ptr)
  *   11/22/1994 JLB : Shares base damage handler for techno objects.                           *
  *   03/31/1995 JLB : Revenge factor.                                                          *
  *=============================================================================================*/
-ResultType InfantryClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, bool fromburn)
+ResultType InfantryClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)
 {
 	Validate();
 	ResultType res = RESULT_NONE;
@@ -398,7 +400,7 @@ ResultType InfantryClass::Take_Damage(int & damage, int distance, WarheadType wa
 //Mono_Printf("Infantry Take_Damage(%d, %d, %d, %p)\r", damage, distance, warhead, source);
 //Get_Key();
 
-	res = FootClass::Take_Damage(damage, distance, warhead, source, fromburn);
+	res = FootClass::Take_Damage(damage, distance, warhead, source, house, fromburn);
 
 	/*
 	**	Flame thrower guys take more damage because of the exposed pilot light
@@ -409,7 +411,7 @@ ResultType InfantryClass::Take_Damage(int & damage, int distance, WarheadType wa
 		// The extra damage on flamers no longer corrupts the returned damage value.
 		int origDamage = damage;
 		damage = 5;
-		ResultType newres = FootClass::Take_Damage(damage, distance, warhead, source, fromburn);
+		ResultType newres = FootClass::Take_Damage(damage, distance, warhead, source, house, fromburn);
 		damage += origDamage;
 		res = MAX(res, newres);
 	}
@@ -424,22 +426,25 @@ ResultType InfantryClass::Take_Damage(int & damage, int distance, WarheadType wa
 		Assign_Mission(MISSION_GUARD);
 		Commence();
 
+		// Nyerguds's C&C Patch Project v1.04
+		// On UnitClass, this damage gets attributed to the one killing
+		// the unit, so it's only logical the same is done here.
 		/*
 		**	Flame thrower infantry always go out with a bang.
 		*/
 		if (*this == INFANTRY_E4) {
 			new AnimClass(ANIM_NAPALM1, Coord);
-			Explosion_Damage(Coord, 80, 0, WARHEAD_FIRE);
+			Explosion_Damage(Coord, 80, source, house, WARHEAD_FIRE);
 		}
 
 		if (*this == INFANTRY_E2) {
 			new AnimClass(ANIM_ART_EXP1, Coord);
-			Explosion_Damage(Coord, 30, 0, WARHEAD_HE);
+			Explosion_Damage(Coord, 30, source, house, WARHEAD_HE);
 		}
 
 		if (*this == INFANTRY_E5) {
 			new AnimClass(ANIM_CHEM_BALL, Coord);
-			Explosion_Damage(Coord, 80, 0, WARHEAD_HE);
+			Explosion_Damage(Coord, 80, source, house, WARHEAD_HE);
 		}
 
 		VocType sound;

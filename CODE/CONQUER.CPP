@@ -507,7 +507,6 @@ void Keyboard_Process(KeyNumType &input)
 		for (int lp = 0; lp <= 9999; lp++) {
 			sprintf(filename, "scrn%04d.pcx", lp);
 			int acc = access(filename, F_OK);
-			//ShowUIMessage(false, true, "File access for\"%s\" returned %d.", filename, acc);
 			if (acc == -1) {
 				fileAvailable = true;
 				break;
@@ -719,7 +718,6 @@ void Keyboard_Process(KeyNumType &input)
 			Handle_Team(8, action);
 			break;
 		case VK_0:
-			//ShowUIMessage(false, true, "Ctrl=%d, Alt=%d, Shift=%d", ctrldown ? 1 : 0, altdown? 1 : 0, shiftdown? 1 : 0);
 			Handle_Team(9, action);
 			break;
 
@@ -3310,8 +3308,6 @@ long VQ_Call_Back(unsigned char *, long )
 void Handle_Team(int team, int action)
 {
 	int index;
-
-	//ShowUIMessage(false, true, "Action is %d", action);
 
 	AllowVoice = true;
 	switch (action) {

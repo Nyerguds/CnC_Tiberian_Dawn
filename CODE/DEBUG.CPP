@@ -166,7 +166,7 @@ void Debug_Key(unsigned input)
 
 			case KN_GRAVE:
 				new AnimClass(ANIM_ART_EXP1, Map.Pixel_To_Coord(Get_Mouse_X(), Get_Mouse_Y()));
-				Explosion_Damage(Map.Pixel_To_Coord(Get_Mouse_X(), Get_Mouse_Y()), 250, NULL, WARHEAD_HE);
+				Explosion_Damage(Map.Pixel_To_Coord(Get_Mouse_X(), Get_Mouse_Y()), 250, NULL, HOUSE_NONE, WARHEAD_HE);
 				break;
 
 			case KN_Z:

@@ -57,10 +57,16 @@ class BulletClass :	public ObjectClass,
 		operator BulletType(void) const {return Class->Type;};
 
 		/*
+		**	Records which house sent this "present" so that an appropriate "thank you"
+		**	can be returned even if the Payback object died.
+		*/
+		HousesType Owner;
+
+		/*
 		**	Records who sent this "present" so that an appropriate "thank you" can
 		**	be returned.
 		*/
-		TechnoClass * Payback;
+		TARGET Payback;
 
 		/*
 		**	This is the facing that the projectile is travelling.
@@ -100,6 +106,9 @@ class BulletClass :	public ObjectClass,
 		virtual short const * Occupy_List(void) const;
 		virtual short const * Overlap_List(bool /*redraw*/ = false) const {return Occupy_List();};
 		virtual TARGET As_Target(void) const;
+
+		virtual void Set_Payback(TechnoClass * payback, HousesType house = HOUSE_NONE);
+		virtual void Set_Payback(TARGET payback, HousesType house = HOUSE_NONE);
 
 		/*
 		**	File I/O.

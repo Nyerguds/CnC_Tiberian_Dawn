@@ -1150,6 +1150,8 @@ bool FootClass::Limbo(void)
  *                                                                                             *
  *          source   -- The source of the damage. This is used to change targeting.            *
  *                                                                                             *
+ *          house    -- Source of the damage if no techno is available to blame.               *
+ *                                                                                             *
  *          fromburn -- The damage is a result of an animation burning the object.             *
  *                                                                                             *
  * OUTPUT:  Returns the ResultType that indicates what the effect of the damage was.           *
@@ -1159,9 +1161,9 @@ bool FootClass::Limbo(void)
  * HISTORY:                                                                                    *
  *   12/30/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-ResultType FootClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, bool fromburn)
+ResultType FootClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)
 {
-	ResultType result = TechnoClass::Take_Damage(damage, distance, warhead, source, fromburn);
+	ResultType result = TechnoClass::Take_Damage(damage, distance, warhead, source, house, fromburn);
 
 	if (result != RESULT_NONE && Team) {
 
@@ -2077,7 +2079,7 @@ void FootClass::Sell_Back(int control)
 		**	A sold unit still counts as a kill, but it just isn't directly
 		**	attributed to the enemy. This ensures that triggers fire correctly.
 		*/
-		Record_The_Kill(NULL, true);
+		Record_The_Kill(NULL, HOUSE_NONE, true);
 
 		House->Refund_Money(Refund_Amount());
 		

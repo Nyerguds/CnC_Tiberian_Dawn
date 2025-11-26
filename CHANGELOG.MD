@@ -234,9 +234,13 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Fixed the TeamTypes "Unload" order using its value both as waypoint and as timeout, making it necessary to always add a "Move" order to the same waypoint first.
 * The TeamTypes "Unload" order can now be used to deploy an MCV.
 * Fixed trees remaining on fire forever until they died, because the damage taken from the burning always set them on fire again.
+* Fixed trees being immune to non-fire damage while they were burning.
 * Fixed trees not getting properly cleaned up when dying from fire damage, and remaining as dead but damage-immune husks.
 * Superweapon triggers ("Ion Cannon" and "Nuclear Missile") for the owner's native superweapon will now produce a one-time shot that works regardless of owned superweapon building, and which does not consume nuke pieces.
-* Computer player superweapon strikes from triggers will now be blocked if they do not own the required superweapon building. This behaviour can be disabled by adding "AllowDetachedAISupers=true" in a mission's \[Basic\] section.
-* The Ion Cannon is no longer restricted to players identifying as GDI. This fixes the bug that the Advanced Communications Center had no effect in Funpark mission 4 if you selected Nod as side.
+* Computer player superweapon strikes from triggers will now be blocked if they do not own the required superweapon building. This behaviour can be disabled by adding "AllowDetachedAISupers=true" in a mission's \[Basic\] section. This affects both the Ion Cannon and the Buclear Strike.
+* The Ion Cannon is no longer restricted to players identifying as GDI. This allows captured Advanced Communications Centers to give the player access to the Ion Cannon.
 * Added new "Money" trigger event, to fix the fact the existing "Credits" event only counts cash money, without tiberium.
 * Computer-owned MCVs ordered to "Unload" will now seek out a valid place if they can't deploy on their current spot.
+* Since the Nuclear Missile superweapon has no "charging" voice, a "New Construction Options" voice now announces when it is added to the build list.
+* Animations now remember which object caused them, meaning buildings burning down from fire damage, and objects damaged by superweapons, will now know where the damage originated, and possibly what to retaliate against.
+* Damage caused by infantry exploding on death is now attributed to the one who killed the infantry, since this is the way it works for Flame Tank and SSM death explosions.

@@ -980,6 +980,8 @@ void BuildingClass::AI(void)
 	if (!Strength) {
 		if (CountDown.Expired()) {
 			Limbo();
+			// Seems the survivors only retaliate against a specific target if it was sabotaged
+			// by a Commando. Normal death origin does not get stored in WhomToRepay.
 			Drop_Debris(WhomToRepay);
 			delete this;
 		}
@@ -1344,6 +1346,8 @@ bool BuildingClass::Unlimbo(COORDINATE coord, DirType dir)
  *                                                                                             *
  *          source   -- The source of the damage. This is used to change targeting.            *
  *                                                                                             *
+ *          house    -- Source of the damage if no techno is available to blame.               *
+ *                                                                                             *
  *          fromburn -- The damage is a result of an animation burning the object.             *
  *                                                                                             *
  * OUTPUT:  Returns the ResultType that indicates what the effect of the damage was.           *
@@ -1359,7 +1363,7 @@ bool BuildingClass::Unlimbo(COORDINATE coord, DirType dir)
  *   11/22/1994 JLB : Shares base damage handler for techno objects.                           *
  *   07/15/1995 JLB : Power ratio gets adjusted.                                               *
  *=============================================================================================*/
-ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, bool fromburn)
+ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)
 {
 	Validate();
 	ResultType res = RESULT_NONE;
@@ -1390,7 +1394,7 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 		/*
 		**	Perform the low level damage assessment.
 		*/
-		res = TechnoClass::Take_Damage(damage, distance, warhead, source, fromburn);
+		res = TechnoClass::Take_Damage(damage, distance, warhead, source, house, fromburn);
 
 		switch (res) {
 			case RESULT_DESTROYED:
@@ -1438,7 +1442,7 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 				}
 
 				/*
-				**	A destuction of the Temple by an ion cannon requires a global
+				**	A destruction of the Temple by an ion cannon requires a global
 				**	remembering of this fact. The finale uses this information to
 				**	play the correct movie.
 				*/
@@ -1504,6 +1508,9 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 					*/
 					if (anim) {
 						anim->Attach_To(this);
+						// Nyerguds's C&C Patch Project v1.04
+						// Burns now remember who caused them.
+						anim->Set_Payback(source, house);
 					}
 				}
 				break;
@@ -1520,11 +1527,13 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 			*/
 			House->Attacked();
 
+#ifdef OBSOLETE
 			/*
 			** Save the type of the house that's doing the damage, so if the building burns
 			** to death credit can still be given for the kill
 			*/
 			WhoLastHurtMe = source->Owner();
+#endif
 
 			/*
 			**	When certain buildings are hit, they "snap out of it" and
@@ -1680,7 +1689,9 @@ BuildingClass::BuildingClass(StructType type, HousesType house) :
 	IsWrenchVisible = false;
 	QueueBState = BSTATE_NONE;
 	Strength = Class->MaxStrength;
+#ifdef OBSOLETE
 	WhoLastHurtMe = house;
+#endif
 	LastRepaired = TARGET_NONE;
 	Ammo = Class->MaxAmmo;
 
@@ -1754,8 +1765,7 @@ void BuildingClass::Drop_Debris(TARGET source)
 	CELL	cell;
 
 	/*
-	**	Special case for Moebius to run from destroyed technology
-	**	building.
+	**	Special case for Chan to run from destroyed technology building.
 	*/
 	// Nyerguds's C&C Patch Project v1.04
 	// Consistently use ScenPlayer for scenario exceptions
@@ -2255,7 +2265,7 @@ void BuildingClass::Update_Buildables(void)
  * HISTORY:                                                                                    *
  *   11/30/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-void BuildingClass::Fire_Out(void)
+void BuildingClass::Fire_Out(bool /*fromdetach*/)
 {
 	Validate();
 //	SAM = SAM_READY;
@@ -3872,8 +3882,10 @@ int BuildingClass::Mission_Deconstruction(void)
 					**	A sold building still counts as a kill, but it just isn't directly
 					**	attributed to the enemy. This ensures that triggers fire correctly.
 					*/
+#ifdef OBSOLETE
 					WhoLastHurtMe = HOUSE_NONE;
-					Record_The_Kill(NULL, true);
+#endif
+					Record_The_Kill(NULL, HOUSE_NONE, true);
 
 					/*
 					**	The player gets part of the money back for the sell.
@@ -4416,7 +4428,7 @@ int BuildingClass::Mission_Missile(void)
 					if (bullet) {
 						COORDINATE launch = Coord_Move(Center_Coord(), (DirType)1, 0x1A0);
 						bullet->Assign_Target(TARGET_NONE);
-						bullet->Payback = NULL;
+						//bullet->Payback = NULL;
 						bullet->Strength = 1;
 						if (!bullet->Unlimbo(launch, DIR_N)) {
 							delete bullet;
@@ -4449,7 +4461,7 @@ int BuildingClass::Mission_Missile(void)
 //						Theme.Queue_Song(THEME_NONE);
 						COORDINATE start = Cell_Coord(XY_Cell(Cell_X(House->NukeDest), 1));
 						bullet->Assign_Target(::As_Target(House->NukeDest));
-						bullet->Payback = NULL;
+						bullet->Set_Payback(this);
 						bullet->Strength = 1;
 						if (!bullet->Unlimbo(start, DIR_S)) {
 							delete bullet;
@@ -4821,6 +4833,9 @@ void BuildingClass::Detach(TARGET target, bool all)
 	TechnoClass::Detach(target, all);
 	if (target == WhomToRepay) {
 		WhomToRepay = TARGET_NONE;
+	}
+	if (target == LastRepaired) {
+		LastRepaired = TARGET_NONE;
 	}
 }
 

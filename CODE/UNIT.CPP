@@ -856,6 +856,8 @@ bool UnitClass::Unlimbo(COORDINATE coord, DirType dir)
  *                                                                                             *
  *          source   -- The source of the damage. This is used to change targeting.            *
  *                                                                                             *
+ *          house    -- Source of the damage if no techno is available to blame.               *
+ *                                                                                             *
  *          fromburn -- The damage is a result of an animation burning the object.             *
  *                                                                                             *
  * OUTPUT:  Returns the ResultType that indicates what the effect of the damage was.           *
@@ -873,7 +875,7 @@ bool UnitClass::Unlimbo(COORDINATE coord, DirType dir)
  *   06/30/1995 JLB : Lasers do maximum damage against gunboat.                                *
  *   08/16/1995 JLB : Harvester crushing doesn't occur on early missions.                      *
  *=============================================================================================*/
-ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, bool fromburn)
+ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)
 {
 	Validate();
 	ResultType res = RESULT_NONE;
@@ -898,7 +900,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 	**	In order for a this to be damaged, it must either be a unit
 	**	with a crew or a sandworm.
 	*/
-	res = TarComClass::Take_Damage(damage, distance, warhead, source, fromburn);
+	res = TarComClass::Take_Damage(damage, distance, warhead, source, house, fromburn);
 
 	if (res == RESULT_DESTROYED) {
 		Death_Announcement(source);
@@ -927,7 +929,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 			**	equivalent to a napalm strike.
 			*/
 			if (Class->Explosion == ANIM_NAPALM3) {
-				Explosion_Damage(Coord, 200, source, WARHEAD_FIRE);
+				Explosion_Damage(Coord, 200, source, house, WARHEAD_FIRE);
 			}
 
 			/*
@@ -988,7 +990,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 						object->Scatter(0, true);
 						if (select) object->Select();
 					} else {
-						object->Record_The_Kill(source);
+						object->Record_The_Kill(source, house);
 						delete object;
 					}
 				}
@@ -998,9 +1000,9 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 				if (select) {
 					AllowVoice = true;
 				}
-				Dump_Cargo(0, select, source);
+				Dump_Cargo(0, select, source, house);
 			} else {
-				Kill_Cargo(source);
+				Kill_Cargo(source, house);
 			}
 		}
 		if (select) {

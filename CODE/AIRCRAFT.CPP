@@ -1573,6 +1573,8 @@ BulletClass * AircraftClass::Fire_At(TARGET target, int which)
  *                                                                                             *
  *          source   -- The source of the damage. This is used to change targeting.            *
  *                                                                                             *
+ *          house    -- Source of the damage if no techno is available to blame.               *
+ *                                                                                             *
  *          fromburn -- The damage is a result of an animation burning the object.             *
  *                                                                                             *
  * OUTPUT:  Returns the ResultType that indicates what the effect of the damage was.           *
@@ -1582,7 +1584,7 @@ BulletClass * AircraftClass::Fire_At(TARGET target, int which)
  * HISTORY:                                                                                    *
  *   05/26/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-ResultType AircraftClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, bool fromburn)
+ResultType AircraftClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)
 {
 	Validate();
 	ResultType res = RESULT_NONE;
@@ -1604,16 +1606,16 @@ ResultType AircraftClass::Take_Damage(int & damage, int distance, WarheadType wa
 	**	In order for a this to be damaged, it must either be a unit
 	**	with a crew or a sandworm.
 	*/
-	res = FootClass::Take_Damage(damage, distance, warhead, source, fromburn);
+	res = FootClass::Take_Damage(damage, distance, warhead, source, house, fromburn);
 
 	switch (res) {
 		case RESULT_DESTROYED:
 			if (Altitude == 0) {
 				Mark(MARK_UP);
 				// 224 = 7/8th
-				Dump_Cargo(224, select, source);
+				Dump_Cargo(224, select, source, house);
 			} else {
-				Kill_Cargo(source);
+				Kill_Cargo(source, house);
 			}
 			Death_Announcement();
 			new AnimClass(ANIM_FBALL1, Target_Coord());

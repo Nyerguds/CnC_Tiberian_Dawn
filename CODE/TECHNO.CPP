@@ -1387,7 +1387,6 @@ bool TechnoClass::Evaluate_Cell(ThreatType method, int mask, CELL cell, int rang
 			ObjectClass const * overlapper = cellptr->Overlapper[index];
 			if (overlapper && overlapper->What_Am_I() == RTTI_BUILDING) {
 				tentative = (TechnoClass const *)overlapper;
-				//ShowUIMessage(false, true, "building found");
 			}
 		}
 	}
@@ -1639,7 +1638,7 @@ TARGET TechnoClass::Greatest_Threat(ThreatType method) const
  *=============================================================================================*/
 HousesType TechnoClass::Owner(void) const
 {
-	return(House->Class->House);
+	return(House ? House->Class->House : HOUSE_NONE);
 }
 
 
@@ -2155,7 +2154,7 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
  	bullet = new BulletClass(weapon->Fires);
 	if (bullet) {
 		bullet->Assign_Target(target);
-		bullet->Payback = this;
+		bullet->Set_Payback(this);
 		bullet->Strength = weapon->Attack;
 		// Nyerguds's C&C Patch Project v1.04
 		// Add actual range as max scatter range, to fix attacks against buildings falling short.
@@ -2174,7 +2173,7 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
 //Mono_Printf("Buildings[0]=%p.\n", Buildings.Raw_Ptr(0));
 //Mono_Printf("Aircraft[0]=%p.\n", Aircraft.Raw_Ptr(0));
 //Mono_Printf("object=%p, Strength=%d, IsActive=%d, IsInLimbo=%d.\n", object, (long)object->Strength, object->IsActive, object->IsInLimbo);Get_Key();
-			bullet->Payback = this;
+			bullet->Set_Payback(this);
 			bullet->Strength = weapon->Attack;
 			if (!bullet->Class->IsFueled) {
 				IsInRecoilState = true;
@@ -2210,6 +2209,8 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
 			AnimClass * anim = new AnimClass(a, fire_coord);
 			if (anim) {
 				anim->Attach_To(this);
+				// If fire spreads from this animation, this unit will be blamed for it.
+				anim->Set_Payback(this);
 			}
 		}
 
@@ -2773,7 +2774,7 @@ bool TechnoClass::Restore_Mission(void)
  *=============================================================================================*/
 bool TechnoClass::Captured(HouseClass * newowner)
 {
-	if (newowner != House) {
+	if (newowner && newowner != House) {
 
 		/*
 		**	Capture attempt springs any "entered" trigger. The entered trigger
@@ -2788,8 +2789,11 @@ bool TechnoClass::Captured(HouseClass * newowner)
 		/*
 		**	Record this as a kill.
 		*/
-		Record_The_Kill(NULL);
+		// Nyerguds's C&C Patch Project v1.04
+		// Record_The_Kill can now handle Houses without actual source.
+		Record_The_Kill(NULL, *newowner);
 
+#ifdef OBSOLETE
 		/*
 		**	Special kill record logic for capture process.
 		*/
@@ -2807,6 +2811,7 @@ bool TechnoClass::Captured(HouseClass * newowner)
 			default:
 				break;
 		}
+#endif
 		House->WhoLastHurtMe = newowner->Class->House;
 
 		/*
@@ -2849,6 +2854,8 @@ bool TechnoClass::Captured(HouseClass * newowner)
  *                                                                                             *
  *          source   -- The source of the damage. This is used to change targeting.            *
  *                                                                                             *
+ *          house    -- Source of the damage if no techno is available to blame.               *
+ *                                                                                             *
  *          fromburn -- The damage is a result of an animation burning the object.             *
  *                                                                                             *
  * OUTPUT:  Returns the ResultType that indicates what the effect of the damage was.           *
@@ -2858,9 +2865,9 @@ bool TechnoClass::Captured(HouseClass * newowner)
  * HISTORY:                                                                                    *
  *   06/20/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-ResultType TechnoClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, bool fromburn)
+ResultType TechnoClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)
 {
-	ResultType result = ObjectClass::Take_Damage(damage, distance, warhead, source, fromburn);
+	ResultType result = ObjectClass::Take_Damage(damage, distance, warhead, source, house, fromburn);
 
 	switch (result) {
 		case RESULT_DESTROYED:
@@ -2919,6 +2926,8 @@ int TechnoTypeClass::Max_Passengers(void) const
  *                                                                                             *
  * INPUT:   source   -- Pointer to the source of this object's death (if there is a source).   *
  *                                                                                             *
+ *          house    -- Source of the damage if no source is available.                        *
+ *                                                                                             *
  * OUTPUT:  none                                                                               *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
@@ -2927,7 +2936,7 @@ int TechnoTypeClass::Max_Passengers(void) const
  *   07/08/1995 JLB : Created.                                                                 *
  *   08/23/1995 JLB : Building loss is only counted if it received damage.                     *
  *=============================================================================================*/
-void TechnoClass::Record_The_Kill(TechnoClass * source, bool sold)
+void TechnoClass::Record_The_Kill(TechnoClass * source, HousesType house, bool sold)
 {
 	/*
 	**	Handle any trigger event associated with this object.
@@ -2938,6 +2947,7 @@ void TechnoClass::Record_The_Kill(TechnoClass * source, bool sold)
 
 	if (Trigger) Trigger->Spring(EVENT_DESTROYED, this);
 
+	HousesType killhouse = HOUSE_NONE;
 	if (source) {
 		/*
 		**	Call the explicity cast versions of the Made_A_Kill function. This
@@ -2961,8 +2971,14 @@ void TechnoClass::Record_The_Kill(TechnoClass * source, bool sold)
 				((AircraftClass *)source)->Made_A_Kill();
 				break;
 		}
-
-		House->WhoLastHurtMe = source->Owner();
+		killhouse = source->Owner();
+		House->WhoLastHurtMe = house;
+	} else {
+		killhouse = house;
+	}
+	HouseClass * killcred = NULL;
+	if (killhouse != HOUSE_NONE) {
+		killcred = HouseClass::As_Pointer(HOUSE_BAD);
 	}
 
 	switch (What_Am_I()) {
@@ -2975,11 +2991,11 @@ void TechnoClass::Record_The_Kill(TechnoClass * source, bool sold)
 				House->BuildingsLost++;
 			}
 #endif
-			if (source){
-				if (GameToPlay == GAME_INTERNET){
-					source->House->DestroyedBuildings->Increment_Unit_Total( ((BuildingClass*)this)->Class->Type );
+			if (killcred) {
+				if (GameToPlay == GAME_INTERNET) {
+					killcred->DestroyedBuildings->Increment_Unit_Total(((BuildingClass*)this)->Class->Type);
 				}
-				source->House->BuildingsKilled[Owner()]++;
+				killcred->BuildingsKilled[Owner()]++;
 			}
 
 			/*
@@ -2994,11 +3010,11 @@ void TechnoClass::Record_The_Kill(TechnoClass * source, bool sold)
 
 		case RTTI_AIRCRAFT:
 			if (!sold) House->UnitsLost++;
-			if (source){
-				if (GameToPlay == GAME_INTERNET){
-					source->House->DestroyedAircraft->Increment_Unit_Total( ((AircraftClass*)this)->Class->Type );
+			if (killcred) {
+				if (GameToPlay == GAME_INTERNET) {
+					killcred->DestroyedAircraft->Increment_Unit_Total(((AircraftClass*)this)->Class->Type);
 				}
-				source->House->UnitsKilled[Owner()]++;
+				killcred->UnitsKilled[Owner()]++;
 			}
 			/*
 			** If the map is displaying the multiplayer player names & their
@@ -3012,11 +3028,11 @@ void TechnoClass::Record_The_Kill(TechnoClass * source, bool sold)
 
 		case RTTI_INFANTRY:
 			if (!sold) House->UnitsLost++;
-			if (source){
-				if (GameToPlay == GAME_INTERNET){
-					source->House->DestroyedInfantry->Increment_Unit_Total( ((InfantryClass*)this)->Class->Type );
+			if (killcred) {
+				if (GameToPlay == GAME_INTERNET) {
+					killcred->DestroyedInfantry->Increment_Unit_Total(((InfantryClass*)this)->Class->Type);
 				}
-				source->House->UnitsKilled[Owner()]++;
+				killcred->UnitsKilled[Owner()]++;
 			}
 			/*
 			** If the map is displaying the multiplayer player names & their
@@ -3030,11 +3046,11 @@ void TechnoClass::Record_The_Kill(TechnoClass * source, bool sold)
 
 		case RTTI_UNIT:
 			if (!sold) House->UnitsLost++;
-			if (source){
-				if (GameToPlay == GAME_INTERNET){
-					source->House->DestroyedUnits->Increment_Unit_Total( ((UnitClass*)this)->Class->Type );
+			if (killcred) {
+				if (GameToPlay == GAME_INTERNET) {
+					killcred->DestroyedUnits->Increment_Unit_Total(((UnitClass*)this)->Class->Type);
 				}
-				source->House->UnitsKilled[Owner()]++;
+				killcred->UnitsKilled[Owner()]++;
 			}
 
 			/*
@@ -3364,6 +3380,8 @@ void TechnoClass::Detach(TARGET target, bool all)
  *                                                                                             *
  * INPUT:   source   -- The source of the destruction of the cargo.                            *
  *                                                                                             *
+ *          house    -- Source of the damage if no source is available.                        *
+ *                                                                                             *
  * OUTPUT:  none                                                                               *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
@@ -3371,12 +3389,12 @@ void TechnoClass::Detach(TARGET target, bool all)
  * HISTORY:                                                                                    *
  *   07/29/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-void TechnoClass::Kill_Cargo(TechnoClass * source)
+void TechnoClass::Kill_Cargo(TechnoClass * source, HousesType house)
 {
 	while (Is_Something_Attached()) {
 		FootClass * foot = Detach_Object();
 		if (foot) {
-			foot->Record_The_Kill(source);
+			foot->Record_The_Kill(source, house);
 			delete foot;
 		}
 	}
@@ -3395,6 +3413,8 @@ void TechnoClass::Kill_Cargo(TechnoClass * source)
  *                                                                                             *
  *          source  -- If any crew dies or unlimbo fails, this Techno wil be marked as killer. *
  *                                                                                             *
+ *          house   -- Source of the damage if no source is available.                         *
+ *                                                                                             *
  * OUTPUT:  none                                                                               *
  *                                                                                             *
  * WARNINGS:   - This function will only work correctly if Mark(MARK_UP) is called before it,  *
@@ -3408,7 +3428,7 @@ void TechnoClass::Kill_Cargo(TechnoClass * source)
  * HISTORY:                                                                                    *
  *   09/08/2025 MM  : Created.                                                                 *
  *=============================================================================================*/
-void TechnoClass::Dump_Cargo(int damage, bool select, TechnoClass * source)
+void TechnoClass::Dump_Cargo(int damage, bool select, TechnoClass * source, HousesType house)
 {
 	// Nyerguds's C&C Patch Project v1.04
 	// General function for dumping passengers.	
@@ -3470,7 +3490,7 @@ void TechnoClass::Dump_Cargo(int damage, bool select, TechnoClass * source)
 			}
 		}
 		if (!exited) {
-			foot -> Record_The_Kill(source);
+			foot -> Record_The_Kill(source, house);
 			delete foot;
 		}
 	}

@@ -78,6 +78,9 @@ class AnimClass : public ObjectClass, private StageClass {
 		virtual TARGET As_Target(void) const;
 		virtual void Detach(TARGET target, bool all);
 
+		virtual void Set_Payback(TechnoClass * payback, HousesType house = HOUSE_NONE);
+		virtual void Set_Payback(TARGET payback, HousesType house = HOUSE_NONE);
+
 		/*
 		**	File I/O.
 		*/
@@ -104,6 +107,12 @@ class AnimClass : public ObjectClass, private StageClass {
 		**	animation.
 		*/
 		HousesType Owner;
+		
+		/*
+		**	If this animation deals damage, records who sent this "present" so that
+		**	an appropriate "thank you" can be returned.
+		*/
+		TARGET Payback;
 
 		/*
 		**	This counter tells how many more times the animation should loop before it
@@ -114,6 +123,7 @@ class AnimClass : public ObjectClass, private StageClass {
 	protected:
 		void Middle(void);
 		void Start(void);
+		bool ObjectHasOtherAnims(ObjectClass * object, bool damaging);
 
 	private:
 		/*

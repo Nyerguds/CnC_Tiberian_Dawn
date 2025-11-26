@@ -246,9 +246,9 @@ class TechnoClass :	public RadioClass,
 		**	Combat related.
 		*/
 		void  Base_Is_Attacked(TechnoClass const *enemy);
-		void  Kill_Cargo(TechnoClass * source);
-		void  Dump_Cargo(int damage = 0, bool select = false, TechnoClass * killer = NULL);
-		virtual void Record_The_Kill(TechnoClass * source, bool sold = false);
+		void  Kill_Cargo(TechnoClass * source, HousesType house);
+		void  Dump_Cargo(int damage = 0, bool select = false, TechnoClass * source = NULL, HousesType house = HOUSE_NONE);
+		virtual void Record_The_Kill(TechnoClass * source, HousesType house = HOUSE_NONE, bool sold = false);
 		virtual bool Target_Something_Nearby(ThreatType threat=THREAT_NORMAL);
 		virtual void Stun(void);
 		virtual bool In_Range(COORDINATE coord, int which=0) const;
@@ -263,7 +263,7 @@ class TechnoClass :	public RadioClass,
 		virtual BulletClass * Fire_At(TARGET target, int which=0);
 		virtual int Weapon_Range(int which, bool withbarrel = false, TARGET target = TARGET_NONE) const;
 		virtual bool Captured(HouseClass * newowner);
-		virtual ResultType Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, bool fromburn = false);
+		virtual ResultType Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house=HOUSE_NONE, bool fromburn = false);
 		bool  Evaluate_Cell(ThreatType method, int mask, CELL cell, int range, TechnoClass const ** object, int & value) const;
 		bool  Evaluate_Object(ThreatType method, int mask, int range, TechnoClass const * object, int & value) const;
 

@@ -144,6 +144,8 @@ TerrainClass::~TerrainClass(void)
  *                                                                                             *
  *          source   -- The source of the damage. This is used to change targeting.            *
  *                                                                                             *
+ *          house    -- Source of the damage if no techno is available to blame.               *
+ *                                                                                             *
  *          fromburn -- The damage is a result of an animation burning the object.             *
  *                                                                                             *
  * OUTPUT:  Returns the ResultType that indicates what the effect of the damage was.           *
@@ -155,7 +157,7 @@ TerrainClass::~TerrainClass(void)
  *   11/22/1994 JLB : Shares base damage handler for techno objects.                           *
  *   12/11/1994 JLB : Shortens attached burning animations.                                    *
  *=============================================================================================*/
-ResultType TerrainClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, bool fromburn)
+ResultType TerrainClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)
 {
 	Validate();
 	ResultType res = RESULT_NONE;
@@ -166,40 +168,21 @@ ResultType TerrainClass::Take_Damage(int & damage, int distance, WarheadType war
 	// Nyerguds's C&C Patch Project v1.04
 	// Trees can still be damaged while on fire.
 	if (!IsCrumbling && warhead != WARHEAD_SA && !Class->IsImmune) {
+		//int oldstr = Strength;
+		res = ObjectClass::Take_Damage(damage, distance, warhead, source, house, fromburn);
 
-		res = ObjectClass::Take_Damage(damage, distance, warhead, source, fromburn);
-
-		// Nyerguds's C&C Patch Project v1.04
-		// Fire on trees won't self-propagate.
-		if (damage && warhead == WARHEAD_FIRE && !fromburn && !IsOnFire) {
-			Catch_Fire();
-		}
-
-		/*
-		**	If the terrain object is destroyed by this damage, then only remove it if it
-		**	currently isn't on fire and isn't in the process of crumbling.
-		*/
 		if (res == RESULT_DESTROYED) {
-
-			/*
-			**	Remove this terrain object from the targeting computers of all other
-			**	game objects. No use beating a dead horse.
-			*/
-			Detach_All();
-
-			if (IsOnFire) {
-
-				/*
-				**	Attached flame animation should be shortened as much as possible so that
-				**	crumbling can begin soon.
-				*/
-				Shorten_Attached_Anims(this);
-				// Nyerguds's C&C Patch Project v1.04
-				// Fixes trees remaining as indestructible undead husks.
-				Fire_Out();
-			} else {
-				Start_To_Crumble();
-			}
+			// Nyerguds's C&C Patch Project v1.04
+			// Vastly simplified. Detach_All() is already called in ObjectClass::Take_Damage(),
+			// Fire_Out() is now called by AnimClass::Detach(), so no need to check  IsOnFire,
+			// and Start_To_Crumble() checks if it's already crumbling anyway, so just run it.
+			Start_To_Crumble();
+		} else if (damage && warhead == WARHEAD_FIRE && !fromburn) {
+			// Nyerguds's C&C Patch Project v1.04
+			// -Fire on trees won't self-propagate.
+			// -Don't set it on fire if it's destroyed.
+			// -If already on fire, renew burning by aborting previous burn and restarting it.
+			Catch_Fire(source, house);
 		}
 	}
 	return(res);
@@ -477,7 +460,9 @@ MoveType TerrainClass::Can_Enter_Cell(CELL cell, FacingType) const
  *    performs checking to make sure that only flammable terrain objects that aren't already   *
  *    on fire get caught on fire.                                                              *
  *                                                                                             *
- * INPUT:   none                                                                               *
+ * INPUT:   source   -- The culprit who set it on fire.                                        *
+ *                                                                                             *
+ *          house    -- Source of the damage if no source is available.                        *
  *                                                                                             *
  * OUTPUT:  bool; Was the terrain object caught on fire by this routine?                       *
  *                                                                                             *
@@ -486,18 +471,28 @@ MoveType TerrainClass::Can_Enter_Cell(CELL cell, FacingType) const
  * HISTORY:                                                                                    *
  *   09/27/1994 JLB : Created.                                                                 *
  *   12/11/1994 JLB : Don't catch fire if already on fire or crumbling.                        *
+ *   11/26/2025 MM  : If already on fire, renew fire rather than ignoring it.                  *
  *=============================================================================================*/
-bool TerrainClass::Catch_Fire(void)
+bool TerrainClass::Catch_Fire(TechnoClass * source, HousesType house)
 {
 	Validate();
-	if (!IsCrumbling && !IsOnFire && Class->IsFlammable) {
+	if (!IsCrumbling && Strength && Class->IsFlammable) {
+		// Nyerguds's C&C Patch Project v1.04
+		// Allow renewing of burn by making previous burns
+		// end gracefully and then adding new ones.
+		if (IsOnFire) {
+			Shorten_Attached_Anims(this, ANIM_BURN_BIG);
+			Shorten_Attached_Anims(this, ANIM_BURN_MED);
+		}
 		AnimClass * anim = new AnimClass(ANIM_BURN_BIG, Coord_Add(Sort_Y(), 0xFFB00000L));
 		if (anim) {
 			anim->Attach_To(this);
+			anim->Set_Payback(source, house);
 		}
 		anim = new AnimClass(ANIM_BURN_MED, Coord_Add(Sort_Y(), 0xFF200000L), 15);
 		if (anim) {
 			anim->Attach_To(this);
+			anim->Set_Payback(source, house);
 		}
 		IsOnFire = true;
 		return(true);
@@ -513,7 +508,8 @@ bool TerrainClass::Catch_Fire(void)
  *    animation has already been terminated prior to calling this routine. All this routine    *
  *    needs to perform is any necessary local flag updating.                                   *
  *                                                                                             *
- * INPUT:   none                                                                               *
+ * INPUT:   fromdetach   -- This function was called from a Detach() function; do not call     *
+ *                          Detach_All() because it will cause a stack overflow.               *
  *                                                                                             *
  * OUTPUT:  none                                                                               *
  *                                                                                             *
@@ -522,14 +518,19 @@ bool TerrainClass::Catch_Fire(void)
  * HISTORY:                                                                                    *
  *   09/27/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-void TerrainClass::Fire_Out(void)
+void TerrainClass::Fire_Out(bool fromdetach)
 {
 	Validate();
 	if (IsOnFire) {
 		IsOnFire = false;
 	}
 	if (!IsCrumbling && !Strength) {
-		Detach_All();
+		// Nyerguds's C&C Patch Project v1.04
+		// Check this to prevent stack overflow. Normally, when strength is 0,
+		// this is always called from detach, so this never executed, but whatever.
+		if (!fromdetach) {
+			Detach_All();
+		}
 		Mark();
 		Start_To_Crumble();
 		new AnimClass(ANIM_SMOKE_M, Coord_Add(Coord, Class->CenterBase));
@@ -589,7 +590,7 @@ void TerrainClass::AI(void)
 				*/
 				if (IsSporing) {
 					if (Fetch_Stage() >= Get_Build_Frame_Count(Class->Get_Image_Data())-1) {
-						Explosion_Damage(Sort_Y(), 5, NULL, WARHEAD_SPORE);
+						Explosion_Damage(Sort_Y(), 5, NULL, HOUSE_NONE, WARHEAD_SPORE);
 						Set_Stage(FIRST_SPORE_STAGE);
 						if (Random() & 1) {
 							IsSporing = false;

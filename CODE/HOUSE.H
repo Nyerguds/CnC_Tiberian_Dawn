@@ -543,7 +543,7 @@ class HouseClass {
 
 	private:
 		void Silo_Redraw_Check(long oldtib, long oldcap);
-
+		BuildingClass * FindLaunchSite(StructType origin, long originMask);
 		/*
 		**	This is a bit field record of all the other houses that are allies with
 		**	this house. It is presumed that any house that isn't an ally, is therefore

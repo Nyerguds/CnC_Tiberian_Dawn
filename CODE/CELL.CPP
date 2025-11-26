@@ -2325,7 +2325,7 @@ bool CellClass::Goodie_Check(FootClass * object)
 						COORDINATE coord = Coord_Scatter(Cell_Coord(), Random_Pick(0, 0x0200));
 						new AnimClass(ANIM_FBALL1, coord);
 						damage = 400;
-						Explosion_Damage(coord, damage, NULL, WARHEAD_HE);
+						Explosion_Damage(coord, damage, NULL, HOUSE_NONE, WARHEAD_HE);
 					}
 					break;
 
@@ -2336,7 +2336,7 @@ bool CellClass::Goodie_Check(FootClass * object)
 					coord = Coord_Mid(Cell_Coord(), object->Center_Coord());
 					new AnimClass(ANIM_NAPALM3, coord);
 					damage = 600;
-					Explosion_Damage(coord, damage, NULL, WARHEAD_FIRE);
+					Explosion_Damage(coord, damage, NULL, HOUSE_NONE, WARHEAD_FIRE);
 					break;
 
 				/*

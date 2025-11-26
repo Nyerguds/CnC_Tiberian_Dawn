@@ -134,12 +134,14 @@ class BuildingClass : public TechnoClass
 		BStateType BState;
 		BStateType QueueBState;
 
+#ifdef OBSOLETE
 		/*
 		** For multiplayer games, this keeps track of the last house to damage
 		** this building, so if it burns to death or otherwise gradually dies,
 		** proper credit can be given for the kill.
 		*/
 		HousesType WhoLastHurtMe;
+#endif
 
 		/*
 		**	This is the saboteur responsible for this building's destruction.
@@ -224,7 +226,7 @@ class BuildingClass : public TechnoClass
 		virtual void Draw_It(int x, int y, WindowNumberType window);
 		virtual bool Mark(MarkType mark);
 		virtual void Look(bool incremental=false);
-		virtual void Fire_Out(void);
+		virtual void Fire_Out(bool fromdetach);
 		void  Begin_Mode(BStateType bstate);
 
 		/*
@@ -239,7 +241,7 @@ class BuildingClass : public TechnoClass
 		virtual void Death_Announcement(TechnoClass const * source=0) const;
 		virtual FireErrorType Can_Fire(TARGET, int which) const;
 		virtual TARGET Greatest_Threat(ThreatType threat) const;
-		virtual ResultType Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source=0, bool fromburn = false);
+		virtual ResultType Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source=0, HousesType house=HOUSE_NONE, bool fromburn = false);
 		virtual TARGET As_Target(void) const;
 		virtual bool Captured(HouseClass * newowner);
 

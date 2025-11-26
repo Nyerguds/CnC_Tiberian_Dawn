@@ -596,7 +596,7 @@ COORDINATE ObjectClass::Render_Coord(void) const {return(Center_Coord());}
 COORDINATE ObjectClass::Docking_Coord(void) const {return(Center_Coord());}
 COORDINATE ObjectClass::Sort_Y(void) const {return Coord;};
 COORDINATE ObjectClass::Fire_Coord(int /*which*/, bool /*forrange*/, COORDINATE /*coords*/) const {return Coord;};
-void ObjectClass::Record_The_Kill(TechnoClass * /*source*/, bool /*sold*/) {};
+void ObjectClass::Record_The_Kill(TechnoClass * /*source*/, HousesType /*house*/, bool /*sold*/) {};
 void ObjectClass::Do_Shimmer(void) {};
 int ObjectClass::Exit_Object(TechnoClass *) {return 0;};
 void ObjectClass::Hidden(void) {};
@@ -608,7 +608,7 @@ bool ObjectClass::In_Range(COORDINATE , int) const {return false;};
 int ObjectClass::Weapon_Range(int /*which*/, bool /*withbarrel*/, TARGET /*target*/) const {return 0x0000;};
 TARGET ObjectClass::As_Target(void) const {return TARGET_NONE;};
 void ObjectClass::Scatter(COORDINATE , bool) {};
-bool ObjectClass::Catch_Fire(void) {return false;};
+bool ObjectClass::Catch_Fire(TechnoClass * /*source*/, HousesType /*house*/) {return false;};
 
 
 /***********************************************************************************************
@@ -626,7 +626,7 @@ bool ObjectClass::Catch_Fire(void) {return false;};
  * HISTORY:                                                                                    *
  *   07/24/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-void ObjectClass::Fire_Out(void)
+void ObjectClass::Fire_Out(bool /*fromdetach*/)
 {
 }
 
@@ -1303,6 +1303,8 @@ RadioMessageType ObjectClass::Receive_Message(RadioClass *, RadioMessageType mes
  *                                                                                             *
  *          source   -- The source of the damage. This is used to change targeting.            *
  *                                                                                             *
+ *          house    -- Source of the damage if no source is available.                        *
+ *                                                                                             *
  *          fromburn -- The damage is a result of an animation burning the object.             *
  *                                                                                             *
  * OUTPUT:  Returns the ResultType that indicates what the effect of the damage was.           *
@@ -1314,7 +1316,7 @@ RadioMessageType ObjectClass::Receive_Message(RadioClass *, RadioMessageType mes
  *   12/27/1994 JLB : Trigger event processing for attacked or destroyed.                      *
  *   01/01/1995 JLB : Reduces damage greatly depending on range.                               *
  *=============================================================================================*/
-ResultType ObjectClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, bool fromburn)
+ResultType ObjectClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)
 {
 	ResultType result = RESULT_NONE;
 	int oldstrength = Strength;
@@ -1367,7 +1369,7 @@ ResultType ObjectClass::Take_Damage(int & damage, int distance, WarheadType warh
 		*/
 		switch (Strength) {
 			case 0:
-				Record_The_Kill(source);
+				Record_The_Kill(source, house);
 				result = RESULT_DESTROYED;
 				Detach_All();
 				break;

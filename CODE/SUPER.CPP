@@ -147,12 +147,13 @@ bool SuperClass::Enable(bool onetime, bool player, bool quiet)
 	// If a temporary ability is present, and a permanent one is added,
 	// ensure the permanent one is activated afterwards.
 	bool addreplacestatus = IsPresent && ((!IsOneTime && onetime) || (IsOneTime && !onetime));
-	bool addpermanent = IsPresent && IsOneTime && !onetime;
 	if (!IsPresent || addreplacestatus) {
 		IsPresent = true;
 		if (addreplacestatus) {
 			IsOneTime = true;
 			IsPermanentPending = true;
+		} else {
+			IsOneTime = onetime;			
 		}
 		bool retval = addreplacestatus ? !IsReady : Recharge(player && !quiet);
 		if (quiet) Suspend(true);

@@ -175,7 +175,7 @@ class ObjectClass : public AbstractClass
 		virtual void Detach(TARGET, bool) {};
 		virtual void Detach_All(bool all=true);
 		static void Detach_This_From_All(TARGET target, bool all=true);
-		virtual void Record_The_Kill(TechnoClass * /*source*/, bool /*sold*/ = false);
+		virtual void Record_The_Kill(TechnoClass * /*source*/, HousesType /*house*/ = HOUSE_NONE, bool /*sold*/ = false);
 
 		/*
 		**	Display and rendering support functionality. Supports imagery and how
@@ -211,11 +211,11 @@ class ObjectClass : public AbstractClass
 		*/
 		virtual bool In_Range(COORDINATE , int=0) const;
 		virtual int Weapon_Range(int /*which*/=0, bool /*withbarrel*/=false, TARGET /*target*/=TARGET_NONE) const;
-		virtual ResultType Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source=0, bool fromburn = false);
+		virtual ResultType Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source=0, HousesType house=HOUSE_NONE, bool fromburn = false);
 		virtual TARGET As_Target(void) const;
 		virtual void Scatter(COORDINATE , bool=false);
-		virtual bool Catch_Fire(void);
-		virtual void Fire_Out(void);
+		virtual bool Catch_Fire(TechnoClass * source=0, HousesType house = HOUSE_NONE);
+		virtual void Fire_Out(bool fromdetach);
 		virtual int Value(void) const;
 		virtual MissionType Get_Mission(void) const;
 

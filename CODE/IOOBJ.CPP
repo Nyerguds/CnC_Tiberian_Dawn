@@ -874,11 +874,15 @@ void BulletClass::Code_Pointers(void)
 	*/
 	((BulletTypeClass *&)Class) = (BulletTypeClass *)Class->Type;
 
+	// Nyerguds's C&C Patch Project v1.04
+	// This is now stored as TARGET, so no need to code/decode.
+#ifdef OBSOLETE
 	/*
 	----------------------------- Code 'Payback' -----------------------------
 	*/
 	if (Payback)
 		Payback = (TechnoClass *)Payback->As_Target();
+#endif
 
 	/*
 	---------------------------- Chain to parent -----------------------------
@@ -915,6 +919,9 @@ void BulletClass::Decode_Pointers(void)
 	((BulletTypeClass const *&)Class) = &BulletTypeClass::As_Reference((BulletType)Class);
 	Check_Ptr((void *)Class,__FILE__,__LINE__);
 
+	// Nyerguds's C&C Patch Project v1.04
+	// This is now stored as TARGET, so no need to code/decode.
+#ifdef OBSOLETE
 	/*
 	---------------------------- Decode 'Payback' ----------------------------
 	*/
@@ -922,6 +929,7 @@ void BulletClass::Decode_Pointers(void)
 		Payback = As_Techno((TARGET)Payback);
 		Check_Ptr((void *)Payback,__FILE__,__LINE__);
 	}
+#endif
 
 	/*
 	---------------------------- Chain to parent -----------------------------

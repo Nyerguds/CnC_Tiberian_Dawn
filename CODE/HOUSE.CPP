@@ -898,7 +898,7 @@ void HouseClass::AI(void)
 
 			/*
 			**	If this house's flag waypoint is a valid cell, see if there's
-			**	someone sitting on it.  If so, make the scatter.  If they refuse,
+			**	someone sitting on it.  If so, make them scatter.  If they refuse,
 			**	blow them up.
 			*/
 			if (FlagHome) {
@@ -926,7 +926,7 @@ void HouseClass::AI(void)
 						count = 0;
 						while (!(techno->IsInLimbo) && count++ < 5) {
 							damage = 0x7fff;
-							Explosion_Damage(techno->Center_Coord(), damage, NULL, WARHEAD_HE);
+							Explosion_Damage(techno->Center_Coord(), damage, NULL, HOUSE_NONE, WARHEAD_HE);
 						}
 					}
 				}
@@ -2435,6 +2435,49 @@ void HouseClass::Special_Weapon_AI(SpecialWeaponType id)
 
 
 /***********************************************************************************************
+ * HouseClass::FindLaunchSite -- Find a building to set as origin for a superweapon strike.    *
+ *                                                                                             *
+ *    This routine is called to find the launch site for a superweapon strike.                 *
+ *    If no suitable building is found, a fallback is returned so there is something to blame. *
+ *                                                                                             *
+ * INPUT:   origin      -- The StructType that this strike should originate from.              *
+ *                                                                                             *
+ *          originmask  -- The scan mask of Origin, to quickly exclude existence.              *
+ *                                                                                             *
+ * OUTPUT:  The structure that can be used as launch site, and which will blamed for the       *
+ *          damage dealt by it.                                                                *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   11/26/2025 MM  : Refactored from main function.                                           *
+ *=============================================================================================*/
+BuildingClass * HouseClass::FindLaunchSite(StructType origin, long originMask)
+{
+	// Quick check; if not in the buildings scan, there's no point in looking.
+	if (!(ActiveBScan & originMask)) {
+		return NULL;
+	}
+	BuildingClass * launchsite = NULL;
+	BuildingClass * fallback = NULL;
+	for (int index = 0; index < Buildings.Count(); ++index) {
+		BuildingClass * b = Buildings.Ptr(index);
+		if (fallback == NULL) fallback = b;
+		// Nyerguds's C&C Patch Project v1.04
+		// A selling temple cannot start the launch progress since it would revert to normal state.
+		if (b && !b->IsInLimbo && b->House == this && *b == origin && b->BState != BSTATE_CONSTRUCTION) {
+			launchsite = b;
+			break;
+		}
+	}
+	if (!launchsite) {
+		launchsite = fallback;
+	}
+	return(launchsite);
+}
+
+
+/***********************************************************************************************
  * HouseClass::Place_Special_Blast -- Place a special blast effect at location specified.      *
  *                                                                                             *
  *    This routine will create a blast effect at the cell specified. This is the result of     *
@@ -2456,15 +2499,15 @@ void HouseClass::Special_Weapon_AI(SpecialWeaponType id)
 bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 {
 	Validate();
-	BuildingClass * launchsite = 0;
+	BuildingClass * launchsite = NULL;
 	AnimClass * anim = 0;
-	int index;
 	switch (id) {
 
 		case SPC_ION_CANNON:
 			if (IonCannon.Is_Ready()) {
+				launchsite = FindLaunchSite(STRUCT_EYE, STRUCTF_EYE);
 				anim = new AnimClass(ANIM_ION_CANNON, Cell_Coord(cell));
-				if (anim) anim->Owner = Class->House;
+				if (anim) anim->Set_Payback(launchsite, *this);
 				IonCannon.Discharged(PlayerPtr == this);
 				IsRecalcNeeded = true;
 			}
@@ -2493,17 +2536,8 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 				/*
 				**	Search for a suitable launch site for this missile.
 				*/
-				BuildingClass * fallback = NULL;
-				for (index = 0; index < Buildings.Count(); index++) {
-					BuildingClass * b = Buildings.Ptr(index);
-					if (fallback == NULL) fallback = b;
-					// Nyerguds's C&C Patch Project v1.04
-					// A selling temple cannot start the launch progress since it would revert to normal state.
-					if (b && !b->IsInLimbo && b->House == this && *b == STRUCT_TEMPLE && b->BState != BSTATE_CONSTRUCTION) {
-						launchsite = b;
-						break;
-					}
-				}
+				BuildingClass * fallback = FindLaunchSite(STRUCT_TEMPLE, STRUCTF_TEMPLE);
+				launchsite = *fallback == STRUCT_TEMPLE ? fallback : NULL;
 
 				/*
 				**	If a launch site was found, then proceed with the normal launch
@@ -2541,7 +2575,7 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 					if (bullet) {
 						COORDINATE start = Cell_Coord(XY_Cell(Cell_X(cell), 0));
 						bullet->Assign_Target(::As_Target(cell));
-						bullet->Payback = fallback;
+						bullet->Set_Payback(fallback, *this);
 						bullet->Strength = 1;
 						if (!bullet->Unlimbo(start, DIR_S)) {
 							delete bullet;
@@ -4090,7 +4124,7 @@ void HouseClass::Blowup_All(void)
 			count = 0;
 			while (::Units.Ptr(i)==uptr && uptr->Strength) {
 				damage = 0x7fff;
-				Explosion_Damage(uptr->Center_Coord(), damage, NULL, WARHEAD_HE);
+				Explosion_Damage(uptr->Center_Coord(), damage, NULL, HOUSE_NONE, WARHEAD_HE);
 				count++;
 				if (count > 5) {
 					delete uptr;
@@ -4128,7 +4162,7 @@ void HouseClass::Blowup_All(void)
 			bptr->IsSurvivorless = true;
 			while (Buildings.Ptr(i)==bptr && bptr->Strength) {
 				damage = 0x7fff;
-				Explosion_Damage(bptr->Center_Coord(), damage, NULL, WARHEAD_HE);
+				Explosion_Damage(bptr->Center_Coord(), damage, NULL, HOUSE_NONE, WARHEAD_HE);
 				count++;
 				if (count > 5) {
 					delete bptr;
@@ -4152,7 +4186,7 @@ void HouseClass::Blowup_All(void)
 			while (Infantry.Ptr(i)==iptr && iptr->Strength) {
 				damage = 0x7fff;
 				warhead = (WarheadType)IRandom (WARHEAD_SA, WARHEAD_FIRE);
-				Explosion_Damage(iptr->Center_Coord(), damage, NULL, warhead);
+				Explosion_Damage(iptr->Center_Coord(), damage, NULL, HOUSE_NONE, warhead);
 				if (iptr->IsActive) {
 					damage = 0x7fff;
 					iptr->Take_Damage(damage, 0, warhead);

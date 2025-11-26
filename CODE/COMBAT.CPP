@@ -105,6 +105,8 @@ int Modify_Damage(int damage, WarheadType warhead, ArmorType armor, int distance
  *                                                                                             *
  *          source   -- Source of the explosion (who is responsible).                          *
  *                                                                                             *
+ *          house    -- Source of the explosion if no techno is available to blame.            *
+ *                                                                                             *
  *          warhead  -- The kind of explosion to process.                                      *
  *                                                                                             *
  * OUTPUT:  none                                                                               *
@@ -122,7 +124,7 @@ int Modify_Damage(int damage, WarheadType warhead, ArmorType armor, int distance
  *   06/20/1994 JLB : Uses object pointers to distribute damage.                               *
  *   06/20/1994 JLB : Source is a pointer.                                                     *
  *=============================================================================================*/
-void Explosion_Damage(COORDINATE coord, unsigned strength, TechnoClass * source, WarheadType warhead)
+void Explosion_Damage(COORDINATE coord, unsigned strength, TechnoClass * source, HousesType house, WarheadType warhead)
 {
 	CELL				cell;			// Cell number under explosion.
 	ObjectClass *	object;			// Working object pointer.
@@ -208,7 +210,7 @@ void Explosion_Damage(COORDINATE coord, unsigned strength, TechnoClass * source,
 			**	Apply the damage to the object.
 			*/
 			if (damage) {
-				object->Take_Damage(damage, distance, warhead, source);
+				object->Take_Damage(damage, distance, warhead, source, house);
 			}
 		}
 	}

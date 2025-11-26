@@ -305,11 +305,13 @@ void AnimClass::Draw_It(int x, int y, WindowNumberType window)
 					transtable = Map.UnitShadow;
 					break;
 			}
+
+			if (!transtable && Class->IsWhiteTrans) transtable = Map.WhiteTranslucentTable;
+			if (!transtable && Class->IsTranslucent) transtable = Map.TranslucentTable;
 #endif
 
 			// Nyerguds's C&C Patch Project v1.04
 			// Added support for all translucent tables available in DisplayClass.
-			// Mouse has a nice bright smoky gray filter by using color index 14.
 			/*
 			**	If the translucent table hasn't been determined yet, then check to see if it
 			**	should use the white or normal translucent tables.
@@ -317,13 +319,6 @@ void AnimClass::Draw_It(int x, int y, WindowNumberType window)
 			if (Class->Translucency != TRANS_NONE) {
 				transtable = Map.TranslucencyTables[Class->Translucency];
 			}
-
-			// Nyerguds's C&C Patch Project v1.04
-			// These were changed into a TransType enum.
-#ifdef OBSOLETE
-			if (!transtable && Class->IsWhiteTrans) transtable = Map.WhiteTranslucentTable;
-			if (!transtable && Class->IsTranslucent) transtable = Map.TranslucentTable;
-#endif
 			/*
 			**	Set the shape flags to properly take into account any fading or ghosting
 			**	table necessary.
@@ -596,6 +591,7 @@ AnimClass::AnimClass(AnimType animnum, COORDINATE coord, unsigned char timedelay
 {
 	Object = 0;
 	Owner = HOUSE_NONE;
+	Payback = TARGET_NONE;
 
 	if (Class->Stages == -1) {
 		((int&)Class->Stages) = Get_Build_Frame_Count(Class->Get_Image_Data());
@@ -648,6 +644,43 @@ AnimClass::AnimClass(AnimType animnum, COORDINATE coord, unsigned char timedelay
 
 
 /***********************************************************************************************
+ * AnimClass::ObjectHasOtherAnims -- check if the object has other animations attached.        *
+ *                                                                                             *
+ *    This routine can be used to check if the object that is attached to this animation       *
+ *    has more animations attached to it. It can specifically check only on damage-dealing     *
+ *    animations, since those determine when the object is no longer considered "on fire".     *
+ *    The current animation will always be ignored when encountered in the list.               *
+ *                                                                                             *
+ * INPUT:   object   -- The object that this animation is attached to.                         *
+ *                                                                                             *
+ *          damaging -- True if this should only check for damage-dealing (burn) animations.   *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   11/26/2025 MM  : Created.                                                                 *
+ *=============================================================================================*/
+bool AnimClass::ObjectHasOtherAnims(ObjectClass * object, bool damaging)
+{
+	if (!object) {
+		return(false);
+	}
+	bool otherFound = false;
+	for (int index = 0; index < Anims.Count(); index++) {
+		AnimClass * anim = Anims.Ptr(index);
+		if (anim == this) continue;
+		if (anim->Object == object && (!damaging || anim->Class->Damage)) {
+			otherFound = true;
+			break;
+		}
+	}
+	return(otherFound);
+}
+
+
+/***********************************************************************************************
  * AnimClass::~AnimClass -- Destructor for anim objects.                                       *
  *                                                                                             *
  *    This destructor handles removing the animation object from the system. It might require  *
@@ -676,32 +709,39 @@ AnimClass::~AnimClass(void)
 		if (Object) {
 			ObjectClass * to = Object;
 
-			Object = 0;
-
+			Object = NULL;
 			/*
 			**	Scan for any other animations that are attached to the object that
 			**	this animation is attached to. If there are no others, then inform the
 			**	attached object of this fact.
 			*/
-			int index;
-			for (index = 0; index < Anims.Count(); index++) {
-				if (Anims.Ptr(index)->Object == to) break;
-			}
+			bool otherfound = ObjectHasOtherAnims(to, false);
+			if (Class->Damage) {
+				bool burnerFound = 0;
+				// If no anims at all were attached, there won't be any fire-dealing ones either.
+				if (otherfound) {
+					burnerFound = ObjectHasOtherAnims(to, true);
+				}
 
-			/*
-			**	Tell the object that it is no longer being damaged.
-			*/
-			if (index != Anims.Count()) {
-				to->Fire_Out();
+				/*
+				**	Tell the object that it is no longer being damaged.
+				*/
+				if (!burnerFound) {
+					to->Fire_Out(false);
+				}
 			}
-			to->Mark(MARK_OVERLAP_UP);
-			to->IsAnimAttached = false;
-			to->Mark(MARK_OVERLAP_DOWN);
+			if (!otherfound) {
+				to->Mark(MARK_OVERLAP_UP);
+				to->IsAnimAttached = false;
+				to->Mark(MARK_OVERLAP_DOWN);
+			}
 			Object = to;
 		}
 
 		Limbo();
-		Object = 0;
+		Object = NULL;
+		Owner = HOUSE_NONE;
+		Payback = TARGET_NONE;
 	}
 }
 
@@ -783,6 +823,11 @@ void AnimClass::AI(void)
 			**	object.
 			*/
 			if (Object && Class->Damage) {
+				if (Object->Strength <= 0) {
+					// Somehow already dead. Clear this.
+					delete this;
+					return;
+				}
 				unsigned int accum = Accum;
 
 				accum += Class->Damage;
@@ -794,7 +839,9 @@ void AnimClass::AI(void)
 					**	then the attached damaging anim is also destroyed.
 					*/
 					int damage = accum >> 8;
-					if (Object->Take_Damage(damage, 0, WARHEAD_FIRE, 0, true) == RESULT_DESTROYED) {
+					// Nyerguds's C&C Patch Project v1.04
+					// Burn anims now properly assign damage to the object / house that caused it.
+					if (Object->Take_Damage(damage, 0, WARHEAD_FIRE, As_Techno(Payback), Owner, true) == RESULT_DESTROYED) {
 						//Object = 0;
 						delete this;
 						return;
@@ -986,9 +1033,13 @@ void AnimClass::Middle(void)
 	Validate();
 	CELL cell = Coord_Cell(Center_Coord());
 	CellClass * cellptr = &Map[cell];
-
+	TechnoClass * blame = As_Techno(Payback);
+	AnimClass * spreadfire;
 	if (Class->Type == ANIM_ATOM_BLAST) {
 
+		// Nyerguds's C&C Patch Project v1.04
+		// Now fully handled by Payback + Owner.
+#ifdef OBSOLETE
 		/*
 		**	Find someone to blame the explosion on. This is necessary in
 		**	order to properly enact retribution and record the kill for
@@ -1011,6 +1062,7 @@ void AnimClass::Middle(void)
 
 			if (!building) building = (BuildingClass *)backup;
 		}
+#endif
 
 		int radius = 3;
 		int rawdamage = 200;
@@ -1039,7 +1091,7 @@ void AnimClass::Middle(void)
 				if (!Map.In_Radar(tcell)) continue;
 
 				int damage = rawdamage / ((ABS(radius)/2)+1);
-				Explosion_Damage(Cell_Coord(tcell), damage, building, WARHEAD_FIRE);
+				Explosion_Damage(Cell_Coord(tcell), damage, blame, Owner, WARHEAD_FIRE);
 				new SmudgeClass(Random_Pick(SMUDGE_SCORCH1, SMUDGE_SCORCH6), Cell_Coord(tcell));
 			}
 		}
@@ -1110,6 +1162,9 @@ void AnimClass::Middle(void)
 	*/
 	switch (Class->Type) {
 		case ANIM_ION_CANNON: {
+				// Nyerguds's C&C Patch Project v1.04
+				// Now fully handled by Payback + Owner.
+#ifdef OBSOLETE
 				BuildingClass * building = NULL;
 				TechnoClass * backup = NULL;
 				if (Owner != HOUSE_NONE) {
@@ -1127,7 +1182,8 @@ void AnimClass::Middle(void)
 
 					if (!building) building = (BuildingClass *)backup;
 				}
-				Explosion_Damage(Center_Coord(), 600, building, WARHEAD_PB);
+#endif
+				Explosion_Damage(Center_Coord(), 600, blame, Owner, WARHEAD_PB);
 			}
 			break;
 
@@ -1145,15 +1201,59 @@ void AnimClass::Middle(void)
 
 		case ANIM_FIRE_MED:
 		case ANIM_FIRE_MED2:
+			// Nyerguds's C&C Patch Project v1.04
+			// When extra anim is attached to Object, copy damage attribution.
 			newanim = new AnimClass(ANIM_FIRE_SMALL, Center_Coord(), 0, ((Random_Pick(0, 1) == 1) ? 1 : 2));
 			if (newanim && Object) {
 				newanim->Attach_To(Object);
+				newanim->Set_Payback(blame, Owner);
 			}
 			break;
 
 		default:
 			break;
 	}
+}
+
+
+/***********************************************************************************************
+ * AnimClass::Set_Payback -- Sets the object to retaliate to                                   *
+ *                                                                                             *
+ *    This routine sets the object to retaliate to, and, if no object is available,            *
+ *    then at least the house to blame.                                                        *
+ *                                                                                             *
+ * INPUT:   payback    -- Techno object to pay back for the damage caused.                     *
+ *                                                                                             *
+ *          house      -- Fallback house in case no techno is available to blame.              *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   11/26/2025 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void AnimClass::Set_Payback(TechnoClass * payback, HousesType house)
+{
+	TARGET source = TARGET_NONE;
+	HousesType owner = HOUSE_NONE;
+	if (payback) {
+		source = payback->As_Target();
+		if (payback->House) {
+			owner = payback->Owner();
+		}
+	}
+	Payback = source;
+	if (owner == HOUSE_NONE) {
+		owner = house;
+	}
+	Owner = owner;
+}
+
+
+void AnimClass::Set_Payback(TARGET payback, HousesType house)
+{
+	Set_Payback(As_Techno(payback), house);
 }
 
 
@@ -1233,7 +1333,19 @@ COORDINATE AnimClass::Adjust_Coord(COORDINATE coord)
 void AnimClass::Detach(TARGET target, bool all)
 {
 	Validate();
+
+	if (target == Payback) {
+		Payback = NULL;
+	}
+
 	if (Object && Object->As_Target() == target && all) {
+
+		// Nyerguds's C&C Patch Project v1.04
+		// Check for other damage-dealing anims here and call Fire_Out() if none are left.
+		if (!ObjectHasOtherAnims(Object, true)) {
+			Object->Fire_Out(true);
+		}
+
 		Map.Remove(this, In_Which_Layer());
 		Object = NULL;
 		IsToDelete = true;

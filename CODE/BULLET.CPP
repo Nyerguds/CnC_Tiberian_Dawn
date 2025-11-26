@@ -110,7 +110,7 @@ int BulletClass::Validate(void) const
 BulletClass::BulletClass(void) :
 	Class(0)
 {
-	Payback = NULL;
+	Payback = TARGET_NONE;
 	IsToAnimate = false;
 	Altitude = 0;
 	Riser = 0;
@@ -199,7 +199,7 @@ BulletClass::BulletClass(BulletType id) :
 	IsLocked = true;
 //	IsLocked = false;
 	IsToAnimate = false;
-	Payback = 0;
+	Payback = TARGET_NONE;
 	Riser = 0;
 	Strength = Class->MaxStrength;
 	TarCom = TARGET_NONE;
@@ -441,8 +441,9 @@ void BulletClass::AI(void)
 				/*
 				**	Non-aircraft targets apply damage to the ground.
 				*/
+				TechnoClass * payback = As_Techno(Payback);
 				if (!Is_Target_Aircraft(TarCom) || As_Aircraft(TarCom)->In_Which_Layer() == LAYER_GROUND) {
-					Explosion_Damage(Coord, Strength, Payback, Class->Warhead);
+					Explosion_Damage(Coord, Strength, payback, Owner, Class->Warhead);
 				} else {
 
 					/*
@@ -453,7 +454,7 @@ void BulletClass::AI(void)
 						AircraftClass * object = As_Aircraft(TarCom);
 
 						int str = Strength;
-						if (object) object->Take_Damage(str, 0, Class->Warhead, Payback);
+						if (object) object->Take_Damage(str, 0, Class->Warhead, payback, Owner);
 					}
 				}
 
@@ -601,10 +602,9 @@ void BulletClass::Init(void)
 void BulletClass::Detach(TARGET target, bool all)
 {
 	Validate();
-	ObjectClass * obj = As_Object(target);
 
-	if (obj == Payback) {
-		Payback = 0;
+	if (target == Payback) {
+		Payback = TARGET_NONE;
 	}
 
 	if (all && target == TarCom) {
@@ -763,6 +763,43 @@ bool BulletClass::Unlimbo(COORDINATE coord, DirType dir)
 		return(true);
 	}
 	return(false);
+}
+
+
+/***********************************************************************************************
+ * BulletClass::Set_Payback -- Sets the object to retaliate to.                                *
+ *                                                                                             *
+ *    This routine sets the object to retaliate to, and, if no object is available,            *
+ *    then at least the house to blame.                                                        *
+ *                                                                                             *
+ * INPUT:   payback    -- Techno object to pay back for the damage caused.                     *
+ *                                                                                             *
+ *          house      -- Fallback house in case no techno is available to blame.              *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   11/26/2025 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void BulletClass::Set_Payback(TechnoClass * payback, HousesType house) {
+	TARGET source = TARGET_NONE;
+	HousesType owner = HOUSE_NONE;
+	if (payback) {
+		source = payback->As_Target();
+		owner = payback->Owner();
+	}
+	Payback = source;
+	if (owner == HOUSE_NONE) {
+		owner = house;
+	}
+	Owner = owner;
+}
+
+
+void BulletClass::Set_Payback(TARGET payback, HousesType house) {
+	Set_Payback(As_Techno(payback), house);
 }
 
 
