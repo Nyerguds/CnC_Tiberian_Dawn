@@ -40,6 +40,7 @@
 
 DirType  Direction(CELL cell1, CELL cell2);
 DirType  Direction(COORDINATE coord1, COORDINATE coord2);
+int  Distance(int x1, int y1, int x2, int y2);
 int  Distance(COORDINATE coord1, COORDINATE coord2);
 int  Distance(CELL coord1, CELL coord2);
 COORDINATE  As_Coord(TARGET target);
@@ -90,8 +91,11 @@ class AbstractClass
 		DirType Direction(CELL cell) const {return ::Direction(Coord_Cell(Center_Coord()), cell);};
 		int Distance(TARGET target) const;
 		int Distance(COORDINATE coord) const {return ::Distance(Center_Coord(), coord);};
-		int Distance(CELL cell) const {return ::Distance(Coord_Cell(Center_Coord()), cell);};
 		int Distance(AbstractClass const * object) const {return ::Distance(Center_Coord(), object->Target_Coord());};
+		/*
+		**	Approximate distance to the cell, in amount of cells.
+		*/
+		int Distance(CELL cell) const {return ::Distance(Coord_Cell(Center_Coord()), cell);};
 
 		/*
 		**	Object entry and exit from the game system.

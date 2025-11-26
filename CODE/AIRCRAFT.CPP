@@ -1564,25 +1564,25 @@ BulletClass * AircraftClass::Fire_At(TARGET target, int which)
  *    This routine is used to apply damage to the specified aircraft. This is where any        *
  *    special crash animation will be initiated.                                               *
  *                                                                                             *
- * INPUT:   damage   -- Reference to the damage that will be applied to the aircraft.          *
- *                      This value will be filled in with the actual damage that was           *
- *                      applied.                                                               *
+ * INPUT:   damage   -- Amount of damage to inflict.                                           *
+ *                      This value will be adjusted to the actual taken damage.                *
  *                                                                                             *
- *          distance -- Distance from the source of the explosion to this aircraft.            *
+ *          distance -- The distance from the damage center point to the object's center point.*
  *                                                                                             *
  *          warhead  -- The warhead type that the damage occurs from.                          *
  *                                                                                             *
- *          source   -- Pointer to the originator of the damage. This can be used so that      *
- *                      proper "thank you" can be delivered.                                   *
+ *          source   -- The source of the damage. This is used to change targeting.            *
  *                                                                                             *
- * OUTPUT:  Returns with the result of the damage as it affects this aircraft.                 *
+ *          fromburn -- The damage is a result of an animation burning the object.             *
+ *                                                                                             *
+ * OUTPUT:  Returns the ResultType that indicates what the effect of the damage was.           *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   05/26/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-ResultType AircraftClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source)
+ResultType AircraftClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, bool fromburn)
 {
 	Validate();
 	ResultType res = RESULT_NONE;
@@ -1604,7 +1604,7 @@ ResultType AircraftClass::Take_Damage(int & damage, int distance, WarheadType wa
 	**	In order for a this to be damaged, it must either be a unit
 	**	with a crew or a sandworm.
 	*/
-	res = FootClass::Take_Damage(damage, distance, warhead, source);
+	res = FootClass::Take_Damage(damage, distance, warhead, source, fromburn);
 
 	switch (res) {
 		case RESULT_DESTROYED:

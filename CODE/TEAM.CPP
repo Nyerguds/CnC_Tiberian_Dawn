@@ -603,7 +603,9 @@ void TeamClass::AI(void)
 			case TMISSION_ATTACKCIVILIANS:
 			case TMISSION_RAMPAGE:
 			case TMISSION_DEFENDBASE:
-			case TMISSION_UNLOAD:
+			// Nyerguds's C&C Patch Project v1.04
+			// Unload is not a mission that should expire; its argument is a waypoint!
+			//case TMISSION_UNLOAD:
 			case TMISSION_RETREAT:
 			case TMISSION_GUARD:
 				if (TimeOut.Expired()) {
@@ -1376,8 +1378,12 @@ void TeamClass::Coordinate_Unload(void)
 		Coordinate_Conscript(unit);
 
 		if (unit->IsInitiated && !unit->IsInLimbo) {
-			if (unit->Is_Something_Attached()) {
+			// Nyerguds's C&C Patch Project v1.04
+			// Make Unload work for MCV deployment
+			bool isMcv = unit->What_Am_I() == RTTI_UNIT && ((UnitClass*)unit)->Class->Type == UNIT_MCV;
+			if (unit->Is_Something_Attached() || isMcv) {
 
+				MissionType mission = isMcv ? MISSION_HUNT : MISSION_UNLOAD;
 				/*
 				**	Loaner transports will break off of the team at this time. The normal
 				**	unload logic for the transport will proceed normally. The rest of the team
@@ -1386,11 +1392,11 @@ void TeamClass::Coordinate_Unload(void)
 				if (unit->IsALoaner) {
 					Remove(unit);
 					unit->Commence();
-					unit->Assign_Mission(MISSION_UNLOAD);
+					unit->Assign_Mission(mission);
 					unit->Assign_Destination(Target);
 				} else {
-					if (unit->Mission != MISSION_UNLOAD) {
-						unit->Assign_Mission(MISSION_UNLOAD);
+					if (unit->Mission != mission) {
+						unit->Assign_Mission(mission);
 						unit->Assign_Destination(Target);
 					}
 				}

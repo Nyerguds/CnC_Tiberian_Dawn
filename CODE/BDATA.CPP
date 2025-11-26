@@ -4407,7 +4407,7 @@ COORDINATE BuildingTypeClass::Valid_Target_Center(COORDINATE center, short const
 	while (*occupyloop != REFRESH_EOL) {
 		CELL cell = *occupyloop++;
 		COORDINATE cellcoord = Cell_Coord(cell);
-		int curdist = Distance_Coord(center, cellcoord);
+		int curdist = Distance(center, cellcoord);
 		if (curdist < distance) {
 			distance = curdist;
 			target = cellcoord;

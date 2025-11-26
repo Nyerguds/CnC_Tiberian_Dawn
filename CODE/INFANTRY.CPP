@@ -357,15 +357,18 @@ void InfantryClass::operator delete(void *ptr)
  *    This routine applies the damage specified to the infantry object. It is possible that    *
  *    this routine will DESTROY the infantry unit in the process.                              *
  *                                                                                             *
- * INPUT:   damage   -- The damage points to inflict.                                          *
+ * INPUT:   damage   -- Amount of damage to inflict.                                           *
+ *                      This value will be adjusted to the actual taken damage.                *
  *                                                                                             *
  *          distance -- The distance from the damage center point to the object's center point.*
  *                                                                                             *
- *          warhead  -- The warhead type that is inflicting the damage.                        *
+ *          warhead  -- The warhead type that the damage occurs from.                          *
  *                                                                                             *
- *          source   -- Who is responsible for inflicting the damage.                          *
+ *          source   -- The source of the damage. This is used to change targeting.            *
  *                                                                                             *
- * OUTPUT:  bool; Was the infantry unit destroyed by this damage?                              *
+ *          fromburn -- The damage is a result of an animation burning the object.             *
+ *                                                                                             *
+ * OUTPUT:  Returns the ResultType that indicates what the effect of the damage was.           *
  *                                                                                             *
  * WARNINGS:   Since the infantry unit could be destroyed by this routine, be sure to check    *
  *             for this in the code that follows the call to Take_Damage().                    *
@@ -375,7 +378,7 @@ void InfantryClass::operator delete(void *ptr)
  *   11/22/1994 JLB : Shares base damage handler for techno objects.                           *
  *   03/31/1995 JLB : Revenge factor.                                                          *
  *=============================================================================================*/
-ResultType InfantryClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source)
+ResultType InfantryClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, bool fromburn)
 {
 	Validate();
 	ResultType res = RESULT_NONE;
@@ -395,15 +398,19 @@ ResultType InfantryClass::Take_Damage(int & damage, int distance, WarheadType wa
 //Mono_Printf("Infantry Take_Damage(%d, %d, %d, %p)\r", damage, distance, warhead, source);
 //Get_Key();
 
-	res = FootClass::Take_Damage(damage, distance, warhead, source);
+	res = FootClass::Take_Damage(damage, distance, warhead, source, fromburn);
 
 	/*
 	**	Flame thrower guys take more damage because of the exposed pilot light
 	**	on their flame gun.
 	*/
 	if (damage && res != RESULT_DESTROYED && *this == INFANTRY_E4) {
+		// Nyerguds's C&C Patch Project v1.04
+		// The extra damage on flamers no longer corrupts the returned damage value.
+		int origDamage = damage;
 		damage = 5;
-		ResultType newres = FootClass::Take_Damage(damage, distance, warhead, source);
+		ResultType newres = FootClass::Take_Damage(damage, distance, warhead, source, fromburn);
+		damage += origDamage;
 		res = MAX(res, newres);
 	}
 

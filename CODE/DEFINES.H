@@ -731,7 +731,6 @@ typedef enum PlayerColorType {
 	REMAP_JP,
 
 	// New remap colors
-	REMAP_AQUA,
 	REMAP_DARK_GREY,
 	REMAP_BROWN,
 	REMAP_BURGUNDY,
@@ -740,6 +739,7 @@ typedef enum PlayerColorType {
 	REMAP_WARM_SILVER,
 
 	// Alternate names for some of the colors
+	REMAP_AQUA,
 	REMAP_GREY, // identical to REMAP_BLUE
 	REMAP_GRAY, // identical to REMAP_BLUE
 	REMAP_TEAL, // identical to REMAP_AQUA

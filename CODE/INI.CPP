@@ -380,22 +380,27 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 		CarryOverPercent = Cardinal_To_Fixed(100, CarryOverPercent);
 		CarryOverCap = WWGetPrivateProfileInt("Basic", "CarryOverCap", -1, buffer);
 		// Nyerguds's C&C Patch Project v1.04
+		// Disallow AI ion/nuke triggers unless they have the correct building at the time of the triggering.
+		AllowDetachedAISupers = WWGetPrivateProfileBool("Basic", "AllowDetachedAISupers", false, buffer);
+
+		// Nyerguds's C&C Patch Project v1.04
 		// Added ini keys for controlling nuke pieces.
-		RequiredNukePieces = WWGetPrivateProfileInt("Basic", "RequiredNukePieces", 3, buffer);
-		RequiredNukePieces = MAX(0, RequiredNukePieces);
+		int neededpieces = WWGetPrivateProfileInt("Basic", "RequiredNukePieces", 3, buffer);
+		RequiredNukePieces = MAX(0, neededpieces);
 		bool nukeInherit = WWGetPrivateProfileBool("Basic", "PlayerNukeInherit", false, buffer);
 		int newpieces = WWGetPrivateProfileInt("Basic", "PlayerNukePieces", 3, buffer);
 
 		PlayerPtr = HouseClass::As_Pointer(HouseTypeClass::From_Name(buf));
 		PlayerPtr->IsHuman = true;
-		
+
 		if (Options.NodCollectathon && ScenPlayer == SCEN_PLAYER_NOD && Scenario < 20) {
 			nukeInherit = true;
+			RequiredNukePieces = 3;
 			if (Scenario == 1) {
 				nukepieces = 0;
 			}
 		}
-		PlayerPtr->NukePieces = nukeInherit ? nukepieces : newpieces;
+		PlayerPtr->NukePieces = MAX(-1, nukeInherit ? nukepieces : newpieces);
 		PlayerPtr->NukePiecesStart = PlayerPtr->NukePieces;
 
 		int carryover;
@@ -413,6 +418,7 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 			PlayerPtr->ActLike = Whom;
 		}
 	} else {
+		AllowDetachedAISupers = false;
 
 #ifdef OBSOLETE
 		if (GameToPlay==GAME_NORMAL && ScenPlayer==SCEN_PLAYER_JP) {

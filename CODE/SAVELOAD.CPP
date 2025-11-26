@@ -93,7 +93,8 @@
 										sizeof(TempleIoned) + \
 										sizeof(Patsux) + \
 										sizeof(RemoveBuildExceptions) + \
-										sizeof(RequiredNukePieces)))
+										sizeof(RequiredNukePieces) + \
+										sizeof(AllowDetachedAISupers)))
 
 
 /***************************************************************************
@@ -632,6 +633,8 @@ bool Save_Misc_Values(FileClass &file)
 	file.Write(&RemoveBuildExceptions, sizeof(RemoveBuildExceptions));
 	// Added amount of nuke pices required for one nuke
 	file.Write(&RequiredNukePieces, sizeof(RequiredNukePieces));
+	// Added option to allow AI superweapons if no building to launch from is present.
+	file.Write(&AllowDetachedAISupers, sizeof(AllowDetachedAISupers));
 	return(true);
 }
 
@@ -735,6 +738,8 @@ bool Load_Misc_Values(FileClass &file)
 	file.Read(&RemoveBuildExceptions, sizeof(RemoveBuildExceptions));
 	// Added amount of nuke pices required for one nuke
 	file.Read(&RequiredNukePieces, sizeof(RequiredNukePieces));
+	// Added option to allow AI superweapons if no building to launch from is present.
+	file.Read(&AllowDetachedAISupers, sizeof(AllowDetachedAISupers));
 	return(true);
 }
 

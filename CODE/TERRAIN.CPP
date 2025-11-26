@@ -135,12 +135,18 @@ TerrainClass::~TerrainClass(void)
  *    through this routine that terrain objects are attacked and thereby destroyed. Not all    *
  *    terrain objects can be damaged by this routine however.                                  *
  *                                                                                             *
- * INPUT:   damage      -- The damage points to inflict (raw).                                 *
+ * INPUT:   damage   -- Amount of damage to inflict.                                           *
+ *                      This value will be adjusted to the actual taken damage.                *
  *                                                                                             *
- *          warhead     -- The warhead type the indicates the kind of damage. This is used to  *
- *                         determine if the terrain object is damaged and if so, by how much.  *
+ *          distance -- The distance from the damage center point to the object's center point.*
  *                                                                                             *
- * OUTPUT:  bool; Was the terrain object destroyed by this damage?                             *
+ *          warhead  -- The warhead type that the damage occurs from.                          *
+ *                                                                                             *
+ *          source   -- The source of the damage. This is used to change targeting.            *
+ *                                                                                             *
+ *          fromburn -- The damage is a result of an animation burning the object.             *
+ *                                                                                             *
+ * OUTPUT:  Returns the ResultType that indicates what the effect of the damage was.           *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
  *                                                                                             *
@@ -149,7 +155,7 @@ TerrainClass::~TerrainClass(void)
  *   11/22/1994 JLB : Shares base damage handler for techno objects.                           *
  *   12/11/1994 JLB : Shortens attached burning animations.                                    *
  *=============================================================================================*/
-ResultType TerrainClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source)
+ResultType TerrainClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, bool fromburn)
 {
 	Validate();
 	ResultType res = RESULT_NONE;
@@ -157,11 +163,15 @@ ResultType TerrainClass::Take_Damage(int & damage, int distance, WarheadType war
 	/*
 	**	Small arms can never destroy a terrain element.
 	*/
-	if ((!IsOnFire || warhead == WARHEAD_FIRE) && warhead != WARHEAD_SA && !Class->IsImmune) {
+	// Nyerguds's C&C Patch Project v1.04
+	// Trees can still be damaged while on fire.
+	if (!IsCrumbling && warhead != WARHEAD_SA && !Class->IsImmune) {
 
-		res = ObjectClass::Take_Damage(damage, distance, warhead, source);
+		res = ObjectClass::Take_Damage(damage, distance, warhead, source, fromburn);
 
-		if (damage && warhead == WARHEAD_FIRE) {
+		// Nyerguds's C&C Patch Project v1.04
+		// Fire on trees won't self-propagate.
+		if (damage && warhead == WARHEAD_FIRE && !fromburn && !IsOnFire) {
 			Catch_Fire();
 		}
 
@@ -184,6 +194,9 @@ ResultType TerrainClass::Take_Damage(int & damage, int distance, WarheadType war
 				**	crumbling can begin soon.
 				*/
 				Shorten_Attached_Anims(this);
+				// Nyerguds's C&C Patch Project v1.04
+				// Fixes trees remaining as indestructible undead husks.
+				Fire_Out();
 			} else {
 				Start_To_Crumble();
 			}
@@ -381,7 +394,7 @@ void TerrainClass::Draw_It(int x, int y, WindowNumberType window)
 		if (IsCrumbling || Class->IsTransformable) {
 			shapenum = Fetch_Stage()+IsCrumbling;
 		} else {
-			if (Strength < 2) {
+			if (Strength <= 1) {
 				shapenum++;
 			}
 		}
@@ -514,12 +527,12 @@ void TerrainClass::Fire_Out(void)
 	Validate();
 	if (IsOnFire) {
 		IsOnFire = false;
-		if (!IsCrumbling && !Strength) {
-			Detach_All();
-			Mark();
-			Start_To_Crumble();
-			new AnimClass(ANIM_SMOKE_M, Coord_Add(Coord, Class->CenterBase));
-		}
+	}
+	if (!IsCrumbling && !Strength) {
+		Detach_All();
+		Mark();
+		Start_To_Crumble();
+		new AnimClass(ANIM_SMOKE_M, Coord_Add(Coord, Class->CenterBase));
 	}
 }
 
@@ -554,6 +567,7 @@ void TerrainClass::AI(void)
 		*/
 		if (IsCrumbling && Fetch_Stage() == Get_Build_Frame_Count(Class->Get_Image_Data())-1) {
 			delete this;
+			return;
 		}
 	}
 

@@ -1085,8 +1085,9 @@ void HouseClass::AI(void)
 	**	because of outside circumstances. The advanced communications facility
 	**	being destroyed is a good example of this.
 	*/
+	bool hasEye = ActiveBScan & STRUCTF_EYE;
 	if (IonCannon.Is_Present()) {
-		if (!(ActiveBScan & STRUCTF_EYE) && !IonCannon.Is_One_Time()) {
+		if (!hasEye && !IonCannon.Is_One_Time()) {
 
 			/*
 			**	Remove the ion cannon when there is no advanced communication facility.
@@ -1131,8 +1132,10 @@ void HouseClass::AI(void)
 		**	If there is no ion cannon present, but there is an advanced communcation
 		**	center available, then make the ion cannon available as well.
 		*/
-		if ((ActiveBScan & STRUCTF_EYE) &&
-			(ActLike == HOUSE_GOOD || GameToPlay != GAME_NORMAL) &&
+		// Nyerguds's C&C Patch Project v1.04
+		// Ion Cannon no longer requires "ActLike == HOUSE_GOOD"
+		if (hasEye &&
+			//(ActLike == HOUSE_GOOD || GameToPlay != GAME_NORMAL) &&
 			(IsHuman || GameToPlay != GAME_NORMAL)) {
 
 			IonCannon.Enable(false, this == PlayerPtr, Power_Fraction() < 0x0100);
@@ -1152,14 +1155,19 @@ void HouseClass::AI(void)
 	**	because of outside circumstances. The Temple of Nod
 	**	being destroyed is a good example of this.
 	*/
-	if (NukeStrike.Is_Present()) {
-		if (!(ActiveBScan & STRUCTF_TEMPLE) && (!NukeStrike.Is_One_Time() || GameToPlay == GAME_NORMAL)) {
 
-			/*
-			**	Remove the nuke strike when there is no Temple of Nod.
-			**	Note that this will not remove the one time created nuke strike.
-			*/
-			if (NukeStrike.Remove(true)) {
+	// Nyerguds's C&C Patch Project v1.04
+	// Nuclear Missile no longer acts like a one-time shot added any time sufficient
+	// nuke pieces are available. It now acts identical to the ion cannon, just with
+	// nuke piece checks on top of building existence checks.
+	bool hasTemple = ActiveBScan & STRUCTF_TEMPLE;
+	if (NukeStrike.Is_Present()) {
+		/*
+		**	Remove the nuke strike when there is no Temple of Nod, or if there are not enough crates.
+		**	Note that this will not remove the one time created nuke strike.
+		*/
+		if (!NukeStrike.Is_One_Time() && (!hasTemple || (IsHuman && !Has_Nuke_Device()))) {
+			if (NukeStrike.Remove()) {
 				IsRecalcNeeded = true;
 				if (this == PlayerPtr) {
 					Map.Column[1].Flag_To_Redraw();
@@ -1198,8 +1206,14 @@ void HouseClass::AI(void)
 		**	If there is no nuke strike present, but there is a Temple of Nod
 		**	available, then make the nuke strike strike available.
 		*/
-		if ((ActiveBScan & STRUCTF_TEMPLE) && Has_Nuke_Device() && IsHuman) {
-			NukeStrike.Enable((GameToPlay == GAME_NORMAL), this == PlayerPtr);
+		if (hasTemple && (IsHuman || GameToPlay != GAME_NORMAL) && Has_Nuke_Device()) {
+			// Nyerguds's C&C Patch Project v1.04
+			// There is no voice for the nuke "charging", so alert the player that something was added.
+			bool nukelow = GameToPlay == GAME_NORMAL && Power_Fraction() < 0x0100;
+			NukeStrike.Enable(false, this == PlayerPtr, nukelow);
+			if (this == PlayerPtr) {
+				Speak(VOX_NEW_CONSTRUCT);
+			}
 
 			/*
 			**	Flag the sidebar to be redrawn if necessary.
@@ -1346,6 +1360,9 @@ void HouseClass::AI(void)
 		**	Credit check.
 		*/
 		if (t->Spring(EVENT_CREDITS, Class->House, Credits)) {
+			continue;
+		}
+		if (t->Spring(EVENT_MONEY, Class->House, Available_Money())) {
 			continue;
 		}
 
@@ -2476,8 +2493,10 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 				/*
 				**	Search for a suitable launch site for this missile.
 				*/
+				BuildingClass * fallback = NULL;
 				for (index = 0; index < Buildings.Count(); index++) {
 					BuildingClass * b = Buildings.Ptr(index);
+					if (fallback == NULL) fallback = b;
 					// Nyerguds's C&C Patch Project v1.04
 					// A selling temple cannot start the launch progress since it would revert to normal state.
 					if (b && !b->IsInLimbo && b->House == this && *b == STRUCT_TEMPLE && b->BState != BSTATE_CONSTRUCTION) {
@@ -2496,17 +2515,16 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 					NukeDest = cell;
 					// Nyerguds's C&C Patch Project v1.04
 					// Don't clear nuke pieces; decrease as int.
-					if (GameToPlay == GAME_NORMAL && NukePieces >= 0) {
+					if (GameToPlay == GAME_NORMAL && !NukeStrike.Is_One_Time() && NukePieces >= 0) {
 						NukePieces = MAX(0, NukePieces - RequiredNukePieces);
 					}
 
 				} else {
 
 					/*
-					**	Only in the multiplayer version can the nuclear bomb be
-					**	sent from some off screen source.
+					**	Only one-time nuclear bombs can be sent from some off screen source.
 					*/
-					if (GameToPlay == GAME_NORMAL) {
+					if (GameToPlay == GAME_NORMAL && !NukeStrike.Is_One_Time()) {
 						// Nyerguds's C&C Patch Project v1.04
 						// Abort cursor too.
 						if (this == PlayerPtr) {
@@ -2523,7 +2541,7 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 					if (bullet) {
 						COORDINATE start = Cell_Coord(XY_Cell(Cell_X(cell), 0));
 						bullet->Assign_Target(::As_Target(cell));
-						bullet->Payback = NULL;
+						bullet->Payback = fallback;
 						bullet->Strength = 1;
 						if (!bullet->Unlimbo(start, DIR_S)) {
 							delete bullet;

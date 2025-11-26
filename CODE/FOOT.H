@@ -240,7 +240,7 @@ class FootClass :	public TechnoClass
 		**	Combat related.
 		*/
 		virtual void Stun(void);
-		virtual ResultType Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source=0);
+		virtual ResultType Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source=0, bool fromburn = false);
 		virtual void Death_Announcement(TechnoClass const * source=0) const;
 
 		/*

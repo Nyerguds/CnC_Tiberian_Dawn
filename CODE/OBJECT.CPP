@@ -1294,16 +1294,18 @@ RadioMessageType ObjectClass::Receive_Message(RadioClass *, RadioMessageType mes
  *    result value can be examined to determine if the object was destroyed, greatly damaged,  *
  *    or other results.                                                                        *
  *                                                                                             *
- * INPUT:   damage   -- Reference to the damage number to apply. This number will be adjusted  *
- *                      according to defensive armor and distance. Examine this value after    *
- *                      the call to determine the actual amount of damage applied.             *
+ * INPUT:   damage   -- Amount of damage to inflict.                                           *
+ *                      This value will be adjusted to the actual taken damage.                *
  *                                                                                             *
- *          distance -- The distance (in leptons) from the center of the damage causing        *
- *                      explosion to the object itself.                                        *
+ *          distance -- The distance from the damage center point to the object's center point.*
  *                                                                                             *
- *          warhead  -- The warhead type that is causing the damage.                           *
+ *          warhead  -- The warhead type that the damage occurs from.                          *
  *                                                                                             *
- * OUTPUT:  Returns the ResultType that indicates what the affect of the damage was.           *
+ *          source   -- The source of the damage. This is used to change targeting.            *
+ *                                                                                             *
+ *          fromburn -- The damage is a result of an animation burning the object.             *
+ *                                                                                             *
+ * OUTPUT:  Returns the ResultType that indicates what the effect of the damage was.           *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
  *                                                                                             *
@@ -1312,7 +1314,7 @@ RadioMessageType ObjectClass::Receive_Message(RadioClass *, RadioMessageType mes
  *   12/27/1994 JLB : Trigger event processing for attacked or destroyed.                      *
  *   01/01/1995 JLB : Reduces damage greatly depending on range.                               *
  *=============================================================================================*/
-ResultType ObjectClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source)
+ResultType ObjectClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, bool fromburn)
 {
 	ResultType result = RESULT_NONE;
 	int oldstrength = Strength;
@@ -1321,10 +1323,14 @@ ResultType ObjectClass::Take_Damage(int & damage, int distance, WarheadType warh
 		int maxstrength = Class_Of().MaxStrength;
 
 		/*
-		**	Modify damage based on the warhead type and the armor of the object. This results
-		**	in a reduced damage value, but never below 1 damage point.
+		**	Modify damage based on the warhead type and the armor of the object.
 		*/
 		damage = Modify_Damage(damage, warhead, Class_Of().Armor, distance);
+		// Nyerguds's C&C Patch Project v1.04
+		// If something is literally on fire, it can't be immune from it.
+		if (fromburn && !damage) {
+			damage = 1;
+		}
 		if (!damage) return(RESULT_NONE);
 
 		/*

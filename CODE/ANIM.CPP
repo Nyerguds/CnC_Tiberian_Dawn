@@ -794,7 +794,7 @@ void AnimClass::AI(void)
 					**	then the attached damaging anim is also destroyed.
 					*/
 					int damage = accum >> 8;
-					if (Object->Take_Damage(damage, 0, WARHEAD_FIRE) == RESULT_DESTROYED) {
+					if (Object->Take_Damage(damage, 0, WARHEAD_FIRE, 0, true) == RESULT_DESTROYED) {
 						//Object = 0;
 						delete this;
 						return;

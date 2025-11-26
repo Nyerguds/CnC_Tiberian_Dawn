@@ -71,6 +71,7 @@ typedef enum EventType {
 	EVENT_NOFACTORIES,						// No factories left.
 	EVENT_EVAC_CIVILIAN,						// Civilian has been evacuated.
 	EVENT_BUILD,								// If specified building has been built.
+	EVENT_MONEY,								// house reaches this much total money.
 
 	EVENT_COUNT,
 	EVENT_FIRST=0

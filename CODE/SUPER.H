@@ -61,6 +61,7 @@ class SuperClass {
 
 		unsigned IsPresent:1;
 		unsigned IsOneTime:1;
+		unsigned IsPermanentPending:1;
 		unsigned IsReady:1;
 		unsigned IsSuspended:1;
 

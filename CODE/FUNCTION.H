@@ -826,6 +826,39 @@ extern int Load_Interpolated_Palettes(char const *filename, BOOL add=FALSE);
 #define	CELL_DRAW_ONLY	2
 
 /***********************************************************************************************
+ * Distance -- Finds the distance between two arbitrary points.                                *
+ *                                                                                             *
+ *    This finds the (Dragon Strike) distance between two arbitrary points in flat space.      *
+ *    It does this by adding 1/2 the smaller absolute axis difference to the other absolute    *
+ *    axis distance. The result is rough but quick to calculate.                               *
+ *                                                                                             *
+ * INPUT:   x1,y1 -- Coordinate location for point 1.                                          *
+ *                                                                                             *
+ *          x2,y2 -- Coordinate location for point 2.                                          *
+ *                                                                                             *
+ * OUTPUT:  Returns with the rough distance between the two points. The value returned is      *
+ *          expressed in the same units as the parameters were specified in.                   *
+ *                                                                                             *
+ * WARNINGS:   When this is used for range calculations, the actual shape of the range         *
+ *             produced by this is octagonal, not circular.                                    *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   05/27/1994 JLB : Created.                                                                 *
+ *   09/30/1996 JLB : Converted to c++                                                         *
+ *=============================================================================================*/
+inline int Distance(int x1, int y1, int x2, int y2)
+{
+	int diff1 = y1 - y2;
+	if (diff1 < 0) diff1 = -diff1;
+	int diff2 = x1 - x2;
+	if (diff2 < 0) diff2 = -diff2;
+	if (diff1 > diff2) {
+		return(diff1 + (diff2/2));
+	}
+	return(diff2 + (diff1/2));
+}
+
+/***********************************************************************************************
  * Distance -- Determines the lepton distance between two coordinates.                         *
  *                                                                                             *
  *    This routine is used to determine the distance between two coordinates. It uses the      *
@@ -842,6 +875,7 @@ extern int Load_Interpolated_Palettes(char const *filename, BOOL add=FALSE);
  * HISTORY:                                                                                    *
  *   05/27/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
+#ifdef NEVER
 int Distance_Coord(COORDINATE coord1, COORDINATE coord2);
 #pragma aux Distance_Coord parm [eax] [ebx] \
 	modify [edx ebx] \
@@ -863,23 +897,11 @@ int Distance_Coord(COORDINATE coord1, COORDINATE coord2);
 	"ok:"						\
 	"shr	dx,1"				\
 	"add	ax,dx"
+#endif
 
 inline int Distance(COORDINATE coord1, COORDINATE coord2)
 {
-#ifdef NEVER
-	int	diff1, diff2;
-
-	diff1 = Coord_Y(coord1) - Coord_Y(coord2);
-	if (diff1 < 0) diff1 = -diff1;
-	diff2 = Coord_X(coord1) - Coord_X(coord2);
-	if (diff2 < 0) diff2 = -diff2;
-	if (diff1 > diff2) {
-		return(diff1 + (diff2>>1));
-	}
-	return(diff2 + (diff1>>1));
-#else
-	return(Distance_Coord(coord1, coord2));
-#endif
+	return(Distance(Coord_X(coord1), Coord_Y(coord1), Coord_X(coord2), Coord_Y(coord2)));
 }
 
 
@@ -901,16 +923,7 @@ inline int Distance(COORDINATE coord1, COORDINATE coord2)
  *=============================================================================================*/
 inline int Distance(CELL coord1, CELL coord2)
 {
-	int	diff1, diff2;
-
-	diff1 = Cell_Y(coord1) - Cell_Y(coord2);
-	if (diff1 < 0) diff1 = -diff1;
-	diff2 = Cell_X(coord1) - Cell_X(coord2);
-	if (diff2 < 0) diff2 = -diff2;
-	if (diff1 > diff2) {
-		return(diff1 + (diff2>>1));
-	}
-	return(diff2 + (diff1>>1));
+	return(Distance(Cell_X(coord1), Cell_Y(coord1), Cell_X(coord2), Cell_Y(coord2)));
 }
 
 

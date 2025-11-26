@@ -139,8 +139,9 @@ These options are available under \[Basic\]:
 
 * **RadarLogo**: Custom radar logo graphics to load. This is the extension of an HRADAR.??? file, where ??? is typically the House identifier. The game contains one for "GDI", "NOD" and "JP", but custom campaigns could add their own.
 * **RequiredNukePieces**: Amount of nuke pieces (steel crates) required to fire a single nuclear missile in this mission. This defaults to three.
-* **PlayerNukePieces**: Amount of nuke pieces (steel crates) the player is considered to have collected at the mission start. The Temple of Nod will grant you one nuclear missile superweapon for each batch of collected nuke pieces, as specified in **RequiredNukePieces**. This defaults to three, to give the normal logic of one nuke per mission. Setting it to -1 gives infinite nukes.
+* **PlayerNukePieces**: Amount of nuke pieces (steel crates) the player is considered to have collected at the mission start. The Temple of Nod will grant you one nuclear missile superweapon for each batch of collected nuke pieces, as specified in **RequiredNukePieces**. This defaults to three, to give the normal logic of one nuke per mission.
 * **PlayerNukeInherit**: If true, the amount of nuke pieces is inherited from the previous scenario. This means the **PlayerNukePieces** value is not used.
+* **AllowDetachedAISupers**: If true, AI superweapon strikes produced by triggers will be allowed even if the AI does not own the required superweapon building.
 
 ### House colors
 
@@ -189,6 +190,10 @@ Triggers can normally be destroyed with a trigger action of the type **Dstry Tri
 
 These three triggers were mainly added for multiplayer purposes: when experimenting with multiplayer scripting, it turned out that giving the multiplayer houses timed benefits (like reinforcements) could be used to create nice multiplayer enhancements. However, these reinforcements should obviously only happen for the players that are actually on the map. The only way to do this is to check with the All Destroyed trigger on each of the houses, and make that trigger remove the reinforcing trigger. But since there are 6 multiplayer-houses, this obviously only works if 6 triggers can be destroyed.
 
+#### Checking player money
+
+A long-standing annoyance in the game's scripting was the fact that the "Credits" trigger only counted the "cash" money, without accounting for harvested tiberium. To remedy this, an additional trigger event called "Money" is now available.
+
 #### Civilian evacuation
 
 The **Civ. Evac.** trigger can now be looped to detect multiple evacuations. Before, such triggers would activate endlessly, since the internal "was a civilian evacuated?" status wasn't reset after the triggers were handled.
@@ -196,6 +201,11 @@ The **Civ. Evac.** trigger can now be looped to detect multiple evacuations. Bef
 #### Capture triggers
 
 There are two trigger types in the game that can check for a building being captured; the special **Cap=Win/Des=Lose** trigger Action, and the **Player Enters** trigger Event. Both of these, when used in a trigger attached to a building, will now cause that specific building to become capturable, regardless of whether the building type can normally be captured.
+
+### Team Type upgrades
+
+* The "Unload" order no longer needs to be preceded by a "Move" order to work correctly, since the bug that makes it also use the waypoint value as timeout value was fixed.
+* The "Unload" order can now be used to deploy MCVs.
 
 ### Map decoration upgrades
 
@@ -210,4 +220,3 @@ There is a map decoration called SQUISH in the game, representing a crushed corp
 ## Full list of changes
 
 See [CHANGELOG.MD](CHANGELOG.MD)
-

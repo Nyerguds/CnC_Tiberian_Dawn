@@ -168,7 +168,7 @@ class InfantryClass : public FootClass
 		virtual ActionType What_Action(CELL cell) const;
 		virtual void Assign_Mission(MissionType order);
 		virtual BulletClass * Fire_At(TARGET target, int which);
-		virtual ResultType Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source=0);
+		virtual ResultType Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source=0, bool fromburn = false);
 		virtual TARGET As_Target(void) const;
 		virtual FireErrorType Can_Fire(TARGET target, int which) const;
 		virtual void Assign_Target(TARGET);

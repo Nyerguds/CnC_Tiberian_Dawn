@@ -85,6 +85,7 @@ static const char * EventText[EVENT_COUNT + 1] = {
 	"No Factories",
 	"Civ. Evac.",
 	"Built It",
+	"Money",
 };
 
 
@@ -416,15 +417,31 @@ bool TriggerClass::Spring(EventType event, ObjectClass *obj)
 	*/
 	bool success = true;
 	TriggerClass * trig = NULL;
+	HouseClass * actor = NULL;
 	switch (Action) {
+
 		case ACTION_NUKE:
-			HouseClass::As_Pointer(HOUSE_BAD)->NukeStrike.Enable(true, false);
-			HouseClass::As_Pointer(HOUSE_BAD)->NukeStrike.Forced_Charge(PlayerPtr->Class->House == HOUSE_BAD);
+			actor = HouseClass::As_Pointer(HOUSE_BAD);
+			if (actor->IsHuman || (actor->ActiveBScan & STRUCTF_TEMPLE) || AllowDetachedAISupers) {
+				actor->NukeStrike.Enable(true, false);
+				actor->NukeStrike.Forced_Charge(actor == PlayerPtr);
+				if (actor == PlayerPtr) {
+					Map.Add(RTTI_SPECIAL, SPC_NUCLEAR_BOMB);
+					Map.Column[1].Flag_To_Redraw();
+				}
+			}
 			break;
 
 		case ACTION_ION:
-			HouseClass::As_Pointer(HOUSE_GOOD)->IonCannon.Enable(true, false);
-			HouseClass::As_Pointer(HOUSE_GOOD)->IonCannon.Forced_Charge(PlayerPtr->Class->House == HOUSE_GOOD);
+			actor = HouseClass::As_Pointer(HOUSE_GOOD);
+			if (actor->IsHuman || (actor->ActiveBScan & STRUCTF_EYE) || AllowDetachedAISupers) {
+				actor->IonCannon.Enable(true, false);
+				actor->IonCannon.Forced_Charge(actor == PlayerPtr);
+				if (actor == PlayerPtr) {
+					Map.Add(RTTI_SPECIAL, SPC_ION_CANNON);
+					Map.Column[1].Flag_To_Redraw();
+				}
+			}
 			break;
 
 		case ACTION_WINLOSE:
@@ -636,16 +653,32 @@ bool TriggerClass::Spring(EventType event, CELL cell)
 	*/
 	bool success = true;
 	TriggerClass * trig = NULL;
+	HouseClass * actor = NULL;
 	int index;
 	switch (Action) {
+
 		case ACTION_NUKE:
-			HouseClass::As_Pointer(HOUSE_BAD)->NukeStrike.Enable(true, false);
-			HouseClass::As_Pointer(HOUSE_BAD)->NukeStrike.Forced_Charge(PlayerPtr->Class->House == HOUSE_BAD);
+			actor = HouseClass::As_Pointer(HOUSE_BAD);
+			if (actor->IsHuman || (actor->ActiveBScan & STRUCTF_TEMPLE) || AllowDetachedAISupers) {
+				actor->NukeStrike.Enable(true, false);
+				actor->NukeStrike.Forced_Charge(actor == PlayerPtr);
+				if (actor == PlayerPtr) {
+					Map.Add(RTTI_SPECIAL, SPC_NUCLEAR_BOMB);
+					Map.Column[1].Flag_To_Redraw();
+				}
+			}
 			break;
 
 		case ACTION_ION:
-			HouseClass::As_Pointer(HOUSE_GOOD)->IonCannon.Enable(true, false);
-			HouseClass::As_Pointer(HOUSE_GOOD)->IonCannon.Forced_Charge(PlayerPtr->Class->House == HOUSE_GOOD);
+			actor = HouseClass::As_Pointer(HOUSE_GOOD);
+			if (actor->IsHuman || (actor->ActiveBScan & STRUCTF_EYE) || AllowDetachedAISupers) {
+				actor->IonCannon.Enable(true, false);
+				actor->IonCannon.Forced_Charge(actor == PlayerPtr);
+				if (actor == PlayerPtr) {
+					Map.Add(RTTI_SPECIAL, SPC_ION_CANNON);
+					Map.Column[1].Flag_To_Redraw();
+				}
+			}
 			break;
 
 		case ACTION_AUTOCREATE:
@@ -703,7 +736,7 @@ bool TriggerClass::Spring(EventType event, CELL cell)
 			break;
 
 		case ACTION_AIRSTRIKE:
-			HouseClass::As_Pointer(House)->AirStrike.Enable(false, true);
+			HouseClass::As_Pointer(House)->AirStrike.Enable(false, House == *PlayerPtr);
 			if (House == PlayerPtr->Class->House) {
 				PlayerPtr->AirStrike.Forced_Charge(true);
 				Map.Add(RTTI_SPECIAL, SPC_AIR_STRIKE);
@@ -812,7 +845,7 @@ bool TriggerClass::Spring(EventType event, HousesType house, long data)
 	/*
 	**	If credits-based, check 'data'
 	*/
-	if (Event == EVENT_CREDITS && data < Data) {
+	if (Event == EVENT_CREDITS || Event == EVENT_MONEY && data < Data) {
 		return(false);
 	}
 
@@ -850,16 +883,31 @@ bool TriggerClass::Spring(EventType event, HousesType house, long data)
 	*/
 	bool success = true;
 	TriggerClass * trig = NULL;
+	HouseClass * actor = NULL;
 	switch (Action) {
 
 		case ACTION_NUKE:
-			HouseClass::As_Pointer(HOUSE_BAD)->NukeStrike.Enable(true, false);
-			HouseClass::As_Pointer(HOUSE_BAD)->NukeStrike.Forced_Charge(PlayerPtr->Class->House == HOUSE_BAD);
+			actor = HouseClass::As_Pointer(HOUSE_BAD);
+			if (actor->IsHuman || (actor->ActiveBScan & STRUCTF_TEMPLE) || AllowDetachedAISupers) {
+				actor->NukeStrike.Enable(true, false);
+				actor->NukeStrike.Forced_Charge(actor == PlayerPtr);
+				if (actor == PlayerPtr) {
+					Map.Add(RTTI_SPECIAL, SPC_NUCLEAR_BOMB);
+					Map.Column[1].Flag_To_Redraw();
+				}
+			}
 			break;
 
 		case ACTION_ION:
-			HouseClass::As_Pointer(HOUSE_GOOD)->IonCannon.Enable(true, false);
-			HouseClass::As_Pointer(HOUSE_GOOD)->IonCannon.Forced_Charge(PlayerPtr->Class->House == HOUSE_GOOD);
+			actor = HouseClass::As_Pointer(HOUSE_GOOD);
+			if (actor->IsHuman || (actor->ActiveBScan & STRUCTF_EYE) || AllowDetachedAISupers) {
+				actor->IonCannon.Enable(true, false);
+				actor->IonCannon.Forced_Charge(actor == PlayerPtr);
+				if (actor == PlayerPtr) {
+					Map.Add(RTTI_SPECIAL, SPC_ION_CANNON);
+					Map.Column[1].Flag_To_Redraw();
+				}
+			}
 			break;
 
 		/*
@@ -923,12 +971,7 @@ bool TriggerClass::Spring(EventType event, HousesType house, long data)
 			break;
 
 		case ACTION_AIRSTRIKE:
-			PlayerPtr->AirStrike.Enable(false, true);
-			if (House == PlayerPtr->Class->House) {
-				PlayerPtr->AirStrike.Forced_Charge(true);
-				Map.Add(RTTI_SPECIAL, SPC_AIR_STRIKE);
-				Map.Column[1].Flag_To_Redraw();
-			}
+			PlayerPtr->IsAirstrikePending = true;
 			break;
 
 		case ACTION_NONE:

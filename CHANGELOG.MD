@@ -222,10 +222,21 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Fixed targets in range not getting detected due to the barrel length not being included in the scan range.
 * Fixed targets in range not getting detected because the cell to detect was a building cell that wasn't part of its solid occupied cells.
 * Fixed ballistic and homing projectiles limiting their range to the range of the firing unit, without taking the bonus range against buildings into account.
-* Fixed the Temple being able to fire a missile while selling.
+* Fixed the Temple being able to fire a missile while selling, aborting the sale but leaving the infantry.
 * Losing the Nuclear Missile or Ion Cannon ability while you are targeting the superweapon in question will now disable the targeting mode.
-* Any House can now collect three steel crates for "nuke pieces" to get an additional nuke from the Temple of Nod. Before, this was limited to Nod, but now the Temple can be made capturable by mission triggers, this was expanded.
-* The player in a mission can now start with a specific amount of nuke pieces by putting "PlayerNukePieces" in the mission's \[Basic\] section. Every multiple of three is one nuke, and -1 gives infinite nukes. This defaults to 3, giving one nuke, as per the game's original behavior.
+* Any House can now collect steel crates for "nuke pieces" to get additional nukes from the Temple of Nod. Before, this was limited to Nod, but now the Temple can be made capturable by mission triggers, this was expanded.
+* Firing a nuclear missile will now subtract the consumed "nuke pieces" from the player's collected amount, rather than resetting the amount to 0;
+* The amount of "nuke pieces" required to unlock a single nuke can now be set in a mission by putting "RequiredNukePieces" in the mission's \[Basic\] section. This defaults to 3, as per the game's original behavior.
+* The player in a mission can now start with a specific amount of nuke pieces by putting "PlayerNukePieces" in the mission's \[Basic\] section. Every multiple of three is one nuke. This defaults to 3, giving one nuke, as per the game's original behavior.
 * Custom campaigns can enable the Steel Crate Collect-a-Thon logic by setting "PlayerNukeInherit=true" in a mission's \[Basic\] section.
-* Added ini key to reactivate the Nod campaign's Steel Crate Collect-a-Thon logic, by setting "NodCrateCollectNuke=true" in conquer.ini, under \[Patch\]. This overrides the two mission-specific nuke crate settings for all Nod campaign missions.
-* Fixed amount of collected crates resetting when restarting a mission.
+* Added ini key to reactivate the Nod campaign's Steel Crate Collect-a-Thon logic, by setting "NodCrateCollectNuke=true" in conquer.ini, under \[Patch\]. This overrides the three mission-specific nuke crate settings for all Nod campaign missions.
+* Fixed amount of collected crates resetting when restarting a mission. It is now reverted to the value the player had at the start of the mission.
+* Fixed the TeamTypes "Unload" order using its value both as waypoint and as timeout, making it necessary to always add a "Move" order to the same waypoint first.
+* The TeamTypes "Unload" order can now be used to deploy an MCV.
+* Fixed trees remaining on fire forever until they died, because the damage taken from the burning always set them on fire again.
+* Fixed trees not getting properly cleaned up when dying from fire damage, and remaining as dead but damage-immune husks.
+* Superweapon triggers ("Ion Cannon" and "Nuclear Missile") for the owner's native superweapon will now produce a one-time shot that works regardless of owned superweapon building, and which does not consume nuke pieces.
+* Computer player superweapon strikes from triggers will now be blocked if they do not own the required superweapon building. This behaviour can be disabled by adding "AllowDetachedAISupers=true" in a mission's \[Basic\] section.
+* The Ion Cannon is no longer restricted to players identifying as GDI. This fixes the bug that the Advanced Communications Center had no effect in Funpark mission 4 if you selected Nod as side.
+* Added new "Money" trigger event, to fix the fact the existing "Credits" event only counts cash money, without tiberium.
+* Computer-owned MCVs ordered to "Unload" will now seek out a valid place if they can't deploy on their current spot.

@@ -89,11 +89,6 @@ int Modify_Damage(int damage, WarheadType warhead, ArmorType armor, int distance
 		damage >>= distance;
 	}
 
-	/*
-	**	If damage was indicated, then it should never drop below one damage point regardless
-	**	of modifiers. This allows a very weak attacker to eventually destroy anything it
-	**	fires upon, given enough time.
-	*/
 	return(damage);
 }
 

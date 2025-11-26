@@ -847,16 +847,18 @@ bool UnitClass::Unlimbo(COORDINATE coord, DirType dir)
  *    whether the unit was destroyed. This will allow appropriate death                        *
  *    animation or whatever.                                                                   *
  *                                                                                             *
- * INPUT:   damage-- The number of damage points to inflict.                                   *
+ * INPUT:   damage   -- Amount of damage to inflict.                                           *
+ *                      This value will be adjusted to the actual taken damage.                *
  *                                                                                             *
  *          distance -- The distance from the damage center point to the object's center point.*
  *                                                                                             *
- *          warhead--The type of damage to inflict.                                            *
+ *          warhead  -- The warhead type that the damage occurs from.                          *
  *                                                                                             *
- *          source   -- Who is responsible for this damage?                                    *
+ *          source   -- The source of the damage. This is used to change targeting.            *
  *                                                                                             *
- * OUTPUT:  Returns the result of the damage process. This can range from RESULT_NONE up to    *
- *          RESULT_DESTROYED.                                                                  *
+ *          fromburn -- The damage is a result of an animation burning the object.             *
+ *                                                                                             *
+ * OUTPUT:  Returns the ResultType that indicates what the effect of the damage was.           *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
  *                                                                                             *
@@ -871,7 +873,7 @@ bool UnitClass::Unlimbo(COORDINATE coord, DirType dir)
  *   06/30/1995 JLB : Lasers do maximum damage against gunboat.                                *
  *   08/16/1995 JLB : Harvester crushing doesn't occur on early missions.                      *
  *=============================================================================================*/
-ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source)
+ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, bool fromburn)
 {
 	Validate();
 	ResultType res = RESULT_NONE;
@@ -896,7 +898,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 	**	In order for a this to be damaged, it must either be a unit
 	**	with a crew or a sandworm.
 	*/
-	res = TarComClass::Take_Damage(damage, distance, warhead, source);
+	res = TarComClass::Take_Damage(damage, distance, warhead, source, fromburn);
 
 	if (res == RESULT_DESTROYED) {
 		Death_Announcement(source);
@@ -989,6 +991,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 						object->Record_The_Kill(source);
 						delete object;
 					}
+				}
 #endif
 				// Nyerguds's C&C Patch Project v1.04
 				// Use Dump_Cargo to ensure passengers are properly ejected when standing on a repair pad.
@@ -2540,10 +2543,14 @@ int UnitClass::Mission_Unload(void)
 				case 1:
 					if (!IsDriving) {
 						Try_To_Deploy();
+						// Nyerguds's C&C Patch Project v1.04
+						// AI MCVs will seek out a place to deploy. This behaviour is coded in the "Hunt" mission.
 						if (IsDeploying) {
 							Status = 2;
-						} else {
+						} else if (House->IsHuman) {
 							Assign_Mission(MISSION_GUARD);
+						} else {
+							Assign_Mission(MISSION_HUNT);
 						}
 					}
 					break;

@@ -2840,18 +2840,27 @@ bool TechnoClass::Captured(HouseClass * newowner)
  *    this object has been destroyed. If it has, then mark the appropriate kill records as     *
  *    necessary.                                                                               *
  *                                                                                             *
- * INPUT:                                                                                      *
+ * INPUT:   damage   -- Amount of damage to inflict.                                           *
+ *                      This value will be adjusted to the actual taken damage.                *
  *                                                                                             *
- * OUTPUT:                                                                                     *
+ *          distance -- The distance from the damage center point to the object's center point.*
+ *                                                                                             *
+ *          warhead  -- The warhead type that the damage occurs from.                          *
+ *                                                                                             *
+ *          source   -- The source of the damage. This is used to change targeting.            *
+ *                                                                                             *
+ *          fromburn -- The damage is a result of an animation burning the object.             *
+ *                                                                                             *
+ * OUTPUT:  Returns the ResultType that indicates what the effect of the damage was.           *
  *                                                                                             *
  * WARNINGS:                                                                                   *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   06/20/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-ResultType TechnoClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source)
+ResultType TechnoClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, bool fromburn)
 {
-	ResultType result = ObjectClass::Take_Damage(damage, distance, warhead, source);
+	ResultType result = ObjectClass::Take_Damage(damage, distance, warhead, source, fromburn);
 
 	switch (result) {
 		case RESULT_DESTROYED:

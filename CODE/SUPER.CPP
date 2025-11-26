@@ -72,6 +72,7 @@ SuperClass::SuperClass(int recharge, VoxType ready, VoxType charging, VoxType im
 {
 	IsPresent = false;
 	IsOneTime = false;
+	IsPermanentPending = false;
 	IsReady = false;
 	IsSuspended = false;
 	OldStage = -1;
@@ -140,10 +141,20 @@ bool SuperClass::Suspend(bool on)
  *=============================================================================================*/
 bool SuperClass::Enable(bool onetime, bool player, bool quiet)
 {
-	if (!IsPresent) {
+	// Nyerguds's C&C Patch Project v1.04
+	// If a permanent ability is present, and a one-time one is added,
+	// temporarily replace the permanent one, but remember the replacement.
+	// If a temporary ability is present, and a permanent one is added,
+	// ensure the permanent one is activated afterwards.
+	bool addreplacestatus = IsPresent && ((!IsOneTime && onetime) || (IsOneTime && !onetime));
+	bool addpermanent = IsPresent && IsOneTime && !onetime;
+	if (!IsPresent || addreplacestatus) {
 		IsPresent = true;
-		IsOneTime = onetime;
-		bool retval = Recharge(player && !quiet);
+		if (addreplacestatus) {
+			IsOneTime = true;
+			IsPermanentPending = true;
+		}
+		bool retval = addreplacestatus ? !IsReady : Recharge(player && !quiet);
 		if (quiet) Suspend(true);
 		return(retval);
 	}
@@ -169,6 +180,11 @@ bool SuperClass::Enable(bool onetime, bool player, bool quiet)
  *=============================================================================================*/
 bool SuperClass::Remove(bool forced) 
 {
+	if (IsPresent && IsOneTime && IsPermanentPending) {
+		// Request to remove superweapon does not affect the one-time one,
+		// but does remove the suspended permanent one.
+		IsPermanentPending = false;
+	}
 	if (IsPresent && (!IsOneTime || forced)) {
 		IsReady = false;
 		IsPresent = false;
@@ -187,7 +203,7 @@ bool SuperClass::Remove(bool forced)
  * INPUT:   player   -- Is this for a player owned super weapon? If so, then a voice           *
  *                      announcement might be in order.                                        *
  *                                                                                             *
- * OUTPUT:  Was the super weapon begun charging up?                                            *
+ * OUTPUT:  Has the super weapon begun charging up?                                            *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
  *                                                                                             *
@@ -238,6 +254,13 @@ bool SuperClass::Discharged(bool player)
 {
 	if (!IsSuspended && IsPresent && IsReady) {
 		IsReady = false;
+		// Nyerguds's C&C Patch Project v1.04
+		// Permanent replaced by one-time gets swapped to permanent again.
+		if (IsPermanentPending && IsOneTime)
+		{
+			IsOneTime = false;
+			IsPermanentPending = false;
+		}
 		if (IsOneTime) {
 			IsOneTime = false;
 			return(Remove());

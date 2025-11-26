@@ -149,7 +149,7 @@ class HouseClass {
 		unsigned IsAirstrikePending:1;
 
 		/*
-		**	This records the existence of the three nuke weapon pieces.
+		**	This records the amount of collected nuke weapon pieces.
 		*/
 		int	NukePieces;
 

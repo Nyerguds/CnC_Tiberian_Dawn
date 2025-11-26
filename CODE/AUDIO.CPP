@@ -341,96 +341,96 @@ int Sound_Effect(VocType voc, VolType volume, int variation, signed short pan_va
 **	This elaborates all the EVA speech voices.
 */
 char const * Speech[VOX_COUNT] =  {
-	"ACCOM1",		//	mission accomplished
-	"FAIL1",			//	your mission has failed
-	"BLDG1",			//	unable to comply, building in progress
-	"CONSTRU1",		//	construction complete
-	"UNITREDY",		//	unit ready
-	"NEWOPT1",		//	new construction options
-	"DEPLOY1",		//	cannot deploy here
-	"GDIDEAD1",		//	GDI unit destroyed
-	"NODDEAD1",		//	Nod unit destroyed
-	"CIVDEAD1",		//	civilian killed
-//	"EVAYES1",		//	affirmative
-//	"EVANO1",		//	negative
-//	"UPUNIT1",		//	upgrade complete, new unit available
-//	"UPSTRUC1",		//	upgrade complete, new structure available
-	"NOCASH1",		//	insufficient funds
-	"BATLCON1",		//	battle control terminated
-	"REINFOR1",		//	reinforcements have arrived
-	"CANCEL1",		//	canceled
-	"BLDGING1",		//	building
-	"LOPOWER1",		//	low power
-	"NOPOWER1",		//	insufficient power
-	"MOCASH1",		//	need more funds
-	"BASEATK1",		//	our base is under attack
-	"INCOME1",		//	incoming missile
-	"ENEMYA",		//	enemy planes approaching
-	"NUKE1",			//	nuclear warhead approaching
-//	"RADOK1",		//	radiation levels are acceptable
-//	"RADFATL1",		//	radiation levels are fatal
-	"NOBUILD1",		//	unable to build more
-	"PRIBLDG1",		//	primary building selected
-//	"REPDONE1",		//	repairs completed
-	"NODCAPT1",		//	Nod building captured
-	"GDICAPT1",		//	GDI building captured
-//	"SOLD1",			//	structure sold
-	"IONCHRG1",		//	ion cannon charging
-	"IONREDY1",		//	ion cannon ready
-	"NUKAVAIL",		//	nuclear weapon available
-	"NUKLNCH1",		//	nuclear weapon launched
-	"UNITLOST",		// unit lost
-	"STRCLOST",		// structure lost
-	"NEEDHARV",		//	need harvester
-	"SELECT1",		// select target
-	"AIRREDY1",		// airstrike ready
-	"NOREDY1",		//	not ready
-	"TRANSSEE",		// Nod transport sighted
-	"TRANLOAD",		// Nod transport loaded
-	"ENMYAPP1",		//	enemy approaching
-	"SILOS1",		//	silos needed
-	"ONHOLD1",		//	on hold
-	"REPAIR1",		//	repairing
-	"ESTRUCX",		//	enemy structure destroyed
-	"GSTRUC1",		//	GDI structure destroyed
-	"NSTRUC1",		//	NOD structure destroyed
-	"ENMYUNIT",		// Enemy unit destroyed
-//	"GUKILL1",		//	gold unit destroyed
-//	"GSTRUD1",		//	gold structure destroyed
-//	"GONLINE1",		//	gold player online
-//	"GLEFT1",		//	gold player has departed
-//	"GOLDKILT",		//	gold player destroyed
-//	"GOLDWIN",		//	gold player is victorious
-//	"RUKILL1",		//	red unit destroyed
-//	"RSTRUD1",		//	red structure destroyed
-//	"RONLINE1",		//	red player online
-//	"RLEFT1",		//	red player has departed
-//	"REDKILT",		//	red player destroyed
-//	"REDWIN",		//	red player is victorious
-//	"GYUKILL1",		//	grey unit destroyed
-//	"GYSTRUD1",		//	grey structure destroyed
-//	"GYONLINE",		//	grey player online
-//	"GYLEFT1",		//	grey player has departed
-//	"GREYKILT",		//	grey player destroyed
-//	"GREYWIN",		//	grey player is victorious
-//	"OUKILL1",		//	orange unit destroyed
-//	"OSTRUD1",		//	orange structure destroyed
-//	"OONLINE1",		//	orange player online
-//	"OLEFT1",		//	orange player has departed
-//	"ORANKILT",		//	orange player destroyed
-//	"ORANWIN",		//	orange player is victorious
-//	"GNUKILL1",		//	green unit destroyed
-//	"GNSTRUD1",		//	green structure destroyed
-//	"GNONLINE",		//	green player online
-//	"GNLEFT1",		//	green player has departed
-//	"GRENKILT",		//	green player destroyed
-//	"GRENWIN",		//	green player is victorious
-//	"BUKILL1",		//	blue unit destroyed
-//	"BSTRUD1",		//	blue structure destroyed
-//	"BONLINE1",		//	blue player online
-//	"BLEFT1",		//	blue player has departed
-//	"BLUEKILT",		//	blue player destroyed
-//	"BLUEWIN"		//	blue player is victorious
+	"ACCOM1",		//	VOX_ACCOMPLISHED - mission accomplished
+	"FAIL1",			//	VOX_FAIL - your mission has failed
+	"BLDG1",			//	VOX_NO_FACTORY - unable to comply, building in progress
+	"CONSTRU1",		//	VOX_CONSTRUCTION - construction complete
+	"UNITREDY",		//	VOX_UNIT_READY - unit ready
+	"NEWOPT1",		//	VOX_NEW_CONSTRUCT - new construction options
+	"DEPLOY1",		//	VOX_DEPLOY - cannot deploy here
+	"GDIDEAD1",		//	VOX_DEAD_GDI - GDI unit destroyed
+	"NODDEAD1",		//	VOX_DEAD_NOD - Nod unit destroyed
+	"CIVDEAD1",		//	VOX_DEAD_CIV - civilian killed
+//	"EVAYES1",		//	VOX_AFFIRMATIVE - affirmative
+//	"EVANO1",		//	VOX_NEGATIVE - negative
+//	"UPUNIT1",		//	VOX_UPGRADE_UNIT - upgrade complete, new unit available
+//	"UPSTRUC1",		//	VOX_UPGRADE_STRUCT - upgrade complete, new structure available
+	"NOCASH1",		//	VOX_NO_CASH - insufficient funds
+	"BATLCON1",		//	VOX_CONTROL_EXIT - battle control terminated
+	"REINFOR1",		//	VOX_REINFORCEMENTS - reinforcements have arrived
+	"CANCEL1",		//	VOX_CANCELED - canceled
+	"BLDGING1",		//	VOX_BUILDING - building
+	"LOPOWER1",		//	VOX_LOW_POWER - low power
+	"NOPOWER1",		//	VOX_NO_POWER - insufficient power
+	"MOCASH1",		//	VOX_NEED_MO_MONEY - need more funds
+	"BASEATK1",		//	VOX_BASE_UNDER_ATTACK - our base is under attack
+	"INCOME1",		//	VOX_INCOMING_MISSILE - incoming missile
+	"ENEMYA",		//	VOX_ENEMY_PLANES - enemy planes approaching
+	"NUKE1",			//	VOX_INCOMING_NUKE - nuclear warhead approaching
+//	"RADOK1",		//	VOX_RADIATION_OK - radiation levels are acceptable
+//	"RADFATL1",		//	VOX_RADIATION_FATAL - radiation levels are fatal
+	"NOBUILD1",		//	VOX_UNABLE_TO_BUILD - unable to build more
+	"PRIBLDG1",		//	VOX_PRIMARY_SELECTED - primary building selected
+//	"REPDONE1",		//	VOX_REPAIRS_COMPLETE - repairs completed
+	"NODCAPT1",		//	VOX_NOD_CAPTURED - Nod building captured
+	"GDICAPT1",		//	VOX_GDI_CAPTURED - GDI building captured
+//	"SOLD1",			//	VOX_STRUCTURE_SOLD - structure sold
+	"IONCHRG1",		//	VOX_ION_CHARGING - ion cannon charging
+	"IONREDY1",		//	VOX_ION_READY - ion cannon ready
+	"NUKAVAIL",		//	VOX_NUKE_AVAILABLE - nuclear weapon available
+	"NUKLNCH1",		//	VOX_NUKE_LAUNCHED - nuclear weapon launched
+	"UNITLOST",		// VOX_UNIT_LOST - unit lost
+	"STRCLOST",		// VOX_STRUCTURE_LOST - structure lost
+	"NEEDHARV",		//	VOX_NEED_HARVESTER - need harvester
+	"SELECT1",		// VOX_SELECT_TARGET - select target
+	"AIRREDY1",		// VOX_AIRSTRIKE_READY - airstrike ready
+	"NOREDY1",		//	VOX_NOT_READY - not ready
+	"TRANSSEE",		// VOX_TRANSPORT_SIGHTED - Nod transport sighted
+	"TRANLOAD",		// VOX_TRANSPORT_LOADED - Nod transport loaded
+	"ENMYAPP1",		//	VOX_PREPARE - enemy approaching
+	"SILOS1",		//	VOX_NEED_MO_CAPACITY - silos needed
+	"ONHOLD1",		//	VOX_SUSPENDED - on hold
+	"REPAIR1",		//	VOX_REPAIRING - repairing
+	"ESTRUCX",		//	VOX_ENEMY_STRUCTURE - enemy structure destroyed
+	"GSTRUC1",		//	VOX_GDI_STRUCTURE - GDI structure destroyed
+	"NSTRUC1",		//	VOX_NOD_STRUCTURE - NOD structure destroyed
+	"ENMYUNIT",		// VOX_ENEMY_UNIT - Enemy unit destroyed
+//	"GUKILL1",		//	VOX_GOLD_UNIT - gold unit destroyed
+//	"GSTRUD1",		//	VOX_GOLD_STRUCTURE - gold structure destroyed
+//	"GONLINE1",		//	VOX_GOLD_ONLINE - gold player online
+//	"GLEFT1",		//	VOX_GOLD_OFFLINE - gold player has departed
+//	"GOLDKILT",		//	VOX_GOLD_LOST - gold player destroyed
+//	"GOLDWIN",		//	VOX_GOLD_WON - gold player is victorious
+//	"RUKILL1",		//	VOX_RED_UNIT - red unit destroyed
+//	"RSTRUD1",		//	VOX_RED_STRUCTURE - red structure destroyed
+//	"RONLINE1",		//	VOX_RED_ONLINE - red player online
+//	"RLEFT1",		//	VOX_RED_OFFLINE - red player has departed
+//	"REDKILT",		//	VOX_RED_LOST - red player destroyed
+//	"REDWIN",		//	VOX_RED_WON - red player is victorious
+//	"GYUKILL1",		//	VOX_GREY_UNIT - grey unit destroyed
+//	"GYSTRUD1",		//	VOX_GREY_STRUCTURE - grey structure destroyed
+//	"GYONLINE",		//	VOX_GREY_ONLINE - grey player online
+//	"GYLEFT1",		//	VOX_GREY_OFFLINE - grey player has departed
+//	"GREYKILT",		//	VOX_GREY_LOST - grey player destroyed
+//	"GREYWIN",		//	VOX_GREY_WON - grey player is victorious
+//	"OUKILL1",		//	VOX_ORANGE_UNIT - orange unit destroyed
+//	"OSTRUD1",		//	VOX_ORANGE_STRUCTURE - orange structure destroyed
+//	"OONLINE1",		//	VOX_ORANGE_ONLINE - orange player online
+//	"OLEFT1",		//	VOX_ORANGE_OFFLINE - orange player has departed
+//	"ORANKILT",		//	VOX_ORANGE_LOST - orange player destroyed
+//	"ORANWIN",		//	VOX_ORANGE_WON - orange player is victorious
+//	"GNUKILL1",		//	VOX_GREEN_UNIT - green unit destroyed
+//	"GNSTRUD1",		//	VOX_GREEN_STRUCTURE - green structure destroyed
+//	"GNONLINE",		//	VOX_GREEN_ONLINE - green player online
+//	"GNLEFT1",		//	VOX_GREEN_OFFLINE - green player has departed
+//	"GRENKILT",		//	VOX_GREEN_LOST - green player destroyed
+//	"GRENWIN",		//	VOX_GREEN_WON - green player is victorious
+//	"BUKILL1",		//	VOX_BLUE_UNIT - blue unit destroyed
+//	"BSTRUD1",		//	VOX_BLUE_STRUCTURE - blue structure destroyed
+//	"BONLINE1",		//	VOX_BLUE_ONLINE - blue player online
+//	"BLEFT1",		//	VOX_BLUE_OFFLINE - blue player has departed
+//	"BLUEKILT",		//	VOX_BLUE_LOST - blue player destroyed
+//	"BLUEWIN"		//	VOX_BLUE_WON - blue player is victorious
 };
 static VoxType CurrentVoice = VOX_NONE;
 

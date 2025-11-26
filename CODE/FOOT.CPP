@@ -1141,25 +1141,27 @@ bool FootClass::Limbo(void)
  *    a member of a team, it informs the team that the damage has occurred. The team may       *
  *    change it's priority or action based on this event.                                      *
  *                                                                                             *
- * INPUT:   damage      -- The damage points inflicted on the unit.                            *
+ * INPUT:   damage   -- Amount of damage to inflict.                                           *
+ *                      This value will be adjusted to the actual taken damage.                *
  *                                                                                             *
- *          distance    -- The distance from the point of damage to the unit itself.           *
+ *          distance -- The distance from the damage center point to the object's center point.*
  *                                                                                             *
- *          warhead     -- The type of damage that is inflicted.                               *
+ *          warhead  -- The warhead type that the damage occurs from.                          *
  *                                                                                             *
- *          source      -- The perpetrator of the damage. By knowing who caused the damage,    *
- *                         the team know's who to "get even with".                             *
+ *          source   -- The source of the damage. This is used to change targeting.            *
  *                                                                                             *
- * OUTPUT:  Returns with the result type of the damage.                                        *
+ *          fromburn -- The damage is a result of an animation burning the object.             *
+ *                                                                                             *
+ * OUTPUT:  Returns the ResultType that indicates what the effect of the damage was.           *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   12/30/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-ResultType FootClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source)
+ResultType FootClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, bool fromburn)
 {
-	ResultType result = TechnoClass::Take_Damage(damage, distance, warhead, source);
+	ResultType result = TechnoClass::Take_Damage(damage, distance, warhead, source, fromburn);
 
 	if (result != RESULT_NONE && Team) {
 
