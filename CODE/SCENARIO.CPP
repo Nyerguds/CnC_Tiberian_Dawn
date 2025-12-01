@@ -520,7 +520,10 @@ void Do_Win(void)
 		Keyboard::Clear();
 	}
 	StructType sabotaged = SabotagedType;
-	CarryOverMoney = PlayerPtr->Credits;
+	
+	// Nyerguds's C&C Patch Project v1.04:
+	// Carryover is no longer restricted to cash money.
+	CarryOverMoney = PlayerPtr->Available_Money();
 
 	int pieces = PlayerPtr->NukePieces;
 
@@ -529,7 +532,7 @@ void Do_Win(void)
 	*/
 	Set_Scenario_Name(ScenarioName, Scenario, ScenPlayer, ScenDir, ScenVar);
 	// Nyerguds's C&C Patch Project v1.04:
-	// nuke pieces are passed on to Start_Scenario
+	// Nuke pieces are passed on to Start_Scenario
 	Start_Scenario(ScenarioName, pieces);
 
 	/*

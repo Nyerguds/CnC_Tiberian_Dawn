@@ -102,7 +102,9 @@ int AnimClass::Validate(void) const
  *    can also be used as a more accurate check instead of the cached IsAnimAttached member.   *
  *                                                                                             *
  * INPUT:   obj   -- Pointer to the object of which to check if it has attached animations.    *
+ *                                                                                             *
  *          animnum -- type of animation to look for. Use ANIM_NONE to disable filtering.      *
+ *                                                                                             *
  *          not_dying -- if true, animations with their loop count set to 0 are considered     *
  *                       "dying" and ignored as valid matches since they will end soon.        *
  *                                                                                             *
@@ -140,6 +142,7 @@ bool Has_Attached_Anim(ObjectClass * obj, AnimType animnum, bool not_dying)
  *    animation will loop.                                                                     *
  *                                                                                             *
  * INPUT:   obj   -- Pointer to the object that all attached animations will be processed.     *
+ *                                                                                             *
  *          animtype -- type of animation to look for. ANIM_NONE disables filtering.           *
  *                                                                                             *
  * OUTPUT:  none.                                                                              *
@@ -148,7 +151,7 @@ bool Has_Attached_Anim(ObjectClass * obj, AnimType animnum, bool not_dying)
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   12/11/1994 JLB : Created.                                                                 *
- *   06/17/2025 MM  : Added filter and kill switch                                             *
+ *   06/17/2025 MM  : Added filter.                                                            *
  *=============================================================================================*/
 void Shorten_Attached_Anims(ObjectClass * obj, AnimType animtype)
 {

@@ -168,14 +168,13 @@ ResultType TerrainClass::Take_Damage(int & damage, int distance, WarheadType war
 	// Nyerguds's C&C Patch Project v1.04
 	// Trees can still be damaged while on fire.
 	if (!IsCrumbling && warhead != WARHEAD_SA && !Class->IsImmune) {
-		//int oldstr = Strength;
 		res = ObjectClass::Take_Damage(damage, distance, warhead, source, house, fromburn);
 
 		if (res == RESULT_DESTROYED) {
 			// Nyerguds's C&C Patch Project v1.04
 			// Vastly simplified. Detach_All() is already called in ObjectClass::Take_Damage(),
-			// Fire_Out() is now called by AnimClass::Detach(), so no need to check  IsOnFire,
-			// and Start_To_Crumble() checks if it's already crumbling anyway, so just run it.
+			// and Fire_Out() is now called by AnimClass::Detach(), so no need to check IsOnFire.
+			// And Start_To_Crumble() checks if it's already crumbling anyway, so just run it.
 			Start_To_Crumble();
 		} else if (damage && warhead == WARHEAD_FIRE && !fromburn) {
 			// Nyerguds's C&C Patch Project v1.04

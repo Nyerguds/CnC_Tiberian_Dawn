@@ -245,3 +245,4 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Since the Nuclear Missile superweapon has no "charging" voice, a "New Construction Options" voice now announces when it is added to the build list.
 * Animations now remember which object caused them, meaning buildings burning down from fire damage, and objects damaged by superweapons, will now know where the damage originated, and possibly what to retaliate against.
 * Damage caused by infantry exploding on death is now attributed to the one who killed the infantry, since this is the way it works for Flame Tank and SSM death explosions.
+* The money carried over from the previous scenario is now actually the full amount of money, not just the non-tiberium credits.
