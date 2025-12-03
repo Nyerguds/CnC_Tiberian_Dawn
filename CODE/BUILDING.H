@@ -226,7 +226,7 @@ class BuildingClass : public TechnoClass
 		virtual void Draw_It(int x, int y, WindowNumberType window);
 		virtual bool Mark(MarkType mark);
 		virtual void Look(bool incremental=false);
-		virtual void Fire_Out(bool fromdetach);
+		virtual void Fire_Out();
 		void  Begin_Mode(BStateType bstate);
 
 		/*

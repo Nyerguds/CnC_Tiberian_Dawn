@@ -8,7 +8,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 
 * Fixed the crash that happens when exploring at the top of the map with a unit with a large sight range.
 * Fixed the stealth animation corruption on the right half of the lowest line of the screen, which could crash the game.
-* Helipads can now be selected as primary building
+* Helipads can now be selected as primary building.
 * Units can now be assigned to team number "0".
 * Fixed the bug that causes the deploying of an MCV to add extra power usage that could never be recovered.
 * Fixed the bug that made harvesting the lowest stage of tiberium yield no resources.
@@ -28,7 +28,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 
 * Fixed tiberium growth not refreshing unless you scroll away from it.
 * Fixed craters CR02-CR06 not placing correctly from mission files.
-* Fixed crater CR06 never being used as building debris. (it's still not used as projectile impact debris, but that's intentional)
+* Fixed crater CR06 never being used as building debris. (It's still not used as projectile impact debris, but that's intentional.)
 * Fixed crushed infantry remains logic ("Overrun=pancake" in conquer.ini) messing up tiberium spawning.
 * Fixed crushed infantry overlay decoration SQUISH not being usable from mission files.
 * Fixed tiberium spread not being able to replace SQUISH overlay.
@@ -225,10 +225,10 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Fixed the Temple being able to fire a missile while selling, aborting the sale but leaving the infantry.
 * Losing the Nuclear Missile or Ion Cannon ability while you are targeting the superweapon in question will now disable the targeting mode.
 * Any House can now collect steel crates for "nuke pieces" to get additional nukes from the Temple of Nod. Before, this was limited to Nod, but now the Temple can be made capturable by mission triggers, this was expanded.
-* Firing a nuclear missile will now subtract the consumed "nuke pieces" from the player's collected amount, rather than resetting the amount to 0;
+* Firing a nuclear missile will now subtract the consumed "nuke pieces" from the player's collected amount, rather than resetting the amount to 0.
 * The amount of "nuke pieces" required to unlock a single nuke can now be set in a mission by putting "RequiredNukePieces" in the mission's \[Basic\] section. This defaults to 3, as per the game's original behavior.
-* The player in a mission can now start with a specific amount of nuke pieces by putting "PlayerNukePieces" in the mission's \[Basic\] section. Every multiple of three is one nuke. This defaults to 3, giving one nuke, as per the game's original behavior.
-* Custom campaigns can enable the Steel Crate Collect-a-Thon logic by setting "PlayerNukeInherit=true" in a mission's \[Basic\] section.
+* The player in a mission can now start with a specific amount of nuke pieces by putting "PlayerNukePieces" in the mission's \[Basic\] section. This defaults to 3, as per the game's original behavior, normally giving access to one nuke.
+* Custom campaigns can enable the Steel Crate Collect-a-Thon logic by setting "PlayerNukeInherit=true" in a mission's \[Basic\] section, overriding the "PlayerNukePieces" option.
 * Added ini key to reactivate the Nod campaign's Steel Crate Collect-a-Thon logic, by setting "NodCrateCollectNuke=true" in conquer.ini, under \[Patch\]. This overrides the three mission-specific nuke crate settings for all Nod campaign missions.
 * Fixed amount of collected crates resetting when restarting a mission. It is now reverted to the value the player had at the start of the mission.
 * Fixed the TeamTypes "Unload" order using its value both as waypoint and as timeout, making it necessary to always add a "Move" order to the same waypoint first.
@@ -238,7 +238,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Fixed trees not getting properly cleaned up when dying from fire damage, and remaining as dead but damage-immune husks.
 * Fixed buildings on fire spawning increasingly more fire when they get repaired above the halfway point but then get reduced below it again by the fire damage.
 * Superweapon triggers ("Ion Cannon" and "Nuclear Missile") for the owner's native superweapon will now produce a one-time shot that works regardless of owned superweapon building, and which does not consume nuke pieces.
-* Computer player superweapon strikes from triggers will now be blocked if they do not own the required superweapon building. This behaviour can be disabled by adding "AllowDetachedAISupers=true" in a mission's \[Basic\] section. This affects both the Ion Cannon and the Buclear Strike.
+* Computer player superweapon strikes from triggers will now be blocked if they do not own the required superweapon building. This behaviour can be disabled by adding "AllowDetachedAISupers=true" in a mission's \[Basic\] section. This affects both the Ion Cannon and the Nuclear Strike.
 * The Ion Cannon is no longer restricted to players identifying as GDI. This allows captured Advanced Communications Centers to give the player access to the Ion Cannon.
 * Added new "Money" trigger event, to fix the fact the existing "Credits" event only counts cash money, without tiberium.
 * Computer-owned MCVs ordered to "Unload" will now seek out a valid place if they can't deploy on their current spot.

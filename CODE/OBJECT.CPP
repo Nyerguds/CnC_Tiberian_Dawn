@@ -621,12 +621,12 @@ bool ObjectClass::Catch_Fire(TechnoClass * /*source*/, HousesType /*house*/) {re
  *                                                                                             *
  * OUTPUT:  none                                                                               *
  *                                                                                             *
- * WARNINGS:   none                                                                            *
+ * WARNINGS:   This is only called when all DAMAGE-DEALING animations expire.                  *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   07/24/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-void ObjectClass::Fire_Out(bool /*fromdetach*/)
+void ObjectClass::Fire_Out()
 {
 }
 

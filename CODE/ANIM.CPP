@@ -718,22 +718,23 @@ AnimClass::~AnimClass(void)
 			**	this animation is attached to. If there are no others, then inform the
 			**	attached object of this fact.
 			*/
-			bool otherfound = ObjectHasOtherAnims(to, false);
+			bool animsfound = ObjectHasOtherAnims(to, false);
 			if (Class->Damage) {
-				bool burnerFound = 0;
-				// If no anims at all were attached, there won't be any fire-dealing ones either.
-				if (otherfound) {
-					burnerFound = ObjectHasOtherAnims(to, true);
-				}
 
+				bool burnersFound = false;
+				// If no anims at all were attached, there won't be any fire-dealing ones either.
+				if (animsfound) {
+					burnersFound = ObjectHasOtherAnims(to, true);
+				}
 				/*
-				**	Tell the object that it is no longer being damaged.
+				**	If no more damage-dealing animations are attached,
+				**	tell the object that it is no longer being damaged.
 				*/
-				if (!burnerFound) {
-					to->Fire_Out(false);
+				if (!burnersFound) {
+					to->Fire_Out();
 				}
 			}
-			if (!otherfound) {
+			if (!animsfound) {
 				to->Mark(MARK_OVERLAP_UP);
 				to->IsAnimAttached = false;
 				to->Mark(MARK_OVERLAP_DOWN);
@@ -1346,7 +1347,7 @@ void AnimClass::Detach(TARGET target, bool all)
 		// Nyerguds's C&C Patch Project v1.04
 		// Check for other damage-dealing anims here and call Fire_Out() if none are left.
 		if (!ObjectHasOtherAnims(Object, true)) {
-			Object->Fire_Out(true);
+			Object->Fire_Out();
 		}
 
 		Map.Remove(this, In_Which_Layer());

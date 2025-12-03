@@ -2265,12 +2265,12 @@ void BuildingClass::Update_Buildables(void)
  *                                                                                             *
  * OUTPUT:  none                                                                               *
  *                                                                                             *
- * WARNINGS:   none                                                                            *
+ * WARNINGS:   This is only called when all DAMAGE-DEALING animations expire.                  *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   11/30/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-void BuildingClass::Fire_Out(bool /*fromdetach*/)
+void BuildingClass::Fire_Out()
 {
 	Validate();
 //	SAM = SAM_READY;

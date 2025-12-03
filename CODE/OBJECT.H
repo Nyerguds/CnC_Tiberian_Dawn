@@ -215,7 +215,7 @@ class ObjectClass : public AbstractClass
 		virtual TARGET As_Target(void) const;
 		virtual void Scatter(COORDINATE , bool=false);
 		virtual bool Catch_Fire(TechnoClass * source=0, HousesType house = HOUSE_NONE);
-		virtual void Fire_Out(bool fromdetach);
+		virtual void Fire_Out();
 		virtual int Value(void) const;
 		virtual MissionType Get_Mission(void) const;
 
