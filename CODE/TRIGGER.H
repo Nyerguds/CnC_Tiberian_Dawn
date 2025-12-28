@@ -109,11 +109,11 @@ class TriggerClass {
 			ACTION_FIRST=0
 		} ActionType;
 
-		typedef enum PersistantType {
+		typedef enum PersistentType {
 			VOLATILE = 0,
-			SEMIPERSISTANT = 1,
-			PERSISTANT = 2,
-		} PersistantType;
+			SEMIPERSISTENT = 1,
+			PERSISTENT = 2,
+		} PersistentType;
 
 		/*
 		** Functions:
@@ -217,7 +217,7 @@ class TriggerClass {
 		**		 triggered from all the objects; then, it removes itself.
 		**	2 = trigger is Fully Persistent; it just won't go away.
 		*/
-		PersistantType IsPersistant;
+		PersistentType IsPersistent;
 
 		/*
 		**	This value tells how many objects or cells this trigger is attached

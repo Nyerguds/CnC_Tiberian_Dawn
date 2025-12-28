@@ -182,7 +182,7 @@
 **	This is the credit threshold that the computer's money must exceed
 **	in order for structure repair to commence.
 */
-#define	REPAIR_THRESHHOLD		1000
+#define	REPAIR_THRESHOLD		1000
 
 
 /**********************************************************************

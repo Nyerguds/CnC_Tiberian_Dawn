@@ -286,7 +286,7 @@ bool TriggerClass::Action_Need_Team(TriggerClass::ActionType action)
  *=============================================================================================*/
 TriggerClass::TriggerClass(void)
 {
-	IsPersistant = VOLATILE;
+	IsPersistent = VOLATILE;
 	AttachCount = 0;
 	Event = EVENT_NONE;
 	Action = ACTION_NONE;
@@ -384,11 +384,11 @@ bool TriggerClass::Spring(EventType event, ObjectClass *obj)
 	}
 
 	/*
-	**	Semi-persistant trigger: first detach it from the calling object, then
+	**	Semi-persistent trigger: first detach it from the calling object, then
 	**	see if this is the last object we're attached to; if so, the trigger
 	**	will spring.
 	*/
-	if (IsPersistant == SEMIPERSISTANT) {
+	if (IsPersistent == SEMIPERSISTENT) {
 
 		/*
 		** Detach ourselves from the object
@@ -408,7 +408,7 @@ bool TriggerClass::Spring(EventType event, ObjectClass *obj)
 		if (AttachCount > 0) {
 			return(false);
 		} else {
-			IsPersistant = VOLATILE;
+			IsPersistent = VOLATILE;
 		}
 	}
 
@@ -541,7 +541,10 @@ bool TriggerClass::Spring(EventType event, ObjectClass *obj)
 			break;
 
 		case ACTION_CREATE_TEAM:
-			if (Team) {
+			// Nyerguds's C&C Patch Project v1.04
+			// If creation of previous teams failed, don't make new ones.
+			// This fixes the bug where Airstrip deliveries lock up.
+			if (Team && !Team->Has_Unformed_Teams()) {
 				ScenarioInit++;
 				Team->Create_One_Of();
 				ScenarioInit--;
@@ -573,7 +576,7 @@ bool TriggerClass::Spring(EventType event, ObjectClass *obj)
 	/*
 	**	Remove trigger from the game.
 	*/
-	if (success && IsPersistant == VOLATILE) {
+	if (success && IsPersistent == VOLATILE) {
 		Remove();
 	}
 
@@ -620,11 +623,11 @@ bool TriggerClass::Spring(EventType event, CELL cell)
 	}
 
 	/*
-	**	Semi-persistant trigger: first detach it from the calling cell, then
+	**	Semi-persistent trigger: first detach it from the calling cell, then
 	**	see if this is the last cell we're attached to; if so, the trigger
 	**	will spring.
 	*/
-	if (IsPersistant == SEMIPERSISTANT) {
+	if (IsPersistent == SEMIPERSISTENT) {
 
 		/*
 		** Detach ourselves from the cell
@@ -644,7 +647,7 @@ bool TriggerClass::Spring(EventType event, CELL cell)
 		if (AttachCount > 0) {
 			return(false);
 		} else {
-			IsPersistant = VOLATILE;
+			IsPersistent = VOLATILE;
 		}
 	}
 
@@ -769,7 +772,10 @@ bool TriggerClass::Spring(EventType event, CELL cell)
 			break;
 
 		case ACTION_CREATE_TEAM:
-			if (Team) {
+			// Nyerguds's C&C Patch Project v1.04
+			// If creation of previous teams failed, don't make new ones.
+			// This fixes the bug where Airstrip deliveries lock up.
+			if (Team && !Team->Has_Unformed_Teams()) {
 				ScenarioInit++;
 				Team->Create_One_Of();
 				ScenarioInit--;
@@ -801,7 +807,7 @@ bool TriggerClass::Spring(EventType event, CELL cell)
 	/*
 	**	Remove trigger from the game.
 	*/
-	if (success && IsPersistant == VOLATILE) {
+	if (success && IsPersistent == VOLATILE) {
 		Remove();
 	}
 
@@ -994,7 +1000,10 @@ bool TriggerClass::Spring(EventType event, HousesType house, long data)
 			break;
 
 		case ACTION_CREATE_TEAM:
-			if (Team) {
+			// Nyerguds's C&C Patch Project v1.04
+			// If creation of previous teams failed, don't make new ones.
+			// This fixes the bug where Airstrip deliveries lock up.
+			if (Team && !Team->Has_Unformed_Teams()) {
 				ScenarioInit++;
 				Team->Create_One_Of();
 				ScenarioInit--;
@@ -1026,7 +1035,7 @@ bool TriggerClass::Spring(EventType event, HousesType house, long data)
 	/*
 	**	Remove trigger from the game.
 	*/
-	if (success && IsPersistant == VOLATILE) {
+	if (success && IsPersistent == VOLATILE) {
 		Remove();
 	}
 
@@ -1111,7 +1120,7 @@ bool TriggerClass::Remove(void)
  * TriggerClass::Read_INI -- reads triggers from the INI file                                  *
  *                                                                                             *
  *    INI entry format:                                                                        *
- *      Triggername = Eventname, Actionname, Data, Housename, TeamName, IsPersistant           *
+ *      Triggername = Eventname, Actionname, Data, Housename, TeamName, IsPersistent           *
  *                                                                                             *
  * This routine reads in the triggers & creates them. Then, other classes can                  *
  * get pointers to the triggers they're linked to.                                             *
@@ -1215,7 +1224,7 @@ void TriggerClass::Read_INI(char *buffer)
  * (This routine is used by the scenario editor, to import teams from the MASTER.INI file.)    *
  *                                                                                             *
  *    INI entry format:                                                                        *
- *      Triggername = Eventname, Actionname, Data, Housename, TeamName, IsPersistant           *
+ *      Triggername = Eventname, Actionname, Data, Housename, TeamName, IsPersistent           *
  *                                                                                             *
  * INPUT:                                                                                      *
  *      name      mnemonic for the desired trigger                                             *
@@ -1269,14 +1278,14 @@ void TriggerClass::Fill_In(char * name, char *entry)
 	Team = TeamTypeClass::As_Pointer(strtok(NULL, ","));
 
 	/*
-	** 6th token: IsPersistant.  This token was added later, so we must check
+	** 6th token: IsPersistent.  This token was added later, so we must check
 	** for its existence.
 	*/
 	p = strtok(NULL, ",");
 	if (p) {
-		IsPersistant = (PersistantType)atoi(p);
+		IsPersistent = (PersistentType)atoi(p);
 	} else {
-		IsPersistant = VOLATILE;
+		IsPersistent = VOLATILE;
 	}
 }
 
@@ -1285,7 +1294,7 @@ void TriggerClass::Fill_In(char * name, char *entry)
  * TriggerClass::Write_INI -- writes triggers to the INI file                                  *
  *                                                                                             *
  *    INI entry format:                                                                        *
- *      Triggername = Eventname, Actionname, Data, Housename, TeamName, IsPersistant           *
+ *      Triggername = Eventname, Actionname, Data, Housename, TeamName, IsPersistent           *
  *                                                                                             *
  * INPUT:                                                                                      *
  *      buffer      buffer to hold the INI data                                                *
@@ -1346,7 +1355,7 @@ void TriggerClass::Write_INI(char *buffer, bool refresh)
 			trigger->Data,
 			hname,
 			tname,
-			trigger->IsPersistant);
+			trigger->IsPersistent);
 		WWWritePrivateProfileString(INI_Name(), trigger->Get_Name(), buf, buffer);
 	}
 }

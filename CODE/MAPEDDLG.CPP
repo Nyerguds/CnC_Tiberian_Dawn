@@ -2742,7 +2742,7 @@ int MapEditClass::Edit_Trigger(void)
 	HousesType house;									// house for this trigger
 	const char *eventnames[EVENT_COUNT + 1];	// names of events
 	const char *actionnames[TriggerClass::ACTION_COUNT + 1];	// names of actions
-	TriggerClass::PersistantType persistant;									// trigger's persistence level
+	TriggerClass::PersistentType persistent;									// trigger's persistence level
 
 	/*........................................................................
 	These flags enable various controls for each EventType.
@@ -2812,11 +2812,11 @@ int MapEditClass::Edit_Trigger(void)
 		TPF_CENTER | TPF_6PT_GRAD | TPF_USE_GRAD_PAL | TPF_NOSHADOW,
 		D_VOLATILE_X, D_VOLATILE_Y, D_VOLATILE_W, D_VOLATILE_H);
 
-	TextButtonClass persistbtn(BUTTON_PERSIST, "Persistant",
+	TextButtonClass persistbtn(BUTTON_PERSIST, "Persistent",
 		TPF_CENTER | TPF_6PT_GRAD | TPF_USE_GRAD_PAL | TPF_NOSHADOW,
 		D_PERSIST_X, D_PERSIST_Y, D_PERSIST_W, D_PERSIST_H);
 
-	TextButtonClass semipersistbtn(BUTTON_SEMIPERSIST, "SemiPersistant",
+	TextButtonClass semipersistbtn(BUTTON_SEMIPERSIST, "SemiPersistent",
 		TPF_CENTER | TPF_6PT_GRAD | TPF_USE_GRAD_PAL | TPF_NOSHADOW,
 		D_SEMIPERSIST_X, D_SEMIPERSIST_Y, D_SEMIPERSIST_W, D_SEMIPERSIST_H);
 
@@ -2852,21 +2852,21 @@ int MapEditClass::Edit_Trigger(void)
 
 	house = CurTrigger->House;						// House
 
-	persistant = CurTrigger->IsPersistant;
+	persistent = CurTrigger->IsPersistent;
 
 	volatilebtn.Turn_Off();
 	persistbtn.Turn_Off();
 	semipersistbtn.Turn_Off();
-	switch (CurTrigger->IsPersistant) {
+	switch (CurTrigger->IsPersistent) {
 		case TriggerClass::VOLATILE:
 			volatilebtn.Turn_On();
 			break;
 
-		case TriggerClass::SEMIPERSISTANT:
+		case TriggerClass::SEMIPERSISTENT:
 			semipersistbtn.Turn_On();
 			break;
 
-		case TriggerClass::PERSISTANT:
+		case TriggerClass::PERSISTENT:
 			persistbtn.Turn_On();
 			break;
 	}
@@ -3074,21 +3074,21 @@ int MapEditClass::Edit_Trigger(void)
 				break;
 
 			case (BUTTON_VOLATILE | KN_BUTTON):
-				persistant = TriggerClass::VOLATILE;
+				persistent = TriggerClass::VOLATILE;
 				volatilebtn.Turn_On();
 				persistbtn.Turn_Off();
 				semipersistbtn.Turn_Off();
 				break;
 
 			case (BUTTON_PERSIST | KN_BUTTON):
-				persistant = TriggerClass::PERSISTANT;
+				persistent = TriggerClass::PERSISTENT;
 				volatilebtn.Turn_Off();
 				persistbtn.Turn_On();
 				semipersistbtn.Turn_Off();
 				break;
 
 			case (BUTTON_SEMIPERSIST | KN_BUTTON):
-				persistant = TriggerClass::SEMIPERSISTANT;
+				persistent = TriggerClass::SEMIPERSISTENT;
 				volatilebtn.Turn_Off();
 				persistbtn.Turn_Off();
 				semipersistbtn.Turn_On();
@@ -3155,7 +3155,7 @@ int MapEditClass::Edit_Trigger(void)
 		/*
 		........................... Set Persistence  ..........................
 		*/
-		CurTrigger->IsPersistant = persistant;
+		CurTrigger->IsPersistent = persistent;
 	}
 
 	/*

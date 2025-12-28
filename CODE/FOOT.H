@@ -276,7 +276,7 @@ class FootClass :	public TechnoClass
 		virtual void Fixup_Path(PathType *) {};
 		virtual void Set_Speed(int speed);
 		virtual MoveType Can_Enter_Cell(CELL , FacingType =FACING_NONE) const;
-		int Optimize_Moves(PathType *path, MoveType threshhold);
+		int Optimize_Moves(PathType *path, MoveType threshold);
 		virtual void Override_Mission(MissionType mission, TARGET tarcom, TARGET navcom);
 		virtual bool Restore_Mission(void);
 
@@ -290,13 +290,13 @@ class FootClass :	public TechnoClass
 		int Rescue_Mission(TARGET tarcom);
 
 	private:
-		int Passable_Cell(CELL cell, FacingType face, int threat, MoveType threshhold);
-		PathType * Find_Path(CELL dest, FacingType *final_moves, int maxlen, MoveType threshhold);
+		int Passable_Cell(CELL cell, FacingType face, int threat, MoveType threshold);
+		PathType * Find_Path(CELL dest, FacingType *final_moves, int maxlen, MoveType threshold);
 		void Debug_Draw_Map(char *txt, CELL start, CELL dest, bool pause);
 		void Debug_Draw_Path(PathType *path);
-		bool Follow_Edge(CELL start, CELL target, PathType *path, FacingType search, FacingType olddir, int threat, int threat_stage, int max_cells, MoveType threshhold);
-		bool Register_Cell(PathType *path, CELL cell, FacingType dir, int cost, MoveType threshhold);
-		bool Unravel_Loop(PathType *path, CELL &cell, FacingType &dir, int sx, int sy, int dx, int dy, MoveType threshhold);
+		bool Follow_Edge(CELL start, CELL target, PathType *path, FacingType search, FacingType olddir, int threat, int threat_stage, int max_cells, MoveType threshold);
+		bool Register_Cell(PathType *path, CELL cell, FacingType dir, int cost, MoveType threshold);
+		bool Unravel_Loop(PathType *path, CELL &cell, FacingType &dir, int sx, int sy, int dx, int dy, MoveType threshold);
 
 		/*
 		**	This is the coordinate that the unit is heading to

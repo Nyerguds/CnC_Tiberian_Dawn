@@ -640,8 +640,17 @@ CCDebugString ("C&C95 - Primary building packet received\n");
 		*/
 		case SCATTER:
 			techno = As_Techno(Data.Target.Whom);
-			if (techno && techno->IsActive && !techno->IsInLimbo && !techno->IsTethered) {
-				techno->Scatter(0, true);
+			if (techno && techno->IsActive && !techno->IsInLimbo) {
+				// Nyerguds's C&C Patch Project v1.04
+				// Allow units to scatter to leave a repair pad.
+				bool execute = true;
+				if (techno->IsTethered && techno->Contact_With_Whom()) {
+					const TechnoClass * tclass = techno->Contact_With_Whom();
+					execute = tclass->What_Am_I() == RTTI_BUILDING && *((BuildingClass *)tclass) == STRUCT_REPAIR;
+				}
+				if (execute) {
+					techno->Scatter(0, true);
+				}
 			}
 			break;
 

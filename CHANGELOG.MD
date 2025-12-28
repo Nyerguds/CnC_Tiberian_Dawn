@@ -251,3 +251,8 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Fixed small misalignment on the click position of the Deploy cursor.
 * Fixed scrolling logic being tied to the game's frame rate. It is now capped at 60fps, making it consistent on any machine.
 * Added middle mouse button scrolling.
+* Fixed Scatter logic not working for units docked to a repair bay.
+* Fixed Scatter logic giving multiple move orders because it doesn't stop looking for locations after finding a valid spot to scatter to.
+* Fixed Scatter logic for vehicles simply making them drive forward in the direction they're already facing.
+* Fixed bug where Airstrip deliveries lock up when looping map scripts keep creating teams that never get filled up with units due to the AI losing the required factories.
+* Fixed Primary Building logic malfunctioning for Airstrip deliveries.

@@ -1807,7 +1807,7 @@ void UnitClass::Per_Cell_Process(bool center)
 
 #ifdef OBSOLETE
 	/*
-	**	If this unit is on a teather, then cut it at this time so that
+	**	If this unit is on a tether, then cut it at this time so that
 	**	the "parent" unit is free to proceed. Note that the parent
 	**	unit might actually be a building.
 	*/
@@ -3302,7 +3302,18 @@ void UnitClass::Scatter(COORDINATE threat, bool forced)
 	/*
 	** Units in Sleep or Sticky mode do not scatter.
 	*/
-	if (Mission == MISSION_SLEEP || Mission == MISSION_STICKY) return;
+	if ((Mission == MISSION_SLEEP && !IsTethered) || Mission == MISSION_STICKY) return;
+	/*
+	**	Nyerguds's C&C Patch Project v1.04
+	**	Units docked to a repair bay are put to Sleep mode. These units are allowed to scatter if forced.
+	*/
+	const TechnoClass * tclass = Contact_With_Whom();
+	if (Mission == MISSION_SLEEP && forced) {
+		if (!tclass || tclass->What_Am_I() != RTTI_BUILDING || *((BuildingClass *)tclass) != STRUCT_REPAIR)
+		{
+			return;
+		}
+	}
 
 	if (*this == UNIT_GUNBOAT || *this == UNIT_HOVER) return;
 
@@ -3316,14 +3327,19 @@ void UnitClass::Scatter(COORDINATE threat, bool forced)
 			toface = toface + (Random_Pick(0, 2)-1);
 		} else {
 			toface = Dir_Facing(PrimaryFacing.Current());
+			toface = toface + (Random_Pick(0, 4)-2);
 		}
 
 		for (FacingType face = FACING_N; face < FACING_COUNT; face++) {
 			newface = toface + face;
 			newcell = Adjacent_Cell(Coord_Cell(Coord), newface);
-
-			if (Map.In_Radar(newcell) && Can_Enter_Cell(newcell) == MOVE_OK) {
+			// For units on a repair pad, do not allow scatter to cells of the pad.
+			if (Map.In_Radar(newcell) && Can_Enter_Cell(newcell) == MOVE_OK && (!tclass || Map[newcell].Cell_Building() != tclass)) {
+				if (Mission == MISSION_SLEEP) {
+					Assign_Mission(MISSION_GUARD);
+				}
 				Assign_Destination(::As_Target(newcell));
+				break;
 			}
 		}
 	}

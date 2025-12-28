@@ -237,7 +237,7 @@ int Point_Relative_To_Line(int x, int z, int x1, int z1, int x2, int z2)
  * HISTORY:                                                                *
  *   05/25/1995 PWG : Created.                                             *
  *=========================================================================*/
-bool FootClass::Unravel_Loop(PathType *path, CELL &cell, FacingType &dir, int sx, int sy, int dx, int dy, MoveType threshhold)
+bool FootClass::Unravel_Loop(PathType *path, CELL &cell, FacingType &dir, int sx, int sy, int dx, int dy, MoveType threshold)
 {
 	/*
 	** Walk back to the actual cell before we advanced our position
@@ -281,7 +281,7 @@ bool FootClass::Unravel_Loop(PathType *path, CELL &cell, FacingType &dir, int sx
 		/*
 		** Since this cell will not be in the list, then pull out its cost
 		*/
-		path->Cost -= Passable_Cell(curr_pos, *list, -1, threshhold);
+		path->Cost -= Passable_Cell(curr_pos, *list, -1, threshold);
 
 		/*
 		** Remove this cells flag from the overlap list for the path
@@ -326,7 +326,7 @@ bool FootClass::Unravel_Loop(PathType *path, CELL &cell, FacingType &dir, int sx
  * HISTORY:                                                                *
  *   05/23/1995 PWG : Created.                                             *
  *=========================================================================*/
-bool FootClass::Register_Cell(PathType *path, CELL cell, FacingType dir, int cost, MoveType threshhold)
+bool FootClass::Register_Cell(PathType *path, CELL cell, FacingType dir, int cost, MoveType threshold)
 {
 	FacingType  *list;
 	int 	pos  = cell >> 5;
@@ -400,7 +400,7 @@ bool FootClass::Register_Cell(PathType *path, CELL cell, FacingType dir, int cos
 			*/
 			while (idx < path->Length) {
 				pos			= Adjacent_Cell(pos, *list);
-				path->Cost -= Passable_Cell(pos, *list, -1, threshhold);
+				path->Cost -= Passable_Cell(pos, *list, -1, threshold);
 				path->Overlap[pos >> 5] &= ~(1 << ((pos & 31) - 1));
 				Draw_Cell_Point(pos, true, -1, LTBLUE);
 				idx++;
@@ -421,7 +421,7 @@ bool FootClass::Register_Cell(PathType *path, CELL cell, FacingType dir, int cos
 	return(true);
 }
 #ifdef OBSOLETE
-bool FootClass::Register_Cell(PathType *path, CELL cell, FacingType dir, int cost, MoveType threshhold)
+bool FootClass::Register_Cell(PathType *path, CELL cell, FacingType dir, int cost, MoveType threshold)
 {
 	FacingType  *list;
 	int 	pos  = cell >> 5;
@@ -485,7 +485,7 @@ bool FootClass::Register_Cell(PathType *path, CELL cell, FacingType dir, int cos
 			*/
 			while (idx < path->Length) {
 				pos			= Adjacent_Cell(pos, *list);
-				path->Cost -= Passable_Cell(pos, *list, -1, threshhold);
+				path->Cost -= Passable_Cell(pos, *list, -1, threshold);
 				path->Overlap[pos >> 5] &= ~(1 << ((pos & 31) - 1));
 				Draw_Cell_Point(pos, true, -1, LTBLUE);
 				idx++;
@@ -526,7 +526,7 @@ bool FootClass::Register_Cell(PathType *path, CELL cell, FacingType dir, int cos
  * HISTORY:                                                                                    *
  *   07/08/1991  CY : Created.                                                                 *
  *=============================================================================================*/
-PathType * FootClass::Find_Path(CELL dest, FacingType *final_moves, int maxlen, MoveType threshhold)
+PathType * FootClass::Find_Path(CELL dest, FacingType *final_moves, int maxlen, MoveType threshold)
 {
 	CELL					source = Coord_Cell(Coord);		// Source expressed as cell
 	static PathType	path;										// Main path control.
@@ -647,10 +647,10 @@ top_of_list:
 		/*
 		**	If we can move here, then make this our next move.
 		*/
-		cost = Passable_Cell(next, direction, threat, threshhold);
+		cost = Passable_Cell(next, direction, threat, threshold);
 		if (cost) {
 			Draw_Cell_Point(next, true, threat_stage);
-			Register_Cell(&path, next, direction, cost, threshhold);
+			Register_Cell(&path, next, direction, cost, threshold);
 		} else {
 			if (Debug_Find_Path && DrawPath) {
 				Debug_Draw_Map("Walk Through Obstacle", startcell, dest, true);
@@ -690,7 +690,7 @@ top_of_list:
 					** If the cell is passable then we have been completely
 					** sucessful.  If the cell is not passable then continue.
 					*/
-					if ((Passable_Cell(next, FACING_NONE, threat, threshhold)) || (next == dest)) {
+					if ((Passable_Cell(next, FACING_NONE, threat, threshold)) || (next == dest)) {
 						Draw_Cell_Point(next, true, threat_stage);
 						break;
 					} else {
@@ -737,8 +737,8 @@ top_of_list:
 				pleft.Overlap 	= LeftOverlap;
 				Mem_Copy(path.Command, pleft.Command, path.Length);
 				Mem_Copy(path.Overlap, pleft.Overlap, sizeof(LeftOverlap));
-				left = Follow_Edge(startcell, next, &pleft, COUNTERCLOCK, direction, threat, threat_stage, sizeof(moves_left), threshhold);
-//				left = Follow_Edge(startcell, next, &pleft, COUNTERCLOCK, direction, threat, threat_stage, follow_len, threshhold);
+				left = Follow_Edge(startcell, next, &pleft, COUNTERCLOCK, direction, threat, threat_stage, sizeof(moves_left), threshold);
+//				left = Follow_Edge(startcell, next, &pleft, COUNTERCLOCK, direction, threat, threat_stage, follow_len, threshold);
 
 				if (left) {
 					follow_len = MIN(maxlen, pleft.Length + (pleft.Length >> 1));
@@ -764,8 +764,8 @@ top_of_list:
 				pright.Overlap = RightOverlap;
 				Mem_Copy(path.Command, pright.Command, path.Length);
 				Mem_Copy(path.Overlap, pright.Overlap, sizeof(RightOverlap));
-				right = Follow_Edge(startcell, next, &pright, CLOCK, direction, threat, threat_stage, sizeof(moves_right), threshhold);
-//				right = Follow_Edge(startcell, next, &pright, CLOCK, direction, threat, threat_stage, follow_len, threshhold);
+				right = Follow_Edge(startcell, next, &pright, CLOCK, direction, threat, threat_stage, sizeof(moves_right), threshold);
+//				right = Follow_Edge(startcell, next, &pright, CLOCK, direction, threat, threat_stage, follow_len, threshold);
 
 				/*
 				** If we are in debug mode then let us know how well our right path
@@ -825,7 +825,7 @@ top_of_list:
 
 					newdir	= CELL_FACING(next, dest);
 					next		= Adjacent_Cell(next, newdir);
-				} while (Passable_Cell(next, newdir, threat, threshhold));
+				} while (Passable_Cell(next, newdir, threat, threshold));
 			}
 
 			if (!left && !right) break;
@@ -884,7 +884,7 @@ end_of_list:
 	**	diagonal moves are allowed.
 	*/
 	#ifdef DIAGONAL
-		Optimize_Moves(&path, threshhold);
+		Optimize_Moves(&path, threshold);
 	#endif
 	if (Debug_Find_Path && DrawPath) {
 		Debug_Draw_Map("Final Generated Path", startcell,dest,false);
@@ -920,7 +920,7 @@ end_of_list:
  *   07/08/1991  CY : Created.                                                                 *
  *   06/01/1992  JLB : Optimized & commented.                                                  *
  *=============================================================================================*/
-bool FootClass::Follow_Edge(CELL start, CELL target, PathType *path, FacingType search, FacingType olddir, int threat, int threat_stage, int max_cells, MoveType threshhold)
+bool FootClass::Follow_Edge(CELL start, CELL target, PathType *path, FacingType search, FacingType olddir, int threat, int threat_stage, int max_cells, MoveType threshold)
 {
 	FacingType	newdir;			// Direction of facing before surrounding cell check.
 	CELL			oldcell,		// Current cell.
@@ -1002,7 +1002,7 @@ bool FootClass::Follow_Edge(CELL start, CELL target, PathType *path, FacingType 
 						**	This only works if in fact, it is possible to move to the
 						**	cell from the current location.
 						*/
-						cost = Passable_Cell(checkcell, Next_Direction(newdir, search), threat, threshhold);
+						cost = Passable_Cell(checkcell, Next_Direction(newdir, search), threat, threshold);
 						if (cost) {
 							Draw_Cell_Point(checkcell, true, threat_stage);
 
@@ -1070,7 +1070,7 @@ bool FootClass::Follow_Edge(CELL start, CELL target, PathType *path, FacingType 
 			/*
 			**	If we found a passable position, this is where we should move.
 			*/
-			if (!forcefail && ((cost = Passable_Cell(newcell, newdir, threat, threshhold)) != 0)) {
+			if (!forcefail && ((cost = Passable_Cell(newcell, newdir, threat, threshold)) != 0)) {
 				Draw_Cell_Point(newcell, true, threat_stage);
 				break;
 			} else {
@@ -1092,13 +1092,13 @@ bool FootClass::Follow_Edge(CELL start, CELL target, PathType *path, FacingType 
 			** cell fails then the list has been shortened and we need to adjust
 			** the new direction.
 			*/
-			if (!Register_Cell(path, newcell, newdir, cost, threshhold)) {
+			if (!Register_Cell(path, newcell, newdir, cost, threshold)) {
 				/*
 				** The only reason we could not register a cell is that we are in
 				** a looping situation.  So we need to try and unravel the loop if
 				** we can.
 				*/
-				if (!Unravel_Loop(path, newcell, newdir, startx, starty, targetx, targety, threshhold)) {
+				if (!Unravel_Loop(path, newcell, newdir, startx, starty, targetx, targety, threshold)) {
 					return(false);
 				}
 				/*
@@ -1190,7 +1190,7 @@ bool FootClass::Follow_Edge(CELL start, CELL target, PathType *path, FacingType 
  *   06/01/1992  JLB : Optimized and commented.                                                *
  *=============================================================================================*/
 #define	EMPTY		(FacingType)-2
-int FootClass::Optimize_Moves(PathType *path, MoveType threshhold)
+int FootClass::Optimize_Moves(PathType *path, MoveType threshold)
 //int Optimize_Moves(PathType *path, int (*callback)(CELL, FacingType), int threshold)
 {
 	/*
@@ -1289,7 +1289,7 @@ int FootClass::Optimize_Moves(PathType *path, MoveType threshhold)
 					**	the path isn't any shorter.
 					*/
 					if (ABS((int)newcmd) == 1) {
-						if (Passable_Cell(Adjacent_Cell(cell, newdir), newdir, -1, threshhold)) {
+						if (Passable_Cell(Adjacent_Cell(cell, newdir), newdir, -1, threshold)) {
 							*cmd2 = newdir;
 							*cmd1 = newdir;
 						}
@@ -1356,7 +1356,7 @@ int FootClass::Optimize_Moves(PathType *path, MoveType threshhold)
 #endif
 
 			cell = Adjacent_Cell(cell, *cmd2);
-			path->Cost+= Passable_Cell(cell, *cmd2, -1, threshhold);
+			path->Cost+= Passable_Cell(cell, *cmd2, -1, threshold);
 			path->Length++;
 			*cmd1++ = *cmd2;
 		}
@@ -1428,13 +1428,13 @@ CELL FootClass::Safety_Point(CELL src, CELL dst, int start, int max)
 
 
 
-int FootClass::Passable_Cell(CELL cell, FacingType face, int threat, MoveType threshhold)
+int FootClass::Passable_Cell(CELL cell, FacingType face, int threat, MoveType threshold)
 {
 	MoveType move = Can_Enter_Cell(cell, face);
 
-	if (move < MOVE_MOVING_BLOCK && Distance(cell) > 1) threshhold = MOVE_MOVING_BLOCK;
+	if (move < MOVE_MOVING_BLOCK && Distance(cell) > 1) threshold = MOVE_MOVING_BLOCK;
 
-	if (move > threshhold) return(0);
+	if (move > threshold) return(0);
 
 	if (GameToPlay == GAME_NORMAL) {
 		if (threat != -1) {

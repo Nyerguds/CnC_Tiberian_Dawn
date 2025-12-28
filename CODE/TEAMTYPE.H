@@ -126,6 +126,8 @@ class TeamTypeClass : public AbstractTypeClass
 		void  Remove(void);
 		TeamClass *  Create_One_Of(void) const;
 		void  Destroy_All_Of(void) const;
+		bool Has_Unformed_Teams(void) const;
+		int  Cull_Unformed_Teams(void) const;
 
 		/*
 		**	Utility routines

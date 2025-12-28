@@ -58,7 +58,7 @@
 #include "mission.h"
 
 /*
-**	This array records the number of teams in existance of each type.
+**	This array records the number of teams in existence of each type.
 */
 unsigned char TeamClass::Number[TEAMTYPE_MAX];
 
@@ -323,7 +323,7 @@ void TeamClass::AI(void)
 
 				/*
 				**	Reinforcable teams will revert (or snap out of) the under strength
-				**	mode when the members transition the magic 1/3 strength threshhold.
+				**	mode when the members transition the magic 1/3 strength threshold.
 				*/
 				if (Class->IsReinforcable) {
 					IsUnderStrength = (Total <= desired / 3);
@@ -977,7 +977,7 @@ void TeamClass::Detach(TARGET target, bool )
 /***********************************************************************************************
  * TeamClass::As_Target -- Converts this team object into a target number.                     *
  *                                                                                             *
- *    This routine is used by the save/load code to produce a persistant identifier for this   *
+ *    This routine is used by the save/load code to produce a persistent identifier for this   *
  *    team object.                                                                             *
  *                                                                                             *
  * INPUT:   none                                                                               *

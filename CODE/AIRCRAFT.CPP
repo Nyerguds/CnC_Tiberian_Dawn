@@ -3362,7 +3362,7 @@ void AircraftClass::Scatter(COORDINATE , bool )
 	/*
 	** Units in Sleep or Sticky mode do not scatter.
 	*/
-	if (Mission == MISSION_SLEEP || Mission == MISSION_STICKY) return;
+	if ((Mission == MISSION_SLEEP && !IsTethered) || Mission == MISSION_STICKY) return;
 
 	if (IsLanding || Altitude == 0) {
 		IsLanding = false;

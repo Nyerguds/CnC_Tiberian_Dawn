@@ -570,8 +570,8 @@ void OptionsClass::Load_Settings (void)
 		nonconstw[WEAPON_GRENADE].Sound = VOC_NONE;
 	}
 	NoRepairAnnounce = WWGetPrivateProfileBool("Patch", "NoRepairAnnounce", false, buffer);
-	ShowPanScrollLine = MAX(1, WWGetPrivateProfileBool("Patch", "ShowPanScrollLine", false, buffer));
-	PanScrollRate = MAX(1, WWGetPrivateProfileInt("Patch", "PanScrollRate", 4, buffer));
+	PanScrollRate = MIN(64, MAX(0, WWGetPrivateProfileInt("Patch", "PanScrollRate", 4, buffer)));
+	ShowPanScrollLine = WWGetPrivateProfileBool("Patch", "ShowPanScrollLine", false, buffer);
 	char workbuf[128];
 
 	/*

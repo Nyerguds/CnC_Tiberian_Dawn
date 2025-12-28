@@ -905,6 +905,48 @@ void TeamTypeClass::Destroy_All_Of(void) const
 }
 
 
+/*
+**	Nyerguds's C&C Patch Project v1.04
+**	Checks if any teams of this type were created but failed to get any members.
+*/
+bool TeamTypeClass::Has_Unformed_Teams(void) const
+{
+	for (int index = 0; index < Teams.Count(); index++) {
+		TeamClass * team = Teams.Ptr(index);
+		if (team->Class == this && !team->IsHasBeen && team->Total == 0) {
+			return true;
+		}
+	}
+	return(false);
+}
+
+
+/*
+**	Nyerguds's C&C Patch Project v1.04
+**	Checks if any teams of this type were created but failed to
+**	get any members, and removes all but one of the failed teams.
+*/
+int TeamTypeClass::Cull_Unformed_Teams(void) const
+{
+	bool found = false;
+	int deleted = 0;
+	for (int index = 0; index < Teams.Count(); index++) {
+		TeamClass * team = Teams.Ptr(index);
+		if (team->Class == this && !team->IsHasBeen && team->Total == 0) {
+			if (!found) {
+				// Preserve the first one, so it could possibly still be filled in, but delete all the rest.
+				found = true;
+				continue;
+			}
+			deleted++;
+			delete team;
+			index--;
+		}
+	}
+	return(deleted);
+}
+
+
 /***********************************************************************************************
  * TeamTypeClass::Suggested_New_Team -- Suggests a new team to create.                         *
  *                                                                                             *

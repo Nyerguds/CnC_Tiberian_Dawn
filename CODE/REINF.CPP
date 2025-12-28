@@ -63,7 +63,7 @@
 bool Do_Reinforcements(TeamTypeClass *teamtype)
 {
 	/*
-	**	preform some preliminary checks for validity.
+	**	perform some preliminary checks for validity.
 	*/
 	if (!teamtype || !teamtype->ClassCount) return(false);
 
@@ -75,6 +75,17 @@ bool Do_Reinforcements(TeamTypeClass *teamtype)
 	TeamClass * team = NULL;
 	if (teamtype->MissionCount) {
 		team = new TeamClass(teamtype, HouseClass::As_Pointer(teamtype->House));
+#ifdef OBSOLETE
+		// Original hotfix. Normally the fixes in TriggerClass should now fix this.
+		if (!team) {
+			// Attempt cleanup of unformed teams.
+			for (int tindex = 0; tindex < TeamTypes.Count(); tindex++) {
+				TeamTypeClass const * team = TeamTypes.Ptr(tindex);
+				team->Cull_Unformed_Teams();
+			}
+			team = new TeamClass(teamtype, HouseClass::As_Pointer(teamtype->House));
+		}
+#endif
 		if (!team) return(false);
 		team->Force_Active();
 	}
@@ -91,7 +102,8 @@ bool Do_Reinforcements(TeamTypeClass *teamtype)
 	bool watertransport = false;			// Transport needs a beach to land at?
 	bool onlytransport = true;				// Just transport is in reinforcement?
 	bool hastransport = false;				// Group comes with transport?
-	for (int index=0; index < teamtype->ClassCount; index++) {
+	int index = 0;
+	for (index=0; index < teamtype->ClassCount; index++) {
 		if (teamtype->Class[index]->IsTransporter || teamtype->Class[index]->What_Am_I() == RTTI_AIRCRAFTTYPE) {
 			hastransport = true;
 			if (teamtype->Class[index]->What_Am_I() == RTTI_AIRCRAFTTYPE) {
@@ -300,7 +312,8 @@ bool Do_Reinforcements(TeamTypeClass *teamtype)
 					**	Could not unlimbo at location specified so find an adjacent location that it can
 					**	be unlimboed at. If this fails, then abort the whole placement process.
 					*/
-					for (FacingType adj = FACING_N; adj < FACING_COUNT; adj++) {
+					FacingType adj = FACING_N;
+					for (adj = FACING_N; adj < FACING_COUNT; adj++) {
 						CELL trycell = Adjacent_Cell(newcell, adj);
 						if (!Map.In_Radar(trycell) && object->Can_Enter_Cell(trycell, adj) == MOVE_OK) {
 							newcell = trycell;
@@ -351,7 +364,16 @@ bool Do_Reinforcements(TeamTypeClass *teamtype)
 				newcell = Map.Calculated_Cell(HouseClass::As_Pointer(teamtype->House)->Edge, teamtype->House);
 				ScenarioInit--;
 				if (*thisone == AIRCRAFT_CARGO) {
-					BuildingClass const * building = thisone->Find_Docking_Bay(STRUCT_AIRSTRIP, false);
+					BuildingClass * building = NULL;
+					// Nyerguds's C&C Patch Project v1.04
+					// If this is the special airstrip cargo delivery team,
+					// retrieve the assigned building from the Missions list.
+					if (strcmp(teamtype->IniName, "RNF=TMP") == 0 && teamtype->MissionCount > 0 && teamtype->MissionList[0].Mission == TMISSION_UNLOAD) {
+						building = As_Building(teamtype->MissionList[0].Argument);
+					}
+					if (building == NULL) {
+						building = thisone->Find_Docking_Bay(STRUCT_AIRSTRIP, false);
+					}
 					if (building) {
 						newcell = XY_Cell(Map.MapCellX+Map.MapCellWidth, Coord_YCell(building->Docking_Coord()+2));
 					} 
@@ -515,7 +537,9 @@ bool Create_Special_Reinforcement(HouseClass * house, TechnoTypeClass const * ty
 			/*
 			**	Fill in the team characteristics.
 			*/
-			strcpy((char *)&team->IniName[0], "TEMP");
+			// Nyerguds's C&C Patch Project v1.04RA
+			// Name is deliberately made into a string that's impossible to retrieve from an ini file.
+			strcpy((char *)&team->IniName[0], "RNF=TMP");
 			team->IsReinforcable = false;
 			team->IsTransient = true;
 			team->ClassCount = 1;
@@ -587,7 +611,8 @@ int Create_Air_Reinforcement(HouseClass *house, AircraftType air, int number, Mi
 	** Loop through the number of objects we are supposed to create and
 	** 	create and place them on the map.
 	*/
-	for (int sub = 0; sub < number; sub++) {
+	int sub = 0;
+	for (sub = 0; sub < number; sub++) {
 
 		/*
 		** Create one of the required objects.  If this fails we could have

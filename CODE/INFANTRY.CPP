@@ -2012,6 +2012,7 @@ void InfantryClass::Scatter(COORDINATE threat, bool forced)
 			if (Map.In_Radar(newcell) && Can_Enter_Cell(newcell) == MOVE_OK) {
 				Assign_Mission(MISSION_MOVE);
 				Assign_Destination(::As_Target(newcell));
+				break;
 			}
 		}
 	}

@@ -461,8 +461,8 @@ bool Bonus_Dialog(void);
 /*
 **	FINDPATH.CPP
 */
-//PathType * Find_Path(CELL source, CELL dest, FacingType *final_moves, int maxlen, int (*callback)(CELL, FacingType), int threshhold);
-int Optimize_Moves(PathType *path, int (*callback)(CELL, FacingType), int threshhold);
+//PathType * Find_Path(CELL source, CELL dest, FacingType *final_moves, int maxlen, int (*callback)(CELL, FacingType), int threshold);
+int Optimize_Moves(PathType *path, int (*callback)(CELL, FacingType), int threshold);
 
 /*
 **	GOPTIONS.CPP

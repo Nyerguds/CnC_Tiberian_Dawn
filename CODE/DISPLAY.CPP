@@ -3811,14 +3811,16 @@ void DisplayClass::Mouse_Left_Held(int x, int y)
  *=============================================================================================*/
 void DisplayClass::Mouse_Middle_Press(int x, int y)
 {
-	IsRubberBand = false;
-	IsTentative = false;
-	IsPanDrag = true;
-	PanX = x;
-	PanY = y;
-	NewPanX = x;
-	NewPanY = y;
-	Refresh_Pan(false);
+	if (Options.PanScrollRate) {
+		IsRubberBand = false;
+		IsTentative = false;
+		IsPanDrag = true;
+		PanX = x;
+		PanY = y;
+		NewPanX = x;
+		NewPanY = y;
+		Refresh_Pan(false);
+	}
 }
 
 /***********************************************************************************************
@@ -3871,8 +3873,10 @@ void DisplayClass::Mouse_Middle_Held(int x, int y)
  *=============================================================================================*/
 void DisplayClass::Mouse_Middle_Release()
 {
-	IsPanDrag = false;
-	Refresh_Pan(true);
+	if (Options.PanScrollRate) {
+		IsPanDrag = false;
+		Refresh_Pan(true);
+	}
 }
 #endif
 

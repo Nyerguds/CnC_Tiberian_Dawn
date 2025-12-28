@@ -26,10 +26,11 @@ These hotkeys have been added or changed:
 * **\[E\]**: Select all units on the current screen. This can be combined with the \[Shift\] key to add these to the selection.
 * **\[G\]**: This hotkey (Area Guard) already existed, but can now be used to make harvesters seek out nearby tiberium.
 * **\[S\]**: This hotkey (Stop) already existed, but now works for stopping defense buildings, as it was in early DOS versions. This can be useful if they were ordered to force-fire on something.
+* **\[X\]**: This hotkey (Scatter) already existed, but will now work on units docked to a repair pad. Note that this will make helicopters go home to their helipad.
 * **\[T\]**: Select all units on the current screen of the type(s) you already have selected. This can be combined with the \[Shift\] key to add these to the selection. If no units of the selected types were found on the screen, the old selection is retained.
 * **\[Ctrl\]+\[Alt\]**: This modifier key combination for mouse clicks already existed to target objects, but can now be targeted at the ground, as targeted version of the Area Guard command. As with the hotkey, this also works for harvesters. Note that some units, such as Commandos and Helicopters, do not support Area Guard orders at all.
 * **\[Alt\]+\[Shift\]+\[0-9\]**: Adds the numbered team to the selection and then centers on the selection.
-* **\[Ctrl\]+\[S\]**: Saves a screenshot to the game folder, in PCX format. A "click" sound will indicate that a screenshot was taken, and a message will show what filename it was saved to. The message can be disabled by adding "NoScreenshotMessage=true" into conquer.ini, under \[Patch\].
+* **\[Ctrl\]+\[S\]**: Saves a screenshot to the game folder, in PCX format. A "click" sound will indicate that a screenshot was taken, and a message will show what filename it was saved to.
 
 General upgrades to selection and giving orders:
 
@@ -43,45 +44,26 @@ General upgrades to selection and giving orders:
 
 Other control upgrades:
 
+* Middle mouse click will allow quickly scrolling over the map, like the right-click scrolling available in the later games.
 * You can now press \[Escape\] to fast-forward the animations on the map selection screen and the score screen.
 * You can use the mouse scroll wheel to go through the sidebar items. This will scroll the specific strip you're hovering the mouse over.
 * Item lists such as the New Missions menu and the music list now support PageUp, PageDown, Home, End, and the mouse scroll wheel.
 
-## Added features that can be disabled
+## New `CONQUER.INI` options
 
-This patch adds a number of extra features into the game. These are generally unobtrusive, but if you absolutely don't want them, you can disable them.
+This patch adds a number of extra features into the game. These options can be tweaked or disabled in the `CONQUER.INI` file, by adding a new section called \[Patch\] into it, and putting the option under it.
 
-### Sidebar building power tooltips
-
-On the sidebar, the building tooltips will now give extra info behind the price, in the format "~+##/-##", with the ## parts indicating respectively the amount of power the building produces and drains. Additionally, " (!)" will be added to the end of this if adding this building to your base would cause a blackout.
-
-This behaviour is enabled by default, but can be disabled by adding the option "NoPowerToolTips=true" in conquer.ini, under \[Patch\].
-
-### Nod-specific map and score screen music
-
-The game contains two unused music tracks that were intended to be Nod-specific music for the mission selection map and the score screen. These tracks always existed in the game, but were never enabled. This patch implements that music as it was intended.
-
-This behaviour is enabled by default, but can be disabled by adding the option "NoNodSceneMusic=true" in conquer.ini, under \[Patch\].
-
-### Rocket Launcher targeting
-
-The Rocket Launcher vehicle contains two stages for its launcher; collapsed onto the flatbed, and popped up to fire. However, the second stage is never used in the PC version of the game. In console versions, this was amended by making it always use the popped up stage. I thought an actual logic would be more interesting, so now, the Rocket Launcher will specifically pop up its launcher if it is in range of a target it wants to fire at.
-
-This behaviour is enabled by default, but can be disabled by adding the option "NoLauncherPopup=true" in conquer.ini, under \[Patch\].
-
-### Turret recoil
-
-In beta footage of the game, gun turrets and vehicles with rotating cannon or machinegun turrets had a small one-frame recoil animation when firing. This logic is also seen in Red alert, but it is broken in the retail version of Tiberian Dawn. This has now been fixed.
-
-This behaviour is enabled by default, but can be disabled by adding the option "NoTurretRecoil=true" in conquer.ini, under \[Patch\].
-
-### Grenade sound
-
-As part of the fixes done in this patch, the previously unused grenade throw sound is now played. If this bothers anyone, the sound can be disabled by adding the option "NoGrenadeToss=true" in conquer.ini, under \[Patch\].
-
-### Repair announcements
-
-The game contains an unused voice clip to announce that repairs were started. This has been reactivated, for both unit and building repairs. If this bothers anyone, the sound can be disabled by adding the option "NoRepairAnnounce=true" in conquer.ini, under \[Patch\].
+| <div style="width:200px">Added Feature</div> | Explanation | <div style="width:250px">INI option</div> |
+| ------------- | ----------- | ------------ |
+| Power tooltips | On the sidebar, the building tooltips will now give extra info behind the price, in the format "~+##/-##", with the ## parts indicating respectively the amount of power the building produces and drains. Additionally, " (!)" will be added to the end of this if adding this building to your base would cause a blackout. | NoPowerToolTips=\[true/false\]<br/>This defaults to "false". |
+| Nod map/score music | The game contains two unused music tracks that were intended to be Nod-specific music for the mission selection map and the score screen. These tracks always existed in the game, but were never enabled. This patch implements that music as it was intended. | NoNodSceneMusic=\[true/false\]<br/>This defaults to "false". |
+| Rocket Launcher targeting | The Rocket Launcher vehicle contains two stages for its launcher; collapsed onto the flatbed, and popped up to fire. In the PC version, the popped up stage was never used. In all console ports, the launcher is permanently in the popped up stage. This patch adds a logic to make the Rocket Launcher pop up its launcher if it is in range of a target, and pop it back down after no target has been in range for a while. | NoLauncherPopup=\[true/false\]<br/>This defaults to "false". |
+| Turret recoil | In beta footage of the game, gun turrets and vehicles with rotating cannon or machinegun turrets had a small one-frame recoil animation when firing. This logic is also seen in Red alert, but it is broken in the retail version of Tiberian Dawn. This has now been fixed. | NoTurretRecoil=\[true/false\]<br/>This defaults to "false". |
+| Grenade sound | As part of the fixes done in this patch, the previously unused grenade throw sound is now played. | NoGrenadeToss=\[true/false\]<br/>This defaults to "false". |
+| Repair announcements | The game contains an unused voice clip to announce that repairs were started. This has been reactivated, for both unit and building repairs. | NoRepairAnnounce=\[true/false\]<br/>This defaults to "false". |
+| Screenshots | As previously mentioned, **\[Ctrl\]+\[S\]** will save a screenshot in the game folder, in PCX format. When a screenshot is made, a click sound will play, and a message will tell you what filename the screenshot is saved to. | NoScreenshotMessage=\[true/false\]<br/>This option disables the text message. It defaults to "false". |
+| Middle mouse scroll | When you the press middle mouse button, you can quickly scroll across the entire map. | PanScrollRate=[1-64]<br/>This defaults to 4. Set to 0 to disable the feature. |
+| | When middle mouse scrolling, a line can be drawn from the point where you originally clicked to the place you moved your mouse to, to give some indication of the scroll direction and speed. | ShowPanScrollLine=\[true/false\]<br/>This defaults to "false". |
 
 ## Extra usage notes
 
@@ -119,7 +101,7 @@ The "**extras**" folder contains a file called "**sc-remix.mix**" which can be a
 
 In the "**extras**" folder, you can find "**special-options.txt**", which contains a set of secret developer switches that can be activated in the game by putting them in your CONQUER.INI file, under the \[Options\] section. A few of these are generally neat, such as the music remixes and showing true civilian names, but be warned that others, like disabling the "bib" pieces of buildings, can seriously mess up the game. Use these at your own risk.
 
-### Reactivated logic
+## Reactivated logic
 
 Since this is logic that was deliberately removed in patches, it is not enabled by default. But it could be fun to play around with.
 

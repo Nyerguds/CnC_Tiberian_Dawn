@@ -110,7 +110,6 @@ void ScrollClass::AI(KeyNumType &input, int x, int y)
 			// Snap to 32 angles to fix inaccuracies; "Desired_Facing256" gives bad values for straight east and south.
 			direction = Snap_Facing_To_32(direction);
 			Scroll_Map(direction, distance, true);
-			ShowUIMessage(true, true, "Deltas: X: %d, Y: %d. Direction is %d", deltaX, deltaY, direction);
 		}
 	} else if (!IsRubberBand /*&& !IsTentative*/) {
 #else

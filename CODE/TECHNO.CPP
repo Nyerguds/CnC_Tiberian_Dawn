@@ -4348,13 +4348,17 @@ BuildingClass * TechnoClass::Find_Docking_Bay(StructType b, bool friendly) const
 				!building->IsInLimbo &&
 				*building == b &&
 				((TechnoClass *)this)->Transmit_Message(RADIO_CAN_LOAD, building) == RADIO_ROGER) {
-
+				// Nyerguds's C&C Patch Project v1.04
+				// If there is a building marked as leader, always return that one.
+				if (building->IsLeader) {
+					return(building);
+				}
 				/*
 				**	If the building qualifies and this building is better than the
 				**	last qualifying building (as rated by distance), then record
 				**	this building and keep scanning.
 				*/
-				if (bestval == -1 || Distance(building) < bestval || building->IsLeader) {
+				if (bestval == -1 || Distance(building) < bestval) {
 					best = building;
 					bestval = Distance(building);
 				}
