@@ -212,8 +212,7 @@ unsigned char const Facing32[256] = {
 	29,29,29,29,29,29,29,29,30,30,30,30,30,30,30,30,30,31,31,31,31,31,31,31,31,31,0,0,0,0,0,0
 };
 
-#ifdef OBSOLETE
-unsigned char const Facing32[256] = {
+unsigned char const Facing32Even[256] = {
 	0,0,0,0,
 	1,1,1,1,1,1,1,1,
 	2,2,2,2,2,2,2,2,
@@ -248,8 +247,6 @@ unsigned char const Facing32[256] = {
 	31,31,31,31,31,31,31,31,
 	0,0,0,0
 };
-#endif
-
 
 /***************************************************************************
 **	These are the movement costs (in ticks at fastest speed) to enter each

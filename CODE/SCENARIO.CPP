@@ -539,7 +539,7 @@ void Do_Win(void)
 	**	Destroy the building that was sabotaged in the previous scenario. This only
 	**	applies to GDI mission #7.
 	*/
-	if (sabotaged != STRUCT_NONE && Scenario == 7 && PlayerPtr->Class->House == HOUSE_GOOD) {
+	if (sabotaged != STRUCT_NONE && Scenario == 7 && ScenPlayer == SCEN_PLAYER_GDI) {
 		int index;
 		for (index = 0; index < Buildings.Count(); index++) {
 			BuildingClass * building = Buildings.Ptr(index);

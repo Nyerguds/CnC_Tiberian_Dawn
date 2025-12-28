@@ -222,7 +222,7 @@
 /**********************************************************************
  * Extra implemented features that could be disabled.
  */
-//#define MIDDLE_MOUSE_PANNING
+#define MIDDLE_MOUSE_PANNING
 //#define FIX_CONCRETE
 
 
@@ -1784,6 +1784,7 @@ typedef enum MouseType
 	MOUSE_AIR_STRIKE,
 	MOUSE_DEMOLITIONS,
 	MOUSE_AREA_GUARD,
+	MOUSE_PAN,  // Nyerguds's C&C Patch Project v1.04; added non-animated deploy cursor as panning cursor.
 	MOUSE_COUNT
 } MouseType;
 

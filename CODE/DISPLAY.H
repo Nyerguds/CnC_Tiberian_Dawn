@@ -290,6 +290,13 @@ class DisplayClass: public MapClass
 		**  a mode, normal input is preempted.
 		*/
 		unsigned IsPanDrag:1;
+
+		/*
+		**	Rubber band mode consists of stretching a box from the anchor point (specified
+		**	here) to the current cursor position.
+		*/
+		int PanX,PanY;
+		int NewPanX,NewPanY;
 #endif
 
 		/*
@@ -327,15 +334,6 @@ class DisplayClass: public MapClass
 		*/
 		int BandX,BandY;
 		int NewX,NewY;
-
-#ifdef MIDDLE_MOUSE_PANNING
-		/*
-		**	Rubber band mode consists of stretching a box from the anchor point (specified
-		**	here) to the current cursor position.
-		*/
-		int PanX,PanY;
-		int NewPanX,NewPanY;
-#endif
 
 		static void const *ShadowShapes;
 		static unsigned char ShadowTrans[(SHADOW_COL_COUNT+1)*256];

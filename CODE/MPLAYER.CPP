@@ -532,7 +532,12 @@ void Read_MultiPlayer_Settings (void)
 	if (!file.Is_Available()) {
 		return;
 	} else {
-		file.Read(buffer, _ShapeBufferSize-1);
+		long inilen = file.Read(buffer, _ShapeBufferSize-1);
+		inilen = MIN(inilen, (long)strlen(_ShapeBuffer));
+		inilen = MIN(inilen, _ShapeBufferSize-3);
+		_ShapeBuffer[inilen] = '\r';
+		_ShapeBuffer[inilen+1] = '\n';
+		_ShapeBuffer[inilen+2] = '\0';
 	}
 	file.Close();
 
@@ -865,7 +870,12 @@ void Write_MultiPlayer_Settings (void)
 	file.Set_Name("CONQUER.INI");
 	if (file.Is_Available()) {
 		file.Open(READ);
-		file.Read(buffer, _ShapeBufferSize-1);
+		long inilen = file.Read(buffer, _ShapeBufferSize-1);
+		inilen = MIN(inilen, (long)strlen(_ShapeBuffer));
+		inilen = MIN(inilen, _ShapeBufferSize-3);
+		_ShapeBuffer[inilen] = '\r';
+		_ShapeBuffer[inilen+1] = '\n';
+		_ShapeBuffer[inilen+2] = '\0';
 		file.Close();
 	}
 

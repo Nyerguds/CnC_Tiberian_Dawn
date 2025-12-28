@@ -2429,7 +2429,7 @@ bool BuildingClass::Limbo(void)
  * INPUT:   which    -- Which weapon to use in the attack. 0=primary, 1=secondary.             *
  *                                                                                             *
  *          forrange -- if true, the facing will always be assumed to be towards the given     *
- *                      coordinates This is used to perform facing- independent range checks.  *
+ *                      coordinates. This is used to perform facing-independent range checks.  *
  *                                                                                             *
  *          coords   -- The coordinates to face when calculating the fire coords. Only used    *
  *                      when forrange is true.                                                 *

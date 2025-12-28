@@ -527,7 +527,12 @@ void OptionsClass::Load_Settings (void)
 	if (!file.Is_Available()) {
 		return;
 	} else {
-		file.Read(buffer, _ShapeBufferSize-1);
+		long inilen = file.Read(buffer, _ShapeBufferSize-1);
+		inilen = MIN(inilen, (long)strlen(_ShapeBuffer));
+		inilen = MIN(inilen, _ShapeBufferSize-3);
+		_ShapeBuffer[inilen] = '\r';
+		_ShapeBuffer[inilen+1] = '\n';
+		_ShapeBuffer[inilen+2] = '\0';
 	}
 	file.Close();
 
@@ -535,7 +540,7 @@ void OptionsClass::Load_Settings (void)
 	**	Read in the Options values
 	*/
 	GameSpeed = WWGetPrivateProfileInt("Options", "GameSpeed", 4, buffer);
-	ScrollRate = WWGetPrivateProfileInt("Options", "ScrollRate", 4, buffer);
+	ScrollRate = MIN(8, MAX(0, WWGetPrivateProfileInt("Options", "ScrollRate", 4, buffer)));
 	Set_Brightness(WWGetPrivateProfileInt("Options", "Brightness", 0x80, buffer));
 	Set_Sound_Volume(WWGetPrivateProfileInt("Options", "Volume", 0xA0, buffer),false);
 	Set_Score_Volume(WWGetPrivateProfileInt("Options", "ScoreVolume", 0xFF, buffer));
@@ -565,7 +570,8 @@ void OptionsClass::Load_Settings (void)
 		nonconstw[WEAPON_GRENADE].Sound = VOC_NONE;
 	}
 	NoRepairAnnounce = WWGetPrivateProfileBool("Patch", "NoRepairAnnounce", false, buffer);
-
+	ShowPanScrollLine = MAX(1, WWGetPrivateProfileBool("Patch", "ShowPanScrollLine", false, buffer));
+	PanScrollRate = MAX(1, WWGetPrivateProfileInt("Patch", "PanScrollRate", 4, buffer));
 	char workbuf[128];
 
 	/*
@@ -714,7 +720,14 @@ void OptionsClass::Save_Settings (void)
 
 	file.Set_Name("CONQUER.INI");
 	if (file.Is_Available()) {
-		file.Read(buffer, _ShapeBufferSize-1);
+		long inilen = file.Read(buffer, _ShapeBufferSize-1);
+		inilen = MIN(inilen, (long)strlen(_ShapeBuffer));
+		inilen = MIN(inilen, _ShapeBufferSize-3);
+		if (inilen > 2 && _ShapeBuffer[inilen-2] != '\r' && _ShapeBuffer[inilen-1] != '\n') {
+			_ShapeBuffer[inilen] = '\r';
+			_ShapeBuffer[inilen+1] = '\n';
+			_ShapeBuffer[inilen+2] = '\0';
+		}
 	}
 
 	/*

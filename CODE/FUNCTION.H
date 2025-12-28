@@ -741,6 +741,7 @@ inline COORDINATE Coord_Mid(COORDINATE coord1, COORDINATE coord2) {return (COORD
 inline COORDINATE Cell_Coord(CELL cell) {return (COORDINATE) MAKE_LONG( (((cell & MAP_CELL_Y_MASK)<<(8-MAP_CELL_MAX_X_BITS))|0x80), (((cell & MAP_CELL_X_MASK)<<8)|0x80));}
 inline COORDINATE XYPixel_Coord(int x, int y) {return ((COORDINATE)MAKE_LONG((int)(((long)y*(long)ICON_LEPTON_H)/(long)ICON_PIXEL_H)/*+LEPTON_OFFSET_Y*/, (int)(((long)x*(long)ICON_LEPTON_W)/(long)ICON_PIXEL_W)/*+LEPTON_OFFSET_X*/));}
 //inline int Facing_To_16(int facing) {return Facing16[facing];}
+inline DirType Snap_Facing_To_32(DirType facing) {return (DirType)(Facing32Even[facing] << 3);}
 inline int Facing_To_32(DirType facing) {return Facing32[facing];}
 inline DirType Direction256(COORDINATE coord1, COORDINATE coord2) {return ((DirType)Desired_Facing256(Coord_X(coord1), Coord_Y(coord1), Coord_X(coord2), Coord_Y(coord2)));}
 inline DirType Direction(COORDINATE coord1, COORDINATE coord2) {return ((DirType)Desired_Facing256(Coord_X(coord1), Coord_Y(coord1), Coord_X(coord2), Coord_Y(coord2)));}

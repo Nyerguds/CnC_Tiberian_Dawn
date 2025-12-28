@@ -1524,7 +1524,10 @@ bool DisplayClass::Scroll_Map(DirType facing, int & distance, bool really)
 	if (really) {
 		Set_Tactical_Position(coord);
 		IsToRedraw = true;
-		Flag_To_Redraw(false);
+		// Nyerguds's C&C Patch Project v1.04
+		// Fix large scroll amounts causing refresh errors.
+		bool completeRedraw = xx >= 0x0200 || yy >= 0x0200;
+		Flag_To_Redraw(completeRedraw);
 	}
 	return(true);
 }
@@ -2175,7 +2178,9 @@ ObjectClass * DisplayClass::Cell_Object(CELL cell, int x, int y)
 			LogicPage->Draw_Rect(BandX+TacPixelX, BandY+TacPixelY, NewX+TacPixelX, NewY+TacPixelY, WHITE);
 #ifdef MIDDLE_MOUSE_PANNING
 		} else if (IsPanDrag) {
-			LogicPage->Draw_Line(PanX+TacPixelX, PanY+TacPixelY, NewPanX+TacPixelX, NewPanY+TacPixelY, WHITE);
+			if (Options.ShowPanScrollLine) {
+				LogicPage->Draw_Line(PanX+TacPixelX, PanY+TacPixelY, NewPanX+TacPixelX, NewPanY+TacPixelY, LTGREEN);
+			}
 #endif
 		}
 		/*
@@ -2929,7 +2934,7 @@ void DisplayClass::Refresh_Band(void)
 #ifdef MIDDLE_MOUSE_PANNING
 void DisplayClass::Refresh_Pan(bool force)
 {
-	if (IsPanDrag || force) {
+	if (Options.ShowPanScrollLine && (IsPanDrag || force)) {
 
 		/*
 		**	In pan mode, mark all cells under the "pan area" to be

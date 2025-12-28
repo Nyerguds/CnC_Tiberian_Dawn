@@ -219,7 +219,7 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 	char buf[128];				// Working string staging buffer.
 	int rndmax;
 	int rndmin;
-	int len;
+	long len;
 	unsigned char val;
 
 	ScenarioInit++;
@@ -268,17 +268,17 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 
 	sprintf(fname,"%s.INI",root);
 	CCFileClass file(fname);
+
 	if (!file.Is_Available()) {
 		return(false);
-	} else {
-		file.Read(buffer, _ShapeBufferSize-1);
 	}
+	long iniSize = file.Read(buffer, _ShapeBufferSize-1);
 
 	/*
 	** Init the Scenario CRC value
 	*/
 	ScenarioCRC = 0;
-	len = strlen(buffer);
+	len = MIN(iniSize, (long)strlen(buffer));
 	int i;
 	for (i = 0; i < len; i++) {
 		val = (unsigned char)buffer[i];
@@ -286,6 +286,12 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 		Add_CRC(&ScenarioCRC, (unsigned long)val);
 #endif
 	}
+	// Nyerguds's C&C Patch Project v1.04:
+	// Compensate for ini system not handling files not ending on a line break.
+	long end = MIN(len, _ShapeBufferSize-3);
+	buffer[end] = '\r';
+	buffer[end+1] = '\n';
+	buffer[end+2] = '\0';
 
 	/*
 	**	Fetch the appropriate movie names from the INI file.
@@ -382,6 +388,9 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 		// Nyerguds's C&C Patch Project v1.04
 		// Disallow AI ion/nuke triggers unless they have the correct building at the time of the triggering.
 		AllowDetachedAISupers = WWGetPrivateProfileBool("Basic", "AllowDetachedAISupers", false, buffer);
+		// Make AI helis passive in this scenario.
+		bool isPassive = ScenPlayer == SCEN_PLAYER_NOD && Scenario == 7 && ScenVar == SCEN_VAR_C;
+		PassiveHelis = WWGetPrivateProfileBool("Basic", "PassiveHelis", isPassive, buffer);
 
 		// Nyerguds's C&C Patch Project v1.04
 		// Added ini keys for controlling nuke pieces.
@@ -534,9 +543,16 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 	**	If the briefing text could not be found in the INI file, then search
 	**	the mission.ini file.
 	*/
-	if (BriefingText[0] == '\0') {
+	if (BriefingText[0] == '\0' && CCFileClass("MISSION.INI").Is_Available()) {
 		memset(_ShapeBuffer, '\0', _ShapeBufferSize);
-		CCFileClass("MISSION.INI").Read(_ShapeBuffer, _ShapeBufferSize);
+		long briefLen = CCFileClass("MISSION.INI").Read(_ShapeBuffer, _ShapeBufferSize-1);
+		briefLen = MIN(briefLen, (long)strlen(_ShapeBuffer));
+		// Nyerguds's C&C Patch Project v1.04:
+		// Compensate for ini system not handling files not ending on a line break.
+		briefLen = MIN(briefLen, _ShapeBufferSize-3);
+		_ShapeBuffer[briefLen] = '\r';
+		_ShapeBuffer[briefLen+1] = '\n';
+		_ShapeBuffer[briefLen+2] = '\0';
 
 		char * buffer = (char *)Add_Long_To_Pointer(_ShapeBuffer, strlen(_ShapeBuffer));
 		char * work = &BriefingText[0];

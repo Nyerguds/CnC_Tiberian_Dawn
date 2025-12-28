@@ -345,7 +345,7 @@ MouseClass::MouseStruct MouseClass::MouseControl[MOUSE_COUNT] = {
 	{11,	1,		0,		27,	15,	12},	//	MOUSE_NO_MOVE
 	{10,	1,		0,		26,	15,	12},	//	MOUSE_CAN_MOVE
 	{119,	3,		4,		148,	15,	12},	//	MOUSE_ENTER
-	{53,	9,		4,		-1,	15,	12},	//	MOUSE_DEPLOY
+	{53,	9,		4,		-1,	15,	11},	//	MOUSE_DEPLOY
 	{12,	6,		4,		-1,	15,	12},	//	MOUSE_CAN_SELECT
 	{18,	8,		4,		140,	15,	12},	//	MOUSE_CAN_ATTACK
 	{62,	24,	2,		-1,	15,	12},	//	MOUSE_SELL_BACK
@@ -359,4 +359,5 @@ MouseClass::MouseStruct MouseClass::MouseControl[MOUSE_COUNT] = {
 	{88,	8,		2,		-1,	15,	12},	//	MOUSE_AIR_STRIKE
 	{122,	3,		4,		127,	15,	12},	//	MOUSE_DEMOLITIONS
 	{153,	1,		0,		152,	15,	12},	//	MOUSE_AREA_GUARD
+	{59,	1,		0,		-1,	15,	11},	//	MOUSE_PAN // Nyerguds's C&C Patch Project v1.04
 };

@@ -57,6 +57,13 @@ class ScrollClass: public HelpClass
 		static CountDownTimerClass Counter;
 
 		/*
+		**	Nyerguds's C&C Patch Project v1.04
+		**	Scrolling is throttled by this count down timer; AI is called on every screen
+		**	refresh, but this limits the scrolling to a frame rate of 60 fps.
+		*/
+		static CountDownTimerClass ScrollTimer;
+
+/*
 		**	These are the delays used (as countdown timers) to regulate the scroll rate
 		**	of the map. These times are based on game ticks.
 		*/
@@ -74,7 +81,7 @@ class ScrollClass: public HelpClass
 		bool Set_Autoscroll(int control);
 
 		virtual void AI(KeyNumType &input, int x, int y);
-		virtual void Init_IO(void) {Counter.Set(0);HelpClass::Init_IO();};
+		virtual void Init_IO(void) {Counter.Set(0);ScrollTimer.Set(0); HelpClass::Init_IO();};
 
 		/*
 		**	File I/O.

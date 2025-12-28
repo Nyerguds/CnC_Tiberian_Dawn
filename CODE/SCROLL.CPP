@@ -44,6 +44,7 @@
 #define	SCROLL_DELAY	1
 
 CountDownTimerClass ScrollClass::Counter;
+CountDownTimerClass ScrollClass::ScrollTimer;
 
 
 /***********************************************************************************************
@@ -66,6 +67,8 @@ ScrollClass::ScrollClass(void)
 	Counter.Set(SCROLL_DELAY);
 	Inertia = 0;
 	Counter.Start();
+	ScrollTimer.Set(SCROLL_DELAY);
+	ScrollTimer.Start();
 }
 
 
@@ -87,16 +90,35 @@ ScrollClass::ScrollClass(void)
  *   08/10/1995 JLB : Revamped for free smooth scrolling.                                      *
  *   08/25/1995 JLB : Handles new scrolling option.                                            *
  *=============================================================================================*/
-#define	EVA_WIDTH		80
+//#define	EVA_WIDTH		80
 void ScrollClass::AI(KeyNumType &input, int x, int y)
 {
 	static DirType direction;
 	bool				player_scrolled=false;
 
+#ifdef MIDDLE_MOUSE_PANNING
+	// Nyerguds's C&C Patch Project v1.04
+	// Middle mouse drag scroll.
+	if (!IsRubberBand && IsPanDrag) {
+		Override_Mouse_Shape(MOUSE_PAN, false);
+		if (ScrollTimer.Time() == 0) {
+			ScrollTimer.Set(SCROLL_DELAY);
+			int deltaX = NewPanX - PanX;
+			int deltaY = NewPanY - PanY;
+			int distance = Distance(PanX, PanY, NewPanX, NewPanY) * Options.PanScrollRate;
+			direction = (DirType)Desired_Facing256(PanX, PanY, NewPanX, NewPanY);
+			// Snap to 32 angles to fix inaccuracies; "Desired_Facing256" gives bad values for straight east and south.
+			direction = Snap_Facing_To_32(direction);
+			Scroll_Map(direction, distance, true);
+			ShowUIMessage(true, true, "Deltas: X: %d, Y: %d. Direction is %d", deltaX, deltaY, direction);
+		}
+	} else if (!IsRubberBand /*&& !IsTentative*/) {
+#else
 	/*
 	**	If rubber band mode is in progress, then don't allow scrolling of the tactical map.
 	*/
 	if (!IsRubberBand /*&& !IsTentative*/) {
+#endif
 
 		/*
 		**	Special check to not scroll within the special no-scroll regions.
@@ -196,11 +218,13 @@ void ScrollClass::AI(KeyNumType &input, int x, int y)
 					*/
 					if (Keyboard::Down(KN_LMOUSE) || IsAutoScroll) {
 						distance = _rate[rate];
-						Scroll_Map(direction, distance, true);
-
-						if (Counter.Time()==0 && player_scrolled) {
-							Counter.Set(SCROLL_DELAY);
-							Inertia++;
+						if (ScrollTimer.Time() == 0) {
+							ScrollTimer.Set(SCROLL_DELAY);
+							Scroll_Map(direction, distance, true);
+							if (Counter.Time()==0 && player_scrolled) {
+								Counter.Set(SCROLL_DELAY);
+								Inertia++;
+							}
 						}
 					}
 				}

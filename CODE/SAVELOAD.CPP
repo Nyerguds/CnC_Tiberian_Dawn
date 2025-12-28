@@ -94,7 +94,8 @@
 										sizeof(Patsux) + \
 										sizeof(RemoveBuildExceptions) + \
 										sizeof(RequiredNukePieces) + \
-										sizeof(AllowDetachedAISupers)))
+										sizeof(AllowDetachedAISupers) + \
+										sizeof(PassiveHelis)))
 
 
 /***************************************************************************
@@ -635,6 +636,8 @@ bool Save_Misc_Values(FileClass &file)
 	file.Write(&RequiredNukePieces, sizeof(RequiredNukePieces));
 	// Added option to allow AI superweapons if no building to launch from is present.
 	file.Write(&AllowDetachedAISupers, sizeof(AllowDetachedAISupers));
+	// Added option to make AI helis not default to Area Guard mode.
+	file.Write(&PassiveHelis, sizeof(PassiveHelis));
 	return(true);
 }
 
@@ -740,6 +743,8 @@ bool Load_Misc_Values(FileClass &file)
 	file.Read(&RequiredNukePieces, sizeof(RequiredNukePieces));
 	// Added option to allow AI superweapons if no building to launch from is present.
 	file.Read(&AllowDetachedAISupers, sizeof(AllowDetachedAISupers));
+	// Added option to make AI helis not default to Area Guard mode.
+	file.Read(&PassiveHelis, sizeof(PassiveHelis));
 	return(true);
 }
 

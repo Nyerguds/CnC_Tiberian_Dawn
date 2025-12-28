@@ -246,3 +246,8 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Animations now remember which object caused them, meaning buildings burning down from fire damage, and objects damaged by superweapons, will now know where the damage originated, and possibly what to retaliate against.
 * Damage caused by infantry exploding on death is now attributed to the one who killed the infantry, since this is the way it works for Flame Tank and SSM death explosions.
 * The money carried over from the previous scenario is now actually the full amount of money, not just the non-tiberium credits.
+* Added "PassiveHelis" option that can be used in missions to make AI helicopters passive.
+* Fixed the game not being able to parse the last line of an ini file if it doesn't end on a line break.
+* Fixed small misalignment on the click position of the Deploy cursor.
+* Fixed scrolling logic being tied to the game's frame rate. It is now capped at 60fps, making it consistent on any machine.
+* Added middle mouse button scrolling.

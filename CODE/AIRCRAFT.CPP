@@ -3481,8 +3481,8 @@ int AircraftClass::Mission_Guard(void)
 	**	mission where it is supposed to be captured.
 	*/
 	// Nyerguds's C&C Patch Project v1.04
-	// Consistently use ScenPlayer for scenario exceptions
-	if (GameToPlay == GAME_NORMAL && ScenPlayer == SCEN_PLAYER_NOD && Scenario == 7 && !House->IsHuman) {
+	// Added ini option for this.
+	if (GameToPlay == GAME_NORMAL && PassiveHelis && !House->IsHuman) {
 		return(TICKS_PER_SECOND*20);
 	}
 
