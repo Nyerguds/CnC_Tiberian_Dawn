@@ -3308,11 +3308,9 @@ void UnitClass::Scatter(COORDINATE threat, bool forced)
 	**	Units docked to a repair bay are put to Sleep mode. These units are allowed to scatter if forced.
 	*/
 	const TechnoClass * tclass = Contact_With_Whom();
-	if (Mission == MISSION_SLEEP && forced) {
-		if (!tclass || tclass->What_Am_I() != RTTI_BUILDING || *((BuildingClass *)tclass) != STRUCT_REPAIR)
-		{
-			return;
-		}
+	if (Mission == MISSION_SLEEP && (!forced || !tclass || tclass->What_Am_I() != RTTI_BUILDING || *((BuildingClass *)tclass) != STRUCT_REPAIR))
+	{
+		return;
 	}
 
 	if (*this == UNIT_GUNBOAT || *this == UNIT_HOVER) return;
@@ -3336,6 +3334,7 @@ void UnitClass::Scatter(COORDINATE threat, bool forced)
 			// For units on a repair pad, do not allow scatter to cells of the pad.
 			if (Map.In_Radar(newcell) && Can_Enter_Cell(newcell) == MOVE_OK && (!tclass || Map[newcell].Cell_Building() != tclass)) {
 				if (Mission == MISSION_SLEEP) {
+					// If they're asleep, wake them up.
 					Assign_Mission(MISSION_GUARD);
 				}
 				Assign_Destination(::As_Target(newcell));
