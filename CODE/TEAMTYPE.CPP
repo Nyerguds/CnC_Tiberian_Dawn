@@ -878,6 +878,14 @@ void TeamTypeClass::operator delete(void *ptr)
 
 TeamClass * TeamTypeClass::Create_One_Of(void) const
 {
+	// Nyerguds's C&C Patch Project v1.04
+	// Never allow creating a team if at least one completely unfilled one
+	// still exists; it indicates the AI is unable to make units to fill it.
+	// This fixes the bug where other systems such as Airstrip deliveries and
+	// reinforcements lock up due to unfilled teams clogging up the Teams list.
+	if (Has_Unformed_Teams()) {
+		return(NULL);
+	}
 	if (ScenarioInit || TeamClass::Number[TeamTypes.ID(this)] < MaxAllowed) {
 		return(new TeamClass(this, HouseClass::As_Pointer(House)));
 	}

@@ -541,10 +541,7 @@ bool TriggerClass::Spring(EventType event, ObjectClass *obj)
 			break;
 
 		case ACTION_CREATE_TEAM:
-			// Nyerguds's C&C Patch Project v1.04
-			// If creation of previous teams failed, don't make new ones.
-			// This fixes the bug where Airstrip deliveries lock up.
-			if (Team && !Team->Has_Unformed_Teams()) {
+			if (Team) {
 				ScenarioInit++;
 				Team->Create_One_Of();
 				ScenarioInit--;
@@ -772,10 +769,7 @@ bool TriggerClass::Spring(EventType event, CELL cell)
 			break;
 
 		case ACTION_CREATE_TEAM:
-			// Nyerguds's C&C Patch Project v1.04
-			// If creation of previous teams failed, don't make new ones.
-			// This fixes the bug where Airstrip deliveries lock up.
-			if (Team && !Team->Has_Unformed_Teams()) {
+			if (Team) {
 				ScenarioInit++;
 				Team->Create_One_Of();
 				ScenarioInit--;
@@ -1000,10 +994,7 @@ bool TriggerClass::Spring(EventType event, HousesType house, long data)
 			break;
 
 		case ACTION_CREATE_TEAM:
-			// Nyerguds's C&C Patch Project v1.04
-			// If creation of previous teams failed, don't make new ones.
-			// This fixes the bug where Airstrip deliveries lock up.
-			if (Team && !Team->Has_Unformed_Teams()) {
+			if (Team) {
 				ScenarioInit++;
 				Team->Create_One_Of();
 				ScenarioInit--;
