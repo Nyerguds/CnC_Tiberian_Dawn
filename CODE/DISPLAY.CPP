@@ -1715,9 +1715,15 @@ bool DisplayClass::Map_Cell(CELL cell, HouseClass * house)
 		}
 	}
 
-	TechnoClass * tech = (*this)[cell].Cell_Techno();
-	if (tech) {
-		tech->Revealed(house);
+	// Nyerguds's C&C Patch Project v1.04
+	// Fix for infantry remaining unselectable and
+	// not getting targeted after being revealed.
+	ObjectClass * tech = (*this)[cell].Cell_Occupier();
+	while (tech) {
+		if (tech->Is_Techno()) {
+			tech->Revealed(house);
+		}
+		tech = tech->Next;
 	}
 	return(true);
 }

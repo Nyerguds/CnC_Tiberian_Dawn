@@ -192,8 +192,8 @@ class CellClass
 		CELL  Cell_Number(void) const;
 		LandType  Land_Type(void) const {return Land;};
 		ObjectClass *  Cell_Find_Object(RTTIType rtti) const;
-		ObjectClass *  Cell_Object(int x=0, int y=0) const;
-		TechnoClass *  Cell_Techno(int x=0, int y=0) const;
+		ObjectClass *  Cell_Object(int x=-1, int y=-1) const;
+		TechnoClass *  Cell_Techno(int x=-1, int y=-1) const;
 		TerrainClass *  Cell_Terrain(void) const;
 		UnitClass *  Cell_Unit(void) const;
 		InfantryClass *  Cell_Infantry(void) const;

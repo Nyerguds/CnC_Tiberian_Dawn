@@ -266,6 +266,7 @@ class TechnoClass :	public RadioClass,
 		virtual ResultType Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house=HOUSE_NONE, bool fromburn = false);
 		bool  Evaluate_Cell(ThreatType method, int mask, CELL cell, int range, TechnoClass const ** object, int & value) const;
 		bool  Evaluate_Object(ThreatType method, int mask, int range, TechnoClass const * object, int & value) const;
+		void  Update_Best_Object(ThreatType method, int mask, CELL cell, int range, ObjectClass const ** bestobject, int & bestval) const;
 
 		/*
 		**	AI.

@@ -239,7 +239,7 @@ TechnoClass * CellClass::Cell_Techno(int x, int y) const
 {
 	Validate();
 	ObjectClass * object;
-	COORDINATE		click;			// Coordinate of click relative to cell corner.
+	COORDINATE		click = 0;			// Coordinate of click relative to cell corner.
 	TechnoClass * close = NULL;
 	long		distance = 0;	// Recorded closest distance.
 
@@ -247,12 +247,14 @@ TechnoClass * CellClass::Cell_Techno(int x, int y) const
 	**	Create a coordinate value that represent the pixel location within the cell. This is
 	**	actually the lower significant bits (leptons) of a regular coordinate value.
 	*/
-	click = XY_Coord(Pixel_To_Lepton(x), Pixel_To_Lepton(y));
-
+	if (x >= 0 && y >= 0) {
+		click = XY_Coord(Pixel_To_Lepton(x), Pixel_To_Lepton(y));
+	}
 	if (Cell_Occupier()) {
 		object = Cell_Occupier();
 		while (object && object->IsActive) {
 			if (object->Is_Techno()) {
+				if (x == -1 && y == -1) return (TechnoClass *)object;
 				COORDINATE		coord;		// Coordinate relative to cell corner.
 				long		dist;
 
@@ -2488,10 +2490,14 @@ void CellClass::Shimmer(void)
 ObjectClass * CellClass::Cell_Occupier(void) const
 {
 	ObjectClass * ptr = OccupierPtr;
-
+	bool reset = false;
 	while (ptr && !ptr->IsActive) {
 		ptr = ptr->Next;
+		reset = true;
 		((ObjectClass *&)OccupierPtr) = 0;
+	}
+	if (reset) {
+		((ObjectClass *&)OccupierPtr) = ptr;
 	}
 
 	return(ptr);

@@ -1437,8 +1437,8 @@ int RadarClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 		cell = Map.RadarClass::Click_Cell_Calc(x, y);
 		if (cell != -1) {
 			shadow	= (!Map[cell].IsVisible && !Debug_Unshroud);
-			cellx	   = 12;
-			celly	   = 12;
+			cellx	   = ICON_PIXEL_W / 2;
+			celly	   = ICON_PIXEL_H / 2;
 
 			/*
 			**	Determine the object that the mouse is currently over.

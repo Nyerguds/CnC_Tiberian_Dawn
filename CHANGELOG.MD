@@ -256,3 +256,6 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Fixed Scatter logic for vehicles simply making them drive forward in the direction they're already facing.
 * Fixed bug where Airstrip deliveries lock up when looping map scripts keep creating teams that never get filled up with units due to the AI losing the required factories.
 * Fixed Primary Building logic malfunctioning for Airstrip deliveries.
+* Fixed bug where revealing a cell containing multiple infantry would only mark one of them as Revealed, preventing the selection and auto-targeting of the others.
+* Fixed the logic to take threat priorities and distance from target into account when scanning for a target to attack.
+* Removed logic to stop scanning after finding nearby targets, since it was a hotfix for the non-working distance factor in the target priority.

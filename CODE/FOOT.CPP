@@ -319,7 +319,7 @@ bool FootClass::Mark(MarkType mark)
 				break;
 
 			case MARK_DOWN:
-				if (What_Am_I() != RTTI_AIRCRAFT || !((AircraftClass*)this)->Class->IsFixedWing) {			
+				if (What_Am_I() != RTTI_AIRCRAFT || !((AircraftClass*)this)->Class->IsFixedWing) {
 					Map.Place_Down(cell, this);
 				}
 				break;

@@ -1319,10 +1319,23 @@ bool TechnoClass::Evaluate_Object(ThreatType method, int mask, int range, Techno
 	/*
 	**	Lessen threat as a factor of distance.
 	*/
-	int modifier = dist;
-	int crange = range / ICON_LEPTON_W;
-	if (crange) modifier /= crange;
-	if (modifier) value /= modifier;
+	// Nyerguds's C&C Patch Project v1.04
+	// Fixed this code to not simply reduce everything to zero.
+	if ((method & THREAT_DUMB) == THREAT_DUMB) {
+		value = 0;
+	} else if (value) {
+		int lrange = range;
+		if (lrange == -1) {
+			// Full map scan. Set "range" to full map times 2.
+			lrange = MAP_CELL_W * 2 * CELL_LEPTON_W;
+		}	else if (lrange == 0) {
+			// Scan in weapons range.
+			lrange = MAX(Weapon_Range(0, true), Weapon_Range(1, true));
+		}
+		if (lrange != 0 && dist != 0) {
+			value = value * lrange / dist;
+		}
+	}
 	if (rawval) {
 		value = MAX(value, 2);
 	}
@@ -1397,6 +1410,34 @@ bool TechnoClass::Evaluate_Cell(ThreatType method, int mask, CELL cell, int rang
 	return(Evaluate_Object(method, mask, range, tentative, value));
 }
 
+
+/*
+**	Nyerguds's C&C Patch Project v1.04
+**	Refactored this to add sub-cell scan logic, and fix updating bestval
+*/
+void TechnoClass::Update_Best_Object(ThreatType method, int mask, CELL cell, int range, ObjectClass const ** bestobject, int & bestval) const {
+	TechnoClass const * object;
+	int value;
+
+	if (Evaluate_Cell(method, mask, cell, range, &object, value)) {
+		if (value > bestval) {
+			* bestobject = object;
+			bestval = value;
+		}
+		// If this is a cell containing multiple infantry, scan through all of them.
+		ObjectClass * nextObj = object->Next;
+		while (nextObj && nextObj->Is_Techno()) {
+			object = (TechnoClass *)nextObj;
+			if (Evaluate_Object(method, mask, range, object, value)) {
+				if (value > bestval) {
+					* bestobject = object;
+					bestval = value;
+				}
+			}
+			nextObj = object->Next;
+		}
+	}
+}
 
 /***********************************************************************************************
  * TechnoClass::Greatest_Threat -- Determines best target given search criteria.               *
@@ -1489,6 +1530,8 @@ TARGET TechnoClass::Greatest_Threat(ThreatType method) const
 			mask |= (1 << RTTI_AIRCRAFT);
 		}
 
+		//ShowUIMessage(true, true, "In TechnoClass::Greatest_Threat. Method is %d, mask is %d.", method, mask);
+
 		// Nyerguds's C&C Patch Project v1.04
 		// Fixed "best target" logic by remembering "bestval".
 		// Not sure if it works though; it didn't when I did this in asm. Needs more testing.
@@ -1497,8 +1540,8 @@ TARGET TechnoClass::Greatest_Threat(ThreatType method) const
 		**	Radiate outward from the object's location, looking for the best
 		**	target.
 		*/
-		TechnoClass const * object;
-		int value;
+		//TechnoClass const * object;
+		//int value;
 		for (int radius = 1; radius < crange; radius++) {
 
 			/*
@@ -1512,22 +1555,12 @@ TARGET TechnoClass::Greatest_Threat(ThreatType method) const
 
 				if ((Cell_Y(cell) - radius) >= Map.MapCellY) {
 					newcell = XY_Cell(Cell_X(cell) + x, Cell_Y(cell)-radius);
-					if (Evaluate_Cell(method, mask, newcell, range, &object, value)) {
-						if (value > bestval) {
-							bestobject = object;
-							bestval = value;
-						}
-					}
+					Update_Best_Object(method, mask, newcell, range, &bestobject, bestval);
 				}
 
 				if ((Cell_Y(cell) + radius) < (Map.MapCellY+Map.MapCellHeight)) {
 					newcell = XY_Cell(Cell_X(cell)+x, Cell_Y(cell)+radius);
-					if (Evaluate_Cell(method, mask, newcell, range, &object, value)) {
-						if (value > bestval) {
-							bestobject = object;
-							bestval = value;
-						}
-					}
+					Update_Best_Object(method, mask, newcell, range, &bestobject, bestval);
 				}
 			}
 
@@ -1542,25 +1575,19 @@ TARGET TechnoClass::Greatest_Threat(ThreatType method) const
 
 				if ((Cell_X(cell) - radius) >= Map.MapCellX) {
 					newcell = XY_Cell(Cell_X(cell)-radius, Cell_Y(cell)+y);
-					if (Evaluate_Cell(method, mask, newcell, range, &object, value)) {
-						if (value > bestval) {
-							bestobject = object;
-							bestval = value;
-						}
-					}
+					Update_Best_Object(method, mask, newcell, range, &bestobject, bestval);
 				}
 
 				if ((Cell_X(cell) + radius) < (Map.MapCellX+Map.MapCellWidth)) {
 					newcell = XY_Cell(Cell_X(cell)+radius, Cell_Y(cell)+y);
-					if (Evaluate_Cell(method, mask, newcell, range, &object, value)) {
-						if (value > bestval) {
-							bestobject = object;
-							bestval = value;
-						}
-					}
+					Update_Best_Object(method, mask, newcell, range, &bestobject, bestval);
 				}
 			}
 
+			// Nyerguds's C&C Patch Project v1.04
+			// Removed this code, because it invalidates the
+			// distance modifier in Evaluate_Object 
+#ifdef OBSOLETE
 			/*
 			**	Bail early if a target has already been found and the range is at
 			**	one of the breaking points (i.e., normal range or range * 2).
@@ -1573,23 +1600,27 @@ TARGET TechnoClass::Greatest_Threat(ThreatType method) const
 					return(bestobject->As_Target());
 				}
 			}
+#endif
 		}
 
 	} else {
-		int index = 0;
+
 		/*
 		**	A full map scan was requested. First scan through aircraft. The top map layer
 		**	is NOT scanned since that layer will probably contain more bullets and animations
 		**	than aircraft.
 		*/
-		for (index = 0; index < Aircraft.Count(); index++) {
-			TechnoClass * object = Aircraft.Ptr(index);
+		int index;
+		if (method & THREAT_AIR) {
+			for (index = 0; index < Aircraft.Count(); index++) {
+				TechnoClass * object = Aircraft.Ptr(index);
 
-			int value = 0;
-			if (Evaluate_Object(method, mask, -1, object, value)) {
-				if (value > bestval) {
-					bestobject = object;
-					bestval = value;
+				int value = 0;
+				if (Evaluate_Object(method, mask, -1, object, value)) {
+					if (value > bestval) {
+						bestobject = object;
+						bestval = value;
+					}
 				}
 			}
 		}

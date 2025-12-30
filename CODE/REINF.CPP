@@ -40,6 +40,9 @@
 
 #include	"function.h"
 
+// Nyerguds's C&C Patch Project v1.04
+// Name is deliberately made into a string that's impossible to retrieve from an ini file.
+#define REINFORCE_TEAM "RNF=TMP"
 
 /***********************************************************************************************
  * Do_Reinforcements -- Create and place a reinforcement team.                                 *
@@ -368,7 +371,7 @@ bool Do_Reinforcements(TeamTypeClass *teamtype)
 					// Nyerguds's C&C Patch Project v1.04
 					// If this is the special airstrip cargo delivery team,
 					// retrieve the assigned building from the Missions list.
-					if (strcmp(teamtype->IniName, "RNF=TMP") == 0 && teamtype->MissionCount > 0 && teamtype->MissionList[0].Mission == TMISSION_UNLOAD) {
+					if (strcmp(teamtype->IniName, REINFORCE_TEAM) == 0 && teamtype->MissionCount > 0 && teamtype->MissionList[0].Mission == TMISSION_UNLOAD) {
 						building = As_Building(teamtype->MissionList[0].Argument);
 					}
 					if (building == NULL) {
@@ -537,9 +540,9 @@ bool Create_Special_Reinforcement(HouseClass * house, TechnoTypeClass const * ty
 			/*
 			**	Fill in the team characteristics.
 			*/
-			// Nyerguds's C&C Patch Project v1.04RA
+			// Nyerguds's C&C Patch Project v1.04
 			// Name is deliberately made into a string that's impossible to retrieve from an ini file.
-			strcpy((char *)&team->IniName[0], "RNF=TMP");
+			strcpy((char *)&team->IniName[0], REINFORCE_TEAM);
 			team->IsReinforcable = false;
 			team->IsTransient = true;
 			team->ClassCount = 1;

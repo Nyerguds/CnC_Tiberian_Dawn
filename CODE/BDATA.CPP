@@ -4314,7 +4314,7 @@ BuildingTypeClass::BuildingTypeClass(
  *          overlapList   -- The list of additional cells refreshed by the building.           *
  *          width, height -- Pointers in which to return the results.                          *
  *                                                                                             *
- * OUTPUT:  Returns the overall width and height of the building.                              *
+ * OUTPUT:  none. Pointers *width and *height are used as output.                              *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
  *                                                                                             *

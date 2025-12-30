@@ -609,7 +609,7 @@ int AircraftClass::Mission_Hunt(void)
 					Status = FLY_TO_TARGET;
 					return(1);
 				} else {
-					Assign_Target(Greatest_Threat(THREAT_NORMAL));
+					Assign_Target(Greatest_Threat(THREAT_NORMAL | THREAT_DUMB));
 
 					/*
 					**	If there is no target, then this aircraft should just do its normal thing.
