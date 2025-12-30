@@ -1530,8 +1530,6 @@ TARGET TechnoClass::Greatest_Threat(ThreatType method) const
 			mask |= (1 << RTTI_AIRCRAFT);
 		}
 
-		//ShowUIMessage(true, true, "In TechnoClass::Greatest_Threat. Method is %d, mask is %d.", method, mask);
-
 		// Nyerguds's C&C Patch Project v1.04
 		// Fixed "best target" logic by remembering "bestval".
 		// Not sure if it works though; it didn't when I did this in asm. Needs more testing.
@@ -2222,19 +2220,20 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
 		**	Perform any animation effect for this weapon.
 		*/
 		AnimType a = weapon->Anim;
-		switch (a) {
-			case ANIM_GUN_N:
-			case ANIM_CHEM_N:
-			case ANIM_FLAME_N:
-				a = (AnimType)(a + Dir_Facing(Fire_Direction()));
-				break;
-		}
 
 		/*
 		**	If there is a special firing animation, then create and attach it
 		**	now.
 		*/
-		if (a != ANIM_NONE) {
+		// Nyerguds's C&C Patch Project v1.04
+		// Buildings take care of the animation themselves.
+		if (a != ANIM_NONE && this->What_Am_I() != RTTI_BUILDING) {
+			const AnimTypeClass animtype = AnimTypeClass::As_Reference(a);
+			// Nyerguds's C&C Patch Project v1.04
+			// Made directional animations a specific type.
+			if (animtype.IsDirectional) {
+				a = (AnimType)(a + Dir_Facing(Fire_Direction()));
+			}
 			// Nyerguds's C&C Patch Project v1.04
 			// Don't call Fire_Coord() again; IsSecondShot has potentially changed. Use cached coords.
 			AnimClass * anim = new AnimClass(a, fire_coord);

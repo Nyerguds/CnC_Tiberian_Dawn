@@ -1699,6 +1699,13 @@ class AnimTypeClass : public ObjectTypeClass
 		AnimType Type;
 
 		/*
+		**	If this animation is the first in a series of eight, that need the direction
+		**	added to it to get the other seven, then this flag will be true. The other
+		**	animations MUST be behind this one in the list for this system to function!
+		*/
+		unsigned IsDirectional:1;
+
+		/*
 		**	This specified the maximum dimension of the shape (edge to edge). This dimension
 		**	is used to build the appropriate cell refresh list. Keep this value as small
 		**	as possible to ensure maximum performance. This is especially critical, since
@@ -1786,6 +1793,7 @@ class AnimTypeClass : public ObjectTypeClass
 							bool issticky,
 							bool ground,
 							bool isflame,
+							bool isdirectional,
 							unsigned int damage,
 							int delaytime,
 							int start,

@@ -29,10 +29,9 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Fixed tiberium growth not refreshing unless you scroll away from it.
 * Fixed craters CR02-CR06 not placing correctly from mission files.
 * Fixed crater CR06 never being used as building debris. (It's still not used as projectile impact debris, but that's intentional.)
-* Fixed crushed infantry remains logic ("Overrun=pancake" in conquer.ini) messing up tiberium spawning.
+* Fixed crushed infantry remains logic ("Overrun=pancake" in conquer.ini) messing up tiberium spawning. \[Revised to animation in 1.04\]
 * Fixed crushed infantry overlay decoration SQUISH not being usable from mission files.
-* Fixed tiberium spread not being able to replace SQUISH overlay.
-* Fixed crate spawning not being able to replace SQUISH overlay.
+* Fixed tiberium spread and crate spawning not being able to replace SQUISH overlay. \[Removed in 1.04, since it's now an animation\]
 * Fixed force-fire modifier getting ignored on overlay.
 * Fixed Rocket Launcher leaving refresh error trail when moving.
 * Fixed "Right away!" voice not playing.
@@ -259,3 +258,4 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Fixed bug where revealing a cell containing multiple infantry would only mark one of them as Revealed, preventing the selection and auto-targeting of the others.
 * Fixed the logic to take threat priorities and distance from target into account when scanning for a target to attack.
 * Removed logic to stop scanning after finding nearby targets, since it was a hotfix for the non-working distance factor in the target priority.
+* Changed "Overrun=pancake" effect to create animations of the SQUISH.SHP graphic for each crushed infantry unit, rather than placing down a single-corpse overlay.

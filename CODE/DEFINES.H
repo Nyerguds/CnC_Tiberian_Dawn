@@ -1554,6 +1554,7 @@ typedef enum AnimType {
 	ANIM_STEG_DIE,
 	ANIM_RAPT_DIE,
 	ANIM_CHEM_BALL,				// Chemical warrior explosion.
+	ANIM_SQUISH,					// Crushed corpse
 
 	ANIM_COUNT,
 	ANIM_FIRST=0

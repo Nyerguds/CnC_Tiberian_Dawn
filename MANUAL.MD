@@ -64,6 +64,7 @@ This patch adds a number of extra features into the game. These options can be t
 | Screenshots | As previously mentioned, **\[Ctrl\]+\[S\]** will save a screenshot in the game folder, in PCX format. When a screenshot is made, a click sound will play, and a message will tell you what filename the screenshot is saved to. | NoScreenshotMessage=\[true/false\]<br/>This option disables the text message. It defaults to "false". |
 | Middle mouse scroll | When you the press middle mouse button, you can quickly scroll across the entire map. | PanScrollRate=[1-64]<br/>This defaults to 4. Set to 0 to disable the feature. |
 | | When middle mouse scrolling, a line can be drawn from the point where you originally clicked to the place you moved your mouse to, to give some indication of the scroll direction and speed. | ShowPanScrollLine=\[true/false\]<br/>This defaults to "false". |
+| Smarter airstrikes | With the added fixing to unit target priority, airstrikes now also look for targets more intelligently. However, this was quite a divisive ugrade in the remaster, so I provided an off-switch for it. | NoSmartAirstrikes=\[true/false\]<br/>This defaults to "false". |
 
 ## Extra usage notes
 

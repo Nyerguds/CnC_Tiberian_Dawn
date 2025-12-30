@@ -252,22 +252,27 @@ void DriveClass::Overrun_Square(CELL cell, bool threaten)
 			while (object) {
 				if (object->Class_Of().IsCrushable && !House->Is_Ally(object) && Distance(object->Center_Coord()) < 0x80) {
 					ObjectClass * next = object->Next;
-
+					bool isInf = object->What_Am_I() == RTTI_INFANTRY;
+					bool isVeh = object->What_Am_I() == RTTI_UNIT;
 					// Nyerguds's C&C Patch Project v1.04
 					// Fix for sound being louder when crushing multiple infantry
 					// Play death animation for units
 					if (!crushed) {
-						// If infantry, play normal squish sound.
-						if (object->What_Am_I() != RTTI_UNIT) {
+						if (isInf) {
+							// If infantry, play normal squish sound.
 							Sound_Effect(VOC_SQUISH2, Coord);
-						} else {
-							UnitClass* unit = (UnitClass*)object;
+						} else if (isVeh) {
 							// The death animation probably already has a sound, but add an extra "roadkill bump" sound.
 							Sound_Effect(VOC_HVYGUN10, Coord);
-							AnimType anim = unit->Class->Explosion;
-							if (anim != ANIM_NONE) {
-								new AnimClass(anim, unit->Coord);
-							}
+						}
+					}
+					if (isInf && Special.IsGross) {
+						new AnimClass(ANIM_SQUISH, object->Coord);
+					} else if (isVeh) {
+						UnitClass* unit = (UnitClass*)object;
+						AnimType anim = unit->Class->Explosion;
+						if (anim != ANIM_NONE) {
+							new AnimClass(anim, unit->Coord);
 						}
 					}
 
@@ -278,6 +283,7 @@ void DriveClass::Overrun_Square(CELL cell, bool threaten)
 					object->Mark(MARK_UP);
 					object->Limbo();
 					delete object;
+#ifdef OBSOLETE
 					if (object->What_Am_I() == RTTI_INFANTRY) {
 						// Nyerguds's TUC Quick Fix Patch v1.02: squish
 						// Check on IsGross here, and only place once.
@@ -285,6 +291,7 @@ void DriveClass::Overrun_Square(CELL cell, bool threaten)
 							new OverlayClass(OVERLAY_SQUISH, Coord_Cell(Coord));
 						}
 					}
+#endif
 					crushed = true;
 					object = next;
 				} else {

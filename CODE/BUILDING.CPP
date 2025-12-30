@@ -775,23 +775,36 @@ BulletClass * BuildingClass::Fire_At(TARGET target, int which)
 		if (*this == STRUCT_SAM) {
 			// Nyerguds's C&C Patch Project v1.04
 			// Fixed alignment of SAM Site launch smoke
-			AnimClass *anim = new AnimClass((AnimType)(ANIM_SAM_N + Dir_Facing(PrimaryFacing.Current())), Coord_Add(Center_Coord(), XYP_COORD(1, -1)));
-			if (anim) {
-				anim->Attach_To(this);
+			AnimClass *samsmok = new AnimClass((AnimType)(ANIM_SAM_N + Dir_Facing(PrimaryFacing.Current())), Coord_Add(Center_Coord(), XYP_COORD(1, -1)));
+			if (samsmok) {
+				samsmok->Attach_To(this);
 			}
-		} else {
-			if (weapon->Fires == BULLET_BULLET) {
-				new AnimClass((AnimType)(ANIM_GUN_N + Dir_Facing(PrimaryFacing.Current())), Fire_Coord(which));
-			} else {
-				if (weapon->Fires == BULLET_LASER) {
-					IsCharging = false;
-					IsCharged = false;
-					Set_Stage(0);
-					Set_Rate(0);
+		}
+		// Nyerguds's C&C Patch Project v1.04
+		// Made directional animations a specific type.
+		if (weapon->Anim != ANIM_NONE) {
+			AnimType anim = weapon->Anim;
+			const AnimTypeClass animtype = AnimTypeClass::As_Reference(anim);
+			if (animtype.IsDirectional) {
+				DirType direction;
+				if (Class->IsTurretEquipped) {
+					direction = PrimaryFacing.Current();
 				} else {
-					new AnimClass(ANIM_MUZZLE_FLASH, Fire_Coord(which));
+					direction = Direction(target);
 				}
+				anim = (AnimType)(anim + Dir_Facing(direction));
 			}
+			AnimClass * shoot = new AnimClass(anim, Fire_Coord(which));
+			if (shoot) {
+				// If fire spreads from this animation, this object will be blamed for it.
+				shoot->Set_Payback(this);
+			}
+		}
+		if (weapon->Fires == BULLET_LASER) {
+			IsCharging = false;
+			IsCharged = false;
+			Set_Stage(0);
+			Set_Rate(0);
 			Mark(MARK_CHANGE);
 		}
 	}

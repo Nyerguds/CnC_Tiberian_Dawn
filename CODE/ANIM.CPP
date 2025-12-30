@@ -626,7 +626,7 @@ AnimClass::AnimClass(AnimType animnum, COORDINATE coord, unsigned char timedelay
 	*/
 	Delay = timedelay;
 
-	Loops = (unsigned char)MIN(0xFF, (MAX(loop, 1) * Class->Loops));
+	Loops = (unsigned char)MIN(0xFF, (MAX(loop, 1) * MAX(Class->Loops, 1)));
 	Loops = (unsigned char)MAX(Loops, 1);
 
 	IsToDelete = false;

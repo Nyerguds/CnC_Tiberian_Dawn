@@ -609,7 +609,13 @@ int AircraftClass::Mission_Hunt(void)
 					Status = FLY_TO_TARGET;
 					return(1);
 				} else {
-					Assign_Target(Greatest_Threat(THREAT_NORMAL | THREAT_DUMB));
+					ThreatType method = THREAT_NORMAL;
+					// Nyerguds's C&C Patch Project v1.04
+					// Allow old dumb airstrikes in the campaigns.
+					if (GameToPlay == GAME_NORMAL && Options.NoSmartAirstrikes ) {
+						method = method | THREAT_DUMB;
+					}
+					Assign_Target(Greatest_Threat(method));
 
 					/*
 					**	If there is no target, then this aircraft should just do its normal thing.
