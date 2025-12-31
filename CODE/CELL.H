@@ -200,6 +200,8 @@ class CellClass
 		TriggerClass *  Get_Trigger(void) const;
 		int  Clear_Icon(void) const;
 		bool  Goodie_Check(FootClass * object);
+		void  Facing_Restrictions(bool * allowed);
+
 		//ObjectClass *  Fetch_Occupier(void) const;
 
 		/*
