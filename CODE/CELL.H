@@ -187,6 +187,8 @@ class CellClass
 		BuildingClass *  Cell_Building(void) const;
 		CellClass const &  Adjacent_Cell(FacingType face) const;
 		CellClass &  Adjacent_Cell(FacingType face) {return (CellClass &)((*((CellClass const *)this)).Adjacent_Cell(face));};
+		bool  Adjacent_Is_Valid(FacingType face, bool foroverlay = false);
+		bool  Is_Ignorable_Concrete();
 		COORDINATE  Cell_Coord(void) const;
 		int  Cell_Color(bool override=false) const;
 		CELL  Cell_Number(void) const;
@@ -200,7 +202,6 @@ class CellClass
 		TriggerClass *  Get_Trigger(void) const;
 		int  Clear_Icon(void) const;
 		bool  Goodie_Check(FootClass * object);
-		void  Facing_Restrictions(bool * allowed);
 
 		//ObjectClass *  Fetch_Occupier(void) const;
 

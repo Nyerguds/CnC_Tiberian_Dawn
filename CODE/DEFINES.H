@@ -222,8 +222,14 @@
 /**********************************************************************
  * Extra implemented features that could be disabled.
  */
+// Allow scroll coasting with middle mouse button.
 #define MIDDLE_MOUSE_PANNING
+// Fix the bugged Concrete connection logic
 #define FIX_CONCRETE
+// When fixing the concrete edge pieces, prefer filling full iso squares.
+#define FIX_CONCRETE_SQUARE
+// Repair the logic to complete single triangles to full 2-cell iso squares.
+//#define FIX_CONCRETE_ADD
 
 
 /**********************************************************************

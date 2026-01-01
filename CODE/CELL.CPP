@@ -79,48 +79,47 @@
 
 #define	FIXUP		0
 
-#ifdef FIX_CONCRETE
-	enum ConcFill {
-			CONC_FILL_NONE   = 0,
-			CONC_FILL_CENTER = 1 << 0,
-			CONC_FILL_TOP    = 1 << 1,
-			CONC_FILL_BOTTOM = 1 << 2,
-		};
-		
-		enum ConcAdj {
-			CONC_ADJ_NONE       = 0,
-			CONC_ADJ_TOP        = 1 << 0,
-			CONC_ADJ_TOPSIDE    = 1 << 1,
-			CONC_ADJ_SIDE       = 1 << 2,
-			CONC_ADJ_BOTTOMSIDE = 1 << 3,
-			CONC_ADJ_BOTTOM     = 1 << 4,
-		};
-		
-		// Represents the order of the different fill states inside the CONC sprite file.
-		// Each state has two icons; one for odd and one for even cells. Note that for some
-		// reason, the first state has these switched on the sprite; it has the even graphics first.
-		const ConcFill ConcIconFillStates[7] = {
-			/* 0 */ CONC_FILL_CENTER,
-			/* 1 */ CONC_FILL_CENTER | CONC_FILL_BOTTOM | CONC_FILL_TOP,
-			/* 2 */ CONC_FILL_TOP,
-			/* 3 */ CONC_FILL_BOTTOM,
-			/* 4 */ CONC_FILL_CENTER | CONC_FILL_BOTTOM,
-			/* 5 */ CONC_FILL_CENTER | CONC_FILL_TOP,
-			/* 6 */ CONC_FILL_BOTTOM | CONC_FILL_TOP,
-		};
-		
-		// To convert fill state to icon index.
-		const int ConcFillStateToIcon[8] = {
-			0, // CONC_FILL_NONE = 0
-			0, // CONC_FILL_CENTER  = 1
-			2, // CONC_FILL_TOP = 2
-			5, // CONC_FILL_CENTER | CONC_FILL_TOP = 3
-			3, // CONC_FILL_BOTTOM = 4
-			4, // CONC_FILL_CENTER | CONC_FILL_BOTTOM = 5
-			6, // CONC_FILL_BOTTOM | CONC_FILL_TOP = 6
-			1, // CONC_FILL_CENTER | CONC_FILL_BOTTOM | CONC_FILL_TOP = 7
-		};
-#endif
+enum ConcFill {
+	CONC_FILL_NONE   = 0,
+	CONC_FILL_CENTER = 1 << 0,
+	CONC_FILL_TOP    = 1 << 1,
+	CONC_FILL_BOTTOM = 1 << 2,
+};
+
+enum ConcAdj {
+	CONC_ADJ_NONE       = 0,
+	CONC_ADJ_TOP        = 1 << 0,
+	CONC_ADJ_TOPSIDE    = 1 << 1,
+	CONC_ADJ_SIDE       = 1 << 2,
+	CONC_ADJ_BOTTOMSIDE = 1 << 3,
+	CONC_ADJ_BOTTOM     = 1 << 4,
+};
+
+// Represents the order of the different fill states inside the CONC sprite file.
+// Each state has two icons; one for odd and one for even cells. Note that for some
+// reason, the first state has these switched on the sprite; it has the even graphics first.
+const ConcFill ConcIconFillStates[7] = {
+	/* 0 */ CONC_FILL_CENTER,
+	/* 1 */ CONC_FILL_CENTER | CONC_FILL_BOTTOM | CONC_FILL_TOP,
+	/* 2 */ CONC_FILL_TOP,
+	/* 3 */ CONC_FILL_BOTTOM,
+	/* 4 */ CONC_FILL_CENTER | CONC_FILL_BOTTOM,
+	/* 5 */ CONC_FILL_CENTER | CONC_FILL_TOP,
+	/* 6 */ CONC_FILL_BOTTOM | CONC_FILL_TOP,
+};
+
+// To convert fill state to icon index.
+const int ConcFillStateToIcon[8] = {
+	0, // CONC_FILL_NONE = 0
+	0, // CONC_FILL_CENTER  = 1
+	2, // CONC_FILL_TOP = 2
+	5, // CONC_FILL_CENTER | CONC_FILL_TOP = 3
+	3, // CONC_FILL_BOTTOM = 4
+	4, // CONC_FILL_CENTER | CONC_FILL_BOTTOM = 5
+	6, // CONC_FILL_BOTTOM | CONC_FILL_TOP = 6
+	1, // CONC_FILL_CENTER | CONC_FILL_BOTTOM | CONC_FILL_TOP = 7
+};
+
 
 /***********************************************************************************************
  * CellClass::Validate -- validates cell's number                                              *
@@ -1123,30 +1122,46 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 	}
 }
 
-#ifdef FIX_CONCRETE
 
-// WIP
-
-void CellClass::Facing_Restrictions(bool * allowed)
+bool CellClass:: Adjacent_Is_Valid(FacingType face, bool foroverlay)
 {
-		int cell = Cell_Number();
-		int mw = MAP_CELL_W;
-		int mw_end = MAP_CELL_W * (MAP_CELL_H - 1);
-
-		bool isEdgeN = cell < mw;
-		bool isEdgeS = cell > mw_end;
-		bool isEdgeW = cell % mw == 0;
-		bool isEdgeE = (cell + 1) % mw == 0;
-
-		allowed[0] = !isEdgeN;              // FACING_N
-		allowed[1] = !isEdgeN && !isEdgeE;  // FACING_NE
-		allowed[2] = !isEdgeS;              // FACING_E
-		allowed[3] = !isEdgeS && !isEdgeE;  // FACING_SE
-		allowed[4] = !isEdgeS;              // FACING_S
-		allowed[5] = !isEdgeS && !isEdgeW;  // FACING_SW
-		allowed[6] = !isEdgeW;              // FACING_W
-		allowed[7] = !isEdgeN && !isEdgeW;  // FACING_NW
+	int cell = Cell_Number();
+	// A bit of unnecessary calculation, but I'm not gonna copy and refine this for each block...
+	int northend = MAP_CELL_W;
+	if (foroverlay) northend *= 2;
+	int southend = MAP_CELL_W * (MAP_CELL_H - (foroverlay? 2 : 1));
+	bool allowEdgeN = (cell >= northend);
+	bool allowEdgeE = ((cell + 1) % MAP_CELL_W != 0);
+	bool allowEdgeS = (cell < southend);
+	bool allowEdgeW = (cell % MAP_CELL_W != 0);
+	
+	switch (face) {
+		case FACING_NONE:
+			if (!foroverlay) {
+				return cell >= 0 && cell < MAP_CELL_W * MAP_CELL_H;
+			} else {
+				return cell >= MAP_CELL_W && cell < MAP_CELL_W * (MAP_CELL_H - 1);
+			}
+		case FACING_N:
+			return allowEdgeN;
+		case FACING_NE:
+			return allowEdgeN && allowEdgeE;
+		case FACING_E:
+			return allowEdgeE;
+		case FACING_SE:
+			return allowEdgeS && allowEdgeE;
+		case FACING_S:
+			return allowEdgeS;
+		case FACING_SW:
+			return allowEdgeS && allowEdgeW;
+		case FACING_W:
+			return allowEdgeW;
+		case FACING_NW:
+			return allowEdgeN && allowEdgeW;
+	}
+	return false;
 }
+
 
 int Get_Conc_Icon(ConcFill fillState, bool isOdd)
 {
@@ -1160,86 +1175,88 @@ int Get_Conc_Icon(ConcFill fillState, bool isOdd)
 
 ConcFill Get_Conc_State(CellClass * cell)
 {
-		if (!cell->Overlay == OVERLAY_CONCRETE)
-		{
-				return CONC_FILL_NONE;
-		}
-		int val = cell->OverlayData / 2;
-		if (val < 0 || val > 7)
-		{
-				return CONC_FILL_NONE;
-		}
-		return ConcIconFillStates[val];
+	if (!cell->Overlay == OVERLAY_CONCRETE) {
+		return CONC_FILL_NONE;
+	}
+	int val = cell->OverlayData / 2;
+	if (val < 0 || val > 7)
+	{
+		return CONC_FILL_NONE;
+	}
+	return ConcIconFillStates[val];
 }
 
-
-bool Is_Ignorable_Conc(CellClass * cell)
+bool CellClass::Is_Ignorable_Concrete()
 {
-	OverlayType overlay = cell->Overlay;
-		if (overlay == OVERLAY_NONE)
-				return true;
-		// only true if concrete without its center filled, or empty.
-		return (Get_Conc_State(cell) & CONC_FILL_CENTER) == 0;
+	// only true if it is concrete without its center filled.
+	return this->Overlay == OVERLAY_CONCRETE && (Get_Conc_State(this) & CONC_FILL_CENTER) == 0;
 }
 
+#ifdef FIX_CONCRETE
 
-ConcFill Build_Conc_Fill_State(int cell, bool isFilled, FacingType * checkCells, bool * allowedfacings)
+ConcFill Build_Conc_Fill_State(CELL cell, FacingType * checkCells)
 {
-		ConcAdj mask = CONC_ADJ_NONE;
-		for (int i = 0; i < 5; ++i)
-		{
-				FacingType facing = checkCells[i];
-				if (!allowedfacings[(int)facing])
-				{
-						continue;
-				}
-				int neighborcell = cell + AdjacentCell[(int)facing];
-				CellClass * neighbor = &Map[neighborcell];
-				OverlayType ovl = neighbor->Overlay; // Overlay[neighborcell];
-				int ovlData = neighbor->OverlayData; // Overlay[neighborcell];
-				if (ovl == OVERLAY_CONCRETE)
-				{
-						ConcFill fill =  Get_Conc_State(neighbor);
-						if ((fill & CONC_FILL_CENTER) != 0)
-						{
-								mask = (ConcAdj)(mask | (1 << i));
-						}
-				}
+	CellClass * mapcell = &Map[cell];
+	ConcAdj mask = CONC_ADJ_NONE;
+	for (int i = 0; i < 5; ++i) {
+		FacingType facing = checkCells[i];
+		if (!mapcell->Adjacent_Is_Valid(facing, true)) {
+			continue;
 		}
-		// Unified logic so the operation becomes identical for the even and odd cells.
-		bool top = (mask & CONC_ADJ_TOP) != 0;
-		bool topSide = (mask & CONC_ADJ_TOPSIDE) != 0;
-		bool side = (mask & CONC_ADJ_SIDE) != 0;
-		bool bottomSide = (mask & CONC_ADJ_BOTTOMSIDE) != 0;
-		bool bottom = (mask & CONC_ADJ_BOTTOM) != 0;
-		// Logic to fill the main cell. Standard for a placed cell is to fill the center.
-		ConcFill fillState = isFilled ? CONC_FILL_CENTER : CONC_FILL_NONE;
-		if (isFilled)
-		{
-				// NEW LOGIC: Fills triangle between two vertical cells
-				// If cell at top, connect. If not, still connect if the two in front are filled.
-				if (top || (topSide && side))
-				{
-						fillState = (ConcFill)(fillState | CONC_FILL_TOP);
-				}
-				// If cell at bottom, connect. If not, still connect if the two in front are filled.
-				if (bottom || (bottomSide && side))
-				{
-					fillState = (ConcFill)(fillState | CONC_FILL_BOTTOM);
-				}
+		int neighborcell = Adjacent_Cell(cell, facing);
+		CellClass * neighbor = &Map[neighborcell];
+		OverlayType ovl = neighbor->Overlay; // Overlay[neighborcell];
+		int ovlData = neighbor->OverlayData; // Overlay[neighborcell];
+		if (ovl == OVERLAY_CONCRETE) {
+			ConcFill fill =  Get_Conc_State(neighbor);
+			if ((fill & CONC_FILL_CENTER) != 0) {
+				mask = (ConcAdj)(mask | (1 << i));
+			}
 		}
-		else
-		{
-				if (top && topSide && side)
-				{
-					fillState = (ConcFill)(fillState | CONC_FILL_TOP);
-				}
-				if (bottom && bottomSide && side)
-				{
-					fillState = (ConcFill)(fillState | CONC_FILL_BOTTOM);
-				}
+	}
+	// Unified logic so the operation becomes identical for the even and odd cells.
+	bool top = (mask & CONC_ADJ_TOP) != 0;
+	bool topSide = (mask & CONC_ADJ_TOPSIDE) != 0;
+	bool side = (mask & CONC_ADJ_SIDE) != 0;
+	bool bottomSide = (mask & CONC_ADJ_BOTTOMSIDE) != 0;
+	bool bottom = (mask & CONC_ADJ_BOTTOM) != 0;
+	// Logic to fill the main cell. Standard for a placed cell is to fill the center.
+	bool isFilled = mapcell->Overlay == OVERLAY_CONCRETE && !mapcell->Is_Ignorable_Concrete();
+	ConcFill fillState = isFilled ? CONC_FILL_CENTER : CONC_FILL_NONE;
+#ifndef FIX_CONCRETE_SQUARE
+	if (isFilled) {
+		if (top || (topSide && side)) {
+			fillState = (ConcFill)(fillState | CONC_FILL_TOP);
 		}
-		return fillState;
+		if (bottom || (bottomSide && side)) {
+			fillState = (ConcFill)(fillState | CONC_FILL_BOTTOM);
+		}
+	} else {
+		if (top && topSide && side) {
+			fillState = (ConcFill)(fillState | CONC_FILL_TOP);
+		}
+		if (bottom && bottomSide && side) {
+			fillState = (ConcFill)(fillState | CONC_FILL_BOTTOM);
+		}
+	}
+#else
+	if (isFilled) {
+		if (top || side || topSide) {
+			fillState = (ConcFill)(fillState | CONC_FILL_TOP);
+		}
+		if (bottom || side || bottomSide) {
+			fillState = (ConcFill)(fillState | CONC_FILL_BOTTOM);
+		}
+	} else {
+		if ((topSide && side) || (topSide && top) || (top && side)) {
+			fillState = (ConcFill)(fillState | CONC_FILL_TOP);
+		}
+		if ((bottomSide && side) || (bottomSide && bottom) || (bottom && side)) {
+			fillState = (ConcFill)(fillState | CONC_FILL_BOTTOM);
+		}
+	}
+#endif
+	return fillState;
 }
 
 
@@ -1263,66 +1280,42 @@ void CellClass::Concrete_Calc(void)
 {
   // Facings to check for adjacent cells around even and odd-cell concrete.
 	// The order in this array matches the bits order in the CONC_ADJ values.
-	const static long face_length = 5;
-	static FacingType _even[face_length] = {FACING_N, FACING_NW, FACING_W, FACING_SW, FACING_S};
-	static FacingType _odd[face_length] = {FACING_N, FACING_NE, FACING_E, FACING_SE, FACING_S};
+	static FacingType _even[5] = {FACING_N, FACING_NW, FACING_W, FACING_SW, FACING_S};
+	static FacingType _odd[5] = {FACING_N, FACING_NE, FACING_E, FACING_SE, FACING_S};
 
 	int cell = Cell_Number();
 
-	OverlayType overlay = Overlay;
+	OverlayType overlay = this->Overlay;
 	// Cannot override non-conc overlay.
 	if (overlay != OVERLAY_NONE && overlay != OVERLAY_CONCRETE) {
-			return;
+		return;
 	}
-	// Cells to check around the current cell. In order: top, top-aside, aside, bottom-aside, bottom
-	bool isFilled = !Is_Ignorable_Conc(this);
-	bool isodd = cell % 2 == 1;
+	// Prevent placing on top or bottom edge.
+	if (!this->Adjacent_Is_Valid(FACING_NONE, true)) {
+		return;
+	}
+	bool isodd = Cell_X(cell) % 2 == 1;
+	// Cells to check around the current cell. In order: top, top-aside, aside, bottom-aside, bottom.
 	FacingType * checkCells = isodd ? _odd : _even;
-	bool allowedfacing[8];
-	Facing_Restrictions(allowedfacing);
-	ConcFill fillState = Build_Conc_Fill_State(cell, isFilled, checkCells, allowedfacing);
+	ConcFill fillState = Build_Conc_Fill_State(cell, checkCells);
 	if (overlay == OVERLAY_NONE && fillState == CONC_FILL_NONE) {
 		return;
 	}
 	// Set current cell's fill
 	if (fillState != CONC_FILL_NONE) {
 		if (overlay == OVERLAY_NONE) {
-			Overlay = OVERLAY_CONCRETE;
+			this->Overlay = OVERLAY_CONCRETE;
 		}
-		OverlayData = Get_Conc_Icon(fillState, isodd);
+		this->OverlayData = Get_Conc_Icon(fillState, isodd);
+	} else if (overlay == OVERLAY_CONCRETE) {
+		// If nothing is on there, remove.
+		this->Overlay = OVERLAY_NONE;
+		this->OverlayData = 0;
 	}
-	for (int i = 0; i < FACING_COUNT; ++i) {
-		FacingType checkDir = (FacingType)i;
-		if (checkDir == FACING_NONE || !allowedfacing[(int)checkDir]) {
-			continue;
-		}
-		int adjCellnr = cell + AdjacentCell[(int)checkDir];
-		CellClass * adjcell = &Adjacent_Cell(checkDir);
-		OverlayType adjoverlay = adjcell->Overlay;
-		// Some other overlay is on this spot. Do not fill wtth edge filler.
-		if (adjcell->Overlay != OVERLAY_NONE && adjcell->Overlay != OVERLAY_CONCRETE) {
-			continue;
-		}
-		isFilled = !Is_Ignorable_Conc(adjcell);
-		isodd = adjCellnr % 2 == 1;
-		checkCells = isodd ? _odd : _even;
-		// Surrounding cells to adjust, as indices in a 3x3 array. The array order itself
-		// follows the checkCells array, so top, side, bottom are indices 0, 2, 4.
-		adjcell->Facing_Restrictions(allowedfacing);
-		fillState = Build_Conc_Fill_State(adjCellnr, isFilled, checkCells, allowedfacing);
-		if (isFilled && adjcell->Overlay != OVERLAY_NONE) {
-			fillState = fillState | Get_Conc_State(adjcell);
-		}
-		// Set current cell's fill
-		if (fillState != CONC_FILL_NONE) {
-			if (adjoverlay == OVERLAY_NONE) {
-				adjcell->Overlay = OVERLAY_CONCRETE;
-			}
-			adjcell->OverlayData = Get_Conc_Icon(fillState, isodd);
-		}
-	}
+	Recalc_Attributes();
+	Redraw_Objects();
+	Map.Radar_Pixel(cell);
 }
-
 
 #else
 

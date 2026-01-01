@@ -260,7 +260,8 @@ bool OverlayClass::Mark(MarkType mark)
 						return(false);
 					}
 				} else {
-					if ((cellptr->Overlay == OVERLAY_NONE || cellptr->Overlay == OVERLAY_SQUISH) && !cellptr->Cell_Terrain() && Ground[cellptr->Land_Type()].Build) {
+					if ((cellptr->Overlay == OVERLAY_NONE || cellptr->Overlay == OVERLAY_SQUISH || cellptr->Is_Ignorable_Concrete())
+						&& !cellptr->Cell_Terrain() && Ground[cellptr->Land_Type()].Build) {
 
 						/*
 						**	Increment the global crate counter. This is used to regulate
@@ -284,38 +285,56 @@ bool OverlayClass::Mark(MarkType mark)
 						} else {
 							if (*this == OVERLAY_CONCRETE) {
 								CELL	newcell;
+								CellClass *newcellp;
 
 								/*
 								**	Smudges go away when concrete is laid down.
 								*/
 								cellptr->Smudge = SMUDGE_NONE;
 								cellptr->SmudgeData = 0;
-								cellptr->Concrete_Calc();
+								//cellptr->Concrete_Calc();
 
+								CELL torefresh[2];
+								torefresh[0] = cell;
+								torefresh[1] = -1;
+#ifdef FIX_CONCRETE_ADD
 								/*
 								**	Possibly add concrete to adjacent cells depending on whether this
 								**	concrete is in an odd or even row.
 								*/
-								if (Cell_X(cell) & 0x01) {
-									newcell = Adjacent_Cell((CELL)(cellptr->Cell_Number()), FACING_W);
-								} else {
-									newcell = Adjacent_Cell((CELL)(cellptr->Cell_Number()), FACING_E);
+								FacingType addfacing = Cell_X(cell) & 0x01 ? FACING_W : FACING_E;
+								if (cellptr->Adjacent_Is_Valid(addfacing, true)) {
+									newcell = Adjacent_Cell(cell, addfacing);
+									newcellp = &Map[newcell];
+									if (newcellp->Overlay == OVERLAY_NONE || newcellp->Is_Ignorable_Concrete()) {
+										torefresh[1] = newcell;
+										//ShowUIMessage(true, true, "Placing additional CONC on cell %d (from %d)", newcell, cell);
+										newcellp->Overlay = OVERLAY_CONCRETE;
+										newcellp->OverlayData = 0;
+									}
 								}
-								if (Map[newcell].Overlay != OVERLAY_CONCRETE) {
-									Class->Create_And_Place(newcell);
-								}
-
+#endif
 								/*
 								**	The display attributes must be recalculated for all adjacent
 								**	cells since their shape can be altered by the presence of
 								**	concrete at this location.
 								*/
-								static FacingType _face[4] = {FACING_N, FACING_E, FACING_S, FACING_W};
-
-								for (int index = 0; index < (sizeof(_face)/sizeof(_face[0])); index++) {
-									CellClass *newcell = &cellptr->Adjacent_Cell(_face[index]);
-									if (newcell != cellptr) {
-										newcell->Concrete_Calc();
+								for (int rcell = 0; rcell < 2; ++rcell) {
+									newcell = torefresh[rcell];
+									if (newcell == -1) continue;
+									newcellp = &Map[newcell];
+									CELL loopcell;
+									CellClass *loopcellp;
+									for (int index = FACING_NONE; index < FACING_COUNT; index++) {
+										FacingType face = (FacingType)index;
+										if (!newcellp->Adjacent_Is_Valid(face)) {
+											continue;
+										}
+										loopcell = face == FACING_NONE ? newcell : Adjacent_Cell(newcell, face);
+										loopcellp = &Map[loopcell];
+										bool wasconc = loopcellp->Overlay == OVERLAY_CONCRETE;
+										loopcellp->Concrete_Calc();
+										OverlayType ovl = loopcellp->Overlay;
 									}
 								}
 							}
