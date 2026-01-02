@@ -260,4 +260,5 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Removed logic to stop scanning after finding nearby targets, since it was a hotfix for the non-working distance factor in the target priority.
 * Changed "Overrun=pancake" effect to create animations of the SQUISH.SHP graphic for each crushed infantry unit, rather than placing down a single-corpse overlay.
 * Fixed defense buildings getting a muzzle flash, which was drawn under the building.
-* Fixed the broken pattern logic of the "isometric" CONC pavement, making it look much nicer. It is not normally used, but can be placed in maps.
+* Fixed the broken pattern logic of the "isometric" CONC pavement, making it look much nicer.
+* Fixed ROAD pavement not always giving the speed boost it is supposed to have.

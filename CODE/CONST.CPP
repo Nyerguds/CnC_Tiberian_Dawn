@@ -259,20 +259,20 @@ unsigned char const Facing32Even[256] = {
 #define	S5 0xC0
 #define	S6 0xFF
 GroundType const Ground[LAND_COUNT] = {
-//						Foot
-//						|		Tracked
-//						|		|		Harvester
-//						|		|		|		Wheeled
-//						|		|		|		|		Winged
-//						|		|		|		|		|		Hover
-//						|		|		|		|		|		|		float  build
-	{66, 				{S3,	S3,	S3,	S4,	S6,	S5,	S1	}, true},	// LAND_CLEAR
-	{68,				{S5,	S4,	S4,	S4,  	S6,	S5,	S1	}, true},	// LAND_ROAD
-	{BLUE,			{S1,	S1,	S1,	S1,	S6,	S5,	S6	}, false},	// LAND_WATER
-	{DKGREY,			{S1,	S1,	S1,	S1,	S6,	S1,	S1	}, false},	// LAND_ROCK
-	{DKGREY,			{S1,	S1,	S1,	S1,	S6,	S1,	S1	}, false},	// LAND_WALL
-	{143,				{S3,	S3,	S3,	S4,	S6,	S5,	S1	}, false},	// LAND_TIBERIUM
-	{66,				{S3,	S3,	S3,	S4,	S6,	S5,	S1	}, false},	// LAND_BEACH
+	//        Foot
+	//        |   Tracked
+	//        |   |   Harvester
+	//        |   |   |   Wheeled
+	//        |   |   |   |   Winged
+	//        |   |   |   |   |   Hover
+	//        |   |   |   |   |   |   float build
+	{66,     {S3, S3, S3, S4, S6, S5, S1 }, true},   // LAND_CLEAR
+	{68,     {S5, S4, S4, S4, S6, S5, S1 }, true},   // LAND_ROAD
+	{BLUE,   {S1, S1, S1, S1, S6, S5, S6 }, false},  // LAND_WATER
+	{DKGREY, {S1, S1, S1, S1, S6, S1, S1 }, false},  // LAND_ROCK
+	{DKGREY, {S1, S1, S1, S1, S6, S1, S1 }, false},  // LAND_WALL
+	{143,    {S3, S3, S3, S4, S6, S5, S1 }, false},  // LAND_TIBERIUM
+	{66,     {S3, S3, S3, S4, S6, S5, S1 }, false},  // LAND_BEACH
 };
 
 

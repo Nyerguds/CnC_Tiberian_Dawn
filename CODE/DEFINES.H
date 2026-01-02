@@ -229,7 +229,7 @@
 // When fixing the concrete edge pieces, prefer filling full iso squares.
 #define FIX_CONCRETE_SQUARE
 // Repair the logic to complete single triangles to full 2-cell iso squares.
-//#define FIX_CONCRETE_ADD
+#define FIX_CONCRETE_ADD
 
 
 /**********************************************************************

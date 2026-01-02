@@ -217,14 +217,18 @@ bool OverlayClass::Mark(MarkType mark)
 			CELL	cell = Coord_Cell(Coord);
 			CellClass * cellptr = &Map[cell];
 
-			/*
-			**	Road placement occurs in two steps. First the foundation is placed, but only
-			**	on buildable terrain. Second, the road is completed, but only if the foundation
-			**	was previously placed.
-			*/
+			// Nyerguds's C&C Patch Project v1.04
+			// Make all the following cases recalc the cell attributes.
 			if (*this == OVERLAY_ROAD) {
+				/*
+				**	Road placement occurs in two steps. First the foundation is placed, but only
+				**	on buildable terrain. Second, the road is completed, but only if the foundation
+				**	was previously placed.
+				*/
+				// Nyerguds's C&C Patch Project v1.04
+				// Allow ROAD to replace CONC to account for extra filled CONC cells taking up where missions have ROAD placed.
 				if ((cellptr->Overlay == OVERLAY_ROAD && cellptr->OverlayData == 0) ||
-					(cellptr->Overlay == OVERLAY_NONE && cellptr->Is_Generally_Clear())) {
+					((cellptr->Overlay == OVERLAY_NONE || cellptr->Overlay == OVERLAY_CONCRETE) && cellptr->Is_Generally_Clear())) {
 
 					if (cellptr->Overlay == OVERLAY_ROAD) {
 						cellptr->OverlayData = 1;
@@ -234,120 +238,116 @@ bool OverlayClass::Mark(MarkType mark)
 					cellptr->Overlay = Class->Type;
 					cellptr->Redraw_Objects();
 				}
-			} else {
-
+			} else if (Class->IsWall) {
 				/*
 				**	Walls have special logic when they are marked down.
 				*/
-				if (Class->IsWall) {
-					if (cellptr->Is_Generally_Clear() && cellptr->Overlay != OVERLAY_FLAG_SPOT) {
-						OverlayType overlay = Class->Type;
-						cellptr->Overlay = overlay;
-						cellptr->OverlayData = 0;
-						cellptr->Wall_Update(overlay);
-						cellptr->Redraw_Objects();
+				if (cellptr->Is_Generally_Clear() && cellptr->Overlay != OVERLAY_FLAG_SPOT) {
+					OverlayType overlay = Class->Type;
+					cellptr->Overlay = overlay;
+					cellptr->OverlayData = 0;
+					// Wall update performs a Redraw_Objects(), so it's not explicitly needed.
+					cellptr->Wall_Update(overlay);
 
-						/*
-						**	Flag ownership of the cell if the 'global' ownership flag indicates that this
-						**	is necessary for the overlay.
-						*/
-						if (ToOwn != HOUSE_NONE) {
-							cellptr->Owner = ToOwn;
-						}
-
-					} else {
-						delete this;
-						return(false);
+					/*
+					**	Flag ownership of the cell if the 'global' ownership flag indicates that this
+					**	is necessary for the overlay.
+					*/
+					if (ToOwn != HOUSE_NONE) {
+						cellptr->Owner = ToOwn;
 					}
+
 				} else {
-					if ((cellptr->Overlay == OVERLAY_NONE || cellptr->Overlay == OVERLAY_SQUISH || cellptr->Is_Ignorable_Concrete())
-						&& !cellptr->Cell_Terrain() && Ground[cellptr->Land_Type()].Build) {
+					delete this;
+					return(false);
+				}
+			} else if ((cellptr->Overlay == OVERLAY_NONE || cellptr->Overlay == OVERLAY_SQUISH || cellptr->Is_Ignorable_Concrete())
+				&& !cellptr->Cell_Terrain() && Ground[cellptr->Land_Type()].Build) {
 
-						/*
-						**	Increment the global crate counter. This is used to regulate
-						**	the crate generation.
-						*/
-						if (Class->IsCrate) CrateCount++;
+				/*
+				**	Increment the global crate counter. This is used to regulate
+				**	the crate generation.
+				*/
+				if (Class->IsCrate) CrateCount++;
 
-						/*
-						**	Don't show the squish unless the gross flag is active.
-						*/
-						// Nyerguds's TUC Quick Fix Patch v1.02: squish
-						// Disable check here, add it in the infantry crush logic.
-						//if (!Special.IsGross || Class->Type != OVERLAY_SQUISH) {
-						cellptr->Overlay = Class->Type;
-						cellptr->OverlayData = 0;
-						//}
-						cellptr->Redraw_Objects();
-						if (Class->Land == LAND_TIBERIUM) {
-							cellptr->OverlayData = 1;
-							cellptr->Tiberium_Adjust();
-						} else {
-							if (*this == OVERLAY_CONCRETE) {
-								CELL	newcell;
-								CellClass *newcellp;
+				/*
+				**	Don't show the squish unless the gross flag is active.
+				*/
+				// Nyerguds's TUC Quick Fix Patch v1.02: squish
+				// Disable IsGross check here, add it in the infantry crush logic.
+				cellptr->Overlay = Class->Type;
+				cellptr->OverlayData = 0;
+				cellptr->Redraw_Objects();
 
-								/*
-								**	Smudges go away when concrete is laid down.
-								*/
-								cellptr->Smudge = SMUDGE_NONE;
-								cellptr->SmudgeData = 0;
-								//cellptr->Concrete_Calc();
+				if (Class->Land == LAND_TIBERIUM) {
+					cellptr->OverlayData = 1;
+					cellptr->Tiberium_Adjust();
+				} else if (*this == OVERLAY_CONCRETE) {
+					CELL	newcell;
+					CellClass *newcellp;
 
-								CELL torefresh[2];
-								torefresh[0] = cell;
-								torefresh[1] = -1;
+					/*
+					**	Smudges go away when concrete is laid down.
+					*/
+					cellptr->Smudge = SMUDGE_NONE;
+					cellptr->SmudgeData = 0;
+					// Nyerguds's C&C Patch Project v1.04
+					// Is now done all together at the loop at the end.
+					//cellptr->Concrete_Calc();
+
+					// Nyerguds's C&C Patch Project v1.04
+					// Loop adjacents of both the placed and added cell.
+					CELL recalc[2];
+					recalc[0] = cell;
+					recalc[1] = -1;
 #ifdef FIX_CONCRETE_ADD
-								/*
-								**	Possibly add concrete to adjacent cells depending on whether this
-								**	concrete is in an odd or even row.
-								*/
-								FacingType addfacing = Cell_X(cell) & 0x01 ? FACING_W : FACING_E;
-								if (cellptr->Adjacent_Is_Valid(addfacing, true)) {
-									newcell = Adjacent_Cell(cell, addfacing);
-									newcellp = &Map[newcell];
-									if (newcellp->Overlay == OVERLAY_NONE || newcellp->Is_Ignorable_Concrete()) {
-										torefresh[1] = newcell;
-										//ShowUIMessage(true, true, "Placing additional CONC on cell %d (from %d)", newcell, cell);
-										newcellp->Overlay = OVERLAY_CONCRETE;
-										newcellp->OverlayData = 0;
-									}
-								}
+					/*
+					**	Possibly add concrete to adjacent cells depending on whether this
+					**	concrete is in an odd or even row.
+					*/
+					// Nyerguds's C&C Patch Project v1.04
+					// Not sure what broke here, but it's fixed now.
+					FacingType addfacing = Cell_X(cell) & 0x01 ? FACING_W : FACING_E;
+					if (cellptr->Adjacent_Is_Valid(addfacing, true)) {
+						newcell = Adjacent_Cell(cell, addfacing);
+						newcellp = &Map[newcell];
+						if (newcellp->Overlay == OVERLAY_NONE || newcellp->Is_Ignorable_Concrete()) {
+							recalc[1] = newcell;
+							newcellp->Overlay = OVERLAY_CONCRETE;
+							newcellp->OverlayData = 0;
+						}
+					}
 #endif
-								/*
-								**	The display attributes must be recalculated for all adjacent
-								**	cells since their shape can be altered by the presence of
-								**	concrete at this location.
-								*/
-								for (int rcell = 0; rcell < 2; ++rcell) {
-									newcell = torefresh[rcell];
-									if (newcell == -1) continue;
-									newcellp = &Map[newcell];
-									CELL loopcell;
-									CellClass *loopcellp;
-									for (int index = FACING_NONE; index < FACING_COUNT; index++) {
-										FacingType face = (FacingType)index;
-										if (!newcellp->Adjacent_Is_Valid(face)) {
-											continue;
-										}
-										loopcell = face == FACING_NONE ? newcell : Adjacent_Cell(newcell, face);
-										loopcellp = &Map[loopcell];
-										bool wasconc = loopcellp->Overlay == OVERLAY_CONCRETE;
-										loopcellp->Concrete_Calc();
-										OverlayType ovl = loopcellp->Overlay;
-									}
-								}
+					/*
+					**	The display attributes must be recalculated for all adjacent
+					**	cells since their shape can be altered by the presence of
+					**	concrete at this location.
+					*/
+					for (int rcell = 0; rcell < 2; ++rcell) {
+						newcell = recalc[rcell];
+						if (newcell == -1) continue;
+						newcellp = &Map[newcell];
+						CELL loopcell;
+						CellClass *loopcellp;
+						// Nyerguds's C&C Patch Project v1.04
+						// Loop over all 8 directions to fix all connections.
+						for (int index = FACING_NONE; index < FACING_COUNT; index++) {
+							FacingType face = (FacingType)index;
+							if (!newcellp->Adjacent_Is_Valid(face)) {
+								continue;
 							}
+							// Nyerguds's C&C Patch Project v1.04
+							// Adjacent_Cell was adjusted to support FACING_NONE to return current cell.
+							loopcell = Adjacent_Cell(newcell, face);
+							loopcellp = &Map[loopcell];
+							loopcellp->Concrete_Calc();
+							OverlayType ovl = loopcellp->Overlay;
 						}
 					}
 				}
-
-				/*
-				**	*****  Is this really needed?
-				*/
-				cellptr->Recalc_Attributes();
-				Map.Radar_Pixel(cell);
 			}
+			cellptr->Recalc_Attributes();
+			Map.Radar_Pixel(cell);
 			delete this;
 			return(true);
 		}

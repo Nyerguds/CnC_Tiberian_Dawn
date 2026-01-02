@@ -1205,8 +1205,8 @@ ConcFill Build_Conc_Fill_State(CELL cell, FacingType * checkCells)
 		}
 		int neighborcell = Adjacent_Cell(cell, facing);
 		CellClass * neighbor = &Map[neighborcell];
-		OverlayType ovl = neighbor->Overlay; // Overlay[neighborcell];
-		int ovlData = neighbor->OverlayData; // Overlay[neighborcell];
+		OverlayType ovl = neighbor->Overlay;
+		int ovlData = neighbor->OverlayData;
 		if (ovl == OVERLAY_CONCRETE) {
 			ConcFill fill =  Get_Conc_State(neighbor);
 			if ((fill & CONC_FILL_CENTER) != 0) {

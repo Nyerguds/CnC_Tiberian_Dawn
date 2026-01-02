@@ -750,7 +750,7 @@ inline DirType Direction8(COORDINATE coord1, COORDINATE coord2) {return ((DirTyp
 inline DirType Direction(CELL cell1, CELL cell2) {return (DirType)(Desired_Facing8(Cell_X(cell1), Cell_Y(cell1), Cell_X(cell2), Cell_Y(cell2)));}
 inline COORDINATE Adjacent_Cell(COORDINATE coord, FacingType dir) {return (Coord_Snap(Coord_Add(AdjacentCoord[dir & 0x07], coord)));}
 inline COORDINATE Adjacent_Cell(COORDINATE coord, DirType dir) {return Adjacent_Cell(coord, Dir_Facing(dir));}
-inline CELL Adjacent_Cell(CELL cell, FacingType dir) {return (CELL)(cell + AdjacentCell[dir]);}
+inline CELL Adjacent_Cell(CELL cell, FacingType dir) {return dir == FACING_NONE ? cell : (CELL)(cell + AdjacentCell[dir]);}
 inline CELL Adjacent_Cell(CELL cell, DirType dir) {return (CELL)(cell + AdjacentCell[Dir_Facing(dir)]);}
 inline int Lepton_To_Pixel(int lepton) {return ((lepton * ICON_PIXEL_W) + (ICON_LEPTON_W / 2)) / ICON_LEPTON_W;}
 inline int Pixel_To_Lepton(int pixel) {return ((pixel * ICON_LEPTON_W) + (ICON_PIXEL_W / 2)) / ICON_PIXEL_W;}
