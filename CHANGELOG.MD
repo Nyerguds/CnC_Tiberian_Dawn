@@ -262,3 +262,9 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Fixed defense buildings getting a muzzle flash, which was drawn under the building.
 * Fixed the broken pattern logic of the "isometric" CONC pavement, making it look much nicer.
 * Fixed ROAD pavement not always giving the speed boost it is supposed to have.
+* Fixed tree targeting option ("TreeTarget=lightning" in conquer.ini) giving an attack cursor over indestructible trees.
+* Template tiles (map cell icons) are no longer limited to only using two terrain types.
+* Fixed the destroyed Desert bridge (NE-SW) having an impassable tile at the south-west end of the road.
+* Implemented wider bridges and river crossings, mimicking their behaviour in the Playstation and Saturn versions.
+* The logic to make the Tech Center spawn special infantry with a trigger attached is now configurable in the mission, using "MissionTargetSpawn" and "MissionTargetTrigger" options.
+* Added explicit "Difficulty" setting in the [Patch] section, which accepts values "easy" and "hard".

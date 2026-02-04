@@ -868,12 +868,10 @@ void HouseClass::AI(void)
 		}
 		if (Special.IsDifficult) {
 			AlertTime = (TICKS_PER_MINUTE * Random_Pick(4, 10));
+		} else if (Special.IsEasy) {
+			AlertTime = (TICKS_PER_MINUTE * Random_Pick(16, 40));
 		} else {
-			if (Special.IsEasy) {
-				AlertTime = (TICKS_PER_MINUTE * Random_Pick(16, 40));
-			} else {
-				AlertTime = (TICKS_PER_MINUTE * Random_Pick(5, 20));
-			}
+			AlertTime = (TICKS_PER_MINUTE * Random_Pick(5, 20));
 		}
 	}
 

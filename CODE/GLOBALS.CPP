@@ -247,6 +247,14 @@ bool RemoveBuildExceptions = false;
 
 
 /***************************************************************************
+**	Nyerguds's C&C Patch Project v1.04
+**	Special logic to spawn Chan from a destroyed Mission Target (Tech Center)
+**	building, and link him to a trigger called "CHAN".
+*/
+InfantryType MissionTargetSpawn = INFANTRY_NONE;
+char MissionTargetTrigger[5];
+
+/***************************************************************************
 **	This is the monochrome debug page array. The various monochrome data
 **	screens are located here.
 */

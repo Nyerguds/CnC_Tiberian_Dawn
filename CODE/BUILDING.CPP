@@ -1786,13 +1786,15 @@ void BuildingClass::Drop_Debris(TARGET source)
 	**	Special case for Chan to run from destroyed technology building.
 	*/
 	// Nyerguds's C&C Patch Project v1.04
-	// Consistently use ScenPlayer for scenario exceptions
-	if (GameToPlay == GAME_NORMAL && *this ==  STRUCT_MISSION && ScenPlayer == SCEN_PLAYER_NOD && Scenario == 10) {
-		InfantryClass * i = new InfantryClass(INFANTRY_CHAN, House->Class->House);
+	// Made tech center spawn configurable.
+	if (GameToPlay == GAME_NORMAL && *this ==  STRUCT_MISSION && MissionTargetSpawn != INFANTRY_NONE) {
+		InfantryClass * i = new InfantryClass(MissionTargetSpawn, House->Class->House);
 
 		ScenarioInit++;
 		if (i->Unlimbo(Center_Coord(), DIR_N)) {
-			i->Trigger = TriggerClass::As_Pointer("CHAN");
+			if (MissionTargetTrigger[0] != '\0') {
+				i->Trigger = TriggerClass::As_Pointer(MissionTargetTrigger);
+			}
 			i->Strength = Random_Pick(5, (int)i->Class->MaxStrength);
 			ScenarioInit--;
 			i->Scatter(0, true);
@@ -3859,6 +3861,7 @@ int BuildingClass::Mission_Deconstruction(void)
 
 		case DURING:
 			if (IsReadyToCommence) {
+				int money = Refund_Amount();
 
 				/*
 				**	Construction yards that deconstruct, really just revert back
@@ -3875,8 +3878,8 @@ int BuildingClass::Mission_Deconstruction(void)
 						**	health condition that the construction yard was in.
 						*/
 						int ratio = Health_Ratio();
-						int money = Refund_Amount();
 
+						Limbo();
 						delete this;
 
 						if (unit->Unlimbo(Coord_Snap(Adjacent_Cell(Coord, DIR_SE)), DIR_SW)) {
@@ -3890,7 +3893,8 @@ int BuildingClass::Mission_Deconstruction(void)
 							House->Refund_Money(money);
 						}
 					} else {
-						House->Refund_Money(Refund_Amount());
+						House->Refund_Money(money);
+						Limbo();
 						delete this;
 					}
 
@@ -3908,7 +3912,7 @@ int BuildingClass::Mission_Deconstruction(void)
 					/*
 					**	The player gets part of the money back for the sell.
 					*/
-					House->Refund_Money(Refund_Amount());
+					House->Refund_Money(money);
 					Limbo();
 
 					/*

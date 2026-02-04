@@ -660,15 +660,19 @@ bool MapClass::Read_Binary(char const * root, unsigned long *crc)
 			unsigned char TIcon;		// Template icon number.
 		} temp;
 
+		// Nyerguds's C&C Patch Project v1.04
+		// This checked for "None" and replaced with "None". Instead, revert explicit Clear terrain.
 		if (file.Read(&temp, sizeof(temp)) != sizeof(temp)) break;
-		if (temp.TType == (TemplateType)255) {
+		if (temp.TType == TEMPLATE_CLEAR1) {
 			temp.TType = TEMPLATE_NONE;
+			temp.TIcon = 0;
 		}
 
 		/*
 		**	Verify that the template type actually contains the template number specified. If
 		**	an illegal icon was specified, then replace it with clear terrain.
 		*/
+		// Nyer note: might remove; don't think it works, and might allow cheating in multiplay by making any terrain passable.
 		if (temp.TType != TEMPLATE_CLEAR1 && temp.TType != TEMPLATE_NONE) {
 			shape = TemplateTypeClass::As_Reference(temp.TType).Get_Image_Data();
 			if (shape) {
@@ -1005,7 +1009,7 @@ int MapClass::Validate(void)
 	TemplateType ttype;
 	unsigned char ticon;
 	TemplateTypeClass const *tclass;
-	unsigned char map[13*8];
+	unsigned char map[TEMPLATE_MAX_SIZE];
 	OverlayType overlay;
 	SmudgeType smudge;
 	ObjectClass *obj;

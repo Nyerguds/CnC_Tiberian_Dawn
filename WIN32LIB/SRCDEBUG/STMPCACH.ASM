@@ -83,15 +83,15 @@ global		C IconSetList:IconSetType
 ;* Cache_Copy_Icon -- copy an icon to its video memory cache                                    *
 ;*                                                                                              *
 ;*                                                                                              *
-;* INPUT:	eax - ptr to icon_data                                                          *
+;* INPUT:       eax - ptr to icon_data                                                          *
 ;*              edx - ptr to video surface                                                      *
 ;*              ebx - pitch of video surface                                                    *
 ;*                                                                                              *
 ;* OUTPUT:      none                                                                            *
 ;*                                                                                              *
 ;* PROTO:       extern "C" Cache_Copy_Icon (void const *icon_ptr ,                              *
-;*		VideoSurfaceDescription.lpSurface ,                                             *
-;*		VideoSurfaceDescription.lPitch);						*
+;*              VideoSurfaceDescription.lpSurface ,                                             *
+;*              VideoSurfaceDescription.lPitch);                                                *
 ;*                                                                                              *
 ;* HISTORY:                                                                                     *
 ;*   11/8/95 3:16PM ST: Created                                                                 *
@@ -125,7 +125,7 @@ endp		Cache_Copy_Icon_
 ;* Is_Icon_Cached -- has an icon been cached? If not, is it cacheable?                          *
 ;*                                                                                              *
 ;*                                                                                              *
-;* INPUT:	eax - ptr to icon_data                                                          *
+;* INPUT:       eax - ptr to icon_data                                                          *
 ;*              edx - icon number                                                               *
 ;*                                                                                              *
 ;* OUTPUT:      eax - index of cached icon or -1 if not cached                                  *
@@ -233,7 +233,7 @@ endp		Is_Icon_Cached_
 ;* Is_Stamp_Registered -- has an icon's set been previously registered?                         *
 ;*                                                                                              *
 ;*                                                                                              *
-;* INPUT:	eax - ptr to icon_data                                                          *
+;* INPUT:       eax - ptr to icon_data                                                          *
 ;*                                                                                              *
 ;* OUTPUT:      eax - ptr to registration entry or -1 if not registered                         *
 ;*                                                                                              *

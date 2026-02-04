@@ -1601,8 +1601,13 @@ class TemplateTypeClass: public ObjectTypeClass
 		*/
 		unsigned char Width,Height;
 
-		LandType AltLand;
-		char const *AltIcons;
+		/*
+		**	Array of land types, represented as string.
+		*/
+		char const *LandTypes;
+
+		//LandType AltLand;
+		//char const *AltIcons;
 
 		//----------------------------------------------------------
 		TemplateTypeClass(
@@ -1613,8 +1618,9 @@ class TemplateTypeClass: public ObjectTypeClass
 			LandType land,
 			int width,
 			int height,
-			LandType altland,
-			char const *alticons);
+			char const * landtypes);
+			//LandType altland,
+			//char const *alticons);
 		virtual RTTIType  What_Am_I(void) const {return RTTI_TEMPLATETYPE;};
 
 		static TemplateType  From_Name(char const *name);
@@ -1628,10 +1634,10 @@ class TemplateTypeClass: public ObjectTypeClass
 		virtual bool  Create_And_Place(CELL cell, HousesType house=HOUSE_NONE) const;
 		virtual ObjectClass *  Create_One_Of(HouseClass *) const;
 		virtual short const *  Occupy_List(bool placement=false) const;
-
 		#ifdef SCENARIO_EDITOR
 		virtual void  Display(int x, int y, WindowNumberType window, HousesType house=HOUSE_NONE) const;
 		#endif
+		virtual LandType Get_Land_Type(int icon) const;
 
 	private:
 		static TemplateTypeClass const * const Pointers[TEMPLATE_COUNT];

@@ -216,7 +216,7 @@ bool OverlayClass::Mark(MarkType mark)
 		if (mark == MARK_DOWN) {
 			CELL	cell = Coord_Cell(Coord);
 			CellClass * cellptr = &Map[cell];
-
+			OverlayType current = cellptr->Overlay;
 			// Nyerguds's C&C Patch Project v1.04
 			// Make all the following cases recalc the cell attributes.
 			if (*this == OVERLAY_ROAD) {
@@ -227,10 +227,10 @@ bool OverlayClass::Mark(MarkType mark)
 				*/
 				// Nyerguds's C&C Patch Project v1.04
 				// Allow ROAD to replace CONC to account for extra filled CONC cells taking up where missions have ROAD placed.
-				if ((cellptr->Overlay == OVERLAY_ROAD && cellptr->OverlayData == 0) ||
-					((cellptr->Overlay == OVERLAY_NONE || cellptr->Overlay == OVERLAY_CONCRETE) && cellptr->Is_Generally_Clear())) {
+				if ((current == OVERLAY_ROAD && cellptr->OverlayData == 0) ||
+					((current == OVERLAY_NONE || current == OVERLAY_CONCRETE) && cellptr->Is_Generally_Clear())) {
 
-					if (cellptr->Overlay == OVERLAY_ROAD) {
+					if (current == OVERLAY_ROAD) {
 						cellptr->OverlayData = 1;
 					} else {
 						cellptr->OverlayData = 0;
@@ -261,7 +261,7 @@ bool OverlayClass::Mark(MarkType mark)
 					delete this;
 					return(false);
 				}
-			} else if ((cellptr->Overlay == OVERLAY_NONE || cellptr->Overlay == OVERLAY_SQUISH || cellptr->Is_Ignorable_Concrete())
+			} else if ((current == OVERLAY_NONE || current == OVERLAY_SQUISH || cellptr->Is_Ignorable_Concrete())
 				&& !cellptr->Cell_Terrain() && Ground[cellptr->Land_Type()].Build) {
 
 				/*

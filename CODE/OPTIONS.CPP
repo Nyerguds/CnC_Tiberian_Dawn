@@ -573,7 +573,34 @@ void OptionsClass::Load_Settings (void)
 	NoSmartAirstrikes = WWGetPrivateProfileBool("Patch", "NoSmartAirstrikes", false, buffer);
 	PanScrollRate = MIN(64, MAX(0, WWGetPrivateProfileInt("Patch", "PanScrollRate", 4, buffer)));
 	ShowPanScrollLine = WWGetPrivateProfileBool("Patch", "ShowPanScrollLine", false, buffer);
+
 	char workbuf[128];
+
+	// If difficulty is not changed from command line, see if it can be changed here.
+	// Despite using the Obfuscate logic, this is not meant as "hidden" option, so it is added under [Patch], not [Options].
+	if (!Special.IsEasy && !Special.IsDifficult) {
+		WWGetPrivateProfileString("Patch", "Difficulty", "", workbuf, sizeof(workbuf), buffer);
+		switch (Obfuscate(workbuf)) {
+
+			/*
+			**	Signal that easy mode is active.
+			*/
+			case PARM_EASY:
+				Special.IsHealthBar = true;
+				Special.IsEasy = true;
+				Special.IsDifficult = false;
+				break;
+
+			/*
+			**	Signal that hard mode is active.
+			*/
+			case PARM_HARD:
+				Special.IsHealthBar = false;
+				Special.IsEasy = false;
+				Special.IsDifficult = true;
+				break;
+		}
+	}
 
 	/*
 	**	Check for and possible enable true object names.

@@ -1937,7 +1937,7 @@ typedef enum ArmorType {
 
 
 /**********************************************************************
-**	Magic color fading pulsing effect limts -- color gun value.
+**	Magic color fading pulsing effect limits -- color gun value.
 */
 #define	MIN_CYCLE_COLOR		16
 #define	MAX_CYCLE_COLOR		63
@@ -2015,6 +2015,14 @@ inline TextPrintType operator ~(TextPrintType);
 
 #define	EACH_UNIT_MAX			(UNIT_MAX/4)			// Default maximum any one player can have.
 #define	EACH_BUILDING_MAX		(BUILDING_MAX/4)		// Default maximum any one player can build.
+
+
+/**********************************************************************
+**	Global maximums for the size (in icons) a single tileset can have.
+*/
+#define TEMPLATE_MAX_WIDTH 		13
+#define TEMPLATE_MAX_HEIGHT		8
+#define TEMPLATE_MAX_SIZE  		TEMPLATE_MAX_HEIGHT * TEMPLATE_MAX_WIDTH
 
 
 /**********************************************************************
@@ -2514,9 +2522,10 @@ typedef enum SourceType {
 **	corresponding GroundType structure.
 */
 typedef struct {
-	int				Color;					// Radar map (map editor) id color.
-	unsigned char	Cost[SPEED_COUNT];	// Terrain effect cost (normal).
-	bool				Build;					// Can build on this terrain?
+	char      Letter;            // Unique letter for reading this type from string.
+	int       Color;             // Radar map (map editor) id color.
+	unsigned  Cost[SPEED_COUNT]; // Terrain effect cost (normal).
+	bool      Build;             // Can build on this terrain?
 } GroundType;
 
 

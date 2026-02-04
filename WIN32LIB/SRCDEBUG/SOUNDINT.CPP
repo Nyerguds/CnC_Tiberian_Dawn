@@ -79,7 +79,7 @@ extern	DebugBuffer[];
 
 
 /***************************************************************************
- * SIMPLE_COPY -- Copyies 1 or 2 source chuncks to a dest                  *
+ * SIMPLE_COPY -- Copies 1 or 2 source chuncks to a dest                   *
  *                                                                         *
  * INPUT:                                                                  *
  *                                                                         *

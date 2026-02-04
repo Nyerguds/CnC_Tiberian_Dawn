@@ -242,36 +242,9 @@ MixFileClass::MixFileClass(char const *filename)
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/23/1994 JLB : Created.                                                                 *
+ *   01/28/2026 MM  : Added size output overload.                                              *
  *=============================================================================================*/
-void const * MixFileClass::Retrieve(char const *filename) {
-	void *ptr = 0;
-	Offset(filename, &ptr);
-//	if (!ptr) {
-//		errno = ENOENT;
-//		File_Fatal(filename);
-//	}
-	return(ptr); 
-};
-
-/***********************************************************************************************
- * MixFileClass::Retrieve_With_Length -- Retrieves a pointer to the specified data file.       *
- *                                                                                             *
- *    This routine will return with a pointer to the specified data file if the file resides   *
- *    in memory. Otherwise, this routine returns NULL. Use this routine to access a resident   *
- *    file directly rather than going through the process of pseudo disk access. This will     *
- *    save both time and RAM.                                                                  *
- *                                                                                             *
- * INPUT:   filename -- Pointer to the filename of the data file to retrieve a pointer to.     *
- *                                                                                             *
- * OUTPUT:  Returns with a pointer to the data file's data. If the file is not in RAM, then    *
- *          NULL is returned.                                                                  *
- *                                                                                             *
- * WARNINGS:   none                                                                            *
- *                                                                                             *
- * HISTORY:                                                                                    *
- *   08/23/1994 JLB : Created.                                                                 *
- *=============================================================================================*/
-void const * MixFileClass::Retrieve_With_Length(char const *filename, long *size) {
+void const * MixFileClass::Retrieve(char const *filename, long *size) {
 	void *ptr = 0;
 	Offset(filename, &ptr, NULL, NULL, size);
 //	if (!ptr) {

@@ -1055,14 +1055,12 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 			**	is not very close, then fire on it instead. In easy mode, they never run over the
 			**	player. In hard mode, they always do. In normal mode, they only overrun past
 			**	mission #8.
+			**	Non-harvester unarmed units (MCV, MHQ) will always try to crush, since they
+			**	generally have nothing better to do.
 			*/
-			if ((Class->Primary == WEAPON_NONE || (Distance(source) < 0x0180 && Class->Primary != WEAPON_FLAME_TONGUE)) &&
-						(GameToPlay != GAME_NORMAL ||
-						*this != UNIT_HARVESTER ||
-						BuildLevel > 8 ||
-						Special.IsDifficult) &&
-						!Special.IsEasy &&
-						Class->IsCrusher &&  source->Is_Techno() && ((TechnoTypeClass const &)source->Class_Of()).IsCrushable) {
+			if (!Special.IsEasy && Class->IsCrusher && source->Is_Techno() && source->Class_Of().IsCrushable &&
+					(Class->Primary == WEAPON_NONE || (Distance(source) < 0x0180 && Weapons[Class->Primary].Fires != BULLET_FLAME)) &&
+					(GameToPlay != GAME_NORMAL || *this != UNIT_HARVESTER || BuildLevel > 8 || Special.IsDifficult)) {
 
 				Assign_Destination(source->As_Target());
 				Assign_Mission(MISSION_MOVE);

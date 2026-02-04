@@ -307,7 +307,10 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 	*/
 	memset(CustomRadarExt, 0, sizeof(CustomRadarExt));
 	Patsux = false;
+	PassiveHelis = false;
 	RemoveBuildExceptions = false;
+	MissionTargetSpawn = INFANTRY_NONE;
+	memset (MissionTargetTrigger, 0, sizeof(MissionTargetTrigger));
 
 	/*
 	**	For single-player scenarios, 'BuildLevel' is the scenario number.
@@ -315,18 +318,7 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 	**	it needs to know the BuildLevel for the sidebar.)
 	*/
 	if (GameToPlay == GAME_NORMAL) {
-#ifdef NEWMENU
 		BuildLevel = WWGetPrivateProfileInt("Basic", "BuildLevel", Scenario, buffer);
-#else
-		BuildLevel = Scenario;
-#endif
-
-		// Nyerguds's C&C Patch Project v1.04:
-		// Added PATSUX laser orca
-		Patsux = WWGetPrivateProfileBool("Basic", "Patsux", 0, buffer);
-		RemoveBuildExceptions = WWGetPrivateProfileBool("Basic", "RemoveBuildExceptions", 0, buffer);
-		// Custom radar extension
-		WWGetPrivateProfileString("Basic", "RadarLogo", NULL, CustomRadarExt, sizeof(CustomRadarExt), buffer);
 	}
 	/*
 	**	Jurassic scenarios are allowed to build the full multiplayer set
@@ -382,26 +374,39 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 //	if (GameToPlay == GAME_NORMAL && (ScenPlayer == SCEN_PLAYER_GDI || ScenPlayer == SCEN_PLAYER_NOD)) {
 	if (GameToPlay == GAME_NORMAL) {
 		WWGetPrivateProfileString("Basic", "Player", "GoodGuy", buf, 127, buffer);
+		PlayerPtr = HouseClass::As_Pointer(HouseTypeClass::From_Name(buf));
+		PlayerPtr->IsHuman = true;
 		CarryOverPercent = WWGetPrivateProfileInt("Basic", "CarryOverMoney", 100, buffer);
 		CarryOverPercent = Cardinal_To_Fixed(100, CarryOverPercent);
 		CarryOverCap = WWGetPrivateProfileInt("Basic", "CarryOverCap", -1, buffer);
+
 		// Nyerguds's C&C Patch Project v1.04
+		// Various added mission options:
 		// Disallow AI ion/nuke triggers unless they have the correct building at the time of the triggering.
 		AllowDetachedAISupers = WWGetPrivateProfileBool("Basic", "AllowDetachedAISupers", false, buffer);
 		// Make AI helis passive in this scenario.
 		bool isPassive = ScenPlayer == SCEN_PLAYER_NOD && Scenario == 7 && ScenVar == SCEN_VAR_C;
 		PassiveHelis = WWGetPrivateProfileBool("Basic", "PassiveHelis", isPassive, buffer);
-
-		// Nyerguds's C&C Patch Project v1.04
-		// Added ini keys for controlling nuke pieces.
+		// Ini keys for controlling nuke pieces.
 		int neededpieces = WWGetPrivateProfileInt("Basic", "RequiredNukePieces", 3, buffer);
 		RequiredNukePieces = MAX(0, neededpieces);
 		bool nukeInherit = WWGetPrivateProfileBool("Basic", "PlayerNukeInherit", false, buffer);
 		int newpieces = WWGetPrivateProfileInt("Basic", "PlayerNukePieces", 3, buffer);
-
-		PlayerPtr = HouseClass::As_Pointer(HouseTypeClass::From_Name(buf));
-		PlayerPtr->IsHuman = true;
-
+		// PATSUX laser orca
+		Patsux = WWGetPrivateProfileBool("Basic", "Patsux", 0, buffer);
+		RemoveBuildExceptions = WWGetPrivateProfileBool("Basic", "RemoveBuildExceptions", 0, buffer);
+		// Custom radar extension
+		WWGetPrivateProfileString("Basic", "RadarLogo", NULL, CustomRadarExt, sizeof(CustomRadarExt), buffer);
+		// Spawn infantry from tech center
+		bool ischanmission = ScenPlayer == SCEN_PLAYER_NOD && Scenario == 10 && ScenDir == SCEN_DIR_EAST && ScenVar == SCEN_VAR_A;
+		InfantryType missSpawn = ischanmission ? INFANTRY_CHAN : INFANTRY_NONE;
+		WWGetPrivateProfileString("Basic", "MissionTargetSpawn", 
+			missSpawn == INFANTRY_NONE ? "None" : InfantryTypeClass::As_Reference(missSpawn).IniName,
+			buf, 127, buffer);
+		MissionTargetSpawn = InfantryTypeClass::From_Name(buf);
+		if (MissionTargetSpawn != INFANTRY_NONE) {
+			WWGetPrivateProfileString("Basic", "MissionTargetTrigger", ischanmission ? "WIN" : NULL, MissionTargetTrigger, sizeof(MissionTargetTrigger), buffer);
+		}
 		if (Options.NodCollectathon && ScenPlayer == SCEN_PLAYER_NOD && Scenario < 20) {
 			nukeInherit = true;
 			RequiredNukePieces = 3;

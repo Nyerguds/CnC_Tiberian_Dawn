@@ -543,6 +543,15 @@ void CellClass::Recalc_Attributes(void)
 	if (TType != TEMPLATE_NONE) {
 		TemplateTypeClass const *ttype = &TemplateTypeClass::As_Reference(TType);
 
+		// Nyerguds's C&C Patch Project v1.04
+		// Use new string-based system to read land types.
+		int icon = TIcon;
+		if (icon < TEMPLATE_MAX_SIZE) {
+			Land = ttype->Get_Land_Type(icon);
+			return;
+		}
+
+#ifdef OBSOLETE
 		/*
 		**	If there is an exception type list for the icons of this template, then
 		**	find out if the current icon is one of them. If so, apply the exception
@@ -563,6 +572,7 @@ void CellClass::Recalc_Attributes(void)
 		/*
 		**	No exception found, so just return the default ground type for this template.
 		*/
+#endif
 		Land = ttype->Land;
 		return;
 	}

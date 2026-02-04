@@ -2479,9 +2479,11 @@ ActionType TechnoClass::What_Action(ObjectClass * object) const
 		/*
 		**	If firing is possible and legal, then return this action potential.
 		*/
+		// Nyerguds's C&C Patch Project v1.04
+		// TreeTarget now only allows targeting destructible trees.
 		if (IsOwnedByPlayer
 			&& (ctrldown || !House->Is_Ally(object))
-			&& (ctrldown || object->Class_Of().IsLegalTarget || (Special.IsTreeTarget && object->What_Am_I() == RTTI_TERRAIN))) {
+			&& (ctrldown || object->Class_Of().IsLegalTarget || (Special.IsTreeTarget && object->What_Am_I() == RTTI_TERRAIN && !object->Class_Of().IsImmune))) {
 			if (Can_Player_Move() || In_Range(object, 0)) {
 				return(ACTION_ATTACK);
 			}
@@ -3585,7 +3587,9 @@ int TechnoClass::Value(void) const
 	**	In early missions, contents of transports are not figured
 	**	into the total value. - 8/16/95
 	*/
-	if (BuildLevel > 8 || GameToPlay != GAME_NORMAL) {
+	// Nyerguds's C&C Patch Project v1.04
+	// All buildlevel 8 limited logic is also included in Hard mode.
+	if (BuildLevel > 8 || GameToPlay != GAME_NORMAL || Special.IsDifficult) {
 		if (Is_Something_Attached()) {
 			FootClass * object = Attached_Object();
 

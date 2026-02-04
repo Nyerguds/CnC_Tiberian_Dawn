@@ -802,7 +802,7 @@ long Load_Sample_Into_Buffer(char const *filename, void *buffer, long size)
 
 
 /***********************************************************************************************
- * Sample_Read -- Reads sample data from an openned file.                                      *
+ * Sample_Read -- Reads sample data from an opened file.                                       *
  *                                                                                             *
  *    This routine reads a sample file.  It is presumed that the file is                       *
  *    already positioned at the start of the sample.  From this, it can                        *

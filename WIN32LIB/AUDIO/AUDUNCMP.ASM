@@ -60,13 +60,13 @@ _4bitdecode	DB	-9,-8,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,8
 ;***************************************************************************
 ;* DECOMPRESS_FRAME -- Uncompresses a WW compressed audio frame            *
 ;*                                                                         *
-;* INPUT:	void * source - pointer to encoded audio data              *
-;*		void * dest   - pointer to decompression area		   *
-;*		long size     - the maximum size of destination buffer	   *
+;* INPUT:       void * source - pointer to encoded audio data              *
+;*              void * dest   - pointer to decompression area              *
+;*              long size     - the maximum size of destination buffer     *
 ;*                                                                         *
 ;* OUTPUT:      long - the number of bytes we uncompressed                 *
 ;*                                                                         *
-;* PROTO:	long Decompress_Frame(void *, void *, long);		   *
+;* PROTO:       long Decompress_Frame(void *, void *, long);               *
 ;*                                                                         *
 ;* HISTORY:                                                                *
 ;*   03/14/1995 PWG : Created.                                             *

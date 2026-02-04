@@ -95,7 +95,9 @@
 										sizeof(RemoveBuildExceptions) + \
 										sizeof(RequiredNukePieces) + \
 										sizeof(AllowDetachedAISupers) + \
-										sizeof(PassiveHelis)))
+										sizeof(PassiveHelis) + \
+										sizeof(MissionTargetSpawn) + \
+										sizeof(MissionTargetTrigger)))
 
 
 /***************************************************************************
@@ -638,6 +640,9 @@ bool Save_Misc_Values(FileClass &file)
 	file.Write(&AllowDetachedAISupers, sizeof(AllowDetachedAISupers));
 	// Added option to make AI helis not default to Area Guard mode.
 	file.Write(&PassiveHelis, sizeof(PassiveHelis));
+	// Added options to customize spawn from tech center destruction.
+	file.Write(&MissionTargetSpawn, sizeof(MissionTargetSpawn));
+	file.Write(MissionTargetTrigger, sizeof(MissionTargetTrigger));		
 	return(true);
 }
 
@@ -745,6 +750,9 @@ bool Load_Misc_Values(FileClass &file)
 	file.Read(&AllowDetachedAISupers, sizeof(AllowDetachedAISupers));
 	// Added option to make AI helis not default to Area Guard mode.
 	file.Read(&PassiveHelis, sizeof(PassiveHelis));
+	// Added options to customize spawn from tech center destruction.
+	file.Read(&MissionTargetSpawn, sizeof(MissionTargetSpawn));
+	file.Read(MissionTargetTrigger, sizeof(MissionTargetTrigger));		
 	return(true);
 }
 

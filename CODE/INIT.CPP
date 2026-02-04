@@ -266,18 +266,20 @@ bool Init_Game(int , char *[])
 	*/
 	SystemStrings = NULL;
 	const char * stringsfile = Language_Name("CONQUER", false);
+	// Nyerguds's C&C Patch Project v1.04:
+	// Retrieve length of strings file, language based file extension for strings.
 	if (RawFileClass(stringsfile).Is_Available()) {
 		SystemStrings = (char const *)Load_Alloc_Data_Size(RawFileClass(stringsfile), &SystemStringsLength);
 	} else {
-		SystemStrings = (char const *)MixFileClass::Retrieve_With_Length(stringsfile, &SystemStringsLength);
+		SystemStrings = (char const *)MixFileClass::Retrieve(stringsfile, &SystemStringsLength);
 	}
 	if (SystemStrings == NULL) {
 		stringsfile = Language_Name("CONQUER", true);
 		if (RawFileClass(stringsfile).Is_Available()) {
 			SystemStrings = (char const *)Load_Alloc_Data_Size(RawFileClass(stringsfile), &SystemStringsLength);
 		} else {
-			SystemStrings = (char const *)MixFileClass::Retrieve_With_Length(stringsfile, &SystemStringsLength);
-		}		
+			SystemStrings = (char const *)MixFileClass::Retrieve(stringsfile, &SystemStringsLength);
+		}
 	}
 
 	/*

@@ -111,19 +111,19 @@ WeaponTypeClass const Weapons[WEAPON_COUNT] = {
 WarheadTypeClass const Warheads[WARHEAD_COUNT] = {
 // Nyerguds's TUC Quick Fix Patch v1.03: warheads
 // Allow 100% values in warheads.
-//	{Sprd,	wall,	wood,	tib,	{vs0,	vs1,	vs2,	vs3,	vs4}}
-	{  2,	false,	false,	false,	{0x100,	0x80,	 0x90,	 0x40,	 0x40}},	//	WARHEAD_SA		Small arms -- good against infantry.
-	{  6,	true, 	true, 	true, 	{ 0xE0,	 0xC0,	 0x90,	 0x40,	0x100}},	//	WARHEAD_HE		High explosive -- good against buildings & infantry.
-	{  6,	true, 	true, 	false,	{ 0x40,	 0xC0,	 0xC0,	0x100,	 0x80}},	//	WARHEAD_AP		Armor piercing -- good against armor.
-	{  8,	false,	true, 	true, 	{ 0xE0,	0x100,	 0xB0,	 0x40,	 0x80}},	//	WARHEAD_FIRE		Incendiary -- Good against flammables.
-	{  4,	false,	false,	false,	{0x100,	0x100,	0x100,	0x100,	0x100}},	//	WARHEAD_LASER		Light Amplification of Stimulated Emission by Radiation.
-	{  7,	true, 	true, 	true, 	{0x100,	0x100,	 0xC0,	 0xC0,	 0xC0}},	//	WARHEAD_PB		Particle beam (neutron beam).
-	{  4,	false,	false,	false,	{0x100,	 0x20,	 0x20,	 0x10,	 0x10}},	//	WARHEAD_FIST		Punching in hand-to-hand combat.
-	{  4,	false,	false,	false,	{0x100,	 0x20,	 0x20,	 0x10,	 0x10}},	//	WARHEAD_FOOT		Kicking in hand-to-hand combat.
-	{  4,	false,	false,	false,	{0x100,	 0x08,	 0x08,	 0x08,	 0x08}},	//	WARHEAD_HOLLOW_POINT	Sniper bullet type.
-	{255,	false,	false,	false,	{0x100,	 0x01,	 0x01,	 0x01,	 0x01}},	//	WARHEAD_SPORE
-	{  1,	true, 	true, 	false,	{0x100,	 0xC0,	 0x80,	 0x20,	 0x08}},	//	WARHEAD_HEADBUTT
-	{  1,	true, 	true, 	false,	{0x100,	 0xC0,	 0x80,	 0x20,	 0x08}},	//	WARHEAD_FEEDME
+//{sprd, wall, wood,  tib,   {  vs0,   vs1,   vs2,   vs3,   vs4}}
+	{  2, false, false, false, {0x100,  0x80,  0x90,  0x40,  0x40}},	//	WARHEAD_SA		Small arms -- good against infantry.
+	{  6, true,  true,  true,  { 0xE0,  0xC0,  0x90,  0x40, 0x100}},	//	WARHEAD_HE		High explosive -- good against buildings & infantry.
+	{  6, true,  true,  false, { 0x40,  0xC0,  0xC0, 0x100,  0x80}},	//	WARHEAD_AP		Armor piercing -- good against armor.
+	{  8, false, true,  true,  { 0xE0, 0x100,  0xB0,  0x40,  0x80}},	//	WARHEAD_FIRE		Incendiary -- Good against flammables.
+	{  4, false, false, false, {0x100, 0x100, 0x100, 0x100, 0x100}},	//	WARHEAD_LASER		Light Amplification of Stimulated Emission by Radiation.
+	{  7, true,  true,  true,  {0x100, 0x100,  0xC0,  0xC0,  0xC0}},	//	WARHEAD_PB		Particle beam (neutron beam).
+	{  4, false, false, false, {0x100,  0x20,  0x20,  0x10,  0x10}},	//	WARHEAD_FIST		Punching in hand-to-hand combat.
+	{  4, false, false, false, {0x100,  0x20,  0x20,  0x10,  0x10}},	//	WARHEAD_FOOT		Kicking in hand-to-hand combat.
+	{  4, false, false, false, {0x100,  0x08,  0x08,  0x08,  0x08}},	//	WARHEAD_HOLLOW_POINT	Sniper bullet type.
+	{255, false, false, false, {0x100,  0x01,  0x01,  0x01,  0x01}},	//	WARHEAD_SPORE
+	{  1, true,  true,  false, {0x100,  0xC0,  0x80,  0x20,  0x08}},	//	WARHEAD_HEADBUTT
+	{  1, true,  true,  false, {0x100,  0xC0,  0x80,  0x20,  0x08}},	//	WARHEAD_FEEDME
 };
 
 
@@ -252,27 +252,29 @@ unsigned char const Facing32Even[256] = {
 **	These are the movement costs (in ticks at fastest speed) to enter each
 **	of the given terrain cells.
 */
-#define	S1	0x00
-#define	S2 0x40
-#define	S3 0x70
-#define	S4 0xA0
-#define	S5 0xC0
-#define	S6 0xFF
+#define	S1 0x00  // 0%
+#define	S2 0x40  // 25%
+#define	S3 0x70  // 43.75%
+#define	S4 0xA0  // 62.5%
+#define	S5 0xC0  // 75%
+#define	S6 0x100 // 100%
 GroundType const Ground[LAND_COUNT] = {
-	//        Foot
-	//        |   Tracked
-	//        |   |   Harvester
-	//        |   |   |   Wheeled
-	//        |   |   |   |   Winged
-	//        |   |   |   |   |   Hover
-	//        |   |   |   |   |   |   float build
-	{66,     {S3, S3, S3, S4, S6, S5, S1 }, true},   // LAND_CLEAR
-	{68,     {S5, S4, S4, S4, S6, S5, S1 }, true},   // LAND_ROAD
-	{BLUE,   {S1, S1, S1, S1, S6, S5, S6 }, false},  // LAND_WATER
-	{DKGREY, {S1, S1, S1, S1, S6, S1, S1 }, false},  // LAND_ROCK
-	{DKGREY, {S1, S1, S1, S1, S6, S1, S1 }, false},  // LAND_WALL
-	{143,    {S3, S3, S3, S4, S6, S5, S1 }, false},  // LAND_TIBERIUM
-	{66,     {S3, S3, S3, S4, S6, S5, S1 }, false},  // LAND_BEACH
+	//             Foot
+	//             |   Tracked
+	//             |   |   Harvester
+	//             |   |   |   Wheeled
+	//             |   |   |   |   Winged
+	//             |   |   |   |   |   Hover
+	//             |   |   |   |   |   |   Float
+	//             |   |   |   |   |   |   |     Build
+  //{'X', 66,   {S3, S3, S3, S4, S6, S5, S1 }, true},   // LAND_NONE (defined as -1, so can't actually be put in the array)
+	{'C', 66,     {S3, S3, S3, S4, S6, S5, S1 }, true},   // LAND_CLEAR
+	{'R', 68,     {S5, S4, S4, S4, S6, S5, S1 }, true},   // LAND_ROAD
+	{'W', BLUE,   {S1, S1, S1, S1, S6, S5, S6 }, false},  // LAND_WATER
+	{'I', DKGREY, {S1, S1, S1, S1, S6, S1, S1 }, false},  // LAND_ROCK (Impassable)
+	{'L', DKGREY, {S1, S1, S1, S1, S6, S1, S1 }, false},  // LAND_WALL
+	{'T', 143,    {S3, S3, S3, S4, S6, S5, S1 }, false},  // LAND_TIBERIUM
+	{'B', 66,     {S3, S3, S3, S4, S6, S5, S1 }, false},  // LAND_BEACH
 };
 
 
