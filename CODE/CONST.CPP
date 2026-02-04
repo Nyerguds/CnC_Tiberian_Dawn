@@ -257,7 +257,7 @@ unsigned char const Facing32Even[256] = {
 #define	S3 0x70  // 43.75%
 #define	S4 0xA0  // 62.5%
 #define	S5 0xC0  // 75%
-#define	S6 0x100 // 100%
+#define	S6 0xFF  // 100% - DO NOT CHANGE THIS TO 0x100 - IT BREAKS GUNBOATS!
 GroundType const Ground[LAND_COUNT] = {
 	//             Foot
 	//             |   Tracked
