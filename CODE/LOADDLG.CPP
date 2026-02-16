@@ -502,15 +502,15 @@ int LoadOptionsClass::Process(void)
 					** it is, set the edit buffer to empty.
 					*/
 					if (game_idx != 0) {
-						// Nyerguds's C&C Patch Project v1.04
+						// Nyerguds's C&C Patch Project v1.04: Remove "old" status when overwriting savegame.
 						// when overwriting an obsolete savegame, trim off the "(old)" prefix,
 						// to prevent it from becoming a real part of the savegame description.
 						int skip = Files[game_idx]->Valid ? 0 : strlen(Text_String(TXT_OLD_GAME));
-						strcpy(game_descr,listbtn.Get_Item(game_idx)+skip);
+						strcpy(game_descr, listbtn.Get_Item(game_idx) + skip);
 					} else {
 						game_descr[0] = 0;
 					}
-					editbtn.Set_Text(game_descr,40);
+					editbtn.Set_Text(game_descr, 40);
 				}
 				break;
 

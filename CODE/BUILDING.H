@@ -278,7 +278,7 @@ class BuildingClass : public TechnoClass
 		/*
 		** Special extra stuff
 		*/
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: Oil derrick flame functions.
 		void  Flame_Spout(void);
 		void  Flame_Out(void);
 		

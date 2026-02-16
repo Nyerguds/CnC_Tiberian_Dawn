@@ -682,7 +682,7 @@ bool BulletClass::Unlimbo(COORDINATE coord, DirType dir)
 			/*
 			**	Limit scatter to the weapon range of the firer.
 			*/
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: fix grenade range vs buildings falling short.
 			// Add actual range as max scatter range, to fix attacks against buildings falling short.
 			if (MaxScatterRange) {
 				int overflow = Distance(tcoord) - MaxScatterRange;
@@ -771,6 +771,7 @@ bool BulletClass::Unlimbo(COORDINATE coord, DirType dir)
  *                                                                                             *
  *    This routine sets the object to retaliate to, and, if no object is available,            *
  *    then at least the house to blame.                                                        *
+ *    Set_Payback - Created for Nyerguds's C&C Patch Project v1.04.                            *
  *                                                                                             *
  * INPUT:   payback    -- Techno object to pay back for the damage caused.                     *
  *                                                                                             *

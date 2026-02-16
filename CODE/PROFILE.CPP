@@ -185,6 +185,8 @@ bool WWWritePrivateProfileInt(char const *section, char const *entry, int value,
 /***********************************************************************************************
  * WWGetPrivateProfileBool -- Fetches boolean value.                                           *
  *                                                                                             *
+ *    WWGetPrivateProfileBool - Created for Nyerguds's C&C Patch Project v1.04.                *
+ *                                                                                             *
  * INPUT:                                                                                      *
  *      section      section to read from                                                      *
  *                                                                                             *
@@ -237,6 +239,8 @@ bool WWGetPrivateProfileBool(char const *section, char const *entry, bool def, c
 
 /***********************************************************************************************
  * WWWritePrivateProfileBool -- Write a profile bool to the profile data block.                *
+ *                                                                                             *
+ *    WWWritePrivateProfileBool - Created for Nyerguds's C&C Patch Project v1.04.              *
  *                                                                                             *
  * INPUT:                                                                                      *
  *      section      section name to write to                                                  *

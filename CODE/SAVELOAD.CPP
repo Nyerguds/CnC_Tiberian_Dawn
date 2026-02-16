@@ -138,15 +138,14 @@
  * HISTORY:                                                                *
  *   12/28/1994 BR : Created.                                              *
  *=========================================================================*/
-bool Save_Game(int id,char *descr)
+bool Save_Game(int id, char *descr)
 {
 	RawFileClass file;
 	char name[_MAX_FNAME+_MAX_EXT];
 	int i;
 	unsigned long version;
 	unsigned scenario;
-	// Nyerguds's C&C Patch Project v1.04
-	// Fix funpark campaign savegames
+	// Nyerguds's C&C Patch Project v1.04: Fix funpark campaign savegames.
 	ScenarioPlayerType campaign;
 	char descr_buf[DESCRIP_MAX];
 
@@ -623,7 +622,7 @@ bool Save_Misc_Values(FileClass &file)
 	// This is new...
 	file.Write(ActionMovie, sizeof(ActionMovie));
 
-	// Nyerguds's C&C Patch Project v1.04:
+	// Nyerguds's C&C Patch Project v1.04: New saved data.
 	// Added custom radar extension support
 	file.Write(CustomRadarExt, sizeof(CustomRadarExt));
 	// fixed Commando last bomb target not getting transferred in savegames.
@@ -733,7 +732,7 @@ bool Load_Misc_Values(FileClass &file)
 	file.Read(BriefingText, sizeof(BriefingText));
 	file.Read(ActionMovie, sizeof(ActionMovie));
 
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: New loaded data.
 	// Added custom radar extension support
 	file.Read(CustomRadarExt, sizeof(CustomRadarExt));
 	// fixed Commando last bomb target not getting transferred in savegames.
@@ -904,13 +903,12 @@ void Decode_All_Pointers(ScenarioPlayerType campaign)
 	*/
 	PlayerPtr = HouseClass::As_Pointer((HousesType)PlayerPtr);
 	if (campaign == SCEN_PLAYER_JP && Scenario < 20) {
-		// Nyerguds's C&C Patch Project v1.04
-		// For Funpark, set the player choice, not the player house.
+		// Nyerguds's C&C Patch Project v1.04: For Funpark, set player choice, not house.
 		Whom = PlayerPtr->ActLike;
 	} else {
 		Whom = PlayerPtr->Class->House;
 	}
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Load campaign ID, not House ID.
 	// Actually save and load campaign ID from the savegame's header, rather than this messy lookup from house type.
 	// The original code could cause a GDI mission inserted in the Nod campaign to make the player switch campaigns.
 	// Note that the Funpark check was wrong anyway; the player in these missions is Multi4, not JP.

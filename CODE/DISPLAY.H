@@ -155,8 +155,7 @@ class DisplayClass: public MapClass
 		void  Center_Map(void);
 		virtual bool Map_Cell(CELL cell, HouseClass *house);
 		virtual CELL Click_Cell_Calc(int x, int y);
-		// Nyerguds's C&C Patch Project v1.04
-		// Add power label support
+		// Nyerguds's C&C Patch Project v1.04: Add power label support.
 		virtual void Help_Text(int /*text*/, int /*x*/=-1, int /*y*/=-1, int /*color*/=YELLOW, bool /*quick*/=false, int /*cost*/=0, bool /*showcost*/=false, int /*drain*/=0, int /*power*/=0, bool /*showpower*/=false) {};
 		virtual MouseType Get_Mouse_Shape(void) const = 0;
 		virtual bool Scroll_Map(DirType facing, int & distance, bool really);
@@ -275,6 +274,12 @@ class DisplayClass: public MapClass
 		**	the extended selection is in progress.
 		*/
 		unsigned IsRubberBand:1;
+
+		/*
+		 *	Last game tick when a mouse click occurred. This is a hotfix mechanism for
+		 *	preventing extra "ghost"click events from messing with the game.
+		 */
+		long LastClickTick;
 
 		/*
 		**	The moment the mouse is held down, this flag gets set. If the mouse is dragged

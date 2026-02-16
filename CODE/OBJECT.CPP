@@ -280,6 +280,7 @@ void const * ObjectTypeClass::Get_Cameo_Data(void) const
  * ObjectTypeClass::Cameo_Is_Theater_Shape -- should cameo be cached as theater data?          *
  *                                                                                             *
  *    This routine will return whether the cameo data should be cached as theater data.        *
+ *    Cameo_Is_Theater_Shape - Created for Nyerguds's C&C Patch Project v1.04.                 *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *
@@ -1328,8 +1329,8 @@ ResultType ObjectClass::Take_Damage(int & damage, int distance, WarheadType warh
 		**	Modify damage based on the warhead type and the armor of the object.
 		*/
 		damage = Modify_Damage(damage, warhead, Class_Of().Armor, distance);
-		// Nyerguds's C&C Patch Project v1.04
-		// If something is literally on fire, it can't be immune from it.
+		// Nyerguds's C&C Patch Project v1.04: Fixes in "on fire" logic.
+		// If something is literally on fire, it can't be immune to it, so always set a minimum.
 		if (fromburn && !damage) {
 			damage = 1;
 		}
@@ -1433,7 +1434,7 @@ bool ObjectClass::Mark(MarkType mark)
 
 	if (!IsInLimbo && IsActive) {
 
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: Fixed recoil logic.
 		// Added RA1's MARK_CHANGE_REDRAW logic to make recoil work.
 		/*
 		**	A mark for change is always successful UNLESS the object

@@ -407,7 +407,7 @@ ResultType InfantryClass::Take_Damage(int & damage, int distance, WarheadType wa
 	**	on their flame gun.
 	*/
 	if (damage && res != RESULT_DESTROYED && *this == INFANTRY_E4) {
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: Extra flamer damage doesn't replace return value.
 		// The extra damage on flamers no longer corrupts the returned damage value.
 		int origDamage = damage;
 		damage = 5;
@@ -426,7 +426,7 @@ ResultType InfantryClass::Take_Damage(int & damage, int distance, WarheadType wa
 		Assign_Mission(MISSION_GUARD);
 		Commence();
 
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: Dying infantry damage is attributed to killer.
 		// On UnitClass, this damage gets attributed to the one killing
 		// the unit, so it's only logical the same is done here.
 		/*
@@ -479,8 +479,7 @@ ResultType InfantryClass::Take_Damage(int & damage, int distance, WarheadType wa
 			case WARHEAD_SPORE:
 			case WARHEAD_HOLLOW_POINT:
 			case WARHEAD_SA:
-			// Nyerguds's C&C Patch Project v1.04
-			// Always have a default death anim
+			// Nyerguds's C&C Patch Project v1.04: Always have a default death anim.
 			default:
 				Sound_Effect(sound, Coord);
 				Do_Action(DO_GUN_DEATH, true);
@@ -2408,7 +2407,7 @@ TARGET InfantryClass::Greatest_Threat(ThreatType threat) const
 			if (!Class->IsCapture) {
 				return(TARGET_NONE);
 			}
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Prevent weapon lookup if there is no weapon.
 			// added break here; "fall into next case." causes it to check illegal index -1 in weapons list.
 			break;
 
@@ -2550,8 +2549,7 @@ void InfantryClass::Response_Move(void)
 				VOC_ROGER,
 				VOC_RIGHT_AWAY,
 				VOC_UGOTIT,
-				// Nyerguds's C&C Patch Project v1.04
-				// reactivated unused sound "Over and out"
+				// Nyerguds's C&C Patch Project v1.04: Reactivated unused sound "Over and out".
 				VOC_OVEROUT,
 				VOC_AFFIRM,
 				VOC_AFFIRM
@@ -2608,8 +2606,7 @@ void InfantryClass::Response_Attack(void)
 				VOC_NO_PROB,
 				VOC_RIGHT_AWAY,
 				VOC_UGOTIT,
-				// Nyerguds's C&C Patch Project v1.04
-				// reactivated unused sound "Over and out"
+				// Nyerguds's C&C Patch Project v1.04: Reactivated unused sound "Over and out".
 				VOC_OVEROUT,
 				VOC_AFFIRM,
 				VOC_AFFIRM
@@ -2627,6 +2624,7 @@ void InfantryClass::Response_Attack(void)
  *                                                                                             *
  *    When the player gives an infantry unit the order to sabotage a building, this routine    *
  *    handles the audio response by that unit.                                                 *
+ *    Response_Sabotage - Created for Nyerguds's TUC Quick Fix Patch v1.02.                    *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *
@@ -2635,7 +2633,7 @@ void InfantryClass::Response_Attack(void)
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   08/06/2025 MM : Created as part of Nyerguds's TUC Quick Fix Patch v1.02                   *
+ *   08/06/2025 MM : Created.                                                                  *
  *=============================================================================================*/
 void InfantryClass::Response_Sabotage(void)
 {
@@ -2670,7 +2668,7 @@ void InfantryClass::Response_Sabotage(void)
 COORDINATE InfantryClass::Fire_Coord(int /*which*/, bool forrange, COORDINATE /*coords*/) const
 {
 	Validate();
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Remove north shift for range calculations.
 	// Allow getting the fire coords for any given target to correctly calculate range.
 	COORDINATE coord = Center_Coord();
 	// For range calculations, remove the north shift.
@@ -2845,7 +2843,7 @@ ActionType InfantryClass::What_Action(ObjectClass * object) const
 	/*
 	**	Check to see if it can enter a transporter.
 	*/
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Enter cursor can't override Ctrl or Ctrl+Alt.
 	// Don't allow ENTER to override Ctrl or Ctrl+Alt. Alt is still allowed to be overridden.
 	if (
 		action != ACTION_ATTACK && action != ACTION_GUARD_AREA &&
@@ -2853,13 +2851,12 @@ ActionType InfantryClass::What_Action(ObjectClass * object) const
 		((InfantryClass *)this)->Transmit_Message(RADIO_CAN_LOAD, (TechnoClass*)object) == RADIO_ROGER) {
 		action = ACTION_ENTER;
 	}
-	// Nyerguds's C&C Patch Project v1.04
-	// Simplified due to new Remaster capture logic.
+	// Nyerguds's C&C Patch Project v1.04: Capture check refactored to new function.
+	// This is simplified due to the new Remaster capture logic.
 	if (Class->IsCapture && action == ACTION_ATTACK && object->Owner() != Owner() && object->Can_Capture()) {
 		action = ACTION_CAPTURE;
 	}
-	// Nyerguds's C&C Patch Project v1.04
-	// Fix civilians getting an Attack cursor if they are unarmed.
+	// Nyerguds's C&C Patch Project v1.04: Fix unarmed civilians getting Attack cursor.
 	if (action == ACTION_ATTACK && !Can_Player_Fire()) {
 		action = ACTION_NONE;
 	}

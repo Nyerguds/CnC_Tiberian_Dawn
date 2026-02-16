@@ -141,7 +141,7 @@ bool SuperClass::Suspend(bool on)
  *=============================================================================================*/
 bool SuperClass::Enable(bool onetime, bool player, bool quiet)
 {
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Separation of One-Time and Permanent supers.
 	// If a permanent ability is present, and a one-time one is added,
 	// temporarily replace the permanent one, but remember the replacement.
 	// If a temporary ability is present, and a permanent one is added,
@@ -255,7 +255,7 @@ bool SuperClass::Discharged(bool player)
 {
 	if (!IsSuspended && IsPresent && IsReady) {
 		IsReady = false;
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: One-time supers can exist alongside Permanent ones.
 		// Permanent replaced by one-time gets swapped to permanent again.
 		if (IsPermanentPending && IsOneTime)
 		{

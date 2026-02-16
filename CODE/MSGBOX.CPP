@@ -41,8 +41,7 @@
 #include	"msgbox.h"
 #include "gadget.h"
 
-// Nyerguds's C&C Patch Project v1.04
-// Unlocked cps briefings
+// Nyerguds's C&C Patch Project v1.04: Unlocked cps briefings for all languages.
 CCMessageBox::CCMessageBox(int caption, bool pict) : Caption(caption), IsPicture(pict)
 {
 }

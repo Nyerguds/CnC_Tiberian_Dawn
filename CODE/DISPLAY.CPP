@@ -167,6 +167,7 @@ DisplayClass::DisplayClass(void)
 	IsTargettingMode = false;
 	IsToRedraw = true;
 	IsRubberBand = false;
+	LastClickTick = -1;
 #ifdef MIDDLE_MOUSE_PANNING
 	IsPanDrag = false;
 #endif
@@ -284,6 +285,7 @@ void DisplayClass::Init_Clear(void)
 	IsTargettingMode = false;
 	IsRepairMode = false;
 	IsRubberBand = false;
+	LastClickTick = -1;
 #ifdef MIDDLE_MOUSE_PANNING
 	IsPanDrag = false;
 #endif
@@ -454,7 +456,7 @@ void DisplayClass::Init_Theater(TheaterType theater)
 
 	Mem_Copy(GamePalette, OriginalPalette, 768);
 
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Fixed corrupted bright colors in fading tables.
 	// Fixed errors in table generating caused by blanking out of water colors.
 	// Separate color source and fade target palettes solve this issue.
 	/*
@@ -529,7 +531,7 @@ void DisplayClass::Init_Theater(TheaterType theater)
 #endif
 #endif
 
-// Nyerguds's C&C Patch Project v1.04
+// Nyerguds's C&C Patch Project v1.04: New translucency table for smoke.
 /*
 **	Extra filter specifically for smoke. This contains the light gray MOUSE one, but is set on
 **	colors that typically don't exist in the vanilla smoke graphics. These are never
@@ -856,7 +858,7 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object)
 				return(true);
 			}
 
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Fix helipad adjacency blocked by heli.
 			/*
 			**	Only check for buildings. Don't mind if they are covered with
 			**	a unit (e.g. on helipads)
@@ -1106,12 +1108,19 @@ void DisplayClass::Cursor_Mark(CELL pos, bool on)
 void DisplayClass::AI(KeyNumType & input, int x, int y)
 {
 	if (
-		IsRubberBand &&
+		// Nyerguds's C&C Patch Project v1.04: Abort panning when touching top or side bar.
+		// This solution isn't really ideal, but it'll do to prevent obvious problems.
+		(IsRubberBand || IsPanDrag) &&
 		(Get_Mouse_X() < TacPixelX ||
 		Get_Mouse_Y() < TacPixelY ||
 		Get_Mouse_X() >= (TacPixelX + Lepton_To_Pixel(TacLeptonWidth)) ||
 		Get_Mouse_Y() >= (TacPixelY + Lepton_To_Pixel(TacLeptonHeight)))) {
-			Mouse_Left_Release(-1, Get_Mouse_X(), Get_Mouse_Y(), NULL, ACTION_NONE);
+			if (IsRubberBand) {
+				Mouse_Left_Release(-1, Get_Mouse_X(), Get_Mouse_Y(), NULL, ACTION_NONE);
+			}
+			if (IsPanDrag){
+				Mouse_Middle_Release();
+			}
 	}
 
 	MapClass::AI(input, x, y);
@@ -1524,8 +1533,7 @@ bool DisplayClass::Scroll_Map(DirType facing, int & distance, bool really)
 	if (really) {
 		Set_Tactical_Position(coord);
 		IsToRedraw = true;
-		// Nyerguds's C&C Patch Project v1.04
-		// Fix large scroll amounts causing refresh errors.
+		// Nyerguds's C&C Patch Project v1.04: Fix large scroll amounts causing refresh errors.
 		bool completeRedraw = xx >= 0x0200 || yy >= 0x0200;
 		Flag_To_Redraw(completeRedraw);
 	}
@@ -1715,9 +1723,9 @@ bool DisplayClass::Map_Cell(CELL cell, HouseClass * house)
 		}
 	}
 
-	// Nyerguds's C&C Patch Project v1.04
-	// Fix for infantry remaining unselectable and
-	// not getting targeted after being revealed.
+	// Nyerguds's C&C Patch Project v1.04: Fix infantry reveal not processing whole cell.
+	// Fix for infantry remaining unselectable and not getting targeted
+	// after being revealed, because they are not all set to Revealed state.
 	ObjectClass * tech = (*this)[cell].Cell_Occupier();
 	while (tech) {
 		if (tech->Is_Techno()) {
@@ -3044,7 +3052,7 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 //			}
 		}
 
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: Fixed priority on special mouse states.
 		// Fixed priority on this, and made all cases mutually exclusive.
 		if (Map.PendingObject) {
 			action = ACTION_NONE;
@@ -3066,11 +3074,12 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 				/*
 				**	Check to see if the cursor is over an owned wall.
 				*/
-				OverlayType ovlt = Map[cell].Overlay;
-				if (ovlt != OVERLAY_NONE && ovlt < OVERLAY_COUNT && Map[cell].Owner == PlayerPtr->Class->House) {
+				CellClass * cellobj = &Map[cell];
+				OverlayType ovlt = cellobj->Overlay;
+				if (ovlt != OVERLAY_NONE && ovlt < OVERLAY_COUNT && cellobj->Owner == PlayerPtr->Class->House) {
 					OverlayTypeClass otc = OverlayTypeClass::As_Reference(ovlt);
-					// Nyerguds's C&C Patch Project v1.04
-					// The Overlay<->building link for walls is now always looked up on ini name.
+					// Nyerguds's C&C Patch Project v1.04: Retrieve StructureType for wall to check Unsellable.
+					// The Overlay<->building link for walls is cached in WallStructureType.
 					// This is initialised in OverlayTypeClass::Init()
 					if (otc.IsWall) {
 						action = ACTION_SELL;
@@ -3095,14 +3104,14 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 			**	the left mouse button were clicked must be determined.
 			*/
 			if (object) {
-				// Nyerguds's C&C Patch Project v1.04
+				// Nyerguds's C&C Patch Project v1.04: Shift key always shows select cursor.
 				// If shift is held over an object, ALWAYS switch to select toggle.
 				bool shift = Keyboard::Down(KN_LSHIFT) || Keyboard::Down(KN_RSHIFT);
 				bool alt = Keyboard::Down(KN_LALT) || Keyboard::Down(KN_RALT);
 				if (shift && object->Class_Of().IsSelectable) {
 					action = ACTION_TOGGLE_SELECT;
 				} else {
-					// Nyerguds's C&C Patch Project v1.04
+					// Nyerguds's C&C Patch Project v1.04: Prioritize Deploy when mouse is over selected unit.
 					// If a selected unit is targeted, execute from that one to test if it's a deployer.
 					// This has an exception for the Alt key, to allow other units a chance to enter it.
 					bool retest = true;
@@ -3127,7 +3136,7 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 					}
 				}
 			} else {
-				// Nyerguds's C&C Patch Project v1.04
+				// Nyerguds's C&C Patch Project v1.04: Find best action for no techno under cursor.
 				// Keep looping until you got something else than "None" or "No move",
 				// so we get a more accurate representation of all units' abilities.
 				for (int index = 0; index < CurrentObject.Count(); index++) {
@@ -3411,7 +3420,7 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
 				Set_Default_Mouse(MOUSE_DEPLOY, wwsmall);
 				break;
 
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Special "can't deploy here" cursor.
 			// Special case where self-targeting is acknowledged to be possible, but currently
 			// unavailable due to external circumstances. Used for the MCV in nondeployable area.
 			case ACTION_NO_SELF:
@@ -3454,7 +3463,7 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
 	**	Give a generic help message when over shadow terrain.
 	*/
 	if (shadow) {
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: Remove beginner hints for Funpark.
 		// Consider secret campaign to be for advanced players; they don't need basic hints.
 		if (Scenario < 4 && GameToPlay == GAME_NORMAL && ScenPlayer != SCEN_PLAYER_JP) {
 			Help_Text(TXT_SHADOW);
@@ -3510,7 +3519,7 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
 					}
 				}
 			}
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Allow advanced tooltips for Funpark.
 			// Consider secret campaign to be for advanced players; they can see advanced hints.
 			if (Scenario > 3 || object->What_Am_I() != RTTI_TERRAIN || GameToPlay != GAME_NORMAL || ScenPlayer == SCEN_PLAYER_JP) {
 				Help_Text(text, -1, -1, color);
@@ -3550,6 +3559,13 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
  *=============================================================================================*/
 void DisplayClass::Mouse_Left_Release(CELL cell, int x, int y, ObjectClass * object, ActionType action, bool wwsmall)
 {
+	// Fix if two click releases happen inside the same game tick.
+	long lastTick = LastClickTick;
+	LastClickTick = TickCount.Time();
+	if (lastTick == LastClickTick) {
+		//ShowUIMessage(true, true, "Double click prevented.");
+		return;
+	}
 	if (PendingObjectPtr) {
 
 		/*
@@ -3607,25 +3623,20 @@ void DisplayClass::Mouse_Left_Release(CELL cell, int x, int y, ObjectClass * obj
 	/*
 	**	Selection of other object action.
 	*/
-	if (action == ACTION_SELECT || (action == ACTION_NONE && object && object->Class_Of().IsSelectable && !object->IsSelected)) {
-		Unselect_All();
-		object->Select();
-		Set_Default_Mouse(MOUSE_NORMAL, wwsmall);
-#ifdef NEVER
-		if (object->Can_Player_Fire()) {
-			Set_Default_Mouse(MOUSE_CAN_ATTACK, wwsmall);
-		} else {
+	if (action == ACTION_SELECT || action == ACTION_NONE) {
+		if (object && object->Class_Of().IsSelectable && !object->IsSelected) {
+			Unselect_All();
+			object->Select();
 			Set_Default_Mouse(MOUSE_NORMAL, wwsmall);
-		}
+#ifdef NEVER
+			if (object->Can_Player_Fire()) {
+				Set_Default_Mouse(MOUSE_CAN_ATTACK, wwsmall);
+			} else {
+				Set_Default_Mouse(MOUSE_NORMAL, wwsmall);
+			}
 #endif
+		}
 		IsTentative = false;
-		return;
-	}
-
-	// Nyerguds's C&C Patch Project v1.04
-	// This seems to have fixed the bug that a click action could
-	// occur after drawing a rubberband box for selecting.
-	if (action == ACTION_NONE || action == ACTION_SELECT || action == ACTION_TOGGLE_SELECT) {
 		return;
 	}
 
@@ -3634,7 +3645,7 @@ void DisplayClass::Mouse_Left_Release(CELL cell, int x, int y, ObjectClass * obj
 	**	to all selected objects.
 	*/
 
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Prioritize object under cursor for self-click.
 	// if the object under the cursor is in the selection, prioritize it, except if Alt is held down.
 	AllowVoice = true;
 	bool loopall = true;
@@ -3689,7 +3700,7 @@ void DisplayClass::Mouse_Left_Release(CELL cell, int x, int y, ObjectClass * obj
 
 	}
 	if (action == ACTION_SELL) {
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: fix selling technos from walls.
 		// Fix for bug allowing the sale of technos on a wall's sell-cursor.
 		if (!object || (Map[cell].Overlay != OVERLAY_NONE &&
 			OverlayTypeClass::As_Reference(Map[cell].Overlay).IsWall &&

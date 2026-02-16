@@ -660,7 +660,7 @@ bool MapClass::Read_Binary(char const * root, unsigned long *crc)
 			unsigned char TIcon;		// Template icon number.
 		} temp;
 
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: Change explicit Clear terrain to NONE.
 		// This checked for "None" and replaced with "None". Instead, revert explicit Clear terrain.
 		if (file.Read(&temp, sizeof(temp)) != sizeof(temp)) break;
 		if (temp.TType == TEMPLATE_CLEAR1) {

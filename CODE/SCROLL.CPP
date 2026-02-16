@@ -97,8 +97,7 @@ void ScrollClass::AI(KeyNumType &input, int x, int y)
 	bool				player_scrolled=false;
 
 #ifdef MIDDLE_MOUSE_PANNING
-	// Nyerguds's C&C Patch Project v1.04
-	// Middle mouse drag scroll.
+	// Nyerguds's C&C Patch Project v1.04: Middle mouse drag scroll.
 	if (!IsRubberBand && IsPanDrag) {
 		Override_Mouse_Shape(MOUSE_PAN, false);
 		if (ScrollTimer.Time() == 0) {

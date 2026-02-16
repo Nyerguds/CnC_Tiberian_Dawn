@@ -505,8 +505,7 @@ void *Conquer_Build_Translucent_Table(void const *sourcepal, void const *targetp
  *=============================================================================================*/
 void *Build_Fading_Table(void const *sourcepal, void const *targetpal, void *dest, long color, long frac, int rangestart, int rangecount, bool freezerange)
 {
-	// Nyerguds's C&C Patch Project v1.04
-	// Fixes in translucent table generation
+	// Nyerguds's C&C Patch Project v1.04: Fixes in translucent table generation.
 	unsigned char *trgpal = (unsigned char *)targetpal;
 	unsigned char *srcpal = (unsigned char *)sourcepal;
 	unsigned char *table = (unsigned char *)dest;

@@ -813,6 +813,7 @@ void AircraftTypeClass::Init(TheaterType theater)
  *                                                                                             *
  *    This routine will make additional tweaks to the data after a game is loaded.             *
  *    Specifically, it initialises the Orca laser weapon of the PATSUX logic.                  *
+ *    After_Init - Created for Nyerguds's C&C Patch Project v1.04.                             *
  *                                                                                             *
  * INPUT:    Nothing                                                                           *
  *                                                                                             *
@@ -821,7 +822,7 @@ void AircraftTypeClass::Init(TheaterType theater)
  * WARNINGS: None                                                                              *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   07/01/2025 MM : Created for Nyerguds's C&C Patch Project v1.04.                           *
+ *   07/01/2025 MM : Created.                                                                  *
  *=============================================================================================*/
 void AircraftTypeClass::After_Init()
 {
@@ -832,6 +833,7 @@ void AircraftTypeClass::After_Init()
 	WeaponType weapon = Patsux ? WEAPON_OBELISK_LASER : PatsuxDefault;
 	if (orca.Primary != weapon) {
 		orca.Primary = weapon;
+		orca.Recalculate_Risk();
 	}
 }
 

@@ -693,7 +693,7 @@ bool BuildingClass::Mark(MarkType mark)
 				**	actual building object itself is destroyed.
 				*/
 				if (Class->IsWall) {
-					// Nyerguds's C&C Patch Project v1.04
+					// Nyerguds's C&C Patch Project v1.04: Wall overlay is now looked up by building name.
 					// The Overlay<->building link for walls is now always looked up on ini name.
 					OverlayType ovl = OverlayTypeClass::From_Name(Class->IniName);
 					if (ovl != OVERLAY_NONE) {
@@ -773,15 +773,13 @@ BulletClass * BuildingClass::Fire_At(TARGET target, int which)
 		Sound_Effect(weapon->Sound, Coord);
 
 		if (*this == STRUCT_SAM) {
-			// Nyerguds's C&C Patch Project v1.04
-			// Fixed alignment of SAM Site launch smoke
+			// Nyerguds's C&C Patch Project v1.04: Fixed alignment of SAM Site launch smoke.
 			AnimClass *samsmok = new AnimClass((AnimType)(ANIM_SAM_N + Dir_Facing(PrimaryFacing.Current())), Coord_Add(Center_Coord(), XYP_COORD(1, -1)));
 			if (samsmok) {
 				samsmok->Attach_To(this);
 			}
 		}
-		// Nyerguds's C&C Patch Project v1.04
-		// Made directional animations a specific type.
+		// Nyerguds's C&C Patch Project v1.04: Made directional animations a specific type.
 		if (weapon->Anim != ANIM_NONE) {
 			AnimType anim = weapon->Anim;
 			const AnimTypeClass animtype = AnimTypeClass::As_Reference(anim);
@@ -1056,8 +1054,8 @@ void BuildingClass::AI(void)
 					Strength = max;
 					IsRepairing = false;
 				}
-				// Nyerguds's C&C Patch Project v1.04
-				// Allow oil derricks to stop their flame. Normally not used since it's not set as repairable.
+				// Nyerguds's C&C Patch Project v1.04: Allow oil derricks to stop their flame.
+				// Normally never used, since it's not set as repairable, but can be useful for modding.
 				if (*this == STRUCT_PUMP && Strength >= (max >> 1)) {
 					Flame_Out();
 				}
@@ -1109,7 +1107,7 @@ void BuildingClass::AI(void)
 		/*
 		**	Possibly start repair process if the building is below half strength.
 		*/
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: Fix sellback chance relying on map number.
 		// Fix sellback chance becoming 100% for higher mission numbers in the New Missions list.
 		// Make it depend on set buildlevel rather than on mission number.
 		int scenario = MIN(BuildLevel, 20);
@@ -1184,9 +1182,9 @@ void BuildingClass::AI(void)
 		Mark(MARK_CHANGE);
 	}
 
-#ifdef OBSOLETE
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Migrated all recoil handling to TechnoClass.
 	// Recoil state handling is now 100% migrated to TechnoClass, where it belongs.
+#ifdef OBSOLETE
 	/*
 	**	If the building was in a recoil state (as it would be just as it fires), then
 	**	restore the building.
@@ -1266,7 +1264,7 @@ bool BuildingClass::Unlimbo(COORDINATE coord, DirType dir)
 	**	converted to an overlay type.
 	*/
 	if (Class->IsWall) {
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: Look up wall overlay type by ini name.
 		// The Overlay<->building link for walls is now always looked up on ini name.
 		OverlayType ovl = OverlayTypeClass::From_Name(Class->IniName);
 		if (ovl != OVERLAY_NONE) {
@@ -1375,6 +1373,8 @@ bool BuildingClass::Unlimbo(COORDINATE coord, DirType dir)
  *   06/20/1994 JLB : Source is a base class pointer.                                          *
  *   11/22/1994 JLB : Shares base damage handler for techno objects.                           *
  *   07/15/1995 JLB : Power ratio gets adjusted.                                               *
+ *   11/26/2025 MM  : Added argument for indicating animation burn damage.                     *
+ *   11/26/2025 MM  : Added argument for house in case no full source is available.            *
  *=============================================================================================*/
 ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)
 {
@@ -1459,8 +1459,7 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 				**	remembering of this fact. The finale uses this information to
 				**	play the correct movie.
 				*/
-				// Nyerguds's C&C Patch Project v1.04
-				// Fixed temple ion cannon status resetting.
+				// Nyerguds's C&C Patch Project v1.04: Fixed temple ion cannon status resetting.
 				if (*this == STRUCT_TEMPLE && warhead == WARHEAD_PB) {
 					TempleIoned = true;
 				}
@@ -1475,7 +1474,7 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 
 			case RESULT_MAJOR:
 				Sound_Effect(VOC_XPLOBIG4, Coord);
-				// Nyerguds's C&C Patch Project v1.04
+				// Nyerguds's C&C Patch Project v1.04: Fire damage re-ignite fix.
 				// Do not re-ignite the building if the damage came from burning down.
 				if (fromburn) {
 					break;
@@ -1526,8 +1525,7 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 					*/
 					if (anim) {
 						anim->Attach_To(this);
-						// Nyerguds's C&C Patch Project v1.04
-						// Burns now remember who caused them.
+						// Nyerguds's C&C Patch Project v1.04: Burns now remember who caused them.
 						anim->Set_Payback(source, house);
 					}
 				}
@@ -1785,8 +1783,7 @@ void BuildingClass::Drop_Debris(TARGET source)
 	/*
 	**	Special case for Chan to run from destroyed technology building.
 	*/
-	// Nyerguds's C&C Patch Project v1.04
-	// Made tech center spawn configurable.
+	// Nyerguds's C&C Patch Project v1.04: Made tech center spawn configurable.
 	if (GameToPlay == GAME_NORMAL && *this ==  STRUCT_MISSION && MissionTargetSpawn != INFANTRY_NONE) {
 		InfantryClass * i = new InfantryClass(MissionTargetSpawn, House->Class->House);
 
@@ -1833,8 +1830,10 @@ void BuildingClass::Drop_Debris(TARGET source)
 					ScenarioInit++;
 					if (i->Unlimbo(Cell_Coord(newcell), DIR_N)) {
 						i->Strength = Random_Pick(5, (int)i->Class->MaxStrength);
+						ScenarioInit--;
 						i->Scatter(0, true);
-						// Nyerguds's C&C Patch Project v1.04
+						ScenarioInit++;
+						// Nyerguds's C&C Patch Project v1.04: Fix for C4 survivors instantly firing.
 						// If not armed (e.g. Engineer), don't use 'isSabotaged' logic.
 						if (isSabotaged && !House->Is_Ally(As_Object(source)) && i->Is_Weapon_Equipped()) {
 							// If the death is the result of C4 exploding, make survivors dazed.
@@ -2461,7 +2460,7 @@ bool BuildingClass::Limbo(void)
 COORDINATE BuildingClass::Fire_Coord(int which, bool forrange, COORDINATE coords) const
 {
 	Validate();
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Fire_Coord for range checks now ignores facing.
 	// Allow getting the fire coords for any given target to correctly calculate range.
 	COORDINATE coord = Center_Coord();
 	int barrellen = 0;
@@ -2973,9 +2972,9 @@ void BuildingClass::Read_INI(char *buffer)
 			b = new BuildingClass(classid, bhouse);
 			if (b) {
 				if (b->Unlimbo(Cell_Coord(cell), facing)) {
-					// Nyerguds's C&C Patch Project v1.04
-					// Oil Derricks placed down as damaged will have their flame spout animation.
 					strength = MIN(strength, 0x100);
+					// Nyerguds's C&C Patch Project v1.04: Pre-placed oil derricks can have flame spout.
+					// Oil Derricks placed down as damaged will have their flame spout animation.
 					if (strength < 0x80 && classid == STRUCT_PUMP) {
 						b->Flame_Spout();
 					}
@@ -3123,6 +3122,7 @@ COORDINATE BuildingClass::Docking_Coord(void) const
  *    When the coordinate to use when firing at this building is needed, this routine will     *
  *    provide it. Normally this just returns the center of the building, but if the cell of    *
  *    that center point is not occupied by the building, a better one is found.                *
+ *    Target_Coord - Created for Nyerguds's C&C Patch Project v1.04.                           *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *
@@ -3277,11 +3277,10 @@ bool BuildingClass::Captured(HouseClass * newowner)
 					break;
 			}
 		}
-		// Nyerguds's C&C Patch Project v1.04
-		// Fix radar refresh for player
 		if (House == PlayerPtr || newowner == PlayerPtr) {
 			Map.PowerClass::IsToRedraw = true;
 		}
+		// Nyerguds's C&C Patch Project v1.04: Always to radar refresh for captures.
 		Map.Flag_To_Redraw(true);
 
 		/*
@@ -3397,8 +3396,9 @@ bool BuildingClass::Captured(HouseClass * newowner)
 		IsRepairing = false;
 		Grand_Opening(true);
 
-		// Nyerguds's C&C Patch Project v1.04
-		// Only give back the tiberium after Grand_Opening, so the receiving House's capacity is updated to include the new storage space.
+		// Nyerguds's C&C Patch Project v1.04: Fix tiberium transfer on capture.
+		// Only give back the tiberium after Grand_Opening, so the receiving House's
+		// capacity is updated to include the new storage space.
 		House->Harvested(booty);
 		// Reset building placement proximity check since something has changed ownership.
 		if (Map.PendingObject){
@@ -3480,6 +3480,7 @@ MoveType BuildingClass::Can_Enter_Cell(CELL cell, FacingType) const
  * BuildingClass::Flame_Spout -- makes the oil derrick spawn the flame spout anim              *
  *                                                                                             *
  *    This routine is called if the Oil Derrick is supposed to catch on fire.                  *
+ *    Flame_Spout - Created for Nyerguds's C&C Patch Project v1.04.                            *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *
@@ -3505,6 +3506,7 @@ void BuildingClass::Flame_Spout(void)
  * BuildingClass::Flame_Out -- Makes the oil derrick's flame spout anim vanish                 *
  *                                                                                             *
  *    This routine is called if the Oil Derrick is no longer supposed to be on fire.           *
+ *    Flame_Out - Created for Nyerguds's C&C Patch Project v1.04.                              *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *
@@ -3573,7 +3575,7 @@ bool BuildingClass::Can_Capture(void) const
 {
 	bool can_capture = Class->IsCaptureable && Mission != MISSION_DECONSTRUCTION;
 
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Triggers override capturability.
 	// Override capturable state if this building has any type of capture trigger
 	if (GameToPlay == GAME_NORMAL) {
 		if (Trigger != NULL && (Trigger->Action == TriggerClass::ACTION_WINLOSE || Trigger->Event == EVENT_PLAYER_ENTERED)) {
@@ -3811,8 +3813,7 @@ int BuildingClass::Mission_Deconstruction(void)
 						if (infantry) {
 							ScenarioInit++;
 							COORDINATE coord = Coord_Add(Center_Coord(), XYP_COORD(0, -12));
-							// Nyerguds's C&C Patch Project v1.04
-							// Fixes infantry spawning from non-building cells.
+							// Nyerguds's C&C Patch Project v1.04: Only spawn infantry from occupied cells.
 							if (Map[Coord_Cell(coord)].Cell_Building() != this) {
 								// Target coords were corrected to always be on the building.
 								coord = Target_Coord();
@@ -5141,7 +5142,7 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 				return(true);
 			}
 
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Fix helis disrupting placement.
 			/*
 			**	Only check for buildings. Don't mind if they are covered with
 			**	a unit (e.g. on helipads)

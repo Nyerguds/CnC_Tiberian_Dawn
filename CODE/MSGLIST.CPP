@@ -435,7 +435,7 @@ TextLabelClass * MessageListClass::Add_Message(char *txt, int color,
 		MessageList = txtlabel;
 	}
 
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: audio feedback on game messages.
 	/*------------------------------------------------------------------------
 	Give audio feedback that the message was created
 	------------------------------------------------------------------------*/

@@ -266,7 +266,7 @@ bool Init_Game(int , char *[])
 	*/
 	SystemStrings = NULL;
 	const char * stringsfile = Language_Name("CONQUER", false);
-	// Nyerguds's C&C Patch Project v1.04:
+	// Nyerguds's C&C Patch Project v1.04: Strings file length / language ext.
 	// Retrieve length of strings file, language based file extension for strings.
 	if (RawFileClass(stringsfile).Is_Available()) {
 		SystemStrings = (char const *)Load_Alloc_Data_Size(RawFileClass(stringsfile), &SystemStringsLength);
@@ -1109,10 +1109,10 @@ bool Select_Game(bool fade)
 					Choose_Side();
 #endif // not DEMO
 
-#ifdef OBSOLETE
-					// Nyerguds's C&C Patch Project v1.04
+					// Nyerguds's C&C Patch Project v1.04: Init logic migrated to intro screen.
 					// Make funpark campaign independent from Jurassic mode.
 					// This is now handled in the intro screen.
+#ifdef OBSOLETE
 					/*
 					** If user is playing special mode, do NOT change Whom; leave it set to
 					** GDI or NOD.  Ini.cpp will set the player's ActLike to mirror the

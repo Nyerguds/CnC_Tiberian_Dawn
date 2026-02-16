@@ -232,7 +232,7 @@ bool TempleIoned = false;
 
 
 /***************************************************************************
-**	Nyerguds's C&C Patch Project v1.04
+**	Nyerguds's C&C Patch Project v1.04: PATSUX
 **	Special logic for giving the ORCA the Obelisk laser.
 */
 WeaponType PatsuxDefault = WEAPON_NONE;
@@ -240,16 +240,16 @@ bool Patsux = false;
 
 
 /***************************************************************************
-**	Nyerguds's C&C Patch Project v1.04
+**	Nyerguds's C&C Patch Project v1.04: Unlock all tech in singleplayer.
 **	Special logic to allow full multiplayer tech in singleplayer.
 */
 bool RemoveBuildExceptions = false;
 
 
 /***************************************************************************
-**	Nyerguds's C&C Patch Project v1.04
-**	Special logic to spawn Chan from a destroyed Mission Target (Tech Center)
-**	building, and link him to a trigger called "CHAN".
+**	Nyerguds's C&C Patch Project v1.04: Tech center spawn logic.
+**	Special logic to spawn an infantry unit from a destroyed Mission Target
+**	(Tech Center) building, and link it to a trigger with the specified name.
 */
 InfantryType MissionTargetSpawn = INFANTRY_NONE;
 char MissionTargetTrigger[5];

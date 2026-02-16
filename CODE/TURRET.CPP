@@ -379,7 +379,7 @@ COORDINATE TurretClass::Fire_Coord(int which, bool forrange, COORDINATE coords) 
 	DirType shiftdir = PrimaryFacing.Current();
 	DirType barreldir = PrimaryFacing.Current();
 
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Specific code to get fire coords for range checks.
 	// Allow getting the fire coords for any given target to correctly calculate range.
 	if (forrange) {
 		barreldir = ::Direction(Coord, coords);
@@ -388,7 +388,7 @@ COORDINATE TurretClass::Fire_Coord(int which, bool forrange, COORDINATE coords) 
 		barreldir = SecondaryFacing.Current();
 	}
 
-	// Visual representation of coordinate adjustments.
+	// Nyerguds's visual representation of coordinate adjustments, to give clarity to this mess.
 	// In this example, the unit is facing to the east, with its turret aimed towards the north-east.
 	// C = coord (unit center coords)
 	// S = TurretShift (Shift of turret coords towards front facing of unit)
@@ -432,7 +432,7 @@ COORDINATE TurretClass::Fire_Coord(int which, bool forrange, COORDINATE coords) 
 		}
 		int xval2 = Coord_X(coord);
 		int yval2 = Coord_Y(coord);
-		// Adjust to perspective by dividing the vertical difference by 2.
+		// Rough adjustment to perspective, by dividing the vertical difference by 2.
 		int yvalpersp = yval1 + (yval2 - yval1) / 2;
 		coord = XY_Coord(xval2, yvalpersp);
 	}

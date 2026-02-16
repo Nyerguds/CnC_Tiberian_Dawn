@@ -360,12 +360,6 @@ class ObjectTypeClass : public AbstractTypeClass
 		bool ImageIsTheaterShape;
 
 		/*
-		**	Nyerguds's C&C Patch Project v1.04
-		**	This caches the structure type if this is a wall.
-		*/
-		StructType WallStructureType;
-
-		/*
 		**	This points to the radar imagery for this object.
 		*/
 		void const * RadarIcon;
@@ -630,6 +624,7 @@ class TechnoTypeClass : public ObjectTypeClass
 		virtual int  Cost_Of(void) const;
 		virtual int  Time_To_Build(HousesType house) const;
 		virtual unsigned short  Get_Ownable(void) const;
+		void Recalculate_Risk(void);
 };
 
 
@@ -1637,10 +1632,11 @@ class TemplateTypeClass: public ObjectTypeClass
 		#ifdef SCENARIO_EDITOR
 		virtual void  Display(int x, int y, WindowNumberType window, HousesType house=HOUSE_NONE) const;
 		#endif
-		virtual LandType Get_Land_Type(int icon) const;
+		virtual LandType Land_Type(int icon) const;
 
 	private:
 		static TemplateTypeClass const * const Pointers[TEMPLATE_COUNT];
+		static unsigned char Lands_Lookup[256];
 };
 
 
@@ -1666,6 +1662,7 @@ class AnimTypeClass : public ObjectTypeClass
 		unsigned IsGroundLayer:1;
 
 		/*
+		**	Nyerguds's C&C Patch Project v1.04: Changed from bool to TransType.
 		**	If this animation should be rendered in a translucent fashion, the table
 		**	to use will be set here. Translucent colors are some of the reds and some
 		**	of the greys. Typically, smoke and some fire effects have this flag set.
@@ -1705,6 +1702,7 @@ class AnimTypeClass : public ObjectTypeClass
 		AnimType Type;
 
 		/*
+		**	Added by Nyerguds's C&C Patch Project v1.04.
 		**	If this animation is the first in a series of eight, that need the direction
 		**	added to it to get the other seven, then this flag will be true. The other
 		**	animations MUST be behind this one in the list for this system to function!
@@ -2008,6 +2006,12 @@ class OverlayTypeClass: public ObjectTypeClass
 		**	If this is true, then the overlay will not show up on the radar map.
 		*/
 		unsigned IsRadarVisible:1;
+
+		/*
+		**	Nyerguds's C&C Patch Project v1.04: Wall structure type.
+		**	This caches the structure type if this is a wall.
+		*/
+		StructType WallStructureType;
 
 		//----------------------------------------------------------
 		OverlayTypeClass(

@@ -241,8 +241,7 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 	** If we are not dealing with scenario 1, or a multi player scenario
 	** then make sure the correct disk is in the drive.
 	*/
-	// Nyerguds's C&C Patch Project v1.04
-	// Allow nonstandard missions with any CD.
+	// Nyerguds's C&C Patch Project v1.04: Allow nonstandard missions with any CD.
 	// Yes, not very useful with the TUC logic removing CD stuff, but I wanted this fixed :p
 	if (RequiredCD != -2) {
 		RequiredCD = -1;
@@ -286,7 +285,7 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 		Add_CRC(&ScenarioCRC, (unsigned long)val);
 #endif
 	}
-	// Nyerguds's C&C Patch Project v1.04:
+	// Nyerguds's C&C Patch Project v1.04: Fix mission ini file without line end.
 	// Compensate for ini system not handling files not ending on a line break.
 	long end = MIN(len, _ShapeBufferSize-3);
 	buffer[end] = '\r';
@@ -324,7 +323,7 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 	**	Jurassic scenarios are allowed to build the full multiplayer set
 	**	of objects.
 	*/
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Set Funpark buildlevel based on scenario ID.
 	// Make funpark campaign independent from Jurassic mode.
 	if (ScenPlayer == SCEN_PLAYER_JP && Scenario < 20) {
 		BuildLevel = 98;
@@ -354,8 +353,8 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 	HouseClass::Read_INI(buffer);
 	Call_Back();
 
+	// Nyerguds's C&C Patch Project v1.04: Set House Special to Funpark colors.
 	if (GameToPlay == GAME_NORMAL && ScenPlayer == SCEN_PLAYER_JP && Scenario < 20) {
-		// Nyerguds's C&C Patch Project v1.04
 		// Make funpark campaign independent from Jurassic mode.
 		// Special color exceptions for House Special in dinosaur campaign.
 		HouseClass *p = HouseClass::As_Pointer(HOUSE_JP);
@@ -380,8 +379,7 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 		CarryOverPercent = Cardinal_To_Fixed(100, CarryOverPercent);
 		CarryOverCap = WWGetPrivateProfileInt("Basic", "CarryOverCap", -1, buffer);
 
-		// Nyerguds's C&C Patch Project v1.04
-		// Various added mission options:
+		// Nyerguds's C&C Patch Project v1.04: Various added mission options.
 		// Disallow AI ion/nuke triggers unless they have the correct building at the time of the triggering.
 		AllowDetachedAISupers = WWGetPrivateProfileBool("Basic", "AllowDetachedAISupers", false, buffer);
 		// Make AI helis passive in this scenario.
@@ -394,6 +392,7 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 		int newpieces = WWGetPrivateProfileInt("Basic", "PlayerNukePieces", 3, buffer);
 		// PATSUX laser orca
 		Patsux = WWGetPrivateProfileBool("Basic", "Patsux", 0, buffer);
+		// Remove capmpaign specific tech tree blocks.
 		RemoveBuildExceptions = WWGetPrivateProfileBool("Basic", "RemoveBuildExceptions", 0, buffer);
 		// Custom radar extension
 		WWGetPrivateProfileString("Basic", "RadarLogo", NULL, CustomRadarExt, sizeof(CustomRadarExt), buffer);
@@ -426,7 +425,7 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 		PlayerPtr->Credits += carryover;
 		PlayerPtr->InitialCredits += carryover;
 
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: Carry selected House over to next Funpark mission.
 		// Make funpark campaign independent from Jurassic mode.
 		if (ScenPlayer == SCEN_PLAYER_JP && Scenario < 20) {
 			PlayerPtr->ActLike = Whom;
@@ -486,7 +485,7 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 	UnitClass::Read_INI(buffer);
 	Call_Back();
 
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Unlock aircraft placement.
 	/*
 	**	Read in and place aircraft (all sides).
 	*/
@@ -552,7 +551,7 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 		memset(_ShapeBuffer, '\0', _ShapeBufferSize);
 		long briefLen = CCFileClass("MISSION.INI").Read(_ShapeBuffer, _ShapeBufferSize-1);
 		briefLen = MIN(briefLen, (long)strlen(_ShapeBuffer));
-		// Nyerguds's C&C Patch Project v1.04:
+		// Nyerguds's C&C Patch Project v1.04: Fix briefing ini file without line end.
 		// Compensate for ini system not handling files not ending on a line break.
 		briefLen = MIN(briefLen, _ShapeBufferSize-3);
 		_ShapeBuffer[briefLen] = '\r';

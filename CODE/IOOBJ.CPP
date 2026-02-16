@@ -874,7 +874,7 @@ void BulletClass::Code_Pointers(void)
 	*/
 	((BulletTypeClass *&)Class) = (BulletTypeClass *)Class->Type;
 
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Payback is TARGET now, so no pointer coding.
 	// This is now stored as TARGET, so no need to code/decode.
 #ifdef OBSOLETE
 	/*
@@ -919,7 +919,7 @@ void BulletClass::Decode_Pointers(void)
 	((BulletTypeClass const *&)Class) = &BulletTypeClass::As_Reference((BulletType)Class);
 	Check_Ptr((void *)Class,__FILE__,__LINE__);
 
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Payback is TARGET now, so no pointer decoding.
 	// This is now stored as TARGET, so no need to code/decode.
 #ifdef OBSOLETE
 	/*

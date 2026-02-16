@@ -22,7 +22,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 
 * Fixed sequence error in engineer death animation from anti-armor-weapon.
 * Fixed tech level of the Chem Warrior to make it 98 instead of 99.
-* Disabled the behaviour that makes the Chem-Warrior randomly walk around.
+* Disabled the behavior that makes the Chem-Warrior randomly walk around.
 
 ## v1.02:
 
@@ -47,7 +47,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Fixed radar minimap always starting as zoomed in.
 * Fixed "juvenile" sounds ("Sounds=7th grade" in conquer.ini) not working.
 * Fixed the Commando giving two responses at once when given a sabotage order. The "I got a present for ya!" yell on the map is now suppressed for the player owning the Commando, and is given as actual unit response instead.
-* Using the mouse scrollwheel now has the same effect as the up and down arrows; it scrolls through the sidebar lists.
+* Using the mouse scrollwheel now has the same effect as the up and down arrows; it scrolls through the sidebar lists. \[Replaced by true scroll support in 1.04, scrolling the specific list your mouse is on\]
 
 ## v1.03:
 
@@ -152,9 +152,9 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * The prefix shown on items in the New Missions menu now always automatically matches the player set in the mission file.
 * Items in the New Missions menu now load missions for campaign side "J" too, from SCJ20EA to SCJ99EA.
 * Added constraint checks on strings file reading, with any unknown string returning "&lt;&lt;UNKNOWN STRING&gt;&gt;".
-* The AI behaviour to run from incoming threats is now enabled at BuildLevel 8, rather than at Scenario 8, making it equivalent to other difficulty increase tweaks that happen at that level.
+* The AI behavior to run from incoming threats is now enabled at BuildLevel 8, rather than at Scenario 8, making it equivalent to other difficulty increase tweaks that happen at that level.
 * Units that are damaged below 50% will not start smoking again when attacked by a weapon that deals no damage to them (e.g. tank vs Technician gun or Blossom Tree).
-* Clicking to place down a building, activating Repair or Sell mode, or clicking the icon of a charged superweapon, will now always properly cancel any other such special targeting mode if it was active, rather than setting the mouse in a strange state where multiple such modes are active at the same time. This bug caused strange behaviour where you had to click multiple times to cancel the targeting.
+* Clicking to place down a building, activating Repair or Sell mode, or clicking the icon of a charged superweapon, will now always properly cancel any other such special targeting mode if it was active, rather than setting the mouse in a strange state where multiple such modes are active at the same time. This bug caused strange behavior where you had to right-click multiple times to cancel the targeting.
 * In the Save menu, when clicking on a savegame from a previous game version to overwrite it, the "(old)" status at the start will no longer be included in the savegame description.
 * \[Remaster\] After unloading in a Refinery, Harvesters will now return to the first spot where they started harvesting the previous time, rather than the last one, reducing harvester drifting.
 * \[Remaster\] Harvesters will randomize their starting point when scanning for tiberium, removing top-left harvester drifting issues.
@@ -168,23 +168,22 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Build levels can now be customized in the campaign missions.
 * The "New Missions" menu only shows mission variants with the EA suffix, but these missions will now attempt to continue to other variants to act as campaign up to 15 missions. The order is EA/EB/EC/ED/EE, WA/WB/WC/WD/WE, XA/XB/XC/XD/XE.
 * Added "RemoveBuildExceptions" option for missions. This will remove all singleplayer-specific build rules, such as disallowing construction of the Helipad and APC for Nod, and the building of superweapons from captured Construction Yards.
-* Fixed double-firing on aircraft getting disrupted by other orders, causing the aircraft to always fire per single shot.
+* Fixed double-firing on aircraft getting disrupted by other orders, causing the aircraft to always fire per single shot from that moment on.
 * Fixed Mammoth Tank showing its muzzle flashes on the wrong barrel.
-* Rocket Launchers will now pop up their launcher when they are in range of their target. You can disable this behaviour by adding the option "NoLauncherPopup=true" in conquer.ini, under \[Patch\].
-* Re-enabled broken turret recoil logic. This was always in the game, but didn't get drawn correctly. You can disable this behaviour by adding the option "NoTurretRecoil=true" in conquer.ini, under \[Patch\].
+* Rocket Launchers will now pop up their launcher when they are in range of their target. You can disable this behavior by adding the option "NoLauncherPopup=true" in conquer.ini, under \[Patch\].
+* Re-enabled broken turret recoil logic. This was always in the game, but didn't get drawn correctly. You can disable this behavior by adding the option "NoTurretRecoil=true" in conquer.ini, under \[Patch\].
 * \[Remaster\] Infantry in Area Guard mode no longer freezes in place, but will instead animate normally.
 * \[Remaster\] Fixed range checks to be independent from the direction the unit/building is currently facing.
 * Fixed unarmed civilians giving an Attack cursor when targeting enemies.
 * \[Remaster\] Any building will now be considered capturable in singleplayer if it has a trigger attached that activates when it is captured. This applies to both the "Cap=Win/Des=Lose" action, and the "Player Enters" event.
 * \[Remaster\] Fixed bug where pressing \[S\] on an aircraft that was already returning to its helipad would make it land on an incorrect spot on the pad.
-* Reduced the behaviour where helicopters return home after barely attacking because they find no place to shuffle to. If the air is too crowded, they will consider staying in place, and if the target is too close to the map edge or shroud and that limits the available airspace, they are now allowed to come closer to compensate.
+* Reduced the behavior where helicopters return home after barely attacking because they find no place to shuffle to. If the air is too crowded, they will consider staying in place, and if the target is too close to the map edge or shroud and that limits the available airspace, they are now allowed to come closer to compensate.
 * Aircraft will now always immediately return to base when they run out of ammo mid-salvo, instead of waiting for a second shot they don't have.
 * Fixed the infantry squish sound increasing in volume if multiple infantry units are on the same squished cell.
 * Fixed ability to crush light vehicles, and tweaked it so this doesn't play the infantry squish sound, but instead plays the destroyed unit's normal death animation, along with a little "roadkill bump" sound.
 * The game now generates translucent effects in memory, rather than reading them from .MRF files. This allowed several minor bugs in the translucency effects to be corrected.
-* Enabled translucent colors on the vehicle smoke and oil derrick smoke animations, so they can be enhanced to semitransparent smoke.
-* Enabled translucent colors on rocket exhaust smoke puff, so it can be enhanced to semitransparent smoke.
-* Enabled translucent colors on the SAM Site launch smoke animations, so the hard-baked Nod colours on the animation can be fixed.
+* Enabled translucent colors on the vehicle smoke, oil derrick smoke and rocket exhaust smoke puff animations, so they can be enhanced to semitransparent smoke.
+* Enabled translucent colors on the SAM Site launch smoke animations, so the hard-baked Nod colors on the animation can be fixed.
 * Fixed misalignment on SAM Site launch smoke animations.
 * The grenade throw sound can now be disabled by enabling the option "NoGrenadeToss=true" in conquer.ini, under \[Patch\].
 * Fixed the issue where capturing tiberium storage would try to transfer the contained tiberium to the player before the storage capacity itself was added to the player's storage pool, often resulting in an unintuitive loss of the captured money.
@@ -208,7 +207,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * If you own a refinery, losing your last harvester will now give a "Need Harvester" announcement instead of the usual "Unit Lost".
 * Restricted the amount of units rendered on a Hovercraft to five, to avoid the game using out-of-bounds program data to determine the locations for further units.
 * Stealth units placed in missions no longer need to cloak on mission start; they now start fully cloaked.
-* Removed extra tendency of APCs to load from the south-east or south-west, which would make them never load units from the north-west unless the south-west cell was blocked.
+* Fixed load/unload mechanism of APC not working in certain directions. Even directions without door animation will now work if no others are available.
 * \[Remaster\] The Hospital can no longer be sold. This fixes a bug that had been in the game since the release of C&C95; in the DOS version it was indeed unsellable.
 * \[Remaster\] Selling a wall now gives a sell sound.
 * Enabled Juvenile version of the sound volume test sound.
@@ -237,7 +236,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Fixed trees not getting properly cleaned up when dying from fire damage, and remaining as dead but damage-immune husks.
 * Fixed buildings on fire spawning increasingly more fire when they get repaired above the halfway point but then get reduced below it again by the fire damage.
 * Superweapon triggers ("Ion Cannon" and "Nuclear Missile") for the owner's native superweapon will now produce a one-time shot that works regardless of owned superweapon building, and which does not consume nuke pieces.
-* Computer player superweapon strikes from triggers will now be blocked if they do not own the required superweapon building. This behaviour can be disabled by adding "AllowDetachedAISupers=true" in a mission's \[Basic\] section. This affects both the Ion Cannon and the Nuclear Strike.
+* Computer player superweapon strikes from triggers will now be blocked if they do not own the required superweapon building. This behavior can be disabled by adding "AllowDetachedAISupers=true" in a mission's \[Basic\] section. This affects both the Ion Cannon and the Nuclear Strike.
 * The Ion Cannon is no longer restricted to players identifying as GDI. This allows captured Advanced Communications Centers to give the player access to the Ion Cannon.
 * Added new "Money" trigger event, to fix the fact the existing "Credits" event only counts cash money, without tiberium.
 * Computer-owned MCVs ordered to "Unload" will now seek out a valid place if they can't deploy on their current spot.
@@ -258,13 +257,14 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Fixed bug where revealing a cell containing multiple infantry would only mark one of them as Revealed, preventing the selection and auto-targeting of the others.
 * Fixed the logic to take threat priorities and distance from target into account when scanning for a target to attack.
 * Removed logic to stop scanning after finding nearby targets, since it was a hotfix for the non-working distance factor in the target priority.
-* Changed "Overrun=pancake" effect to create animations of the SQUISH.SHP graphic for each crushed infantry unit, rather than placing down a single-corpse overlay.
+* Changed "Overrun=pancake" effect to create animations of the SQUISH.SHP graphic for each crushed infantry unit, rather than placing down a permanent single-corpse Overlay object.
 * Fixed defense buildings getting a muzzle flash, which was drawn under the building.
-* Fixed the broken pattern logic of the "isometric" CONC pavement, making it look much nicer.
+* Fixed the broken pattern logic of the isometric CONC pavement, making it look much nicer. It will now also always place the tiles in pairs, forming full isometric diamond shapes.
 * Fixed ROAD pavement not always giving the speed boost it is supposed to have.
 * Fixed tree targeting option ("TreeTarget=lightning" in conquer.ini) giving an attack cursor over indestructible trees.
-* Template tiles (map cell icons) are no longer limited to only using two terrain types.
+* Full map template blocks (map cell terrain pieces) made up of multiple cells are no longer limited to only using two different land types (which determine passability / buildability behavior).
 * Fixed the destroyed Desert bridge (NE-SW) having an impassable tile at the south-west end of the road.
-* Implemented wider bridges and river crossings, mimicking their behaviour in the Playstation and Saturn versions.
+* Implemented wider bridges and river crossings, mimicking their behavior in the Playstation and Saturn versions.
 * The logic to make the Tech Center spawn special infantry with a trigger attached is now configurable in the mission, using "MissionTargetSpawn" and "MissionTargetTrigger" options.
 * Added explicit "Difficulty" setting in the [Patch] section, which accepts values "easy" and "hard".
+* Fixed issue where dragging the mouse to select units would give an extra click order at the point where the mouse was released.

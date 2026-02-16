@@ -924,6 +924,7 @@ void OverlayTypeClass::Init(TheaterType theater)
 		((void const *&)overlay.RadarIcon) = Get_Radar_Icon(overlay.Get_Image_Data(), 0, -1, 3);
 		IsTheaterShape = false;
 
+		// Nyerguds's C&C Patch Project v1.04: Structure type for wall is cached.
 		if (overlay.IsWall) {
 			overlay.WallStructureType = BuildingTypeClass::From_Name(overlay.IniName);
 		} else {

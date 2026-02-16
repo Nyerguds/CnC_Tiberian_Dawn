@@ -55,8 +55,7 @@ class HelpClass: public TabClass
 		virtual bool Scroll_Map(DirType facing, int &distance, bool really);
 		virtual void Set_Tactical_Position(COORDINATE coord);
 
-		// Nyerguds's C&C Patch Project v1.04
-		// Add power label support
+		// Nyerguds's C&C Patch Project v1.04: Add power label support.
 		void Help_Text(int text, int x=-1, int y=-1, int color=LTGREY, bool quick=false, int cost=0, bool showcost=false, int drain=0, int power=0, bool showpower=false);
 		void Set_Cost(int cost, bool showcost = true);
 		void Set_Power(int drain, int power, bool showpower = true);
@@ -94,9 +93,8 @@ class HelpClass: public TabClass
 		**	value will be non-zero. Typically, this is true when the help text is associated
 		**	with one of the sidebar construction icons.
 		*/
-		// Nyerguds's C&C Patch Project v1.04
 		int Cost;
-		// Allow showing a cost of 0
+		// Nyerguds's C&C Patch Project v1.04: Allow showing a cost of 0.
 		bool ShowCost;
 
 		// Add power values support

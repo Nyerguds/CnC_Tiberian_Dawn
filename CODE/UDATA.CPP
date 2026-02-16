@@ -1632,8 +1632,7 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 	ROT = rot;
 	Speed = speed;
 	TurretShift = turshift;
-	// Nyerguds's C&C Patch Project v1.04
-	// Migrated turret info to UnitTypeClass.
+	// Nyerguds's C&C Patch Project v1.04: Migrated turret info to UnitTypeClass.
 	BarrelLateralPrimary = pribarlat;
 	BarrelLateralSecondary = secbarlat;
 

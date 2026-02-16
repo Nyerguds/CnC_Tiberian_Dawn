@@ -46,8 +46,7 @@
 
 #include	"function.h"
 
-// Nyerguds's C&C Patch Project v1.04
-// Replaced with string-based land type definitions.
+// Nyerguds's C&C Patch Project v1.04: Replaced with string-based land type definitions.
 #ifdef OBSOLETE
 static char const _slope00000001[] = {7,-1};
 static char const _slope000000101[] = {6,8,-1};
@@ -2704,6 +2703,8 @@ TemplateTypeClass const * const TemplateTypeClass::Pointers[TEMPLATE_COUNT] = {
 	&Shore63,		//	TEMPLATE_SHORE63
 };
 
+unsigned char TemplateTypeClass::Lands_Lookup[256];
+
 
 /***********************************************************************************************
  * TemplateTypeClass::TemplateTypeClass -- Constructor for template type objects.              *
@@ -2786,7 +2787,7 @@ void TemplateTypeClass::Set_Land_Types(char const * landtypes) {
 
 
 /***********************************************************************************************
- * TemplateTypeClass::Get_Land_Type -- Looks up the land type for a given index.               *
+ * TemplateTypeClass::Land_Type -- Looks up the land type for a given index.                   *
  *                                                                                             *
  *    This routine uses the landtypes string to retrieve the land type for a specific index    *
  *    on a template. Non-alphabet characters are ignored. Unknown alphabet characters revert   *
@@ -2802,7 +2803,7 @@ void TemplateTypeClass::Set_Land_Types(char const * landtypes) {
  * HISTORY:                                                                                    *
  *   01/10/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
-LandType TemplateTypeClass::Get_Land_Type(int icon) const {
+LandType TemplateTypeClass::Land_Type(int icon) const {
 	if (!LandTypes) {
 		return LAND_CLEAR;
 	}
@@ -2820,17 +2821,7 @@ LandType TemplateTypeClass::Get_Land_Type(int icon) const {
 		if (c < 'A' || c > 'Z') continue;
 		// Only do the actual lookup if this is the correct index.
 		if (index == icon) {
-			// "X" indicates cells that normally don't have icons. Always default these to clear.
-			if (c == 'X') break;
-			for (int i = 0; i < LAND_COUNT; ++i) {
-				unsigned char letter = Ground[i].Letter;
-				// Always use uppercase.
-				if (letter >= 'a' && letter <= 'z') letter -= ('a' - 'A');
-				if (letter == c) {
-					landtype = (unsigned char)i;
-					break;
-				}
-			}
+			landtype = Lands_Lookup[c];
 			// Correct index: break no matter what.
 			break;
 		}
@@ -2939,8 +2930,8 @@ void TemplateTypeClass::Init(TheaterType theater)
 
 		((void const *&)tplate.ImageData) = NULL;
 		//if (tplate.Theater & (1<<theater)) {
-		// Nyerguds's C&C Patch Project v1.04
-		// Ignore theater ownership on cells. Just try and see if it succeeds.
+		// Nyerguds's C&C Patch Project v1.04: Ignore theater ownership on templates.
+		// Just try and see if it succeeds.
 		_makepath(fullname, NULL, NULL, tplate.IniName, Theaters[theater].Suffix);
 		ptr = MixFileClass::Retrieve(fullname);
 		if (ptr) {
@@ -3103,8 +3094,15 @@ ObjectClass * TemplateTypeClass::Create_One_Of(HouseClass *) const
  *=============================================================================================*/
 void TemplateTypeClass::One_Time(void)
 {
+	// Initialize Lands_Lookup array. Always default to Clear terrain.
+	memset(Lands_Lookup, (unsigned char)LAND_CLEAR, sizeof(Lands_Lookup));
+	// "X" indicates cells that normally don't have icons. Always default to clear.
+	// Not actually needed since the initial clear does this already.
+	Lands_Lookup['X'] = LAND_CLEAR;
+	// Prepare array with known land types.
+	for (int i = 0; i < LAND_COUNT; ++i) {
+		unsigned char letter = Ground[i].Letter;
+		if (letter >= 'a' && letter <= 'z') letter -= ('a' - 'A');
+		Lands_Lookup[letter] = i;
+	}
 }
-
-
-
-

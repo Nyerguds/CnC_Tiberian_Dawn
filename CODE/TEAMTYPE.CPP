@@ -878,7 +878,7 @@ void TeamTypeClass::operator delete(void *ptr)
 
 TeamClass * TeamTypeClass::Create_One_Of(void) const
 {
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Fix unformed teams overflowing teams list.
 	// Never allow creating a team if at least one completely unfilled one
 	// still exists; it indicates the AI is unable to make units to fill it.
 	// This fixes the bug where other systems such as Airstrip deliveries and
@@ -913,10 +913,21 @@ void TeamTypeClass::Destroy_All_Of(void) const
 }
 
 
-/*
-**	Nyerguds's C&C Patch Project v1.04
-**	Checks if any teams of this type were created but failed to get any members.
-*/
+/***********************************************************************************************
+ * TeamTypeClass::Has_Unformed_Teams -- Checks for teams of this type that never got filled.   *
+ *                                                                                             *
+ *    Checks if any teams of this type were created but failed to get any members.             *
+ *    Has_Unformed_Teams - Created for Nyerguds's C&C Patch Project v1.04.                     *
+ *                                                                                             *
+ * INPUT:      none.                                                                           *
+ *                                                                                             *
+ * OUTPUT:     True if any unformed teams were found.                                          *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   12/28/2025 MM  : Created.                                                                 *
+ *=============================================================================================*/
 bool TeamTypeClass::Has_Unformed_Teams(void) const
 {
 	for (int index = 0; index < Teams.Count(); index++) {
@@ -929,13 +940,25 @@ bool TeamTypeClass::Has_Unformed_Teams(void) const
 }
 
 
-/*
-**	Nyerguds's C&C Patch Project v1.04
-**	Checks if any teams of this type were created but failed to
-**	get any members, and removes all but one of the failed teams.
-*/
+/***********************************************************************************************
+ * TeamTypeClass::Cull_Unformed_Teams -- Removes teams that never got filled.                  *
+ *                                                                                             *
+ *    Checks if any teams of this type were created but failed to get any members, and         *
+ *    removes all but one of the failed teams.                                                 *
+ *    Cull_Unformed_Teams - Created for Nyerguds's C&C Patch Project v1.04.                    *
+ *                                                                                             *
+ * INPUT:      none.                                                                           *
+ *                                                                                             *
+ * OUTPUT:     The amount of deleted teams.                                                    *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   12/28/2025 MM  : Created.                                                                 *
+ *=============================================================================================*/
 int TeamTypeClass::Cull_Unformed_Teams(void) const
 {
+	// Not actually used, due to Create_One_Of() now simply preventing this problem from ever occuring.
 	bool found = false;
 	int deleted = 0;
 	for (int index = 0; index < Teams.Count(); index++) {

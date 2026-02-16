@@ -554,9 +554,8 @@ void OptionsClass::Load_Settings (void)
 	IsFreeScroll = WWGetPrivateProfileBool("Options", "FreeScrolling", false, buffer);
 	SlowPalette = WWGetPrivateProfileBool("Options", "SlowPalette", true, buffer);
 
-	// Nyerguds's C&C Patch Project v1.04
 	/*
-	** New options related to the patch additions.
+	** Nyerguds's C&C Patch Project v1.04: New options related to the patch additions.
 	*/
 	NoPowerBuildToolTips = WWGetPrivateProfileBool("Patch", "NoPowerToolTips", false, buffer);
 	NoNodSceneMusic = WWGetPrivateProfileBool("Patch", "NoNodSceneMusic", false, buffer);

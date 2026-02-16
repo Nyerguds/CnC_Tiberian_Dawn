@@ -324,7 +324,7 @@ bool FootClass::Mark(MarkType mark)
 				}
 				break;
 
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Fix recoil anims.
 			// Added RA1's MARK_CHANGE_REDRAW logic to make recoil work.
 			// Give redraw a larger refresh area, since recoil offset can make units exceed normal boundaries.
 			case MARK_CHANGE_REDRAW:
@@ -913,9 +913,8 @@ void FootClass::Approach_Target(void)
 		if (!Target_Legal(NavCom) && (!In_Range(TarCom) || !IsLocked)) {
 //		if (!Target_Legal(NavCom) && (Distance(TarCom) > maxrange || !IsLocked)) {
 
+			// Nyerguds's C&C Patch Project v1.04: Extra range on buildings is now in Weapon_Range().
 #ifdef OBSOLETE
-			// Nyerguds's C&C Patch Project v1.04
-			// Migrated to Weapon_Range arg.
 			/*
 			** If the object that we are attacking is a building adjust the units
 			** max range so that people can stand far away from the buildings and
@@ -1034,7 +1033,7 @@ int FootClass::Mission_Guard_Area(void)
 		Target_Something_Nearby(THREAT_AREA);
 		Coord = old;
 		if (Target_Legal(TarCom)) return(1);
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: Make infantry animate in Area Guard mode.
 		// Fix from remaster: infantry in Area Guard mode no longer freezes in place.
 		Random_Animate();
 	} else {
@@ -1185,7 +1184,7 @@ ResultType FootClass::Take_Damage(int & damage, int distance, WarheadType warhea
 			}
 			bool tweap = (weap != WEAPON_NONE && weap != WEAPON_NIKE);
 
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Fixed Sticky orders.
 			// Sticky mode is supposed to keep units on their assigned place no matter what.
 			// Treat it as equal to human controlled Guard mode in the code below.
 			// Note that Scatter is blocked for Sticky units anyway, so it doesn't affect them.
@@ -1290,7 +1289,7 @@ void FootClass::Active_Click_With(ActionType action, ObjectClass * object)
 			break;
 
 		case ACTION_SELF:
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: Added "can't deploy" cursor.
 		// "NO_SELF" is purely cosmetic; it will still allow the order so it can give its feedback.
 		// This is more intuitive, since it tells the player why the action doesn't work, rather
 		// than not showing the action at all.
@@ -1354,7 +1353,7 @@ void FootClass::Active_Click_With(ActionType action, ObjectClass * object)
  *=============================================================================================*/
 void FootClass::Active_Click_With(ActionType action, CELL cell)
 {
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Added movement flash for more actions.
 	// These actions can give a movement flash.
 	switch (action) {
 		case ACTION_HARVEST:
@@ -1633,8 +1632,7 @@ RadioMessageType FootClass::Receive_Message(RadioClass * from, RadioMessageType 
  *=============================================================================================*/
 int FootClass::Mission_Enter(void)
 {
-	// Nyerguds's C&C Patch Project v1.04
-	// Ported the remaster's multi-load logic.
+	// Nyerguds's C&C Patch Project v1.04: Ported the remaster's transport multi-load logic.
 	/*
 	**	Find out who to coordinate with. If in radio contact, then this the transporter is
 	**	defined. If not in radio contact, then try the archive target value to see if that
@@ -2072,8 +2070,7 @@ void FootClass::Sell_Back(int control)
 			Sound_Effect(VOC_CASHTURN);
 		}
 		Mark(MARK_UP);
-		// Nyerguds's C&C Patch Project v1.04
-		// Selling transports will now evacuate their crew.
+		// Nyerguds's C&C Patch Project v1.04: Selling transports will now evacuate their crew.
 		Dump_Cargo();
 		/*
 		**	A sold unit still counts as a kill, but it just isn't directly

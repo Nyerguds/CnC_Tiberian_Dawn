@@ -282,7 +282,7 @@ void FactoryClass::AI(void)
 				**	production step occurs, there may be sufficient funds available.
 				*/
 				if (cost > House->Available_Money()) {
-					// Nyerguds's C&C Patch Project v1.04
+					// Nyerguds's C&C Patch Project v1.04: Specific status for waiting for credits.
 					// Keep specific status indicating the construction is waiting for more credits.
 					IsWaitingForFunds = true;
 					Set_Stage(Fetch_Stage()-1);
@@ -520,7 +520,7 @@ bool FactoryClass::Start(void)
 {
 	Validate();
 	if ((Object || SpecialItem) && IsSuspended && !Has_Completed()) {
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: Don't force On Hold status on low funds.
 		// * Construction no longer starts as "On Hold" if no money is available.
 		// * "On Hold" status can be resumed even if no money is currently available.
 		//if (House->Available_Money() >= Cost_Per_Tick()) {

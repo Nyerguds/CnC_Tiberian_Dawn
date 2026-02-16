@@ -1130,6 +1130,7 @@ void const * SidebarClass::StripClass::Get_Special_Cameo(int type)
  *    This routine will return whether a pointer to the cameo data for the special objects     *
  *    that can appear on the sidebar (e.g., nuclear bomb) should be cached as theater          *
  *    specific data.                                                                           *
+ *    Special_Cameo_Is_Theater_Shape - Created for Nyerguds's C&C Patch Project v1.04.         *
  *                                                                                             *
  * INPUT:   type  -- The special type to fetch the cameo imagery for.                          *
  *                                                                                             *
@@ -1138,7 +1139,7 @@ void const * SidebarClass::StripClass::Get_Special_Cameo(int type)
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   07/19/2025 MM : created                                                                   *
+ *   07/19/2025 MM  : Created.                                                                 *
  *=============================================================================================*/
 bool SidebarClass::StripClass::Special_Cameo_Is_Theater_Shape(int type)
 {
@@ -2324,7 +2325,7 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 			}
 		}
 		if (newspc != SPC_NONE) {
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Cancel other mouse modes for super targeting.
 			// To activate a superweapon, cancel building placement, repair and sell modes.
 			Map.Override_Mouse_Shape(MOUSE_NORMAL);
 			if (Map.PendingObjectPtr && Map.PendingObjectPtr->Is_Techno()) {
@@ -2414,7 +2415,7 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 					**	bail.
 					*/
 					if (factory->Is_Building()) {
-						// Nyerguds's C&C Patch Project v1.04
+						// Nyerguds's C&C Patch Project v1.04: Impatient clicks on no money get specific EVA.
 						// Let EVA explain to impatient players the basic principle that
 						// their construction will not progress if they're frickin' broke.
 						if (factory->Is_Waiting_For_Funds()) {

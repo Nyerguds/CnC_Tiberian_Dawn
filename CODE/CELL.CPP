@@ -79,6 +79,9 @@
 
 #define	FIXUP		0
 
+/**********************************************************************
+ * Concrete fill states. These are bits that can be combined.
+ */
 enum ConcFill {
 	CONC_FILL_NONE   = 0,
 	CONC_FILL_CENTER = 1 << 0,
@@ -86,6 +89,12 @@ enum ConcFill {
 	CONC_FILL_BOTTOM = 1 << 2,
 };
 
+
+/**********************************************************************
+ * Concrete adjacency with neighboring cells that are also concrete.
+ * These are bits that can be combined to determine which icon it
+ * should get.
+ */
 enum ConcAdj {
 	CONC_ADJ_NONE       = 0,
 	CONC_ADJ_TOP        = 1 << 0,
@@ -95,9 +104,14 @@ enum ConcAdj {
 	CONC_ADJ_BOTTOM     = 1 << 4,
 };
 
-// Represents the order of the different fill states inside the CONC sprite file.
-// Each state has two icons; one for odd and one for even cells. Note that for some
-// reason, the first state has these switched on the sprite; it has the even graphics first.
+
+/**********************************************************************
+ * Represents the order of the different fill states inside the CONC
+ * sprite file. Each state has two icons; one for odd and one for even
+ * cells.
+ * Note that the first state has these switched on the sprite; it has
+ * the even graphics first.
+ */
 const ConcFill ConcIconFillStates[7] = {
 	/* 0 */ CONC_FILL_CENTER,
 	/* 1 */ CONC_FILL_CENTER | CONC_FILL_BOTTOM | CONC_FILL_TOP,
@@ -108,7 +122,13 @@ const ConcFill ConcIconFillStates[7] = {
 	/* 6 */ CONC_FILL_BOTTOM | CONC_FILL_TOP,
 };
 
-// To convert fill state to icon index.
+
+/**********************************************************************
+ * Table to convert Concrete fill state to the actual icon index.
+ * This needs to be multiplied by 2, with 1 added for even cells.
+ * Note that the first state has these switched on the sprite; it has
+ * the even graphics first.
+ */
 const int ConcFillStateToIcon[8] = {
 	0, // CONC_FILL_NONE = 0
 	0, // CONC_FILL_CENTER  = 1
@@ -466,7 +486,7 @@ bool CellClass::Is_Generally_Clear(bool ignoremobile) const
 {
 	Validate();
 	if (ScenarioInit) return(true);
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Allow placing smudge on unit-occupied cells.
 	// Check ignoring temporary occupiers, to allow placing down smudge.
 	if (!ignoremobile && (Flag.Composite || IsFlagged || Cell_Occupier())) {
 		return(false);
@@ -543,11 +563,10 @@ void CellClass::Recalc_Attributes(void)
 	if (TType != TEMPLATE_NONE) {
 		TemplateTypeClass const *ttype = &TemplateTypeClass::As_Reference(TType);
 
-		// Nyerguds's C&C Patch Project v1.04
-		// Use new string-based system to read land types.
+		// Nyerguds's C&C Patch Project v1.04: Use new string-based system to read land types.
 		int icon = TIcon;
 		if (icon < TEMPLATE_MAX_SIZE) {
-			Land = ttype->Get_Land_Type(icon);
+			Land = ttype->Land_Type(icon);
 			return;
 		}
 
@@ -950,7 +969,7 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 				iconfound = LogicPage->Draw_Stamp(ttype->Get_Image_Data(), icon, x, y, NULL, WINDOW_TACTICAL);
 			}
 			if (!iconfound) {
-				// Nyerguds's C&C Patch Project v1.04
+				// Nyerguds's C&C Patch Project v1.04: Paint black on illegal tiles.
 				// Illegal tiles are shown black rather than non-refreshing.
 				int right = left + Lepton_To_Pixel(Map.TacLeptonWidth) -1;
 				int bottom = top + Lepton_To_Pixel(Map.TacLeptonHeight) - 1;
@@ -1133,13 +1152,34 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 }
 
 
+/***********************************************************************************************
+ * Adjacent_Is_Valid -- Checks if a valid adjacent cell exists for the given facing.           *
+ *                                                                                             *
+ *    This routine does boundary checking on the currecnt cell to see if a valid adjacent      *
+ *    cell can be found in the direction of the specified facing.                              *
+ *    Adjacent_Is_Valid - Created for Nyerguds's C&C Patch Project v1.04.                      *
+ *                                                                                             *
+ * INPUT:   face      -- The facing to check.                                                  *
+ *                                                                                             *
+ *          foroverlay -- True if this is for overlay placement, meaning the top and bottom    *
+ *                        rows of the map are illegal to place on.                             *
+ *                                                                                             *
+ * OUTPUT:  True if there is a valid adjacent cell in that facing direction.                   *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   01/01/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
 bool CellClass:: Adjacent_Is_Valid(FacingType face, bool foroverlay)
 {
 	int cell = Cell_Number();
-	// A bit of unnecessary calculation, but I'm not gonna copy and refine this for each block...
+	// A bit of unnecessary initial calculation, but I'm not gonna
+	// copy and refine this for each block...
 	int northend = MAP_CELL_W;
+	// Overlay is only valid from second to second-to-last line.
 	if (foroverlay) northend *= 2;
-	int southend = MAP_CELL_W * (MAP_CELL_H - (foroverlay? 2 : 1));
+	int southend = MAP_CELL_W * (MAP_CELL_H - (foroverlay ? 2 : 1));
 	bool allowEdgeN = (cell >= northend);
 	bool allowEdgeE = ((cell + 1) % MAP_CELL_W != 0);
 	bool allowEdgeS = (cell < southend);
@@ -1173,6 +1213,26 @@ bool CellClass:: Adjacent_Is_Valid(FacingType face, bool foroverlay)
 }
 
 
+/***********************************************************************************************
+ * Get_Conc_Icon -- Gets the Concrete icon based on its fill state.                            *
+ *                                                                                             *
+ *    This routine looks up the exact icon in the Concrete sprite file to use based on the     *
+ *    combination of filled parts it is made of.                                               *
+ *    Get_Conc_Icon - Created for Nyerguds's C&C Patch Project v1.04.                          *
+ *                                                                                             *
+ * INPUT:   fillState  -- Bit mask indicating which parts of the Concrete                      *
+ *                       (Center, Top, Bottom) are filled.                                     *
+ *                                                                                             *
+ *          isOdd     -- Indicates whether this will be placed on an odd or even cell,         *
+ *                       Determining which tile graphics set should be used.                   *
+ *                                                                                             *
+ * OUTPUT:  The icon to use as OverlayData.                                                    *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   08/13/2025 MM  : Created.                                                                 *
+ *=============================================================================================*/
 int Get_Conc_Icon(ConcFill fillState, bool isOdd)
 {
 	int odd = isOdd ? 1 : 0;
@@ -1183,6 +1243,22 @@ int Get_Conc_Icon(ConcFill fillState, bool isOdd)
 }
 
 
+/***********************************************************************************************
+ * Get_Conc_State -- Gets the Concrete fill state as ConcFill bit flags.                       *
+ *                                                                                             *
+ *    This routine checks if the overlay on the current cell is Concrete, and if so, which     *
+ *    combination of filled parts it is made of.                                               *
+ *    Get_Conc_State - Created for Nyerguds's C&C Patch Project v1.04.                         *
+ *                                                                                             *
+ * INPUT:   cell  -- The cell to check for Concrete overlay.                                   *
+ *                                                                                             *
+ * OUTPUT:  Bit mask indicating which parts of the Concrete (Center, Top, Bottom) are filled.  *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   08/13/2025 MM  : Created.                                                                 *
+ *=============================================================================================*/
 ConcFill Get_Conc_State(CellClass * cell)
 {
 	if (!cell->Overlay == OVERLAY_CONCRETE) {
@@ -1196,14 +1272,50 @@ ConcFill Get_Conc_State(CellClass * cell)
 	return ConcIconFillStates[val];
 }
 
+
+/***********************************************************************************************
+ * Is_Ignorable_Concrete -- Determines if the cell contains a Concrete filler tile.            *
+ *                                                                                             *
+ *    This routine checks if the overlay on the current cell is Concrete, and if so, if        *
+ *    its central area is not filled, which means it is an edge filler that can be ignored     *
+ *    for the purpose of placing down other tiles.                                             *
+ *    Is_Ignorable_Concrete - Created for Nyerguds's C&C Patch Project v1.04.                  *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   01/01/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
 bool CellClass::Is_Ignorable_Concrete()
 {
 	// only true if it is concrete without its center filled.
-	return this->Overlay == OVERLAY_CONCRETE && (Get_Conc_State(this) & CONC_FILL_CENTER) == 0;
+	ConcFill fill = Get_Conc_State(this);
+	return fill != CONC_FILL_NONE && (fill & CONC_FILL_CENTER) == 0;
 }
 
 #ifdef FIX_CONCRETE
 
+
+/***********************************************************************************************
+ * Build_Conc_Fill_State -- Determines the fill state for one cell of Concrete                 *
+ *                                                                                             *
+ *    This routine examines the cells around the current one and from this, determines what    *
+ *    concrete icon shape to use (if any).                                                     *
+ *    Build_Conc_Fill_State - Created for Nyerguds's C&C Patch Project v1.04.                  *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   12/31/2025 MM  : Created.                                                                 *
+ *=============================================================================================*/
 ConcFill Build_Conc_Fill_State(CELL cell, FacingType * checkCells)
 {
 	CellClass * mapcell = &Map[cell];
@@ -1231,7 +1343,8 @@ ConcFill Build_Conc_Fill_State(CELL cell, FacingType * checkCells)
 	bool bottomSide = (mask & CONC_ADJ_BOTTOMSIDE) != 0;
 	bool bottom = (mask & CONC_ADJ_BOTTOM) != 0;
 	// Logic to fill the main cell. Standard for a placed cell is to fill the center.
-	bool isFilled = mapcell->Overlay == OVERLAY_CONCRETE && !mapcell->Is_Ignorable_Concrete();
+	bool isFilled = (Get_Conc_State(mapcell) & CONC_FILL_CENTER) != 0;
+	// Start with a clean slate.
 	ConcFill fillState = isFilled ? CONC_FILL_CENTER : CONC_FILL_NONE;
 #ifndef FIX_CONCRETE_SQUARE
 	if (isFilled) {
@@ -1591,7 +1704,9 @@ void CellClass::Wall_Update(OverlayType overlay)
 		if (newcell == this && facing != FACING_NONE) {
 			continue;
 		}
-		// Only update walls that can connect to this one.
+		/*
+		 *	Only update walls that can connect to this one.
+		*/
 		if (newcell->Overlay != overlay) {
 			continue;
 		}
@@ -2178,13 +2293,13 @@ bool CellClass::Goodie_Check(FootClass * object)
 		OverlayData = 0;
 
 		if (steel) {
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Any house can pick up nuke pieces.
 			// Made nuke piece logic available for all, because why not?
 			if (GameToPlay == GAME_NORMAL) {
 				object->House->Add_Nuke_Piece();
 			}
 			// Nyerguds's TUC Quick Fix Patch v1.02: steelcrate-anim
-			// nuke piece logic is obsolete, so play anim for any House.
+			// Play animation regardless of House.
 			new AnimClass(ANIM_CRATE_EMPULSE, Cell_Coord());
 
 		} else {

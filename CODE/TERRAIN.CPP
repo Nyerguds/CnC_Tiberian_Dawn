@@ -165,11 +165,10 @@ ResultType TerrainClass::Take_Damage(int & damage, int distance, WarheadType war
 	/*
 	**	Small arms can never destroy a terrain element.
 	*/
-	// Nyerguds's C&C Patch Project v1.04
-	// Trees can still be damaged while on fire.
+	// Nyerguds's C&C Patch Project v1.04: Trees can still be damaged while on fire.
 	if (!IsCrumbling && warhead != WARHEAD_SA && !Class->IsImmune) {
 
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: Remember IsOnFire status before damage is applied.
 		// Dying from fire damage makes the fire animations
 		// call the Fire_Out() function, so store this now.
 		boolean onFire = IsOnFire;
@@ -177,21 +176,20 @@ ResultType TerrainClass::Take_Damage(int & damage, int distance, WarheadType war
 		res = ObjectClass::Take_Damage(damage, distance, warhead, source, house, fromburn);
 
 		if (res == RESULT_DESTROYED) {
-			// Nyerguds's C&C Patch Project v1.04
-			// Fix burnt trees not crubling.
+			// Nyerguds's C&C Patch Project v1.04: Fix burnt trees not crubling.
 
 			// This was all vastly simplified. Detach_All() is already called in
 			// ObjectClass::Take_Damage(), which kills off all attached anims, too.
 			// Start_To_Crumble() checks if it's already crumbling, so just run it.
 			Start_To_Crumble();
 
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Add smoke when dying from burn.
 			// Migrated from Fire_Out(). If it died while burning, add smoke.
 			if (warhead == WARHEAD_FIRE || fromburn || onFire) {
 				new AnimClass(ANIM_SMOKE_M, Coord_Add(Coord, Class->CenterBase));
 			}
 		} else if (damage && warhead == WARHEAD_FIRE && !fromburn) {
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Only catch on fire when damage is not from anims.
 			// -Fire on trees won't self-propagate.
 			// -Don't set it on fire if it's destroyed.
 			Catch_Fire(source, house);
@@ -490,7 +488,7 @@ bool TerrainClass::Catch_Fire(TechnoClass * source, HousesType house)
 	Validate();
 	if (!IsCrumbling && Strength && Class->IsFlammable) {
 		bool fireadded = false;
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: Fire damage renews existing burn anim.
 		// Allow renewing of burn by making previous burns
 		// end gracefully and then adding new ones.
 		if (IsOnFire) {
@@ -539,13 +537,14 @@ void TerrainClass::Fire_Out()
 	Validate();
 	if (IsOnFire) {
 		IsOnFire = false;
-		// Nyerguds's C&C Patch Project v1.04
-		// Crumble logic removed. This is handled by Take_Damage() now, as it should be.
-#ifdef OBSOLETE
+		// Nyerguds's C&C Patch Project v1.04: Removed crumble logic in Fire_Out().
+		// Crumble logic is now handled by Take_Damage(), as it should be.
+
+		// Since this function can now be called from Detach(), Detach_All()
+		// should never be called from here since that can cause a stack overflow.
+		#ifdef OBSOLETE
 		if (!IsCrumbling && !Strength) {
-			// This can now be called from Detach_All(), so calling Detach_All()
-			// here can cause a stack overflow.
-			//Detach_All();
+			Detach_All();
 			Mark();
 			Start_To_Crumble();
 			new AnimClass(ANIM_SMOKE_M, Coord_Add(Coord, Class->CenterBase));

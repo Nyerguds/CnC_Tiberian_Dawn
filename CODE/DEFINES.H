@@ -220,7 +220,8 @@
 #define	FOREIGN_VERSION_NUMBER	6
 
 /**********************************************************************
- * Extra implemented features that could be disabled.
+ * New features added by Nyerguds's C&C Patch Project
+ * that could be disabled.
  */
 // Allow scroll coasting with middle mouse button.
 #define MIDDLE_MOUSE_PANNING
@@ -711,6 +712,10 @@ inline HousesType operator++(HousesType &, int);
 #define	HOUSEF_MULTI5	(1<<HOUSE_MULTI5)
 #define	HOUSEF_MULTI6	(1<<HOUSE_MULTI6)
 
+
+/**********************************************************************
+**	All colors that houses can have are listed here.
+*/
 typedef enum PlayerColorType {
 	REMAP_EXPLICIT_NONE = -2, // Used for explicitly disabling secondary color scheme.
 	REMAP_NONE = -1, // General "not found in lookup" value.
@@ -736,7 +741,8 @@ typedef enum PlayerColorType {
 	REMAP_NEUTRAL,
 	REMAP_JP,
 
-	// New remap colors
+	// Nyerguds's C&C Patch Project v1.04: New remap colors.
+
 	REMAP_DARK_GREY,
 	REMAP_BROWN,
 	REMAP_BURGUNDY,
@@ -745,10 +751,10 @@ typedef enum PlayerColorType {
 	REMAP_WARM_SILVER,
 
 	// Alternate names for some of the colors
-	REMAP_AQUA,
+	REMAP_AQUA, // identical to REMAP_BLUEGREEN
 	REMAP_GREY, // identical to REMAP_BLUE
 	REMAP_GRAY, // identical to REMAP_BLUE
-	REMAP_TEAL, // identical to REMAP_AQUA
+	REMAP_TEAL, // identical to REMAP_BLUEGREEN
 	REMAP_DARK_GRAY, // identical to REMAP_DARK_GREY
 
 	REMAP_COUNT
@@ -1560,7 +1566,7 @@ typedef enum AnimType {
 	ANIM_STEG_DIE,
 	ANIM_RAPT_DIE,
 	ANIM_CHEM_BALL,				// Chemical warrior explosion.
-	ANIM_SQUISH,					// Crushed corpse
+	ANIM_SQUISH,					// Crushed corpse. Added by Nyerguds's C&C Patch Project v1.04.
 
 	ANIM_COUNT,
 	ANIM_FIRST=0
@@ -1571,14 +1577,15 @@ inline AnimType operator++(AnimType &, int);
 
 /**********************************************************************
 **	Translucency types used by animations are enumerated here. These provide
-**  translucent effects.
+**  translucent effects. Maps on DisplayClass::TranslucencyTables
+**	TransType - Added by Nyerguds's C&C Patch Project v1.04.
 */
 typedef enum TransType {
 	TRANS_NONE = -1, // No translucency.
-	TRANS_ANIM,   // Default animation translucency. (12-13-14-15 are increasingly more transparent black) (32-39 are bright fades, but all identical)
+	TRANS_ANIM,   // Standard animation translucency. (12-13-14-15 are increasingly more transparent black) (32-39 are bright fades, but all identical)
 	TRANS_WHITE,  // White flash translucency. (2 is translucent white)
 	TRANS_MOUSE,  // Mouse translucency. (12-13-14-15 are semitransparent black, dark grey, light grey, and white)
-	TRANS_SMOKE,  // Smoke translucency. (5-6-7-8 are increasingly less transparent light gray) Added for Nyerguds's C&C Patch Project v1.04.
+	TRANS_SMOKE,  // Smoke translucency. (5-6-7-8 are increasingly less transparent light gray) New in Nyerguds's C&C Patch Project v1.04.
 	TRANS_UNITS,  // Unit shadow translucency. (4 is shadow)
 	TRANS_GHOST,  // Special "ghost" table. Maps the entire sprite to its table. Unsure if really used.
 	TRANS_SHADOW, // Fade to black around map shroud. (16 and 15 are increasingly darker shades. 14 and 13 are practically completely black.)
@@ -1905,10 +1912,13 @@ typedef enum ArmorType {
 
 
 /*
-**	Define "FADING_GENERATE" if the palette morphing tables are part of the loaded data. If this
-**	is undefined, then the tables will be generated and the files will be created.
-**	Nyerguds's C&C Patch Project v1.04
-**	Enabled this to fix errors in the generated files.
+**	Define "FADING_GENERATE" if the palette morphing tables are not part of the loaded data.
+**	If this is defined, then the tables will be generated in memory.
+**
+**	Nyerguds's C&C Patch Project v1.04: Enabled generating fading tables.
+**	This option was migrated and inverted from the original "_RETRIEVE" in "DISPLAY.CPP".
+**	In-memory fading table generation was enabled to fix errors in the generated files,
+**	caused by bugs in the generating algorithm.
 */
 #define	FADING_GENERATE
 
@@ -2019,6 +2029,7 @@ inline TextPrintType operator ~(TextPrintType);
 
 /**********************************************************************
 **	Global maximums for the size (in icons) a single tileset can have.
+**	Added by Nyerguds's C&C Patch Project v1.04.
 */
 #define TEMPLATE_MAX_WIDTH 		13
 #define TEMPLATE_MAX_HEIGHT		8
@@ -2285,7 +2296,7 @@ typedef enum VocType{
 //	VOC_SIR,				//	"sir?"
 //	VOC_SQUAD,			//	"squad reporting"
 //	VOC_PRACTICE,		//	"target practice"
-// Nyerguds's C&C Patch Project v1.04: reactivated unused sound
+// Nyerguds's C&C Patch Project v1.04: Reactivated unused sound.
 	VOC_OVEROUT,		// "Over and out"
 	VOC_UGOTIT,			//	"you got it"
 	VOC_UNIT,			//	"unit reporting"
@@ -2522,10 +2533,10 @@ typedef enum SourceType {
 **	corresponding GroundType structure.
 */
 typedef struct {
-	char      Letter;            // Unique letter for reading this type from string.
-	int       Color;             // Radar map (map editor) id color.
-	unsigned  Cost[SPEED_COUNT]; // Terrain effect cost (normal).
-	bool      Build;             // Can build on this terrain?
+	char            Letter;            // Unique letter for reading this type from string. Added by Nyerguds's C&C Patch Project v1.04.
+	int             Color;             // Radar map (map editor) id color.
+	unsigned char   Cost[SPEED_COUNT]; // Terrain effect cost (normal).
+	bool            Build;             // Can build on this terrain?
 } GroundType;
 
 

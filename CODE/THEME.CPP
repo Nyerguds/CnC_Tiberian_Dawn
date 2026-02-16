@@ -372,6 +372,7 @@ char const * ThemeClass::Theme_File_Name(ThemeType theme)
  *    This routine will construct (into a static buffer) a filename that matches the theme     *
  *    number specified. This constructed filename is returned as a pointer. The filename will  *
  *    remain valid until the next call to this routine.                                        *
+ *    Theme_File_Name - Created .VAR overload for Nyerguds's TUC Quick Fix Patch v1.02.        *
  *                                                                                             *
  * INPUT:   theme -- The theme number to convert to a filename.                                *
  *          variation -- whether to get the normal filename, or the one for the variation      *
@@ -381,10 +382,11 @@ char const * ThemeClass::Theme_File_Name(ThemeType theme)
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   06/12/2025 MM  : Created overload with specific argument for getting the variation.       *
+ *   06/12/2025 MM  : Created overload with arg for getting the variation.                     *
  *=============================================================================================*/
 char const * ThemeClass::Theme_File_Name(ThemeType theme, bool variation)
 {
+	// Nyerguds's TUC Quick Fix Patch v1.03: var-music-length
 	static char name[_MAX_FNAME+_MAX_EXT];
 
 	if (variation) {
@@ -505,8 +507,7 @@ bool ThemeClass::Is_Allowed(ThemeType index) const
 		return(false);
 	}
 #endif
-	// Nyerguds's C&C Patch Project v1.04
-	// Always block repeating themes from the playlist.
+	// Nyerguds's C&C Patch Project v1.04: Always block repeating themes from the playlist.
 	return (
 		_themes[index].Available && !_themes[index].Repeat &&
 #ifdef SCENARIO_MUSIC_UNLOCK

@@ -465,7 +465,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	** Equivalent buildings; normal and advanced versions.
 	*/
 	if (flags & STRUCTF_ADVANCED_POWER) flags |= STRUCTF_POWER;
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Make EYE act as HQ for prerequisites.
 	// if the player owns an Advanced Comm Center, make it act as normal Comm Center, too,
 	// so selling the now obsolete non-advanced version has no effect on the tech tree.
 	// This needs to be done before the Temple check since a Temple does not act as Comm Center.
@@ -482,7 +482,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	/*
 	**	Multiplayer game uses a different legality check for building.
 	*/
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Funpark build rules check on campaign ID.
 	// Make funpark campaign independent from Jurassic mode.
 	if (GameToPlay != GAME_NORMAL || (ScenPlayer == SCEN_PLAYER_JP && Scenario < 20)) {
 		return((pre & flags) == pre && type->Level <= BuildLevel);
@@ -494,7 +494,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 	int level = Scenario;
 #endif
 
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: RemoveBuildExceptions logic.
 	// Add ability to unlock all tech in singleplayer.
 	if (!RemoveBuildExceptions) {
 		/*
@@ -1010,7 +1010,7 @@ void HouseClass::AI(void)
 		**	When the power is below required, then the buildings will take damage over
 		**	time.
 		*/
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: Don't decay on 0/0 power balance.
 		// Only decay if drain is actually greater than Power; not when there's a 0/0 balance.
 		if (Drain > Power) {
 			for (int index = 0; index < Buildings.Count(); index++) {
@@ -1130,7 +1130,7 @@ void HouseClass::AI(void)
 		**	If there is no ion cannon present, but there is an advanced communcation
 		**	center available, then make the ion cannon available as well.
 		*/
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: Ion Cannon no longer requires GDI.
 		// Ion Cannon no longer requires "ActLike == HOUSE_GOOD"
 		if (hasEye &&
 			//(ActLike == HOUSE_GOOD || GameToPlay != GAME_NORMAL) &&
@@ -1154,7 +1154,7 @@ void HouseClass::AI(void)
 	**	being destroyed is a good example of this.
 	*/
 
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Fix nuke behaviour.
 	// Nuclear Missile no longer acts like a one-time shot added any time sufficient
 	// nuke pieces are available. It now acts identical to the ion cannon, just with
 	// nuke piece checks on top of building existence checks.
@@ -1205,7 +1205,7 @@ void HouseClass::AI(void)
 		**	available, then make the nuke strike strike available.
 		*/
 		if (hasTemple && (IsHuman || GameToPlay != GAME_NORMAL) && Has_Nuke_Device()) {
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Add EVA voice to announce nuke is added.
 			// There is no voice for the nuke "charging", so alert the player that something was added.
 			bool nukelow = GameToPlay == GAME_NORMAL && Power_Fraction() < 0x0100;
 			NukeStrike.Enable(false, this == PlayerPtr, nukelow);
@@ -1378,8 +1378,7 @@ void HouseClass::AI(void)
 			continue;
 		}
 	}
-	// Nyerguds's C&C Patch Project v1.04
-	// Allows looping evacuation triggers.
+	// Nyerguds's C&C Patch Project v1.04: Allow looping evacuation triggers.
 	IsCivEvacuated = false;
 
 	/*
@@ -2437,6 +2436,7 @@ void HouseClass::Special_Weapon_AI(SpecialWeaponType id)
  *                                                                                             *
  *    This routine is called to find the launch site for a superweapon strike.                 *
  *    If no suitable building is found, a fallback is returned so there is something to blame. *
+ *    Find_Launch_Site - Refactored from main function for Nyerguds's C&C Patch Project v1.04. *
  *                                                                                             *
  * INPUT:   origin      -- The StructType that this strike should originate from.              *
  *                                                                                             *
@@ -2450,7 +2450,7 @@ void HouseClass::Special_Weapon_AI(SpecialWeaponType id)
  * HISTORY:                                                                                    *
  *   11/26/2025 MM  : Refactored from main function.                                           *
  *=============================================================================================*/
-BuildingClass * HouseClass::FindLaunchSite(StructType origin, long originMask)
+BuildingClass * HouseClass::Find_Launch_Site(StructType origin, long originMask)
 {
 	// Quick check; if not in the buildings scan, there's no point in looking.
 	if (!(ActiveBScan & originMask)) {
@@ -2461,7 +2461,7 @@ BuildingClass * HouseClass::FindLaunchSite(StructType origin, long originMask)
 	for (int index = 0; index < Buildings.Count(); ++index) {
 		BuildingClass * b = Buildings.Ptr(index);
 		if (fallback == NULL) fallback = b;
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: Don't allow nuke launch from selling Temple.
 		// A selling temple cannot start the launch progress since it would revert to normal state.
 		if (b && !b->IsInLimbo && b->House == this && *b == origin && b->BState != BSTATE_CONSTRUCTION) {
 			launchsite = b;
@@ -2503,7 +2503,7 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 
 		case SPC_ION_CANNON:
 			if (IonCannon.Is_Ready()) {
-				launchsite = FindLaunchSite(STRUCT_EYE, STRUCTF_EYE);
+				launchsite = Find_Launch_Site(STRUCT_EYE, STRUCTF_EYE);
 				anim = new AnimClass(ANIM_ION_CANNON, Cell_Coord(cell));
 				if (anim) anim->Set_Payback(launchsite, *this);
 				IonCannon.Discharged(PlayerPtr == this);
@@ -2534,7 +2534,7 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 				/*
 				**	Search for a suitable launch site for this missile.
 				*/
-				BuildingClass * fallback = FindLaunchSite(STRUCT_TEMPLE, STRUCTF_TEMPLE);
+				BuildingClass * fallback = Find_Launch_Site(STRUCT_TEMPLE, STRUCTF_TEMPLE);
 				launchsite = *fallback == STRUCT_TEMPLE ? fallback : NULL;
 
 				/*
@@ -2545,8 +2545,7 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 					launchsite->Assign_Mission(MISSION_MISSILE);
 					launchsite->Commence();
 					NukeDest = cell;
-					// Nyerguds's C&C Patch Project v1.04
-					// Don't clear nuke pieces; decrease as int.
+					// Nyerguds's C&C Patch Project v1.04: Don't clear nuke pieces; decrease as int.
 					if (GameToPlay == GAME_NORMAL && !NukeStrike.Is_One_Time() && NukePieces >= 0) {
 						NukePieces = MAX(0, NukePieces - RequiredNukePieces);
 					}
@@ -2557,8 +2556,7 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 					**	Only one-time nuclear bombs can be sent from some off screen source.
 					*/
 					if (GameToPlay == GAME_NORMAL && !NukeStrike.Is_One_Time()) {
-						// Nyerguds's C&C Patch Project v1.04
-						// Abort cursor too.
+						// Nyerguds's C&C Patch Project v1.04: If no launch site found, abort targeting cursor.
 						if (this == PlayerPtr) {
 							Map.IsTargettingMode = false;
 						}
@@ -2782,8 +2780,7 @@ bool HouseClass::Manual_Place(BuildingClass * builder,  BuildingClass * object)
 		Map.Repair_Mode_Control(0);
 		Map.Sell_Mode_Control(0);
 
-		// Nyerguds's C&C Patch Project v1.04
-		// Placing a building cancels superweapon targeting mode.
+		// Nyerguds's C&C Patch Project v1.04: Placing a building cancels SW targeting mode.
 		Map.IsTargettingMode = SPC_NONE;
 		Map.PendingObject = object->Class;
 		Map.PendingObjectPtr = object;
@@ -3209,8 +3206,8 @@ void HouseClass::Make_Air_Strike_Available(bool present, bool one_time_effect)
 void HouseClass::Add_Nuke_Piece()
 {
 	Validate();
-	// Nyerguds's C&C Patch Project v1.04
-	// Treat nuke pieces as int, without limit. Treat -1 as infinite.
+	// Nyerguds's C&C Patch Project v1.04: Treat nuke pieces as int, without limit.
+	// If NukePieces is set to -1, this is treated as as infinite, and never modified.
 	if (NukePieces >= 0) {
 		NukePieces++;
 	}
@@ -4424,7 +4421,7 @@ bool HouseClass::Has_Nuke_Device(void)
 {
 	Validate();
 	if (GameToPlay != GAME_NORMAL || !IsHuman) return(true);
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Treat nuke pieces as int.
 	// Treat nuke pieces as int, without limit. Treat -1 as infinite.
 	return(NukePieces < 0 || NukePieces >= RequiredNukePieces);
 
@@ -4462,8 +4459,8 @@ void HouseClass::Sell_Wall(CELL cell)
 		if (!optr.IsWall) {
 			return;
 		}
-		// Nyerguds's C&C Patch Project v1.04
-		// The Overlay<->building link for walls is now always looked up on ini name.
+		// Nyerguds's C&C Patch Project v1.04: Retrieve StructureType for wall to get cost.
+		// The Overlay<->building link for walls is cached in WallStructureType.
 		// This is initialised in OverlayTypeClass::Init()
 		int refund = 0;
 		if (optr.WallStructureType != STRUCT_NONE) {

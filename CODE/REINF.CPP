@@ -40,7 +40,7 @@
 
 #include	"function.h"
 
-// Nyerguds's C&C Patch Project v1.04
+// Nyerguds's C&C Patch Project v1.04: Named Nod delivery reinforcement team.
 // Name is deliberately made into a string that's impossible to retrieve from an ini file.
 #define REINFORCE_TEAM "RNF=TMP"
 
@@ -368,7 +368,7 @@ bool Do_Reinforcements(TeamTypeClass *teamtype)
 				ScenarioInit--;
 				if (*thisone == AIRCRAFT_CARGO) {
 					BuildingClass * building = NULL;
-					// Nyerguds's C&C Patch Project v1.04
+					// Nyerguds's C&C Patch Project v1.04: Retrieve Nod delivery location from team.
 					// If this is the special airstrip cargo delivery team,
 					// retrieve the assigned building from the Missions list.
 					if (strcmp(teamtype->IniName, REINFORCE_TEAM) == 0 && teamtype->MissionCount > 0 && teamtype->MissionList[0].Mission == TMISSION_UNLOAD) {
@@ -540,7 +540,7 @@ bool Create_Special_Reinforcement(HouseClass * house, TechnoTypeClass const * ty
 			/*
 			**	Fill in the team characteristics.
 			*/
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Named Nod delivery reinforcement team.
 			// Name is deliberately made into a string that's impossible to retrieve from an ini file.
 			strcpy((char *)&team->IniName[0], REINFORCE_TEAM);
 			team->IsReinforcable = false;

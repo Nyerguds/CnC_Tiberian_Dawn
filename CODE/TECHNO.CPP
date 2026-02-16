@@ -204,8 +204,7 @@ TechnoTypeClass::TechnoTypeClass(
 	CameoData = NULL;
 	Primary = primary,
 	Secondary = secondary,
-	// Nyerguds's C&C Patch Project v1.04
-	// Migrated turret info to TechnoTypeClass.
+	// Nyerguds's C&C Patch Project v1.04: Migrated turret info to TechnoTypeClass.
 	WeaponOffset = weaponoffs;
 	BarrelLengthPrimary = pribarlen;
 	BarrelLengthSecondary = secbarlen;
@@ -222,18 +221,39 @@ TechnoTypeClass::TechnoTypeClass(
 	IsActiveTargeter= is_active_targeter;
 	IsNominal = is_nominal;
 	Ownable = ownable;
+	risk = risk; // not actually used.
 	Reward = reward;
 	Scenario = scenario;
 	SightRange = sightrange;
+	Recalculate_Risk();
+}
 
+
+/***********************************************************************************************
+ * TechnoTypeClass::Recalculate_Risk -- Recalculates "Risk" value based on primary weapon.     *
+ *                                                                                             *
+ *    This routine is used to recalculate the Risk value for this object, and store it in      *
+ *    the object. Units risk value  is based on the type of weapon it has, and the rate of     *
+ *    fire it shoots at.                                                                       *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   08/13/1995 JLB : Created.                                                                 *
+ *=============================================================================================*/
+void TechnoTypeClass::Recalculate_Risk(void)
+{
 	/*
-	** Units risk value is based on the type of weapon he has and the
+	** Units risk value is based on the type of weapon it has, and the
 	** rate of fire it shoots at.
 	*/
-	risk = risk;
 	Risk = 0;
-	if (primary != WEAPON_NONE) {
-		Risk = (Weapons[primary].Attack * (Weapons[primary].Range >> 4)) / Weapons[primary].ROF;
+	if (Primary != WEAPON_NONE) {
+		Risk = (Weapons[Primary].Attack * (Weapons[Primary].Range >> 4)) / Weapons[Primary].ROF;
 	}
 }
 
@@ -1071,8 +1091,7 @@ bool TechnoClass::In_Range(TARGET target, int which) const
 {
 	if (IsLocked && Target_Legal(target)) {
 		int range = Weapon_Range(which, false, target);
-		// Nyerguds's C&C Patch Project v1.04
-		// Fixed range checks to be facing independent.
+		// Nyerguds's C&C Patch Project v1.04: Fixed range checks to be facing independent.
 		COORDINATE tarcoord = As_Coord(target);
 		if (::Distance(Fire_Coord(which, true, tarcoord), tarcoord) <= range) {
 			return(true);
@@ -1104,8 +1123,7 @@ bool TechnoClass::In_Range(ObjectClass const * target, int which) const
 {
 	if (IsLocked && target) {
 		int range = Weapon_Range(which, false, target->As_Target());
-		// Nyerguds's C&C Patch Project v1.04
-		// Fixed range checks to be facing independent.
+		// Nyerguds's C&C Patch Project v1.04: Fixed range checks to be facing independent.
 		COORDINATE tarcoord = target->Center_Coord();
 		if (::Distance(Fire_Coord(which, true, tarcoord), tarcoord) <= range) {
 			return(true);
@@ -1134,8 +1152,7 @@ bool TechnoClass::In_Range(ObjectClass const * target, int which) const
  *=============================================================================================*/
 bool TechnoClass::In_Range(COORDINATE coord, int which) const
 {
-	// Nyerguds's C&C Patch Project v1.04
-	// Fixed range checks to be facing independent.
+	// Nyerguds's C&C Patch Project v1.04: Fixed range checks to be facing independent.
 	// Creating a TARGET for a location can only take a cell number, not coords,
 	// so an extra arg was added to correct that to the real coords.
 	return(IsLocked && ::Distance(Fire_Coord(which, true, coord), coord) <= Weapon_Range(which));
@@ -1319,7 +1336,7 @@ bool TechnoClass::Evaluate_Object(ThreatType method, int mask, int range, Techno
 	/*
 	**	Lessen threat as a factor of distance.
 	*/
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Fixed threat scan code.
 	// Fixed this code to not simply reduce everything to zero.
 	if ((method & THREAT_DUMB) == THREAT_DUMB) {
 		value = 0;
@@ -1391,7 +1408,7 @@ bool TechnoClass::Evaluate_Cell(ThreatType method, int mask, CELL cell, int rang
 		tentative = (TechnoClass const *)tentative->Next;
 	}
 	
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Threat scan on overlappers to not miss buildings.
 	/*
 	** Buildings give extra range inside their bounds. To compensate, check if any are present in the overlaps of the cell.
 	*/
@@ -1412,7 +1429,7 @@ bool TechnoClass::Evaluate_Cell(ThreatType method, int mask, CELL cell, int rang
 
 
 /*
-**	Nyerguds's C&C Patch Project v1.04
+**	Nyerguds's C&C Patch Project v1.04: Update_Best_Object.
 **	Refactored this to add sub-cell scan logic, and fix updating bestval
 */
 void TechnoClass::Update_Best_Object(ThreatType method, int mask, CELL cell, int range, ObjectClass const ** bestobject, int & bestval) const {
@@ -1490,15 +1507,14 @@ TARGET TechnoClass::Greatest_Threat(ThreatType method) const
 		int crange;
 		if (range == 0) {
 			crange = MAX(Weapon_Range(0, true), Weapon_Range(1, true)) / ICON_LEPTON_W;
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Increase scan range to include buildings.
 			// Increased to account for large buildings. Max for 3x3 or 2x4 is 1.5 cells.
 			// In the range==0 case it will be checked against actual weapon range anyway.
 			crange+=2;
 		} else {
 			crange = range / ICON_LEPTON_W;
 		}
-		// Nyerguds's C&C Patch Project v1.04
-		// restored this to combat south advantage.
+		// Nyerguds's C&C Patch Project v1.04: Scan from center to fix bias towards facing.
 //		CELL cell = Coord_Cell(Fire_Coord(0));
 		CELL cell = Coord_Cell(Center_Coord());
 
@@ -1530,9 +1546,7 @@ TARGET TechnoClass::Greatest_Threat(ThreatType method) const
 			mask |= (1 << RTTI_AIRCRAFT);
 		}
 
-		// Nyerguds's C&C Patch Project v1.04
-		// Fixed "best target" logic by remembering "bestval".
-		// Not sure if it works though; it didn't when I did this in asm. Needs more testing.
+		// Nyerguds's C&C Patch Project v1.04: Fixed "best target" logic.
 
 		/*
 		**	Radiate outward from the object's location, looking for the best
@@ -1582,9 +1596,8 @@ TARGET TechnoClass::Greatest_Threat(ThreatType method) const
 				}
 			}
 
-			// Nyerguds's C&C Patch Project v1.04
-			// Removed this code, because it invalidates the
-			// distance modifier in Evaluate_Object 
+			// Nyerguds's C&C Patch Project v1.04: Removed early bailout on target scan.
+			// Removed this, because it invalidates the distance modifier in Evaluate_Object.
 #ifdef OBSOLETE
 			/*
 			**	Bail early if a target has already been found and the range is at
@@ -1710,8 +1723,7 @@ void TechnoClass::Clicked_As_Target(int count)
  *=============================================================================================*/
 void TechnoClass::AI(void)
 {
-	// Nyerguds's C&C Patch Project v1.04
-	// Recoil state handling is now 100% migrated to TechnoClass
+	// Nyerguds's C&C Patch Project v1.04 Recoil state migrated to TechnoClass.
 	/*
 	**	Handle recoil recovery here.
 	*/
@@ -1829,8 +1841,7 @@ void TechnoClass::AI(void)
 		}
 	}
 
-	// Nyerguds's C&C Patch Project v1.04
-	// Logic for popping up the Rocket Launcher weapon
+	// Nyerguds's C&C Patch Project v1.04: Rocket Launcher popup logic.
 	/*
 	**	Handle active state; if it changes, flag the unit to redraw.
 	**	A unit can go to active state instantly, but after losing a
@@ -2130,7 +2141,7 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
 	TechnoTypeClass const & tclass = *Techno_Type_Class();
 	ObjectClass		*object;
 
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Block Fire_At if techno is unarmed.
 	// [from Remaster] Completely block this logic if techno is unarmed.
 	if ((which == 0 && tclass.Primary == WEAPON_NONE) || (which == 1 && tclass.Secondary == WEAPON_NONE)) {
 		return(NULL);
@@ -2185,7 +2196,7 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
 		bullet->Assign_Target(target);
 		bullet->Set_Payback(this);
 		bullet->Strength = weapon->Attack;
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: Fix grenade range vs buildings falling short.
 		// Add actual range as max scatter range, to fix attacks against buildings falling short.
 		bullet->MaxScatterRange = Weapon_Range(which, true, target);
 
@@ -2225,16 +2236,14 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
 		**	If there is a special firing animation, then create and attach it
 		**	now.
 		*/
-		// Nyerguds's C&C Patch Project v1.04
-		// Buildings take care of the animation themselves.
+		// Nyerguds's C&C Patch Project v1.04: Buildings take care of the animation themselves.
 		if (a != ANIM_NONE && this->What_Am_I() != RTTI_BUILDING) {
 			const AnimTypeClass animtype = AnimTypeClass::As_Reference(a);
-			// Nyerguds's C&C Patch Project v1.04
-			// Made directional animations a specific type.
+			// Nyerguds's C&C Patch Project v1.04: Made directional animations a specific type.
 			if (animtype.IsDirectional) {
 				a = (AnimType)(a + Dir_Facing(Fire_Direction()));
 			}
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Fix double barrel units showing flash on wrong barrel.
 			// Don't call Fire_Coord() again; IsSecondShot has potentially changed. Use cached coords.
 			AnimClass * anim = new AnimClass(a, fire_coord);
 			if (anim) {
@@ -2251,18 +2260,12 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
 			Ammo--;
 		}
 
-		// Nyerguds's C&C Patch Project v1.04
-		/*
-		** If the unit ran out of ammo, always reset this.
-		*/
+		// Nyerguds's C&C Patch Project v1.04: Always reset "IsSecondShot" if ammo ran out.
 		if (!Ammo && tclass.IsTwoShooter) {
 			IsSecondShot = false;
 		}
 
-		// Nyerguds's C&C Patch Project v1.04
-		/*
-		**	Draw the laser beam.
-		*/
+		// Nyerguds's C&C Patch Project v1.04: Draw the laser beam in TechnoClass.
 		if (weapon->Fires == BULLET_LASER) {
 			Draw_Laser(target, which);
 			new SmudgeClass(Random_Pick(SMUDGE_SCORCH1, SMUDGE_SCORCH6), As_Coord(target) );
@@ -2385,7 +2388,7 @@ void TechnoClass::Player_Assign_Mission(MissionType mission, TARGET target, TARG
 			case MISSION_SABOTAGE:
 				Response_Sabotage();
 				break;
-			// Nyerguds's C&C Patch Project v1.04:
+			// Nyerguds's C&C Patch Project v1.04: Area Guard and Stop use Response_Attack().
 			// Use Response_Attack on Area Guard and Stop keyboard orders. Don't use
 			// Response_Move: hearing "moving out!" is weird when it makes them stop.
 			case MISSION_ATTACK:
@@ -2434,7 +2437,7 @@ ActionType TechnoClass::What_Action(ObjectClass * object) const
 		**	object cannot do anything special with itself, then just return with
 		**	the no action flag.
 		*/
- 		// Nyerguds's C&C Patch Project v1.04
+ 		// Nyerguds's C&C Patch Project v1.04: Don't restrict Deploy action to 1-unit selection.
 		// Don't disallow deploy just because more is selected. This is now checked afterwards.
 		if (object == this && /*CurrentObject.Count() == 1 &&*/ House == PlayerPtr) {
 			return(ACTION_SELF);
@@ -2479,8 +2482,7 @@ ActionType TechnoClass::What_Action(ObjectClass * object) const
 		/*
 		**	If firing is possible and legal, then return this action potential.
 		*/
-		// Nyerguds's C&C Patch Project v1.04
-		// TreeTarget now only allows targeting destructible trees.
+		// Nyerguds's C&C Patch Project v1.04: Block TreeTarget from targeting indestructible trees.
 		if (IsOwnedByPlayer
 			&& (ctrldown || !House->Is_Ally(object))
 			&& (ctrldown || object->Class_Of().IsLegalTarget || (Special.IsTreeTarget && object->What_Am_I() == RTTI_TERRAIN && !object->Class_Of().IsImmune))) {
@@ -2548,8 +2550,7 @@ ActionType TechnoClass::What_Action(CELL cell) const
 	**	Special guard area mission is possible if both the control and the
 	**	alt keys are held down.
 	*/
-	// Nyerguds's C&C Patch Project v1.04
-	// Allow Guard Area order on harvesters
+	// Nyerguds's C&C Patch Project v1.04: Allow Guard Area order on harvesters.
 	if (IsOwnedByPlayer && ctrldown && altdown && Can_Player_Move() && (Can_Player_Fire() || (What_Am_I() == RTTI_UNIT && ((UnitClass *)this)->Class->IsToHarvest))) {
 		return(ACTION_GUARD_AREA);
 	}
@@ -2727,8 +2728,13 @@ int TechnoClass::Weapon_Range(int which, bool withbarrel, TARGET target) const
 			range += Weapons[weapon].Range;
 		}
 	}
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Add extra range for buildings.
 	// Refactored to centralize the logic in one function only.
+	/*
+	** If the object that we are attacking is a building, adjust the unit's
+	** max range so that people can stand far away from the buildings and
+	** hit them.
+	*/
 	if (target != TARGET_NONE) {
 		BuildingClass * const bld = As_Building(target);
 		if (bld) {
@@ -2821,7 +2827,7 @@ bool TechnoClass::Captured(HouseClass * newowner)
 		/*
 		**	Record this as a kill.
 		*/
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: let Record_The_Kill handle capture recording.
 		// Record_The_Kill can now handle Houses without actual source.
 		Record_The_Kill(NULL, *newowner);
 
@@ -3010,12 +3016,12 @@ void TechnoClass::Record_The_Kill(TechnoClass * source, HousesType house, bool s
 	}
 	HouseClass * killcred = NULL;
 	if (killhouse != HOUSE_NONE) {
-		killcred = HouseClass::As_Pointer(HOUSE_BAD);
+		killcred = HouseClass::As_Pointer(killhouse);
 	}
 
 	switch (What_Am_I()) {
 		case RTTI_BUILDING:
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Fix loss registration for sold objects.
 			// Changed the losses suppression system for sales to be usable for all types.
 			if (!sold) House->BuildingsLost++;
 #ifdef OBSOLETE
@@ -3041,6 +3047,7 @@ void TechnoClass::Record_The_Kill(TechnoClass * source, HousesType house, bool s
 
 
 		case RTTI_AIRCRAFT:
+			// Nyerguds's C&C Patch Project v1.04: Fix loss registration for sold objects.
 			if (!sold) House->UnitsLost++;
 			if (killcred) {
 				if (GameToPlay == GAME_INTERNET) {
@@ -3059,6 +3066,7 @@ void TechnoClass::Record_The_Kill(TechnoClass * source, HousesType house, bool s
 
 
 		case RTTI_INFANTRY:
+			// Nyerguds's C&C Patch Project v1.04: Fix loss registration for sold objects.
 			if (!sold) House->UnitsLost++;
 			if (killcred) {
 				if (GameToPlay == GAME_INTERNET) {
@@ -3077,6 +3085,7 @@ void TechnoClass::Record_The_Kill(TechnoClass * source, HousesType house, bool s
 
 
 		case RTTI_UNIT:
+			// Nyerguds's C&C Patch Project v1.04: Fix loss registration for sold objects.
 			if (!sold) House->UnitsLost++;
 			if (killcred) {
 				if (GameToPlay == GAME_INTERNET) {
@@ -3438,6 +3447,7 @@ void TechnoClass::Kill_Cargo(TechnoClass * source, HousesType house)
  *                                                                                             *
  *    When an object is sold or dies, and it contains passengers, they usually don't just      *
  *    vanish. This routine takes care of putting them on the map and making them spread out.   *
+ *    Dump_Cargo - Created for Nyerguds's C&C Patch Project v1.04.                             *
  *                                                                                             *
  * INPUT:   damage  -- Maximum damage % (fixed point 0-256) taken by the ejected passengers.   *
  *                                                                                             *
@@ -3462,9 +3472,6 @@ void TechnoClass::Kill_Cargo(TechnoClass * source, HousesType house)
  *=============================================================================================*/
 void TechnoClass::Dump_Cargo(int damage, bool select, TechnoClass * source, HousesType house)
 {
-	// Nyerguds's C&C Patch Project v1.04
-	// General function for dumping passengers.	
-
 	while (Is_Something_Attached()) {
 		FootClass * foot = Detach_Object();
 		if (!foot) continue; // Not sure how this can happen		
@@ -3587,8 +3594,7 @@ int TechnoClass::Value(void) const
 	**	In early missions, contents of transports are not figured
 	**	into the total value. - 8/16/95
 	*/
-	// Nyerguds's C&C Patch Project v1.04
-	// All buildlevel 8 limited logic is also included in Hard mode.
+	// Nyerguds's C&C Patch Project v1.04: Include all buildlevel 8 logic in Hard mode.
 	if (BuildLevel > 8 || GameToPlay != GAME_NORMAL || Special.IsDifficult) {
 		if (Is_Something_Attached()) {
 			FootClass * object = Attached_Object();
@@ -4090,6 +4096,7 @@ void TechnoClass::Response_Attack(void)
  *                                                                                             *
  *    This routine is called when a voice response to a sabotage order is desired. This        *
  *    routine should be overridden for any object that actually has a voice response.          *
+ *    Response_Sabotage - Created for Nyerguds's TUC Quick Fix Patch v1.02.                    *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *
@@ -4098,7 +4105,7 @@ void TechnoClass::Response_Attack(void)
  * WARNINGS:   This can generate an audio response.                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   08/06/2025 MM : Created as part of Nyerguds's TUC Quick Fix Patch v1.02                   *
+ *   08/06/2025 MM : Created.                                                                  *
  *=============================================================================================*/
 void TechnoClass::Response_Sabotage(void)
 {
@@ -4306,8 +4313,8 @@ void TechnoClass::Draw_Pips(int x, int y, WindowNumberType window)
 				}
 				object = object->Next;
 			}
-			// Nyerguds's C&C Patch Project v1.04
-			// Improved pip positions so they no longer get drawn over the edge of the selection box.
+			// Nyerguds's C&C Patch Project v1.04: Improved pip positions.
+			// Ensure pip positions no longer get drawn over the edge of the selection box.
 			CC_Draw_Shape(Class_Of().PipShapes, pip, x+3+index*3, y, window, SHAPE_CENTER|SHAPE_WIN_REL);
 		}
 
@@ -4319,8 +4326,8 @@ void TechnoClass::Draw_Pips(int x, int y, WindowNumberType window)
 		*/
 		int pips = Pip_Count();
 		for (int index = 0; index < Class_Of().Max_Pips(); index++) {
-			// Nyerguds's C&C Patch Project v1.04
-			// Improved pip positions so they no longer get drawn over the edge of the selection box.
+			// Nyerguds's C&C Patch Project v1.04: Improved pip positions.
+			// Ensure pip positions no longer get drawn over the edge of the selection box.
 			CC_Draw_Shape(Class_Of().PipShapes, (index < pips) ? PIP_FULL : PIP_EMPTY, x+3+index*3, y, window, SHAPE_CENTER|SHAPE_WIN_REL);
 		}
 	}
@@ -4357,45 +4364,46 @@ void TechnoClass::Draw_Pips(int x, int y, WindowNumberType window)
  *=============================================================================================*/
 BuildingClass * TechnoClass::Find_Docking_Bay(StructType b, bool friendly) const
 {
-	BuildingClass * best = 0;
-
 	/*
 	**	First check to see if there are ANY buildings of the specified
-	**	type in thi house's inventory. If not, then don't bother to scan
+	**	type in this house's inventory. If not, then don't bother to scan
 	**	for one.
 	*/
-	if (House->BScan & (1L << b)) {
-		int bestval = -1;
+	if (!(House->BScan & (1L << b))) {
+		return NULL;
+	}
+
+	BuildingClass * best = NULL;
+	int bestval = -1;
+
+	/*
+	**	Loop through all the buildings and find the one that matches the specification
+	**	and is willing to dock with this object.
+	*/
+	for (int index = 0; index < Buildings.Count(); index++) {
+		BuildingClass * building = Buildings.Ptr(index);
 
 		/*
-		**	Loop through all the buildings and find the one that matches the specification
-		**	and is willing to dock with this object.
+		**	Check to see if the building qualifies (preliminary scan).
 		*/
-		for (int index = 0; index < Buildings.Count(); index++) {
-			BuildingClass * building = Buildings.Ptr(index);
-
+		if (building &&
+			(friendly ? building->House->Is_Ally(this) : building->House == House) &&
+			!building->IsInLimbo &&
+			*building == b &&
+			((TechnoClass *)this)->Transmit_Message(RADIO_CAN_LOAD, building) == RADIO_ROGER) {
+			// Nyerguds's C&C Patch Project v1.04: Prefer airstrip marked as Leader.
+			// If there is a building marked as leader, always return that one.
+			if (building->IsLeader) {
+				return(building);
+			}
 			/*
-			**	Check to see if the building qualifies (preliminary scan).
+			**	If the building qualifies and this building is better than the
+			**	last qualifying building (as rated by distance), then record
+			**	this building and keep scanning.
 			*/
-			if (building &&
-				(friendly ? building->House->Is_Ally(this) : building->House == House) &&
-				!building->IsInLimbo &&
-				*building == b &&
-				((TechnoClass *)this)->Transmit_Message(RADIO_CAN_LOAD, building) == RADIO_ROGER) {
-				// Nyerguds's C&C Patch Project v1.04
-				// If there is a building marked as leader, always return that one.
-				if (building->IsLeader) {
-					return(building);
-				}
-				/*
-				**	If the building qualifies and this building is better than the
-				**	last qualifying building (as rated by distance), then record
-				**	this building and keep scanning.
-				*/
-				if (bestval == -1 || Distance(building) < bestval) {
-					best = building;
-					bestval = Distance(building);
-				}
+			if (bestval == -1 || Distance(building) < bestval) {
+				best = building;
+				bestval = Distance(building);
 			}
 		}
 	}
@@ -4449,8 +4457,7 @@ int TechnoClass::Refund_Amount(void) const
 	**	If the object is carrying Tiberium directly (i.e., the harvester), then
 	**	account for the credits of the load.
 	*/
-	// Nyerguds's C&C Patch Project v1.04
-	// Fixed tiberium getting divided twice.
+	// Nyerguds's C&C Patch Project v1.04: Fixed tiberium value dividing twice on Harvester sale.
 	cost += Fixed_To_Cardinal(UnitTypeClass::FULL_LOAD_CREDITS, Tiberium_Load());
 
 	if (House->IsHuman) {

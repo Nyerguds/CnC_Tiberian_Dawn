@@ -470,9 +470,9 @@ void UnitClass::AI(void)
 		Commence();
 	}
 
-#ifdef OBSOLETE
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Migrated all recoil handling to TechnoClass.
 	// Recoil state handling is now 100% migrated to TechnoClass, where it belongs.
+#ifdef OBSOLETE
 	/*
 	**	Handle recoil recovery here.
 	*/
@@ -638,8 +638,7 @@ RadioMessageType UnitClass::Receive_Message(RadioClass * from, RadioMessageType 
 		**	to the impatient unit.
 		*/
 		case RADIO_DOCKING:
-			// Nyerguds's C&C Patch Project v1.04
-			// Ported the remaster's multi-load logic.
+			// Nyerguds's C&C Patch Project v1.04: Ported the remaster's APC multi-load logic.
 			/*
 			**	Check for the case of a docking message arriving from a unit that does not
 			**	have formal radio contact established. This might be a unit that is standing
@@ -670,9 +669,8 @@ RadioMessageType UnitClass::Receive_Message(RadioClass * from, RadioMessageType 
 					return(RADIO_ROGER);
 				}
 			}
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Removed explicit check on APC for loading.
 			// Ported the remaster's logic to allow loading while busy attacking.
-			// Removed explicit check on APC.
 			if (Class->IsTransporter && How_Many() < Class->Max_Passengers()) {
 				TarComClass::Receive_Message(from, message, param);
 
@@ -884,8 +882,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 	**	Special case: If this is a laser attacking a gunboat, then the gunboat is ALWAYS toasted.
 	*/
 	if (*this == UNIT_GUNBOAT && warhead == WARHEAD_LASER) {
-		// Nyerguds's C&C Patch Project v1.04
-		// Ensure this is 100% completely murdered.
+		// Nyerguds's C&C Patch Project v1.04 Ensure laser 100% completely murders boats.
 		Strength = 1;
 		damage = 1000;
 	}
@@ -915,7 +912,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 				anim = ANIM_NAPALM3;
 			}
 
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Migrated dino deaths to death animations.
 			// This is now simply linked to the death animations directly.
 #ifdef OBSOLETE
 			if (*this == UNIT_TRIC || *this == UNIT_TREX || *this == UNIT_RAPT || *this == UNIT_STEG) {
@@ -995,7 +992,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 					}
 				}
 #endif
-				// Nyerguds's C&C Patch Project v1.04
+				// Nyerguds's C&C Patch Project v1.04: Eject passengers of dead transport from repair pad.
 				// Use Dump_Cargo to ensure passengers are properly ejected when standing on a repair pad.
 				if (select) {
 					AllowVoice = true;
@@ -1045,8 +1042,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 		**	Try to crush anyone that fires on this unit if possible. The harvester
 		**	typically is the only one that will qualify here.
 		*/
-		// Nyerguds's C&C Patch Project v1.04
-		// Sticky or Sleeping units should not crush infantry.
+		// Nyerguds's C&C Patch Project v1.04: Sticky or Sleeping units should not crush infantry.
 		if (!Team && source && !IsTethered && !House->Is_Ally(source) && (!House->IsHuman || Special.IsSmartDefense) && Mission != MISSION_SLEEP && Mission != MISSION_STICKY) {
 
 			/*
@@ -1109,11 +1105,11 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   09/11/2025 MM  : Created.                                                                 *
+ *   09/11/2025 MM  : Implemented Death_Announcement for Nyerguds's C&C Patch Project v1.04.   *
  *=============================================================================================*/
 void UnitClass::Death_Announcement(TechnoClass const * source) const
 {
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: "Need harvester" announcement.
 	// Whoops, looks like somebody's in the market for a new harvester!
 	if (*this == UNIT_HARVESTER && IsOwnedByPlayer) {
 		bool reffound = false;
@@ -2149,7 +2145,7 @@ void UnitClass::Draw_It(int x, int y, WindowNumberType window)
 			*/
 			shapenum = TechnoClass::BodyShape[tfacing]+32;
 
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: SSM ammo causes turret change.
 			// Setting Ammo on UnitType now triggers multi-turret logic.
 			/*
 			**	The shape to use for the rocket launcher is dependent on the
@@ -2165,12 +2161,14 @@ void UnitClass::Draw_It(int x, int y, WindowNumberType window)
 			}
 #endif
 
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Rocket Launcher popup.
 			/*
-			**	If an MLRS is in range of its target, pop
-			**	up its launcher so it looks ready to fire.
+			**	If an MLRS is in range of its target, pop up its launcher so it looks ready to fire.
+			**	This was supposed to use the "IsTurretLockedDown" property, but that logic becomes
+			**	buggy when the unit fires while moving. The ActiveDetection also just looks nicer.
 			*/
 			if (Class->IsActiveTargeter && ActiveDetection > 0 && !Options.NoLauncherPopup) {
+				// If ammo states are used, each state must be given a flat and popped up variant.
 				shapenum += 32 * (MAX(Class->MaxAmmo, 0) + 1);
 			}
 
@@ -2202,7 +2200,7 @@ void UnitClass::Draw_It(int x, int y, WindowNumberType window)
 		**	If this unit has "piggy back" unit(s), then render it at the same time.
 		*/
 		if (*this == UNIT_HOVER && Is_Something_Attached()) {
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Hovercraft renders max. 5 units.
 			// Don't render more than 5 units or it overflows the positioning.
 			ObjectClass * ob = Attached_Object();
 			int maxpos = sizeof(StoppingCoordAbs) / sizeof(StoppingCoordAbs[0]);
@@ -2461,7 +2459,8 @@ int UnitClass::Mission_Unload(void)
 					break;
 
 				case MANEUVERING:
-					if (!IsRotating) {
+					// Nyerguds's C&C Patch Project v1.04: "IsRotating" wasn't reliable?
+					if (!PrimaryFacing.Is_Rotating()) {
 						APC_Open_Door();
 						if (Is_Door_Opening()) {
 							Status = OPENING_DOOR;
@@ -2543,8 +2542,8 @@ int UnitClass::Mission_Unload(void)
 				case 1:
 					if (!IsDriving) {
 						Try_To_Deploy();
-						// Nyerguds's C&C Patch Project v1.04
-						// AI MCVs will seek out a place to deploy. This behaviour is coded in the "Hunt" mission.
+						// Nyerguds's C&C Patch Project v1.04: AI MCVs will seek out a place to deploy.
+						// This seeking behaviour is coded in the "Hunt" mission.
 						if (IsDeploying) {
 							Status = 2;
 						} else if (House->IsHuman) {
@@ -3189,8 +3188,12 @@ MoveType UnitClass::Can_Enter_Cell(CELL cell, FacingType ) const
 		}
 	}
 
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: fix vehicle crushing.
 	// This pointless check caused vehicle crushing to malfunction.
+
+	// This might need an additional check comparable to the airspace
+	// checks, that go over all other crusher units and check if they
+	// are in the process of crushing this cell, and are closer to it.
 #ifdef OBSOLETE
 	/*
 	** If its ok to move into the cell because we can crush whats in the cell, then
@@ -3302,7 +3305,7 @@ void UnitClass::Scatter(COORDINATE threat, bool forced)
 	*/
 	if ((Mission == MISSION_SLEEP && !IsTethered) || Mission == MISSION_STICKY) return;
 	/*
-	**	Nyerguds's C&C Patch Project v1.04
+	**	Nyerguds's C&C Patch Project v1.04: Allow repair bay docked units to scatter.
 	**	Units docked to a repair bay are put to Sleep mode. These units are allowed to scatter if forced.
 	*/
 	const TechnoClass * tclass = Contact_With_Whom();
@@ -3478,8 +3481,9 @@ void UnitClass::Response_Select(void)
 		VOC_AWAIT
 	};
 	VocType response ;
-	// Nyerguds's C&C Patch Project v1.04
-	// Added Visceroid to this, so it never responds with a human voice.
+	// Nyerguds's C&C Patch Project v1.04: IsTalker determines if units get "monster" voice.
+	// Originally just for dinos, but the Visceroid is now added to this,
+	// so it never responds with a human voice.
 	if (Class->IsTalker) {
 		response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
 	} else {
@@ -3518,8 +3522,9 @@ void UnitClass::Response_Move(void)
 		VOC_AFFIRM
 	};
 	VocType response;
-	// Nyerguds's C&C Patch Project v1.04
-	// Added Visceroid to this, so it never responds with a human voice.
+	// Nyerguds's C&C Patch Project v1.04: IsTalker determines if units get "monster" voice.
+	// Originally just for dinos, but the Visceroid is now added to this,
+	// so it never responds with a human voice.
 	if (Class->IsTalker) {
 		response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
 	} else {
@@ -3557,8 +3562,9 @@ void UnitClass::Response_Attack(void)
 		VOC_YESSIR
 	};
 	VocType response;
-	// Nyerguds's C&C Patch Project v1.04
-	// Added Visceroid to this, so it never responds with a human voice.
+	// Nyerguds's C&C Patch Project v1.04: IsTalker determines if units get "monster" voice.
+	// Originally just for dinos, but the Visceroid is now added to this,
+	// so it never responds with a human voice.
 	if (Class->IsTalker) {
 		response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
 	} else {
@@ -3591,13 +3597,12 @@ void UnitClass::Response_Attack(void)
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   04/09/2025 MM  : Created.                                                                 *
+ *   04/09/2025 MM  : Implemented for Remaster harvest logic upgrade.                          *
  *=============================================================================================*/
 void UnitClass::Player_Assign_Mission(MissionType mission, TARGET target, TARGET destination)
 {
 	Validate();
-	// Nyerguds's C&C Patch Project v1.04
-	// Copied from Remaster: harvest logic upgrade.
+	// Nyerguds's C&C Patch Project v1.04: Copied from Remaster: harvest logic upgrade.
 	if (mission == MISSION_HARVEST) {
 		ArchiveTarget = TARGET_NONE;
 	}
@@ -3650,8 +3655,7 @@ ActionType UnitClass::What_Action(ObjectClass * object) const
 		} else {
 			((ObjectClass &)(*this)).Mark(MARK_UP);
 			if (!BuildingTypeClass::As_Reference(STRUCT_CONST).Legal_Placement(Coord_Cell(Adjacent_Cell(Center_Coord(), FACING_NW)))) {
- 				// Nyerguds's C&C Patch Project v1.04
-				// Fun little "Cannot deploy here" cursor :)
+ 				// Nyerguds's C&C Patch Project v1.04: Added "Cannot deploy here" cursor.
 				action = ACTION_NO_SELF;
 			}
 			((ObjectClass &)(*this)).Mark(MARK_DOWN);
@@ -3661,7 +3665,7 @@ ActionType UnitClass::What_Action(ObjectClass * object) const
 	/*
 	**	Special return to friendly dockable building action. Used for the refinery and repair facility.
 	*/
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Enter cursor can't override Ctrl or Ctrl+Alt.
 	// Don't allow ENTER to override Ctrl or Ctrl+Alt. Alt is still allowed to be overridden.
 	if (
 		action != ACTION_ATTACK && action != ACTION_GUARD_AREA && object->Is_Techno() && IsOwnedByPlayer &&
@@ -3786,9 +3790,8 @@ void UnitClass::Read_INI(char *buffer)
 							unit->Enter_Idle_Mode();
 						}
 
-						// Nyerguds's C&C Patch Project v1.04
-						// Units with cloaking ability start off as cloaked.
-						if (unit->Class->IsCloakable){
+						// Nyerguds's C&C Patch Project v1.04: Units with cloaking ability start off as cloaked.
+						if (unit->Class->IsCloakable) {
 							unit->Cloak = CLOAKED;
 						}
 
@@ -4062,35 +4065,73 @@ DirType UnitClass::Desired_Load_Dir(ObjectClass * passenger, CELL & moveto) cons
 		**	allowed to enter the cell. If it can't, then give such a negative value to the
 		**	cell so that it is prevented from ever choosing that cell for load/unload.
 		*/
+		bool blocked = false;
 		if (passenger) {
-			value = (passenger->Can_Enter_Cell(cellnum) == MOVE_OK || Coord_Cell(passenger->Coord) == cellnum) ? 128 : -128;
+			blocked = (passenger->Can_Enter_Cell(cellnum) != MOVE_OK && Coord_Cell(passenger->Coord) != cellnum);
 		} else {
 			CellClass * cell = &Map[cellnum];
 			if (Ground[cell->Land_Type()].Cost[SPEED_FOOT] == 0 || cell->Flag.Occupy.Building || cell->Flag.Occupy.Vehicle || cell->Flag.Occupy.Monolith || (cell->Flag.Composite & 0x01F) == 0x01F) {
-				value = -128;
+				blocked = true;
 			} else {
-				if (cell->Cell_Techno() && !House->Is_Ally(cell->Cell_Techno())) {
-					value = -128;
-				} else {
-					value = 128;
+				// Nyerguds's C&C Patch Project v1.04: Occupancy check for unloading infantry.
+				// Apparently checking the bit flags isn't reliable?
+				// Should just be using InfantryClass::Can_Enter_Cell() but it's not static and I don't have an object.
+				ObjectClass * cellobj = cell->Cell_Occupier();
+				if (cellobj) {
+					if (!House->Is_Ally(cellobj)) {
+						blocked = true;
+					} else {
+						switch (cellobj->What_Am_I())
+						{
+							case RTTI_AIRCRAFT:
+								blocked = ((AircraftClass*)cellobj)->Altitude == 0;
+								break;
+							case RTTI_INFANTRY: {
+									int hasinf = 0;
+									while (cellobj) {
+										if (!House->Is_Ally(cellobj)) {
+											blocked = true;
+											break;
+										}
+										if (cellobj->What_Am_I() == RTTI_INFANTRY) {
+											hasinf |= (1 << CellClass::Spot_Index(cellobj->Coord));
+											cellobj = cellobj->Next;
+										}
+									}
+									if ((hasinf & 0x1F) == 0x1F) {
+										blocked = true;
+									}
+								}
+								break;
+							default:
+								blocked = true;
+								break;
+						}
+					}
 				}
 			}
 		}
+		value = blocked ? -256 : 256;
 
 		/*
 		**	Give more weight to the cells that require the least rotation of the transport or the
 		**	least roundabout movement for the potential passenger.
 		*/
-		value -= (int)ABS(Dir_Diff(Facing_Dir(face), faceto));
-		// Nyerguds's C&C Patch Project v1.04
-		// Give less value to directions you have no animation for.
+		// Nyerguds's C&C Patch Project v1.04: Fix rotation bias going over 128.
+		int rotval = (int)ABS(Dir_Diff(Facing_Dir(face), faceto));
+		if (rotval > DIR_S) rotval = DIR_MAX - rotval;
+		value -= rotval;
+		// Nyerguds's C&C Patch Project v1.04: less priority to load directions without animation.
+		// Give less value to visible-door directions which have no door animation.
 		if (face == FACING_S || face == FACING_E || face == FACING_W) {
 			value -= 100;
 		}
+		// Nyerguds's C&C Patch Project v1.04: Fix SE and SW load directions having higher priority.
 		// No clue why this was a thing, but it made loading from the north-west
 		// malfunction unless the south-west cell was blocked.
-		//if (face == FACING_SW || face == FACING_SE) value += 64;
-
+#ifdef OBSOLETE
+		if (face == FACING_SW || face == FACING_SE) value += 64;
+#endif
 		/*
 		**	If the value for the potential cell is greater than the last recorded potential
 		**	value, then record this cell as the best candidate.
@@ -4106,11 +4147,17 @@ DirType UnitClass::Desired_Load_Dir(ObjectClass * passenger, CELL & moveto) cons
 	*/
 	moveto = 0;
 	if (bestval > 0) {
+		// Nyerguds's C&C Patch Project v1.04: Don't fully exclude door-lacking directions.
+#ifdef OBSOLETE
 		//                                                     N      NE      E       SE      S       SW      W       NW
 		static DirType _desired_to_actual[FACING_COUNT] = {DIR_S, DIR_SW, DIR_NW, DIR_NW, DIR_NE, DIR_NE, DIR_NE, DIR_SE};
+#endif
 
 		moveto = Adjacent_Cell(Coord_Cell(Coord), bestdir);
+#ifdef OBSOLETE
 		return(_desired_to_actual[bestdir]);
+#endif
+		return(Facing_Dir(bestdir + FACING_S));
 	}
 	return(DIR_S);
 }

@@ -100,12 +100,13 @@ int AnimClass::Validate(void) const
  *                                                                                             *
  *    This routine is used to avoid duplicating animations that should only exist once. It     *
  *    can also be used as a more accurate check instead of the cached IsAnimAttached member.   *
+ *    Has_Attached_Anim - Created for Nyerguds's C&C Patch Project v1.04.                      *
  *                                                                                             *
  * INPUT:   obj   -- Pointer to the object of which to check if it has attached animations.    *
  *                                                                                             *
- *          animnum -- type of animation to look for. Use ANIM_NONE to disable filtering.      *
+ *          animtype -- type of animation to look for. Use ANIM_NONE to disable filtering.     *
  *                                                                                             *
- *          not_dying -- if true, animations with their loop count set to 0 are considered     *
+ *          notdying -- if true, animations with their loop count set to 0 are considered      *
  *                       "dying" and ignored as valid matches since they will end soon.        *
  *                                                                                             *
  * OUTPUT:  none.                                                                              *
@@ -115,13 +116,13 @@ int AnimClass::Validate(void) const
  * HISTORY:                                                                                    *
  *   06/17/2025 MM  : Created.                                                                 *
  *=============================================================================================*/
-bool Has_Attached_Anim(ObjectClass * obj, AnimType animnum, bool not_dying)
+bool Has_Attached_Anim(ObjectClass * obj, AnimType animtype, bool notdying)
 {
-	if (obj && animnum != ANIM_NONE) {
+	if (obj && animtype != ANIM_NONE) {
 		for (int index = 0; index < Anims.Count(); index++) {
 			AnimClass & anim = *Anims.Ptr(index);
-			if (anim.Object == obj && (animnum == ANIM_NONE || anim == animnum)) {
-				if (anim.Loops == 0 && not_dying) {
+			if (anim.Object == obj && (animtype == ANIM_NONE || anim == animtype)) {
+				if (anim.Loops == 0 && notdying) {
 					continue;
 				}
 				return(true);
@@ -158,6 +159,7 @@ void Shorten_Attached_Anims(ObjectClass * obj, AnimType animtype)
 	if (obj) {
 		for (int index = 0; index < Anims.Count(); index++) {
 			AnimClass & anim = *Anims.Ptr(index);
+			// Nyerguds's C&C Patch Project v1.04: Filter on anim type to shorten.
 			if (anim.Object == obj && (animtype == ANIM_NONE || anim == animtype)) {
 				anim.Loops = 0;
 			}
@@ -186,8 +188,7 @@ COORDINATE AnimClass::Sort_Y(void) const
 {
 	Validate();
 	if (Object) {
-		// Nyerguds's C&C Patch Project v1.04
-		// Fixed overlap on oil derrick flame.
+		// Nyerguds's C&C Patch Project v1.04: Fixed overlap on oil derrick flame.
 		if (*this == ANIM_OILFIELD_BURN) {
 			return(Coord_Add(Center_Coord(), XYP_COORD(-12, 20)));
 		}
@@ -291,7 +292,7 @@ void AnimClass::Draw_It(int x, int y, WindowNumberType window)
 					y += 12;
 			}
 
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Un-hardcoded translucency.
 			// transtable exceptions were migrated to the data, as the "Translucency" setting.
 #ifdef OBSOLETE
 			switch (Class->Type) {
@@ -313,7 +314,7 @@ void AnimClass::Draw_It(int x, int y, WindowNumberType window)
 			if (!transtable && Class->IsTranslucent) transtable = Map.TranslucentTable;
 #endif
 
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Translucent tables support.
 			// Added support for all translucent tables available in DisplayClass.
 			/*
 			**	If the translucent table hasn't been determined yet, then check to see if it
@@ -647,43 +648,6 @@ AnimClass::AnimClass(AnimType animnum, COORDINATE coord, unsigned char timedelay
 
 
 /***********************************************************************************************
- * AnimClass::ObjectHasOtherAnims -- check if the object has other animations attached.        *
- *                                                                                             *
- *    This routine can be used to check if the object that is attached to this animation       *
- *    has more animations attached to it. It can specifically check only on damage-dealing     *
- *    animations, since those determine when the object is no longer considered "on fire".     *
- *    The current animation will always be ignored when encountered in the list.               *
- *                                                                                             *
- * INPUT:   object   -- The object that this animation is attached to.                         *
- *                                                                                             *
- *          damaging -- True if this should only check for damage-dealing (burn) animations.   *
- *                                                                                             *
- * OUTPUT:  none                                                                               *
- *                                                                                             *
- * WARNINGS:   none                                                                            *
- *                                                                                             *
- * HISTORY:                                                                                    *
- *   11/26/2025 MM  : Created.                                                                 *
- *=============================================================================================*/
-bool AnimClass::ObjectHasOtherAnims(ObjectClass * object, bool damaging)
-{
-	if (!object) {
-		return(false);
-	}
-	bool otherFound = false;
-	for (int index = 0; index < Anims.Count(); index++) {
-		AnimClass * anim = Anims.Ptr(index);
-		if (anim == this) continue;
-		if (anim->Object == object && (!damaging || anim->Class->Damage)) {
-			otherFound = true;
-			break;
-		}
-	}
-	return(otherFound);
-}
-
-
-/***********************************************************************************************
  * AnimClass::~AnimClass -- Destructor for anim objects.                                       *
  *                                                                                             *
  *    This destructor handles removing the animation object from the system. It might require  *
@@ -704,10 +668,9 @@ AnimClass::~AnimClass(void)
 	if (GameActive) {
 
 		/*
-		**	If this anim is attached to another object
-		**	then check to see if this is the last anim attached to it. If this
-		**	is the case, then inform the object that it is no longer attached to
-		**	an animation.
+		**	If this anim is attached to another object then check to see if this
+		**	is the last anim attached to it. If this is the case, then inform the
+		**	object that it is no longer attached to an animation.
 		*/
 		if (Object) {
 			ObjectClass * to = Object;
@@ -718,13 +681,13 @@ AnimClass::~AnimClass(void)
 			**	this animation is attached to. If there are no others, then inform the
 			**	attached object of this fact.
 			*/
-			bool animsfound = ObjectHasOtherAnims(to, false);
+			bool animsfound = Object_Has_Other_Anims(to, false);
 			if (Class->Damage) {
 
 				bool burnersFound = false;
 				// If no anims at all were attached, there won't be any fire-dealing ones either.
 				if (animsfound) {
-					burnersFound = ObjectHasOtherAnims(to, true);
+					burnersFound = Object_Has_Other_Anims(to, true);
 				}
 				/*
 				**	If no more damage-dealing animations are attached,
@@ -843,7 +806,7 @@ void AnimClass::AI(void)
 					**	then the attached damaging anim is also destroyed.
 					*/
 					int damage = accum >> 8;
-					// Nyerguds's C&C Patch Project v1.04
+					// Nyerguds's C&C Patch Project v1.04: Burn anim damage attribution.
 					// Burn anims now properly assign damage to the object / house that caused it.
 					if (Object->Take_Damage(damage, 0, WARHEAD_FIRE, As_Techno(Payback), Owner, true) == RESULT_DESTROYED) {
 						//Object = 0;
@@ -1041,7 +1004,7 @@ void AnimClass::Middle(void)
 	AnimClass * spreadfire;
 	if (Class->Type == ANIM_ATOM_BLAST) {
 
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: Remove obsolete nuke payback scan.
 		// Now fully handled by Payback + Owner.
 #ifdef OBSOLETE
 		/*
@@ -1166,7 +1129,7 @@ void AnimClass::Middle(void)
 	*/
 	switch (Class->Type) {
 		case ANIM_ION_CANNON: {
-				// Nyerguds's C&C Patch Project v1.04
+				// Nyerguds's C&C Patch Project v1.04: Remove obsolete ion payback scan.
 				// Now fully handled by Payback + Owner.
 #ifdef OBSOLETE
 				BuildingClass * building = NULL;
@@ -1205,7 +1168,7 @@ void AnimClass::Middle(void)
 
 		case ANIM_FIRE_MED:
 		case ANIM_FIRE_MED2:
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Retain damage culprit on attached anims.
 			// When extra anim is attached to Object, copy damage attribution.
 			newanim = new AnimClass(ANIM_FIRE_SMALL, Center_Coord(), 0, ((Random_Pick(0, 1) == 1) ? 1 : 2));
 			if (newanim && Object) {
@@ -1225,6 +1188,7 @@ void AnimClass::Middle(void)
  *                                                                                             *
  *    This routine sets the object to retaliate to, and, if no object is available,            *
  *    then at least the house to blame.                                                        *
+ *    Set_Payback - Created for Nyerguds's C&C Patch Project v1.04.                            *
  *                                                                                             *
  * INPUT:   payback    -- Techno object to pay back for the damage caused.                     *
  *                                                                                             *
@@ -1344,9 +1308,9 @@ void AnimClass::Detach(TARGET target, bool all)
 
 	if (Object && Object->As_Target() == target && all) {
 
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: Fix Fire_Out logic.
 		// Check for other damage-dealing anims here and call Fire_Out() if none are left.
-		if (!ObjectHasOtherAnims(Object, true)) {
+		if (!Object_Has_Other_Anims(Object, true)) {
 			Object->Fire_Out();
 		}
 
@@ -1354,4 +1318,42 @@ void AnimClass::Detach(TARGET target, bool all)
 		Object = NULL;
 		IsToDelete = true;
 	}
+}
+
+
+/***********************************************************************************************
+ * AnimClass::Object_Has_Other_Anims -- Check if the object has other animations attached.     *
+ *                                                                                             *
+ *    This routine can be used to check if the object that is attached to this animation       *
+ *    has more animations attached to it. It can specifically check only on damage-dealing     *
+ *    animations, since those determine when the object is no longer considered "on fire".     *
+ *    The current animation will always be ignored when encountered in the list.               *
+ *    Object_Has_Other_Anims - Created for Nyerguds's C&C Patch Project v1.04.                 *
+ *                                                                                             *
+ * INPUT:   object   -- The object that this animation is attached to.                         *
+ *                                                                                             *
+ *          damaging -- True if this should only check for damage-dealing (burn) animations.   *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   11/26/2025 MM  : Created.                                                                 *
+ *=============================================================================================*/
+bool AnimClass::Object_Has_Other_Anims(ObjectClass * object, bool damaging)
+{
+	if (!object) {
+		return(false);
+	}
+	bool otherFound = false;
+	for (int index = 0; index < Anims.Count(); index++) {
+		AnimClass * anim = Anims.Ptr(index);
+		if (anim == this) continue;
+		if (anim->Object == object && (!damaging || anim->Class->Damage)) {
+			otherFound = true;
+			break;
+		}
+	}
+	return(otherFound);
 }

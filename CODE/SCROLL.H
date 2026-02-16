@@ -57,7 +57,7 @@ class ScrollClass: public HelpClass
 		static CountDownTimerClass Counter;
 
 		/*
-		**	Nyerguds's C&C Patch Project v1.04
+		**	Nyerguds's C&C Patch Project v1.04: Fix for fast scroll bugs.
 		**	Scrolling is throttled by this count down timer; AI is called on every screen
 		**	refresh, but this limits the scrolling to a frame rate of 60 fps.
 		*/

@@ -603,7 +603,7 @@ void TeamClass::AI(void)
 			case TMISSION_ATTACKCIVILIANS:
 			case TMISSION_RAMPAGE:
 			case TMISSION_DEFENDBASE:
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Fixed bug that Unload arg is used as timeout.
 			// Unload is not a mission that should expire; its argument is a waypoint!
 			//case TMISSION_UNLOAD:
 			case TMISSION_RETREAT:
@@ -1378,8 +1378,7 @@ void TeamClass::Coordinate_Unload(void)
 		Coordinate_Conscript(unit);
 
 		if (unit->IsInitiated && !unit->IsInLimbo) {
-			// Nyerguds's C&C Patch Project v1.04
-			// Make Unload work for MCV deployment
+			// Nyerguds's C&C Patch Project v1.04: Make Unload work for MCV deployment.
 			bool isMcv = unit->What_Am_I() == RTTI_UNIT && ((UnitClass*)unit)->Class->Type == UNIT_MCV;
 			if (unit->Is_Something_Attached() || isMcv) {
 

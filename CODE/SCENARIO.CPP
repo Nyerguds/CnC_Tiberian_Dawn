@@ -95,7 +95,7 @@ bool Start_Scenario(char *root, int nukepieces, bool briefing)
 		** sides introduction.  We don't want an intro movie on scenario 1, and
 		** we don't want a briefing movie on GDI scenario 1.
 		*/
-		// Nyerguds's C&C Patch Project v1.04
+		// Nyerguds's C&C Patch Project v1.04: Replace Jurassic checks with ScenPlayer checks.
 		// -Consistently use ScenPlayer for scenario exceptions
 		// -Make funpark campaign independent from Jurassic mode.
 		if (Scenario < 20 && /*(!Special.IsJurassic || !AreThingiesEnabled) ||*/ ScenPlayer != SCEN_PLAYER_JP) {
@@ -110,8 +110,7 @@ bool Start_Scenario(char *root, int nukepieces, bool briefing)
 			Play_Movie(ActionMovie, TransitTheme);
 		} else {
 #ifdef NEWMENU
-			// Nyerguds's C&C Patch Project v1.04
-			// Allow into movie for Covert Ops (because why not?)
+			// Nyerguds's C&C Patch Project v1.04: Allow intro movie for Covert Ops.
 			Play_Movie(IntroMovie);
 			Play_Movie(BriefMovie);
 			Play_Movie(ActionMovie, TransitTheme);
@@ -119,8 +118,7 @@ bool Start_Scenario(char *root, int nukepieces, bool briefing)
 		}
 #endif // DEMO
 
-		// Nyerguds's C&C Patch Project v1.04
-		// Always show brief screen if no briefing video is available.
+		// Nyerguds's C&C Patch Project v1.04: Force brief screen if no Briefing video is found.
 		char buffer[25];
 		sprintf(buffer, "%s.VQA", BriefMovie);
 		CCFileClass file(buffer);
@@ -475,8 +473,8 @@ void Do_Win(void)
 
 		// Handle end of menu-selected mission.
 		if (bonusmission) {
-			// Nyerguds's C&C Patch Project v1.04
-			// Minicampaigns system: progress from EA...->EE -> WA...->WE -> XA...->XE
+			// Nyerguds's C&C Patch Project v1.04: Minicampaigns system.
+			// This progresses from EA...->EE -> WA...->WE -> XA...->XE
 			ScenarioVarEnum nextvar = ScenVar;
 			ScenarioDirEnum nextdir = ScenDir;
 			nextvar++;
@@ -503,8 +501,7 @@ void Do_Win(void)
 				ScenDir = nextdir;
 			}
 		} else {
-			// Nyerguds's C&C Patch Project v1.04
-			// Consistently use ScenPlayer for scenario exceptions
+			// Nyerguds's C&C Patch Project v1.04: Consistently use ScenPlayer for scenario exceptions.
 			/*
 			**	Skip scenario #7 if the airfield was blown up.
 			*/
@@ -521,8 +518,7 @@ void Do_Win(void)
 	}
 	StructType sabotaged = SabotagedType;
 	
-	// Nyerguds's C&C Patch Project v1.04:
-	// Carryover is no longer restricted to cash money.
+	// Nyerguds's C&C Patch Project v1.04: Carryover is no longer restricted to cash money.
 	CarryOverMoney = PlayerPtr->Available_Money();
 
 	int pieces = PlayerPtr->NukePieces;
@@ -531,8 +527,7 @@ void Do_Win(void)
 	** Generate a new scenario filename
 	*/
 	Set_Scenario_Name(ScenarioName, Scenario, ScenPlayer, ScenDir, ScenVar);
-	// Nyerguds's C&C Patch Project v1.04:
-	// Nuke pieces are passed on to Start_Scenario
+	// Nyerguds's C&C Patch Project v1.04: Nuke pieces are passed on to Start_Scenario.
 	Start_Scenario(ScenarioName, pieces);
 
 	/*
@@ -564,8 +559,8 @@ void Do_Win(void)
 		}
 	}
 
-	// Nyerguds's C&C Patch Project v1.04:
-	// fixed temple ion cannon status lingering in memory / getting reset / not getting saved in savegames.
+	// Nyerguds's C&C Patch Project v1.04: Always clear special statuses on mission start.
+	// Fix for temple ion cannon status and sabotaged type lingering in memory.
 	/*
 	** Always clear these on mission start.
 	*/
@@ -746,8 +741,8 @@ bool Restate_Mission(char const * name, int button1, int button2)
 			brief = false;
 		}
 #endif
-		// Nyerguds's C&C Patch Project v1.04
-		// Always check for CPS. This offers interesting modding / mapping opportunities.
+		// Nyerguds's C&C Patch Project v1.04: Always check for briefing CPS.
+		// This offers interesting modding / mapping opportunities.
 		char fname[14];
 		strcpy(fname, name);
 		strcat(fname,".CPS");

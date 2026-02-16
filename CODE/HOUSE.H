@@ -154,9 +154,9 @@ class HouseClass {
 		int	NukePieces;
 
 		/*
-		**	Nyerguds's C&C Patch Project v1.04
+		**	Nyerguds's C&C Patch Project v1.04: Backup starting amount of nuke pieces.
 		**	This remembers the amount of nuke pieces the player had at the
-		**	start of this scenario.
+		**	start of this scenario, so a restart can restore this amount.
 		*/
 		int	NukePiecesStart;
 
@@ -543,7 +543,7 @@ class HouseClass {
 
 	private:
 		void Silo_Redraw_Check(long oldtib, long oldcap);
-		BuildingClass * FindLaunchSite(StructType origin, long originMask);
+		BuildingClass * Find_Launch_Site(StructType origin, long originMask);
 		/*
 		**	This is a bit field record of all the other houses that are allies with
 		**	this house. It is presumed that any house that isn't an ally, is therefore

@@ -611,7 +611,7 @@ void ScoreClass::Presentation(void)
 	void *anim, *oldfont;
 	int oldfontxspacing = FontXSpacing;
 	int house = PlayerPtr->Class->House;		// normally 0 or 1
-	// Nyerguds's C&C Patch Project v1.04
+	// Nyerguds's C&C Patch Project v1.04: Added "You vs Enemy" brief screen.
 	// Any nonstandard house gets a score screen without faction logo,
 	// with the GDI casualty bars, but labelled "You:" and "Enemy:"
 	bool youvsthem = house > HOUSE_BAD;

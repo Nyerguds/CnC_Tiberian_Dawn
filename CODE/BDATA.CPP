@@ -4309,6 +4309,7 @@ BuildingTypeClass::BuildingTypeClass(
  *    This routine will find the boundaries of the occupy list and overlap lists, and return   *
  *    them to be used as overall building dimensions. This replaces the old BSizeType enum     *
  *    system, allowing easier adding of custom sized buildings.                                *
+ *    Max_Dimensions - Created for Nyerguds's C&C Patch Project v1.04.                         *
  *                                                                                             *
  * INPUT:   occupylist    -- The list of cells occupied by the building.                       *
  *          overlapList   -- The list of additional cells refreshed by the building.           *
@@ -4319,7 +4320,7 @@ BuildingTypeClass::BuildingTypeClass(
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   20/08/2025 MM : Created.                                                                  *
+ *   08/20/2025 MM : Created.                                                                  *
  *=============================================================================================*/
 void BuildingTypeClass::Max_Dimensions(short const *occupylist, short const *overlapList, int *width, int *height)
 {
@@ -4353,6 +4354,7 @@ void BuildingTypeClass::Max_Dimensions(short const *occupylist, short const *ove
  *    this routine will provide the coordinate to use when firing at a building.               *
  *    Normally this just uses the center of the building, but if the cell of                   *
  *    that center point is not occupied by the building, a better one is found.                *
+ *    Valid_Target_Center - Created for Nyerguds's C&C Patch Project v1.04.                    *
  *                                                                                             *
  * INPUT:   center     -- The calculated center of the building's overall dimensions.          *
  *          occupylist -- The list of occupied cells, to ensure the center point is occupied.  *

@@ -490,8 +490,7 @@ void Keyboard_Process(KeyNumType &input)
 	}
 #endif
 
-	// Nyerguds's C&C Patch Project v1.04
-	// Screenshot button
+	// Nyerguds's C&C Patch Project v1.04: Screenshot button.
 	if (input == (KN_S|KN_CTRL_BIT)) {
 		/*
 		** time to create a screen shot using the PCX code (if it works)
@@ -579,8 +578,8 @@ void Keyboard_Process(KeyNumType &input)
 		**	if one is present.
 		*/
 		case VK_H:
-			// Nyerguds's C&C Patch Project v1.04
-			// Fix MCV responding when selecting CY with 'H' if both are on the map.
+			// Nyerguds's C&C Patch Project v1.04: 'H' scans for CY first, then for MCV.
+			// Fix for MCV responding when selecting CY with 'H' if both are on the map.
 			for (index = 0; index < Buildings.Count(); index++) {
 				BuildingClass * building = Buildings.Ptr(index);
 				// Don't jump to undiscovered Construction Yard.
@@ -629,7 +628,7 @@ void Keyboard_Process(KeyNumType &input)
 				obj = Map.Next_Object(CurrentObject.Count() ? CurrentObject[0] : NULL);
 			}
 			if (obj) {
-				// Nyerguds's C&C Patch Project v1.04
+				// Nyerguds's C&C Patch Project v1.04: Cancel special functions when pressing 'N'.
 				// Selecting objects with the N key cancels repair, sell and superweapon targeting modes.
 				Map.Repair_Mode_Control(0);
 				Map.Sell_Mode_Control(0);
@@ -752,8 +751,7 @@ void Keyboard_Process(KeyNumType &input)
 				for (int index = 0; index < CurrentObject.Count(); index++) {
 					ObjectClass const * tech = CurrentObject[index];
 					if (tech && tech->Is_Techno() && tech->Can_Player_Move()) {
-						// Nyerguds's C&C Patch Project v1.04
-						// Give response on keyboard orders
+						// Nyerguds's C&C Patch Project v1.04: Give response on keyboard orders.
 						if (AllowVoice) {
 							((TechnoClass *)tech)->Response_Move();
 							AllowVoice = false;
@@ -768,8 +766,7 @@ void Keyboard_Process(KeyNumType &input)
 		/*
 		**	All applicable selected units will attempt to deploy themselves.
 		*/
-		// Nyerguds's C&C Patch Project v1.04
-		// Add "D" as deploy key
+		// Nyerguds's C&C Patch Project v1.04: Add "D" as deploy key.
 		case VK_D:
 			if (CurrentObject.Count()) {
 				AllowVoice = true;
@@ -809,14 +806,12 @@ void Keyboard_Process(KeyNumType &input)
 			AllowVoice = true;
 			break;
 
-		// Nyerguds's C&C Patch Project v1.04
-		// Select all units on screen
+		// Nyerguds's C&C Patch Project v1.04: Select all units on screen.
 		case VK_E:
 			Map.Select_These(0x00000000, XY_Coord(Map.TacLeptonWidth, Map.TacLeptonHeight), true, additive, RTTI_NONE, 0);
 			break;
 
-		// Nyerguds's C&C Patch Project v1.04
-		// Select all units on screen of the selected types.
+		// Nyerguds's C&C Patch Project v1.04: Select all units on screen of the selected types.
 		case VK_T:
 			AllowVoice = true;
 			if (CurrentObject.Count()) {
@@ -901,11 +896,9 @@ void Keyboard_Process(KeyNumType &input)
 				AllowVoice = true;
 				for (int index = 0; index < CurrentObject.Count(); index++) {
 					ObjectClass const * tech = CurrentObject[index];
-					// Nyerguds's C&C Patch Project v1.04
-					// Allow Guard Area order on harvesters
+					// Nyerguds's C&C Patch Project v1.04: Allow Guard Area order on harvesters.
 					if (tech && tech->Is_Techno() && tech->Can_Player_Move() && (tech->Can_Player_Fire() || (tech -> What_Am_I() == RTTI_UNIT && ((UnitClass *)tech)->Class->IsToHarvest))) {
-						// Nyerguds's C&C Patch Project v1.04
-						// Give response on keyboard orders.
+						// Nyerguds's C&C Patch Project v1.04: Give response on keyboard orders.
 						((TechnoClass *)tech)->Player_Assign_Mission(MISSION_GUARD_AREA, TARGET_NONE, TARGET_NONE);
 						if (AllowVoice) {
 							AllowVoice = false;

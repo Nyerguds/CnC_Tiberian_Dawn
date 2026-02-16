@@ -254,7 +254,7 @@ void DriveClass::Overrun_Square(CELL cell, bool threaten)
 					ObjectClass * next = object->Next;
 					bool isInf = object->What_Am_I() == RTTI_INFANTRY;
 					bool isVeh = object->What_Am_I() == RTTI_UNIT;
-					// Nyerguds's C&C Patch Project v1.04
+					// Nyerguds's C&C Patch Project v1.04: unit crushing fixes.
 					// Fix for sound being louder when crushing multiple infantry
 					// Play death animation for units
 					if (!crushed) {
@@ -267,6 +267,7 @@ void DriveClass::Overrun_Square(CELL cell, bool threaten)
 						}
 					}
 					if (isInf && Special.IsGross) {
+					// Nyerguds's C&C Patch Project v1.04: unit crushing fixes.
 						new AnimClass(ANIM_SQUISH, object->Coord);
 					} else if (isVeh) {
 						UnitClass* unit = (UnitClass*)object;

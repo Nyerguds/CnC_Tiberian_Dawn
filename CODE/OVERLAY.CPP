@@ -217,7 +217,7 @@ bool OverlayClass::Mark(MarkType mark)
 			CELL	cell = Coord_Cell(Coord);
 			CellClass * cellptr = &Map[cell];
 			OverlayType current = cellptr->Overlay;
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Fix ground speed on ROAD overlay.
 			// Make all the following cases recalc the cell attributes.
 			if (*this == OVERLAY_ROAD) {
 				/*
@@ -225,7 +225,7 @@ bool OverlayClass::Mark(MarkType mark)
 				**	on buildable terrain. Second, the road is completed, but only if the foundation
 				**	was previously placed.
 				*/
-				// Nyerguds's C&C Patch Project v1.04
+				// Nyerguds's C&C Patch Project v1.04: Always allow ROAD to replace CONC.
 				// Allow ROAD to replace CONC to account for extra filled CONC cells taking up where missions have ROAD placed.
 				if ((current == OVERLAY_ROAD && cellptr->OverlayData == 0) ||
 					((current == OVERLAY_NONE || current == OVERLAY_CONCRETE) && cellptr->Is_Generally_Clear())) {
@@ -291,11 +291,11 @@ bool OverlayClass::Mark(MarkType mark)
 					*/
 					cellptr->Smudge = SMUDGE_NONE;
 					cellptr->SmudgeData = 0;
-					// Nyerguds's C&C Patch Project v1.04
+					// Nyerguds's C&C Patch Project v1.04: Fix Concrete_Calc().
 					// Is now done all together at the loop at the end.
 					//cellptr->Concrete_Calc();
 
-					// Nyerguds's C&C Patch Project v1.04
+					// Nyerguds's C&C Patch Project v1.04: Fix looping for checking Concrete adjacency.
 					// Loop adjacents of both the placed and added cell.
 					CELL recalc[2];
 					recalc[0] = cell;
@@ -305,7 +305,7 @@ bool OverlayClass::Mark(MarkType mark)
 					**	Possibly add concrete to adjacent cells depending on whether this
 					**	concrete is in an odd or even row.
 					*/
-					// Nyerguds's C&C Patch Project v1.04
+					// Nyerguds's C&C Patch Project v1.04: Fix CONC not placing in pairs.
 					// Not sure what broke here, but it's fixed now.
 					FacingType addfacing = Cell_X(cell) & 0x01 ? FACING_W : FACING_E;
 					if (cellptr->Adjacent_Is_Valid(addfacing, true)) {
@@ -329,14 +329,14 @@ bool OverlayClass::Mark(MarkType mark)
 						newcellp = &Map[newcell];
 						CELL loopcell;
 						CellClass *loopcellp;
-						// Nyerguds's C&C Patch Project v1.04
+						// Nyerguds's C&C Patch Project v1.04: Make CONC check loop over all 8 directions.
 						// Loop over all 8 directions to fix all connections.
 						for (int index = FACING_NONE; index < FACING_COUNT; index++) {
 							FacingType face = (FacingType)index;
 							if (!newcellp->Adjacent_Is_Valid(face)) {
 								continue;
 							}
-							// Nyerguds's C&C Patch Project v1.04
+							// Nyerguds's C&C Patch Project v1.04: Simplified call on Adjacent_Cell().
 							// Adjacent_Cell was adjusted to support FACING_NONE to return current cell.
 							loopcell = Adjacent_Cell(newcell, face);
 							loopcellp = &Map[loopcell];

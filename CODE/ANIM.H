@@ -123,7 +123,7 @@ class AnimClass : public ObjectClass, private StageClass {
 	protected:
 		void Middle(void);
 		void Start(void);
-		bool ObjectHasOtherAnims(ObjectClass * object, bool damaging);
+		bool Object_Has_Other_Anims(ObjectClass * object, bool damaging);
 
 	private:
 		/*

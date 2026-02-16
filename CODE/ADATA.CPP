@@ -2309,12 +2309,13 @@ static AnimTypeClass const ChemBall(
 	ANIM_NONE
 );
 
+// Nyerguds's C&C Patch Project v1.04: squish mark made usable as animation.
 static AnimTypeClass const Squishy(
 	ANIM_SQUISH,							// Animation number.
 	"SQUISH",								// Data name of animation.
 	24,										// Maximum dimension of animation.
 	0,										// Biggest animation stage.
-	TRANS_NONE,								// Translucency for this animation?
+	TRANS_UNITS,							// Translucency for this animation?
 	false,									// Normalized animation rate?
 	false,									// Scorches the ground?
 	false,									// Forms a crater?

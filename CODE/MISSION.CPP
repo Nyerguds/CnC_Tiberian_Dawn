@@ -199,7 +199,7 @@ void MissionClass::AI(void)
 				Timer = Mission_Sleep();
 				break;
 
-			// Nyerguds's C&C Patch Project v1.04
+			// Nyerguds's C&C Patch Project v1.04: Fixed Sticky orders.
 			// Sticky mode is basically Guard mode, shooting at any targets in
 			// range, but unrecruitable and without movement. All usage in missions
 			// shows that this is the intended behaviour, and yet it was coded as
