@@ -269,3 +269,5 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Added explicit "Difficulty" setting in the [Patch] section, which accepts values "easy" and "hard".
 * Fixed issue where dragging the mouse to select units would give an extra click order at the point where the mouse was released.
 * Fixed APC door animation.
+* If an AI-constructed building can't be placed, it will now scan for other locations in its build plan where a building of that type can be placed down.
+* [Base] entries now work for walls.

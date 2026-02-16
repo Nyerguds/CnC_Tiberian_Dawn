@@ -2150,6 +2150,7 @@ bool Parse_Command_Line(int argc, char *argv[])
 
 #endif
 
+#ifdef SCENARIO_EDITOR
 #ifdef PARM_EDITORBILL
 			case PARM_EDITORBILL:
 				Debug_Map = true;
@@ -2160,6 +2161,16 @@ bool Parse_Command_Line(int argc, char *argv[])
 
 #ifdef PARM_EDITORERIK
 			case PARM_EDITORERIK:
+				Debug_Map = true;
+				Debug_Unshroud = true;
+				Debug_Flag = true;
+				break;
+#endif
+
+#ifndef PARM_EDITORBILL
+			case PARM_EDITOR:
+#endif
+			case PARM_EDITOR2:
 				Debug_Map = true;
 				Debug_Unshroud = true;
 				Debug_Flag = true;

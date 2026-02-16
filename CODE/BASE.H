@@ -87,14 +87,19 @@ class BaseClass
 		virtual void Decode_Pointers(void) {};
 
 		/**********************************************************************
-		** Tells if the given node has been built or not
+		** Tells if the given node has been built or not.
 		*/
 		bool Is_Built(int index);
 
 		/**********************************************************************
-		** Returns a pointer to the object for the given node
+		** Returns a pointer to the object for the given node.
 		*/
 		BuildingClass * Get_Building(int index);
+
+		/**********************************************************************
+		** Returns a pointer to the cell on which a wall was built.
+		*/
+		CellClass * Get_Built_Overlay(int index);
 
 		/**********************************************************************
 		** Tells if the given building ptr is a node in this base's list.
@@ -110,7 +115,7 @@ class BaseClass
 		/**********************************************************************
 		** Returns a pointer to the next "hole" in the Nodes list.
 		*/
-		BaseNodeClass * Next_Buildable(StructType type = STRUCT_NONE);
+		BaseNodeClass * Next_Buildable(StructType type = STRUCT_NONE, BaseNodeClass * afterthis = NULL);
 
 		/**********************************************************************
 		** This is the list of "nodes" that define the base.  Portions of this

@@ -366,22 +366,21 @@ bool BaseClass::Save(FileClass &file)
  *=============================================================================================*/
 bool BaseClass::Is_Built(int index)
 {
-	if (Get_Building(index) != NULL) {
+	if (Get_Built_Overlay(index) != NULL || Get_Building(index) != NULL) {
 		return(true);
 	} else {
 		return(false);
 	}
 }
 
-
 /***********************************************************************************************
- * BaseClass::Get_Building -- Returns ptr to the built building for the given node             *
+ * BaseClass::Get_Building -- Returns ptr to the built building for the given node.            *
  *                                                                                             *
  * INPUT:                                                                                      *
- *      obj      pointer to building to test                                                   *
+ *      index    Node index of building to test                                                *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *      ptr to already-built building, NULL if none                                            *
+ *      ptr to already-built building, NULL if none.                                           *
  *                                                                                             *
  * WARNINGS:                                                                                   *
  *      none.                                                                                  *
@@ -391,6 +390,15 @@ bool BaseClass::Is_Built(int index)
  *=============================================================================================*/
 BuildingClass * BaseClass::Get_Building(int index)
 {
+	BaseNodeClass * node = &Nodes[index];
+	StructType nodestruct = node->Type;
+	if (nodestruct == STRUCT_NONE) {
+		return(NULL);
+	}
+	BuildingTypeClass structinfo = BuildingTypeClass::As_Reference(nodestruct);
+	if (structinfo.IsWall) {
+		return(NULL);
+	}
 	BuildingClass *bldg;
 	ObjectClass *obj[4];
 
@@ -398,7 +406,7 @@ BuildingClass * BaseClass::Get_Building(int index)
 	** Check the location on the map where this building should be; if it's
 	** there, return a pointer to it.
 	*/
-	CELL cell = Coord_Cell(Nodes[index].Coord);
+	CELL cell = Coord_Cell(node->Coord);
 
 	obj[0] = Map[cell].Cell_Building();
 	obj[1] = Map[cell].Overlapper[0];
@@ -418,6 +426,44 @@ BuildingClass * BaseClass::Get_Building(int index)
 	}
 
 	return(bldg);
+}
+
+
+/***********************************************************************************************
+ * BaseClass::Get_Built_Overlay -- Returns ptr to the built overlay cell for the given node.   *
+ *                                                                                             *
+ * INPUT:                                                                                      *
+ *      index    Node index of building to test                                                *
+ *                                                                                             *
+ * OUTPUT:                                                                                     *
+ *      ptr to cell containing the correct wall type, or NULL if none.                         *
+ *                                                                                             *
+ * WARNINGS:                                                                                   *
+ *      none.                                                                                  *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   03/24/1995 BRR : Created.                                                                 *
+ *=============================================================================================*/
+CellClass * BaseClass::Get_Built_Overlay(int index) 
+{
+	BaseNodeClass * node = &Nodes[index];
+	StructType nodestruct = node->Type;
+	if (nodestruct == STRUCT_NONE) {
+		return(NULL);
+	}
+	BuildingTypeClass structinfo = BuildingTypeClass::As_Reference(nodestruct);
+	if (!structinfo.IsWall) {
+		return(NULL);
+	}
+	CELL cell = Coord_Cell(node->Coord);
+	CellClass * cellptr = &Map[cell];
+	if (cellptr->Overlay != OVERLAY_NONE) {
+		OverlayTypeClass ovt = OverlayTypeClass::As_Reference(cellptr->Overlay);
+		if (ovt.WallStructureType == nodestruct) {
+			return (cellptr);
+		}
+	}
+	return(NULL);
 }
 
 
@@ -479,7 +525,9 @@ BaseNodeClass * BaseClass::Get_Node(BuildingClass *obj)
  * Otherwise, returns ptr to the next hole in the list of any type.                            *
  *                                                                                             *
  * INPUT:                                                                                      *
- *      type      type of building to check for                                                *
+ *      type        Type of building to check for.                                             *
+ *                                                                                             *
+ *      afterthis   Previous scanned and rejected node; skip ahead until after this node.      *
  *                                                                                             *
  * OUTPUT:                                                                                     *
  *      ptr to a BaseNodeClass, NULL if none                                                   *
@@ -490,14 +538,24 @@ BaseNodeClass * BaseClass::Get_Node(BuildingClass *obj)
  * HISTORY:                                                                                    *
  *   03/24/1995 BRR : Created.                                                                 *
  *=============================================================================================*/
-BaseNodeClass * BaseClass::Next_Buildable(StructType type)
+BaseNodeClass * BaseClass::Next_Buildable(StructType type, BaseNodeClass * afterthis)
 {
 	/*
 	** Loop through all node entries, returning a pointer to the first
 	** un-built one that matches the requested type.
 	*/
+	// Nyerguds's C&C Patch Project v1.04: Allow scanning further in base nodes.
+	BaseNodeClass * tofind = afterthis;
 	for (int i = 0; i < Nodes.Count(); i++) {
-
+		// Skip ahead until after specified node.
+		if (tofind != NULL) {
+			if (&Nodes[i] != tofind) {
+				continue;
+			} else {
+				tofind = NULL;
+				continue;
+			}
+		}
 		/*
 		** For STRUCT_NONE, return the first hole found
 		*/

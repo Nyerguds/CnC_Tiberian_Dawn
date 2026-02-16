@@ -1955,7 +1955,7 @@ void MapEditClass::Build_Base_To(int percent)
 	int num_buildings;
 	BuildingTypeClass const *objtype;
 	BuildingClass *obj;
-
+	CellClass * cellobj;
 	//ScenarioInit++;
 
 	/*
@@ -1964,7 +1964,16 @@ void MapEditClass::Build_Base_To(int percent)
 	for (i = 0; i < Base.Nodes.Count(); i++) {
 		if (Base.Is_Built(i)) {
 			obj = Base.Get_Building(i);
-			delete obj;
+			if (obj) delete obj;
+			cellobj = Base.Get_Built_Overlay(i);
+			if (cellobj) {
+				OverlayType ovt = cellobj->Overlay;
+				cellobj->Overlay = OVERLAY_NONE;
+				cellobj->OverlayData = 0;
+				cellobj->Wall_Update(ovt);
+				cellobj->Recalc_Attributes();
+			}
+			
 		}
 	}
 

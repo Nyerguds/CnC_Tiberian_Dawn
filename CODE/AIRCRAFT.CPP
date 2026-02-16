@@ -1484,7 +1484,7 @@ int AircraftClass::Mission_Retreat(void)
  * HISTORY:                                                                                    *
  *   01/10/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-bool AircraftClass::Exit_Object(TechnoClass * unit)
+int AircraftClass::Exit_Object(TechnoClass * unit)
 {
 	Validate();
 	static FacingType _toface[FACING_COUNT] = {FACING_S, FACING_SW, FACING_SE, FACING_NW, FACING_NE, FACING_N, FACING_W, FACING_E};
@@ -1514,9 +1514,9 @@ bool AircraftClass::Exit_Object(TechnoClass * unit)
 			Transmit_Message(RADIO_UNLOAD);
 		}
 		unit->Look(false);
-		return(true);
+		return(1);
 	}
-	return(false);
+	return(0);
 }
 
 

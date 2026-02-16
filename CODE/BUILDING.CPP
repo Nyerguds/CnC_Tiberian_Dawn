@@ -2178,14 +2178,25 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 				**	routine will return failure. The calling routine will probably abandon this
 				**	building in preference to building another.
 				*/
-				BaseNodeClass * node = Base.Next_Buildable(((BuildingClass *)base)->Class->Type);
-				if (node) {
-					if (Flush_For_Placement(base, Coord_Cell(node->Coord))) {
+				// Nyerguds's C&C Patch Project v1.04: Scan base nodes of the same type before giving up.
+				StructType toBuild = ((BuildingClass *)base)->Class->Type;
+				BuildingTypeClass btype = BuildingTypeClass::As_Reference(toBuild);
+
+				BaseNodeClass * node = Base.Next_Buildable(toBuild);
+				while (node) {
+					// Center to scatter away from.
+					COORDINATE center = Coord_Add(node->Coord, btype.Center);
+					int blocked =  Flush_For_Placement(base, Coord_Cell(node->Coord), center);
+					// Blocked by friendlies: try again after they scattered.
+					if (blocked == 1) {
 						return(1);
 					}
-					if (base->Unlimbo(node->Coord)) {
+					// Should be unblocked; if this fails, something unknown (like a bib) is blocking it.
+					if (blocked == 0 && base->Unlimbo(node->Coord)) {
 						return(2);
 					}
+					// blocked == 2 or Unlimbo failed. Try next node.
+					node = Base.Next_Buildable(toBuild, node);
 				}
 			}
 			break;
@@ -5029,37 +5040,53 @@ void BuildingClass::Detach_All(bool all)
  *                                                                                             *
  *          cell     -- The cell that placement wants to occur at.                             *
  *                                                                                             *
- * OUTPUT:  none                                                                               *
+ *          scatter  -- The coordinates that friendly units should move away from.             *
+ *                                                                                             *
+ * OUTPUT:  0 for ok, nothing blocking.                                                        *
+ *          1 for occupied by friendlies; tell them to scatter and try again.                  *
+ *          2 for occupied by enemies or buildings; try to place somewhere else.               *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/06/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-bool BuildingClass::Flush_For_Placement(TechnoClass * techno, CELL cell)
+int BuildingClass::Flush_For_Placement(TechnoClass * techno, CELL cell, COORDINATE scatter)
 {
 	Validate();
-	bool again = false;
+	int blocked = 0;
 	if (techno && cell > 0) {
 		short const * list = techno->Class_Of().Occupy_List(true);
 
 		while (*list != REFRESH_EOL) {
 			CELL newcell = cell + *list++;
 
-			if (Map.In_Radar(newcell)) {
-				TechnoClass * occupier = Map[newcell].Cell_Techno();
-				if (occupier) {
-					again = true;
-					if (occupier->House->Is_Ally(this)) {
-						Map[newcell].Incoming(0, true);
-					} else {
-						Base_Is_Attacked(occupier);
-					}
+			if (!Map.In_Radar(newcell))
+				continue;
+			TechnoClass * occupier = Map[newcell].Cell_Techno();
+			if (!occupier)
+				continue;
+			// Nyerguds's C&C Patch Project v1.04: Enhanced check for placing AI buildings.
+			// This was a boolean before; it can now be 3 values.
+			blocked = MAX(blocked, 1);
+			RTTIType rtti = occupier->What_Am_I();
+			if (occupier->House->Is_Ally(this)) {
+				if (rtti == RTTI_BUILDING) {
+					blocked = 2;
+				} else {
+					Map[newcell].Incoming(scatter, true);
 				}
+			} else {
+				blocked = 2;
+				// if this is a tree... the mission creator messed up I guess?
+				if (rtti != RTTI_TERRAIN) {
+					Base_Is_Attacked(occupier);
+				}
+				
 			}
 		}
 	}
-	return(again);
+	return(blocked);
 }
 
 

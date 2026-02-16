@@ -138,8 +138,11 @@
 #define	PARM_CHEATADAM  	0xDFABC23A		// Adam Isgreen
 #endif
 
-//#define	PARM_CHEAT		0x6F4BE7CA		// "CHEAT"
-//#define	PARM_EDITOR		0x7E7C4CCA		// "-EDITOR"
+//#define	PARM_CHEAT				0x6F4BE7CA		// "CHEAT"
+#ifdef SCENARIO_EDITOR
+#define	PARM_EDITOR				0x7E7C4CCA		// "-EDITOR"
+#define	PARM_EDITOR2			0x16B170B1		// "EDITOR"
+#endif
 
 #define	PARM_EASY       	0x59E975CE		// "EASY" Enables easy mode.
 #define	PARM_HARD       	0xACFE9D13		// "HARD" Enables hard mode.

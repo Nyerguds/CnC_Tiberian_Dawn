@@ -672,6 +672,15 @@ OverlayTypeClass::OverlayTypeClass(
  *=============================================================================================*/
 void OverlayTypeClass::One_Time(void)
 {
+	for (OverlayType index = OVERLAY_FIRST; index < OVERLAY_COUNT; index++) {
+		OverlayTypeClass & overlay = (OverlayTypeClass)As_Reference(index);
+		// Nyerguds's C&C Patch Project v1.04: Structure type for wall is cached.
+		if (overlay.IsWall) {
+			overlay.WallStructureType = BuildingTypeClass::From_Name(overlay.IniName);
+		} else {
+			overlay.WallStructureType = STRUCT_NONE;
+		}
+	}
 }
 
 
@@ -923,13 +932,6 @@ void OverlayTypeClass::Init(TheaterType theater)
 		if (overlay.RadarIcon) delete[] (char *)overlay.RadarIcon;
 		((void const *&)overlay.RadarIcon) = Get_Radar_Icon(overlay.Get_Image_Data(), 0, -1, 3);
 		IsTheaterShape = false;
-
-		// Nyerguds's C&C Patch Project v1.04: Structure type for wall is cached.
-		if (overlay.IsWall) {
-			overlay.WallStructureType = BuildingTypeClass::From_Name(overlay.IniName);
-		} else {
-			overlay.WallStructureType = STRUCT_NONE;
-		}
 	}
 	//}
 }
