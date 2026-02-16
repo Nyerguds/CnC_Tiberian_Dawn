@@ -4782,7 +4782,7 @@ int BuildingClass::Mission_Unload(void)
 						unit->Set_Speed(128);
 						Status = LEAVE;
 					} else {
-						Close_Door(2, 11);
+						Close_Door(2, 10);
 						Status = CLOSE;
 					}
 				}
@@ -4790,7 +4790,7 @@ int BuildingClass::Mission_Unload(void)
 
 			case LEAVE:
 				if (!IsTethered) {
-					Close_Door(2, 11);
+					Close_Door(2, 10);
 					Status = CLOSE;
 				}
 				break;

@@ -68,8 +68,10 @@ class StageClass {
 
 		int Fetch_Stage(void) const {return Stage;};
 		int Fetch_Rate(void) const {return Rate;};
+		int Fetch_Remaining(void) const {return StageTimer;};
 		void Set_Stage(int stage) {Stage = stage;};
-		void Set_Rate(unsigned char rate) {Rate = StageTimer = rate;};
+		void Set_Rate(unsigned char rate) {Rate = StageTimer = MAX(0, rate);};
+		void Set_Remaining(unsigned char remainder) {StageTimer =  MAX(1, MIN(remainder, Rate)); };
 		void AI(void) {};
 		bool Graphic_Logic(void) {
 			if (Rate) {

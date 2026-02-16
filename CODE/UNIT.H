@@ -85,7 +85,7 @@ class UnitClass :	public TarComClass
 		bool  Unload_Hovercraft_Process(void);
 		bool  Goto_Tiberium(void);
 		bool  Harvesting(void);
-		void  APC_Close_Door(void);
+		void  APC_Close_Door(bool fast = false);
 		void  APC_Open_Door(void);
 
 		/*
@@ -194,6 +194,10 @@ class UnitClass :	public TarComClass
 		int Validate(void) const;
 
 	private:
+		/*
+		** This is the door closing timeout
+		 */
+		unsigned int DoorTimeout;
 
 		/*
 		** This contains the value of the Virtual Function Table Pointer

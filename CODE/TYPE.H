@@ -1636,7 +1636,7 @@ class TemplateTypeClass: public ObjectTypeClass
 
 	private:
 		static TemplateTypeClass const * const Pointers[TEMPLATE_COUNT];
-		static unsigned char Lands_Lookup[256];
+		static unsigned char Lands_Lookup[('Z' - 'A' + 1)];
 };
 
 

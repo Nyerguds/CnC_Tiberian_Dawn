@@ -74,15 +74,17 @@ class DoorClass
 
 		bool Time_To_Redraw(void) {return(IsToRedraw);};
 		void Clear_Redraw_Flag(void) {IsToRedraw = false;};
-		void  AI(void);
+		void AI(void);
 		int  Door_Stage(void) const;
 		bool Is_Door_Opening(void) {return(State == IS_OPENING);};
 		bool Is_Door_Closing(void) {return(State == IS_CLOSING);};
-		bool  Open_Door(int rate, int stages);
-		bool  Close_Door(int rate, int stages);
+		bool Open_Door(int rate, int stages);
+		bool Close_Door(int rate, int stages);
 		bool Is_Door_Open(void) {return(State == IS_OPEN);};
 		bool Is_Door_Closed(void) {return(State == IS_CLOSED);};
-		bool  Is_Ready_To_Open(void);
+		bool Is_Ready_To_Open(void);
+		int  Get_Rate(void) {return(Control.Fetch_Rate()); };
+		void Change_Rate(int rate);
 
 		/*
 		**	File I/O.

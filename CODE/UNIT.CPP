@@ -387,6 +387,15 @@ void UnitClass::AI(void)
 		Commence();
 	}
 
+	/*
+	**	If there is a door that is animating, then it might cause this unit
+	**	to be redrawn. Check for and flag to redraw as necessary.
+	*/
+	if (Time_To_Redraw()) {
+		Clear_Redraw_Flag();
+		Mark(MARK_CHANGE);
+	}
+
 	TarComClass::AI();
 
 	/*
@@ -457,8 +466,19 @@ void UnitClass::AI(void)
 		**	Double check that there is a passenger that is trying to load or unload.
 		**	If not, then close the door.
 		*/
-		if (!Is_Door_Closed() && Mission != MISSION_UNLOAD && Transmit_Message(RADIO_TRYING_TO_LOAD) != RADIO_ROGER) {
-			APC_Close_Door();
+		if (DoorTimeout > 0) {
+			DoorTimeout--;
+		}
+		if (Is_Door_Open() && Mission != MISSION_UNLOAD) {
+			if (Transmit_Message(RADIO_TRYING_TO_LOAD) == RADIO_ROGER) {
+				// Someone is loading. Leave the door open for others coming behind them.
+				DoorTimeout = 20;
+			} else {
+				// No one is loading anymore. If timeout runs out, close the door.
+				if (!DoorTimeout) {
+					APC_Close_Door();
+				}
+			}
 		}
 	}
 
@@ -679,7 +699,7 @@ RadioMessageType UnitClass::Receive_Message(RadioClass * from, RadioMessageType 
 				*/
 				bool is_busy = Mission == MISSION_MOVE;
 
-				if ((!IsRotating || Target_Legal(TarCom)) && !IsTethered) {
+				if ((!PrimaryFacing.Is_Rotating() || Target_Legal(TarCom)) && !IsTethered) {
 
 					/*
 					**	If the potential passenger needs someplace to go, then figure out a good
@@ -717,9 +737,10 @@ RadioMessageType UnitClass::Receive_Message(RadioClass * from, RadioMessageType 
 								**	transport doors. Close the doors if the transport is or needs
 								**	to rotate.
 								*/
-								if (IsRotating) {
+								if (PrimaryFacing.Is_Rotating()) {
 									if (!Is_Door_Closed()) {
-										APC_Close_Door();
+										// Closing to rotate towards new passenger.
+										APC_Close_Door(true);
 									}
 								} else {
 									if (!Is_Door_Open()) {
@@ -1635,7 +1656,7 @@ bool UnitClass::Goto_Clear_Spot(void)
 bool UnitClass::Try_To_Deploy(void)
 {
 	Validate();
-	if (!Target_Legal(NavCom) && !IsRotating) {
+	if (!Target_Legal(NavCom) && !PrimaryFacing.Is_Rotating()) {
 		if (*this == UNIT_MCV) {
 
 			/*
@@ -2086,8 +2107,9 @@ void UnitClass::Draw_It(int x, int y, WindowNumberType window)
 				if (Class->IsPieceOfEight) {
 					shapenum = 0;
 					if (facing)    shapenum = UnitClass::BodyShape[24+facing];
-					if (IsDriving) shapenum = Fetch_Stage() + 16 + shapenum*8;
+					// Nyerguds's C&C Patch Project v1.04: Fixed dinos corrupting when firing while driving.
 					if (IsFiring)  shapenum = Fetch_Stage() + 80 + shapenum*( ((*this == UNIT_TREX) || (*this == UNIT_RAPT)) ? 8 : 12);
+					else if (IsDriving) shapenum = Fetch_Stage() + 16 + shapenum*8;
 				} else {
 
 					/*
@@ -2096,13 +2118,11 @@ void UnitClass::Draw_It(int x, int y, WindowNumberType window)
 					*/
 					if (!Is_Door_Closed() && (PrimaryFacing == DIR_NW || PrimaryFacing == DIR_NE)) {
 						if (PrimaryFacing == DIR_NE) {
-							shapenum = 32;
-						} else {
-							if (PrimaryFacing == DIR_NW) {
-								shapenum = 35;
-							}
+							shapenum = 34;
+						} else if (PrimaryFacing == DIR_NW) {
+							shapenum = 37;
 						}
-						shapenum += Door_Stage();
+						shapenum -= Door_Stage();
 					}
 				}
 			}
@@ -2461,7 +2481,9 @@ int UnitClass::Mission_Unload(void)
 				case MANEUVERING:
 					// Nyerguds's C&C Patch Project v1.04: "IsRotating" wasn't reliable?
 					if (!PrimaryFacing.Is_Rotating()) {
-						APC_Open_Door();
+						if (!Is_Door_Opening() && !Is_Door_Open()){
+							APC_Open_Door();
+						}
 						if (Is_Door_Opening()) {
 							Status = OPENING_DOOR;
 							return(1);
@@ -2473,10 +2495,11 @@ int UnitClass::Mission_Unload(void)
 					if (Is_Door_Open()) {
 						Status = UNLOADING;
 						return(1);
+					} else if (Is_Door_Opening()) {
+						// Let animation play out.
+						return(1);
 					} else {
-						if (!Is_Door_Opening()) {
-							Status = INITIAL_CHECK;
-						}
+						Status = INITIAL_CHECK;
 					}
 					break;
 
@@ -2511,10 +2534,12 @@ int UnitClass::Mission_Unload(void)
 							if (!placed) {
 								Attach(passenger);
 								Status = CLOSING_DOOR;
+						return(1);
 							}
 						}
 					} else {
 						Status = CLOSING_DOOR;
+						return(1);
 					}
 					break;
 
@@ -2522,10 +2547,13 @@ int UnitClass::Mission_Unload(void)
 				**	Close APC door in preparation for normal operation.
 				*/
 				case CLOSING_DOOR:
-					if (Is_Door_Open()) {
+					if (!Is_Door_Closed() && !Is_Door_Closing()) {
 						APC_Close_Door();
 					}
-					if (Is_Door_Closed()) {
+					if (Is_Door_Closing()) {
+						// Let animation play out.
+						return(1);
+					} else if (Is_Door_Closed()) {
 						Assign_Mission(MISSION_GUARD);
 					}
 					break;
@@ -4003,7 +4031,7 @@ int UnitClass::Mission_Move(void)
 	**	Always make sure that that transport door is closed if the vehcile is moving.
 	*/
 	if (!Is_Door_Closed()) {
-		APC_Close_Door();
+		APC_Close_Door(true);
 	}
 
 	/*
@@ -4075,42 +4103,37 @@ DirType UnitClass::Desired_Load_Dir(ObjectClass * passenger, CELL & moveto) cons
 			} else {
 				// Nyerguds's C&C Patch Project v1.04: Occupancy check for unloading infantry.
 				// Apparently checking the bit flags isn't reliable?
-				// Should just be using InfantryClass::Can_Enter_Cell() but it's not static and I don't have an object.
+				// Should just be using InfantryClass::Can_Enter_Cell() but it does too many per-object checks to make it static.
 				ObjectClass * cellobj = cell->Cell_Occupier();
-				if (cellobj) {
+				int hasinf = 0;
+				while (cellobj) {
 					if (!House->Is_Ally(cellobj)) {
 						blocked = true;
-					} else {
-						switch (cellobj->What_Am_I())
-						{
-							case RTTI_AIRCRAFT:
-								blocked = ((AircraftClass*)cellobj)->Altitude == 0;
-								break;
-							case RTTI_INFANTRY: {
-									int hasinf = 0;
-									while (cellobj) {
-										if (!House->Is_Ally(cellobj)) {
-											blocked = true;
-											break;
-										}
-										if (cellobj->What_Am_I() == RTTI_INFANTRY) {
-											hasinf |= (1 << CellClass::Spot_Index(cellobj->Coord));
-											cellobj = cellobj->Next;
-										}
-									}
-									if ((hasinf & 0x1F) == 0x1F) {
-										blocked = true;
-									}
-								}
-								break;
-							default:
-								blocked = true;
-								break;
-						}
+						break;
 					}
+					switch (cellobj->What_Am_I()) {
+						case RTTI_INFANTRY:
+							// Add occupied spot, check if cell is filled.
+							hasinf |= (1 << CellClass::Spot_Index(cellobj->Coord));
+							if ((hasinf & 0x1F) == 0x1F) {
+								blocked = true;
+							}
+							break;
+						case RTTI_TERRAIN: // Not really needed; can't have a House
+						case RTTI_AIRCRAFT:
+						case RTTI_BUILDING:
+						case RTTI_UNIT:
+							blocked = true;
+							break;
+					}
+					if (blocked)
+						break;
+					cellobj = cellobj->Next;
 				}
 			}
 		}
+		// Nyerguds's C&C Patch Project v1.04: Fixed large APC rotations blocking load/unload.
+		// Changed values to twice the old amounts so non-blocked values always remain positive.
 		value = blocked ? -256 : 256;
 
 		/*
@@ -4119,16 +4142,18 @@ DirType UnitClass::Desired_Load_Dir(ObjectClass * passenger, CELL & moveto) cons
 		*/
 		// Nyerguds's C&C Patch Project v1.04: Fix rotation bias going over 128.
 		int rotval = (int)ABS(Dir_Diff(Facing_Dir(face), faceto));
-		if (rotval > DIR_S) rotval = DIR_MAX - rotval;
+		if (rotval > DIR_S) rotval = 256 - rotval;
 		value -= rotval;
-		// Nyerguds's C&C Patch Project v1.04: less priority to load directions without animation.
+		// Nyerguds's C&C Patch Project v1.04: Less priority to load-directions without animation.
 		// Give less value to visible-door directions which have no door animation.
+		// Was originally just S. Added E and W to retain some of the original preference for diagonals.
 		if (face == FACING_S || face == FACING_E || face == FACING_W) {
 			value -= 100;
 		}
 		// Nyerguds's C&C Patch Project v1.04: Fix SE and SW load directions having higher priority.
-		// No clue why this was a thing, but it made loading from the north-west
-		// malfunction unless the south-west cell was blocked.
+		// Removed this heightening of priority because it had too much impact,
+		// and made loading from diagonal north cells malfunction completely
+		// unless the corresponding diagonal south cell was blocked.
 #ifdef OBSOLETE
 		if (face == FACING_SW || face == FACING_SE) value += 64;
 #endif
@@ -4147,7 +4172,7 @@ DirType UnitClass::Desired_Load_Dir(ObjectClass * passenger, CELL & moveto) cons
 	*/
 	moveto = 0;
 	if (bestval > 0) {
-		// Nyerguds's C&C Patch Project v1.04: Don't fully exclude door-lacking directions.
+		// Nyerguds's C&C Patch Project v1.04: Never fully exclude door-lacking directions.
 #ifdef OBSOLETE
 		//                                                     N      NE      E       SE      S       SW      W       NW
 		static DirType _desired_to_actual[FACING_COUNT] = {DIR_S, DIR_SW, DIR_NW, DIR_NW, DIR_NE, DIR_NE, DIR_NE, DIR_SE};
@@ -4157,6 +4182,7 @@ DirType UnitClass::Desired_Load_Dir(ObjectClass * passenger, CELL & moveto) cons
 #ifdef OBSOLETE
 		return(_desired_to_actual[bestdir]);
 #endif
+		// Simply invert by adding South
 		return(Facing_Dir(bestdir + FACING_S));
 	}
 	return(DIR_S);
@@ -4302,7 +4328,8 @@ int UnitClass::Pip_Count(void) const
  *                                                                                             *
  *    This routine will initiate closing of the APC door.                                      *
  *                                                                                             *
- * INPUT:   none                                                                               *
+ * INPUT:   fast  -- True if the door should be closed immediately, in case the APC needs      *
+ *                   to hurry up and leave.                                                    *
  *                                                                                             *
  * OUTPUT:  none                                                                               *
  *                                                                                             *
@@ -4311,10 +4338,14 @@ int UnitClass::Pip_Count(void) const
  * HISTORY:                                                                                    *
  *   06/25/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-void UnitClass::APC_Close_Door(void)
+void UnitClass::APC_Close_Door(bool fast)
 {
 	Validate();
-	Close_Door(10, 2);
+	int rate = fast ? 1 : 5;
+	if (!Close_Door(rate, 3)) {
+		// Already closing. Change rate.
+		Change_Rate(rate);
+	}
 }
 
 
@@ -4335,12 +4366,8 @@ void UnitClass::APC_Close_Door(void)
 void UnitClass::APC_Open_Door(void)
 {
 	Validate();
-	if (!IsDriving && !IsRotating) {
-		if (PrimaryFacing == DIR_NW || PrimaryFacing == DIR_NE) {
-			Open_Door(10, 2);
-		} else {
-			Open_Door(1, 2);
-		}
+	if (!IsDriving && !PrimaryFacing.Is_Rotating()) {
+		Open_Door(5, 3);
 	}
 }
 

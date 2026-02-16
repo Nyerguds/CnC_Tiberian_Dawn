@@ -268,3 +268,4 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * The logic to make the Tech Center spawn special infantry with a trigger attached is now configurable in the mission, using "MissionTargetSpawn" and "MissionTargetTrigger" options.
 * Added explicit "Difficulty" setting in the [Patch] section, which accepts values "easy" and "hard".
 * Fixed issue where dragging the mouse to select units would give an extra click order at the point where the mouse was released.
+* Fixed APC door animation.

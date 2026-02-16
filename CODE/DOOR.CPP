@@ -124,7 +124,7 @@ bool DoorClass::Open_Door(int rate, int stages)
 		case IS_CLOSED:
 		case IS_CLOSING:
 			State = IS_OPENING;
-			Stages = stages-1;
+			Stages = stages;
 			Control.Set_Stage(0);
 			Control.Set_Rate(rate);
 			return(true);
@@ -156,12 +156,39 @@ bool DoorClass::Close_Door(int rate, int stages)
 		case IS_OPEN:
 		case IS_OPENING:
 			State = IS_CLOSING;
-			Stages = stages-1;
+			Stages = stages;
 			Control.Set_Stage(0);
 			Control.Set_Rate(rate);
 			return(true);
 	}
 	return(false);
+}
+
+
+/***********************************************************************************************
+ * DoorClass::Change_Rate -- Change the rate at which the door is opening or closing.          *
+ *                                                                                             *
+ *    This routine will change the rate at which the current animation is going.               *
+ *                                                                                             *
+ * INPUT:   rate     -- The animation rate (delay) to use for the door animation logic.        *
+ *                      A rate of 0 (freezing the door) is not accepted.                       *
+ *                                                                                             *
+ * OUTPUT:     none.                                                                           *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   05/08/1995 JLB : Created.                                                                 *
+ *=============================================================================================*/
+void DoorClass::Change_Rate(int rate) {
+	// Only relevant if currently animating, and there is anything to change.
+	int currate = Control.Fetch_Rate();
+	if (rate == 0 || rate == currate || currate == 0 || (State != IS_OPENING && State != IS_CLOSING)) {
+		return;
+	}
+	int cur = Control.Fetch_Remaining();
+	Control.Set_Rate(rate);
+	Control.Set_Remaining(cur);
 }
 
 

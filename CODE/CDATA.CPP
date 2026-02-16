@@ -2703,7 +2703,7 @@ TemplateTypeClass const * const TemplateTypeClass::Pointers[TEMPLATE_COUNT] = {
 	&Shore63,		//	TEMPLATE_SHORE63
 };
 
-unsigned char TemplateTypeClass::Lands_Lookup[256];
+unsigned char TemplateTypeClass::Lands_Lookup[('Z' - 'A' + 1)];
 
 
 /***********************************************************************************************
@@ -2809,8 +2809,6 @@ LandType TemplateTypeClass::Land_Type(int icon) const {
 	}
 	int index = 0;
 	const char * landtypes = LandTypes;
-	// Always default to Clear terrain.
-	unsigned char landtype = (unsigned char)LAND_CLEAR;
 	while (*landtypes)
 	{
 		char c = *landtypes;
@@ -2821,14 +2819,14 @@ LandType TemplateTypeClass::Land_Type(int icon) const {
 		if (c < 'A' || c > 'Z') continue;
 		// Only do the actual lookup if this is the correct index.
 		if (index == icon) {
-			landtype = Lands_Lookup[c];
-			// Correct index: break no matter what.
-			break;
+			// Correct index: simply return value.
+			return (LandType)Lands_Lookup[c - 'A'];
 		}
 		// Increase actual index.
 		index++;
 	}
-	return (LandType)landtype;
+	// Always default to Clear terrain.
+	return LAND_CLEAR;
 }
 
 
@@ -3083,6 +3081,9 @@ ObjectClass * TemplateTypeClass::Create_One_Of(HouseClass *) const
 /***********************************************************************************************
  * TemplateTypeClass::One_Time -- Performs one-time initialization                             *
  *                                                                                             *
+ *    This routine initializes the Lands_Lookup array, to easily look up the Letter            *
+ *    data used by the "Ground" array in the CONST.CPP file.                                   *
+ *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *
  * OUTPUT:  none                                                                               *
@@ -3098,11 +3099,11 @@ void TemplateTypeClass::One_Time(void)
 	memset(Lands_Lookup, (unsigned char)LAND_CLEAR, sizeof(Lands_Lookup));
 	// "X" indicates cells that normally don't have icons. Always default to clear.
 	// Not actually needed since the initial clear does this already.
-	Lands_Lookup['X'] = LAND_CLEAR;
+	Lands_Lookup['X' - 'A'] = LAND_CLEAR;
 	// Prepare array with known land types.
 	for (int i = 0; i < LAND_COUNT; ++i) {
 		unsigned char letter = Ground[i].Letter;
 		if (letter >= 'a' && letter <= 'z') letter -= ('a' - 'A');
-		Lands_Lookup[letter] = i;
+		Lands_Lookup[letter - 'A'] = i;
 	}
 }

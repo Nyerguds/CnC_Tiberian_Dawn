@@ -2678,7 +2678,7 @@ RadioMessageType AircraftClass::Receive_Message(RadioClass * from, RadioMessageT
 		*/
 		case RADIO_IM_IN:
 			if (How_Many() == Class->Max_Passengers()) {
-				Close_Door(5, 4);
+				Close_Door(5, 3);
 			}
 
 			/*
@@ -2813,7 +2813,7 @@ bool AircraftClass::Process_Take_Off(void)
 	IsTakingOff = true;
 	switch (Altitude) {
 		case 0:
-			Close_Door(5, 4);
+			Close_Door(5, 3);
 			PrimaryFacing = SecondaryFacing;
 			break;
 
