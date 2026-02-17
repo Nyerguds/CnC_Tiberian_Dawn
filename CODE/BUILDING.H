@@ -256,7 +256,7 @@ class BuildingClass : public TechnoClass
 		virtual void AI(void);
 		virtual void Assign_Target(TARGET target);
 		virtual bool Toggle_Primary(void);
-		int  Flush_For_Placement(TechnoClass * techno, CELL cell, COORDINATE scatter = 0);
+		int  Flush_For_Placement(TechnoClass * techno, CELL cell, COORDINATE center = 0, bool scatter = false);
 
 		virtual int Mission_Unload(void);
 		virtual int Mission_Repair(void);

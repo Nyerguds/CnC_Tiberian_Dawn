@@ -758,18 +758,21 @@ class BuildingTypeClass : public TechnoTypeClass {
 		/*
 		**	This is the size of the building. This size value is a rough indication
 		**	of the building's "footprint". It is derived from OccupyList and OverlapList.
+		**	Nyerguds's C&C Patch Project v1.04: Replaced BSizeType enum by size X and Y.
 		*/
 		int SizeX;
 		int SizeY;
 
 		/*
-		** This is the center of the building. It is derived from the size.
+		**	This is the center of the building. It is derived from the size.
+		**	Nyerguds's C&C Patch Project v1.04: Cached center coord.
 		*/
 		COORDINATE Center;
 
 		/*
-		** This is the targeted center of the building. It is the same as Center,
-		** but adjusted to be on an actual occupied cell of the building.
+		**	This is the targeted center of the building. It is the same as Center,
+		**	but adjusted to be on an actual occupied cell of the building.
+		**	Nyerguds's C&C Patch Project v1.04: Cached target center coord.
 		*/
 		COORDINATE TargetCenter;
 

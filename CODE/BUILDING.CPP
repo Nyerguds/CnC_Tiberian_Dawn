@@ -2178,7 +2178,7 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 				**	routine will return failure. The calling routine will probably abandon this
 				**	building in preference to building another.
 				*/
-				// Nyerguds's C&C Patch Project v1.04: Scan base nodes of the same type before giving up.
+				// Nyerguds's C&C Patch Project v1.04: On failure, scan more base nodes of the same type.
 				StructType toBuild = ((BuildingClass *)base)->Class->Type;
 				BuildingTypeClass btype = BuildingTypeClass::As_Reference(toBuild);
 
@@ -2186,16 +2186,28 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 				while (node) {
 					// Center to scatter away from.
 					COORDINATE center = Coord_Add(node->Coord, btype.Center);
-					int blocked =  Flush_For_Placement(base, Coord_Cell(node->Coord), center);
+					CELL cell = Coord_Cell(node->Coord);
+					SmudgeType bib = SMUDGE_NONE;
+					CELL bibcell = cell;
+					if (Class->Bib_And_Offset(bib, bibcell)) {
+						// A bib is attached: move scatter center half a cell down.
+						center += (COORDINATE)0x00800000;
+					}
+					int blocked =  Flush_For_Placement(base, cell, center);
 					// Blocked by friendlies: try again after they scattered.
 					if (blocked == 1) {
 						return(1);
 					}
-					// Should be unblocked; if this fails, something unknown (like a bib) is blocking it.
-					if (blocked == 0 && base->Unlimbo(node->Coord)) {
-						return(2);
+					if (blocked == 0) {
+						// Should be unblocked; if this fails, something unknown (like a bib) is blocking it.
+						Transmit_Message(RADIO_HELLO, base);
+						if (base->Unlimbo(node->Coord)) {
+							return(2);
+						}
+						// Unlimbo failed; abort radio contact.
+						Transmit_Message(RADIO_OVER_OUT);
 					}
-					// blocked == 2 or Unlimbo failed. Try next node.
+					// blocked == 2 or Unlimbo failed. Find next node for this StructType.
 					node = Base.Next_Buildable(toBuild, node);
 				}
 			}
@@ -5036,11 +5048,15 @@ void BuildingClass::Detach_All(bool all)
  *    a building). If there are friendly units blocking the placement area, they are told      *
  *    to scatter. Enemy blocking units are attacked.                                           *
  *                                                                                             *
- * INPUT:   techno   -- Pointer to the object that is desired to be placed.                    *
+ * INPUT:   techno     -- Pointer to the object that is desired to be placed.                  *
  *                                                                                             *
- *          cell     -- The cell that placement wants to occur at.                             *
+ *          cell       -- The cell that placement wants to occur at.                           *
  *                                                                                             *
- *          scatter  -- The coordinates that friendly units should move away from.             *
+ *          center     -- The coordinates that friendly units should move away from.           *
+ *                                                                                             *
+ *          doscatter  -- Always call the function with this set to False.                     *
+ *                        To avoid unnecessary scattering, the function calls itself with      *
+ *                        this set to True when the area is only blocked by friendlies.        *
  *                                                                                             *
  * OUTPUT:  0 for ok, nothing blocking.                                                        *
  *          1 for occupied by friendlies; tell them to scatter and try again.                  *
@@ -5051,7 +5067,7 @@ void BuildingClass::Detach_All(bool all)
  * HISTORY:                                                                                    *
  *   08/06/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-int BuildingClass::Flush_For_Placement(TechnoClass * techno, CELL cell, COORDINATE scatter)
+int BuildingClass::Flush_For_Placement(TechnoClass * techno, CELL cell, COORDINATE center, bool scatter)
 {
 	Validate();
 	int blocked = 0;
@@ -5060,31 +5076,43 @@ int BuildingClass::Flush_For_Placement(TechnoClass * techno, CELL cell, COORDINA
 
 		while (*list != REFRESH_EOL) {
 			CELL newcell = cell + *list++;
-
 			if (!Map.In_Radar(newcell))
 				continue;
-			TechnoClass * occupier = Map[newcell].Cell_Techno();
-			if (!occupier)
-				continue;
 			// Nyerguds's C&C Patch Project v1.04: Enhanced check for placing AI buildings.
-			// This was a boolean before; it can now be 3 values.
-			blocked = MAX(blocked, 1);
-			RTTIType rtti = occupier->What_Am_I();
-			if (occupier->House->Is_Ally(this)) {
-				if (rtti == RTTI_BUILDING) {
-					blocked = 2;
-				} else {
-					Map[newcell].Incoming(scatter, true);
+			// Return value was a boolean before; it can now be 3 values.
+			// Now loops over all technos so the computer retaliates against all blockers.
+			ObjectClass * obj = Map[newcell].Cell_Techno();
+			while (obj) {
+				if (obj->Is_Techno()) {
+					TechnoClass * occupier = (TechnoClass*)obj;
+					RTTIType rtti = occupier->What_Am_I();
+					if (occupier->House->Is_Ally(this)) {
+						if (rtti == RTTI_BUILDING) {
+							blocked = 2;
+						} else {
+							blocked = MAX(blocked, 1);
+							// Only scatter if in "doscatter" extra call, and if no scatter was done for this cell.
+							if (scatter) {
+								occupier->Scatter(center, true);
+								// "Incoming" makes enemies scatter too, so don't use it.
+								//Map[newcell].Incoming(scatter, true);
+							}
+						}
+					} else {
+						blocked = 2;
+						// if this is a tree... the mission creator messed up I guess?
+						if (rtti != RTTI_TERRAIN) {
+							Base_Is_Attacked(occupier);
+						}
+					}
 				}
-			} else {
-				blocked = 2;
-				// if this is a tree... the mission creator messed up I guess?
-				if (rtti != RTTI_TERRAIN) {
-					Base_Is_Attacked(occupier);
-				}
-				
+				obj = obj->Next;
 			}
 		}
+	}
+	// Only actually scatter if the building is not truly blocked.
+	if (!scatter && blocked == 1) {
+		return(Flush_For_Placement(techno, cell, center, true));
 	}
 	return(blocked);
 }

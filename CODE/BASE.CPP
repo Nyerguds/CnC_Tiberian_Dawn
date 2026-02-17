@@ -519,7 +519,7 @@ BaseNodeClass * BaseClass::Get_Node(BuildingClass *obj)
 
 
 /***********************************************************************************************
- * BaseClass::Next_Buildable -- returns ptr to the next node that needs to be built            *
+ * BaseClass::Next_Buildable -- Returns ptr to the next node that needs to be built.           *
  *                                                                                             *
  * If 'type' is not NONE, returns ptr to the next "hole" in the list of the given type.        *
  * Otherwise, returns ptr to the next hole in the list of any type.                            *
@@ -530,7 +530,7 @@ BaseNodeClass * BaseClass::Get_Node(BuildingClass *obj)
  *      afterthis   Previous scanned and rejected node; skip ahead until after this node.      *
  *                                                                                             *
  * OUTPUT:                                                                                     *
- *      ptr to a BaseNodeClass, NULL if none                                                   *
+ *      ptr to a BaseNodeClass, NULL if none.                                                  *
  *                                                                                             *
  * WARNINGS:                                                                                   *
  *      none.                                                                                  *

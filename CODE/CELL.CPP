@@ -2077,12 +2077,15 @@ void CellClass::Incoming(COORDINATE threat, bool forced)
 		**	Special check to make sure that friendly units never scatter.
 		*/
 		if (Special.IsScatter || (object->Is_Techno() && !((TechnoClass *)object)->House->IsHuman)) {
+			object->Scatter(threat, forced);
+#ifdef OBSOLETE
 			if (object->What_Am_I() == RTTI_INFANTRY) {
 				object->Scatter(threat, forced);
 			} else {
 				object->Scatter(threat, forced);
 //				object->Scatter(threat, false);
 			}
+#endif
 		}
 		object = object->Next;
 	}
