@@ -806,7 +806,7 @@ static void Assign_Houses(void)
 	HousesType pref_house;
 	HouseClass *housep;
 	bool house_used[MAX_PLAYERS];	// true = this house is in use
-	bool color_used[6];				// true = this color is in use
+	bool color_used[MAX_MPLAYER_COLORS];				// true = this color is in use
 	int i,j;
 	PlayerColorType color;
 	HousesType house2;
@@ -822,7 +822,7 @@ CCDebugString (wibble);
 	for (i = 0; i < MAX_PLAYERS; i++) {
 		house_used[i] = false;
 	}
-	for (i = 0; i < 6; i++) {
+	for (i = 0; i < MAX_MPLAYER_COLORS; i++) {
 		color_used[i] = false;
 	}
 
@@ -884,9 +884,16 @@ CCDebugString (wibble);
 			*/
 			house = (HousesType)(i + (int)HOUSE_MULTI1);
 			pref_house = (HousesType)(IRandom(0, 1) + (int)HOUSE_GOOD);
-			for (;;) {
-				color = Random_Pick(REMAP_MULTI_FIRST, REMAP_MULTI_LAST);
-				if (color_used[color] == false) {
+			color = (PlayerColorType)REMAP_MULTI_FIRST;
+			// Loop through all with wraparound from randomized start point,
+			// rather than randomizing until you find a spot.
+			int startcol = Random_Pick(REMAP_MULTI_FIRST, REMAP_MULTI_LAST);
+			for (int col = 0; col < MAX_MPLAYER_COLORS; ++col) {
+				int testcol = startcol + col;
+				if (testcol > MAX_MPLAYER_COLORS)
+					testcol -= MAX_MPLAYER_COLORS;
+				if (color_used[testcol] == false) {
+					color = (PlayerColorType)testcol;
 					break;
 				}
 			}

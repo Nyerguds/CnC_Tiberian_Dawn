@@ -549,22 +549,26 @@ char MPlayerName[MPLAYER_NAME_MAX];
 ** assigned one of these colors.  The 'G' is for graphics drawing; the 'T'
 ** is for text printing (indicates a remap table for the font to use).
 */
+
+// Used in main menu UI, so these are color indices on the palette of TITLE.CPS / TITLE.PCX
 int MPlayerGColors[MAX_MPLAYER_COLORS] = {
-	5, 			// Yellow
-	127, 			// Red
-	135, 			// BlueGreen
-	26,			// Orange
-	4,				// Green
-	202			// Blue-Grey
+	5,    // Yellow
+	127,  // Red
+	135,  // BlueGreen
+	26,   // Orange
+	4,    // Green
+	202,  // Blue-Grey
 };
 
+// The multiplay colors are used with option TPF_USE_GRAD_PAL, meaning
+// they refer to _textfontpal in Simple_Text_Print() in DIALOG.CPP
 int MPlayerTColors[MAX_MPLAYER_COLORS] = {
-	CC_GDI_COLOR, 			// Yellow
-	CC_NOD_COLOR, 			// Red
-	CC_BLUE_GREEN, 		// BlueGreen
-	CC_ORANGE,				// Orange	//26
-	CC_GREEN,				// Green
-	CC_BLUE_GREY,			// Blue
+	CC_GDI_COLOR,    // Yellow
+	CC_NOD_COLOR,    // Red
+	CC_BLUE_GREEN,   // BlueGreen
+	CC_ORANGE,       // Orange	//26
+	CC_GREEN,        // Green
+	CC_BLUE_GREY,    // Blue
 };
 
 

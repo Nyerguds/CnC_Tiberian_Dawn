@@ -855,7 +855,7 @@ static int Net_Join_Dialog(void)
 	RedrawType display = REDRAW_ALL;		// redraw level
 	bool process = true;						// process while true
 	KeyNumType input;
-	int cbox_x[] = {	d_gdi_x,
+	int cbox_x[MAX_MPLAYER_COLORS] = {	d_gdi_x,
 							d_gdi_x + d_color_w,
 							d_gdi_x + (d_color_w * 2),
 							d_gdi_x + (d_color_w * 3),

@@ -1152,6 +1152,12 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 }
 
 
+// To prevent copy-paste errors.
+inline bool	Allow_Edge_N(int cell, bool foroverlay) { return (cell >= (MAP_CELL_W * (foroverlay ? 2 : 1))); }
+inline bool Allow_Edge_S(int cell, bool foroverlay) { return (cell < (MAP_CELL_W * (MAP_CELL_H - (foroverlay ? 2 : 1)))); }
+inline bool Allow_Edge_E(int cell) { return ((cell + 1) % MAP_CELL_W != 0); }
+inline bool Allow_Edge_W(int cell) { return  (cell % MAP_CELL_W != 0); }
+
 /***********************************************************************************************
  * Adjacent_Is_Valid -- Checks if a valid adjacent cell exists for the given facing.           *
  *                                                                                             *
@@ -1174,16 +1180,6 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 bool CellClass:: Adjacent_Is_Valid(FacingType face, bool foroverlay)
 {
 	int cell = Cell_Number();
-	// A bit of unnecessary initial calculation, but I'm not gonna
-	// copy and refine this for each block...
-	int northend = MAP_CELL_W;
-	// Overlay is only valid from second to second-to-last line.
-	if (foroverlay) northend *= 2;
-	int southend = MAP_CELL_W * (MAP_CELL_H - (foroverlay ? 2 : 1));
-	bool allowEdgeN = (cell >= northend);
-	bool allowEdgeE = ((cell + 1) % MAP_CELL_W != 0);
-	bool allowEdgeS = (cell < southend);
-	bool allowEdgeW = (cell % MAP_CELL_W != 0);
 	
 	switch (face) {
 		case FACING_NONE:
@@ -1193,21 +1189,21 @@ bool CellClass:: Adjacent_Is_Valid(FacingType face, bool foroverlay)
 				return cell >= MAP_CELL_W && cell < MAP_CELL_W * (MAP_CELL_H - 1);
 			}
 		case FACING_N:
-			return allowEdgeN;
+			return Allow_Edge_N(cell, foroverlay);
 		case FACING_NE:
-			return allowEdgeN && allowEdgeE;
+			return Allow_Edge_N(cell, foroverlay) && Allow_Edge_E(cell);
 		case FACING_E:
-			return allowEdgeE;
+			return Allow_Edge_E(cell);
 		case FACING_SE:
-			return allowEdgeS && allowEdgeE;
+			return Allow_Edge_S(cell, foroverlay) && Allow_Edge_E(cell);
 		case FACING_S:
-			return allowEdgeS;
+			return Allow_Edge_S(cell, foroverlay);
 		case FACING_SW:
-			return allowEdgeS && allowEdgeW;
+			return Allow_Edge_S(cell, foroverlay) && Allow_Edge_W(cell);
 		case FACING_W:
-			return allowEdgeW;
+			return Allow_Edge_W(cell);
 		case FACING_NW:
-			return allowEdgeN && allowEdgeW;
+			return Allow_Edge_N(cell, foroverlay) && Allow_Edge_W(cell);
 	}
 	return false;
 }

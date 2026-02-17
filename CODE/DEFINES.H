@@ -2878,14 +2878,16 @@ typedef enum {
 	SDLG_SPECIAL,
 } SpecialDialogType;
 
+// The multiplay colors are used with option TPF_USE_GRAD_PAL, meaning
+// they refer to _textfontpal in Simple_Text_Print() in DIALOG.CPP
 typedef enum {
-	CC_GDI_COLOR		= YELLOW,
-	CC_NOD_COLOR		= RED,
-	CC_BLUE_GREEN		= CYAN,
-	CC_BLUE_GREY		= LTBLUE,
-	CC_ORANGE			= PURPLE,
-	CC_GREEN				= GREEN,
-	CC_TAN				= BROWN,
+	CC_GDI_COLOR    = YELLOW, //  5
+	CC_NOD_COLOR    = RED,    //  8
+	CC_BLUE_GREEN   = CYAN,   //  2
+	CC_BLUE_GREY    = LTBLUE, // 10
+	CC_ORANGE       = PURPLE, //  1
+	CC_GREEN        = GREEN,  //  3
+	CC_TAN          = BROWN,  //  7
 
 	CC_GREEN_SHADOW	= 140,
 	CC_GREEN_BKGD		= 141,

@@ -3253,7 +3253,7 @@ int Com_Scenario_Dialog(void)
 	char credbuf[CREDITSBUF_MAX];					// for credit edit box
 	int old_cred;								// old value in credits buffer
 	int transmit;								// 1 = re-transmit new game options
-	int cbox_x[] = {	d_gdi_x,
+	int cbox_x[MAX_MPLAYER_COLORS] = {	d_gdi_x,
 							d_gdi_x + d_color_w,
 							d_gdi_x + (d_color_w * 2),
 							d_gdi_x + (d_color_w * 3),
