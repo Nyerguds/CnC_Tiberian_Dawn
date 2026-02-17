@@ -276,10 +276,13 @@ class DisplayClass: public MapClass
 		unsigned IsRubberBand:1;
 
 		/*
-		 *	Last game tick when a mouse click occurred. This is a hotfix mechanism for
-		 *	preventing extra "ghost"click events from messing with the game.
+		 *	Last game tick and location of a mouse click (left mouse release). This is
+		 *	a hotfix mechanism for preventing extra "ghost" click events from messing
+		 *	with the game.
 		 */
 		long LastClickTick;
+		long LastClickX;
+		long LastClickY;
 
 		/*
 		**	The moment the mouse is held down, this flag gets set. If the mouse is dragged

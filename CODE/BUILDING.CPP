@@ -2200,6 +2200,7 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 					}
 					if (blocked == 0) {
 						// Should be unblocked; if this fails, something unknown (like a bib) is blocking it.
+						// Nyerguds's C&C Patch Project v1.04: Make computer-owned Construction Yards animate when placing.
 						Transmit_Message(RADIO_HELLO, base);
 						if (base->Unlimbo(node->Coord)) {
 							return(2);
@@ -2207,7 +2208,7 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 						// Unlimbo failed; abort radio contact.
 						Transmit_Message(RADIO_OVER_OUT);
 					}
-					// blocked == 2 or Unlimbo failed. Find next node for this StructType.
+					// blocked == 2 or Unlimbo failed. Try next node after this one.
 					node = Base.Next_Buildable(toBuild, node);
 				}
 			}

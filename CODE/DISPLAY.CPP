@@ -3559,11 +3559,13 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
  *=============================================================================================*/
 void DisplayClass::Mouse_Left_Release(CELL cell, int x, int y, ObjectClass * object, ActionType action, bool wwsmall)
 {
-	// Fix if two click releases happen inside the same game tick.
-	long lastTick = LastClickTick;
-	LastClickTick = TickCount.Time();
-	if (lastTick == LastClickTick) {
-		//ShowUIMessage(true, true, "Double click prevented.");
+	// Nyerguds's C&C Patch Project v1.04: Fix ghost clicks that sometimes occur after rubberband.
+	int tick = TickCount.Time();
+	bool ghostclick = LastClickTick == tick && LastClickX == x && LastClickY == y;
+	LastClickTick = tick;
+	LastClickX = x;
+	LastClickY = y;
+	if (ghostclick) {
 		return;
 	}
 	if (PendingObjectPtr) {
