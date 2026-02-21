@@ -411,7 +411,7 @@ void UnitClass::AI(void)
 	/*
 	**	Rocket launchers will reload every so often.
 	*/
-	if (*this == UNIT_MSAM && Ammo < Class->MaxAmmo) {
+	if (*this == UNIT_SSM && Ammo < Class->MaxAmmo) {
 		if (IsDriving) {
 			Reload = Reload + 1;
 		} else {
@@ -464,7 +464,7 @@ void UnitClass::AI(void)
 
 		/*
 		**	Double check that there is a passenger that is trying to load or unload.
-		**	If not, then close the door.
+		**	If not, then close the door after the timeout runs out.
 		*/
 		if (DoorTimeout > 0) {
 			DoorTimeout--;
@@ -929,7 +929,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 			**	SSM launchers will really explode big if they are carrying
 			**	missiles at the time of the explosion.
 			*/
-			if (*this == UNIT_MSAM && Ammo) {
+			if (*this == UNIT_SSM && Ammo) {
 				anim = ANIM_NAPALM3;
 			}
 
@@ -1949,7 +1949,7 @@ void UnitClass::Per_Cell_Process(bool center)
 	**	Certain units require some setup time after they come to a halt.
 	*/
 	if (Special.IsDefenderAdvantage && /*center &&*/ !Target_Legal(NavCom) && Path[0] == FACING_NONE) {
-		if (*this == UNIT_MLRS || *this == UNIT_ARTY || *this == UNIT_MSAM) {
+		if (*this == UNIT_MLRS || *this == UNIT_ARTY || *this == UNIT_SSM) {
 			Arm = Rearm_Delay(false)*2;
 		}
 	}
@@ -2131,7 +2131,8 @@ void UnitClass::Draw_It(int x, int y, WindowNumberType window)
 		/*
 		**	The artillery unit should have its entire body recoil when it fires.
 		*/
-		if (*this == UNIT_ARTY && IsInRecoilState && !Options.NoTurretRecoil) {
+		// Nyerguds's C&C Patch Project v1.04: Body recoil is no longer specific to Artillery.
+		if (!Class->IsTurretEquipped && IsInRecoilState && !Options.NoTurretRecoil) {
 			Recoil_Adjust(PrimaryFacing.Current(), x, y);
 		}
 
@@ -2203,7 +2204,7 @@ void UnitClass::Draw_It(int x, int y, WindowNumberType window)
 			** The Mobile SAM and the Missile Launchers need their turrets moved based
 			** on the facing of the vehicle.
 			*/
-			if (*this == UNIT_MSAM || *this == UNIT_MLRS) {
+			if (*this == UNIT_SSM || *this == UNIT_MLRS) {
 				Turret_Adjust(PrimaryFacing, x1, y1);
 			}
 			if (*this == UNIT_JEEP || *this == UNIT_BUGGY) {
@@ -4147,7 +4148,7 @@ DirType UnitClass::Desired_Load_Dir(ObjectClass * passenger, CELL & moveto) cons
 		// Nyerguds's C&C Patch Project v1.04: Less priority to load-directions without animation.
 		// Give less value to visible-door directions which have no door animation.
 		// Was originally just S. Added E and W to retain some of the original preference for diagonals.
-		if (face == FACING_S || face == FACING_E || face == FACING_W) {
+		if (*this == UNIT_APC && (face == FACING_S || face == FACING_E || face == FACING_W)) {
 			value -= 100;
 		}
 		// Nyerguds's C&C Patch Project v1.04: Fix SE and SW load directions having higher priority.
@@ -4210,6 +4211,9 @@ int UnitClass::Mission_Attack(void)
 	if (*this == UNIT_GUNBOAT) {
 		Assign_Mission(MISSION_HUNT);
 		return(TICKS_PER_SECOND);
+	}
+	if (!Is_Door_Closed()) {
+		APC_Close_Door(true);
 	}
 	return(TarComClass::Mission_Attack());
 }
@@ -4341,6 +4345,7 @@ int UnitClass::Pip_Count(void) const
 void UnitClass::APC_Close_Door(bool fast)
 {
 	Validate();
+	DoorTimeout = 0;
 	int rate = fast ? 1 : 5;
 	if (!Close_Door(rate, 3)) {
 		// Already closing. Change rate.
@@ -4366,6 +4371,7 @@ void UnitClass::APC_Close_Door(bool fast)
 void UnitClass::APC_Open_Door(void)
 {
 	Validate();
+	DoorTimeout = 0;
 	if (!IsDriving && !PrimaryFacing.Is_Rotating()) {
 		Open_Door(5, 3);
 	}

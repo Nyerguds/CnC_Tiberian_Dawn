@@ -195,12 +195,13 @@ class UnitClass :	public TarComClass
 
 	private:
 		/*
-		** This is the door closing timeout
+		**	APC door closing timeout. This can be set to leave the door open for a
+		**	while, to close it a bit later than it normally would.
 		 */
 		unsigned int DoorTimeout;
 
 		/*
-		** This contains the value of the Virtual Function Table Pointer
+		**	This contains the value of the Virtual Function Table Pointer
 		*/
 		static void * VTable;
 };

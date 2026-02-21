@@ -303,6 +303,7 @@ class BuildingClass : public TechnoClass
 
 	private:
 		void  Drop_Debris(TARGET source = TARGET_NONE);
+		void Spawn_Mission_Target(TechnoClass * source, HousesType attacker, bool fromcapture = false, HousesType oldowner = HOUSE_NONE);
 		virtual BulletClass * Fire_At(TARGET target, int which);
 
 		TARGET LastRepaired;

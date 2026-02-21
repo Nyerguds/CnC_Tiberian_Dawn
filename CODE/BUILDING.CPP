@@ -1783,26 +1783,15 @@ void BuildingClass::Drop_Debris(TARGET source)
 	/*
 	**	Special case for Chan to run from destroyed technology building.
 	*/
-	// Nyerguds's C&C Patch Project v1.04: Made tech center spawn configurable.
-	if (GameToPlay == GAME_NORMAL && *this ==  STRUCT_MISSION && MissionTargetSpawn != INFANTRY_NONE) {
-		InfantryClass * i = new InfantryClass(MissionTargetSpawn, House->Class->House);
-
-		ScenarioInit++;
-		if (i->Unlimbo(Center_Coord(), DIR_N)) {
-			if (MissionTargetTrigger[0] != '\0') {
-				i->Trigger = TriggerClass::As_Pointer(MissionTargetTrigger);
-			}
-			i->Strength = Random_Pick(5, (int)i->Class->MaxStrength);
-			ScenarioInit--;
-			i->Scatter(0, true);
-			ScenarioInit++;
-			i->Assign_Mission(MISSION_GUARD_AREA);
-		} else {
-			delete i;
+	HousesType house = HOUSE_NONE;
+	TechnoClass * attacker = NULL;
+	if (Target_Legal(source)) {
+		attacker = As_Techno(source);
+		if (attacker) {
+			house = *attacker->House;
 		}
-		ScenarioInit--;
 	}
-
+	Spawn_Mission_Target(attacker, house);
 
 	/*
 	**	Infantry could run out of a destroyed building.
@@ -3379,6 +3368,10 @@ bool BuildingClass::Captured(HouseClass * newowner)
 		House->IsRecalcNeeded = true;
 		newowner->IsRecalcNeeded = true;
 
+		// Store these to potentially spawn mission target.
+		bool capturedbefore = IsCaptured;
+		HousesType oldowner = House->Class->House;
+
 		IsCaptured = true;
 		TechnoClass::Captured(newowner);
 
@@ -3437,6 +3430,14 @@ bool BuildingClass::Captured(HouseClass * newowner)
 		*/
 		if (House == PlayerPtr) {
 			Look(false);
+		}
+
+		/*
+		**	If this building needs to spawn infantry, do it here.
+		**	However, don't allow spawning infantry from multiple captures.
+		*/
+		if (!capturedbefore) {
+			Spawn_Mission_Target(NULL, House->Class->House, true, oldowner);
 		}
 
 		return(true);
@@ -5146,6 +5147,7 @@ CELL BuildingClass::Find_Exit_Cell(TechnoClass const * techno) const
 	return(0);
 }
 
+
 /***********************************************************************************************
  * BuildingClass::Passes_Proximity_Check -- Determines if building placement is near friendly sq*
  *                                                                                             *
@@ -5210,4 +5212,65 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 		}
 	}
 	return(false);
+}
+
+
+void BuildingClass::Spawn_Mission_Target(TechnoClass * source, HousesType attacker, bool fromcapture, HousesType oldowner) {
+	// Nyerguds's C&C Patch Project v1.04: Made tech center spawn configurable.
+
+	// Do not spawn the unit if this building was captured before,
+	// unless this call comes from the capture handling function.
+	if ((IsCaptured && !fromcapture) || GameToPlay != GAME_NORMAL ||
+		 *this != STRUCT_MISSION || MissionTargetSpawn == INFANTRY_NONE) {
+		return;
+	}
+	HousesType house = MissionTargetHouse;
+	// "None" means "spawn as the House of the building". However, if the
+	// building was captured, the Person of Interest will try to escape.
+	if (house == HOUSE_NONE) {
+		house = fromcapture && oldowner != HOUSE_NONE ? oldowner : House->Class->House;
+	}
+
+	// Exit point on MISS is configured for this purpose. After all, it has a door.
+	COORDINATE exitpoint = fromcapture ? Coord_Add(Coord, Class->ExitPoint) : Center_Coord();
+
+	InfantryClass * i = new InfantryClass(MissionTargetSpawn, house);
+	TriggerClass * trigger = NULL;
+	if (MissionTargetTrigger[0] != '\0') {
+		trigger = TriggerClass::As_Pointer(MissionTargetTrigger);
+	}
+	ScenarioInit++;
+	if (i->Unlimbo(exitpoint, fromcapture ? DIR_S : DIR_N)) {
+		if (trigger) {
+			i->Trigger = trigger;
+			trigger->AttachCount++;
+		}
+		if (!fromcapture) {
+			// If the building blew up, apply damage. If not, the target escapes unscathed.
+			int minStr = MAX(1, i->Class->MaxStrength * 2 / 5);
+			i->Strength = Random_Pick(minStr, (int)i->Class->MaxStrength);
+		}
+		i->Look(false);
+		ScenarioInit--;
+		i->Scatter(Center_Coord(), true);
+		ScenarioInit++;
+		bool isHuman = HouseClass::As_Pointer(house)->IsHuman;
+		if (isHuman) {
+				// The new unit announces that it appeared.
+			if (MissionTargetSpawn == INFANTRY_RAMBO) {
+				Sound_Effect(VOC_RAMBO_ROCK);
+			} else if (MissionTargetSpawn == INFANTRY_MOEBIUS) {
+				Sound_Effect(VOC_COMMANDER);
+			} else {
+				AllowVoice=true;
+				i->Response_Select();
+			}
+		}
+		i->Assign_Mission(isHuman ? MISSION_GUARD : MISSION_GUARD_AREA);
+	} else {
+		// Ensure that if spawn somehow fails, triggers get executed.
+		Record_The_Kill(source, attacker);
+		delete i;
+	}
+	ScenarioInit--;
 }

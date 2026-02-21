@@ -261,7 +261,7 @@ BulletClass * TurretClass::Fire_At(TARGET target, int which)
 			/*
 			**	Possible reload timer set.
 			*/
-			if (*this == UNIT_MSAM && Reload == 0) {
+			if (*this == UNIT_SSM && Reload == 0) {
 				Reload = TICKS_PER_SECOND * 30;
 			}
 		}
@@ -488,7 +488,7 @@ bool TurretClass::Unlimbo(COORDINATE coord, DirType dir)
 DirType TurretClass::Fire_Direction(void) const
 {
 	if (Class->IsTurretEquipped) {
-		if (*this == UNIT_MSAM) {
+		if (*this == UNIT_SSM) {
 			int diff1 = SecondaryFacing.Difference(DIR_E);
 			int diff2 = SecondaryFacing.Difference(DIR_W);
 			diff1 = ABS(diff1);

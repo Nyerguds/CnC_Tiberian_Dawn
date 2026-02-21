@@ -43,6 +43,7 @@
 /***************************************************************************
 **	Detailed information about each class of bullet (projectile) in the game.
 */
+// Sniper bullet.
 static BulletTypeClass const ClassSniper(
 	BULLET_BULLET,
 	"50cal",						// NAME:			Text name of this unit type.
@@ -58,6 +59,8 @@ static BulletTypeClass const ClassSniper(
 		false,					// Is projectile inherently inaccurate?
 		false,					// Translucent colors are used?
 		false,					// Good against aircraft?
+		true, 					// Causes knockback on the unit firing this?
+		false,					// Causes the unit's body to kick back if it has no turret?
 	0,								// ARMING:		Time to arm projectile after launch.
 	0,								// RANGE:		Inherent override range factor.
 	MPH_LIGHT_SPEED,			// SPEED:		Miles per hour.
@@ -66,6 +69,7 @@ static BulletTypeClass const ClassSniper(
 	ANIM_PIFF					// Explosion to use upon impact.
 );
 
+// Small arms
 static BulletTypeClass const ClassBullet(
 	BULLET_BULLET,
 	"50cal",						// NAME:			Text name of this unit type.
@@ -80,7 +84,9 @@ static BulletTypeClass const ClassBullet(
 		true,						// Is there no visual difference between projectile facings?
 		false,					// Is projectile inherently inaccurate?
 		false,					// Translucent colors are used?
-		false,					// Good against aircraft?
+		false,					// Good against aircraft?		
+		true, 					// Causes knockback on the unit firing this?
+		false,					// Causes the unit's body to kick back if it has no turret?
 	0,								// ARMING:		Time to arm projectile after launch.
 	0,								// RANGE:		Inherent override range factor.
 	MPH_LIGHT_SPEED,			// SPEED:		Miles per hour.
@@ -89,6 +95,7 @@ static BulletTypeClass const ClassBullet(
 	ANIM_PIFF					// Explosion to use upon impact.
 );
 
+// Chain gun bullets.
 static BulletTypeClass const ClassSpreadfire(
 	BULLET_SPREADFIRE,
 	"50cal",						// NAME:			Text name of this unit type.
@@ -104,6 +111,8 @@ static BulletTypeClass const ClassSpreadfire(
 		false,					// Is projectile inherently inaccurate?
 		false,					// Translucent colors are used?
 		false,					// Good against aircraft?
+		true, 					// Causes knockback on the unit firing this?
+		false,					// Causes the unit's body to kick back if it has no turret?
 	0,								// ARMING:		Time to arm projectile after launch.
 	0,								// RANGE:		Inherent override range factor.
 	MPH_LIGHT_SPEED,			// SPEED:		Miles per hour.
@@ -112,6 +121,7 @@ static BulletTypeClass const ClassSpreadfire(
 	ANIM_PIFFPIFF				// Explosion to use upon impact.
 );
 
+// Armor piercing projectile.
 static BulletTypeClass const ClassAPDS(
 	BULLET_APDS,
 	"120mm",						// NAME:			Text name of this unit type.
@@ -127,6 +137,8 @@ static BulletTypeClass const ClassAPDS(
 		false,					// Is projectile inherently inaccurate?
 		false,					// Translucent colors are used?
 		false,					// Good against aircraft?
+		true, 					// Causes knockback on the unit firing this?
+		true,					// Causes the unit's body to kick back if it has no turret?
 	0,								// ARMING:		Time to arm projectile after launch.
 	0,								// RANGE:		Inherent override range factor.
 	MPH_VERY_FAST,				// SPEED:		Miles per hour.
@@ -135,21 +147,24 @@ static BulletTypeClass const ClassAPDS(
 	ANIM_VEH_HIT3				// Explosion to use upon impact.
 );
 
+// High explosive shell.
 static BulletTypeClass const Class120mm(
 	BULLET_HE,
 	"120mm",						// NAME:			Text name of this unit type.
-		true,						// Flies over tall walls?
+		true, 					// Flies over tall walls?
 		false,					// Homes in on target?
-		true,						// Projectile arcs to the target?
+		true, 					// Projectile arcs to the target?
 		false,					// Is this a dropping bomb-like object?
 		false,					// Is this projectile invisible?
 		false,					// Will it blow up even if it gets just NEAR to target?
 		false,					// Does it have flickering flame animation?
 		false,					// Can it run out of fuel?
-		true,						// Is there no visual difference between projectile facings?
-		true,						// Is projectile inherently inaccurate?
+		true, 					// Is there no visual difference between projectile facings?
+		true, 					// Is projectile inherently inaccurate?
 		false,					// Translucent colors are used?
 		false,					// Good against aircraft?
+		true, 					// Causes knockback on the unit firing this?
+		true, 					// Causes the unit's body to kick back if it has no turret?
 	0,								// ARMING:		Time to arm projectile after launch.
 	0,								// RANGE:		Inherent override range factor.
 	MPH_MEDIUM_FAST,			// SPEED:		Miles per hour.
@@ -158,6 +173,7 @@ static BulletTypeClass const Class120mm(
 	ANIM_ART_EXP1				// Explosion to use upon impact.
 );
 
+// Surface to surface small missile type.
 static BulletTypeClass const ClassMissile(
 	BULLET_SSM,
 	"DRAGON",					// NAME:			Text name of this unit type.
@@ -173,6 +189,8 @@ static BulletTypeClass const ClassMissile(
 		true,						// Is projectile inherently inaccurate?
 		true,						// Translucent colors are used?
 		true,						// Good against aircraft?
+		false, 					// Causes knockback on the unit firing this?
+		false,					// Causes the unit's body to kick back if it has no turret?
 	7,								// ARMING:		Time to arm projectile after launch.
 	0,								// RANGE:		Inherent override range factor.
 	MPH_ROCKET,					// SPEED:		Miles per hour.
@@ -181,6 +199,7 @@ static BulletTypeClass const ClassMissile(
 	ANIM_FRAG1					// Explosion to use upon impact.
 );
 
+// MLRS missile.
 static BulletTypeClass const ClassMissile2(
 	BULLET_SSM2,
 	"DRAGON",					// NAME:			Text name of this unit type.
@@ -196,6 +215,8 @@ static BulletTypeClass const ClassMissile2(
 		true,						// Is projectile inherently inaccurate?
 		true,						// Translucent colors are used?
 		true,						// Good against aircraft?
+		false, 					// Causes knockback on the unit firing this?
+		false,					// Causes the unit's body to kick back if it has no turret?
 	9,								// ARMING:		Time to arm projectile after launch.
 	0,								// RANGE:		Inherent override range factor.
 	MPH_ROCKET,					// SPEED:		Miles per hour.
@@ -204,6 +225,7 @@ static BulletTypeClass const ClassMissile2(
 	ANIM_FRAG1					// Explosion to use upon impact.
 );
 
+// Fast homing anti-aircraft missile.
 static BulletTypeClass const ClassPatriot(
 	BULLET_SAM,
 	"MISSILE",					// NAME:			Text name of this unit type.
@@ -219,6 +241,8 @@ static BulletTypeClass const ClassPatriot(
 		false,					// Is projectile inherently inaccurate?
 		false,					// Translucent colors are used?
 		true,						// Good against aircraft?
+		false, 					// Causes knockback on the unit firing this?
+		false,					// Causes the unit's body to kick back if it has no turret?
 	0,								// ARMING:		Time to arm projectile after launch.
 	0,								// RANGE:		Inherent override range factor.
 	MPH_VERY_FAST,				// SPEED:		Miles per hour.
@@ -227,6 +251,7 @@ static BulletTypeClass const ClassPatriot(
 	ANIM_VEH_HIT1				// Explosion to use upon impact.
 );
 
+// TOW anti-vehicle short range missile.
 static BulletTypeClass const ClassDragon(
 	BULLET_TOW,
 	"DRAGON",					// NAME:			Text name of this unit type.
@@ -242,6 +267,8 @@ static BulletTypeClass const ClassDragon(
 		false,					// Is projectile inherently inaccurate?
 		true,						// Translucent colors are used?
 		true,						// Good against aircraft?
+		false, 					// Causes knockback on the unit firing this?
+		false,					// Causes the unit's body to kick back if it has no turret?
 	3,								// ARMING:		Time to arm projectile after launch.
 	0,								// RANGE:		Inherent override range factor.
 	MPH_ROCKET,					// SPEED:		Miles per hour.
@@ -250,6 +277,7 @@ static BulletTypeClass const ClassDragon(
 	ANIM_VEH_HIT2				// Explosion to use upon impact.
 );
 
+// Flame thrower flame.
 static BulletTypeClass const ClassFlame(
 	BULLET_FLAME,
 	"FLAME",						// NAME:			Text name of this unit type.
@@ -265,6 +293,8 @@ static BulletTypeClass const ClassFlame(
 		false,					// Is projectile inherently inaccurate?
 		false,					// Translucent colors are used?
 		false,					// Good against aircraft?
+		false, 					// Causes knockback on the unit firing this?
+		false,					// Causes the unit's body to kick back if it has no turret?
 	12,							// ARMING:		Time to arm projectile after launch.
 	12,							// RANGE:		Inherent override range factor.
 	MPH_FAST,					// SPEED:		Miles per hour.
@@ -273,6 +303,7 @@ static BulletTypeClass const ClassFlame(
 	ANIM_NONE					// Explosion to use upon impact.
 );
 
+// Chemical weapon spray.
 static BulletTypeClass const ClassChem(
 	BULLET_CHEMSPRAY,
 	"FLAME",						// NAME:			Text name of this unit type.
@@ -288,6 +319,8 @@ static BulletTypeClass const ClassChem(
 		false,					// Is projectile inherently inaccurate?
 		false,					// Translucent colors are used?
 		false,					// Good against aircraft?
+		false, 					// Causes knockback on the unit firing this?
+		false,					// Causes the unit's body to kick back if it has no turret?
 	12,							// ARMING:		Time to arm projectile after launch.
 	12,							// RANGE:		Inherent override range factor.
 	MPH_FAST,					// SPEED:		Miles per hour.
@@ -296,6 +329,7 @@ static BulletTypeClass const ClassChem(
 	ANIM_NONE					// Explosion to use upon impact.
 );
 
+// Napalm bomblet.
 static BulletTypeClass const ClassNapalm(
 	BULLET_NAPALM,
 	"BOMBLET",					// NAME:			Text name of this unit type.
@@ -311,6 +345,8 @@ static BulletTypeClass const ClassNapalm(
 		false,					// Is projectile inherently inaccurate?
 		true,						// Translucent colors are used?
 		false,					// Good against aircraft?
+		false, 					// Causes knockback on the unit firing this?
+		false,					// Causes the unit's body to kick back if it has no turret?
 	24,							// ARMING:		Time to arm projectile after launch.
 	24,							// RANGE:		Inherent override range factor.
 	MPH_MEDIUM_SLOW,			// SPEED:		Miles per hour.
@@ -319,6 +355,7 @@ static BulletTypeClass const ClassNapalm(
 	ANIM_NAPALM2				// Explosion to use upon impact.
 );
 
+// Hand tossed grenade.
 static BulletTypeClass const ClassGrenade(
 	BULLET_GRENADE,
 	"BOMB",						// NAME:			Text name of this unit type.
@@ -334,6 +371,8 @@ static BulletTypeClass const ClassGrenade(
 		true,						// Is projectile inherently inaccurate?
 		true,						// Translucent colors are used?
 		false,					// Good against aircraft?
+		true, 					// Causes knockback on the unit firing this?
+		false,					// Causes the unit's body to kick back if it has no turret?
 	0,								// ARMING:		Time to arm projectile after launch.
 	0,								// RANGE:		Inherent override range factor.
 	MPH_MEDIUM_SLOW,			// SPEED:		Miles per hour.
@@ -342,6 +381,7 @@ static BulletTypeClass const ClassGrenade(
 	ANIM_VEH_HIT2				// Explosion to use upon impact.
 );
 
+// Laser beam from obelisk
 static BulletTypeClass const ClassLaser(
 	BULLET_LASER,
 	"Laser",						// NAME:			Text name of this unit type.
@@ -357,6 +397,8 @@ static BulletTypeClass const ClassLaser(
 		false,					// Is projectile inherently inaccurate?
 		false,					// Translucent colors are used?
 		false,					// Good against aircraft?
+		false, 					// Causes knockback on the unit firing this?
+		false,					// Causes the unit's body to kick back if it has no turret?
 	0,								// ARMING:		Time to arm projectile after launch.
 	0,								// RANGE:		Inherent override range factor.
 	MPH_LIGHT_SPEED,			// SPEED:		Miles per hour.
@@ -365,6 +407,7 @@ static BulletTypeClass const ClassLaser(
 	ANIM_NONE					// Explosion to use upon impact.
 );
 
+// Nuclear Missile on its way up
 static BulletTypeClass const ClassNukeUp(
 	BULLET_NUKE_UP,
 	"ATOMICUP",					// NAME:			Text name of this unit type.
@@ -380,6 +423,8 @@ static BulletTypeClass const ClassNukeUp(
 		false,					// Is projectile inherently inaccurate?
 		false,					// Translucent colors are used?
 		false,					// Good against aircraft?
+		false, 					// Causes knockback on the unit firing this?
+		false,					// Causes the unit's body to kick back if it has no turret?
 	0,								// ARMING:		Time to arm projectile after launch.
 	0,								// RANGE:		Inherent override range factor.
 	MPH_VERY_FAST,				// SPEED:		Miles per hour.
@@ -388,6 +433,7 @@ static BulletTypeClass const ClassNukeUp(
 	ANIM_FRAG1					// Explosion to use upon impact.
 );
 
+// Nuclear Missile on its way down
 static BulletTypeClass const ClassNukeDown(
 	BULLET_NUKE_DOWN,
 	"ATOMICDN",					// NAME:			Text name of this unit type.
@@ -403,6 +449,8 @@ static BulletTypeClass const ClassNukeDown(
 		false,					// Is projectile inherently inaccurate?
 		false,					// Translucent colors are used?
 		false,					// Good against aircraft?
+		false, 					// Causes knockback on the unit firing this?
+		false,					// Causes the unit's body to kick back if it has no turret?
 	0,								// ARMING:		Time to arm projectile after launch.
 	0,								// RANGE:		Inherent override range factor.
 	MPH_VERY_FAST,				// SPEED:		Miles per hour.
@@ -411,6 +459,7 @@ static BulletTypeClass const ClassNukeDown(
 	ANIM_ATOM_BLAST			// Explosion to use upon impact.
 );
 
+// SSM with napalm warhead.
 static BulletTypeClass const ClassHonestJohn(
 	BULLET_HONEST_JOHN,
 	"MISSILE",					// NAME:			Text name of this unit type.
@@ -426,6 +475,8 @@ static BulletTypeClass const ClassHonestJohn(
 		false,					// Is projectile inherently inaccurate?
 		false,					// Translucent colors are used?
 		false,					// Good against aircraft?
+		false, 					// Causes knockback on the unit firing this?
+		false,					// Causes the unit's body to kick back if it has no turret?
 	10,							// ARMING:		Time to arm projectile after launch.
 	0,								// RANGE:		Inherent override range factor.
 	MPH_FAST,					// SPEED:		Miles per hour.
@@ -434,6 +485,7 @@ static BulletTypeClass const ClassHonestJohn(
 	ANIM_NAPALM3				// Explosion to use upon impact.
 );
 
+// Stegosaurus, Triceratops head butt
 static BulletTypeClass const ClassHeadButt(
 	BULLET_HEADBUTT,
 	"GORE",						// NAME:			Text name of this unit type.
@@ -449,6 +501,8 @@ static BulletTypeClass const ClassHeadButt(
 		false,					// Is projectile inherently inaccurate?
 		false,					// Translucent colors are used?
 		false,					// Good against aircraft?
+		false, 					// Causes knockback on the unit firing this?
+		false,					// Causes the unit's body to kick back if it has no turret?
 	0,								// ARMING:		Time to arm projectile after launch.
 	0,								// RANGE:		Inherent override range factor.
 	MPH_LIGHT_SPEED,			// SPEED:		Miles per hour.
@@ -457,6 +511,7 @@ static BulletTypeClass const ClassHeadButt(
 	ANIM_NONE					// Explosion to use upon impact.
 );
 
+// Tyrannosaurus Rex's bite - especially bad for infantry
 static BulletTypeClass const ClassTRexBite(
 	BULLET_TREXBITE,
 	"CHEW",						// NAME:			Text name of this unit type.
@@ -472,6 +527,8 @@ static BulletTypeClass const ClassTRexBite(
 		false,					// Is projectile inherently inaccurate?
 		false,					// Translucent colors are used?
 		false,					// Good against aircraft?
+		false, 					// Causes knockback on the unit firing this?
+		false,					// Causes the unit's body to kick back if it has no turret?
 	0,								// ARMING:		Time to arm projectile after launch.
 	0,								// RANGE:		Inherent override range factor.
 	MPH_LIGHT_SPEED,			// SPEED:		Miles per hour.
@@ -538,6 +595,8 @@ BulletTypeClass::BulletTypeClass(
 	bool is_inaccurate, 
 	bool is_translucent, 
 	bool is_antiaircraft,
+	bool is_kicker,
+	bool is_body_kicker,
 	int arming, int range, MPHType maxspeed, unsigned rot,
 	WarheadType warhead, AnimType explosion) : 
 		ObjectTypeClass(true, false, false, true, false, false, true, true, TXT_NONE, ininame, ARMOR_NONE, 0) 
@@ -555,6 +614,8 @@ BulletTypeClass::BulletTypeClass(
 	IsFueled = is_fueled;
 	IsFaceless = is_faceless;
 	IsInaccurate = is_inaccurate;
+	IsKicker = is_kicker;
+	IsBodyKicker = is_body_kicker;
 	Type = type;
 	Warhead = warhead;
 	MaxSpeed = maxspeed;

@@ -1161,7 +1161,7 @@ inline bool Allow_Edge_W(int cell) { return  (cell % MAP_CELL_W != 0); }
 /***********************************************************************************************
  * Adjacent_Is_Valid -- Checks if a valid adjacent cell exists for the given facing.           *
  *                                                                                             *
- *    This routine does boundary checking on the currecnt cell to see if a valid adjacent      *
+ *    This routine does boundary checking on the current cell to see if a valid adjacent       *
  *    cell can be found in the direction of the specified facing.                              *
  *    Adjacent_Is_Valid - Created for Nyerguds's C&C Patch Project v1.04.                      *
  *                                                                                             *

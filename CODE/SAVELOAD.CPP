@@ -52,8 +52,9 @@
 /*
 ********************************** Defines **********************************
 */
+
 #define	SAVEGAME_VERSION		(DESCRIP_MAX + \
-										0x01000003 + ( \
+										(VERSION_MAJOR << 24 | VERSION_MINOR) + ( \
 										sizeof(AircraftClass) + \
 										sizeof(AircraftTypeClass) + \
 										sizeof(AnimClass) + \
@@ -89,6 +90,7 @@
 										sizeof(LoseMovie) + \
 										sizeof(ActionMovie) + \
 										sizeof(CustomRadarExt) + \
+										+ \
 										sizeof(SabotagedType) + \
 										sizeof(TempleIoned) + \
 										sizeof(Patsux) + \
@@ -97,6 +99,7 @@
 										sizeof(AllowDetachedAISupers) + \
 										sizeof(PassiveHelis) + \
 										sizeof(MissionTargetSpawn) + \
+										sizeof(MissionTargetHouse) + \
 										sizeof(MissionTargetTrigger)))
 
 
@@ -641,6 +644,7 @@ bool Save_Misc_Values(FileClass &file)
 	file.Write(&PassiveHelis, sizeof(PassiveHelis));
 	// Added options to customize spawn from tech center destruction.
 	file.Write(&MissionTargetSpawn, sizeof(MissionTargetSpawn));
+	file.Write(&MissionTargetHouse, sizeof(MissionTargetHouse));
 	file.Write(MissionTargetTrigger, sizeof(MissionTargetTrigger));		
 	return(true);
 }
@@ -751,6 +755,7 @@ bool Load_Misc_Values(FileClass &file)
 	file.Read(&PassiveHelis, sizeof(PassiveHelis));
 	// Added options to customize spawn from tech center destruction.
 	file.Read(&MissionTargetSpawn, sizeof(MissionTargetSpawn));
+	file.Read(&MissionTargetHouse, sizeof(MissionTargetHouse));
 	file.Read(MissionTargetTrigger, sizeof(MissionTargetTrigger));		
 	return(true);
 }

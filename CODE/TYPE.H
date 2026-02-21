@@ -706,7 +706,7 @@ class BuildingTypeClass : public TechnoTypeClass {
 
 		/*
 		**	For building that produce ground units (infantry and vehicles), there is a default
-		**	exit poit defined. This point is where the object is first placed on the map.
+		**	exit point defined. This point is where the object is first placed on the map.
 		**	Typically, this is located next to a door. The unit will then travel on to a clear
 		**	terrain area and enter normal game processing.
 		*/
@@ -1385,6 +1385,20 @@ class BulletTypeClass : public ObjectTypeClass
 		**	If this bullet can be fired on aircraft, then this flag will be true.
 		*/
 		unsigned IsAntiAircraft:1;
+		
+		/*
+		**	If firing this bullet type will cause recoil, then this flag will be true.
+		**	Nyerguds's C&C Patch Project v1.04: Added specific recoil properties to bullets.
+		*/
+		unsigned IsKicker:1;
+
+		/*
+		**	If firing this bullet type kicks back hard enough that a unit without
+		**	turret will experience recoil on its entire body, then this flag will
+		**	be true. This only has an effect if IsKicker is also true.
+		**	Nyerguds's C&C Patch Project v1.04: Added specific recoil properties to bullets.
+		*/
+		unsigned IsBodyKicker:1;
 
 		/*
 		**	This element is a unique identification number for the bullet
@@ -1444,6 +1458,8 @@ class BulletTypeClass : public ObjectTypeClass
 			bool is_inaccurate,
 			bool is_translucent,
 			bool is_antiair,
+			bool is_kicker,
+			bool is_body_kicker,
 			int arming,
 			int range,
 			MPHType maxspeed,

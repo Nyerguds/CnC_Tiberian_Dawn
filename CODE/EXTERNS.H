@@ -83,60 +83,61 @@ extern void const *WarFactoryOverlay;
 **	Dynamic global variables (these change or are initialized at run time).
 */
 #ifdef PATCH
-extern bool						IsV107;
-extern char						OverridePath[128];
+extern bool           IsV107;
+extern char           OverridePath[128];
 #endif
-extern bool						SlowPalette;
-extern char						VersionText[128];
-extern bool						ScoresPresent;
-extern int						CrateCount;
-extern TCountDownTimerClass		CrateTimer;
-extern bool						CrateMaker;
-extern ThemeType				TransitTheme;
-extern bool						AllowVoice;
-extern NewConfigType			NewConfig;
-extern char						BriefingText[512];
-extern char 					IntroMovie[_MAX_FNAME+_MAX_EXT];
-extern char 					ActionMovie[_MAX_FNAME+_MAX_EXT];
-extern char 					BriefMovie[_MAX_FNAME+_MAX_EXT];
-extern char 					WinMovie[_MAX_FNAME+_MAX_EXT];
-extern char 					LoseMovie[_MAX_FNAME+_MAX_EXT];
-extern char 					CustomRadarExt[8];
-extern VoxType					SpeakQueue;
-extern bool						PlayerWins;
-extern bool						PlayerLoses;
-extern bool						PlayerRestarts;
-extern StructType				SabotagedType;
-extern bool						TempleIoned;
-extern WeaponType				PatsuxDefault;
-extern bool						Patsux;
-extern bool						RemoveBuildExceptions;
-extern InfantryType				MissionTargetSpawn;
-extern char						MissionTargetTrigger[5];
-extern long						Frame;
-extern void *					SpeechBuffer;
-extern int						PreserveVQAScreen;
-extern bool						BreakoutAllowed;
-extern bool						Brokeout;
-extern CELL						Views[4];
+extern bool           SlowPalette;
+extern char           VersionText[128];
+extern bool           ScoresPresent;
+extern int            CrateCount;
+extern TCountDownTimerClass  CrateTimer;
+extern bool           CrateMaker;
+extern ThemeType      TransitTheme;
+extern bool           AllowVoice;
+extern NewConfigType  NewConfig;
+extern char           BriefingText[512];
+extern char           IntroMovie[_MAX_FNAME+_MAX_EXT];
+extern char           ActionMovie[_MAX_FNAME+_MAX_EXT];
+extern char           BriefMovie[_MAX_FNAME+_MAX_EXT];
+extern char           WinMovie[_MAX_FNAME+_MAX_EXT];
+extern char           LoseMovie[_MAX_FNAME+_MAX_EXT];
+extern char           CustomRadarExt[8];
+extern VoxType        SpeakQueue;
+extern bool           PlayerWins;
+extern bool           PlayerLoses;
+extern bool           PlayerRestarts;
+extern StructType     SabotagedType;
+extern bool           TempleIoned;
+extern WeaponType     PatsuxDefault;
+extern bool           Patsux;
+extern bool           RemoveBuildExceptions;
+extern InfantryType   MissionTargetSpawn;
+extern HousesType     MissionTargetHouse;
+extern char           MissionTargetTrigger[5];
+extern long           Frame;
+extern void *         SpeechBuffer;
+extern int            PreserveVQAScreen;
+extern bool           BreakoutAllowed;
+extern bool           Brokeout;
+extern CELL           Views[4];
 
-extern GameOptionsClass 		Options;
+extern GameOptionsClass   Options;
 
-extern LogicClass 				Logic;
+extern LogicClass         Logic;
 #ifdef SCENARIO_EDITOR
-extern MapEditClass 				Map;
+extern MapEditClass       Map;
 #else
-extern MouseClass 				Map;
+extern MouseClass         Map;
 #endif
-extern ScoreClass 				Score;
-extern MonoClass 					MonoArray[MonoClass::MAX_MONO_PAGES];
-extern MixFileClass *			ScoreMix;
-extern MixFileClass *			TheaterData;
-extern MixFileClass *			LowTheaterData;
-extern MixFileClass *			MoviesMix;
-extern MixFileClass *			GeneralMix;
-extern ThemeClass 				Theme;
-extern SpecialClass 				Special;
+extern ScoreClass         Score;
+extern MonoClass          MonoArray[MonoClass::MAX_MONO_PAGES];
+extern MixFileClass *     ScoreMix;
+extern MixFileClass *     TheaterData;
+extern MixFileClass *     LowTheaterData;
+extern MixFileClass *     MoviesMix;
+extern MixFileClass *     GeneralMix;
+extern ThemeClass         Theme;
+extern SpecialClass       Special;
 
 /*
 **	Game object allocation and tracking classes.

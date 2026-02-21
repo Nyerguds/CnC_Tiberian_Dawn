@@ -2215,8 +2215,10 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
 //Mono_Printf("object=%p, Strength=%d, IsActive=%d, IsInLimbo=%d.\n", object, (long)object->Strength, object->IsActive, object->IsInLimbo);Get_Key();
 			bullet->Set_Payback(this);
 			bullet->Strength = weapon->Attack;
-			if (!bullet->Class->IsFueled) {
-				IsInRecoilState = true;
+			// Nyerguds's C&C Patch Project v1.04: Added specific recoil properties to bullets.
+			const BulletTypeClass * bclass = bullet->Class;
+			if (bclass->IsKicker) {
+				IsInRecoilState = tclass.IsTurretEquipped || bclass->IsBodyKicker;
 				Mark(MARK_CHANGE_REDRAW);
 			}
 		} else {

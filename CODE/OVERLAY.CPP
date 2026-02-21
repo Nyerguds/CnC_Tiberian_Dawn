@@ -331,8 +331,7 @@ bool OverlayClass::Mark(MarkType mark)
 						CellClass *loopcellp;
 						// Nyerguds's C&C Patch Project v1.04: Make CONC check loop over all 8 directions.
 						// Loop over all 8 directions to fix all connections.
-						for (int index = FACING_NONE; index < FACING_COUNT; index++) {
-							FacingType face = (FacingType)index;
+						for (FacingType face = FACING_NONE; face < FACING_COUNT; face++) {
 							if (!newcellp->Adjacent_Is_Valid(face)) {
 								continue;
 							}

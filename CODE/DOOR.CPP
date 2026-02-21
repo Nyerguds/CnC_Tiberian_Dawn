@@ -188,6 +188,7 @@ void DoorClass::Change_Rate(int rate) {
 	}
 	int cur = Control.Fetch_Remaining();
 	Control.Set_Rate(rate);
+	// This automatically sets it to at most the new rate, cutting off excess time.
 	Control.Set_Remaining(cur);
 }
 

@@ -309,6 +309,7 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 	PassiveHelis = false;
 	RemoveBuildExceptions = false;
 	MissionTargetSpawn = INFANTRY_NONE;
+	MissionTargetHouse = HOUSE_NONE;
 	memset (MissionTargetTrigger, 0, sizeof(MissionTargetTrigger));
 
 	/*
@@ -390,20 +391,25 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 		RequiredNukePieces = MAX(0, neededpieces);
 		bool nukeInherit = WWGetPrivateProfileBool("Basic", "PlayerNukeInherit", false, buffer);
 		int newpieces = WWGetPrivateProfileInt("Basic", "PlayerNukePieces", 3, buffer);
-		// PATSUX laser orca
+		// PATSUX laser orca. This setting is applied in the Map.Read_INI() call below,
+		// when it calls AircraftTypeClass::After_Init().
 		Patsux = WWGetPrivateProfileBool("Basic", "Patsux", 0, buffer);
 		// Remove capmpaign specific tech tree blocks.
 		RemoveBuildExceptions = WWGetPrivateProfileBool("Basic", "RemoveBuildExceptions", 0, buffer);
 		// Custom radar extension
 		WWGetPrivateProfileString("Basic", "RadarLogo", NULL, CustomRadarExt, sizeof(CustomRadarExt), buffer);
-		// Spawn infantry from tech center
+		// Spawn infantry from Tech Center when destroyed / captured.
 		bool ischanmission = ScenPlayer == SCEN_PLAYER_NOD && Scenario == 10 && ScenDir == SCEN_DIR_EAST && ScenVar == SCEN_VAR_A;
 		InfantryType missSpawn = ischanmission ? INFANTRY_CHAN : INFANTRY_NONE;
-		WWGetPrivateProfileString("Basic", "MissionTargetSpawn", 
-			missSpawn == INFANTRY_NONE ? "None" : InfantryTypeClass::As_Reference(missSpawn).IniName,
-			buf, 127, buffer);
+		const char * defaultspawn = missSpawn == INFANTRY_NONE ? "None" : InfantryTypeClass::As_Reference(missSpawn).IniName;
+		WWGetPrivateProfileString("Basic", "MissionTargetSpawn", defaultspawn, buf, 127, buffer);
 		MissionTargetSpawn = InfantryTypeClass::From_Name(buf);
 		if (MissionTargetSpawn != INFANTRY_NONE) {
+			// The House is not a restriction on which Tech Centers can spawn the infantry,
+			// but the House to assign to the infantry coming out, so this can differ from
+			// the Tech Center's House. "None" defaults to the owner of the Tech Center.
+			WWGetPrivateProfileString("Basic", "MissionTargetHouse", "None", buf, 127, buffer);
+			MissionTargetHouse = HouseTypeClass::From_Name(buf);
 			WWGetPrivateProfileString("Basic", "MissionTargetTrigger", ischanmission ? "WIN" : NULL, MissionTargetTrigger, sizeof(MissionTargetTrigger), buffer);
 		}
 		if (Options.NodCollectathon && ScenPlayer == SCEN_PLAYER_NOD && Scenario < 20) {
@@ -457,7 +463,7 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 	/*
 	**	Read in the map control values. This includes dimensions
 	**	as well as theater information. This calls the static "Init"
-	**	function for every *TypeClass
+	**	function for every *TypeClass.
 	*/
 	Map.Read_INI(buffer);
 	Call_Back();
@@ -1027,7 +1033,7 @@ static void Create_Units(void)
 		{4,	1,UNIT_APC,		2,UNIT_BUGGY},
 		{5,	1,UNIT_JEEP,	1,UNIT_BIKE},
 		{5,	2,UNIT_JEEP,	1,UNIT_FTANK},
-		{6,	1,UNIT_MSAM,	1,UNIT_MSAM},
+		{6,	1,UNIT_SSM,		1,UNIT_SSM},
 		{7,	1,UNIT_HTANK,	2,UNIT_STANK},
 	};
 	static int num_units[NUM_UNIT_CATEGORIES];		// # of each type of unit to create

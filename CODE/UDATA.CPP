@@ -576,10 +576,10 @@ static UnitTypeClass const UnitHover(
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
 );
 
-// Mobile sam launcher
-static UnitTypeClass const UnitSAM(
-	UNIT_MSAM,
-	TXT_MSAM,								// NAME:			Text name of this unit type.
+// SSM launcher
+static UnitTypeClass const UnitSSM(
+	UNIT_SSM,
+	TXT_SSM,								// NAME:			Text name of this unit type.
 	"MLRS",									// NAME:			Text name of this unit type.
 	ANIM_FRAG2,							// EXPLOSION:	Type of explosion when destroyed.
 	7,								// Build level.
@@ -1487,7 +1487,7 @@ UnitTypeClass const * const UnitTypeClass::Pointers[UNIT_COUNT] = {
 	&UnitBuggy,			//	UNIT_BUGGY
 	&UnitHarvester,	//	UNIT_HARVESTER
 	&UnitArty,			//	UNIT_ARTY
-	&UnitSAM,			//	UNIT_MSAM
+	&UnitSSM,			//	UNIT_MSAM
 	&UnitHover,			//	UNIT_HOVER
 	&UnitMHQ,			//	UNIT_MHQ
 	&UnitGunBoat,		//	UNIT_GUNBOAT

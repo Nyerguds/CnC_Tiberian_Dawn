@@ -439,9 +439,11 @@ AircraftType AircraftTypeClass::From_Name(char const *name)
  *=============================================================================================*/
 void AircraftTypeClass::One_Time(void)
 {
-	AircraftType index;
+	if (PatsuxDefault == WEAPON_NONE) {
+		PatsuxDefault = OrcaHeli.Primary;
+	}
 
-	for (index = AIRCRAFT_FIRST; index < AIRCRAFT_COUNT; index++) {
+	for (AircraftType index = AIRCRAFT_FIRST; index < AIRCRAFT_COUNT; index++) {
 		char fullname[_MAX_FNAME+_MAX_EXT];
 		AircraftTypeClass * uclass = (AircraftTypeClass *)&As_Reference(index);
 
@@ -809,7 +811,7 @@ void AircraftTypeClass::Init(TheaterType theater)
 
 
 /***********************************************************************************************
- * AircraftTypeClass::After_Init -- Load up extra things after the map / savegame is loaded    *
+ * AircraftTypeClass::After_Init -- Load up extra things after the map / savegame is loaded.   *
  *                                                                                             *
  *    This routine will make additional tweaks to the data after a game is loaded.             *
  *    Specifically, it initialises the Orca laser weapon of the PATSUX logic.                  *
@@ -826,9 +828,6 @@ void AircraftTypeClass::Init(TheaterType theater)
  *=============================================================================================*/
 void AircraftTypeClass::After_Init()
 {
-	if (PatsuxDefault == WEAPON_NONE) {
-		PatsuxDefault = OrcaHeli.Primary;
-	}
 	AircraftTypeClass & orca = ((AircraftTypeClass&)AircraftTypeClass::As_Reference(AIRCRAFT_ORCA));
 	WeaponType weapon = Patsux ? WEAPON_OBELISK_LASER : PatsuxDefault;
 	if (orca.Primary != weapon) {

@@ -717,7 +717,7 @@ void InfantryClass::Per_Cell_Process(bool center)
 	}
 
 	/*
-	**	If this unit is on a teather, then cut it at this time so that
+	**	If this unit is on a tether, then cut it at this time so that
 	**	the "parent" unit is free to proceed. Note that the parent
 	**	unit might actually be a building.
 	*/

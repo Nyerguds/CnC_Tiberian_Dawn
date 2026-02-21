@@ -252,6 +252,7 @@ bool RemoveBuildExceptions = false;
 **	(Tech Center) building, and link it to a trigger with the specified name.
 */
 InfantryType MissionTargetSpawn = INFANTRY_NONE;
+HousesType MissionTargetHouse = HOUSE_NONE;
 char MissionTargetTrigger[5];
 
 /***************************************************************************

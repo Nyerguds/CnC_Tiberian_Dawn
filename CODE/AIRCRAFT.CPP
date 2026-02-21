@@ -360,7 +360,7 @@ void AircraftClass::Draw_It(int x, int y, WindowNumberType window)
 	**	If there is a door on this aircraft (Chinook), then adjust the
 	**	shape number to match the door open state.
 	*/
-	if (!Is_Door_Closed()) {
+	if (!Is_Door_Closed() && facing == 0) {
 		shapenum = 32 + Door_Stage();
 	}
 
@@ -1162,6 +1162,7 @@ int AircraftClass::Mission_Unload(void)
 			SEARCH_FOR_LZ,
 			FLY_TO_LZ,
 			LAND_ON_LZ,
+			OPENING_DOOR,
 			UNLOAD_PASSENGERS,
 			TAKE_OFF,
 		};
@@ -1173,7 +1174,7 @@ int AircraftClass::Mission_Unload(void)
 			*/
 			case SEARCH_FOR_LZ:
 				if (Altitude == 0 && (Target_Legal(NavCom) || Coord == As_Coord(NavCom))) {
-					Status = UNLOAD_PASSENGERS;
+					Status = LAND_ON_LZ;
 				} else {
 					if (!Is_LZ_Clear(NavCom)) {
 						// Nyerguds's C&C Patch Project v1.04: Prevent Unload key from directing to WAYPT_REINF.
@@ -1223,17 +1224,39 @@ int AircraftClass::Mission_Unload(void)
 
 			/*
 			**	Landing phase. Just delay until landing is complete. At that time,
-			**	transition to the unloading phase.
+			**	start the door animation and transition to the door opening phase.
 			*/
 			case LAND_ON_LZ:
 				if (IsTakingOff) {
 					Status = TAKE_OFF;
 				} else {
 					if (Process_Landing()) {
-						Status = UNLOAD_PASSENGERS;
+						// Nyerguds's C&C Patch Project v1.04: Make Chinook open door when unloading.
+						// This opens fairly quickly, so it doesn't respond too
+						// differently from the old no-door behavior.
+						Open_Door(2, 4);
+						Status = OPENING_DOOR;
 					}
 				}
 				return(1);
+
+			/*
+			**	Door opening phase. Just delay until the animation is done playing,
+			**	then transition to the unloading phase.
+			*/
+			// Nyerguds's C&C Patch Project v1.04: Make Chinook open door when unloading.
+			case OPENING_DOOR:
+				if (Is_Door_Open()) {
+					Status = UNLOAD_PASSENGERS;
+					return(1);
+				} else if (Is_Door_Opening()) {
+					// Let animation play out.
+					return(1);
+				} else {
+					// Door wasn't opened? Retry.
+					Status = LAND_ON_LZ;
+				}
+				break;
 
 			/*
 			**	Hold while unloading passengers. When passengers are unloaded the order for this

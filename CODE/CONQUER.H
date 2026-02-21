@@ -118,7 +118,7 @@ typedef enum TextType {
 	TXT_C17,                  	// C17
 	TXT_HARVESTER,            	// Harvester
 	TXT_ARTY,                 	// Artillery
-	TXT_MSAM,                 	// S.S.M. Launcher
+	TXT_SSM,                 	// S.S.M. Launcher
 	TXT_E1,                   	// Minigunner
 	TXT_E2,                   	// Grenadier
 	TXT_E3,                   	// Bazooka

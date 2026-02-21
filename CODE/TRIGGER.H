@@ -71,6 +71,7 @@ typedef enum EventType {
 	EVENT_NOFACTORIES,						// No factories left.
 	EVENT_EVAC_CIVILIAN,						// Civilian has been evacuated.
 	EVENT_BUILD,								// If specified building has been built.
+	// Nyerguds's C&C Patch Project v1.04: Money trigger.
 	EVENT_MONEY,								// house reaches this much total money.
 
 	EVENT_COUNT,

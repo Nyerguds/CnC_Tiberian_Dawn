@@ -843,10 +843,17 @@ bool TriggerClass::Spring(EventType event, HousesType house, long data)
 	}
 
 	/*
-	**	If credits-based, check 'data'
+	**	If credits-based, check 'data'.
 	*/
-	if (Event == EVENT_CREDITS || Event == EVENT_MONEY && data < Data) {
-		return(false);
+	// Nyerguds's C&C Patch Project v1.04: Added "Money" trigger.
+	if (Event == EVENT_CREDITS || Event == EVENT_MONEY) {
+		if (data < Data) {
+			return(false);
+		}
+		if (Event == EVENT_MONEY) {
+			// If this is a repeating trigger, trigger again if the next multiple of the amount is reached.
+			Data += DataCopy;
+		}
 	}
 
 	/*

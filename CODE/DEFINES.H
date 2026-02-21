@@ -855,8 +855,8 @@ typedef enum BulletType {
 	BULLET_NAPALM,			// Napalm bomblet.
 	BULLET_GRENADE,		// Hand tossed grenade.
 	BULLET_LASER,			// Laser beam from obelisk
-	BULLET_NUKE_UP,  		// Nuclear Missile on its way down
-	BULLET_NUKE_DOWN,		// Nuclear Missile on its way up
+	BULLET_NUKE_UP,  		// Nuclear Missile on its way up
+	BULLET_NUKE_DOWN,		// Nuclear Missile on its way down
 	BULLET_HONEST_JOHN,	// SSM with napalm warhead.
 	BULLET_SPREADFIRE,	// Chain gun bullets.
 	BULLET_HEADBUTT,		// Stegosaurus, Triceratops head butt
@@ -1083,7 +1083,7 @@ typedef enum UnitType{
 	UNIT_BUGGY,					// Rat patrol dune buggy type.
 	UNIT_HARVESTER,			// Resource gathering vehicle.
 	UNIT_ARTY,					// Artillery unit.
-	UNIT_MSAM,					// Anti-Aircraft vehicle.
+	UNIT_SSM,					// Anti-Aircraft vehicle.
 	UNIT_HOVER,					// Hovercraft.
 	UNIT_MHQ,					// Mobile Head Quarters.
 	UNIT_GUNBOAT,				// Gunboat
@@ -1111,7 +1111,7 @@ inline UnitType operator++(UnitType &, int);
 #define	UNITF_BUGGY			(1L<<UNIT_BUGGY)
 #define	UNITF_HARVESTER	(1L<<UNIT_HARVESTER)
 #define	UNITF_ARTY			(1L<<UNIT_ARTY)
-#define	UNITF_MSAM			(1L<<UNIT_MSAM)
+#define	UNITF_MSAM			(1L<<UNIT_SSM)
 #define	UNITF_HOVER			(1L<<UNIT_HOVER)
 #define	UNITF_MHQ			(1L<<UNIT_MHQ)
 #define	UNITF_GUNBOAT		(1L<<UNIT_GUNBOAT)
@@ -2165,6 +2165,7 @@ typedef enum FacingType {
 	FACING_FIRST=0
 } FacingType;
 
+// Deliberately not limited with & 0x07 so loops to FACING_COUNT would work
 inline FacingType operator++(FacingType &, int);
 inline FacingType operator + (FacingType f1, FacingType f2)
 {

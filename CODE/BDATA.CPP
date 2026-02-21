@@ -3720,7 +3720,7 @@ static BuildingTypeClass const ClassMission(
 	STRUCT_MISSION,
 	TXT_CIVMISS,							// NAME:			Short name of the structure.
 	"MISS",									// NAME:			Short name of the structure.
-	XYP_COORD(0,0),						// Exit point for produced units.
+	XYP_COORD(38,42),				// Exit point for produced units.
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		true,			// Has ability to detect adjacent cloaked objects?

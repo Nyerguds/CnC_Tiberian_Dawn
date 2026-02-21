@@ -265,13 +265,15 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Full map template blocks (map cell terrain pieces) made up of multiple cells are no longer limited to only using two different land types (which determine passability / buildability behavior).
 * Fixed the destroyed Desert bridge (NE-SW) having an impassable tile at the south-west end of the road.
 * Implemented wider bridges and river crossings, mimicking their behavior in the Playstation and Saturn versions.
-* The logic to make the Tech Center spawn special infantry with a trigger attached is now configurable in the mission, using "MissionTargetSpawn" and "MissionTargetTrigger" options.
+* The logic to make the Tech Center spawn special infantry with a trigger attached is now configurable in the mission, using "MissionTargetSpawn", "MissionTargetTrigger" and "MissionTargetHouse" options. The infantry will also spawn if the building is captured.
 * Added explicit "Difficulty" setting in the [Patch] section, which accepts values "easy" and "hard".
 * Fixed issue where dragging the mouse to select units would give an extra click order at the point where the mouse was released.
 * Fixed APC door animation not using all of its frames.
 * If a computer-constructed building can't be placed, it will now scan for other locations in its build plan where a building of that type can be placed down.
-* [Base] entries now work for walls.
+* [Base] entries now work for walls, meaning they can be scripted to be built or rebuilt in missions.
 * Computer-owned Construction Yards now animate when placing down a building.
 * Computer-owned units will no longer scatter to make place for placing a building if enemies are also obstructing the buiding and it can't be placed down anyway.
 * To make place for placing a building, computer-owned units will now specifically scatter away from the building's center.
-* Computer-owned units will no longer scatter to make place for a different computer player attempting to place a building if the two are not allies. This could also affect human-owned unit if the IsScatter option ("CombatIQ=sergent" in conquer.ini) was enabled.
+* If a computer player attempts to place a building, this will no longer make units owned by another Computer player scatter to make space for it, if the two are not allies. This could also affect human-owned unit if the IsScatter option ("CombatIQ=sergent" in conquer.ini) was enabled.
+* Fixed dinosaur graphics corrupting when firing while moving.
+* The Transport Helicopter now opens its door to unload troops.
