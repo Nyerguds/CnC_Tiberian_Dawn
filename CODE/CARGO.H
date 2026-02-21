@@ -64,7 +64,7 @@ class CargoClass {
 		bool Is_Something_Attached(void) const {return (CargoHold != 0);};
 		FootClass * Attached_Object(void) const;
 		FootClass * Detach_Object(void);
-		void Attach(FootClass * object);
+		virtual void Attach(FootClass * object);
 
 		/*
 		**	File I/O.

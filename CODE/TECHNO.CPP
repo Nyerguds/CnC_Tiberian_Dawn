@@ -4352,6 +4352,8 @@ void TechnoClass::Draw_Pips(int x, int y, WindowNumberType window)
  *                                                                                             *
  * INPUT:   b  -- The structure type to look for.                                              *
  *                                                                                             *
+ *          leader   -- Prefer buildings marked as Leader in this search.                      *
+ *                                                                                             *
  *          friendly -- Allow searching for allied buildings as well.                          *
  *                                                                                             *
  * OUTPUT:  Returns with a pointer to the building that can serve as the best docking bay.     *
@@ -4364,7 +4366,7 @@ void TechnoClass::Draw_Pips(int x, int y, WindowNumberType window)
  *   07/18/1995 JLB : Created.                                                                 *
  *   08/13/1995 JLB : Recognizes the "IsLeader" method of building preference.                 *
  *=============================================================================================*/
-BuildingClass * TechnoClass::Find_Docking_Bay(StructType b, bool friendly) const
+BuildingClass * TechnoClass::Find_Docking_Bay(StructType b, bool leader, bool friendly) const
 {
 	/*
 	**	First check to see if there are ANY buildings of the specified
@@ -4393,9 +4395,9 @@ BuildingClass * TechnoClass::Find_Docking_Bay(StructType b, bool friendly) const
 			!building->IsInLimbo &&
 			*building == b &&
 			((TechnoClass *)this)->Transmit_Message(RADIO_CAN_LOAD, building) == RADIO_ROGER) {
-			// Nyerguds's C&C Patch Project v1.04: Prefer airstrip marked as Leader.
-			// If there is a building marked as leader, always return that one.
-			if (building->IsLeader) {
+			// Nyerguds's C&C Patch Project v1.04: Prefer C17 docking with the Primary building.
+			// If there is a building marked as leader, and leader search is preferred, return that one.
+			if (leader && building->IsLeader) {
 				return(building);
 			}
 			/*

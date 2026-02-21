@@ -150,12 +150,13 @@ class UnitClass :	public TarComClass
 		virtual DirType Desired_Load_Dir(ObjectClass * passenger, CELL & moveto) const;
 		virtual RadioMessageType Receive_Message(RadioClass * from, RadioMessageType message, long & param);
 		virtual void AI(void);
+		virtual void Attach(FootClass * object);
 		virtual int Mission_Attack(void);
 		virtual int Mission_Unload(void);
 		virtual int Mission_Guard(void);
 		virtual int Mission_Harvest(void);
 		virtual int Mission_Hunt(void);
-		virtual int UnitClass::Mission_Move(void);
+		virtual int Mission_Move(void);
 		virtual FireErrorType Can_Fire(TARGET, int which) const;
 
 		/*

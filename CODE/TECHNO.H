@@ -208,7 +208,7 @@ class TechnoClass :	public RadioClass,
 		*/
 		virtual int Refund_Amount(void) const;
 		virtual CELL Find_Exit_Cell(TechnoClass const * techno) const;
-		virtual BuildingClass * Find_Docking_Bay(StructType b, bool friendly) const;
+		virtual BuildingClass * Find_Docking_Bay(StructType b, bool leader, bool friendly) const;
 		virtual int Threat_Range(int control) const;
 		virtual InfantryType Crew_Type(void) const;
 		TechnoTypeClass const * Techno_Type_Class(void) const {return((TechnoTypeClass const *)&Class_Of());};

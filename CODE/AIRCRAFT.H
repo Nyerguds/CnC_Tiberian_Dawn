@@ -149,6 +149,7 @@ class AircraftClass : public FootClass, public FlyClass
 		**	AI.
 		*/
 		virtual void AI(void);
+		virtual void Attach(FootClass * object);
 		virtual void Enter_Idle_Mode(bool initial = false);
 		virtual RadioMessageType Receive_Message(RadioClass * from, RadioMessageType message, long & param);
 		virtual void Scatter(COORDINATE threat, bool forced=false);

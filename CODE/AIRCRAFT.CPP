@@ -155,6 +155,29 @@ TARGET AircraftClass::As_Target(void) const
 
 
 /***********************************************************************************************
+ * AircraftClass::Attach -- Add unit to cargo hold.                                            *
+ *                                                                                             *
+ *    This routine will add the specified unit to the cargo hold.                              *
+ *                                                                                             *
+ * INPUT:   object-- Pointer to the object to attach to the cargo hold.                        *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/21/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void AircraftClass::Attach(FootClass * object)
+{
+	CargoClass::Attach(object);
+	if (How_Many() == Class->Max_Passengers()) {
+		Close_Door(5, 3);
+	}
+}
+
+
+/***********************************************************************************************
  * AircraftClass::operator new -- Allocates a new aircraft object from the pool                *
  *                                                                                             *
  *    This routine will allocate an aircraft object from the free aircraft object pool. If     *
@@ -1026,7 +1049,7 @@ int AircraftClass::Mission_Unload(void)
 			case PICK_AIRSTRIP:
 				if (!Target_Legal(NavCom) || !In_Radio_Contact()) {
 
-					BuildingClass * building = Find_Docking_Bay(STRUCT_AIRSTRIP, false);
+					BuildingClass * building = Find_Docking_Bay(STRUCT_AIRSTRIP, true, false);
 					if (building) {
 						if (Transmit_Message(RADIO_HELLO, building) == RADIO_ROGER) {
 							Set_Speed(0xFF);
@@ -1921,7 +1944,7 @@ void AircraftClass::Enter_Idle_Mode(bool )
 						/*
 						**	Normal aircraft try to find a good landing spot to rest.
 						*/
-						BuildingClass * building = Find_Docking_Bay(STRUCT_HELIPAD, false);
+						BuildingClass * building = Find_Docking_Bay(STRUCT_HELIPAD, false, false);
 						Assign_Destination(TARGET_NONE);
 						if (building && Transmit_Message(RADIO_HELLO, building) == RADIO_ROGER) {
 							mission = MISSION_ENTER;
@@ -2700,9 +2723,13 @@ RadioMessageType AircraftClass::Receive_Message(RadioClass * from, RadioMessageT
 		**	entered the transport.
 		*/
 		case RADIO_IM_IN:
+		// This does not work: passengers radio in just before they actually attach.
+		// Code was instead migrated to an overridden AircraftClass::Attach() function.
+#ifdef OBSOLETE
 			if (How_Many() == Class->Max_Passengers()) {
 				Close_Door(5, 3);
 			}
+#endif
 
 			/*
 			**	If a civilian has entered the transport, then the transport will immediately
@@ -2718,12 +2745,41 @@ RadioMessageType AircraftClass::Receive_Message(RadioClass * from, RadioMessageT
 		**	to the impatient unit.
 		*/
 		case RADIO_DOCKING:
+			// Nyerguds's C&C Patch Project v1.04: Ported the remaster's APC multi-load logic.
+			/*
+			**	Check for the case of a docking message arriving from a unit that does not
+			**	have formal radio contact established. This might be a unit that is standing
+			**	by. If this transport is free to proceed with normal docking operation, then
+			**	establish formal contact now. If the transport is completely full, then break
+			**	off contact. In all other cases, just tell the pending unit to stand by.
+			*/
+			if (Contact_With_Whom() != from) {
+
+				/*
+				**	Can't ever load up so tell the passenger to bug off.
+				*/
+				if (How_Many() >= Class->Max_Passengers()) {
+					return(RADIO_NEGATIVE);
+				}
+
+				/*
+				**	Establish contact and let the loading process proceed normally.
+				*/
+				if (!In_Radio_Contact()) {
+					Transmit_Message(RADIO_HELLO, from);
+				} else {
+
+					/*
+					**	This causes the potential passenger to think that all is ok and to
+					**	hold on for a bit.
+					*/
+					return(RADIO_ROGER);
+				}
+			}
 			if (Class->IsTransporter && How_Many() < Class->Max_Passengers()) {
 				FootClass::Receive_Message(from, message, param);
 
 				if (!IsTethered && !IsLanding && !IsTakingOff && Altitude == 0) {
-
-					Open_Door(5, 4);
 
 					/*
 					**	If the potential passenger needs someplace to go, then figure out a good
@@ -2742,18 +2798,24 @@ RadioMessageType AircraftClass::Receive_Message(RadioClass * from, RadioMessageT
 						} else {
 							param = (long)::As_Target(cell);
 
+							
+							if (!Is_Door_Open()) {
+								Open_Door(5, 4);
+							}
 							/*
 							**	Tell the potential passenger where it should go. If the passenger is
 							**	already at the staging location, then tell it to move onto the transport
 							**	directly.
 							*/
 							if (Transmit_Message(RADIO_MOVE_HERE, param, from) == RADIO_YEA_NOW_WHAT) {
-								param = (long)As_Target();
-								Transmit_Message(RADIO_TETHER);
-								if (Transmit_Message(RADIO_MOVE_HERE, param, from) != RADIO_ROGER) {
-									Transmit_Message(RADIO_OVER_OUT, from);
-								} else {
-									Contact_With_Whom()->Unselect();
+								if (Is_Door_Open()) {
+									param = (long)As_Target();
+									Transmit_Message(RADIO_TETHER);
+									if (Transmit_Message(RADIO_MOVE_HERE, param, from) != RADIO_ROGER) {
+										Transmit_Message(RADIO_OVER_OUT, from);
+									} else {
+										Contact_With_Whom()->Unselect();
+									}
 								}
 							}
 						}
@@ -3525,7 +3587,7 @@ int AircraftClass::Mission_Guard(void)
 				(Contact_With_Whom()->What_Am_I() != RTTI_BUILDING || *((BuildingClass *)Contact_With_Whom()) != STRUCT_REPAIR))) {
 
 
-			BuildingClass * building = Find_Docking_Bay(STRUCT_REPAIR, true);
+			BuildingClass * building = Find_Docking_Bay(STRUCT_REPAIR, false, true);
 			if (building) {
 				Assign_Destination(building->As_Target());
 				Assign_Target(TARGET_NONE);
@@ -3542,7 +3604,7 @@ int AircraftClass::Mission_Guard(void)
 	*/
 	if (Ammo == 0 && Class->Primary != WEAPON_NONE) {
 		if (!In_Radio_Contact()) {
-			BuildingClass * building = Find_Docking_Bay(STRUCT_HELIPAD, false);
+			BuildingClass * building = Find_Docking_Bay(STRUCT_HELIPAD, false, false);
 			if (building) {
 				Assign_Destination(building->As_Target());
 				Assign_Target(TARGET_NONE);

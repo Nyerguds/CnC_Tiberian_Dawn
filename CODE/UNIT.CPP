@@ -285,6 +285,27 @@ TARGET UnitClass::As_Target(void) const
 	return(Build_Target(KIND_UNIT, Units.ID(this)));
 }
 
+/***********************************************************************************************
+ * UnitClass::Attach -- Add unit to cargo hold.                                                *
+ *                                                                                             *
+ *    This routine will add the specified unit to the cargo hold.                              *
+ *                                                                                             *
+ * INPUT:   object-- Pointer to the object to attach to the cargo hold.                        *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/21/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void UnitClass::Attach(FootClass * object)
+{
+	CargoClass::Attach(object);
+	if (How_Many() == Class->Max_Passengers()) {
+		APC_Close_Door();
+	}
+}
 
 #ifdef CHEAT_KEYS
 /***********************************************************************************************
@@ -648,9 +669,13 @@ RadioMessageType UnitClass::Receive_Message(RadioClass * from, RadioMessageType 
 		**	entered the transport.
 		*/
 		case RADIO_IM_IN:
+		// This does not work: passengers radio in just before they actually attach.
+		// Code was instead migrated to an overridden UnitClass::Attach() function.
+#ifdef OBSOLETE
 			if (How_Many() == Class->Max_Passengers()) {
 				APC_Close_Door();
 			}
+#endif
 			return(RADIO_ATTACH);
 
 		/*
@@ -1090,7 +1115,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 					/*
 					**	Find nearby refinery and head to it?
 					*/
-					BuildingClass * building = Find_Docking_Bay(STRUCT_REFINERY, false);
+					BuildingClass * building = Find_Docking_Bay(STRUCT_REFINERY, false, false);
 
 					/*
 					**	Since the refinery said it was ok to load, establish radio
@@ -2535,7 +2560,7 @@ int UnitClass::Mission_Unload(void)
 							if (!placed) {
 								Attach(passenger);
 								Status = CLOSING_DOOR;
-						return(1);
+								return(1);
 							}
 						}
 					} else {
@@ -2726,7 +2751,7 @@ int UnitClass::Mission_Harvest(void)
 				/*
 				**	Find nearby refinery and head to it?
 				*/
-				BuildingClass * nearest = Find_Docking_Bay(STRUCT_REFINERY, false);
+				BuildingClass * nearest = Find_Docking_Bay(STRUCT_REFINERY, false, false);
 
 				/*
 				**	Since the refinery said it was ok to load, establish radio
@@ -2736,7 +2761,7 @@ int UnitClass::Mission_Harvest(void)
 					Status = HEADINGHOME;
 				} else {
 					ScenarioInit++;
-					nearest = Find_Docking_Bay(STRUCT_REFINERY, false);
+					nearest = Find_Docking_Bay(STRUCT_REFINERY, false, false);
 					ScenarioInit--;
 					if (nearest) {
 						Assign_Destination(::As_Target(nearest->Nearby_Location(this)));
@@ -4346,6 +4371,7 @@ void UnitClass::APC_Close_Door(bool fast)
 {
 	Validate();
 	DoorTimeout = 0;
+	if (Is_Door_Closed()) return;
 	int rate = fast ? 1 : 5;
 	if (!Close_Door(rate, 3)) {
 		// Already closing. Change rate.
@@ -4372,6 +4398,7 @@ void UnitClass::APC_Open_Door(void)
 {
 	Validate();
 	DoorTimeout = 0;
+	if (Is_Door_Open()) return;
 	if (!IsDriving && !PrimaryFacing.Is_Rotating()) {
 		Open_Door(5, 3);
 	}

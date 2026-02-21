@@ -1855,7 +1855,7 @@ class AircraftTypeClass : public TechnoTypeClass
 
 		/*
 		**	Fixed wing aircraft (ones that cannot hover) have this flag set to true.
-		**	Such aircraft will not vary speed while it is flying.
+		**	Such aircraft will not vary speed while they are flying.
 		*/
 		unsigned IsFixedWing:1;
 

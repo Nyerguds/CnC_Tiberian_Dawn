@@ -265,7 +265,7 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Full map template blocks (map cell terrain pieces) made up of multiple cells are no longer limited to only using two different land types (which determine passability / buildability behavior).
 * Fixed the destroyed Desert bridge (NE-SW) having an impassable tile at the south-west end of the road.
 * Implemented wider bridges and river crossings, mimicking their behavior in the Playstation and Saturn versions.
-* The logic to make the Tech Center spawn special infantry with a trigger attached is now configurable in the mission, using "MissionTargetSpawn", "MissionTargetTrigger" and "MissionTargetHouse" options. The infantry will also spawn if the building is captured.
+* The logic to make the Tech Center spawn special infantry with a trigger attached is now configurable in the mission, using the "MissionTargetSpawn" and "MissionTargetTrigger" options, with the "MissionTargetHouse" option able to change the House of the spawned unit. If the building is captured, the infantry will run out of the building.
 * Added explicit "Difficulty" setting in the [Patch] section, which accepts values "easy" and "hard".
 * Fixed issue where dragging the mouse to select units would give an extra click order at the point where the mouse was released.
 * Fixed APC door animation not using all of its frames.
@@ -277,3 +277,5 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * If a computer player attempts to place a building, this will no longer make units owned by another Computer player scatter to make space for it, if the two are not allies. This could also affect human-owned unit if the IsScatter option ("CombatIQ=sergent" in conquer.ini) was enabled.
 * Fixed dinosaur graphics corrupting when firing while moving.
 * The Transport Helicopter now opens its door to unload troops.
+* The Transport Helicopter's passengers will now wait until its door is open before going inside.
+* Fixed logic to make the Transport Helicopter and APC immediately close their door when the passenger hold is full.
