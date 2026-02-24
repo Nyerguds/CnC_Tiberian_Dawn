@@ -3242,12 +3242,15 @@ MoveType UnitClass::Can_Enter_Cell(CELL cell, FacingType ) const
 		}
 	}
 
-	// Nyerguds's C&C Patch Project v1.04: fix vehicle crushing.
+	// Nyerguds's C&C Patch Project v1.04: unit crushing fixes.
 	// This pointless check caused vehicle crushing to malfunction.
 
 	// This might need an additional check comparable to the airspace
 	// checks, that go over all other crusher units and check if they
 	// are in the process of crushing this cell, and are closer to it.
+	if (retval == MOVE_OK && crushable && !No_Other_Crushers(cell)) {
+		return(MOVE_MOVING_BLOCK);
+	}
 #ifdef OBSOLETE
 	/*
 	** If its ok to move into the cell because we can crush whats in the cell, then
@@ -4404,6 +4407,72 @@ void UnitClass::APC_Open_Door(void)
 	}
 }
 
+
+/***********************************************************************************************
+ * UnitClass::No_Other_Crushers -- Checks if others are trying to crush this cell's occupant.  *
+ *                                                                                             *
+ *    This routine examines the navigation computers of other units in order to see if the     *
+ *    specified cell is safe to move to. The intent of this routine is to avoid two vehicles   *
+ *    from attempting to crush the same vehicle on a cell.                                     *
+ *                                                                                             *
+ * INPUT:   cell     -- The cell to examine.                                                   *
+ *                                                                                             *
+ * OUTPUT:  Is the specified cell free from movement conflicts?                                *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   02/24/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+bool UnitClass::No_Other_Crushers(CELL cell) const
+{
+	// Nyerguds's C&C Patch Project v1.04: unit crushing fixes.
+	Validate();
+	/*
+	**	Make sure that no other units are heading to the selected location. If they
+	**	are, then don't consider the location as valid.
+	*/
+	CellClass * cellPtr = &Map[cell];
+	UnitClass * occupant = cellPtr->Cell_Unit();
+	if (!occupant) return (true);
+	if (!this->Class->IsCrusher || !occupant->Class->IsCrushable) return(false);
+	TARGET crushtarget = occupant->As_Target();
+	TARGET movetarget = ::As_Target(cell);
+	COORDINATE targetpos = occupant->Center_Coord();
+	
+	// Check 5x5 radius around the target for others trying to crush it.
+	// The 5x5 area accounts for the "chess horse move" 2-cell skips.
+	// This check is only needed for immediate entering checks anyway.
+	int cellx = Cell_X(cell);
+	int startx = cellx - 2;
+	int endx = cellx + 5;
+	int celly = Cell_Y(cell);
+	int starty = celly - 2;
+	int endy = celly + 5;
+	for (int y = starty; y < endy; ++y) {
+		for (int x = startx; x < endx; ++x) {
+			if (x < 0 || y < 0 || x >= MAP_CELL_W || y >= MAP_CELL_H) continue;
+			// Do not evaluate corners; they're too far away.
+			if ((x == startx && y == starty) || (x == startx && y == endy) ||
+					(x == endx && y == starty) || (x == endx && y == endy)) continue;
+			// Technically this should probably evaluate something track-related
+			// to filter out those units that are bound directly for the cell, but
+			// I'm not sure exactly how to do that. In general, this'll do. -MM
+			CELL c = XY_Cell(x, y);
+			if (!Map.In_Radar(c)) continue;
+			CellClass * cellPtr = &Map[c];
+			UnitClass * unit = cellPtr->Cell_Unit();
+			if (unit && unit != occupant && unit != this && !unit->IsInLimbo) {
+				// Check if this found unit is also trying to crush the target.
+				if ((unit->NavCom == crushtarget || unit->NavCom == movetarget)
+						&& unit->Class->IsCrusher && !unit->House->Is_Ally(occupant)) {
+					return(false);
+				}
+			}
+		}
+	}
+	return(true);
+}
 
 /***********************************************************************************************
  * UnitClass::Remap_Table -- Fetches the remap table to use for this object.                   *

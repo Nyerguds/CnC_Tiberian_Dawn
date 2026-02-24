@@ -94,6 +94,7 @@ class UnitClass :	public TarComClass
 		virtual bool Can_Player_Move(void) const;
 		virtual int Pip_Count(void) const;
 		virtual InfantryType Crew_Type(void) const;
+		bool  No_Other_Crushers(CELL cell) const;
 
 		/*
 		**	Coordinate inquiry functions. These are used for both display and

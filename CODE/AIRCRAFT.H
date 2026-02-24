@@ -93,7 +93,7 @@ class AircraftClass : public FootClass, public FlyClass
 		virtual DirType Desired_Load_Dir(ObjectClass * passenger, CELL & moveto) const;
 		virtual int Pip_Count(void) const;
 		TARGET  Good_Fire_Location(TARGET target) const;
-		bool  Cell_Seems_Ok(CELL cell, bool landing=false) const;
+		bool  Cell_Seems_Ok(CELL cell, bool strict=false) const;
 		DirType  Pose_Dir(void) const;
 		TARGET  Good_LZ(void) const;
 		virtual DirType Fire_Direction(void) const;
