@@ -375,7 +375,7 @@ bool Do_Reinforcements(TeamTypeClass *teamtype)
 						building = As_Building(teamtype->MissionList[0].Argument);
 					}
 					if (building == NULL) {
-						building = thisone->Find_Docking_Bay(STRUCT_AIRSTRIP, false);
+						building = thisone->Find_Docking_Bay(STRUCT_AIRSTRIP, true, false);
 					}
 					if (building) {
 						newcell = XY_Cell(Map.MapCellX+Map.MapCellWidth, Coord_YCell(building->Docking_Coord()+2));

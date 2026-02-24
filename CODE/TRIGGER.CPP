@@ -206,6 +206,7 @@ bool TriggerClass::Event_Need_House(EventType event)
 		case EVENT_NOFACTORIES:
 		case EVENT_EVAC_CIVILIAN:
 		case EVENT_BUILD:
+		case EVENT_MONEY:
 			return(true);
 	}
 	return(false);
@@ -235,6 +236,7 @@ bool TriggerClass::Event_Need_Data(EventType event)
 		case EVENT_NBUILDINGS_DESTROYED:
 		case EVENT_NUNITS_DESTROYED:
 		case EVENT_BUILD:
+		case EVENT_MONEY:
 			return(true);
 	}
 	return(false);
