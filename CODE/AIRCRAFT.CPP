@@ -383,7 +383,8 @@ void AircraftClass::Draw_It(int x, int y, WindowNumberType window)
 	**	If there is a door on this aircraft (Chinook), then adjust the
 	**	shape number to match the door open state.
 	*/
-	if (!Is_Door_Closed() && facing == 0) {
+	// Nyerguds's C&C Patch Project v1.04: only show door when transport and facing north.
+	if (Class->IsTransporter && !Is_Door_Closed() && facing == 0) {
 		shapenum = 32 + Door_Stage();
 	}
 

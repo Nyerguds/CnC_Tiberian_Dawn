@@ -248,7 +248,8 @@ void DriveClass::Overrun_Square(CELL cell, bool threaten)
 			}
 		} else {
 			ObjectClass * object = cellptr->Cell_Occupier();
-			int crushed = false;
+			int crushedInf = false;
+			int crushedVeh = false;
 			while (object) {
 				if (object->Class_Of().IsCrushable && !House->Is_Ally(object) && Distance(object->Center_Coord()) < 0x80) {
 					ObjectClass * next = object->Next;
@@ -257,14 +258,14 @@ void DriveClass::Overrun_Square(CELL cell, bool threaten)
 					// Nyerguds's C&C Patch Project v1.04: unit crushing fixes.
 					// Fix for sound being louder when crushing multiple infantry
 					// Play death animation for units
-					if (!crushed) {
-						if (isInf) {
-							// If infantry, play normal squish sound.
-							Sound_Effect(VOC_SQUISH2, Coord);
-						} else if (isVeh) {
-							// The death animation probably already has a sound, but add an extra "roadkill bump" sound.
-							Sound_Effect(VOC_HVYGUN10, Coord);
-						}
+					if (isInf && !crushedInf) {
+						// If infantry, play normal squish sound.
+						Sound_Effect(VOC_SQUISH2, Coord);
+						crushedInf = true;
+					} else if (isVeh && !crushedVeh) {
+						// The death animation probably already has a sound, but add an extra "roadkill bump" sound.
+						Sound_Effect(VOC_HVYGUN10, Coord);
+						crushedVeh = true;
 					}
 					if (isInf && Special.IsGross) {
 					// Nyerguds's C&C Patch Project v1.04: unit crushing fixes.
@@ -293,13 +294,12 @@ void DriveClass::Overrun_Square(CELL cell, bool threaten)
 						}
 					}
 #endif
-					crushed = true;
 					object = next;
 				} else {
 					object = object->Next;
 				}
 			}
-			if (crushed) Do_Uncloak();
+			if (crushedInf || crushedVeh) Do_Uncloak();
 		}
 	}
 }

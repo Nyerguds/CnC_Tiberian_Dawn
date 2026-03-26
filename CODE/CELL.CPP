@@ -1323,11 +1323,8 @@ ConcFill Build_Conc_Fill_State(CELL cell, FacingType * checkCells)
 		}
 		int neighborcell = Adjacent_Cell(cell, facing);
 		CellClass * neighbor = &Map[neighborcell];
-		OverlayType ovl = neighbor->Overlay;
-		int ovlData = neighbor->OverlayData;
-		if (ovl == OVERLAY_CONCRETE) {
-			ConcFill fill =  Get_Conc_State(neighbor);
-			if ((fill & CONC_FILL_CENTER) != 0) {
+		if (neighbor->Overlay == OVERLAY_CONCRETE) {
+			if ((Get_Conc_State(neighbor) & CONC_FILL_CENTER) != 0) {
 				mask = (ConcAdj)(mask | (1 << i));
 			}
 		}
@@ -1399,6 +1396,7 @@ void CellClass::Concrete_Calc(void)
 {
   // Facings to check for adjacent cells around even and odd-cell concrete.
 	// The order in this array matches the bits order in the CONC_ADJ values.
+ 	// In order: top, top-aside, aside, bottom-aside, bottom.
 	static FacingType _even[5] = {FACING_N, FACING_NW, FACING_W, FACING_SW, FACING_S};
 	static FacingType _odd[5] = {FACING_N, FACING_NE, FACING_E, FACING_SE, FACING_S};
 
@@ -1414,9 +1412,7 @@ void CellClass::Concrete_Calc(void)
 		return;
 	}
 	bool isodd = Cell_X(cell) % 2 == 1;
-	// Cells to check around the current cell. In order: top, top-aside, aside, bottom-aside, bottom.
-	FacingType * checkCells = isodd ? _odd : _even;
-	ConcFill fillState = Build_Conc_Fill_State(cell, checkCells);
+	ConcFill fillState = Build_Conc_Fill_State(cell, isodd ? _odd : _even);
 	if (overlay == OVERLAY_NONE && fillState == CONC_FILL_NONE) {
 		return;
 	}

@@ -2142,10 +2142,15 @@ void UnitClass::Draw_It(int x, int y, WindowNumberType window)
 					**	certain directions where this door animation will work.
 					*/
 					if (!Is_Door_Closed() && (PrimaryFacing == DIR_NW || PrimaryFacing == DIR_NE)) {
+						shapenum = 31;
+						// Nyerguds's C&C Patch Project v1.04: Turret equipped transports need unload frames after turret frames.
+						if (Class->IsTurretEquipped) {
+							shapenum += 32;
+						}
 						if (PrimaryFacing == DIR_NE) {
-							shapenum = 34;
+							shapenum += 3;
 						} else if (PrimaryFacing == DIR_NW) {
-							shapenum = 37;
+							shapenum += 6;
 						}
 						shapenum -= Door_Stage();
 					}
@@ -2491,101 +2496,103 @@ int UnitClass::Mission_Unload(void)
 	CELL		cell;
 
 	switch (Class->Type) {
-		case UNIT_APC:
-			switch (Status) {
-				case INITIAL_CHECK:
-					dir = Desired_Load_Dir(NULL, cell);
-					if (How_Many() && cell != 0) {
-						Do_Turn(dir);
-						Status = MANEUVERING;
-						return(1);
-					} else {
-						Assign_Mission(MISSION_GUARD);
-					}
-					break;
-
-				case MANEUVERING:
-					// Nyerguds's C&C Patch Project v1.04: "IsRotating" wasn't reliable?
-					if (!PrimaryFacing.Is_Rotating()) {
-						if (!Is_Door_Opening() && !Is_Door_Open()){
-							APC_Open_Door();
-						}
-						if (Is_Door_Opening()) {
-							Status = OPENING_DOOR;
+		default:
+			// Nyerguds's C&C Patch Project v1.04: Generic unit unload no longer checks for APC.
+			if (Class->IsTransporter) {
+				switch (Status) {
+					case INITIAL_CHECK:
+						dir = Desired_Load_Dir(NULL, cell);
+						if (How_Many() && cell != 0) {
+							Do_Turn(dir);
+							Status = MANEUVERING;
 							return(1);
+						} else {
+							Assign_Mission(MISSION_GUARD);
 						}
-					}
-					break;
+						break;
 
-				case OPENING_DOOR:
-					if (Is_Door_Open()) {
-						Status = UNLOADING;
-						return(1);
-					} else if (Is_Door_Opening()) {
-						// Let animation play out.
-						return(1);
-					} else {
-						Status = INITIAL_CHECK;
-					}
-					break;
-
-				case UNLOADING:
-					if (How_Many()) {
-						FootClass * passenger = Detach_Object();
-
-						if (passenger) {
-							DirType toface = DIR_S + PrimaryFacing;
-							bool placed = false;
-
-							for (FacingType face = FACING_N; face < FACING_COUNT; face++) {
-								DirType newface = toface + face;
-								CELL newcell = Adjacent_Cell(Coord_Cell(Coord), newface);
-
-								if (passenger->Can_Enter_Cell(newcell) == MOVE_OK) {
-									ScenarioInit++;
-									passenger->Unlimbo(Coord_Move(Coord, newface, 0x0080), newface);
-									ScenarioInit--;
-									passenger->Look(false);
-									passenger->Assign_Mission(MISSION_MOVE);
-									passenger->Assign_Destination(::As_Target(newcell));
-									placed = true;
-									break;
-								}
+					case MANEUVERING:
+						// Nyerguds's C&C Patch Project v1.04: "IsRotating" wasn't reliable?
+						if (!PrimaryFacing.Is_Rotating()) {
+							if (!Is_Door_Opening() && !Is_Door_Open()){
+								APC_Open_Door();
 							}
-
-							/*
-							** If the attached unit could NOT be deployed, then re-attach
-							**	it and then bail out of this deploy process.
-							*/
-							if (!placed) {
-								Attach(passenger);
-								Status = CLOSING_DOOR;
+							if (Is_Door_Opening()) {
+								Status = OPENING_DOOR;
 								return(1);
 							}
 						}
-					} else {
-						Status = CLOSING_DOOR;
-						return(1);
-					}
-					break;
+						break;
 
-				/*
-				**	Close APC door in preparation for normal operation.
-				*/
-				case CLOSING_DOOR:
-					if (!Is_Door_Closed() && !Is_Door_Closing()) {
-						APC_Close_Door();
-					}
-					if (Is_Door_Closing()) {
-						// Let animation play out.
-						return(1);
-					} else if (Is_Door_Closed()) {
-						Assign_Mission(MISSION_GUARD);
-					}
-					break;
+					case OPENING_DOOR:
+						if (Is_Door_Open()) {
+							Status = UNLOADING;
+							return(1);
+						} else if (Is_Door_Opening()) {
+							// Let animation play out.
+							return(1);
+						} else {
+							Status = INITIAL_CHECK;
+						}
+						break;
+
+					case UNLOADING:
+						if (How_Many()) {
+							FootClass * passenger = Detach_Object();
+
+							if (passenger) {
+								DirType toface = DIR_S + PrimaryFacing;
+								bool placed = false;
+
+								for (FacingType face = FACING_N; face < FACING_COUNT; face++) {
+									DirType newface = toface + face;
+									CELL newcell = Adjacent_Cell(Coord_Cell(Coord), newface);
+
+									if (passenger->Can_Enter_Cell(newcell) == MOVE_OK) {
+										ScenarioInit++;
+										passenger->Unlimbo(Coord_Move(Coord, newface, 0x0080), newface);
+										ScenarioInit--;
+										passenger->Look(false);
+										passenger->Assign_Mission(MISSION_MOVE);
+										passenger->Assign_Destination(::As_Target(newcell));
+										placed = true;
+										break;
+									}
+								}
+
+								/*
+								** If the attached unit could NOT be deployed, then re-attach
+								**	it and then bail out of this deploy process.
+								*/
+								if (!placed) {
+									Attach(passenger);
+									Status = CLOSING_DOOR;
+									return(1);
+								}
+							}
+						} else {
+							Status = CLOSING_DOOR;
+							return(1);
+						}
+						break;
+
+					/*
+					**	Close APC door in preparation for normal operation.
+					*/
+					case CLOSING_DOOR:
+						if (!Is_Door_Closed() && !Is_Door_Closing()) {
+							APC_Close_Door();
+						}
+						if (Is_Door_Closing()) {
+							// Let animation play out.
+							return(1);
+						} else if (Is_Door_Closed()) {
+							Assign_Mission(MISSION_GUARD);
+						}
+						break;
+				}
+				break;
 			}
-			break;
-
 		case UNIT_MCV:
 			switch (Status) {
 				case 0:
