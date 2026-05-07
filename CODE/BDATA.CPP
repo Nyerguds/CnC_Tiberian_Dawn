@@ -220,9 +220,9 @@ static BuildingTypeClass const ClassTemple(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	1000,										// STRNTH:		Full strength of building.
-	4,											// SIGHTRANGE:	Range of sighting.
-	3000,										// COST:			Cost to purchase.
+	2000,									// STRNTH:		Full strength of building.
+	4,										// SIGHTRANGE:	Range of sighting.
+	3000,									// COST:		Cost to purchase.
 	13,										// SCENARIO:	Starting availability scenario.
 	0,20, 									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
@@ -278,9 +278,9 @@ static BuildingTypeClass const ClassEye(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	(DirType)160,							// Starting idle frame to match construction.
-	500,										// STRNTH:		Full strength of building.
+	1000,									// STRNTH:		Full strength of building.
 	10,										// SIGHTRANGE:	Range of sighting.
-	2800,										// COST:			Cost to purchase.
+	2800,									// COST:		Cost to purchase.
 	13,										// SCENARIO:	Starting availability scenario.
 	0,100,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
@@ -337,14 +337,14 @@ static BuildingTypeClass const ClassWeapon(
 	RTTI_UNITTYPE,							// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 #ifdef ADVANCED
-	500,										// STRNTH:		Full strength of building.
+	1000,									// STRNTH:		Full strength of building.
 #else
-	200,										// STRNTH:		Full strength of building.
+	400,									// STRNTH:		Full strength of building.
 #endif
-	3,											// SIGHTRANGE:	Range of sighting.
-	2000,										// COST:			Cost to purchase.
-	5,											// SCENARIO:	Starting availability scenario.
-	0,86,										// RISK/RWRD:	Risk/reward rating values.
+	3,										// SIGHTRANGE:	Range of sighting.
+	2000,									// COST:		Cost to purchase.
+	5,										// SCENARIO:	Starting availability scenario.
+	0,86,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -398,10 +398,10 @@ static BuildingTypeClass const ClassGTower(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	3,											// SIGHTRANGE:	Range of sighting.
-	500,										// COST:			Cost to purchase.
-	7,											// SCENARIO:	Starting availability scenario.
+	400,									// STRNTH:		Full strength of building.
+	3,										// SIGHTRANGE:	Range of sighting.
+	500,									// COST:		Cost to purchase.
+	7,										// SCENARIO:	Starting availability scenario.
 	100,25,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -457,9 +457,9 @@ static BuildingTypeClass const ClassATower(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	300,										// STRNTH:		Full strength of building.
-	4,											// SIGHTRANGE:	Range of sighting.
-	1000,										// COST:			Cost to purchase.
+	600,									// STRNTH:		Full strength of building.
+	4,										// SIGHTRANGE:	Range of sighting.
+	1000,									// COST:		Cost to purchase.
 	13,										// SCENARIO:	Starting availability scenario.
 	100,30,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
@@ -516,9 +516,9 @@ static BuildingTypeClass const ClassObelisk(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	5,											// SIGHTRANGE:	Range of sighting.
-	1500,										// COST:			Cost to purchase.
+	400,									// STRNTH:		Full strength of building.
+	5,										// SIGHTRANGE:	Range of sighting.
+	1500,									// COST:		Cost to purchase.
 	11,										// SCENARIO:	Starting availability scenario.
 	100,35,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
@@ -574,18 +574,18 @@ static BuildingTypeClass const ClassTurret(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	(DirType)208,							// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	5,											// SIGHTRANGE:	Range of sighting.
+	400,									// STRNTH:		Full strength of building.
+	5,										// SIGHTRANGE:	Range of sighting.
 #ifdef ADVANCED
-	600,										// COST:			Cost to purchase.
+	600,									// COST:		Cost to purchase.
 #else
 #ifdef PATCH
 	600,
 #else
-	250,										// COST:			Cost to purchase.
+	250,									// COST:		Cost to purchase.
 #endif
 #endif
-	8,											// SCENARIO:	Starting availability scenario.
+	8,										// SCENARIO:	Starting availability scenario.
 	300,26,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -640,11 +640,11 @@ static BuildingTypeClass const ClassConst(
 		false,		// Is this building un-sellable?
 	RTTI_BUILDINGTYPE,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	400,										// STRNTH:		Full strength of building.
-	3,											// SIGHTRANGE:	Range of sighting.
-	5000,										// COST:			Cost to purchase.
-	1,											// SCENARIO:	Starting availability scenario.
-	0,70,										// RISK/RWRD:	Risk/reward rating values.
+	800,									// STRNTH:		Full strength of building.
+	3,										// SIGHTRANGE:	Range of sighting.
+	5000,									// COST:		Cost to purchase.
+	1,										// SCENARIO:	Starting availability scenario.
+	0,70,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -699,11 +699,11 @@ static BuildingTypeClass const ClassRefinery(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	450,										// STRNTH:		Full strength of building.
-	4,											// SIGHTRANGE:	Range of sighting.
-	2000,										// COST:			Cost to purchase.
-	2,											// SCENARIO:	Starting availability scenario.
-	0,55,										// RISK/RWRD:	Risk/reward rating values.
+	900,									// STRNTH:		Full strength of building.
+	4,										// SIGHTRANGE:	Range of sighting.
+	2000,									// COST:		Cost to purchase.
+	2,										// SCENARIO:	Starting availability scenario.
+	0,55,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -758,12 +758,12 @@ static BuildingTypeClass const ClassStorage(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	150,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	150,										// COST:			Cost to purchase.
-//	300,										// COST:			Cost to purchase.
-	2,											// SCENARIO:	Starting availability scenario.
-	0,16,										// RISK/RWRD:	Risk/reward rating values.
+	300,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	150,									// COST:		Cost to purchase.
+//	300,									// COST:		Cost to purchase.
+	2,										// SCENARIO:	Starting availability scenario.
+	0,16,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -818,11 +818,11 @@ static BuildingTypeClass const ClassHelipad(
 		false,		// Is this building un-sellable?
 	RTTI_AIRCRAFTTYPE,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	400,										// STRNTH:		Full strength of building.
-	3,											// SIGHTRANGE:	Range of sighting.
-	1500,										// COST:			Cost to purchase.
+	800,									// STRNTH:		Full strength of building.
+	3,										// SIGHTRANGE:	Range of sighting.
+	1500,									// COST:		Cost to purchase.
 	10,										// SCENARIO:	Starting availability scenario.
-	0,65,										// RISK/RWRD:	Risk/reward rating values.
+	0,65,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -877,10 +877,10 @@ static BuildingTypeClass const ClassCommand(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	(DirType)160,							// Starting idle frame to match construction.
-	500,										// STRNTH:		Full strength of building.
+	1000,									// STRNTH:		Full strength of building.
 	10,										// SIGHTRANGE:	Range of sighting.
-	1000,										// COST:			Cost to purchase.
-	3,											// SCENARIO:	Starting availability scenario.
+	1000,									// COST:		Cost to purchase.
+	3,										// SCENARIO:	Starting availability scenario.
 	0,20, 									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -936,10 +936,10 @@ static BuildingTypeClass const ClassSAM(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	3,											// SIGHTRANGE:	Range of sighting.
-	750,										// COST:			Cost to purchase.
-	5,											// SCENARIO:	Starting availability scenario.
+	400,									// STRNTH:		Full strength of building.
+	3,										// SIGHTRANGE:	Range of sighting.
+	750,									// COST:		Cost to purchase.
+	5,										// SCENARIO:	Starting availability scenario.
 	300,40,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -994,10 +994,10 @@ static BuildingTypeClass const ClassAirStrip(
 		false,		// Is this building un-sellable?
 	RTTI_UNITTYPE,							// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	500,										// STRNTH:		Full strength of building.
-	5,											// SIGHTRANGE:	Range of sighting.
-	2000,										// COST:			Cost to purchase.
-	5,											// SCENARIO:	Starting availability scenario.
+	1000,									// STRNTH:		Full strength of building.
+	5,										// SIGHTRANGE:	Range of sighting.
+	2000,									// COST:		Cost to purchase.
+	5,										// SCENARIO:	Starting availability scenario.
 	300,86,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1052,11 +1052,11 @@ static BuildingTypeClass const ClassPower(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	300,										// COST:			Cost to purchase.
-	1,											// SCENARIO:	Starting availability scenario.
-	0,50,										// RISK/RWRD:	Risk/reward rating values.
+	400,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	300,									// COST:		Cost to purchase.
+	1,										// SCENARIO:	Starting availability scenario.
+	0,50,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -1111,11 +1111,11 @@ static BuildingTypeClass const ClassAdvancedPower(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	300,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	700,										// COST:			Cost to purchase.
+	600,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	700,									// COST:		Cost to purchase.
 	13,										// SCENARIO:	Starting availability scenario.
-	0,75,										// RISK/RWRD:	Risk/reward rating values.
+	0,75,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -1170,9 +1170,9 @@ static BuildingTypeClass const ClassHospital(
 		true,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	500,										// COST:			Cost to purchase.
+	400,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	500,									// COST:		Cost to purchase.
 	99,										// SCENARIO:	Starting availability scenario.
 	0,20, 									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
@@ -1229,11 +1229,11 @@ static BuildingTypeClass const ClassBioLab(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	300,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	500,										// COST:			Cost to purchase.
+	600,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	500,									// COST:		Cost to purchase.
 	99,										// SCENARIO:	Starting availability scenario.
-	0,1,										// RISK/RWRD:	Risk/reward rating values.
+	0,1,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -1287,11 +1287,11 @@ static BuildingTypeClass const ClassBarracks(
 		false,		// Is this building un-sellable?
 	RTTI_INFANTRYTYPE,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	400,										// STRNTH:		Full strength of building.
-	3,											// SIGHTRANGE:	Range of sighting.
-	300,										// COST:			Cost to purchase.
-	1,											// SCENARIO:	Starting availability scenario.
-	0,60,										// RISK/RWRD:	Risk/reward rating values.
+	800,									// STRNTH:		Full strength of building.
+	3,										// SIGHTRANGE:	Range of sighting.
+	300,									// COST:		Cost to purchase.
+	1,										// SCENARIO:	Starting availability scenario.
+	0,60,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -1345,11 +1345,11 @@ static BuildingTypeClass const ClassHand(
 		false,		// Is this building un-sellable?
 	RTTI_INFANTRYTYPE,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	400,										// STRNTH:		Full strength of building.
-	3,											// SIGHTRANGE:	Range of sighting.
-	300,										// COST:			Cost to purchase.
-	2,											// SCENARIO:	Starting availability scenario.
-	0,61,										// RISK/RWRD:	Risk/reward rating values.
+	800,									// STRNTH:		Full strength of building.
+	3,										// SIGHTRANGE:	Range of sighting.
+	300,									// COST:		Cost to purchase.
+	2,										// SCENARIO:	Starting availability scenario.
+	0,61,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -1403,11 +1403,11 @@ static BuildingTypeClass const ClassTanker(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	100,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
-	0,1, 										// RISK/RWRD:	Risk/reward rating values.
+	200,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
+	0,1, 									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -1461,11 +1461,11 @@ static BuildingTypeClass const ClassRepair(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	400,										// STRNTH:		Full strength of building.
-	3,											// SIGHTRANGE:	Range of sighting.
-	1200,										// COST:			Cost to purchase.
-	8,											// SCENARIO:	Starting availability scenario.
-	0,46,										// RISK/RWRD:	Risk/reward rating values.
+	800,									// STRNTH:		Full strength of building.
+	3,										// SIGHTRANGE:	Range of sighting.
+	1200,									// COST:		Cost to purchase.
+	8,										// SCENARIO:	Starting availability scenario.
+	0,46,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -1522,11 +1522,11 @@ static BuildingTypeClass const ClassRoad(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	1,											// STRNTH:		Full strength of building.
-	0,											// SIGHTRANGE:	Range of sighting.
-	50,										// COST:			Cost to purchase.
+	1,										// STRNTH:		Full strength of building.
+	0,										// SIGHTRANGE:	Range of sighting.
+	50,										// COST:		Cost to purchase.
 	99,										// SCENARIO:	Starting availability scenario.
-	0,0,										// RISK/RWRD:	Risk/reward rating values.
+	0,0,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -1582,10 +1582,10 @@ static BuildingTypeClass const ClassV01(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	400,									// STRNTH:		Full strength of building.
+	1,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1640,11 +1640,11 @@ static BuildingTypeClass const ClassV02(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	400,									// STRNTH:		Full strength of building.
+	1,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
+	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -1698,11 +1698,11 @@ static BuildingTypeClass const ClassV03(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	400,									// STRNTH:		Full strength of building.
+	1,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
+	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -1756,11 +1756,11 @@ static BuildingTypeClass const ClassV04(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	400,									// STRNTH:		Full strength of building.
+	1,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
+	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -1814,10 +1814,10 @@ static BuildingTypeClass const ClassV05(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	400,									// STRNTH:		Full strength of building.
+	1,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1872,10 +1872,10 @@ static BuildingTypeClass const ClassV06(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	400,									// STRNTH:		Full strength of building.
+	1,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -1930,11 +1930,11 @@ static BuildingTypeClass const ClassV07(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	400,									// STRNTH:		Full strength of building.
+	1,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
+	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -1988,11 +1988,11 @@ static BuildingTypeClass const ClassV08(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	400,									// STRNTH:		Full strength of building.
+	1,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
+	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -2046,11 +2046,11 @@ static BuildingTypeClass const ClassV09(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	400,									// STRNTH:		Full strength of building.
+	1,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
+	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -2104,10 +2104,10 @@ static BuildingTypeClass const ClassV10(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	400,									// STRNTH:		Full strength of building.
+	1,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2162,10 +2162,10 @@ static BuildingTypeClass const ClassV11(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	400,									// STRNTH:		Full strength of building.
+	1,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2220,11 +2220,11 @@ static BuildingTypeClass const ClassV12(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	400,									// STRNTH:		Full strength of building.
+	1,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
+	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -2278,11 +2278,11 @@ static BuildingTypeClass const ClassV13(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
-	0,2, 						// RISK/RWRD:	Risk/reward rating values.
+	400,									// STRNTH:		Full strength of building.
+	1,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
+	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -2336,11 +2336,11 @@ static BuildingTypeClass const ClassV14(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	400,									// STRNTH:		Full strength of building.
+	1,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
+	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -2394,11 +2394,11 @@ static BuildingTypeClass const ClassV15(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	400,									// STRNTH:		Full strength of building.
+	1,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
+	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -2452,11 +2452,11 @@ static BuildingTypeClass const ClassV16(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	400,									// STRNTH:		Full strength of building.
+	1,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
+	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -2510,11 +2510,11 @@ static BuildingTypeClass const ClassV17(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	400,									// STRNTH:		Full strength of building.
+	1,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
+	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -2568,10 +2568,10 @@ static BuildingTypeClass const ClassV18(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	1,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	400,									// STRNTH:		Full strength of building.
+	1,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2626,10 +2626,10 @@ static BuildingTypeClass const ClassV19(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	400,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2685,10 +2685,10 @@ static BuildingTypeClass const ClassV20(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	400,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2744,10 +2744,10 @@ static BuildingTypeClass const ClassV21(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	400,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2803,10 +2803,10 @@ static BuildingTypeClass const ClassV22(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	400,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2862,10 +2862,10 @@ static BuildingTypeClass const ClassV23(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	400,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2921,10 +2921,10 @@ static BuildingTypeClass const ClassV24(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	400,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -2980,10 +2980,10 @@ static BuildingTypeClass const ClassV25(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	400,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -3039,11 +3039,11 @@ static BuildingTypeClass const ClassV26(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	400,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
+	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -3098,11 +3098,11 @@ static BuildingTypeClass const ClassV27(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	400,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
+	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -3157,11 +3157,11 @@ static BuildingTypeClass const ClassV28(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	400,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
+	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -3216,11 +3216,11 @@ static BuildingTypeClass const ClassV29(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
-	0,2, 						// RISK/RWRD:	Risk/reward rating values.
+	400,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
+	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -3275,11 +3275,11 @@ static BuildingTypeClass const ClassV30(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	400,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
+	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -3334,11 +3334,11 @@ static BuildingTypeClass const ClassV31(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
-	0,2, 						// RISK/RWRD:	Risk/reward rating values.
+	400,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
+	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -3393,11 +3393,11 @@ static BuildingTypeClass const ClassV32(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	400,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
+	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -3452,11 +3452,11 @@ static BuildingTypeClass const ClassV33(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
-	0,2,						// RISK/RWRD:	Risk/reward rating values.
+	400,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
+	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -3511,10 +3511,10 @@ static BuildingTypeClass const ClassV34(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	400,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -3570,10 +3570,10 @@ static BuildingTypeClass const ClassV35(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	400,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -3629,10 +3629,10 @@ static BuildingTypeClass const ClassV36(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	400,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -3688,10 +3688,10 @@ static BuildingTypeClass const ClassV37(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	300,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	0,											// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	600,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	0,										// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -3747,10 +3747,10 @@ static BuildingTypeClass const ClassMission(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	200,										// STRNTH:		Full strength of building.
-	2,											// SIGHTRANGE:	Range of sighting.
-	1000,										// COST:			Cost to purchase.
-	0,											// SCENARIO:	Starting availability scenario.
+	400,									// STRNTH:		Full strength of building.
+	2,										// SIGHTRANGE:	Range of sighting.
+	1000,									// COST:		Cost to purchase.
+	0,										// SCENARIO:	Starting availability scenario.
 	0,2,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
@@ -3808,11 +3808,11 @@ static BuildingTypeClass const Sandbag(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	1,											// STRNTH:		Full strength of building.
-	0,											// SIGHTRANGE:	Range of sighting.
-	50,										// COST:			Cost to purchase.
-	5,											// SCENARIO:	Starting availability scenario.
-	0,0,										// RISK/RWRD:	Risk/reward rating values.
+	1,										// STRNTH:		Full strength of building.
+	0,										// SIGHTRANGE:	Range of sighting.
+	50,										// COST:		Cost to purchase.
+	5,										// SCENARIO:	Starting availability scenario.
+	0,0,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -3868,11 +3868,11 @@ static BuildingTypeClass const Cyclone(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	1,											// STRNTH:		Full strength of building.
-	0,											// SIGHTRANGE:	Range of sighting.
-	75,										// COST:			Cost to purchase.
-	9,											// SCENARIO:	Starting availability scenario.
-	0,0,										// RISK/RWRD:	Risk/reward rating values.
+	1,										// STRNTH:		Full strength of building.
+	0,										// SIGHTRANGE:	Range of sighting.
+	75,										// COST:		Cost to purchase.
+	9,										// SCENARIO:	Starting availability scenario.
+	0,0,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -3928,11 +3928,11 @@ static BuildingTypeClass const Brick(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	1,											// STRNTH:		Full strength of building.
-	0,											// SIGHTRANGE:	Range of sighting.
-	100,										// COST:			Cost to purchase.
+	1,										// STRNTH:		Full strength of building.
+	0,										// SIGHTRANGE:	Range of sighting.
+	100,									// COST:		Cost to purchase.
 	13,										// SCENARIO:	Starting availability scenario.
-	0,0,										// RISK/RWRD:	Risk/reward rating values.
+	0,0,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -3988,11 +3988,11 @@ static BuildingTypeClass const Barbwire(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	1,											// STRNTH:		Full strength of building.
-	0,											// SIGHTRANGE:	Range of sighting.
-	25,										// COST:			Cost to purchase.
+	1,										// STRNTH:		Full strength of building.
+	0,										// SIGHTRANGE:	Range of sighting.
+	25,										// COST:		Cost to purchase.
 	98,										// SCENARIO:	Starting availability scenario.
-	0,0,										// RISK/RWRD:	Risk/reward rating values.
+	0,0,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -4049,11 +4049,11 @@ static BuildingTypeClass const Wood(
 		false,		// Is this building un-sellable?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
-	1,											// STRNTH:		Full strength of building.
-	0,											// SIGHTRANGE:	Range of sighting.
-	25,										// COST:			Cost to purchase.
+	1,										// STRNTH:		Full strength of building.
+	0,										// SIGHTRANGE:	Range of sighting.
+	25,										// COST:		Cost to purchase.
 	98,										// SCENARIO:	Starting availability scenario.
-	0,0,										// RISK/RWRD:	Risk/reward rating values.
+	0,0,									// RISK/RWRD:	Risk/reward rating values.
 	HOUSEF_MULTI1|
 	HOUSEF_MULTI2|
 	HOUSEF_MULTI3|
@@ -4240,7 +4240,7 @@ BuildingTypeClass::BuildingTypeClass(
 													is_buildable,
 													is_crew,
 													-1,
-													strength*2,
+													strength,
 													MPH_IMMOBILE,
 													sightrange,
 													cost,
