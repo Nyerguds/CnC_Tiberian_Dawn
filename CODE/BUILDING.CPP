@@ -1892,7 +1892,7 @@ void BuildingClass::Drop_Debris(TARGET source)
 void BuildingClass::Active_Click_With(ActionType action, ObjectClass * object)
 {
 	Validate();
-	if (action == ACTION_ATTACK) {
+	if ((action == ACTION_ATTACK || action == ACTION_ATTACK_NOW)) {
 		Player_Assign_Mission(MISSION_ATTACK, object->As_Target());
 	}
 
@@ -1922,7 +1922,7 @@ void BuildingClass::Active_Click_With(ActionType action, ObjectClass * object)
 void BuildingClass::Active_Click_With(ActionType action, CELL cell)
 {
 	Validate();
-	if (action == ACTION_ATTACK) {
+	if ((action == ACTION_ATTACK || action == ACTION_ATTACK_NOW)) {
 		Player_Assign_Mission(MISSION_ATTACK, ::As_Target(cell));
 	}
 }
@@ -2818,7 +2818,7 @@ ActionType BuildingClass::What_Action(ObjectClass * object) const
 	**	Don't allow targeting of SAM sites, even if the CTRL key
 	**	is held down.
 	*/
-	if (action == ACTION_ATTACK && *this == STRUCT_SAM) {
+	if ((action == ACTION_ATTACK || action == ACTION_ATTACK_NOW) && *this == STRUCT_SAM) {
 		action = ACTION_NONE;
 	}
 
@@ -2859,7 +2859,7 @@ ActionType BuildingClass::What_Action(CELL cell) const
 	**	Don't allow targeting of SAM sites, even if the CTRL key
 	**	is held down.
 	*/
-	if (action == ACTION_ATTACK && *this == STRUCT_SAM) {
+	if ((action == ACTION_ATTACK || action == ACTION_ATTACK_NOW) && *this == STRUCT_SAM) {
 		action = ACTION_NONE;
 	}
 
@@ -3293,7 +3293,7 @@ bool BuildingClass::Captured(HouseClass * newowner)
 		if (House == PlayerPtr || newowner == PlayerPtr) {
 			Map.PowerClass::IsToRedraw = true;
 		}
-		// Nyerguds's C&C Patch Project v1.04: Always to radar refresh for captures.
+		// Nyerguds's C&C Patch Project v1.04: Always do radar refresh for captures.
 		Map.Flag_To_Redraw(true);
 
 		/*
@@ -3418,7 +3418,7 @@ bool BuildingClass::Captured(HouseClass * newowner)
 		// capacity is updated to include the new storage space.
 		House->Harvested(booty);
 		// Reset building placement proximity check since something has changed ownership.
-		if (Map.PendingObject){
+		if (Map.PendingObject) {
 			Map.ProximityCheck = Map.Passes_Proximity_Check(Map.PendingObject);
 		}
 
@@ -5235,16 +5235,23 @@ void BuildingClass::Spawn_Mission_Target(TechnoClass * source, HousesType attack
 	COORDINATE exitpoint = fromcapture ? Coord_Add(Coord, Class->ExitPoint) : Center_Coord();
 
 	InfantryClass * i = new InfantryClass(MissionTargetSpawn, house);
+	if (!i) {
+		// Creation failed;  can't do much. Can't even spring triggers.
+		return;
+	}
+
 	TriggerClass * trigger = NULL;
 	if (MissionTargetTrigger[0] != '\0') {
 		trigger = TriggerClass::As_Pointer(MissionTargetTrigger);
 	}
+	// Apply trigger in advance, so that if Unlimbo fails, it can still be executed.
+	if (trigger) {
+		i->Trigger = trigger;
+		trigger->AttachCount++;
+	}
+
 	ScenarioInit++;
 	if (i->Unlimbo(exitpoint, fromcapture ? DIR_S : DIR_N)) {
-		if (trigger) {
-			i->Trigger = trigger;
-			trigger->AttachCount++;
-		}
 		if (!fromcapture) {
 			// If the building blew up, apply damage. If not, the target escapes unscathed.
 			int minStr = MAX(1, i->Class->MaxStrength * 2 / 5);
@@ -5269,7 +5276,7 @@ void BuildingClass::Spawn_Mission_Target(TechnoClass * source, HousesType attack
 		i->Assign_Mission(isHuman ? MISSION_GUARD : MISSION_GUARD_AREA);
 	} else {
 		// Ensure that if spawn somehow fails, triggers get executed.
-		Record_The_Kill(source, attacker);
+		i->Record_The_Kill(source, attacker);
 		delete i;
 	}
 	ScenarioInit--;
