@@ -360,4 +360,5 @@ MouseClass::MouseStruct MouseClass::MouseControl[MOUSE_COUNT] = {
 	{122,	3,		4,		127,	15,	12},	//	MOUSE_DEMOLITIONS
 	{153,	1,		0,		152,	15,	12},	//	MOUSE_AREA_GUARD
 	{59,	1,		0,		-1,	15,	11},	//	MOUSE_PAN // Nyerguds's C&C Patch Project v1.04
+	{21,	5,		3,		143,	15,	12},	//	MOUSE_CAN_SHOOT // Nyerguds's C&C Patch Project v1.04
 };

@@ -279,3 +279,6 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * The Transport Helicopter now opens its door to unload troops.
 * The Transport Helicopter's passengers will now wait until its door is open before going inside.
 * Fixed logic to make the Transport Helicopter and APC immediately close their door when the passenger hold is full.
+* Fixed bug that artillery type units could get their rearm delay significantly shortened when the game perceived them as "arriving on a cell".
+* Fixed GDI occasionally getting SSM Launchers as multiplayer starting units.
+* The Attack cursor now plays a quicker and shorter animation if the target is in range. This only works if a single unit is selected.

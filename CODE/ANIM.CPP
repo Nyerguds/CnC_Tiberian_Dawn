@@ -1057,7 +1057,16 @@ void AnimClass::Middle(void)
 				CELL tcell = XY_Cell(xpos, ypos);
 				if (!Map.In_Radar(tcell)) continue;
 
+				// The intended algorithm was probably to reduce over distance,
+				// but it uses the constant value "radius" instead of the distance
+				// from the center, resulting in a constant damage value.
 				int damage = rawdamage / ((ABS(radius)/2)+1);
+				// The corrected algorithm would probably be this:
+				//int dist = max(abs(x), abs(y));
+				//int damage = rawdamage / ((dist/2)+1);
+				// However, this would need carefully chosen damage values since
+				// it could easily make the multiplayer nuke a CY killer.
+				// For now, I'm not touching it. -Nyerguds
 				Explosion_Damage(Cell_Coord(tcell), damage, blame, Owner, WARHEAD_FIRE);
 				new SmudgeClass(Random_Pick(SMUDGE_SCORCH1, SMUDGE_SCORCH6), Cell_Coord(tcell));
 			}

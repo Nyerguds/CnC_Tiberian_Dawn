@@ -2829,7 +2829,7 @@ ActionType InfantryClass::What_Action(ObjectClass * object) const
 	/*
 	**	First see if it's a commando, and if he's attacking a building, have him return ACTION_SABOTAGE instead
 	*/
-	if (*this == INFANTRY_RAMBO && action == ACTION_ATTACK && object->What_Am_I() == RTTI_BUILDING) {
+	if (*this == INFANTRY_RAMBO && (action == ACTION_ATTACK || action == ACTION_ATTACK_NOW) && object->What_Am_I() == RTTI_BUILDING) {
 		return(ACTION_SABOTAGE);
 	}
 
@@ -2846,18 +2846,19 @@ ActionType InfantryClass::What_Action(ObjectClass * object) const
 	// Nyerguds's C&C Patch Project v1.04: Enter cursor can't override Ctrl or Ctrl+Alt.
 	// Don't allow ENTER to override Ctrl or Ctrl+Alt. Alt is still allowed to be overridden.
 	if (
-		action != ACTION_ATTACK && action != ACTION_GUARD_AREA &&
+		action != ACTION_ATTACK && action != ACTION_ATTACK_NOW && action != ACTION_GUARD_AREA &&
 		IsOwnedByPlayer && House->Is_Ally(object) && object->Is_Techno() &&
 		((InfantryClass *)this)->Transmit_Message(RADIO_CAN_LOAD, (TechnoClass*)object) == RADIO_ROGER) {
 		action = ACTION_ENTER;
 	}
 	// Nyerguds's C&C Patch Project v1.04: Capture check refactored to new function.
 	// This is simplified due to the new Remaster capture logic.
-	if (Class->IsCapture && action == ACTION_ATTACK && object->Owner() != Owner() && object->Can_Capture()) {
+	if (Class->IsCapture && (action == ACTION_ATTACK || action == ACTION_ATTACK_NOW)
+			&& object->Owner() != Owner() && object->Can_Capture()) {
 		action = ACTION_CAPTURE;
 	}
 	// Nyerguds's C&C Patch Project v1.04: Fix unarmed civilians getting Attack cursor.
-	if (action == ACTION_ATTACK && !Can_Player_Fire()) {
+	if ((action == ACTION_ATTACK || action == ACTION_ATTACK_NOW) && !Can_Player_Fire()) {
 		action = ACTION_NONE;
 	}
 	return(action);

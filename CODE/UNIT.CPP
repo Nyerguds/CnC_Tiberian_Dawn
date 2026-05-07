@@ -1975,7 +1975,8 @@ void UnitClass::Per_Cell_Process(bool center)
 	*/
 	if (Special.IsDefenderAdvantage && /*center &&*/ !Target_Legal(NavCom) && Path[0] == FACING_NONE) {
 		if (*this == UNIT_MLRS || *this == UNIT_ARTY || *this == UNIT_SSM) {
-			Arm = Rearm_Delay(false)*2;
+			// Nyerguds's C&C Patch Project v1.04: Ensure rearm delay on stop is actually increased, not decreased.
+			Arm = MAX(Arm, Rearm_Delay(false)*2);
 		}
 	}
 
@@ -3700,7 +3701,7 @@ ActionType UnitClass::What_Action(ObjectClass * object) const
 	**	If the unit doesn't have a weapon, but can crush the object, then consider
 	**	the object as a movable location.
 	*/
-	if (action == ACTION_ATTACK && !Can_Player_Fire()) {
+	if ((action == ACTION_ATTACK || action == ACTION_ATTACK_NOW) && !Can_Player_Fire()) {
 		if (Class->IsCrusher && object->Class_Of().IsCrushable) {
 			action = ACTION_MOVE;
 		} else {

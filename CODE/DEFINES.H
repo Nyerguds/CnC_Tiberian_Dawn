@@ -594,6 +594,7 @@ typedef enum ActionType {
 	ACTION_NUKE_BOMB,		// That target object should be blasted.
 	ACTION_AIR_STRIKE,	// That target object should be blasted.
 	ACTION_GUARD_AREA,	// Guard the area/object clicked on.
+	ACTION_ATTACK_NOW,	// Can attack or fire upon it, and is in range to do so. // Nyerguds's C&C Patch Project v1.04
 
 	ACTION_COUNT
 } ActionType;
@@ -1083,7 +1084,7 @@ typedef enum UnitType{
 	UNIT_BUGGY,					// Rat patrol dune buggy type.
 	UNIT_HARVESTER,			// Resource gathering vehicle.
 	UNIT_ARTY,					// Artillery unit.
-	UNIT_SSM,					// Anti-Aircraft vehicle.
+	UNIT_SSM,					// Surface-to-Surface Missile Launcher
 	UNIT_HOVER,					// Hovercraft.
 	UNIT_MHQ,					// Mobile Head Quarters.
 	UNIT_GUNBOAT,				// Gunboat
@@ -1802,6 +1803,7 @@ typedef enum MouseType
 	MOUSE_DEMOLITIONS,
 	MOUSE_AREA_GUARD,
 	MOUSE_PAN,  // Nyerguds's C&C Patch Project v1.04; added non-animated deploy cursor as panning cursor.
+	MOUSE_CAN_SHOOT,  // Nyerguds's C&C Patch Project v1.04; added faster attack cursor if target is in range.
 	MOUSE_COUNT
 } MouseType;
 

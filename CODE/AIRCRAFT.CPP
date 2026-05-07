@@ -383,7 +383,7 @@ void AircraftClass::Draw_It(int x, int y, WindowNumberType window)
 	**	If there is a door on this aircraft (Chinook), then adjust the
 	**	shape number to match the door open state.
 	*/
-	// Nyerguds's C&C Patch Project v1.04: only show door when transport and facing north.
+	// Nyerguds's C&C Patch Project v1.04: Only show door when transport and facing north.
 	if (Class->IsTransporter && !Is_Door_Closed() && facing == 0) {
 		shapenum = 32 + Door_Stage();
 	}
@@ -2092,7 +2092,7 @@ void AircraftClass::Debug_Dump(MonoClass *mono) const
 void AircraftClass::Active_Click_With(ActionType action, ObjectClass * object)
 {
 	Validate();
-	// Nyerguds's TUC Quick Fix Patch v1.03: aircraft-dock-unload
+	// Nyerguds's TUC Quick Fix Patch v1.03: Aircraft-dock-unload
 	// Nothing here is any different from the default FootClass behaviour, and, in fact
 	// the default behaviour always overrode the specific code here in the retail game.
 #ifdef OBSOLETE
@@ -2146,6 +2146,7 @@ void AircraftClass::Active_Click_With(ActionType action, CELL cell)
 			break;
 
 		case ACTION_ATTACK:
+		case ACTION_ATTACK_NOW:
 			Player_Assign_Mission(MISSION_ATTACK, ::As_Target(cell));
 			break;
 	}
@@ -2214,14 +2215,14 @@ ActionType AircraftClass::What_Action(ObjectClass * object) const
 		action = ACTION_NONE;
 	}
 
-	if (action == ACTION_ATTACK && Class->Primary == WEAPON_NONE) {
+	if ((action == ACTION_ATTACK || action == ACTION_ATTACK_NOW) && Class->Primary == WEAPON_NONE) {
 		action = ACTION_NONE;
 	}
 
 	// Nyerguds's C&C Patch Project v1.04: Enter cursor can't override Ctrl or Ctrl+Alt.
 	// Don't allow ENTER to override Ctrl or Ctrl+Alt. Alt is still allowed to be overridden.
 	if (
-		action != ACTION_ATTACK && action != ACTION_GUARD_AREA && object->Is_Techno() && IsOwnedByPlayer &&
+		action != ACTION_ATTACK && action != ACTION_ATTACK_NOW && action != ACTION_GUARD_AREA && object->Is_Techno() && IsOwnedByPlayer &&
 		((TechnoClass const *)object)->House->Is_Ally(this) && object->What_Am_I() == RTTI_BUILDING &&
 		((AircraftClass *)this)->Transmit_Message(RADIO_CAN_LOAD, (TechnoClass*)object) == RADIO_ROGER) {
 		action = ACTION_ENTER;
@@ -2254,11 +2255,11 @@ ActionType AircraftClass::What_Action(CELL cell) const
 
 	// Nyerguds's C&C Patch Project v1.04: No Move or Force-Fire in the shroud in MP.
 	// Don't allow Move or Force-attack in the shroud in multiplay.
-	if ((action == ACTION_MOVE || action == ACTION_ATTACK) && !Map[cell].IsVisible) {
+	if ((action == ACTION_MOVE || action == ACTION_ATTACK || action == ACTION_ATTACK_NOW) && !Map[cell].IsVisible) {
 		action = ACTION_NOMOVE;
 	}
 
-	if (action == ACTION_ATTACK && Class->Primary == WEAPON_NONE) {
+	if ((action == ACTION_ATTACK || action == ACTION_ATTACK_NOW) && Class->Primary == WEAPON_NONE) {
 		action = ACTION_NONE;
 	}
 	return(action);

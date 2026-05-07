@@ -466,7 +466,12 @@ void BulletClass::AI(void)
 					Coord = Coord_Scatter(Coord, 0x0020);
 				}
 				if (Class->Explosion != ANIM_NONE) {
-					new AnimClass(Class->Explosion, Coord);
+					AnimClass * anim = new AnimClass(Class->Explosion, Coord);
+					/*
+					**	Set payback on this animation, in case the animation itself can deal damage.
+					**	An example of this would be the nuclear explosion.
+					*/
+					anim->Set_Payback(Payback, Owner);
 				}
 				delete this;
 				return;

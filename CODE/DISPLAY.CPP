@@ -3054,6 +3054,7 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 
 		// Nyerguds's C&C Patch Project v1.04: Fixed priority on special mouse states.
 		// Fixed priority on this, and made all cases mutually exclusive.
+		int amount = CurrentObject.Count();
 		if (Map.PendingObject) {
 			action = ACTION_NONE;
 		} else if (Map.IsTargettingMode == SPC_ION_CANNON) {
@@ -3098,7 +3099,7 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 			} else {
 				action = ACTION_NO_REPAIR;
 			}
-		} else if (CurrentObject.Count()) {
+		} else if (amount > 0) {
 			/*
 			**	If there is a currently selected object, then the action to perform if
 			**	the left mouse button were clicked must be determined.
@@ -3124,7 +3125,7 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 					}
 					// A bit heavy perhaps, but the only way to find if anything can interact with it.
 					if (retest) {
-						for (int index = 0; index < CurrentObject.Count(); index++) {
+						for (int index = 0; index < amount; index++) {
 							ObjectClass * tobject = CurrentObject[index];
 							if (object == tobject)
 								continue;
@@ -3139,7 +3140,7 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 				// Nyerguds's C&C Patch Project v1.04: Find best action for no techno under cursor.
 				// Keep looping until you got something else than "None" or "No move",
 				// so we get a more accurate representation of all units' abilities.
-				for (int index = 0; index < CurrentObject.Count(); index++) {
+				for (int index = 0; index < amount; index++) {
 					ActionType testaction = CurrentObject[index]->What_Action(cell);
 					if (testaction != ACTION_NONE) {
 						action = testaction;
@@ -3149,6 +3150,11 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 					}
 				}
 				//action = CurrentObject[0]->What_Action(cell);
+			}
+			// If multiple units are selected, ignore range check, since it would require
+			// adding a whole new layer of complexity.
+			if (amount > 1 && action == ACTION_ATTACK_NOW) {
+				action = ACTION_ATTACK;
 			}
 		} else if (object && object->Class_Of().IsSelectable) {
 			action = ACTION_SELECT;
@@ -3393,6 +3399,10 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
 			case ACTION_HARVEST:
 			case ACTION_ATTACK:
 				Set_Default_Mouse(MOUSE_CAN_ATTACK, wwsmall);
+				break;
+
+			case ACTION_ATTACK_NOW:
+				Set_Default_Mouse(MOUSE_CAN_SHOOT, wwsmall);
 				break;
 
 			case ACTION_SABOTAGE:

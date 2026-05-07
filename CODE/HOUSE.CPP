@@ -523,7 +523,7 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 		}
 
 		/*
-		**	Special check to allow GDI to build the MSAM by mission #9
+		**	Special check to allow GDI to build the MLRS by mission #9
 		**	and no sooner.
 		*/
 		if (house == HOUSE_GOOD &&
@@ -2432,7 +2432,7 @@ void HouseClass::Special_Weapon_AI(SpecialWeaponType id)
 
 
 /***********************************************************************************************
- * HouseClass::FindLaunchSite -- Find a building to set as origin for a superweapon strike.    *
+ * HouseClass::Find_Launch_Site -- Find a building to set as origin for a superweapon strike.  *
  *                                                                                             *
  *    This routine is called to find the launch site for a superweapon strike.                 *
  *    If no suitable building is found, a fallback is returned so there is something to blame. *

@@ -1504,13 +1504,18 @@ TARGET TechnoClass::Greatest_Threat(ThreatType method) const
 //		int range = MAX(Weapon_Range(0), Weapon_Range(1));
 //		if (!(method & THREAT_RANGE)) range *= 2;
 //		range = Bound(range, 0x0100, 0x1400);			// Limit maximum scan distance.
+		/* Cell range */
 		int crange;
 		if (range == 0) {
 			crange = MAX(Weapon_Range(0, true), Weapon_Range(1, true)) / ICON_LEPTON_W;
-			// Nyerguds's C&C Patch Project v1.04: Increase scan range to include buildings.
-			// Increased to account for large buildings. Max for 3x3 or 2x4 is 1.5 cells.
-			// In the range==0 case it will be checked against actual weapon range anyway.
-			crange+=2;
+			// Nyerguds's C&C Patch Project v1.04: Increase scan range when scanning for buildings.
+			// Maximum added scan range for 3x3 or 2x4 buildings is 1.5 cells, so add 2.
+			// The distance to the object will still be checked against 'range' anyway.
+			// This is pointless for the THREAT_AREA method since it is not advanced
+			// enough to add the extra range for structures.
+			if (method & THREAT_BUILDINGS) {
+				crange += 2;
+			}
 		} else {
 			crange = range / ICON_LEPTON_W;
 		}
@@ -2391,8 +2396,7 @@ void TechnoClass::Player_Assign_Mission(MissionType mission, TARGET target, TARG
 				Response_Sabotage();
 				break;
 			// Nyerguds's C&C Patch Project v1.04: Area Guard and Stop use Response_Attack().
-			// Use Response_Attack on Area Guard and Stop keyboard orders. Don't use
-			// Response_Move: hearing "moving out!" is weird when it makes them stop.
+			// Don't use Response_Move: hearing "moving out!" is weird when it makes them stop.
 			case MISSION_ATTACK:
 			case MISSION_GUARD_AREA:
 			case MISSION_GUARD:
@@ -2488,8 +2492,9 @@ ActionType TechnoClass::What_Action(ObjectClass * object) const
 		if (IsOwnedByPlayer
 			&& (ctrldown || !House->Is_Ally(object))
 			&& (ctrldown || object->Class_Of().IsLegalTarget || (Special.IsTreeTarget && object->What_Am_I() == RTTI_TERRAIN && !object->Class_Of().IsImmune))) {
-			if (Can_Player_Move() || In_Range(object, 0)) {
-				return(ACTION_ATTACK);
+			bool inrange = In_Range(object, 0);
+			if (Can_Player_Move() || inrange) {
+				return(inrange ? ACTION_ATTACK_NOW : ACTION_ATTACK);
 			}
 		}
 
@@ -2562,8 +2567,9 @@ ActionType TechnoClass::What_Action(CELL cell) const
 		// Nyerguds's TUC Quick Fix Patch v1.02: overlay-force-fire
 		// Allow force-fire on overlay.
 		if (!optr || ctrldown || (optr->IsWall && (whead->IsWallDestroyer || (whead->IsWoodDestroyer && optr->IsWooden)))) {
-			if (Can_Player_Move() || In_Range(::As_Target(cell), 0)) {
-				return(ACTION_ATTACK);
+			bool inrange = In_Range(::As_Target(cell), 0);
+			if (Can_Player_Move() || inrange) {
+				return(inrange ? ACTION_ATTACK_NOW : ACTION_ATTACK);
 			}
 		}
 	}
@@ -2723,12 +2729,13 @@ int TechnoClass::Weapon_Range(int which, bool withbarrel, TARGET target) const
 			break;
 	}
 	int range = withbarrel ? barrel : 0;
-	if (weapon != WEAPON_NONE) {
-		if (weapon == WEAPON_NIKE && GameToPlay == GAME_NORMAL) {
-			range += Weapons[weapon].Range*2;
-		} else {
-			range += Weapons[weapon].Range;
-		}
+	if (weapon == WEAPON_NONE) {
+		return(range);
+	}
+	if (weapon == WEAPON_NIKE && GameToPlay == GAME_NORMAL) {
+		range += Weapons[weapon].Range*2;
+	} else {
+		range += Weapons[weapon].Range;
 	}
 	// Nyerguds's C&C Patch Project v1.04: Add extra range for buildings.
 	// Refactored to centralize the logic in one function only.
@@ -2968,6 +2975,8 @@ int TechnoTypeClass::Max_Passengers(void) const
  *                                                                                             *
  *          house    -- Source of the damage if no source is available.                        *
  *                                                                                             *
+ *          sold     -- True if this object was sold, not killed. This changes the handling.   *
+ *                                                                                             *
  * OUTPUT:  none                                                                               *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
@@ -2988,36 +2997,42 @@ void TechnoClass::Record_The_Kill(TechnoClass * source, HousesType house, bool s
 	if (Trigger) Trigger->Spring(EVENT_DESTROYED, this);
 
 	HousesType killhouse = HOUSE_NONE;
-	if (source) {
-		/*
-		**	Call the explicity cast versions of the Made_A_Kill function. This
-		**	is necessary because we don't want to add a virtual function to the
-		**	CrewClass. Doing so would complicate the save/load process.
-		*/
-		switch (source->What_Am_I()) {
-			case RTTI_INFANTRY:
-				((InfantryClass *)source)->Made_A_Kill();
-				break;
+	/*
+	**	Normally, no object or house should ever be given as argument if this
+	**	was sold, but let's just make sure.
+	*/
+	if (!sold) {
+		if (source) {
+			/*
+			**	Call the explicity cast versions of the Made_A_Kill function. This
+			**	is necessary because we don't want to add a virtual function to the
+			**	CrewClass. Doing so would complicate the save/load process.
+			*/
+			switch (source->What_Am_I()) {
+				case RTTI_INFANTRY:
+					((InfantryClass *)source)->Made_A_Kill();
+					break;
 
-			case RTTI_UNIT:
-				((UnitClass *)source)->Made_A_Kill();
-				break;
+				case RTTI_UNIT:
+					((UnitClass *)source)->Made_A_Kill();
+					break;
 
-			case RTTI_BUILDING:
-				((BuildingClass *)source)->Made_A_Kill();
-				break;
+				case RTTI_BUILDING:
+					((BuildingClass *)source)->Made_A_Kill();
+					break;
 
-			case RTTI_AIRCRAFT:
-				((AircraftClass *)source)->Made_A_Kill();
-				break;
+				case RTTI_AIRCRAFT:
+					((AircraftClass *)source)->Made_A_Kill();
+					break;
+			}
+			killhouse = source->Owner();
+		} else {
+			killhouse = house;
 		}
-		killhouse = source->Owner();
-		House->WhoLastHurtMe = house;
-	} else {
-		killhouse = house;
 	}
 	HouseClass * killcred = NULL;
-	if (killhouse != HOUSE_NONE) {
+	if (killhouse != HOUSE_NONE && killhouse != *House) {
+		House->WhoLastHurtMe = house;
 		killcred = HouseClass::As_Pointer(killhouse);
 	}
 
