@@ -570,6 +570,7 @@ void OptionsClass::Load_Settings (void)
 	}
 	NoRepairAnnounce = WWGetPrivateProfileBool("Patch", "NoRepairAnnounce", false, buffer);
 	NoSmartAirstrikes = WWGetPrivateProfileBool("Patch", "NoSmartAirstrikes", false, buffer);
+	NoRangeIndicator = WWGetPrivateProfileBool("Patch", "NoRangeIndicator", false, buffer);
 	PanScrollRate = MIN(64, MAX(0, WWGetPrivateProfileInt("Patch", "PanScrollRate", 4, buffer)));
 	ShowPanScrollLine = WWGetPrivateProfileBool("Patch", "ShowPanScrollLine", false, buffer);
 

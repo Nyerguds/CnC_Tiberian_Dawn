@@ -1142,7 +1142,7 @@ void WinModemClass::Write_To_Serial_Port (unsigned char *buffer, int length)
  *    1/10/96 2:30PM ST : Created                                                              *
  *=============================================================================================*/
 
-extern void CCDebugString (char*);
+extern void CCDebugString (char*, ...);
 
 int WinModemClass::Get_Modem_Result(int delay, char *buffer, int buffer_len)
 {

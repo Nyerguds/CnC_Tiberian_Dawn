@@ -1031,6 +1031,8 @@ int RequiredCD = -2;
 int RequiredCD = -1;
 #endif
 int MouseInstalled;
+// Nyerguds's C&C Patch Project v1.04: expanded mouse cursor
+int MouseExpanded = 0;
 
 /*
 ** Certain options must be enabled by both a command-line option, and an

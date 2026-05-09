@@ -71,6 +71,7 @@ class SpecialClass
 			IsFromInstall = false;
 			IsSeparate = false;
 			IsFromWChat = false;
+			IsLogging = false;
 		}
 
 		/*
@@ -235,6 +236,11 @@ class SpecialClass
 		** Flag that we were spawned from WChat.
 		*/
 		unsigned IsFromWChat:1;
+
+		/*
+		**	Logging is enabled via command line.
+		*/
+		unsigned IsLogging:1;
 };
 
 

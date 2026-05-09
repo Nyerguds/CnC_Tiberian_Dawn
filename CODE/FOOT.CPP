@@ -1298,6 +1298,7 @@ void FootClass::Active_Click_With(ActionType action, ObjectClass * object)
 			break;
 
 		case ACTION_ATTACK:
+		// Nyerguds's C&C Patch Project v1.04: Show different cursor for targets in range.
 		case ACTION_ATTACK_NOW:
 			if (Can_Player_Fire()) {
 				Player_Assign_Mission(MISSION_ATTACK, object->As_Target());
@@ -1392,6 +1393,7 @@ void FootClass::Active_Click_With(ActionType action, CELL cell)
 			break;
 
 		case ACTION_ATTACK:
+		// Nyerguds's C&C Patch Project v1.04: Show different cursor for targets in range.
 		case ACTION_ATTACK_NOW:
 			Player_Assign_Mission(MISSION_ATTACK, ::As_Target(cell));
 			break;

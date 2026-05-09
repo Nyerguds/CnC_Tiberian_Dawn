@@ -101,6 +101,7 @@ class OptionsClass {
 		unsigned NodCollectathon:1;	// Enable Nod campaign crate collecting to unlock the nuke.
 		unsigned NoRepairAnnounce:1;	// Don't announce whenever a player starts repairing something?
 		unsigned NoSmartAirstrikes:1;	// Don't use smarter airstrike logic.
+		unsigned NoRangeIndicator:1;	// Don't indicate when targets are in or out of range.
 		unsigned ShowPanScrollLine:1;	// Show a green line from the clicked origin when middle mouse click scrolling?
 		unsigned int PanScrollRate;	// Multiplier for middle mouse click scrolling.
 

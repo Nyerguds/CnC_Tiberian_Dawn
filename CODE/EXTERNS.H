@@ -394,6 +394,7 @@ extern char *DebugFname;	// for stoopid debugging purposes
 extern int DebugLine;		// for stoopid debugging purposes
 extern int RequiredCD;
 extern int MouseInstalled;
+extern int MouseExpanded;
 extern int AreThingiesEnabled;
 
 extern WWKeyboardClass	Kbd;
@@ -408,7 +409,7 @@ void Memory_Error_Handler(void);
 extern bool GameStatisticsPacketSent;
 extern bool ConnectionLost;
 extern bool InMainLoop;			// True if in game state rather than menu state
-void CCDebugString (char *string);
+void CCDebugString (char *string, ...);
 extern void *PacketLater;
 void Load_Title_Screen(char *name, GraphicViewPortClass *video_page, unsigned char *palette);
 

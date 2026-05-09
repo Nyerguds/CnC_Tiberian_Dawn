@@ -2492,9 +2492,10 @@ ActionType TechnoClass::What_Action(ObjectClass * object) const
 		if (IsOwnedByPlayer
 			&& (ctrldown || !House->Is_Ally(object))
 			&& (ctrldown || object->Class_Of().IsLegalTarget || (Special.IsTreeTarget && object->What_Am_I() == RTTI_TERRAIN && !object->Class_Of().IsImmune))) {
+			// Nyerguds's C&C Patch Project v1.04: Show different cursor for targets in range.
 			bool inrange = In_Range(object, 0);
 			if (Can_Player_Move() || inrange) {
-				return(inrange ? ACTION_ATTACK_NOW : ACTION_ATTACK);
+				return((inrange && !Options.NoRangeIndicator) ? ACTION_ATTACK_NOW : ACTION_ATTACK);
 			}
 		}
 
@@ -2569,7 +2570,7 @@ ActionType TechnoClass::What_Action(CELL cell) const
 		if (!optr || ctrldown || (optr->IsWall && (whead->IsWallDestroyer || (whead->IsWoodDestroyer && optr->IsWooden)))) {
 			bool inrange = In_Range(::As_Target(cell), 0);
 			if (Can_Player_Move() || inrange) {
-				return(inrange ? ACTION_ATTACK_NOW : ACTION_ATTACK);
+				return((inrange && !Options.NoRangeIndicator) ? ACTION_ATTACK_NOW : ACTION_ATTACK);
 			}
 		}
 	}

@@ -76,6 +76,8 @@ class MouseClass: public ScrollClass
 
 	private:
 
+		virtual int Get_Mouse_Range();
+
 		/*
 		**	This type is used to control the frames and rates of the mouse
 		**	pointer. Some mouse pointers are actually looping animations.

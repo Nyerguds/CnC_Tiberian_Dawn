@@ -65,6 +65,8 @@ This patch adds a number of extra features into the game. These options can be t
 | Middle mouse scroll | When you the press middle mouse button, you can quickly scroll across the entire map. | PanScrollRate=[1-64]<br/>This defaults to 4. Set to 0 to disable the feature. |
 | | When middle mouse scrolling, a line can be drawn from the point where you originally clicked to the place you moved your mouse to, to give some indication of the scroll direction and speed. | ShowPanScrollLine=\[true/false\]<br/>This defaults to "false". |
 | Smarter airstrikes | With the added fixing to unit target priority, airstrikes now also look for targets more intelligently. However, this was quite a divisive ugrade in the remaster, so I provided an off-switch for it. | NoSmartAirstrikes=\[true/false\]<br/>This defaults to "false". |
+| Weapon range indication | The game now shows whether a target under the Attack cursor is in range of the selected units' weapons. | NoRangeIndicator=\[true/false\]<br/>This defaults to "false". |
+| Debug logging | Writes logged debug messages to "debug.txt". This is purely an internal testing feature. Can also be enabled by launching the game with "-LOG". | LogDebug=\[true/false\]<br/>This defaults to "false". |
 
 ## Extra usage notes
 

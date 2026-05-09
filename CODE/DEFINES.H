@@ -1784,7 +1784,6 @@ typedef enum MouseType
 	MOUSE_NO_SW,
 	MOUSE_NO_W,
 	MOUSE_NO_NW,
-	MOUSE_NO,  // Nyerguds's C&C Patch Project v1.04; added as "can't deploy here" cursor.
 	MOUSE_NO_MOVE,
 	MOUSE_CAN_MOVE,
 	MOUSE_ENTER,
@@ -1802,8 +1801,11 @@ typedef enum MouseType
 	MOUSE_AIR_STRIKE,
 	MOUSE_DEMOLITIONS,
 	MOUSE_AREA_GUARD,
-	MOUSE_PAN,  // Nyerguds's C&C Patch Project v1.04; added non-animated deploy cursor as panning cursor.
-	MOUSE_CAN_SHOOT,  // Nyerguds's C&C Patch Project v1.04; added faster attack cursor if target is in range.
+	MOUSE_NONE,         // Nyerguds's C&C Patch Project v1.04; empty mouse cursor.
+	MOUSE_DENIED,       // Nyerguds's C&C Patch Project v1.04; "can't deploy here" cursor.
+	MOUSE_PAN,          // Nyerguds's C&C Patch Project v1.04; non-animated deploy cursor as panning cursor.
+	MOUSE_OUT_OF_RANGE, // Nyerguds's C&C Patch Project v1.04; Extra attack cursor for target out of range.
+	MOUSE_IN_RANGE,     // Nyerguds's C&C Patch Project v1.04; Fallback cursor for target in range without expanded mouse sprite.
 	MOUSE_COUNT
 } MouseType;
 

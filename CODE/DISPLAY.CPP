@@ -3104,6 +3104,7 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 			**	If there is a currently selected object, then the action to perform if
 			**	the left mouse button were clicked must be determined.
 			*/
+			ActionType testaction = ACTION_NONE;
 			if (object) {
 				// Nyerguds's C&C Patch Project v1.04: Shift key always shows select cursor.
 				// If shift is held over an object, ALWAYS switch to select toggle.
@@ -3127,12 +3128,30 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 					if (retest) {
 						for (int index = 0; index < amount; index++) {
 							ObjectClass * tobject = CurrentObject[index];
-							if (object == tobject)
+							if (object == tobject) {
 								continue;
+							}
 							action = tobject->What_Action(object);
+							// If not an attack order in range, set flag to revert to normal Attack order.
 							// If a specific action was found, abort.
 							if (action != ACTION_NONE && (!alt || action != ACTION_MOVE))
 								break;
+						}
+						// Nyerguds's C&C Patch Project v1.04: Re-test if all attacking units are in range of target.
+						bool retestRange = action == ACTION_ATTACK_NOW;
+						if (retestRange) {
+							for (int index = 0; index < amount; index++) {
+								ObjectClass * tobject = CurrentObject[index];
+								if (object == tobject) {
+									continue;
+								}
+								testaction = tobject->What_Action(object);
+								// If any unit has "attack but not in range", revert to normal attack cursor.
+								if (testaction == ACTION_ATTACK) {
+									action = ACTION_ATTACK;
+									break;
+								}
+							}
 						}
 					}
 				}
@@ -3141,7 +3160,7 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 				// Keep looping until you got something else than "None" or "No move",
 				// so we get a more accurate representation of all units' abilities.
 				for (int index = 0; index < amount; index++) {
-					ActionType testaction = CurrentObject[index]->What_Action(cell);
+					testaction = CurrentObject[index]->What_Action(cell);
 					if (testaction != ACTION_NONE) {
 						action = testaction;
 						if (testaction != ACTION_NOMOVE) {
@@ -3149,12 +3168,17 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 						}
 					}
 				}
-				//action = CurrentObject[0]->What_Action(cell);
-			}
-			// If multiple units are selected, ignore range check, since it would require
-			// adding a whole new layer of complexity.
-			if (amount > 1 && action == ACTION_ATTACK_NOW) {
-				action = ACTION_ATTACK;
+				// Nyerguds's C&C Patch Project v1.04: Re-test if all attacking units are in range of cell.
+				if (action == ACTION_ATTACK_NOW) {
+					for (int index = 0; index < amount; index++) {
+						testaction = CurrentObject[index]->What_Action(cell);
+						// If any unit has "attack but not in range", revert to normal attack cursor.
+						if (testaction == ACTION_ATTACK) {
+							action = ACTION_ATTACK;
+							break;
+						}
+					}
+				}				
 			}
 		} else if (object && object->Class_Of().IsSelectable) {
 			action = ACTION_SELECT;
@@ -3382,6 +3406,7 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
 		**	Change the mouse shape according to the default action that will occur
 		**	if the mouse button were clicked at this location.
 		*/
+		MouseType att = MOUSE_CAN_ATTACK;
 		switch (action) {
 			case ACTION_TOGGLE_SELECT:
 			case ACTION_SELECT:
@@ -3397,12 +3422,18 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
 				break;
 
 			case ACTION_HARVEST:
-			case ACTION_ATTACK:
 				Set_Default_Mouse(MOUSE_CAN_ATTACK, wwsmall);
+				break;
+			case ACTION_ATTACK:
+				att = !Options.NoRangeIndicator && MouseExpanded ? MOUSE_OUT_OF_RANGE : MOUSE_CAN_ATTACK;
+				Set_Default_Mouse(att, wwsmall);
 				break;
 
 			case ACTION_ATTACK_NOW:
-				Set_Default_Mouse(MOUSE_CAN_SHOOT, wwsmall);
+				// Nyerguds's C&C Patch Project v1.04: Show different cursor for targets in range.
+				// No need to check NoRangeIndicator here; this is never returned if the range check is disabled.
+				att = MouseExpanded ? MOUSE_CAN_ATTACK : MOUSE_IN_RANGE;
+				Set_Default_Mouse(att, wwsmall);
 				break;
 
 			case ACTION_SABOTAGE:
@@ -3434,7 +3465,7 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
 			// Special case where self-targeting is acknowledged to be possible, but currently
 			// unavailable due to external circumstances. Used for the MCV in nondeployable area.
 			case ACTION_NO_SELF:
-				Set_Default_Mouse(MOUSE_NO, wwsmall);
+				Set_Default_Mouse(MOUSE_DENIED, wwsmall);
 				break;
 
 			case ACTION_REPAIR:

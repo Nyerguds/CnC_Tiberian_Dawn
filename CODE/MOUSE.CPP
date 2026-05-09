@@ -127,6 +127,22 @@ void MouseClass::Mouse_Small(bool wwsmall)
 }
 
 
+// Nyerguds's C&C Patch Project v1.04: expanded mouse cursor
+// Gets the maximum amount of frames used in the defined mouse cursors.
+int MouseClass::Get_Mouse_Range()
+{
+	int maxFrames = 0;
+	for (int mouse = 0; mouse < MOUSE_COUNT; ++mouse) {
+		MouseStruct const * control = &MouseControl[mouse];
+		int start = MAX(control->StartFrame, control->SmallFrame);
+		if (start != -1) {
+			maxFrames = MAX(maxFrames, start + control->FrameCount);
+		}
+	}
+	return(maxFrames);
+}
+
+
 /***********************************************************************************************
  * MouseClass::Override_Mouse_Shape -- Alters the shape of the mouse.                          *
  *                                                                                             *
@@ -289,6 +305,11 @@ void MouseClass::One_Time(void)
 	} else {
 		MouseShapes = MixFileClass::Retrieve("MOUSE.SHP");
 	}
+	short frames;
+	memcpy(&frames, MouseShapes, sizeof(frames));
+	int defined = Get_Mouse_Range();
+	MouseExpanded = frames >= defined;
+	CCDebugString(" MouseClass::One_Time - Mouse file has %d shapes, game has %d shapes defined. Expanded mouse cursors are %sabled.\n", frames, defined, MouseExpanded ? "en" : "dis");
 
 	VTable = ((void **)(((char *)this) + sizeof(VectorClass<CellClass>) - 4))[0];
 }
@@ -341,7 +362,6 @@ MouseClass::MouseStruct MouseClass::MouseControl[MOUSE_COUNT] = {
 	{136,	1,		0,		-1,	0, 	13},	//	MOUSE_NO_W
 	{137,	1,		0,		-1,	0, 	0},	//	MOUSE_NO_NW
 
-	{9,	1,		0,		27,	15,	12},	//	MOUSE_NO // Nyerguds's C&C Patch Project v1.04
 	{11,	1,		0,		27,	15,	12},	//	MOUSE_NO_MOVE
 	{10,	1,		0,		26,	15,	12},	//	MOUSE_CAN_MOVE
 	{119,	3,		4,		148,	15,	12},	//	MOUSE_ENTER
@@ -359,6 +379,11 @@ MouseClass::MouseStruct MouseClass::MouseControl[MOUSE_COUNT] = {
 	{88,	8,		2,		-1,	15,	12},	//	MOUSE_AIR_STRIKE
 	{122,	3,		4,		127,	15,	12},	//	MOUSE_DEMOLITIONS
 	{153,	1,		0,		152,	15,	12},	//	MOUSE_AREA_GUARD
-	{59,	1,		0,		-1,	15,	11},	//	MOUSE_PAN // Nyerguds's C&C Patch Project v1.04
-	{21,	5,		3,		143,	15,	12},	//	MOUSE_CAN_SHOOT // Nyerguds's C&C Patch Project v1.04
+
+// Nyerguds's C&C Patch Project v1.04: added mouse cursors
+	{28,	1,		0,		28,	15,	12},	//	MOUSE_NONE
+	{9,	1,		0,		27,	15,	12},	//	MOUSE_DENIED
+	{59,	1,		0,		-1,	15,	11},	//	MOUSE_PAN
+	{178,	8,		4,		140,	15,	12},	//	MOUSE_OUT_OF_RANGE - Specific added cursor, both mini and normal.
+	{21,	5,		3,		143,	15,	12},	//	MOUSE_IN_RANGE - sped up Attack cursor
 };

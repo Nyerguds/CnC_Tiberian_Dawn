@@ -555,15 +555,23 @@ HANDLE DebugFile = INVALID_HANDLE_VALUE;
  * WARNINGS: None                                                                              *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *    10/28/96 12:48PM ST : Created                                                            *
+ *    10/28/1996 12:48PM ST : Created                                                           *
+ *    05/09/2026 MM : Expanded to use vsprintf args.                                            *
  *=============================================================================================*/
-void CCDebugString (char *string)
+void CCDebugString (char *string, ...)
 {
-#if (0)
+	// Nyerguds's C&C Patch Project v1.04: added string formatting args to debug logging.
+	va_list	va;
+	
+	if (!Special.IsLogging) {
+		return;
+	}
 
 	char outstr[256];
-
-	sprintf (outstr, "%s", string);
+	va_start(va, string);
+	vsprintf(outstr, string, va);
+	outstr[sizeof(outstr)-1] = '\0';
+	va_end(va);
 
 	DWORD	actual;
 	if (DebugFile == INVALID_HANDLE_VALUE){
@@ -576,17 +584,11 @@ void CCDebugString (char *string)
 
 	if (DebugFile != INVALID_HANDLE_VALUE){
 		SetFilePointer (DebugFile, 0, NULL, FILE_END);
-		WriteFile(DebugFile, outstr, strlen(outstr)+1, &actual, NULL);
+		WriteFile(DebugFile, outstr, strlen(outstr), &actual, NULL);
 		CloseHandle (DebugFile);
 	}
 
 	OutputDebugString (string);
-
-#else
-
-	string = string;
-
-#endif
 
 }
 

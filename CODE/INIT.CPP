@@ -240,7 +240,12 @@ bool Init_Game(int , char *[])
 	*/
 	ShowCursor (FALSE);
 	if (MouseInstalled) {
-		temp_mouse_shapes = MixFileClass::Retrieve("MOUSE.SHP");
+		RawFileClass file("MOUSE.SHP");
+		if (file.Is_Available()) {
+			temp_mouse_shapes = Load_Alloc_Data(file);
+		} else {
+			temp_mouse_shapes = MixFileClass::Retrieve("MOUSE.SHP");
+		}
 		if (temp_mouse_shapes) {
 			Set_Mouse_Cursor(0, 0, Extract_Shape(temp_mouse_shapes,0));
 			while (Get_Mouse_State() > 1) {
@@ -2197,6 +2202,13 @@ bool Parse_Command_Line(int argc, char *argv[])
 		}
 		if (processed) continue;
 
+		/*
+		**	debug logging
+		*/
+		if (stricmp(string, "-LOG") == 0) {
+			Special.IsLogging = true;
+			continue;
+		}
 
 #ifdef CHEAT_KEYS
 		/*
