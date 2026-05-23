@@ -384,6 +384,6 @@ MouseClass::MouseStruct MouseClass::MouseControl[MOUSE_COUNT] = {
 	{28,	1,		0,		28,	15,	12},	//	MOUSE_NONE
 	{9,	1,		0,		27,	15,	12},	//	MOUSE_DENIED
 	{59,	1,		0,		-1,	15,	11},	//	MOUSE_PAN
-	{178,	8,		4,		140,	15,	12},	//	MOUSE_OUT_OF_RANGE - Specific added cursor, both mini and normal.
-	{21,	5,		3,		143,	15,	12},	//	MOUSE_IN_RANGE - sped up Attack cursor
+	{178,	8,		4,		140,	15,	12},	//	MOUSE_OUT_OF_RANGE - Specific added cursor for "can attack, but not from here".
+	{21,	5,		3,		143,	15,	12},	//	MOUSE_IN_RANGE - sped up Attack cursor, only used if "out of range" isn't in the mouse graphics.
 };

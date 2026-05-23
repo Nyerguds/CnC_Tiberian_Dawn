@@ -1801,11 +1801,12 @@ typedef enum MouseType
 	MOUSE_AIR_STRIKE,
 	MOUSE_DEMOLITIONS,
 	MOUSE_AREA_GUARD,
-	MOUSE_NONE,         // Nyerguds's C&C Patch Project v1.04; empty mouse cursor.
-	MOUSE_DENIED,       // Nyerguds's C&C Patch Project v1.04; "can't deploy here" cursor.
-	MOUSE_PAN,          // Nyerguds's C&C Patch Project v1.04; non-animated deploy cursor as panning cursor.
-	MOUSE_OUT_OF_RANGE, // Nyerguds's C&C Patch Project v1.04; Extra attack cursor for target out of range.
-	MOUSE_IN_RANGE,     // Nyerguds's C&C Patch Project v1.04; Fallback cursor for target in range without expanded mouse sprite.
+	// Nyerguds's C&C Patch Project v1.04 extra cursors
+	MOUSE_NONE,         // Empty mouse cursor.
+	MOUSE_DENIED,       // "Can't deploy here" cursor.
+	MOUSE_PAN,          // Non-animated deploy cursor as panning cursor.
+	MOUSE_OUT_OF_RANGE, // Extra attack cursor for target out of range.
+	MOUSE_IN_RANGE,     // Fallback cursor for target in range without expanded mouse sprite.
 	MOUSE_COUNT
 } MouseType;
 

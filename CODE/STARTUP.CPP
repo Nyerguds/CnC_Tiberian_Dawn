@@ -736,6 +736,9 @@ void Read_Setup_Options( RawFileClass *config_file )
 		AllowHardwareBlitFills = WWGetPrivateProfileInt ("Options", "HardwareFills", 1, buffer);
 		ScreenHeight = WWGetPrivateProfileInt ("Options", "Resolution", 0, buffer) ? 480 : 400;
 		IsV107 = WWGetPrivateProfileInt ("Options", "Compatibility", 0, buffer);
+		// This only enables logging; doesn't disable since command line param should have priority.
+		bool enableLogging = WWGetPrivateProfileBool("Patch", "LogDebug", false, buffer);
+		if (enableLogging) Special.IsLogging = true;
 
 		/*
 		** See if an alternative socket number has been specified
