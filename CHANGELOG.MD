@@ -282,3 +282,5 @@ Fixes that were specifically inspired by or copied from the Remaster's code are 
 * Fixed bug that artillery type units could get their rearm delay significantly shortened when the game perceived them as "arriving on a cell".
 * Fixed GDI occasionally getting SSM Launchers as multiplayer starting units.
 * The Attack cursor now plays a quicker and shorter animation if the target is in range. This only works if a single unit is selected.
+* Fixed errors in selection box sizes, and health bar length not matching the selection box size.
+* Fixed "IsNominal" setting on infantry to no longer force infantry to show the "Civilian" label. This is now controlled by IsCivilian as it should be, removing the need for exceptions.

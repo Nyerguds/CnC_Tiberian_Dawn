@@ -641,7 +641,7 @@ static InfantryTypeClass const C1(
 	true,							// Is a leader type?
 	false,						// Has crawling animation frames?
 	true,							// Is this a civlian?
-	true,							// Always use the given name for the infantry?
+	false,						// Always use the given name for the infantry?
 	true,							// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
@@ -716,7 +716,7 @@ static InfantryTypeClass const C2(
 	false,						// Is a leader type?
 	false,						// Has crawling animation frames?
 	true,							// Is this a civlian?
-	true,							// Always use the given name for the infantry?
+	false,						// Always use the given name for the infantry?
 	true,							// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
@@ -792,7 +792,7 @@ static InfantryTypeClass const C3(
 	false,						// Is a leader type?
 	false,						// Has crawling animation frames?
 	true,							// Is this a civlian?
-	true,							// Always use the given name for the infantry?
+	false,						// Always use the given name for the infantry?
 	true,							// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
@@ -868,7 +868,7 @@ static InfantryTypeClass const C4(
 	false,						// Is a leader type?
 	false,						// Has crawling animation frames?
 	true,							// Is this a civlian?
-	true,							// Always use the given name for the infantry?
+	false,						// Always use the given name for the infantry?
 	true,							// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
@@ -943,7 +943,7 @@ static InfantryTypeClass const C5(
 	false,						// Is a leader type?
 	false,						// Has crawling animation frames?
 	true,							// Is this a civlian?
-	true,							// Always use the given name for the infantry?
+	false,						// Always use the given name for the infantry?
 	true,							// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
@@ -1018,7 +1018,7 @@ static InfantryTypeClass const C6(
 	false,						// Is a leader type?
 	false,						// Has crawling animation frames?
 	true,							// Is this a civlian?
-	true,							// Always use the given name for the infantry?
+	false,						// Always use the given name for the infantry?
 	true,							// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
@@ -1093,7 +1093,7 @@ static InfantryTypeClass const C7(
 	true,							// Is a leader type?
 	false,						// Has crawling animation frames?
 	true,							// Is this a civlian?
-	true,							// Always use the given name for the infantry?
+	false,						// Always use the given name for the infantry?
 	true,							// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
@@ -1168,7 +1168,7 @@ static InfantryTypeClass const C8(
 	false,						// Is a leader type?
 	false,						// Has crawling animation frames?
 	true,							// Is this a civlian?
-	true,							// Always use the given name for the infantry?
+	false,						// Always use the given name for the infantry?
 	true,							// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
@@ -1243,7 +1243,7 @@ static InfantryTypeClass const C9(
 	false,						// Is a leader type?
 	false,						// Has crawling animation frames?
 	true,							// Is this a civlian?
-	true,							// Always use the given name for the infantry?
+	false,						// Always use the given name for the infantry?
 	true,							// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
@@ -2157,9 +2157,9 @@ BuildingClass * InfantryTypeClass::Who_Can_Build_Me(bool intheory, bool legal, H
  *=============================================================================================*/
 int InfantryTypeClass::Full_Name(void) const
 {
-	// Nyerguds's TUC Quick Fix Patch v1.02: chan-name
-	if (Debug_Map || !IsNominal || Special.IsNamed || Type == INFANTRY_C10 || Type == INFANTRY_DELPHI || Type == INFANTRY_MOEBIUS || Type == INFANTRY_CHAN) {
-		return(TechnoTypeClass::Full_Name());
+	// Nyerguds's C&C Patch Project v1.04: Fixed IsNominal on infantry.
+	if (IsCivilian && !Debug_Map && !IsNominal && !Special.IsNamed) {
+		return(TXT_CIVILIAN);
 	}
-	return(TXT_CIVILIAN);
+	return(TechnoTypeClass::Full_Name());
 }

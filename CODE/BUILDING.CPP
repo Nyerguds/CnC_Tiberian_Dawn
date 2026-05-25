@@ -637,6 +637,10 @@ void BuildingClass::Draw_It(int x, int y, WindowNumberType window)
 		}
 	}
 
+	// Migrated from TechnoClass::Draw_It
+	if (*this == STRUCT_BARRACKS) {
+		y -= 5;
+	}
 	TechnoClass::Draw_It(x, y, window);
 }
 

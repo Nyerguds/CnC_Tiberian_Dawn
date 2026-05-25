@@ -631,7 +631,11 @@ void InfantryClass::Draw_It(int x, int y, WindowNumberType window)
 	Techno_Draw_Object(shapefile, shapenum, x, y, window);
 //	CC_Draw_Shape(shapefile, shapenum, x, y, window, SHAPE_FADING|SHAPE_CENTER|SHAPE_WIN_REL|SHAPE_GHOST, House->Remap_Table(IsBlushing, true), Map.UnitShadow);
 
-	FootClass::Draw_It(x, y, window);
+	// "y - 6" offset: migrated from TechnoClass::Draw_It
+	/*
+	**	The infantry select box should be a bit higher than normal.
+	*/
+	FootClass::Draw_It(x, y - 6, window);
 }
 
 

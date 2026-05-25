@@ -924,17 +924,6 @@ void TechnoClass::Draw_It(int x, int y, WindowNumberType window)
 														WindowList[window][WINDOWHEIGHT]);
 
 		/*
-		**	The infantry select box should be a bit higher than normal.
-		*/
-		if (What_Am_I() == RTTI_INFANTRY) {
-			y -= 6;
-		}
-
-		if (What_Am_I() == RTTI_BUILDING && ((BuildingTypeClass const &)Class_Of()).Type == STRUCT_BARRACKS) {
-			y -= 5;
-		}
-
-		/*
 		**	Fetch the dimensions of the object. These dimensions will be used to draw
 		**	the selection box and the health bar.
 		*/
@@ -947,21 +936,21 @@ void TechnoClass::Draw_It(int x, int y, WindowNumberType window)
 			int			color;		// The color to give the interior of the bargraph.
 
 			int xx = x-width/2;
-			int yy = y-(height/2);
+			int yy = y-height/2;
 
 			/*
 			**	Draw the outline of the bargraph.
 			*/
-			draw_window.Remap(xx+1, yy+1, width-1, 3-1, Map.FadingShade);
+			draw_window.Remap(xx+1, yy+1, width-2, 3-1, Map.FadingShade);
 			draw_window.Draw_Rect(xx, yy, xx+width-1, yy+3, BLACK);
 
 			/*
 			**	Determine the width of the interior strength
 			**	graph.
 			*/
-			pwidth = Fixed_To_Cardinal(width-2, ratio);
+			pwidth = Fixed_To_Cardinal(width-3, ratio);
 
-			pwidth = Bound(pwidth, 1, width-2);
+			pwidth = Bound(pwidth, 1, width-3);
 
 			color = LTGREEN;
 			if (ratio < 0x7F) {
@@ -970,37 +959,42 @@ void TechnoClass::Draw_It(int x, int y, WindowNumberType window)
 			if (ratio < 0x3F) {
 				color = RED;
 			}
-			draw_window.Fill_Rect(xx+1, yy+1, xx+pwidth, yy+(3-1), color);
+			draw_window.Fill_Rect(xx+1, yy+1, xx+1+pwidth, yy+(3-1), color);
 		}
 
 		/*
 		**	Draw the selected object graphic.
 		*/
 		if (IsSelected) {
+			int fudge = (House->Is_Ally(PlayerPtr) || Special.IsHealthBar) ? 4 : 0;
 			int lx = width/2;
 			int ly = height/2;
+			int lefx = x-lx;
+			int topy = y-ly + fudge;
+			int ritx = lefx + width - 1;
+			int boty = y-ly + height - 1;
+
 			int dx = width/5;
 			int dy = height/5;
-			int fudge = (House->Is_Ally(PlayerPtr) || Special.IsHealthBar) ? 4 : 0;
 
 			// Upper left corner.
-			draw_window.Draw_Line(x-lx, fudge+y-ly, x-lx+dx, fudge+y-ly, WHITE);
-			draw_window.Draw_Line(x-lx, fudge+y-ly, x-lx, fudge+y-ly+dy, WHITE);
+			draw_window.Draw_Line(lefx, topy, lefx+dx, topy, WHITE);
+			draw_window.Draw_Line(lefx, topy, lefx, topy+dy, WHITE);
 
 			// Upper right corner.
-			draw_window.Draw_Line(x+lx, fudge+y-ly, x+lx-dx, fudge+y-ly, WHITE);
-			draw_window.Draw_Line(x+lx, fudge+y-ly, x+lx, fudge+y-ly+dy, WHITE);
+			draw_window.Draw_Line(ritx, topy, ritx-dx, topy, WHITE);
+			draw_window.Draw_Line(ritx, topy, ritx, topy+dy, WHITE);
 
 			// Lower right corner.
-			draw_window.Draw_Line(x+lx, y+ly, x+lx-dx, y+ly, WHITE);
-			draw_window.Draw_Line(x+lx, y+ly, x+lx, y+ly-dy, WHITE);
+			draw_window.Draw_Line(ritx, boty, ritx-dx, boty, WHITE);
+			draw_window.Draw_Line(ritx, boty, ritx, boty-dy, WHITE);
 
 			// Lower left corner.
-			draw_window.Draw_Line(x-lx, y+ly, x-lx+dx, y+ly, WHITE);
-			draw_window.Draw_Line(x-lx, y+ly, x-lx, y+ly-dy, WHITE);
+			draw_window.Draw_Line(lefx, boty, lefx+dx, boty, WHITE);
+			draw_window.Draw_Line(lefx, boty, lefx, boty-dy, WHITE);
 
 			if (House->Is_Ally(PlayerPtr)) {
-				Draw_Pips((x-lx)+5, y+ly-3, window);
+				Draw_Pips(lefx+5, boty-3, window);
 			}
 		}
 	}
@@ -4306,6 +4300,14 @@ void TechnoClass::Enter_Idle_Mode(bool )
  *=============================================================================================*/
 void TechnoClass::Draw_Pips(int x, int y, WindowNumberType window)
 {
+
+	// Nyerguds's C&C Patch Project v1.04: Improved pip positions.
+	// Ensure pip positions no longer get drawn over the edge of the selection box.
+	int width,height;
+	Class_Of().Dimensions(width, height);
+	int maxpips = Class_Of().Max_Pips();
+	// pips width is (pips * 3 + 1); add 1 padding and 2 border.
+	int offset = width < (maxpips * 3 + 4) ? 2 : 3;
 	/*
 	**	Transporter type objects have a different graphic representation for the pips. The
 	**	pip color represents the type of occupant.
@@ -4313,27 +4315,26 @@ void TechnoClass::Draw_Pips(int x, int y, WindowNumberType window)
 	if (Techno_Type_Class()->IsTransporter) {
 		ObjectClass const * object = Attached_Object();
 
-		for (int index = 0; index < Class_Of().Max_Pips(); index++) {
+		for (int index = 0; index < maxpips; index++) {
 			PipEnum pip = PIP_EMPTY;
 
 			if (object) {
 				pip = PIP_FULL;
 				if (object->What_Am_I() == RTTI_INFANTRY) {
-					if (*((InfantryClass *)object) == INFANTRY_RAMBO) {
+					InfantryClass * inf = ((InfantryClass *)object);
+					if (*inf == INFANTRY_RAMBO) {
 						pip = PIP_COMMANDO;
 					}
-					if (*((InfantryClass *)object) == INFANTRY_E7) {
+					if (*inf == INFANTRY_E7) {
 						pip = PIP_ENGINEER;
 					}
-					if (((InfantryClass *)object)->Class->IsCivilian) {
+					if (inf->Class->IsCivilian) {
 						pip = PIP_CIVILIAN;
 					}
 				}
 				object = object->Next;
 			}
-			// Nyerguds's C&C Patch Project v1.04: Improved pip positions.
-			// Ensure pip positions no longer get drawn over the edge of the selection box.
-			CC_Draw_Shape(Class_Of().PipShapes, pip, x+3+index*3, y, window, SHAPE_CENTER|SHAPE_WIN_REL);
+			CC_Draw_Shape(Class_Of().PipShapes, pip, x+offset+index*3, y, window, SHAPE_CENTER|SHAPE_WIN_REL);
 		}
 
 	} else {
@@ -4343,10 +4344,8 @@ void TechnoClass::Draw_Pips(int x, int y, WindowNumberType window)
 		**	to display the fullness rating for a harvester.
 		*/
 		int pips = Pip_Count();
-		for (int index = 0; index < Class_Of().Max_Pips(); index++) {
-			// Nyerguds's C&C Patch Project v1.04: Improved pip positions.
-			// Ensure pip positions no longer get drawn over the edge of the selection box.
-			CC_Draw_Shape(Class_Of().PipShapes, (index < pips) ? PIP_FULL : PIP_EMPTY, x+3+index*3, y, window, SHAPE_CENTER|SHAPE_WIN_REL);
+		for (int index = 0; index < maxpips; index++) {
+			CC_Draw_Shape(Class_Of().PipShapes, (index < pips) ? PIP_FULL : PIP_EMPTY, x+offset+index*3, y, window, SHAPE_CENTER|SHAPE_WIN_REL);
 		}
 	}
 
