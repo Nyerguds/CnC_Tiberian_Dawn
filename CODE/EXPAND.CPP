@@ -108,17 +108,23 @@ void Add_List_Items(EListClass * list, ScenarioPlayerEnum player, int start, int
 			sbuffer[1000+1] = '\n';
 			sbuffer[1000+2] = '\0';
 
-			WWGetPrivateProfileString("Basic", "Player", "GoodGuy", buffer, sizeof(buffer), sbuffer);
-			HousesType house = HouseTypeClass::From_Name(buffer);
-			HouseTypeClass housetype = HouseTypeClass::As_Reference(house);
-			int name = housetype.ShortName;
-			const char* prefix = name ? Text_String(name) : housetype.Suffix;
+			char prebuffer[4];
+			WWGetPrivateProfileString("Basic", "Prefix", "", prebuffer, sizeof(prebuffer), sbuffer);
+			if (prebuffer[0] == '\0') {
+				WWGetPrivateProfileString("Basic", "Player", "GoodGuy", buffer, sizeof(buffer), sbuffer);
+				HousesType house = HouseTypeClass::From_Name(buffer);
+				HouseTypeClass housetype = HouseTypeClass::As_Reference(house);
+				int name = housetype.ShortName;
+				const char* prefix = name ? Text_String(name) : housetype.Suffix;
+				strncpy(&prebuffer[0], prefix, (sizeof(prebuffer)) - 1);
+			}
+			prebuffer[3] = '\0';
 
 			WWGetPrivateProfileString("Basic", "Name", "x", buffer, sizeof(buffer), sbuffer);
 			char * data = new char [sizeof(int)*2+sizeof(buffer)];
 			*((int*)&data[0]) = index;
 			*((int*)&data[sizeof(int)]) = player;
-			strcpy(&data[sizeof(int)*2], prefix);
+			strcpy(&data[sizeof(int)*2], prebuffer);
 			strcat(&data[sizeof(int)*2], ": ");
 			strcat(&data[sizeof(int)*2], buffer);
 			list->Add_Item(data);

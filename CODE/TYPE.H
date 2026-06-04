@@ -427,6 +427,13 @@ class TechnoTypeClass : public ObjectTypeClass
 		unsigned IsScanner:1;
 
 		/*
+		**	This flags whether this object is civilian. Civilians are given
+		**	a special overridden name. Civilian units also use different voice
+		**	responses, have less ammunition, and run from danger more often.
+		*/
+		unsigned IsCivilian:1;
+
+		/*
 		**	If this object is always given its proper name rather than a generic
 		**	name, then this flag will be true. Typically, civilians and Dr. Mobius
 		**	fall under this catagory.
@@ -487,6 +494,16 @@ class TechnoTypeClass : public ObjectTypeClass
 		**	this.
 		*/
 		unsigned IsTransporter:1;
+
+		/*
+		**	Is this object a spy type unit that should be ignored by normal targeting methods?
+		*/
+		unsigned IsSpy:1;
+
+		/*
+		**	Can this object see through a spy's disguise?
+		*/
+		unsigned IsSpyDetector:1;
 
 		/*
 		**	Most objects have the ability to reveal the terrain around themselves.
@@ -599,6 +616,9 @@ class TechnoTypeClass : public ObjectTypeClass
 				bool is_repairable,
 				bool is_buildable,
 				bool is_crew,
+				bool is_spy,
+				bool Is_spy_detector,
+				bool is_civilian,
 				int ammo,
 				unsigned short strength,
 				MPHType maxspeed,
@@ -610,9 +630,9 @@ class TechnoTypeClass : public ObjectTypeClass
 				int ownable,
 				WeaponType primary,
 				WeaponType secondary,
-				int weaponoffs,
-				int pribarlen,
-				int secbarlen,
+				int weapon_offset,
+				int primary_barrel_length,
+				int secondary_barrel_length,
 				ArmorType armor);
 
 		virtual int  Raw_Cost(void) const;
@@ -622,6 +642,7 @@ class TechnoTypeClass : public ObjectTypeClass
 		virtual void const *  Get_Cameo_Data(void) const;
 		virtual bool  Cameo_Is_Theater_Shape(void) const;
 		virtual int  Cost_Of(void) const;
+		virtual int  Enemy_Name(void) const;
 		virtual int  Time_To_Build(HousesType house) const;
 		virtual unsigned short  Get_Ownable(void) const;
 		void Recalculate_Risk(void);
@@ -829,6 +850,7 @@ class BuildingTypeClass : public TechnoTypeClass {
 						bool is_crew,
 						bool is_sturdy,
 						bool is_unsellable,
+						bool is_civilian,
 						RTTIType tobuild,
 						DirType sframe,
 						unsigned short strength,
@@ -867,6 +889,7 @@ class BuildingTypeClass : public TechnoTypeClass {
 
 		virtual int  Cost_Of(void) const;
 		virtual int  Full_Name(void) const;
+		virtual int Enemy_Name(void) const;
 		virtual COORDINATE  Coord_Fixup(COORDINATE coord) const {return coord & 0xFF00FF00L;}
 		virtual int  Max_Pips(void) const;
 		virtual void  Dimensions(int &width, int &height) const;
@@ -1142,12 +1165,12 @@ class UnitTypeClass : public TechnoTypeClass
 						SpeedType speed,
 						MPHType maxSpeed,
 						unsigned rot,
-						int turshift,
-						int weapoffs,
-						int pribarlen,
-						int secbarlen,
-						int pribarlat,
-						int secbarlat,
+						int turret_shift,
+						int weapon_offset,
+						int primary_barrel_length,
+						int secondary_barrel_length,
+						int primary_barrel_lateral,
+						int secondary_barrel_lateral,
 						MissionType order);
 		virtual RTTIType  What_Am_I(void) const {return RTTI_UNITTYPE;};
 
@@ -1163,6 +1186,7 @@ class UnitTypeClass : public TechnoTypeClass
 		virtual ObjectClass *  Create_One_Of(HouseClass * house) const;
 		virtual short const *  Occupy_List(bool placement=false) const;
 		virtual BuildingClass *  Who_Can_Build_Me(bool intheory, bool legal, HousesType house) const;
+		virtual int  Enemy_Name(void) const;
 		virtual int  Max_Pips(void) const;
 
 		virtual int  Repair_Cost(void) const;
@@ -1221,11 +1245,9 @@ class InfantryTypeClass : public TechnoTypeClass
 		unsigned IsFraidyCat:1;
 
 		/*
-		**	This flags whether this infantry is actually a civilian. A
-		**	civilian uses different voice responses, has less ammunition,
-		**	and runs from danger more often.
+		**	Civilian types often randomly wander around when idle.
 		*/
-		unsigned IsCivilian:1;
+		unsigned IsWanderer:1;
 
 		/*
 		**	This value represents the unit class. It can serve as a unique
@@ -1260,9 +1282,11 @@ class InfantryTypeClass : public TechnoTypeClass
 						bool is_crawling,
 						bool is_civilian,
 						bool is_nominal,
+						bool is_wanderer,
 						bool is_fraidycat,
 						bool is_capture,
 						bool is_theater,
+						bool is_spy,
 						int ammo,
 						int *do_table,
 						int firelaunch,
@@ -1293,6 +1317,7 @@ class InfantryTypeClass : public TechnoTypeClass
 		virtual short const *  Occupy_List(bool placement=false) const;
 		virtual BuildingClass *  Who_Can_Build_Me(bool intheory, bool legal, HousesType house) const;
 		virtual int  Full_Name(void) const;
+		virtual int  Enemy_Name(void) const;
 
 		#ifdef SCENARIO_EDITOR
 		virtual void  Display(int x, int y, WindowNumberType window, HousesType house) const;
@@ -1885,6 +1910,7 @@ class AircraftTypeClass : public TechnoTypeClass
 				unsigned char level,
 				long pre,
 				bool is_leader,
+				bool is_nominal,
 				bool is_twoshooter,
 				bool is_transporter,
 				bool is_fixedwing,
@@ -1932,6 +1958,7 @@ class AircraftTypeClass : public TechnoTypeClass
 		virtual short const *  Occupy_List(bool placement=false) const;
 		virtual short const *  Overlap_List(void) const;
 		virtual BuildingClass *  Who_Can_Build_Me(bool intheory, bool legal, HousesType house) const;
+		virtual int  Enemy_Name(void) const;
 		virtual int  Max_Pips(void) const;
 
 		#ifdef SCENARIO_EDITOR

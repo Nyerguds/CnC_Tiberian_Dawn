@@ -844,7 +844,7 @@ inline LayerType operator++(LayerType &, int);
 typedef enum BulletType {
 	BULLET_NONE=-1,
 	BULLET_SNIPER,			// Sniper bullet.
-	BULLET_BULLET,			// Small arms
+	BULLET_BULLET,			// Small arms.
 	BULLET_APDS,			// Armor piercing projectile.
 	BULLET_HE,			 	// High explosive shell.
 	BULLET_SSM,				// Surface to surface small missile type.

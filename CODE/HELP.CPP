@@ -218,7 +218,7 @@ void HelpClass::AI(KeyNumType &key, int x, int y)
  *=============================================================================================*/
 void HelpClass::Help_Text(int text, int x, int y, int color, bool quick, int cost, bool showcost, int drain, int power, bool showpower)
 {
-	if (text != Text) {
+	if (text != Text || color != Color) {
 
 		/*
 		**	If there is an existing text message, then flag the map to redraw the underlying

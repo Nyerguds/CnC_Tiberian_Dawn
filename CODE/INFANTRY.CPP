@@ -1930,7 +1930,7 @@ void InfantryClass::Random_Animate(void)
 			case 7:
 			case 8:
 			case 9:
-				if (!House->IsHuman && Class->IsFraidyCat) {
+				if (!House->IsHuman && Class->IsWanderer) {
 					Scatter(NULL, true);
 				}
 				break;

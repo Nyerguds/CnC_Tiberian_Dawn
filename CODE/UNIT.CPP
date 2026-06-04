@@ -2197,22 +2197,6 @@ void UnitClass::Draw_It(int x, int y, WindowNumberType window)
 			*/
 			shapenum = TechnoClass::BodyShape[tfacing]+32;
 
-			// Nyerguds's C&C Patch Project v1.04: SSM ammo causes turret change.
-			// Setting Ammo on UnitType now triggers multi-turret logic.
-			/*
-			**	The shape to use for the rocket launcher is dependent on the
-			**	ammo remaining.
-			*/
-			if (Class->MaxAmmo > 0) {
-				shapenum += 32 * (Class->MaxAmmo - Ammo);
-			}
-#ifdef OBSOLETE
-			if (*this == UNIT_MSAM) {
-				if (Ammo == 0) shapenum += 64;
-				if (Ammo == 1) shapenum += 32;
-			}
-#endif
-
 			// Nyerguds's C&C Patch Project v1.04: Rocket Launcher popup.
 			/*
 			**	If an MLRS is in range of its target, pop up its launcher so it looks ready to fire.
@@ -2221,8 +2205,24 @@ void UnitClass::Draw_It(int x, int y, WindowNumberType window)
 			*/
 			if (Class->IsActiveTargeter && ActiveDetection > 0 && !Options.NoLauncherPopup) {
 				// If ammo states are used, each state must be given a flat and popped up variant.
-				shapenum += 32 * (MAX(Class->MaxAmmo, 0) + 1);
+				shapenum += 32 + 64 * (Class->MaxAmmo > 0 ? (Class->MaxAmmo - Ammo) : 0);
 			}
+			// Nyerguds's C&C Patch Project v1.04: SSM ammo causes turret change.
+			// Setting Ammo on UnitType now triggers multi-turret logic.
+			/*
+			**	The shape to use for the rocket launcher is dependent on the
+			**	ammo remaining.
+			*/
+			else if (Class->MaxAmmo > 0) {
+				// If IsActiveTargeter, there are 2 states for each ammo set.
+				shapenum += 32 * (Class->MaxAmmo - Ammo) * (Class->IsActiveTargeter ? 2 : 1);
+			}
+#ifdef OBSOLETE
+			if (*this == UNIT_MSAM) {
+				if (Ammo == 0) shapenum += 64;
+				if (Ammo == 1) shapenum += 32;
+			}
+#endif
 
 			/*
 			**	A recoiling turret moves "backward" one pixel.

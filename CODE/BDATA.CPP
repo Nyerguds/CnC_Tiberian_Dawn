@@ -218,6 +218,7 @@ static BuildingTypeClass const ClassTemple(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	2000,									// STRNTH:		Full strength of building.
@@ -276,6 +277,7 @@ static BuildingTypeClass const ClassEye(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	(DirType)160,							// Starting idle frame to match construction.
 	1000,									// STRNTH:		Full strength of building.
@@ -334,6 +336,7 @@ static BuildingTypeClass const ClassWeapon(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,		// Is this a civilian building?
 	RTTI_UNITTYPE,							// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 #ifdef ADVANCED
@@ -396,6 +399,7 @@ static BuildingTypeClass const ClassGTower(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -455,6 +459,7 @@ static BuildingTypeClass const ClassATower(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	600,									// STRNTH:		Full strength of building.
@@ -514,6 +519,7 @@ static BuildingTypeClass const ClassObelisk(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -572,6 +578,7 @@ static BuildingTypeClass const ClassTurret(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	(DirType)208,							// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -638,6 +645,7 @@ static BuildingTypeClass const ClassConst(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,		// Is this a civilian building?
 	RTTI_BUILDINGTYPE,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	800,									// STRNTH:		Full strength of building.
@@ -697,6 +705,7 @@ static BuildingTypeClass const ClassRefinery(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	900,									// STRNTH:		Full strength of building.
@@ -756,6 +765,7 @@ static BuildingTypeClass const ClassStorage(
 		false,		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	300,									// STRNTH:		Full strength of building.
@@ -816,6 +826,7 @@ static BuildingTypeClass const ClassHelipad(
 		false,		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,		// Is this a civilian building?
 	RTTI_AIRCRAFTTYPE,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	800,									// STRNTH:		Full strength of building.
@@ -875,6 +886,7 @@ static BuildingTypeClass const ClassCommand(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	(DirType)160,							// Starting idle frame to match construction.
 	1000,									// STRNTH:		Full strength of building.
@@ -934,6 +946,7 @@ static BuildingTypeClass const ClassSAM(
 		false,		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -992,6 +1005,7 @@ static BuildingTypeClass const ClassAirStrip(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,		// Is this a civilian building?
 	RTTI_UNITTYPE,							// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	1000,									// STRNTH:		Full strength of building.
@@ -1050,6 +1064,7 @@ static BuildingTypeClass const ClassPower(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -1109,6 +1124,7 @@ static BuildingTypeClass const ClassAdvancedPower(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	600,									// STRNTH:		Full strength of building.
@@ -1149,7 +1165,7 @@ static BuildingTypeClass const ClassHospital(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
-		true,		// Always use the given name for the building? // Nyerguds's TUC Quick Fix Patch v1.02: hosp-name
+		true,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		true,			// Can this building be captured?
@@ -1168,6 +1184,7 @@ static BuildingTypeClass const ClassHospital(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		true,		// Is this building un-sellable?
+		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -1227,6 +1244,7 @@ static BuildingTypeClass const ClassBioLab(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	600,									// STRNTH:		Full strength of building.
@@ -1285,6 +1303,7 @@ static BuildingTypeClass const ClassBarracks(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,		// Is this a civilian building?
 	RTTI_INFANTRYTYPE,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	800,									// STRNTH:		Full strength of building.
@@ -1343,6 +1362,7 @@ static BuildingTypeClass const ClassHand(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,		// Is this a civilian building?
 	RTTI_INFANTRYTYPE,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	800,									// STRNTH:		Full strength of building.
@@ -1382,7 +1402,7 @@ static BuildingTypeClass const ClassTanker(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -1401,6 +1421,7 @@ static BuildingTypeClass const ClassTanker(
 		true,			// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,									// STRNTH:		Full strength of building.
@@ -1459,6 +1480,7 @@ static BuildingTypeClass const ClassRepair(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	800,									// STRNTH:		Full strength of building.
@@ -1501,7 +1523,7 @@ static BuildingTypeClass const ClassRoad(
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -1520,6 +1542,7 @@ static BuildingTypeClass const ClassRoad(
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	1,										// STRNTH:		Full strength of building.
@@ -1561,7 +1584,7 @@ static BuildingTypeClass const ClassV01(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -1580,6 +1603,7 @@ static BuildingTypeClass const ClassV01(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -1619,7 +1643,7 @@ static BuildingTypeClass const ClassV02(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -1638,6 +1662,7 @@ static BuildingTypeClass const ClassV02(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -1677,7 +1702,7 @@ static BuildingTypeClass const ClassV03(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -1696,6 +1721,7 @@ static BuildingTypeClass const ClassV03(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -1735,7 +1761,7 @@ static BuildingTypeClass const ClassV04(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -1754,6 +1780,7 @@ static BuildingTypeClass const ClassV04(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -1793,7 +1820,7 @@ static BuildingTypeClass const ClassV05(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -1812,6 +1839,7 @@ static BuildingTypeClass const ClassV05(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -1851,7 +1879,7 @@ static BuildingTypeClass const ClassV06(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -1870,6 +1898,7 @@ static BuildingTypeClass const ClassV06(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -1909,7 +1938,7 @@ static BuildingTypeClass const ClassV07(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -1928,6 +1957,7 @@ static BuildingTypeClass const ClassV07(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -1967,7 +1997,7 @@ static BuildingTypeClass const ClassV08(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -1986,6 +2016,7 @@ static BuildingTypeClass const ClassV08(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2025,7 +2056,7 @@ static BuildingTypeClass const ClassV09(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -2044,6 +2075,7 @@ static BuildingTypeClass const ClassV09(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2083,7 +2115,7 @@ static BuildingTypeClass const ClassV10(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -2102,6 +2134,7 @@ static BuildingTypeClass const ClassV10(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2141,7 +2174,7 @@ static BuildingTypeClass const ClassV11(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -2160,6 +2193,7 @@ static BuildingTypeClass const ClassV11(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2199,7 +2233,7 @@ static BuildingTypeClass const ClassV12(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -2218,6 +2252,7 @@ static BuildingTypeClass const ClassV12(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2257,7 +2292,7 @@ static BuildingTypeClass const ClassV13(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -2276,6 +2311,7 @@ static BuildingTypeClass const ClassV13(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2315,7 +2351,7 @@ static BuildingTypeClass const ClassV14(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -2334,6 +2370,7 @@ static BuildingTypeClass const ClassV14(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2373,7 +2410,7 @@ static BuildingTypeClass const ClassV15(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -2392,6 +2429,7 @@ static BuildingTypeClass const ClassV15(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2431,7 +2469,7 @@ static BuildingTypeClass const ClassV16(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -2450,6 +2488,7 @@ static BuildingTypeClass const ClassV16(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2489,7 +2528,7 @@ static BuildingTypeClass const ClassV17(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -2508,6 +2547,7 @@ static BuildingTypeClass const ClassV17(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2547,7 +2587,7 @@ static BuildingTypeClass const ClassV18(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -2566,6 +2606,7 @@ static BuildingTypeClass const ClassV18(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2605,7 +2646,7 @@ static BuildingTypeClass const ClassV19(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -2624,6 +2665,7 @@ static BuildingTypeClass const ClassV19(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2664,7 +2706,7 @@ static BuildingTypeClass const ClassV20(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -2683,6 +2725,7 @@ static BuildingTypeClass const ClassV20(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2723,7 +2766,7 @@ static BuildingTypeClass const ClassV21(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -2742,6 +2785,7 @@ static BuildingTypeClass const ClassV21(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2782,7 +2826,7 @@ static BuildingTypeClass const ClassV22(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -2801,6 +2845,7 @@ static BuildingTypeClass const ClassV22(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2860,6 +2905,7 @@ static BuildingTypeClass const ClassV23(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2900,7 +2946,7 @@ static BuildingTypeClass const ClassV24(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -2919,6 +2965,7 @@ static BuildingTypeClass const ClassV24(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2959,7 +3006,7 @@ static BuildingTypeClass const ClassV25(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -2978,6 +3025,7 @@ static BuildingTypeClass const ClassV25(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3018,7 +3066,7 @@ static BuildingTypeClass const ClassV26(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -3037,6 +3085,7 @@ static BuildingTypeClass const ClassV26(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3077,7 +3126,7 @@ static BuildingTypeClass const ClassV27(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -3096,6 +3145,7 @@ static BuildingTypeClass const ClassV27(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3136,7 +3186,7 @@ static BuildingTypeClass const ClassV28(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -3155,6 +3205,7 @@ static BuildingTypeClass const ClassV28(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3195,7 +3246,7 @@ static BuildingTypeClass const ClassV29(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -3214,6 +3265,7 @@ static BuildingTypeClass const ClassV29(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3273,6 +3325,7 @@ static BuildingTypeClass const ClassV30(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3313,7 +3366,7 @@ static BuildingTypeClass const ClassV31(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -3332,6 +3385,7 @@ static BuildingTypeClass const ClassV31(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3372,7 +3426,7 @@ static BuildingTypeClass const ClassV32(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -3391,6 +3445,7 @@ static BuildingTypeClass const ClassV32(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3431,7 +3486,7 @@ static BuildingTypeClass const ClassV33(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -3450,6 +3505,7 @@ static BuildingTypeClass const ClassV33(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3490,7 +3546,7 @@ static BuildingTypeClass const ClassV34(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -3509,6 +3565,7 @@ static BuildingTypeClass const ClassV34(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3549,7 +3606,7 @@ static BuildingTypeClass const ClassV35(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -3568,6 +3625,7 @@ static BuildingTypeClass const ClassV35(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3608,7 +3666,7 @@ static BuildingTypeClass const ClassV36(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -3627,6 +3685,7 @@ static BuildingTypeClass const ClassV36(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3667,7 +3726,7 @@ static BuildingTypeClass const ClassV37(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
-		true,			// Always use the given name for the building?
+		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
 		false,		// Can this building be captured?
@@ -3686,6 +3745,7 @@ static BuildingTypeClass const ClassV37(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		true,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	600,									// STRNTH:		Full strength of building.
@@ -3745,6 +3805,7 @@ static BuildingTypeClass const ClassMission(
 		true,			// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3806,6 +3867,7 @@ static BuildingTypeClass const Sandbag(
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	1,										// STRNTH:		Full strength of building.
@@ -3866,6 +3928,7 @@ static BuildingTypeClass const Cyclone(
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	1,										// STRNTH:		Full strength of building.
@@ -3926,6 +3989,7 @@ static BuildingTypeClass const Brick(
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	1,										// STRNTH:		Full strength of building.
@@ -3986,6 +4050,7 @@ static BuildingTypeClass const Barbwire(
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	1,										// STRNTH:		Full strength of building.
@@ -4047,6 +4112,7 @@ static BuildingTypeClass const Wood(
 		false,		// Does it contain a crew?
 		true,			// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
+		false,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	1,										// STRNTH:		Full strength of building.
@@ -4196,6 +4262,7 @@ BuildingTypeClass::BuildingTypeClass(
 						bool is_crew,
 						bool is_sturdy,
 						bool is_unsellable,
+						bool is_civilian,
 						RTTIType tobuild,
 						DirType sframe,
 						unsigned short strength,
@@ -4239,6 +4306,9 @@ BuildingTypeClass::BuildingTypeClass(
 													is_repairable,
 													is_buildable,
 													is_crew,
+													false,
+													false,
+													is_civilian,
 													-1,
 													strength,
 													MPH_IMMOBILE,
@@ -4268,6 +4338,7 @@ BuildingTypeClass::BuildingTypeClass(
 	IsSimpleDamage = is_simpledamage;
 	IsSturdy = is_sturdy;
 	IsWall = is_wall;
+	IsCivilian = is_civilian;
 	OccupyList = sizelist;
 	OverlapList = overlap;
 	Power = power;
@@ -5250,14 +5321,35 @@ int BuildingTypeClass::Max_Pips(void) const
  *=============================================================================================*/
 int BuildingTypeClass::Full_Name(void) const
 {
-	if (::Scenario == 3 && Type == STRUCT_MISSION && GameToPlay == GAME_NORMAL) {
+	if (GameToPlay == GAME_NORMAL && ScenPlayer == SCEN_PLAYER_NOD && ::Scenario == 3 && Type == STRUCT_MISSION) {
 		return(TXT_PRISON);
 	}
-	// Nyerguds's TUC Quick Fix Patch v1.02: hosp-name
-	if (!IsNominal || Special.IsNamed || IsWall || Debug_Map || Type == STRUCT_V23 || Type == STRUCT_V30 || Type == STRUCT_MISSION || Type == STRUCT_BIO_LAB || Type == STRUCT_HOSPITAL) {
-		return(TechnoTypeClass::Full_Name());
+	// Nyerguds's C&C Patch Project v1.04: Fixed IsNominal on buildings.
+	if (IsCivilian && !Debug_Map && !IsNominal && !Special.IsNamed) {
+		return(TXT_CIVILIAN_BUILDING);
 	}
-	return(TXT_CIVILIAN_BUILDING);
+	return(TechnoTypeClass::Full_Name());
+}
+
+
+/***********************************************************************************************
+ * BuildingTypeClass::Enemy_Name -- Fetches the name to show for an enemy of this type.        *
+ *                                                                                             *
+ *    This routine will return with the name (as a text number) to show for an enemy           *
+ *    of this type. Typically, this is always the same per TechnoType implementation.          *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with the full name to use for this techno.                                 *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/29/1995 JLB : Created.                                                                 *
+ *=============================================================================================*/
+int BuildingTypeClass::Enemy_Name(void) const
+{
+	return(TXT_ENEMY_STRUCTURE);
 }
 
 

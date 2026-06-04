@@ -75,7 +75,7 @@ static UnitTypeClass const UnitVisceroid(
 		false,			// Is it equipped with a combat turret?
 		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
-		false,			// Can it be repaired in a repair facility?
+		true,				// Can it be repaired in a repair facility?
 		false,			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
@@ -534,7 +534,7 @@ static UnitTypeClass const UnitHover(
 		false,			// Is it equipped with a combat turret?
 		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
-		false,			// Can it be repaired in a repair facility?
+		true,				// Can it be repaired in a repair facility?
 		false,			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
@@ -798,7 +798,7 @@ static UnitTypeClass const UnitMCV(
 		false,			// Is it equipped with a combat turret?
 		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
-		false,			// Can it be repaired in a repair facility?
+		true,				// Can it be repaired in a repair facility?
 		true, 			// Can the player construct or order this unit?
 		true, 			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
@@ -1195,7 +1195,7 @@ static UnitTypeClass const UnitGunBoat(
 		true, 			// Is it equipped with a combat turret?
 		false,			// Does this unit have a special active state when a target is in range?
 		true, 			// Fires multiple shots in quick succession?
-		false,			// Can it be repaired in a repair facility?
+		true,				// Can it be repaired in a repair facility?
 		false,			// Can the player construct or order this unit?
 		true, 			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
@@ -1261,7 +1261,7 @@ static UnitTypeClass const UnitTric(
 		false,			// Is it equipped with a combat turret?
 		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
-		false,			// Can it be repaired in a repair facility?
+		true,				// Can it be repaired in a repair facility?
 		false,			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
@@ -1319,7 +1319,7 @@ static UnitTypeClass const UnitTrex(
 		false,			// Is it equipped with a combat turret?
 		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
-		false,			// Can it be repaired in a repair facility?
+		true,				// Can it be repaired in a repair facility?
 		false,			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
@@ -1377,7 +1377,7 @@ static UnitTypeClass const UnitRapt(
 		false,			// Is it equipped with a combat turret?
 		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
-		false,			// Can it be repaired in a repair facility?
+		true,				// Can it be repaired in a repair facility?
 		false,			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
@@ -1435,7 +1435,7 @@ static UnitTypeClass const UnitSteg(
 		false,			// Is it equipped with a combat turret?
 		false,			// Does this unit have a special active state when a target is in range?
 		false,			// Fires multiple shots in quick succession?
-		false,			// Can it be repaired in a repair facility?
+		true,				// Can it be repaired in a repair facility?
 		false,			// Can the player construct or order this unit?
 		false,			// Is there a crew inside?
 		false,			// Does it have a rotating radar dish?
@@ -1567,12 +1567,12 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 				SpeedType speed,
 				MPHType maxSpeed,
 				unsigned rot,
-				int turshift,
-				int weapoffs,
-				int pribarlen,
-				int secbarlen,
-				int pribarlat,
-				int secbarlat,
+				int turret_shift,
+				int weapon_offset,
+				int primary_barrel_length,
+				int secondary_barrel_length,
+				int primary_barrel_lateral,
+				int secondary_barrel_lateral,
 				MissionType order) :
 					TechnoTypeClass(name,
 										ininame,
@@ -1596,6 +1596,9 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 										is_repairable,
 										is_buildable,
 										is_crew,
+										false,
+										false,
+										false,
 										ammo,
 										strength,
 										maxSpeed,
@@ -1606,9 +1609,9 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 										reward,
 										ownable,
 										primary,secondary,
-										weapoffs,
-										pribarlen,
-										secbarlen,
+										weapon_offset,
+										primary_barrel_length,
+										secondary_barrel_length,
 										armor)
 {
 	Explosion = exp;
@@ -1631,10 +1634,10 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 	Mission = order;
 	ROT = rot;
 	Speed = speed;
-	TurretShift = turshift;
+	TurretShift = turret_shift;
 	// Nyerguds's C&C Patch Project v1.04: Migrated turret info to UnitTypeClass.
-	BarrelLateralPrimary = pribarlat;
-	BarrelLateralSecondary = secbarlat;
+	BarrelLateralPrimary = primary_barrel_lateral;
+	BarrelLateralSecondary = secondary_barrel_lateral;
 
 	Type = type;
 }
@@ -2108,4 +2111,25 @@ int UnitTypeClass::Max_Pips(void) const
 		return(Max_Passengers());
 	}
 	return(0);
+}
+
+
+/***********************************************************************************************
+ * UnitTypeClass::Enemy_Name -- Fetches the name to show for an enemy of this type.            *
+ *                                                                                             *
+ *    This routine will return with the name (as a text number) to show for an enemy           *
+ *    of this type. Typically, this is always the same per TechnoType implementation.          *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with the full name to use for this techno.                                 *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/29/1995 JLB : Created.                                                                 *
+ *=============================================================================================*/
+int UnitTypeClass::Enemy_Name(void) const
+{
+	return(TXT_ENEMY_VEHICLE);
 }

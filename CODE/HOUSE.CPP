@@ -1025,6 +1025,8 @@ void HouseClass::AI(void)
 		DamageTime.Set(DAMAGE_DELAY);
 	}
 
+	// Nyerguds's C&C Patch Project v1.04: removed because this also prevents selling walls.
+#ifdef OBSOLETE
 	/*
 	**	If there are no more buildings to sell, then automatically cancel the
 	**	sell mode.
@@ -1032,6 +1034,7 @@ void HouseClass::AI(void)
 	if (PlayerPtr == this && !BScan && Map.IsSellMode) {
 		Map.Sell_Mode_Control(0);
 	}
+#endif
 
 	/*
 	**	Various base conditions may be announced to the player.

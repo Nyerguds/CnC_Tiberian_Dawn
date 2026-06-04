@@ -114,9 +114,11 @@ static InfantryTypeClass const E1(
 	true,							// Has crawling animation frames?
 	false,						// Is this a civlian?
 	false,						// Always use the given name for the infantry?
+	false,						// Does this infantry wander around when idle?
 	false,						// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
+	false,						// Is this a spy that enemies won't detect?
 	-1,							// Number of shots it has (default).
 	&MiniGunnerDos[0][0],	// Ptr to minigunner 'DO' table above
 	2,								// Frame of projectile launch.
@@ -189,9 +191,11 @@ static InfantryTypeClass const E2(
 	true,							// Has crawling animation frames?
 	false,						// Is this a civlian?
 	false,						// Always use the given name for the infantry?
+	false,						// Does this infantry wander around when idle?
 	false,						// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
+	false,						// Is this a spy that enemies won't detect?
 	-1,							// Number of shots it has (default).
 	&GrenadierDos[0][0],		// Ptr to grenadier DO table (above)
 	14,							// Frame of projectile launch.
@@ -265,9 +269,11 @@ static InfantryTypeClass const E3(
 	true,							// Has crawling animation frames?
 	false,						// Is this a civlian?
 	false,						// Always use the given name for the infantry?
+	false,						// Does this infantry wander around when idle?
 	false,						// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
+	false,						// Is this a spy that enemies won't detect?
 	-1,							// Number of shots it has (default).
 	&BazookaDos[0][0],		// Ptr to DO table (above)
 	3,								// Frame of projectile launch.
@@ -342,9 +348,11 @@ static InfantryTypeClass const E4(
 	true,							// Has crawling animation frames?
 	false,						// Is this a civlian?
 	false,						// Always use the given name for the infantry?
+	false,						// Does this infantry wander around when idle?
 	false,						// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
+	false,						// Is this a spy that enemies won't detect?
 	-1,							// Number of shots it has (default).
 	&FlamethrowerDos[0][0],	// ptr to DO table (above)
 	2,								// Frame of projectile launch.
@@ -417,9 +425,11 @@ static InfantryTypeClass const E5(
 	true,							// Has crawling animation frames?
 	false,						// Is this a civlian?
 	false,						// Always use the given name for the infantry?
+	false,						// Does this infantry wander around when idle?
 	false,							// Is this a "fraidycat" run-away type infantry? // Nyerguds's TUC Quick Fix Patch v1.01: chemwarrior
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
+	false,						// Is this a spy that enemies won't detect?
 	-1,							// Number of shots it has (default).
 	&ChemwarriorDos[0][0],	// ptr to DO table
 	2,								// Frame of projectile launch.
@@ -492,9 +502,11 @@ static InfantryTypeClass const E7(
 	false,						// Has crawling animation frames?
 	false,						// Is this a civlian?
 	false,						// Always use the given name for the infantry?
+	false,						// Does this infantry wander around when idle?
 	false,						// Is this a "fraidycat" run-away type infantry?
 	true,							// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
+	false,						// Is this a spy that enemies won't detect?
 	-1,							// Number of shots it has (default).
 	&EngineerDos[0][0],		// ptr to DO table
 	3,								// Frame of projectile launch.
@@ -567,9 +579,11 @@ static InfantryTypeClass const Commando(
 	true,							// Has crawling animation frames?
 	false,						// Is this a civlian?
 	false,						// Always use the given name for the infantry?
+	false,						// Does this infantry wander around when idle?
 	false,						// Is this a "fraidycat" run-away type infantry?
 	true,							// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
+	false,						// Is this a spy that enemies won't detect?
 	-1,							// Number of shots it has (default).
 	&CommandoDos[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
@@ -642,9 +656,11 @@ static InfantryTypeClass const C1(
 	false,						// Has crawling animation frames?
 	true,							// Is this a civlian?
 	false,						// Always use the given name for the infantry?
+	true,							// Does this infantry wander around when idle?
 	true,							// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
+	false,						// Is this a spy that enemies won't detect?
 	10,							// Number of shots it has (default).
 	&CivilianDos1[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
@@ -717,9 +733,11 @@ static InfantryTypeClass const C2(
 	false,						// Has crawling animation frames?
 	true,							// Is this a civlian?
 	false,						// Always use the given name for the infantry?
+	true,							// Does this infantry wander around when idle?
 	true,							// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
+	false,						// Is this a spy that enemies won't detect?
 	0,								// Number of shots it has (default).
 	&CivilianDos2[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
@@ -793,9 +811,11 @@ static InfantryTypeClass const C3(
 	false,						// Has crawling animation frames?
 	true,							// Is this a civlian?
 	false,						// Always use the given name for the infantry?
+	true,							// Does this infantry wander around when idle?
 	true,							// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
+	false,						// Is this a spy that enemies won't detect?
 	0,								// Number of shots it has (default).
 	&CivilianDos3[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
@@ -869,9 +889,11 @@ static InfantryTypeClass const C4(
 	false,						// Has crawling animation frames?
 	true,							// Is this a civlian?
 	false,						// Always use the given name for the infantry?
+	true,							// Does this infantry wander around when idle?
 	true,							// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
+	false,						// Is this a spy that enemies won't detect?
 	0,								// Number of shots it has (default).
 	&CivilianDos4[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
@@ -944,9 +966,11 @@ static InfantryTypeClass const C5(
 	false,						// Has crawling animation frames?
 	true,							// Is this a civlian?
 	false,						// Always use the given name for the infantry?
+	true,							// Does this infantry wander around when idle?
 	true,							// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
+	false,						// Is this a spy that enemies won't detect?
 	0,								// Number of shots it has (default).
 	&CivilianDos5[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
@@ -1019,9 +1043,11 @@ static InfantryTypeClass const C6(
 	false,						// Has crawling animation frames?
 	true,							// Is this a civlian?
 	false,						// Always use the given name for the infantry?
+	true,							// Does this infantry wander around when idle?
 	true,							// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
+	false,						// Is this a spy that enemies won't detect?
 	0,								// Number of shots it has (default).
 	&CivilianDos6[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
@@ -1094,9 +1120,11 @@ static InfantryTypeClass const C7(
 	false,						// Has crawling animation frames?
 	true,							// Is this a civlian?
 	false,						// Always use the given name for the infantry?
+	true,							// Does this infantry wander around when idle?
 	true,							// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
+	false,						// Is this a spy that enemies won't detect?
 	10,							// Number of shots it has (default).
 	&CivilianDos7[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
@@ -1169,9 +1197,11 @@ static InfantryTypeClass const C8(
 	false,						// Has crawling animation frames?
 	true,							// Is this a civlian?
 	false,						// Always use the given name for the infantry?
+	true,							// Does this infantry wander around when idle?
 	true,							// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
+	false,						// Is this a spy that enemies won't detect?
 	0,								// Number of shots it has (default).
 	&CivilianDos8[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
@@ -1244,9 +1274,11 @@ static InfantryTypeClass const C9(
 	false,						// Has crawling animation frames?
 	true,							// Is this a civlian?
 	false,						// Always use the given name for the infantry?
+	true,							// Does this infantry wander around when idle?
 	true,							// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
+	false,						// Is this a spy that enemies won't detect?
 	0,								// Number of shots it has (default).
 	&CivilianDos9[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
@@ -1321,9 +1353,11 @@ static InfantryTypeClass const C10(
 	false,						// Has crawling animation frames?
 	true,							// Is this a civlian?
 	true,							// Always use the given name for the infantry?
+	true,							// Does this infantry wander around when idle?
 	true,							// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
+	false,						// Is this a spy that enemies won't detect?
 	0,								// Number of shots it has (default).
 	&NikoombaDos[0][0],		// ptr to DO table
 	2,								// Frame of projectile launch.
@@ -1396,9 +1430,11 @@ static InfantryTypeClass const Moebius(
 	false,						// Has crawling animation frames?
 	true,							// Is this a civlian?
 	true,							// Always use the given name for the infantry?
+	true,							// Does this infantry wander around when idle?
 	true,							// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
+	false,						// Is this a spy that enemies won't detect?
 	0,								// Number of shots it has (default).
 	&MoebiusDos[0][0],		// ptr to DO table
 	0,								// Frame of projectile launch.
@@ -1471,9 +1507,11 @@ static InfantryTypeClass const Delphi(
 	false,						// Has crawling animation frames?
 	true,							// Is this a civlian?
 	true,							// Always use the given name for the infantry?
+	true,							// Does this infantry wander around when idle?
 	true,							// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
+	true,							// Is this a spy that enemies won't detect?
 	10,							// Number of shots it has (default).
 	&DelphiDos[0][0],			// ptr to DO table
 	2,								// Frame of projectile launch.
@@ -1545,9 +1583,11 @@ static InfantryTypeClass const DrChan(
 	false,						// Has crawling animation frames?
 	true,							// Is this a civlian?
 	true,							// Always use the given name for the infantry?
+	true,							// Does this infantry wander around when idle?
 	true,							// Is this a "fraidycat" run-away type infantry?
 	false,						// Can this infantry type capture a building?
 	false,						// Theater specific graphic image?
+	false,						// Is this a spy that enemies won't detect?
 	10,							// Number of shots it has (default).
 	&DrChanDos[0][0],			// ptr to DO table
 	2,								// Frame of projectile launch.
@@ -1623,9 +1663,11 @@ InfantryTypeClass::InfantryTypeClass	(
 						bool is_crawling,
 						bool is_civilian,
 						bool is_nominal,
+						bool is_wanderer,
 						bool is_fraidycat,
 						bool is_capture,
 						bool is_theater,
+						bool is_spy,
 						int ammo,
 						int *do_table,
 						int firelaunch, int pronelaunch,
@@ -1636,7 +1678,7 @@ InfantryTypeClass::InfantryTypeClass	(
 						MPHType maxspeed)
 	: TechnoTypeClass(name, ininame, level, pre,
 							is_leader, true, is_nominal, false, false, true, true, true, true, false, false,
-							is_theater, false, false, false, false, true, false,
+							is_theater, false, false, false, false, true, false, is_spy, false, is_civilian,
 							ammo, strength, maxspeed, sightrange, cost,
 							scenario, risk, reward, ownable,
 							primary, secondary, weapoffs, 0, 0,
@@ -1646,7 +1688,7 @@ InfantryTypeClass::InfantryTypeClass	(
 	IsCrawling = is_crawling;
 	IsCapture = is_capture;
 	IsFraidyCat = is_fraidycat;
-	IsCivilian = is_civilian;
+	IsWanderer = is_wanderer;
 	Type = type;
 	FireLaunch = firelaunch;
 	ProneLaunch = pronelaunch;
@@ -2162,4 +2204,25 @@ int InfantryTypeClass::Full_Name(void) const
 		return(TXT_CIVILIAN);
 	}
 	return(TechnoTypeClass::Full_Name());
+}
+
+
+/***********************************************************************************************
+ * InfantryTypeClass::Enemy_Name -- Fetches the name to show for an enemy of this type.        *
+ *                                                                                             *
+ *    This routine will return with the name (as a text number) to show for an enemy           *
+ *    of this type. Typically, this is always the same per TechnoType implementation.          *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with the full name to use for this techno.                                 *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/29/1995 JLB : Created.                                                                 *
+ *=============================================================================================*/
+int InfantryTypeClass::Enemy_Name(void) const
+{
+	return(TXT_ENEMY_SOLDIER);
 }

@@ -169,6 +169,9 @@ TechnoTypeClass::TechnoTypeClass(
 		bool is_repairable,
 		bool is_buildable,
 		bool is_crew,
+		bool is_spy,
+		bool Is_spy_detector,
+		bool is_civilian,
 		int ammo,
 		unsigned short strength,
 		MPHType maxspeed,
@@ -180,9 +183,9 @@ TechnoTypeClass::TechnoTypeClass(
 		int ownable,
 		WeaponType primary,
 		WeaponType secondary,
-		int weaponoffs,
-		int pribarlen,
-		int secbarlen,
+		int weapon_offset,
+		int primary_barrel_length,
+		int secondary_barrel_length,
 		ArmorType armor) :
 	ObjectTypeClass(	true,
 							is_flammable,
@@ -205,9 +208,9 @@ TechnoTypeClass::TechnoTypeClass(
 	Primary = primary,
 	Secondary = secondary,
 	// Nyerguds's C&C Patch Project v1.04: Migrated turret info to TechnoTypeClass.
-	WeaponOffset = weaponoffs;
-	BarrelLengthPrimary = pribarlen;
-	BarrelLengthSecondary = secbarlen;
+	WeaponOffset = weapon_offset;
+	BarrelLengthPrimary = primary_barrel_length;
+	BarrelLengthSecondary = secondary_barrel_length;
 	Cost = cost;
 	IsLeader = is_leader;
 	IsScanner = is_scanner;
@@ -220,6 +223,9 @@ TechnoTypeClass::TechnoTypeClass(
 	IsTurretEquipped = is_turret_equipped;
 	IsActiveTargeter= is_active_targeter;
 	IsNominal = is_nominal;
+	IsSpy = is_spy;
+	IsSpyDetector = Is_spy_detector;
+	IsCivilian = is_civilian;
 	Ownable = ownable;
 	risk = risk; // not actually used.
 	Reward = reward;
@@ -363,6 +369,27 @@ int TechnoTypeClass::Time_To_Build(HousesType house) const
 int TechnoTypeClass::Cost_Of(void) const
 {
 	return(Cost);
+}
+
+
+/***********************************************************************************************
+ * TechnoTypeClass::Enemy_Name -- Fetches the name to show for an enemy of this type.          *
+ *                                                                                             *
+ *    This routine will return with the name (as a text number) to show for an enemy           *
+ *    of this type. Typically, this is always the same per TechnoType implementation.          *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with the full name to use for this techno.                                 *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/29/1995 JLB : Created.                                                                 *
+ *=============================================================================================*/
+int TechnoTypeClass::Enemy_Name(void) const
+{
+	return(Full_Name());
 }
 
 
@@ -1239,7 +1266,7 @@ bool TechnoClass::Evaluate_Object(ThreatType method, int mask, int range, Techno
 	/*
 	**	Never consider agent Delphi a valid target.
 	*/
-	if (otype == RTTI_INFANTRY && ((InfantryTypeClass const *)tclass)->Type == INFANTRY_DELPHI) {
+	if (tclass->IsSpy && !Techno_Type_Class()->IsSpyDetector) {
 		return(false);
 	}
 

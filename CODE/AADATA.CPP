@@ -63,6 +63,7 @@ static AircraftTypeClass const AttackPlane(
 	99,						// Build level.
 	STRUCTF_NONE,			// Building prerequisite.
 		false,				// Is a leader type?
+		true, 				// Always use the given name for the aircraft?
 		false,				// Does it fire a pair of shots in quick succession?
 		false,				//	Is this a typical transport vehicle?
 		true,					// Fixed wing aircraft?
@@ -76,7 +77,7 @@ static AircraftTypeClass const AttackPlane(
 		false,				// Is it insignificant (won't be announced)?
 		false,				// Is it immune to normal combat damage?
 		false,				// Theater specific graphic image?
-		false,				// Can it be repaired in a repair facility?
+		true,				// Can it be repaired in a repair facility?
 		false,				// Can the player construct or order this unit?
 		true,					// Is there a crew inside?
 	3,							// Number of shots it has (default).
@@ -109,6 +110,7 @@ static AircraftTypeClass const TransportHeli(
 	6,							// Build level.
 	STRUCTF_HELIPAD,		// Building prerequisite.
 		false,				// Is a leader type?
+		true, 				// Always use the given name for the aircraft?
 		false,				// Does it fire a pair of shots in quick succession?
 		true,					//	Is this a typical transport vehicle?
 		false,				// Fixed wing aircraft?
@@ -122,7 +124,7 @@ static AircraftTypeClass const TransportHeli(
 		false,				// Is it insignificant (won't be announced)?
 		false,				// Theater specific graphic image?
 		false,				// Is it equipped with a combat turret?
-		false,				// Can it be repaired in a repair facility?
+		true,				// Can it be repaired in a repair facility?
 		true,					// Can the player construct or order this unit?
 		true,					// Is there a crew inside?
 	0,							// Number of shots it has (default).
@@ -155,6 +157,7 @@ static AircraftTypeClass const AttackHeli(
 	6,							// Build level.
 	STRUCTF_HELIPAD,		// Building prerequisite.
 		true,					// Is a leader type?
+		false, 				// Always use the given name for the aircraft?
 		true,					// Does it fire a pair of shots in quick succession?
 		false,				//	Is this a typical transport vehicle?
 		false,				// Fixed wing aircraft?
@@ -168,7 +171,7 @@ static AircraftTypeClass const AttackHeli(
 		false,				// Is it insignificant (won't be announced)?
 		false,				// Is it immune to normal combat damage?
 		false,				// Theater specific graphic image?
-		false,				// Can it be repaired in a repair facility?
+		true,				// Can it be repaired in a repair facility?
 		true,					// Can the player construct or order this unit?
 		true,					// Is there a crew inside?
 	15,						// Number of shots it has (default).
@@ -201,6 +204,7 @@ static AircraftTypeClass const OrcaHeli(
 	6,							// Build level.
 	STRUCTF_HELIPAD,		// Building prerequisite.
 		true,					// Is a leader type?
+		false, 				// Always use the given name for the aircraft?
 		true,					// Does it fire a pair of shots in quick succession?
 		false,				//	Is this a typical transport vehicle?
 		false,				// Fixed wing aircraft?
@@ -214,7 +218,7 @@ static AircraftTypeClass const OrcaHeli(
 		false,				// Is it insignificant (won't be announced)?
 		false,				// Is it immune to normal combat damage?
 		false,				// Theater specific graphic image?
-		false,				// Can it be repaired in a repair facility?
+		true,				// Can it be repaired in a repair facility?
 		true,					// Can the player construct or order this unit?
 		true,					// Is there a crew inside?
 	6,							// Number of shots it has (default).
@@ -247,6 +251,7 @@ static AircraftTypeClass const CargoPlane(
 	99,						// Build level.
 	STRUCTF_NONE,			// Building prerequisite.
 		false,				// Is a leader type?
+		true, 				// Always use the given name for the aircraft?
 		false,				// Does it fire a pair of shots in quick succession?
 		true,					//	Is this a typical transport vehicle?
 		true,					// Fixed wing aircraft?
@@ -260,7 +265,7 @@ static AircraftTypeClass const CargoPlane(
 		false,				// Is it insignificant (won't be announced)?
 		false,				// Is it immune to normal combat damage?
 		false,				// Theater specific graphic image?
-		false,				// Can it be repaired in a repair facility?
+		true,				// Can it be repaired in a repair facility?
 		false,				// Can the player construct or order this unit?
 		true,					// Is there a crew inside?
 	0,							// Number of shots it has (default).
@@ -316,6 +321,7 @@ AircraftTypeClass::AircraftTypeClass(
 				unsigned char level,
 				long pre,
 				bool is_leader,
+				bool is_nominal,
 				bool is_twoshooter,
 				bool is_transporter,
 				bool is_fixedwing,
@@ -352,7 +358,7 @@ AircraftTypeClass::AircraftTypeClass(
 										pre,
 										is_leader,
 										false,
-										false,
+										is_nominal,
 										is_transporter,
 										false,
 										is_crushable,
@@ -368,6 +374,9 @@ AircraftTypeClass::AircraftTypeClass(
 										is_repairable,
 										is_buildable,
 										is_crew,
+										false,
+										false,
+										false,
 										ammo,
 										strength,
 										maxspeed,
@@ -728,6 +737,27 @@ int AircraftTypeClass::Max_Pips(void) const
 		}
 	}
 	return(0);
+}
+
+
+/***********************************************************************************************
+ * AircraftTypeClass::Enemy_Name -- Fetches the name to show for an enemy of this type.        *
+ *                                                                                             *
+ *    This routine will return with the name (as a text number) to show for an enemy           *
+ *    of this type. Typically, this is always the same per TechnoType implementation.          *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with the full name to use for this techno.                                 *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/29/1995 JLB : Created.                                                                 *
+ *=============================================================================================*/
+int AircraftTypeClass::Enemy_Name(void) const
+{
+	return(TXT_ENEMY_VEHICLE);
 }
 
 

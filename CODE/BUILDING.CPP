@@ -219,8 +219,11 @@ RadioMessageType BuildingClass::Receive_Message(RadioClass * from, RadioMessageT
 					break;
 
 				case STRUCT_REPAIR:
-					if (/*from->Health_Ratio() < 0x0100 &&*/ from->What_Am_I() == RTTI_UNIT || from->What_Am_I() == RTTI_AIRCRAFT) {
-						return(RADIO_ROGER);
+					if (from->What_Am_I() == RTTI_UNIT || from->What_Am_I() == RTTI_AIRCRAFT) {
+						const TechnoClass * techno = (const TechnoClass *)from;
+						if (techno->Techno_Type_Class()->IsRepairable){
+							return(RADIO_ROGER);
+						}
 					}
 					return(RADIO_NEGATIVE);
 
@@ -1124,7 +1127,10 @@ void BuildingClass::AI(void)
 		if (Class->IsRepairable && Health_Ratio() <= ratio) {
 			if (House->Available_Money() >= REPAIR_THRESHOLD) {
 				Repair(1);
-			} else if (IsTickedOff && scenario > 2 && Random_Pick(0, 50) < scenario && !Trigger) {
+			// Nyerguds's C&C Patch Project v1.04: Never sell the Temple in the final GDI campaign mission.
+			} else if (IsTickedOff && scenario > 2 && !Trigger &&
+				(GameToPlay != GAME_NORMAL || Scenario != 15 || ScenPlayer != SCEN_PLAYER_GDI || *this != STRUCT_TEMPLE)
+				&& Random_Pick(0, 50) < scenario) {
 				Sell_Back(1);
 			}
 		}

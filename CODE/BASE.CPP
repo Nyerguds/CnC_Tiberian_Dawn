@@ -366,7 +366,7 @@ bool BaseClass::Save(FileClass &file)
  *=============================================================================================*/
 bool BaseClass::Is_Built(int index)
 {
-	if (Get_Built_Overlay(index) != NULL || Get_Building(index) != NULL) {
+	if (Get_Built_Overlay(index, true) != NULL || Get_Building(index) != NULL) {
 		return(true);
 	} else {
 		return(false);
@@ -434,6 +434,7 @@ BuildingClass * BaseClass::Get_Building(int index)
  *                                                                                             *
  * INPUT:                                                                                      *
  *      index    Node index of building to test                                                *
+ *      anywall  Return the cell if it contains any wall type, even if it's different.         *
  *                                                                                             *
  * OUTPUT:                                                                                     *
  *      ptr to cell containing the correct wall type, or NULL if none.                         *
@@ -444,7 +445,7 @@ BuildingClass * BaseClass::Get_Building(int index)
  * HISTORY:                                                                                    *
  *   03/24/1995 BRR : Created.                                                                 *
  *=============================================================================================*/
-CellClass * BaseClass::Get_Built_Overlay(int index) 
+CellClass * BaseClass::Get_Built_Overlay(int index, bool anywall) 
 {
 	BaseNodeClass * node = &Nodes[index];
 	StructType nodestruct = node->Type;
@@ -459,7 +460,9 @@ CellClass * BaseClass::Get_Built_Overlay(int index)
 	CellClass * cellptr = &Map[cell];
 	if (cellptr->Overlay != OVERLAY_NONE) {
 		OverlayTypeClass ovt = OverlayTypeClass::As_Reference(cellptr->Overlay);
-		if (ovt.WallStructureType == nodestruct) {
+		// With "anywall", consider any wall valid, no matter what type.
+		// This prevents sandbag creeping from messing up the AI build plan.
+		if (ovt.IsWall && (anywall || ovt.WallStructureType == nodestruct)) {
 			return (cellptr);
 		}
 	}

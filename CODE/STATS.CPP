@@ -139,7 +139,7 @@ long			GameEndTime;
 void			*PacketLater = NULL;
 
 /***********************************************************************************************
- * Send_Statistics_To_Server -- sends internet game statistics to the Westeood server          *
+ * Send_Statistics_To_Server -- sends internet game statistics to the Westwood server          *
  *                                                                                             *
  *                                                                                             *
  *                                                                                             *

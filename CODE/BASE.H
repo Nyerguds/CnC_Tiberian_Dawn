@@ -99,7 +99,7 @@ class BaseClass
 		/**********************************************************************
 		** Returns a pointer to the cell on which a wall was built.
 		*/
-		CellClass * Get_Built_Overlay(int index);
+		CellClass * Get_Built_Overlay(int index, bool anywall = false);
 
 		/**********************************************************************
 		** Tells if the given building ptr is a node in this base's list.

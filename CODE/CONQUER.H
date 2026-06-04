@@ -255,7 +255,7 @@ typedef enum TextType {
 	TXT_TREX,                 	// Tyrannosaurus Rex
 	TXT_TRIC,                 	// Triceratops
 	TXT_RAPT,                 	// Velociraptor
-	TXT_STEG,                 	// Stegasaurus
+	TXT_STEG,                 	// Stegosaurus
 	TXT_STEEL_CRATE,          	// Steel Crate
 	TXT_WOOD_CRATE,           	// Wood Crate
 	TXT_FLAG_SPOT,            	// Flag Location

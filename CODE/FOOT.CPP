@@ -1847,7 +1847,7 @@ void FootClass::Death_Announcement(TechnoClass const * source) const
 		}
 		return;
 	}
-	if (What_Am_I() == RTTI_INFANTRY && ((InfantryTypeClass const &)Class_Of()).IsCivilian && !((InfantryClass *)this)->IsTechnician) {
+	if (What_Am_I() == RTTI_INFANTRY && Techno_Type_Class()->IsCivilian && !((InfantryClass *)this)->IsTechnician) {
 		Speak(VOX_DEAD_CIV);
 		return;
 	}

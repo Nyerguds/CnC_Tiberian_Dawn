@@ -878,7 +878,7 @@ void AircraftClass::AI(void)
 			*/
 			while (Is_Something_Attached()) {
 				FootClass * obj = Detach_Object();
-				if (obj->What_Am_I() == RTTI_INFANTRY && ((InfantryClass *)obj)->Class->IsCivilian && !((InfantryClass *)obj)->IsTechnician) {
+				if (obj->What_Am_I() == RTTI_INFANTRY && obj->Techno_Type_Class()->IsCivilian && !((InfantryClass *)obj)->IsTechnician) {
 					House->IsCivEvacuated = true;
 				}
 

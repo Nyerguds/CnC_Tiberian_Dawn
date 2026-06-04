@@ -3527,12 +3527,10 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
 			*/
 			if (PlayerPtr->Is_Ally(object)) {
 				color = CC_GREEN;
+			} else  if (object->Owner() == HOUSE_NONE || object->Owner() == HOUSE_NEUTRAL) {
+				color = LTGREY;
 			} else {
-				if (object->Owner() == HOUSE_NONE || object->Owner() == HOUSE_NEUTRAL) {
-					color = LTGREY;
-				} else {
-					color = PINK;
-				}
+				color = PINK;
 			}
 
 			/*
@@ -3540,24 +3538,10 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
 			**	the exact identity is glossed over with a generic text.
 			*/
 			text = object->Full_Name();
-			if (object->Is_Techno() && !((TechnoTypeClass const &)object->Class_Of()).IsNominal) {
-
-				if (!PlayerPtr->Is_Ally(object)) {
-					switch (object->What_Am_I()) {
-						case RTTI_INFANTRY:
-							text = TXT_ENEMY_SOLDIER;
-							break;
-
-						case RTTI_UNIT:
-							text = TXT_ENEMY_VEHICLE;
-							break;
-
-						case RTTI_BUILDING:
-							if ( *((BuildingClass*)object) != STRUCT_MISSION) {
-								text = TXT_ENEMY_STRUCTURE;
-							}
-							break;
-					}
+			if (!PlayerPtr->Is_Ally(object) && object->Is_Techno()) {
+				const TechnoTypeClass *ttype = ((const TechnoClass *) object)->Techno_Type_Class();
+				if (!ttype->IsNominal && !ttype->IsCivilian) {
+					text = ttype->Enemy_Name();
 				}
 			}
 			// Nyerguds's C&C Patch Project v1.04: Allow advanced tooltips for Funpark.
@@ -4001,7 +3985,8 @@ void DisplayClass::Compute_Start_Pos(void)
 	long x = 0;
 	long y = 0;
 	long num = 0;
-	for (int i = 0; i < Infantry.Count(); i++) {
+	int i;
+	for (i = 0; i < Infantry.Count(); i++) {
 		InfantryClass * infp = Infantry.Ptr(i);
 		if (!infp->IsInLimbo && infp->House == PlayerPtr) {
 			x += (long)Coord_XCell (infp->Coord);
