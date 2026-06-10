@@ -927,11 +927,18 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 	/*
 	**	Draw the stamp of the template.
 	*/
+
+	int xpixel = x;
+	int ypixel = y;
+	int ww = ICON_PIXEL_W;
+	int hh = ICON_PIXEL_H;
 	if (Debug_Icon) {
-		LogicPage->Fill_Rect(Map.TacPixelX+x, Map.TacPixelY+y, Map.TacPixelX+x+ICON_PIXEL_W-1, Map.TacPixelY+y+ICON_PIXEL_H-1, Sim_Random_Pick(1, 254));
-		FontXSpacing -= 2;
-		Fancy_Text_Print("%d\r%2X%c\r%02X.%02X", Map.TacPixelX+x+(ICON_PIXEL_W>>1), Map.TacPixelY+y, WHITE, TBLACK, TPF_6POINT|TPF_NOSHADOW|TPF_CENTER, cell, Flag.Composite, (Cell_Occupier() ? '*' : ' '), Overlay, OverlayData);
-		FontXSpacing += 2;
+		if (Clip_Rect(&xpixel, &ypixel, &ww, &hh, Lepton_To_Pixel(Map.TacLeptonWidth), Lepton_To_Pixel(Map.TacLeptonHeight)) >= 0) {
+			LogicPage->Fill_Rect(Map.TacPixelX+xpixel, Map.TacPixelX+ypixel, Map.TacPixelX+xpixel+ww-1, Map.TacPixelX+ypixel+hh-1, Sim_Random_Pick(1, 254));
+			FontXSpacing -= 2;
+			Fancy_Text_Print("%d\r%2X%c\r%02X.%02X", Map.TacPixelX+x+(ICON_PIXEL_W>>1), Map.TacPixelY+y, WHITE, TBLACK, TPF_6POINT|TPF_NOSHADOW|TPF_CENTER, cell, Flag.Composite, (Cell_Occupier() ? '*' : ' '), Overlay, OverlayData);
+			FontXSpacing += 2;
+		}
 	} else {
 
 
@@ -971,14 +978,8 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 			if (!iconfound) {
 				// Nyerguds's C&C Patch Project v1.04: Paint black on illegal tiles.
 				// Illegal tiles are shown black rather than non-refreshing.
-				int right = left + Lepton_To_Pixel(Map.TacLeptonWidth) -1;
-				int bottom = top + Lepton_To_Pixel(Map.TacLeptonHeight) - 1;
-				int x1r = left + MAX(0, x);
-				int y1r = top + MAX(0, y);
-				int x2r = MIN(right, Map.TacPixelX+x+ICON_PIXEL_W-1);
-				int y2r = MIN(bottom, Map.TacPixelY+y+ICON_PIXEL_H-1);
-				if (x2r > left && y2r > top && x1r < right && y1r < bottom) {
-					LogicPage->Fill_Rect(x1r, y1r, x2r, y2r, BLACK);
+				if (Clip_Rect(&xpixel, &ypixel, &ww, &hh, Lepton_To_Pixel(Map.TacLeptonWidth), Lepton_To_Pixel(Map.TacLeptonHeight)) >= 0) {
+					LogicPage->Fill_Rect(Map.TacPixelX+xpixel, Map.TacPixelX+ypixel, Map.TacPixelX+xpixel+ww-1, Map.TacPixelX+ypixel+hh-1, BLACK);
 				}
 			}
 			if (remap) {
