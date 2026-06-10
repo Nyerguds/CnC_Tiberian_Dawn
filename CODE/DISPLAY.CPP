@@ -3538,10 +3538,10 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
 			**	the exact identity is glossed over with a generic text.
 			*/
 			text = object->Full_Name();
-			if (!PlayerPtr->Is_Ally(object) && object->Is_Techno()) {
+			if (object->Is_Techno() && !Debug_Map && !PlayerPtr->Is_Ally(object)) {
 				const TechnoTypeClass *ttype = ((const TechnoClass *) object)->Techno_Type_Class();
 				if (!ttype->IsNominal && !ttype->IsCivilian) {
-					text = ttype->Enemy_Name();
+					text = object->Enemy_Name();
 				}
 			}
 			// Nyerguds's C&C Patch Project v1.04: Allow advanced tooltips for Funpark.

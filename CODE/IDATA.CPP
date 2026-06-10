@@ -2196,6 +2196,7 @@ BuildingClass * InfantryTypeClass::Who_Can_Build_Me(bool intheory, bool legal, H
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   06/29/1995 JLB : Created.                                                                 *
+ *   06/04/2026 MM  : Fixed IsNominal to its intended behavior.                                *
  *=============================================================================================*/
 int InfantryTypeClass::Full_Name(void) const
 {
@@ -2220,7 +2221,7 @@ int InfantryTypeClass::Full_Name(void) const
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   07/29/1995 JLB : Created.                                                                 *
+ *   06/04/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
 int InfantryTypeClass::Enemy_Name(void) const
 {

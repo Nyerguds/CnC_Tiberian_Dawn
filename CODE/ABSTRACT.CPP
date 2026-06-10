@@ -107,4 +107,5 @@ AbstractTypeClass::AbstractTypeClass(int name, char const * ini)
 RTTIType AbstractTypeClass::What_Am_I(void) const {return RTTI_ABSTRACTTYPE;};
 COORDINATE AbstractTypeClass::Coord_Fixup(COORDINATE coord) const {return coord;}
 int AbstractTypeClass::Full_Name(void) const {return Name;};
+int AbstractTypeClass::Enemy_Name(void) const {return Full_Name();};
 unsigned short AbstractTypeClass::Get_Ownable(void) const {return 0xffff;};

@@ -1174,7 +1174,7 @@ ResultType FootClass::Take_Damage(int & damage, int distance, WarheadType warhea
 
 		if (result != RESULT_DESTROYED) {
 			/*
-			**	Determine if the target that is current being attacked has a weapon that can
+			**	Determine if the target that is currently being attacked has a weapon that can
 			**	do harm to a ground based unit. This information is needed so that an appropriate
 			**	response will occur when damage is taken.
 			*/

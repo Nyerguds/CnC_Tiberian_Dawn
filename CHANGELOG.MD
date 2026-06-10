@@ -285,7 +285,8 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * Fixed GDI occasionally getting SSM Launchers as multiplayer starting units.
 * There is now a special different Attack cursor depending on whether the target is in range or out of range. If multiple units are selected, targets are only shown as "in range" if they are in range of all selected units.
 * Fixed errors in selection box sizes, and health bar length not matching the selection box size.
-* \[Internal\] Fixed "IsNominal" setting on infantry and buildings so it is used for its originally intended purpose of showing real names, rather than to trigger the civilian name overrides. These are now controlled by "IsCivilian" as they should be, removing the need for exceptions.
+* \[Internal\] Fixed "IsNominal" setting so it is used for its original intended purpose of showing the object's real name, rather than to trigger the civilian name overrides. These are now controlled by "IsCivilian" as they should be, removing the need for exceptions.
+* Enemy helicopters will now also show "Enemy vehicle" instead of their real name. The Transport Helicopter will still show its true name, since this needs to serve as player hint if they need to be captured in a mission. The "PassiveHelis" behavior will also show helicopter names.
 * \[Remaster\] The computer player can no longer sell the Temple of Nod in the final GDI mission.
 * \[Internal\] Generalized the fact Delphi is ignored by targeting to a general "IsSpy" property.
 * Mission files now support a "Prefix=" key in the \[Basic\] section to override the House prefix shown in the New Missions menu. This prefix can only be 1-3 characters.
@@ -293,3 +294,4 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * Fixed a bug causing the tooltip to show the wrong color when moving the mouse cursor between adjacent objects that would show the same tooltip text but in a different color. (e.g. two harvesters of different Houses parked next to each other.)
 * \[Internal\] Units and Aircraft will now obey their "can be repaired" property, and be unable to dock with the Repair Facility if it is disabled. Not that this is now set to True on all units and aircraft, to reflect the original state of the game.
 * Sell mode will no longer be disabled if the player has no structures on the map, since it could still be used for selling walls.
+* Fixed civilians becoming unselectable when they are put on the map before the units revealing them.

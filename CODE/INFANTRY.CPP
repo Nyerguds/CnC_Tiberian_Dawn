@@ -2367,7 +2367,9 @@ bool InfantryClass::Unlimbo(COORDINATE coord, DirType facing)
 		**	If there is no sight range, then this object isn't discovered by the player unless
 		**	it actually appears in a cell mapped by the player.
 		*/
-		if (Class->SightRange == 0) {
+		// Nyerguds's C&C Patch Project v1.04: Fixed unselectable civilians.
+		// This didn't bother to check anything except sight range, causing odd bugs.
+		if (House == PlayerPtr && Class->SightRange == 0 && !Map[Coord_Cell(coord)].IsVisible) {
 			IsDiscoveredByPlayer = false;
 		}
 

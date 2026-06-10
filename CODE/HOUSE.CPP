@@ -3392,7 +3392,11 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 				*/
 				for (int uindex = 0; uindex < Units.Count(); uindex++) {
 					UnitClass * unit = Units.Ptr(uindex);
-					if (unit && !unit->Team && unit->House == this && (unit->Mission != MISSION_GUARD_AREA && unit->Mission != MISSION_HUNT && unit->Mission != MISSION_STICKY && unit->Mission != MISSION_SLEEP)) {
+					if (unit && !unit->Team && unit->House == this && (
+							unit->Mission != MISSION_GUARD_AREA &&
+							unit->Mission != MISSION_HUNT &&
+							unit->Mission != MISSION_STICKY &&
+							unit->Mission != MISSION_SLEEP)) {
 						counter[unit->Class->Type]--;
 					}
 				}
@@ -3490,7 +3494,11 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 				*/
 				for (int uindex = 0; uindex < Infantry.Count(); uindex++) {
 					InfantryClass * infantry = Infantry.Ptr(uindex);
-					if (infantry && !infantry->Team && infantry->House == this && (infantry->Mission != MISSION_GUARD_AREA && infantry->Mission != MISSION_HUNT && infantry->Mission != MISSION_STICKY && infantry->Mission != MISSION_SLEEP)) {
+					if (infantry && !infantry->Team && infantry->House == this && (
+							infantry->Mission != MISSION_GUARD_AREA &&
+							infantry->Mission != MISSION_HUNT &&
+							infantry->Mission != MISSION_STICKY &&
+							infantry->Mission != MISSION_SLEEP)) {
 						counter[infantry->Class->Type]--;
 					}
 				}

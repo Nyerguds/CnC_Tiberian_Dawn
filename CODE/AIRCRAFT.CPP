@@ -2232,6 +2232,33 @@ ActionType AircraftClass::What_Action(ObjectClass * object) const
 
 
 /***********************************************************************************************
+ * AircraftClass::Enemy_Name -- Fetches the name to show for this unit if it is an enemy.      *
+ *                                                                                             *
+ *    This routine will return with the name (as a text number) for this aircraft if it is     *
+ *    an enemy. Typically, this is the same as the enemy label on the AircraftTypeClass, but   *
+ *    the "PassiveHelis" behavior overrides this and shows the true name.                      *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with the name to use for this aircraft unit if it is an enemy.             *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/10/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+int AircraftClass::Enemy_Name(void) const
+{
+	Validate();
+	// Nyerguds's C&C Patch Project v1.04: Passive helis to be captured will show their name.
+	if (PassiveHelis && !Class->IsFixedWing) {
+		return(Class->Full_Name());
+	}
+	return(Class->Enemy_Name());
+}
+
+
+/***********************************************************************************************
  * AircraftClass::What_Action -- Determines what action to perform.                            *
  *                                                                                             *
  *    This routine will determine what action would occur if the mouse were clicked over the   *
@@ -3576,7 +3603,7 @@ int AircraftClass::Mission_Guard(void)
 	// Nyerguds's C&C Patch Project v1.04: PassiveHelis option.
 	// This was changed from hardcoded behaviour on one mission to an ini option.
 	if (GameToPlay == GAME_NORMAL && PassiveHelis && !House->IsHuman) {
-		return(TICKS_PER_SECOND*20);
+		return(Mission_Sleep());
 	}
 
 	/*

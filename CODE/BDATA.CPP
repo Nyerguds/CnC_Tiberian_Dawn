@@ -5318,6 +5318,7 @@ int BuildingTypeClass::Max_Pips(void) const
  * HISTORY:                                                                                    *
  *   06/29/1995 JLB : Created.                                                                 *
  *   07/17/1995 JLB : Village wells will always have their name displayed.                     *
+ *   06/04/2026 MM  : Fixed IsNominal to its intended behavior.                                *
  *=============================================================================================*/
 int BuildingTypeClass::Full_Name(void) const
 {
@@ -5345,7 +5346,7 @@ int BuildingTypeClass::Full_Name(void) const
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   07/29/1995 JLB : Created.                                                                 *
+ *   06/04/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
 int BuildingTypeClass::Enemy_Name(void) const
 {

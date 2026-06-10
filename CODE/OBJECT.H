@@ -150,6 +150,7 @@ class ObjectClass : public AbstractClass
 		virtual unsigned char Get_Ownable(void) const;
 		virtual ObjectTypeClass const & Class_Of(void) const = 0;
 		virtual int Full_Name(void) const;
+		virtual int Enemy_Name(void) const;
 		virtual bool Can_Repair(void) const;
 		virtual bool Can_Demolish(void) const;
 		virtual bool Can_Capture(void) const;

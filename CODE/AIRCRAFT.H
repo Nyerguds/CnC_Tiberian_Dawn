@@ -87,6 +87,7 @@ class AircraftClass : public FootClass, public FlyClass
 		virtual MoveType Can_Enter_Cell(CELL cell, FacingType facing=FACING_NONE) const;
 		virtual LayerType In_Which_Layer(void) const;
 		virtual ObjectTypeClass const & Class_Of(void) const {return *Class;};
+		virtual int Enemy_Name(void) const;
 		virtual ActionType What_Action(ObjectClass * object) const;
 		virtual ActionType What_Action(CELL cell) const;
 		virtual bool Can_Capture(void) const;

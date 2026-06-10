@@ -265,6 +265,7 @@ class AbstractTypeClass
 
 		virtual COORDINATE  Coord_Fixup(COORDINATE coord) const;
 		virtual int  Full_Name(void) const;
+		virtual int  Enemy_Name(void) const;
 		void  Set_Name(char const *buf) const
 		{
 			strncpy((char *)IniName, buf, sizeof(IniName));
