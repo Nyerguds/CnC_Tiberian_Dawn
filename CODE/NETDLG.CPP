@@ -1398,7 +1398,7 @@ static int Net_Join_Dialog(void)
 					//
 					if (Players.Count()) {		// added: BRR 6/14/96
 						who = Players[0];
-						Players.Delete(0);
+						Players.Delete_Index(0);
 						delete who;
 					}
 
@@ -1686,7 +1686,7 @@ static int Net_Join_Dialog(void)
 						//
 						if (Players.Count()){
 							who = Players[0];
-							Players.Delete(0);
+							Players.Delete_Index(0);
 							delete who;
 						}
 
@@ -1802,7 +1802,7 @@ static int Net_Join_Dialog(void)
 			//
 			if (Players.Count()) {		// added: BRR 6/14/96
 				who = Players[0];
-				Players.Delete(0);
+				Players.Delete_Index(0);
 				delete who;
 			}
 
@@ -5022,7 +5022,7 @@ static int Net_Fake_Join_Dialog(void)
 					// Remove myself from the Players list
 					//
 					who = Players[0];
-					Players.Delete(0);
+					Players.Delete_Index(0);
 					delete who;
 
 					for (i = 0; i < Players.Count(); i++) {
@@ -5155,7 +5155,7 @@ CCDebugString ("C&C95 - Received 'GO' packet\n");
 						//
 						if (Players.Count()){
 							who = Players[0];
-							Players.Delete(0);
+							Players.Delete_Index(0);
 							delete who;
 						}
 					}
@@ -5277,7 +5277,7 @@ CCDebugString ("C&C95 - Received 'GO' packet\n");
 			// Remove myself from the Players list
 			//
 			who = Players[0];
-			Players.Delete(0);
+			Players.Delete_Index(0);
 			delete who;
 
 			memset (&GPacket, 0, sizeof(GlobalPacketType));

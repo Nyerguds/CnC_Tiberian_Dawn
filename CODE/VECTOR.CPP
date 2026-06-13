@@ -568,7 +568,7 @@ int DynamicVectorClass<T>::Delete(T const & object)
 {
 	int index = ID(object);
 	if (index != -1){
-		return(Delete(index));
+		return(Delete_Index(index));
 	}else{
 		return (false);
 	}
@@ -593,7 +593,7 @@ int DynamicVectorClass<T>::Delete(T const & object)
  *   03/10/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 template<class T>
-int DynamicVectorClass<T>::Delete(int index)
+int DynamicVectorClass<T>::Delete_Index(int index)
 {
 	if ((unsigned)index < ActiveCount) {
 		ActiveCount--;
@@ -894,5 +894,3 @@ void BooleanVectorClass::Fixup(int index) const
 		((int &)LastIndex) = index;
 	}
 }
-
-

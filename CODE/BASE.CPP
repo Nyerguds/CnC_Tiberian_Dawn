@@ -67,7 +67,7 @@
  *=============================================================================================*/
 int BaseNodeClass::operator == (BaseNodeClass const & node)
 {
-	return(Type == node.Type && Coord == node.Coord);
+	return(Type == node.Type && Coord == node.Coord && House == node.House);
 }
 
 
@@ -88,7 +88,7 @@ int BaseNodeClass::operator == (BaseNodeClass const & node)
  *=============================================================================================*/
 int BaseNodeClass::operator !=(BaseNodeClass const & node)
 {
-	return(Type != node.Type || Coord != node.Coord);
+	return(Type != node.Type || Coord != node.Coord || House != node.House);
 }
 
 
@@ -143,12 +143,17 @@ void BaseClass::Read_INI(char *buffer)
 	**	First, determine the house of the human player, and set the Base's house
 	**	accordingly.
 	*/
+	// Nyerguds's C&C Patch Project v1.04: Read base player from [Base] secion.
+	WWGetPrivateProfileString(INI_Name(), "Player", "None", buf, 20, buffer);
+	House = HouseTypeClass::From_Name(buf);
+#ifdef OBSOLETE
 	WWGetPrivateProfileString("BASIC", "Player", "GoodGuy", buf, 20, buffer);
 	if (HouseTypeClass::From_Name(buf) == HOUSE_GOOD) {
 		House = HOUSE_BAD;
 	} else {
 		House = HOUSE_GOOD;
 	}
+#endif
 
 	/*
 	**	Read the number of buildings that will go into the base node list
@@ -175,6 +180,15 @@ void BaseClass::Read_INI(char *buffer)
 		** Read & set the node's coordinate
 		*/
 		node.Coord = atol(strtok(NULL,","));
+
+		/*
+		** Nyerguds's C&C Patch Project v1.04: allow explicit owners in Base secion.
+		*/
+		node.House = HouseTypeClass::From_Name(strtok(NULL,","));
+		// If there is a default House from the BaseClass itself, fill it in.
+		if (node.House == HOUSE_NONE && House != HOUSE_NONE) {
+			node.House = House;
+		}
 
 		/*
 		** Add this node to the Base's list
@@ -366,7 +380,7 @@ bool BaseClass::Save(FileClass &file)
  *=============================================================================================*/
 bool BaseClass::Is_Built(int index)
 {
-	if (Get_Built_Overlay(index, true) != NULL || Get_Building(index) != NULL) {
+	if (Get_Built_Overlay(index, true) != NULL || Get_Building(index, false) != NULL) {
 		return(true);
 	} else {
 		return(false);
@@ -388,7 +402,7 @@ bool BaseClass::Is_Built(int index)
  * HISTORY:                                                                                    *
  *   03/24/1995 BRR : Created.                                                                 *
  *=============================================================================================*/
-BuildingClass * BaseClass::Get_Building(int index)
+BuildingClass * BaseClass::Get_Building(int index, bool checkHouse)
 {
 	BaseNodeClass * node = &Nodes[index];
 	StructType nodestruct = node->Type;
@@ -399,32 +413,38 @@ BuildingClass * BaseClass::Get_Building(int index)
 	if (structinfo.IsWall) {
 		return(NULL);
 	}
-	BuildingClass *bldg;
-	ObjectClass *obj[4];
+	
+	CELL cell = Coord_Cell(node->Coord);
+	if (!Map.In_Radar(cell)) {
+		return(NULL);
+	}
 
 	/*
 	** Check the location on the map where this building should be; if it's
 	** there, return a pointer to it.
 	*/
-	CELL cell = Coord_Cell(node->Coord);
+	BuildingClass *bldg = NULL;
+	CellClass * cellobj = &Map[cell];
+	ObjectClass *obj[4];
+	obj[0] = cellobj->Cell_Building();
+	obj[1] = cellobj->Overlapper[0];
+	obj[2] = cellobj->Overlapper[1];
+	obj[3] = cellobj->Overlapper[2];
 
-	obj[0] = Map[cell].Cell_Building();
-	obj[1] = Map[cell].Overlapper[0];
-	obj[2] = Map[cell].Overlapper[1];
-	obj[3] = Map[cell].Overlapper[2];
-
-	bldg = NULL;
+	BaseNodeClass bnc = Nodes[index];
+	COORDINATE coord= bnc.Coord;
+	StructType btc = bnc.Type;
+	HousesType hs = bnc.House;
 	for (int i = 0; i < 4; i++) {
-		if (obj[i] &&
-			obj[i]->Coord == Nodes[index].Coord &&
-			obj[i]->What_Am_I() == RTTI_BUILDING &&
-			((BuildingClass *)obj[i])->Class->Type == Nodes[index].Type) {
-
+		ObjectClass *curobj = obj[i];
+		if (curobj && curobj->Coord == coord && curobj->What_Am_I() == RTTI_BUILDING) {
+			BuildingClass * bld = (BuildingClass *)obj[i];
+			if (bld->Class->Type == btc && (!checkHouse || hs == HOUSE_NONE || bld->House->Class->House == hs)) {
 				bldg = (BuildingClass *)obj[i];
 				break;
+			}
 		}
 	}
-
 	return(bldg);
 }
 
@@ -541,7 +561,7 @@ BaseNodeClass * BaseClass::Get_Node(BuildingClass *obj)
  * HISTORY:                                                                                    *
  *   03/24/1995 BRR : Created.                                                                 *
  *=============================================================================================*/
-BaseNodeClass * BaseClass::Next_Buildable(StructType type, BaseNodeClass * afterthis)
+BaseNodeClass * BaseClass::Next_Buildable(HousesType house, StructType type, BaseNodeClass * afterthis)
 {
 	/*
 	** Loop through all node entries, returning a pointer to the first
@@ -550,21 +570,26 @@ BaseNodeClass * BaseClass::Next_Buildable(StructType type, BaseNodeClass * after
 	// Nyerguds's C&C Patch Project v1.04: Allow scanning further in base nodes.
 	BaseNodeClass * tofind = afterthis;
 	for (int i = 0; i < Nodes.Count(); i++) {
+		BaseNodeClass * bn = &Nodes[i];
 		// Skip ahead until after specified node.
 		if (tofind != NULL) {
-			if (&Nodes[i] != tofind) {
+			if (bn != tofind) {
 				continue;
 			} else {
 				tofind = NULL;
 				continue;
 			}
 		}
+		if (bn->House != HOUSE_NONE && house != bn->House) {
+			continue;
+		}
+		
 		/*
 		** For STRUCT_NONE, return the first hole found
 		*/
 		if (type == STRUCT_NONE) {
 			if (!Is_Built(i)) {
-				return(&Nodes[i]);
+				return(bn);
 			}
 
 		} else {
@@ -573,7 +598,7 @@ BaseNodeClass * BaseClass::Next_Buildable(StructType type, BaseNodeClass * after
 			** For a "real" building type, return the first hold for that type
 			*/
 			if (Nodes[i].Type==type && !Is_Built(i)) {
-				return(&Nodes[i]);
+				return(bn);
 			}
 		}
 	}

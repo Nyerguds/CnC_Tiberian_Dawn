@@ -157,7 +157,7 @@ void ColorListClass::Remove_Item(char const * text)
 {
 	int index = List.ID(text);
 	if (index != -1) {
-		Colors.Delete(index);
+		Colors.Delete_Index(index);
 		ListClass::Remove_Item(text);
 	}
 }

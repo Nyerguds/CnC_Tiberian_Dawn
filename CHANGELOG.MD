@@ -295,3 +295,5 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * \[Internal\] Units and Aircraft will now obey their "can be repaired" property, and be unable to dock with the Repair Facility if it is disabled. Not that this is now set to True on all units and aircraft, to reflect the original state of the game.
 * Sell mode will no longer be disabled if the player has no structures on the map, since it could still be used for selling walls.
 * Fixed civilians becoming unselectable when they are put on the map before the units revealing them.
+* Base nodes can now have an owner, so multiple Computer players can each build their own base. This is done either by specifying "Player=" on the Base section, or by suffixing the existing base node lines with an extra comma-separated part containing the node's house.
+* Computer-owned Construction Yards will now only pick buildings to build if other Construction Yards of their House aren't already building them.

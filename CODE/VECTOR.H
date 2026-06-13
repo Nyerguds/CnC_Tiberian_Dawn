@@ -147,7 +147,7 @@ class DynamicVectorClass : public VectorClass<T>
 		int Delete(T const & object);
 
 		// Delete object at this vector index.
-		int Delete(int index);
+		int Delete_Index(int index);
 
 		// Deletes all objects in the vector.
 		void Delete_All(void) {ActiveCount = 0;};

@@ -44,13 +44,19 @@
 class BaseNodeClass
 {
 	public:
-		BaseNodeClass(void) {};
+		BaseNodeClass(void)
+		{
+			Type = STRUCT_NONE;
+			Coord = 0;
+			House = HOUSE_NONE;
+		};
 		int operator == (BaseNodeClass const & node);
 		int operator != (BaseNodeClass const & node);
 		int operator > (BaseNodeClass const & node);
 
 		StructType Type;
 		COORDINATE Coord;
+		HousesType House;
 };
 
 
@@ -94,7 +100,7 @@ class BaseClass
 		/**********************************************************************
 		** Returns a pointer to the object for the given node.
 		*/
-		BuildingClass * Get_Building(int index);
+		BuildingClass * Get_Building(int index, bool checkHouse = false);
 
 		/**********************************************************************
 		** Returns a pointer to the cell on which a wall was built.
@@ -115,7 +121,7 @@ class BaseClass
 		/**********************************************************************
 		** Returns a pointer to the next "hole" in the Nodes list.
 		*/
-		BaseNodeClass * Next_Buildable(StructType type = STRUCT_NONE, BaseNodeClass * afterthis = NULL);
+		BaseNodeClass * Next_Buildable(HousesType House, StructType type = STRUCT_NONE, BaseNodeClass * afterthis = NULL);
 
 		/**********************************************************************
 		** This is the list of "nodes" that define the base.  Portions of this

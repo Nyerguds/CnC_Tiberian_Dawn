@@ -3535,7 +3535,39 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 		case RTTI_BUILDING:
 		case RTTI_BUILDINGTYPE:
 			if (CurBuildings < MaxBuilding) {
-				BaseNodeClass * node = Base.Next_Buildable();
+				// Get the next unbuilt.
+				BaseNodeClass * node = Base.Next_Buildable(*this);
+				// Nyerguds's C&C Patch PRoject v1.04: Smart multitasking on multiple Construction Yards.
+				if (node) {
+					// Loop over any other CYs of this house and list all types they are already producing.
+					// Technically the requesting building should be skipped in this, but in reality it will
+					// only request something new to build if it is currently idle anyway.
+					DynamicVectorClass<int> beingbuilt;
+					for (int index = 0; index < Buildings.Count(); ++index) {
+						BuildingClass * building = Buildings.Ptr(index);
+						if (building && building->House == this
+							&& building->Class->ToBuild == RTTI_BUILDINGTYPE
+							&& building->Factory && building->Factory->Get_Object()
+							&& building->Factory->Get_Object()->What_Am_I() == RTTI_BUILDING) {
+							beingbuilt.Add(((BuildingTypeClass *)building->Factory->Get_Object()->Techno_Type_Class())->Type);
+						}
+					}
+					// Check if the item is already being built, and if so, remove it from the check list
+					// and continue checking until either an available one is found, or we ran out of nodes.
+					bool isinprogress;
+					do {
+						isinprogress = false;
+						for (int index = 0; index < beingbuilt.Count(); ++index) {
+							if (beingbuilt[index] == node->Type) {
+								// Node found in list. Delete it, fetch the next node, and abort the loop to evaluate the next Base item.
+								isinprogress = true;
+								beingbuilt.Delete_Index(index);
+								node = Base.Next_Buildable(*this, STRUCT_NONE, node);
+								break;
+							}
+						}
+					} while (isinprogress && node);
+				}
 				if (node) {
 					techno = &BuildingTypeClass::As_Reference(node->Type);
 				}

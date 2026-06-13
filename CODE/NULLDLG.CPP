@@ -2760,7 +2760,7 @@ static int Com_Settings_Dialog( SerialSettingsType *settings )
 			case (BUTTON_DELETE | KN_BUTTON):
 
 				if ( InitStrings.Count() && initstr_index != -1) {
-					InitStrings.Delete( initstr_index );
+					InitStrings.Delete_Index( initstr_index );
 					Build_Init_String_Listbox(&initstrlist, &initstr_edt, initstrbuf,
 						&initstr_index);
 				}
@@ -6068,7 +6068,7 @@ static int Phone_Dialog (void)
 				/*...............................................................
 				Delete the current item & rebuild the phone listbox
 				...............................................................*/
-				PhoneBook.Delete (CurPhoneIdx);
+				PhoneBook.Delete_Index (CurPhoneIdx);
 				Build_Phone_Listbox(&phonelist, &numedit, phone_num);
 
 				if (CurPhoneIdx == -1) {

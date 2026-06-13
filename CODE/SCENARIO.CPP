@@ -553,7 +553,7 @@ void Do_Win(void)
 			BaseNodeClass * node = Base.Get_Node(index);
 
 			if (node && node->Type == sabotaged) {
-				Base.Nodes.Delete(index);
+				Base.Nodes.Delete_Index(index);
 				break;
 			}
 		}

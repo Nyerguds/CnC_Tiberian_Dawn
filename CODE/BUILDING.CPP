@@ -1117,10 +1117,7 @@ void BuildingClass::AI(void)
 		// Nyerguds's C&C Patch Project v1.04: Fix sellback chance relying on map number.
 		// Fix sellback chance becoming 100% for higher mission numbers in the New Missions list.
 		// Make it depend on set buildlevel rather than on mission number.
-		int scenario = MIN(BuildLevel, 20);
-		if (GameToPlay != GAME_NORMAL) {
-			scenario = 20;
-		}
+		int scenario = GameToPlay != GAME_NORMAL ? 20 : MIN(BuildLevel, 20);
 		int ratio = 0x0040;
 		if (scenario > 6) ratio = 0x0080;
 		if (scenario > 10) ratio = 0x00C0;
@@ -2181,7 +2178,7 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 				StructType toBuild = ((BuildingClass *)base)->Class->Type;
 				BuildingTypeClass btype = BuildingTypeClass::As_Reference(toBuild);
 
-				BaseNodeClass * node = Base.Next_Buildable(toBuild);
+				BaseNodeClass * node = Base.Next_Buildable(*House, toBuild);
 				while (node) {
 					// Center to scatter away from.
 					COORDINATE center = Coord_Add(node->Coord, btype.Center);
@@ -2208,7 +2205,7 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 						Transmit_Message(RADIO_OVER_OUT);
 					}
 					// blocked == 2 or Unlimbo failed. Try next node after this one.
-					node = Base.Next_Buildable(toBuild, node);
+					node = Base.Next_Buildable(*House, toBuild, node);
 				}
 			}
 			break;
@@ -5036,7 +5033,7 @@ void BuildingClass::Detach_All(bool all)
 
 		/*
 		**	If a factory was found, then temporarily disable this building and then
-		**	detmermine if any object that is being produced can still be produced. If
+		**	determine if any object that is being produced can still be produced. If
 		**	not, then the object being produced must be abandoned.
 		*/
 		if (factory) {

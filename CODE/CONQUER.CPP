@@ -830,7 +830,7 @@ void Keyboard_Process(KeyNumType &input)
 					selectedTypes.Add(CurrentObject[index]);
 				}
 				Unselect_All();
-				for (index = 0; index < selectedTypes.Count(); index++) {
+				for (index = 0; index < selectedTypes.Count(); ++index) {
 					ObjectClass const * sel = selectedTypes[index];
 					RTTIType whattype = sel->What_Am_I();
 					int id = -1;

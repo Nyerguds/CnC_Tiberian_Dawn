@@ -238,7 +238,14 @@ int ObjectTypeClass::Time_To_Build(HousesType ) const
  *                                                                                             *
  *    This routine will search for a factory building that can build this object type.         *
  *                                                                                             *
- * INPUT:   <NA> this routine is just here to be overridden by other classes.                  *
+ * INPUT:   intheory -- When true, it doesn't consider if the factory is currently busy. It    *
+ *                      only considers that it is the right type.                              *
+ *                                                                                             *
+ *          legal    -- Should building prerequisite legality checks be performed as well?     *
+ *                      For building placements, this is usually false. For sidebar button     *
+ *                      adding, this is usually true.                                          *
+ *                                                                                             *
+ *          house    -- The house of the desired aircraft to be built.                         *
  *                                                                                             *
  * OUTPUT:  Returns with a pointer to the building that can construct the object specified.    *
  *                                                                                             *
@@ -247,7 +254,7 @@ int ObjectTypeClass::Time_To_Build(HousesType ) const
  * HISTORY:                                                                                    *
  *   07/19/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-BuildingClass * ObjectTypeClass::Who_Can_Build_Me(bool, bool, HousesType) const
+BuildingClass * ObjectTypeClass::Who_Can_Build_Me(bool /*intheory*/, bool /*legal*/, HousesType /*house*/) const
 {
 	return(NULL);
 }
