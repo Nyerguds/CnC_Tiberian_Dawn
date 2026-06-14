@@ -437,7 +437,7 @@ class HouseClass {
 		bool  Can_Build(TechnoTypeClass const * type, HousesType house) const;
 		unsigned char const *  Remap_Table(bool blushing=false, bool unit=false) const;
 
-		TechnoTypeClass const *  Suggest_New_Object(RTTIType objectype) const;
+		TechnoTypeClass const *  Suggest_New_Object(RTTIType objectype, bool safetype) const;
 		bool  Does_Enemy_Building_Exist(StructType) const;
 		void  Harvested(unsigned tiberium);
 		long  Available_Money(void) const;

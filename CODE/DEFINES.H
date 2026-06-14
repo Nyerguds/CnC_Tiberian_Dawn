@@ -150,7 +150,6 @@
 #define	PARM_INSTALL    	0xD95C68A2		// "FROMINSTALL"
 #define	PARM_TRUENAME   	0xB1A34435		// "TARBOSH" Enables true object names.
 #define	PARM_3POINT     	0x03552894		// "DANCING" Enable three point turns.
-#define	PARM_BAR_ON	     	0xC3B59CA2		// "HARKONNEN" Enable health bars (newly added :p)
 #define	PARM_SCORE      	0x7FDE2C33		// "REMIX" Enables alternate themes.
 #define	PARM_COMBAT     	0xDC57C4B2		// "CHARGE!" Gives combat advantage to attacker.
 #define	PARM_TREETARGET 	0x00AB6BEF		// "LIGHTNING" Allows targeting of trees without <CTRL> key.
@@ -171,6 +170,9 @@
 //#define PARM_SPECIAL    	0xE0F651B9		// #7 "GONEWILD"
 //#define PARM_SPECIAL    	0x10B9683D		// #8 "ISITCLEAR"
 //#define PARM_SPECIAL    	0xEE1CD37D		// #9 "CHOMPCHOMP"
+#define	PARM_BAR_ON	     	0xC3B59CA2		// "HARKONNEN" Enable health bars.
+#define	PARM_SPYGLASS1   	0x8D1447B5		// Enable spying on production.
+#define	PARM_SPYGLASS2  	0xA13CF3DA		// Enable spying on all production.
 
 
 /**********************************************************************
@@ -835,6 +837,20 @@ typedef enum LayerType {
 } LayerType;
 
 inline LayerType operator++(LayerType &, int);
+
+
+/**********************************************************************
+**	Used to check how unoccupied a certain placement target area is.
+**	The values increase as the blockage gets more severe.
+*/
+typedef enum OccupiedState {
+	OCCUPIED_FREE,
+	OCCUPIED_FRIENDLY,
+	OCCUPIED_HOSTILE,
+	OCCUPIED_BLOCKED,
+} OccupiedState;
+
+inline OccupiedState operator++(OccupiedState &, int);
 
 
 /**********************************************************************

@@ -392,6 +392,8 @@ class ObjectTypeClass : public AbstractTypeClass
 		virtual BuildingClass *  Who_Can_Build_Me(bool, bool, HousesType) const;
 		virtual void const *  Get_Cameo_Data(void) const;
 		virtual bool  Cameo_Is_Theater_Shape(void) const;
+		virtual void const *  Get_Spy_Cameo_Data(void) const;
+		virtual bool  Spy_Cameo_Is_Theater_Shape(void) const;
 		void const *  Get_Image_Data(void) const {return ImageData;};
 		bool Image_Is_Theater_Shape(void) const {return ImageIsTheaterShape;};
 		void const *  Get_Radar_Data(void) const {return RadarIcon;};
@@ -569,6 +571,17 @@ class TechnoTypeClass : public ObjectTypeClass
 		bool CameoIsTheaterShape;
 
 		/*
+		**	This is the small icon image that is used to display the object on
+		**	the battlefield to indicate what a building is constructing.
+		*/
+		void const * SpyCameoData;
+
+		/*
+		**	This caches whether the spy icon image data was loaded from a theater specific mix archive.
+		*/
+		bool SpyCameoIsTheaterShape;
+
+		/*
 		**	These are the weapons that this techno object is armed with.
 		*/
 		WeaponType Primary;
@@ -642,6 +655,8 @@ class TechnoTypeClass : public ObjectTypeClass
 		virtual int  Repair_Step(void) const;
 		virtual void const *  Get_Cameo_Data(void) const;
 		virtual bool  Cameo_Is_Theater_Shape(void) const;
+		virtual void const *  Get_Spy_Cameo_Data(void) const;
+		virtual bool  Spy_Cameo_Is_Theater_Shape(void) const;
 		virtual int  Cost_Of(void) const;
 		virtual int  Enemy_Name(void) const;
 		virtual int  Time_To_Build(HousesType house) const;
@@ -879,6 +894,7 @@ class BuildingTypeClass : public TechnoTypeClass {
 		operator StructType(void) const {return(Type);};
 
 		static BuildingTypeClass const &  As_Reference(StructType type);
+		static BuildingTypeClass const *  As_Pointer(StructType type);
 		static StructType  From_Name(char const *name);
 		static void Init(TheaterType theater);
 		static void After_Init(void) {};
@@ -1177,6 +1193,7 @@ class UnitTypeClass : public TechnoTypeClass
 
 		static UnitType  From_Name(char const *name);
 		static UnitTypeClass const &  As_Reference(UnitType type);
+		static UnitTypeClass const *  As_Pointer(UnitType type);
 		static void Init(TheaterType );
 		static void After_Init(void) {};
 		static void One_Time(void);
@@ -1307,6 +1324,7 @@ class InfantryTypeClass : public TechnoTypeClass
 
 		static InfantryType  From_Name(char const *name);
 		static InfantryTypeClass const &  As_Reference(InfantryType type) {return *Pointers[type];};
+		static InfantryTypeClass const *  As_Pointer(InfantryType type);
 		static void Init(TheaterType );
 		static void After_Init(void) {};
 		static void One_Time(void);
@@ -1946,6 +1964,7 @@ class AircraftTypeClass : public TechnoTypeClass
 
 		static AircraftType  From_Name(char const *name);
 		static AircraftTypeClass const &  As_Reference(AircraftType a) {return *Pointers[a];};
+		static AircraftTypeClass const *  As_Pointer(AircraftType a);
 		static void Init(TheaterType);
 		static void After_Init(void);
 		static void One_Time(void);
@@ -2081,6 +2100,7 @@ class OverlayTypeClass: public ObjectTypeClass
 
 		static OverlayType  From_Name(char const *name);
 		static OverlayTypeClass const &  As_Reference(OverlayType type) {return *Pointers[type];};
+		static OverlayTypeClass const *  As_Pointer(OverlayType type);
 		static void Init(TheaterType);
 		static void After_Init(void) {};
 		static void One_Time(void);

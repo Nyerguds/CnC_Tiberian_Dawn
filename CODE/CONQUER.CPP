@@ -3081,19 +3081,19 @@ TechnoTypeClass const * Fetch_Techno_Type(RTTIType type, int id)
 	switch (type) {
 		case RTTI_UNITTYPE:
 		case RTTI_UNIT:
-			return(&UnitTypeClass::As_Reference((UnitType)id));
+			return(UnitTypeClass::As_Pointer((UnitType)id));
 
 		case RTTI_BUILDINGTYPE:
 		case RTTI_BUILDING:
-			return(&BuildingTypeClass::As_Reference((StructType)id));
+			return(BuildingTypeClass::As_Pointer((StructType)id));
 
 		case RTTI_INFANTRYTYPE:
 		case RTTI_INFANTRY:
-			return(&InfantryTypeClass::As_Reference((InfantryType)id));
+			return(InfantryTypeClass::As_Pointer((InfantryType)id));
 
 		case RTTI_AIRCRAFTTYPE:
 		case RTTI_AIRCRAFT:
-			return(&AircraftTypeClass::As_Reference((AircraftType)id));
+			return(AircraftTypeClass::As_Pointer((AircraftType)id));
 	}
 	return(NULL);
 }

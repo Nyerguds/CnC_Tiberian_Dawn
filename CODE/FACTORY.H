@@ -69,6 +69,7 @@ class FactoryClass : private StageClass
 		bool  Start(void);
 		bool  Suspend(void);
 		int  Completion(void);
+		int  Final(void);
 		TechnoClass *  Get_Object(void) const;
 		int  Get_Special_Item(void) const;
 		void  AI(void);

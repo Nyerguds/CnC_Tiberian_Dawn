@@ -605,7 +605,7 @@ bool FactoryClass::Abandon(void)
 
 
 /***********************************************************************************************
- * FactoryClass::Completion -- Fetchs the completion step for this factory.                    *
+ * FactoryClass::Completion -- Fetches the completion step for this factory.                   *
  *                                                                                             *
  *    Use this routine to determine what animation (or completion step) the factory is         *
  *    currently on.                                                                            *
@@ -623,6 +623,27 @@ int FactoryClass::Completion(void)
 {
 	Validate();
 	return(Fetch_Stage());
+}
+
+
+/***********************************************************************************************
+ * FactoryClass::Final -- Fetches the final completion step for this factory.                  *
+ *                                                                                             *
+ *    Use this routine to get the amount to be reached by Completion() to consider this        *
+ *    factory complete. This can be used to get a percentage of the completion.                *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns the final step needed to be reached for the factory to be done.            *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/14/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+int FactoryClass::Final(void)
+{
+	return(STEP_COUNT);
 }
 
 

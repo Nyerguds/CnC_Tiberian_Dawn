@@ -3299,6 +3299,9 @@ bool HouseClass::Does_Enemy_Building_Exist(StructType btype) const
  *                                                                                             *
  * INPUT:   objecttype  -- The type of object to restrict the scan for.                        *
  *                                                                                             *
+ *          safetype    -- Indicates previous placement failed. Try to something completely    *
+ *                         safe this time (only for building placement)                        *
+ *                                                                                             *
  * OUTPUT:  Returns with a pointer to a techno type for the object type that should be         *
  *          created. If no object should be created, then NULL is returned.                    *
  *                                                                                             *
@@ -3307,7 +3310,7 @@ bool HouseClass::Does_Enemy_Building_Exist(StructType btype) const
  * HISTORY:                                                                                    *
  *   05/23/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) const
+TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype, bool safetype) const
 {
 	Validate();
 	TechnoTypeClass const * techno = NULL;
@@ -3328,7 +3331,7 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 				**	is in easy mode.
 				*/
 				if (!Special.IsEasy && !IsHuman && (ActiveBScan & STRUCTF_REFINERY) && !(UScan & UNITF_HARVESTER)) {
-					techno = &UnitTypeClass::As_Reference(UNIT_HARVESTER);
+					techno = UnitTypeClass::As_Pointer(UNIT_HARVESTER);
 					if (techno->Scenario <= BuildLevel) break;
 					techno = 0;
 				}
@@ -3422,7 +3425,7 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 				**	The unit type to build is now known. Fetch a pointer to the techno type class.
 				*/
 				if (bestcount) {
-					techno = &UnitTypeClass::As_Reference(bestlist[Random_Pick(0, bestcount-1)]);
+					techno = UnitTypeClass::As_Pointer(bestlist[Random_Pick(0, bestcount-1)]);
 				}
 			}
 			break;
@@ -3524,7 +3527,7 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 				**	The infantry type to build is now known. Fetch a pointer to the techno type class.
 				*/
 				if (bestcount) {
-					techno = &InfantryTypeClass::As_Reference(bestlist[Random_Pick(0, bestcount-1)]);
+					techno = InfantryTypeClass::As_Pointer(bestlist[Random_Pick(0, bestcount-1)]);
 				}
 			}
 			break;
@@ -3535,9 +3538,18 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 		case RTTI_BUILDING:
 		case RTTI_BUILDINGTYPE:
 			if (CurBuildings < MaxBuilding) {
+				// Nyerguds's C&C Patch Project v1.04: specifically filter for unoccupied node if previous placement failed.
+				OccupiedState checktype = safetype ? OCCUPIED_HOSTILE : OCCUPIED_BLOCKED;
 				// Get the next unbuilt.
 				BaseNodeClass * node = Base.Next_Buildable(*this);
-				// Nyerguds's C&C Patch PRoject v1.04: Smart multitasking on multiple Construction Yards.
+				// If the build location is permanently blocked, pick something else to build.
+				BuildingTypeClass const * tp;
+				// Skip over 100% unbuildable locations.
+				while (node && BuildingClass::Flush_For_Placement(node->Type, Coord_Cell(node->Coord), *this) >= checktype) {
+					tp = BuildingTypeClass::As_Pointer(node->Type);
+					node = Base.Next_Buildable(*this, STRUCT_NONE, node);
+				}
+				// Nyerguds's C&C Patch Project v1.04: Smart multitasking on multiple Construction Yards.
 				if (node) {
 					// Loop over any other CYs of this house and list all types they are already producing.
 					// Technically the requesting building should be skipped in this, but in reality it will
@@ -3563,13 +3575,19 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype) cons
 								isinprogress = true;
 								beingbuilt.Delete_Index(index);
 								node = Base.Next_Buildable(*this, STRUCT_NONE, node);
+								// Skip over 100% unbuildable locations.
+								while (node && BuildingClass::Flush_For_Placement(node->Type, Coord_Cell(node->Coord), *this) >= checktype) {
+									tp = BuildingTypeClass::As_Pointer(node->Type);
+									CCDebugString("Node %s for house %s deemed impassable. Finding new node.\n", tp->IniName, this->Class->IniName);
+									node = Base.Next_Buildable(*this, STRUCT_NONE, node);
+								}
 								break;
 							}
 						}
 					} while (isinprogress && node);
 				}
 				if (node) {
-					techno = &BuildingTypeClass::As_Reference(node->Type);
+					techno = BuildingTypeClass::As_Pointer(node->Type);
 				}
 			}
 			break;

@@ -173,11 +173,6 @@ class SpecialClass
 		unsigned IsShowPath:1;
 
 		/*
-		**	All units will display their health bargraph if this is true.
-		*/
-		unsigned IsBarOn:1;
-
-		/*
 		**	If wheeled vehicles should do a 3-point turn when rotating in place, then
 		**	this flag is true.
 		*/
@@ -236,6 +231,21 @@ class SpecialClass
 		** Flag that we were spawned from WChat.
 		*/
 		unsigned IsFromWChat:1;
+
+		/*
+		**	All units will display their health bargraph if this is true.
+		*/
+		unsigned IsBarOn:1;
+
+		/*
+		**	Debug mode to view what factories are building.
+		*/
+		unsigned IsSpyGlass:1;
+
+		/*
+		**	Debug mode to view what all factories are building.
+		*/
+		unsigned IsGlobalSpyGlass:1;
 
 		/*
 		**	Logging is enabled via command line.

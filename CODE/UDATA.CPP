@@ -1767,7 +1767,7 @@ void UnitTypeClass::Prep_For_Add(void)
 {
 	for (UnitType index = UNIT_FIRST; index < UNIT_COUNT; index++) {
 		if (As_Reference(index).Get_Image_Data() != NULL) {
-			Map.Add_To_List(&As_Reference(index));
+			Map.Add_To_List(As_Pointer(index));
 		}
 	}
 }
@@ -1795,17 +1795,21 @@ void UnitTypeClass::One_Time(void)
 	for (UnitType index = UNIT_FIRST; index < UNIT_COUNT; index++) {
 		char fullname[_MAX_FNAME+_MAX_EXT];
 		char buffer[_MAX_FNAME];
-		UnitTypeClass	*uclass = (UnitTypeClass*)&As_Reference(index);
+		UnitTypeClass	*uclass = (UnitTypeClass*)As_Pointer(index);
 
 		uclass->CameoData = NULL;
 		uclass->CameoIsTheaterShape = false;
-		if (uclass->IsBuildable && !hires) {
-			/*
-			**	Fetch the supporting data files for the unit.
-			*/
+		/*
+		**	Fetch the supporting data files for the unit.
+		*/
+		if (uclass->IsBuildable) {
 			sprintf(buffer, "%sICON", uclass->IniName);
 			_makepath(fullname, NULL, NULL, buffer, ".SHP");
-			uclass->CameoData = MixFileClass::Retrieve(fullname);
+			uclass->SpyCameoData = MixFileClass::Retrieve(fullname);
+			uclass->SpyCameoIsTheaterShape = false;
+			if (!hires) {
+				uclass->CameoData = uclass->SpyCameoData;
+			}
 		}
 
 		/*
@@ -1863,7 +1867,7 @@ void UnitTypeClass::Init(TheaterType theater)
 		sprintf(cameomixname, "%.4sICNH.MIX", Theaters[theater].Root);
 
 		for (UnitType index = UNIT_FIRST; index < UNIT_COUNT; index++) {
-			UnitTypeClass * classptr = (UnitTypeClass*)&As_Reference(index);
+			UnitTypeClass * classptr = (UnitTypeClass*)As_Pointer(index);
 
 			classptr->CameoData = NULL;
 			classptr->CameoIsTheaterShape = true;
@@ -1995,8 +1999,8 @@ BuildingClass * UnitTypeClass::Who_Can_Build_Me(bool intheory, bool legal, House
 /***********************************************************************************************
  * UnitTypeClass::As_Reference -- Fetches a reference to the unit type class specified.        *
  *                                                                                             *
- *    Use this routine to return a reference to the UnitTypeClass object as indicated by       *
- *    the unit type number speicified.                                                         *
+ *    This routine will fetch a reference to the UnitTypeClass as indicated by the             *
+ *    unit type number specified.                                                              *
  *                                                                                             *
  * INPUT:   type  -- The unit type number to convert into a UnitTypeClass object reference.    *
  *                                                                                             *
@@ -2010,6 +2014,30 @@ BuildingClass * UnitTypeClass::Who_Can_Build_Me(bool intheory, bool legal, House
 UnitTypeClass const & UnitTypeClass::As_Reference(UnitType type)
 {
 	return(*Pointers[type]);
+}
+
+
+/***********************************************************************************************
+ * UnitTypeClass::As_Pointer -- Fetches pointer to the building type specified.                *
+ *                                                                                             *
+ *    This routine will fetch a pointer to the UnitTypeClass as indicated by the               *
+ *    unit type number specified.                                                              *
+ *                                                                                             *
+ * INPUT:   type  -- The unit type number to convert into a UnitTypeClass reference.           *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the unit type class as indicated by the                  *
+ *          parameter.                                                                         *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/14/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+UnitTypeClass const * UnitTypeClass::As_Pointer(UnitType type)
+{
+	if (type <= UNIT_NONE || type >= UNIT_COUNT)
+		return (NULL);
+	return(Pointers[type]);
 }
 
 

@@ -635,6 +635,17 @@ void OptionsClass::Load_Settings (void)
 	}
 
 	/*
+	**	Show what buildings are producing.
+	*/
+	WWGetPrivateProfileString("Options", "SpyGlass", "", workbuf, sizeof(workbuf), buffer);
+	int spyglass = Obfuscate(workbuf);
+	if (spyglass == PARM_SPYGLASS1) {
+		Special.IsSpyGlass = true;
+	} else if (spyglass == PARM_SPYGLASS2) {
+		Special.IsGlobalSpyGlass = true;
+	}
+
+	/*
 	**	Allow purchase of the helipad separately from the helicopter.
 	*/
 	WWGetPrivateProfileString("Options", "Helipad", "", workbuf, sizeof(workbuf), buffer);

@@ -899,6 +899,30 @@ void OverlayTypeClass::Draw_It(int x, int y, int data) const
 
 
 /***********************************************************************************************
+ * OverlayTypeClass::As_Pointer -- Fetches a pointer to the overlay type class specified.      *
+ *                                                                                             *
+ *    This routine will fetch a pointer to the OverlayTypeClass as indicated by the            *
+ *    overlay type number specified.                                                           *
+ *                                                                                             *
+ * INPUT:   type  -- The overlay type number to convert into a OverlayTypeClass object         *
+ *                   pointer.                                                                  *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the overlay type class object specified.                 *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/14/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+OverlayTypeClass const * OverlayTypeClass::As_Pointer(OverlayType type)
+{
+	if (type <= OVERLAY_NONE || type >= OVERLAY_COUNT)
+		return (NULL);
+	return(Pointers[type]);
+}
+
+
+/***********************************************************************************************
  * OverlayTypeClass::Init -- Initialize the overlay graphic data per theater.                  *
  *                                                                                             *
  *    This routine will update the overlay graphic data according to the theater specified.    *

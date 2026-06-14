@@ -471,7 +471,9 @@ void BulletClass::AI(void)
 					**	Set payback on this animation, in case the animation itself can deal damage.
 					**	An example of this would be the nuclear explosion.
 					*/
-					anim->Set_Payback(Payback, Owner);
+					if (anim) {
+						anim->Set_Payback(payback, Owner);
+					}
 				}
 				delete this;
 				return;

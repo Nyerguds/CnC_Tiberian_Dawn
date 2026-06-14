@@ -452,22 +452,27 @@ void AircraftTypeClass::One_Time(void)
 		PatsuxDefault = OrcaHeli.Primary;
 	}
 
+	bool hires = Get_Resolution_Factor() != 0;
 	for (AircraftType index = AIRCRAFT_FIRST; index < AIRCRAFT_COUNT; index++) {
 		char fullname[_MAX_FNAME+_MAX_EXT];
-		AircraftTypeClass * uclass = (AircraftTypeClass *)&As_Reference(index);
+		char buffer[_MAX_FNAME];
+		AircraftTypeClass * uclass = (AircraftTypeClass *)As_Pointer(index);
 
 		/*
 		**	Fetch the supporting data files for the unit.
 		*/
-		char buffer[_MAX_FNAME];
 		uclass->CameoData = NULL;
 		uclass->CameoIsTheaterShape = false;
-		if (!Get_Resolution_Factor() ) {
+		if (uclass->IsBuildable) {
 			sprintf(buffer, "%sICON", uclass->IniName);
 			_makepath(fullname, NULL, NULL, buffer, ".SHP");
-			uclass->CameoData = MixFileClass::Retrieve(fullname);
+			uclass->SpyCameoData = MixFileClass::Retrieve(fullname);
+			uclass->SpyCameoIsTheaterShape = false;
+			if (!hires) {
+				uclass->CameoData = uclass->SpyCameoData;
+			}
 		}
-		
+
 		/*
 		**	Generic shape for all houses load method.
 		*/
@@ -522,7 +527,7 @@ void AircraftTypeClass::Prep_For_Add(void)
 {
 	for (AircraftType index = AIRCRAFT_FIRST; index < AIRCRAFT_COUNT; index++) {
 		if (As_Reference(index).Get_Image_Data()) {
-			Map.Add_To_List(&As_Reference(index));
+			Map.Add_To_List(As_Pointer(index));
 		}
 	}
 }
@@ -783,6 +788,30 @@ bool AircraftTypeClass::Create_And_Place(CELL, HousesType) const
 
 
 /***********************************************************************************************
+ * AircraftTypeClass::As_Pointer -- Fetches a pointer to the aircraft type class specified.    *
+ *                                                                                             *
+ *    This routine will fetch a pointer to the AircraftTypeClass as indicated by the           *
+ *    aircraft type number specified.                                                          *
+ *                                                                                             *
+ * INPUT:   type  -- The aircraft type number to convert into a AircraftTypeClass object       *
+ *                   pointer.                                                                  *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the aircraft type class object specified.                *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/14/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+AircraftTypeClass const * AircraftTypeClass::As_Pointer(AircraftType type)
+{
+	if (type <= AIRCRAFT_NONE || type >= AIRCRAFT_COUNT)
+		return (NULL);
+	return(Pointers[type]);
+}
+
+
+/***********************************************************************************************
  * AircraftTypeClass::Init -- load up terrain set dependent sidebar icons                      *
  *                                                                                             *
  *                                                                                             *
@@ -809,7 +838,7 @@ void AircraftTypeClass::Init(TheaterType theater)
 		sprintf(cameomixname, "%.4sICNH.MIX", Theaters[theater].Root);
 
 		for (AircraftType index = AIRCRAFT_FIRST; index < AIRCRAFT_COUNT; index++) {
-			AircraftTypeClass *classptr = (AircraftTypeClass*)&As_Reference(index);
+			AircraftTypeClass *classptr = (AircraftTypeClass*)As_Pointer(index);
 
 			classptr->CameoData = NULL;
 			classptr->CameoIsTheaterShape = true;

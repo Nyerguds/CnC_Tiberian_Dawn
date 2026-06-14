@@ -4556,19 +4556,23 @@ void BuildingTypeClass::One_Time(void)
 	for (StructType sindex = STRUCT_FIRST; sindex < STRUCT_COUNT; sindex++) {
 		char	fullname[_MAX_FNAME+_MAX_EXT];
 		char	buffer[_MAX_FNAME];
-		BuildingTypeClass * building = (BuildingTypeClass*)&As_Reference(sindex);
+		BuildingTypeClass * building = (BuildingTypeClass*)As_Pointer(sindex);
 
 		/*
 		**	Fetch the sidebar cameo image for this building.
 		*/
 		building->CameoData = NULL;
-		if (building->IsBuildable && !hires) {
+		building->CameoIsTheaterShape = false;
+		if (building->IsBuildable) {
 			sprintf(buffer, "%.4sICON", building->IniName);
 			_makepath(fullname, NULL, NULL, buffer, ".SHP");
-			building->CameoData = MixFileClass::Retrieve(fullname);
-			building->CameoIsTheaterShape = false;
+			building->SpyCameoData = MixFileClass::Retrieve(fullname);
+			building->SpyCameoIsTheaterShape = false;
+			if (!hires) {
+				building->CameoData = building->SpyCameoData;
+			}
 		}
-	
+
 		/*
 		**	Fetch the construction animation for this building.
 		*/
@@ -4603,7 +4607,7 @@ void BuildingTypeClass::One_Time(void)
 	**	Install all the special animation sequences for the different building types.
 	*/
 	for (unsigned index = 0; index < (sizeof(_anims) / sizeof(_anims[0])); index++) {
-		BuildingTypeClass const *b = &As_Reference(_anims[index].Class);
+		BuildingTypeClass const *b = As_Pointer(_anims[index].Class);
 		if (b) {
 			b->Init_Anim(_anims[index].Stage, _anims[index].Start, _anims[index].Length, _anims[index].Rate);
 		}
@@ -4707,7 +4711,7 @@ void BuildingTypeClass::Prep_For_Add(void)
 {
 	for (StructType index = STRUCT_FIRST; index < STRUCT_COUNT; index++) {
 		if (As_Reference(index).Get_Image_Data()) {
-			Map.Add_To_List(&As_Reference(index));
+			Map.Add_To_List(As_Pointer(index));
 		}
 	}
 }
@@ -4944,7 +4948,7 @@ void BuildingTypeClass::Init(TheaterType theater)
 	}
 
 	for (StructType sindex = STRUCT_FIRST; sindex < STRUCT_COUNT; sindex++) {
-		BuildingTypeClass *classptr = (BuildingTypeClass*)&As_Reference(sindex);
+		BuildingTypeClass *classptr = (BuildingTypeClass*)As_Pointer(sindex);
 		classptr->ImageIsTheaterShape = false;
 		if (classptr->IsTheater) {
 			_makepath(fullname, NULL, NULL, classptr->IniName, Theaters[theater].Suffix);
@@ -5037,6 +5041,30 @@ void BuildingTypeClass::Dimensions(int &width, int &height) const
 BuildingTypeClass const & BuildingTypeClass::As_Reference(StructType type)
 {
 	return(* Pointers[type]);
+}
+
+
+/***********************************************************************************************
+ * BuildingTypeClass::As_Pointer -- Fetches pointer to the building type specified.            *
+ *                                                                                             *
+ *    This routine will fetch a pointer to the BuildingTypeClass as indicated by the           *
+ *    building type number specified.                                                          *
+ *                                                                                             *
+ * INPUT:   type  -- The building type number to convert into a BuildingTypeClass reference.   *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the building type class as indicated by the              *
+ *          parameter.                                                                         *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/14/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+BuildingTypeClass const * BuildingTypeClass::As_Pointer(StructType type)
+{
+	if (type <= STRUCT_NONE || type >= STRUCT_COUNT)
+		return (NULL);
+	return(Pointers[type]);
 }
 
 

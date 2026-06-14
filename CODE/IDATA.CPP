@@ -1980,7 +1980,7 @@ void InfantryTypeClass::Display(int x, int y, WindowNumberType window, HousesTyp
 void InfantryTypeClass::Prep_For_Add(void)
 {
 	for (InfantryType index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
-		Map.Add_To_List(&As_Reference(index));
+		Map.Add_To_List(As_Pointer(index));
 	}
 }
 #endif
@@ -2037,17 +2037,21 @@ void InfantryTypeClass::One_Time(void)
 	for (InfantryType index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
 		char fullname[_MAX_FNAME+_MAX_EXT];
 		char buffer[_MAX_FNAME];
-		InfantryTypeClass *uclass = (InfantryTypeClass*)&As_Reference(index);
+		InfantryTypeClass *uclass = (InfantryTypeClass*)As_Pointer(index);
 
 		/*
 		**	The small build image icon sized shapes are always generic.
 		*/
 		uclass->CameoData = NULL;
 		uclass->CameoIsTheaterShape = false;
-		if (uclass->IsBuildable && !hires) {
+		if (uclass->IsBuildable) {
 			sprintf(buffer, "%.4sICON", uclass->IniName);
 			_makepath(fullname, NULL, NULL, buffer, ".SHP");
-			uclass->CameoData = MixFileClass::Retrieve(fullname);
+			uclass->SpyCameoData = MixFileClass::Retrieve(fullname);
+			uclass->SpyCameoIsTheaterShape = false;
+			if(!hires) {
+				uclass->CameoData = uclass->SpyCameoData;
+			}
 		}
 
 		/*
@@ -2059,8 +2063,28 @@ void InfantryTypeClass::One_Time(void)
 }
 
 
-
-
+/***********************************************************************************************
+ * InfantryTypeClass::As_Pointer -- Fetches a pointer to the infantry type class specified.    *
+ *                                                                                             *
+ *    This routine will fetch a pointer to the InfantryTypeClass as indicated by the           *
+ *    infantry type number specified.                                                          *
+ *                                                                                             *
+ * INPUT:   type  -- The infantry type number to convert into a InfantryTypeClass object       *
+ *                   pointer.                                                                  *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the infantry type class object specified.                *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/14/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+InfantryTypeClass const * InfantryTypeClass::As_Pointer(InfantryType type)
+{
+	if (type <= INFANTRY_NONE || type >= INFANTRY_COUNT)
+		return (NULL);
+	return(Pointers[type]);
+}
 
 
 /***********************************************************************************************
@@ -2091,7 +2115,7 @@ void InfantryTypeClass::Init(TheaterType theater)
 		sprintf(cameomixname, "%.4sICNH.MIX", Theaters[theater].Root);
 
 		for (InfantryType index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
-			InfantryTypeClass	*classptr = (InfantryTypeClass*)&As_Reference(index);
+			InfantryTypeClass	*classptr = (InfantryTypeClass*)As_Pointer(index);
 			classptr->CameoData = NULL;
 			classptr->CameoIsTheaterShape = true;
 

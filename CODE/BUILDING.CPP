@@ -608,6 +608,11 @@ void BuildingClass::Draw_It(int x, int y, WindowNumberType window)
 	Techno_Draw_Object(shapefile, shapenum, x, y, window);
 	IsTheaterShape = false;
 
+	int selecty = y;
+	// Migrated from TechnoClass::Draw_It
+	if (*this == STRUCT_BARRACKS) {
+		selecty -= 5;
+	}
 	/*
 	** Patch for adding overlay onto weapon factory.  Only add the overlay if
 	** the building has more than 1 hp.  Also, if the building's in radio
@@ -632,6 +637,11 @@ void BuildingClass::Draw_It(int x, int y, WindowNumberType window)
 			Techno_Draw_Object(WarFactoryOverlay, shapenum, x, y, window);
 		}
 
+		if (Special.IsGlobalSpyGlass || (Special.IsSpyGlass && IsSelected) && GameToPlay == GAME_NORMAL)
+		{
+			Draw_Production(x, selecty, window);
+		}
+
 		/*
 		**	Draw any repair feedback graphic required.
 		*/
@@ -639,12 +649,137 @@ void BuildingClass::Draw_It(int x, int y, WindowNumberType window)
 			CC_Draw_Shape(ObjectTypeClass::SelectShapes, SELECT_WRENCH, x, y, window, SHAPE_CENTER|SHAPE_WIN_REL);
 		}
 	}
+	TechnoClass::Draw_It(x, selecty, window);
+}
 
-	// Migrated from TechnoClass::Draw_It
-	if (*this == STRUCT_BARRACKS) {
-		y -= 5;
+
+/***********************************************************************************************
+ * BuildingClass::Draw_Production -- Displays what this building is currently producing.       *
+ *                                                                                             *
+ *    This paints an icon over the current building graphics indicating what it is currently   *
+ *    building.                                                                                *
+ *                                                                                             *
+ * INPUT:   x,y   -- The coordinate to draw the building at.                                   *
+ *                                                                                             *
+ *          window   -- The clipping window to use.                                            *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/14/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void BuildingClass::Draw_Production(int x, int y, WindowNumberType window) {
+	FactoryClass * fact = Get_Producing_Factory();
+
+	/*
+	**	Check if anything is actually being built.
+	*/
+	if (!fact || !fact->Get_Object()) {
+		return;
 	}
-	TechnoClass::Draw_It(x, y, window);
+
+	TechnoClass * prod = fact->Get_Object();
+	TechnoTypeClass const * prodtype = prod->Techno_Type_Class();
+	void const * shapefile = prodtype->Get_Spy_Cameo_Data();
+	if (!shapefile) {
+		return;
+	}
+
+	/*
+	**	Draw cameo. For infantry, this isn't remapped.
+	*/
+	IsTheaterShape = prodtype->Spy_Cameo_Is_Theater_Shape();
+	int w = Get_Build_Frame_Width(shapefile);
+	int h = Get_Build_Frame_Height(shapefile);
+	void const * remap = NULL;
+	ShapeFlags_Type opts = SHAPE_CENTER|SHAPE_WIN_REL;
+	if (prodtype->What_Am_I() != RTTI_INFANTRYTYPE) {
+		opts = opts | SHAPE_FADING;
+		remap = prod->Remap_Table();
+	}
+	CC_Draw_Shape(shapefile, 0, x, y, window, opts, remap);
+	IsTheaterShape = false;
+
+	/*
+	**	Draw completion bar at the bottom of the cameo.
+	*/	
+	int completion = (w-1) * fact->Completion() / fact->Final();
+	GraphicViewPortClass draw_window(	LogicPage->Get_Graphic_Buffer(),
+													WindowList[window][WINDOWX] << 3 + LogicPage->Get_XPos(),
+													WindowList[window][WINDOWY] + LogicPage->Get_YPos(),
+													WindowList[window][WINDOWWIDTH] << 3,
+													WindowList[window][WINDOWHEIGHT]);
+	int x1 = x - w/2;
+	int x2 = x1 + completion;
+	int y1 = y + h/2 - 3;
+	int y2 = y1 + 2;
+	draw_window.Fill_Rect(x1, y1, x2, y2, LTBLUE);
+}
+
+
+/***********************************************************************************************
+ * BuildingClass::Get_Producing_Factory -- Retrieves this building's current factory.          *
+ *                                                                                             *
+ *    This method is used to find the factory that is relevant to the current building's       *
+ *    production. For human players, this is their global factory object for the producing     *
+ *    type. If the factory is currently idle, or if this building is incapable of producing    *
+ *    the object queued up on a human player's factory of this type, this returns NULL.        *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  A factory object used for showing the "spy" production overlay.                    *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/14/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+FactoryClass * BuildingClass::Get_Producing_Factory() {
+	/*
+	**	Get the factory. For computer players this is trivial,
+	**	for humans it needs to be looked up.
+	*/
+	FactoryClass * fact = NULL;
+	if (House->IsHuman) {
+		int fnum = -1;
+		switch (Class->ToBuild) {
+			case RTTI_AIRCRAFTTYPE:
+				fnum = House->AircraftFactory;
+				break;
+			case RTTI_INFANTRYTYPE:
+				fnum = House->InfantryFactory;
+				break;
+			case RTTI_UNITTYPE:
+				fnum = House->UnitFactory;
+				break;
+			case RTTI_BUILDINGTYPE:
+				fnum = House->BuildingFactory;
+				break;
+		}
+
+		/*
+		**	Convert the factory number into a real factory pointer.
+		*/
+		if (fnum != -1) {
+			fact = Factories.Raw_Ptr(fnum);
+		}
+	} else {
+		fact = Factory;
+	}
+	if (fact == NULL || fact->Get_Object() == NULL) {
+		return(NULL);
+	}
+
+	/*
+	**	For human houses, do not display an icon if the construction option
+	**	or the building is captured tech, and they don't match.
+	*/
+	if (House->IsHuman && !((1L << ActLike) & fact->Get_Object()->Techno_Type_Class()->Ownable)) {
+		return(NULL);
+	}
+	return(fact);
 }
 
 
@@ -852,6 +987,13 @@ void BuildingClass::AI(void)
 	**	Always refresh the SAM site if it has an animation change.
 	*/
 	if (*this == STRUCT_SAM && stagechange) Mark(MARK_CHANGE);
+
+	// If Spyglass is enabled, force a redraw to update the production progress bar.
+	if (((IsSelected && Special.IsSpyGlass) || Special.IsGlobalSpyGlass) &&
+			!IsInLimbo && BState != BSTATE_CONSTRUCTION && Class->ToBuild != RTTI_NONE
+			&& Get_Producing_Factory() != NULL) {
+		Mark(MARK_CHANGE_REDRAW);
+	}
 
 	if ((!Class->IsTurretEquipped && *this != STRUCT_OBELISK) || Mission == MISSION_CONSTRUCTION || Mission == MISSION_DECONSTRUCTION) {
 		if (stagechange) {
@@ -1077,6 +1219,7 @@ void BuildingClass::AI(void)
 	**	production attached to the building itself. The player uses the sidebar interface for
 	**	all production control.
 	*/
+	bool factoryfail = false;
 	if (Factory && Factory->Has_Completed() && PlacementDelay.Expired()) {
 
 		switch (Exit_Object(Factory->Get_Object())) {
@@ -1090,6 +1233,7 @@ void BuildingClass::AI(void)
 				Factory->Abandon();
 				delete Factory;
 				Factory = 0;
+				factoryfail = true;
 				break;
 
 			case 1:
@@ -1157,7 +1301,8 @@ void BuildingClass::AI(void)
 				**	production can never complete -- don't bother starting it.
 				*/
 				if (House->IsStarted && House->Available_Money() > 10) {
-					TechnoTypeClass const * techno = House->Suggest_New_Object(Class->ToBuild);
+					//	Nyerguds's C&C Patch Project v1.04: if factory aborted, ask for a safer thing to build.
+					TechnoTypeClass const * techno = House->Suggest_New_Object(Class->ToBuild, factoryfail);
 
 					/*
 					**	If a suitable object type was selected for production, then start
@@ -1822,7 +1967,7 @@ void BuildingClass::Drop_Debris(TARGET source)
 			if (Random_Pick(0, odds) == 1) {
 				i = new InfantryClass(Crew_Type(), House->Class->House);
 				if (i) {
-					if (Class->Get_Buildup_Data() != NULL && i->Class->IsNominal) i->IsTechnician = true;
+					if (Class->Get_Buildup_Data() != NULL && i->Class->IsCivilian) i->IsTechnician = true;
 					ScenarioInit++;
 					if (i->Unlimbo(Cell_Coord(newcell), DIR_N)) {
 						i->Strength = Random_Pick(5, (int)i->Class->MaxStrength);
@@ -2093,7 +2238,7 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 					break;
 
 				case STRUCT_AIRSTRIP:
-					if (Create_Special_Reinforcement(House, &AircraftTypeClass::As_Reference(AIRCRAFT_CARGO), ttype, TMISSION_UNLOAD, As_Target())) {
+					if (Create_Special_Reinforcement(House, AircraftTypeClass::As_Pointer(AIRCRAFT_CARGO), ttype, TMISSION_UNLOAD, As_Target())) {
 						delete base;
 						return(2);
 					}
@@ -2176,20 +2321,11 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 				*/
 				// Nyerguds's C&C Patch Project v1.04: On failure, scan more base nodes of the same type.
 				StructType toBuild = ((BuildingClass *)base)->Class->Type;
-				BuildingTypeClass btype = BuildingTypeClass::As_Reference(toBuild);
-
 				BaseNodeClass * node = Base.Next_Buildable(*House, toBuild);
 				while (node) {
 					// Center to scatter away from.
-					COORDINATE center = Coord_Add(node->Coord, btype.Center);
 					CELL cell = Coord_Cell(node->Coord);
-					SmudgeType bib = SMUDGE_NONE;
-					CELL bibcell = cell;
-					if (Class->Bib_And_Offset(bib, bibcell)) {
-						// A bib is attached: move scatter center half a cell down.
-						center += (COORDINATE)0x00800000;
-					}
-					int blocked =  Flush_For_Placement(base, cell, center);
+					int blocked =  Flush_For_Placement(toBuild, cell, *House, this);
 					// Blocked by friendlies: try again after they scattered.
 					if (blocked == 1) {
 						return(1);
@@ -3840,6 +3976,7 @@ int BuildingClass::Mission_Deconstruction(void)
 							typ = Crew_Type();
 						}
 						if (typ == INFANTRY_E7) engine = true;
+						bool isCiv = typ == INFANTRY_C7 || typ == INFANTRY_C1;
 
 						InfantryClass * infantry = new InfantryClass(typ, House->Class->House);
 						if (infantry) {
@@ -3855,7 +3992,7 @@ int BuildingClass::Mission_Deconstruction(void)
 								infcoord = coord;
 							}
 							if (infantry->Unlimbo(infcoord, DIR_N)) {
-								if (infantry->Class->IsNominal) infantry->IsTechnician = true;
+								if (infantry->Class->IsCivilian) infantry->IsTechnician = true;
 								ScenarioInit--;
 								infantry->Scatter(0, true);
 								ScenarioInit++;
@@ -4801,7 +4938,7 @@ int BuildingClass::Mission_Unload(void)
 					unit->Assign_Mission(MISSION_GUARD);
 					unit->Commence();
 				}
-				Open_Door(2, 11);
+				Open_Door(2, 10);
 				Status = OPEN;
 				break;
 
@@ -5061,7 +5198,11 @@ void BuildingClass::Detach_All(bool all)
  *                                                                                             *
  *          cell       -- The cell that placement wants to occur at.                           *
  *                                                                                             *
- *          center     -- The coordinates that friendly units should move away from.           *
+ *          house      -- The house that is trying to place this.                              *
+ *                                                                                             *
+ *          placer     -- Building that will react as if attacked if the placement fails.      *
+ *                        If this is not specified, this is considered a test only, and        *
+ *                        nothing will respond or scatter as a result of this test.            *
  *                                                                                             *
  *          doscatter  -- Always call the function with this set to False.                     *
  *                        To avoid unnecessary scattering, the function calls itself with      *
@@ -5070,58 +5211,98 @@ void BuildingClass::Detach_All(bool all)
  * OUTPUT:  0 for ok, nothing blocking.                                                        *
  *          1 for occupied by friendlies; tell them to scatter and try again.                  *
  *          2 for occupied by enemies or buildings; try to place somewhere else.               *
+ *          3 for occupied by something that is permanently blocking; place somewhere else.    *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   08/06/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-int BuildingClass::Flush_For_Placement(TechnoClass * techno, CELL cell, COORDINATE center, bool scatter)
+OccupiedState BuildingClass::Flush_For_Placement(StructType btype, CELL cell, HousesType house, BuildingClass * placer, bool doscatter)
 {
-	Validate();
-	int blocked = 0;
-	if (techno && cell > 0) {
-		short const * list = techno->Class_Of().Occupy_List(true);
-
-		while (*list != REFRESH_EOL) {
-			CELL newcell = cell + *list++;
-			if (!Map.In_Radar(newcell))
+	
+	if (btype == STRUCT_NONE || cell <= 0) {
+		return(OCCUPIED_BLOCKED);
+	}
+	BuildingTypeClass const * btc = BuildingTypeClass::As_Pointer(btype);
+	OccupiedState blocked = OCCUPIED_FREE;
+	COORDINATE center = 0;
+	if (placer) {
+		// Don't bother calculating the scatter center if this is a test
+		// that will never result in actual scattering.
+		center = Coord_Add(Cell_Coord(cell), btc->Center);
+		SmudgeType bib = SMUDGE_NONE;
+		CELL bibcell = cell;
+		if (btc->Bib_And_Offset(bib, bibcell)) {
+			// A bib is attached: move scatter center half a cell down.
+			center += (COORDINATE)0x00800000;
+		}
+	}
+	short const * list = btc->Occupy_List(true);
+	while (*list != REFRESH_EOL) {
+		CELL newcell = cell + *list++;
+		if (!Map.In_Radar(newcell)) {
+			blocked = OCCUPIED_BLOCKED;
+			continue;
+		}
+		CellClass * cellobj = &Map[newcell];
+		if (!Ground[cellobj->Land_Type()].Build) {
+			blocked = OCCUPIED_BLOCKED;
+			continue;
+		}
+		if (cellobj->Overlay != OVERLAY_NONE) {
+			// Walls are insurmountable blockers to the AI. Skip immediately.
+			OverlayTypeClass const * otc = OverlayTypeClass::As_Pointer(cellobj->Overlay);
+			if (otc && !Ground[otc->Land].Build) {
+				blocked = OCCUPIED_BLOCKED;
 				continue;
-			// Nyerguds's C&C Patch Project v1.04: Enhanced check for placing AI buildings.
-			// Return value was a boolean before; it can now be 3 values.
-			// Now loops over all technos so the computer retaliates against all blockers.
-			ObjectClass * obj = Map[newcell].Cell_Techno();
-			while (obj) {
-				if (obj->Is_Techno()) {
-					TechnoClass * occupier = (TechnoClass*)obj;
-					RTTIType rtti = occupier->What_Am_I();
-					if (occupier->House->Is_Ally(this)) {
-						if (rtti == RTTI_BUILDING) {
-							blocked = 2;
-						} else {
-							blocked = MAX(blocked, 1);
-							// Only scatter if in "doscatter" extra call, and if no scatter was done for this cell.
-							if (scatter) {
-								occupier->Scatter(center, true);
-								// "Incoming" makes enemies scatter too, so don't use it.
-								//Map[newcell].Incoming(scatter, true);
-							}
-						}
-					} else {
-						blocked = 2;
-						// if this is a tree... the mission creator messed up I guess?
-						if (rtti != RTTI_TERRAIN) {
-							Base_Is_Attacked(occupier);
-						}
+			}
+		}
+		SmudgeType smudge = cellobj->Smudge;
+		if ((smudge == SMUDGE_BIB1 || smudge == SMUDGE_BIB2 || smudge == SMUDGE_BIB3) && cellobj->Owner != HOUSE_NONE) {
+			// Blocked by a bib. Could trace the origin, check the occupiers / overlappers on the top line,
+			// and look what building is blocking it, I guess? Lots of work though. For now just leave it.
+			blocked = OCCUPIED_BLOCKED;
+			continue;
+		}
+
+		// Nyerguds's C&C Patch Project v1.04: Enhanced check for placing AI buildings.
+		// Return value was a boolean before; it can now be 3 values.
+		// Now loops over all technos so the computer retaliates against all blockers.
+		ObjectClass * obj = cellobj->Cell_Techno();
+		while (obj) {
+			if (!obj->Is_Techno()) {
+				continue;
+			}
+			TechnoClass * occupier = (TechnoClass*)obj;
+			RTTIType rtti = occupier->What_Am_I();
+			if (occupier->House->Is_Ally(house)) {
+				if (rtti == RTTI_BUILDING) {
+					// Blocked by allied building; consider this a lost cause.
+					blocked = OCCUPIED_BLOCKED;
+				} else {
+					// Only increase to 1, never decrease if already higher.
+					blocked = MAX(blocked, OCCUPIED_FRIENDLY);
+					// Only scatter if not in test mode, and when in "doscatter" extra call.
+					if (placer && doscatter) {
+						occupier->Scatter(center, true);
+						// "Incoming" makes enemies scatter too, so don't use it.
+						//Map[newcell].Incoming(scatter, true);
 					}
 				}
-				obj = obj->Next;
+			} else {
+				blocked = OCCUPIED_HOSTILE;
+				// Only act as if attached if not in test mode.
+				if (placer) {
+					placer->Base_Is_Attacked(occupier);
+				}
 			}
+			obj = obj->Next;
 		}
 	}
 	// Only actually scatter if the building is not truly blocked.
-	if (!scatter && blocked == 1) {
-		return(Flush_For_Placement(techno, cell, center, true));
+	if (placer && !doscatter && blocked == OCCUPIED_FRIENDLY) {
+		return(Flush_For_Placement(btype, cell, house, placer, true));
 	}
 	return(blocked);
 }

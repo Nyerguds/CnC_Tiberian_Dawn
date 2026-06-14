@@ -434,6 +434,49 @@ bool TechnoTypeClass::Cameo_Is_Theater_Shape(void) const
 	return(CameoIsTheaterShape);
 }
 
+
+/***********************************************************************************************
+ * TechnoTypeClass::Get_Spy_Cameo_Data -- Fetches the cameo image for this object type.        *
+ *                                                                                             *
+ *    This routine will fetch the spy cameo (battlefield small image) shape of this            *
+ *    object type. If there is no cameo data available (typical for non-producable units),     *
+ *    then NULL will be returned.                                                              *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the spy cameo data for this object type if present.      *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/29/1995 JLB : Created.                                                                 *
+ *=============================================================================================*/
+void const * TechnoTypeClass::Get_Spy_Cameo_Data(void) const
+{
+	return(SpyCameoData);
+}
+
+
+/***********************************************************************************************
+ * TechnoTypeClass::Spy_Cameo_Is_Theater_Shape -- should spy cameo be cached as theater data?  *
+ *                                                                                             *
+ *    This routine will return whether the spy cameo data should be cached as theater data.    *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns whether the spy cameo data should be cached as theater data.               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/19/1995 JLB : Created.                                                                 *
+ *=============================================================================================*/
+bool TechnoTypeClass::Spy_Cameo_Is_Theater_Shape(void) const
+{
+	return(SpyCameoIsTheaterShape);
+}
+
+
 /***********************************************************************************************
  * TechnoTypeClass::Repair_Cost -- Fetches the cost to repair one step.                        *
  *                                                                                             *
@@ -3729,7 +3772,6 @@ void TechnoClass::Base_Is_Attacked(TechnoClass const *enemy)
 	/*
 	**	If the enemy is a gunboat, then don't do anything.
 	*/
-	// This should allow helicopters to retaliate however. Hmmm.
 	if (enemy->What_Am_I() == RTTI_UNIT && (*((UnitClass const *)enemy) == UNIT_GUNBOAT || *((UnitClass const *)enemy) == UNIT_HOVER)) {
 		return;
 	}

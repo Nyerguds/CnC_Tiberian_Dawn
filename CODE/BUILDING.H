@@ -224,6 +224,7 @@ class BuildingClass : public TechnoClass
 		virtual void const * Remap_Table(void);
 		virtual int Exit_Object(TechnoClass * base);
 		virtual void Draw_It(int x, int y, WindowNumberType window);
+		virtual void Draw_Production(int x, int y, WindowNumberType window);
 		virtual bool Mark(MarkType mark);
 		virtual void Look(bool incremental=false);
 		virtual void Fire_Out();
@@ -256,8 +257,7 @@ class BuildingClass : public TechnoClass
 		virtual void AI(void);
 		virtual void Assign_Target(TARGET target);
 		virtual bool Toggle_Primary(void);
-		int  Flush_For_Placement(TechnoClass * techno, CELL cell, COORDINATE center = 0, bool scatter = false);
-
+		static OccupiedState Flush_For_Placement(StructType btype, CELL cell, HousesType house, BuildingClass * placer = NULL, bool scatter = false);
 		virtual int Mission_Unload(void);
 		virtual int Mission_Repair(void);
 		virtual int Mission_Attack(void);
@@ -267,6 +267,7 @@ class BuildingClass : public TechnoClass
 		virtual int Mission_Deconstruction(void);
 		virtual int Mission_Missile(void);
 		virtual void Enter_Idle_Mode(bool initial=false);
+		virtual FactoryClass * Get_Producing_Factory();
 
 		/*
 		**	Scenario and debug support.
