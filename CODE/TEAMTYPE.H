@@ -105,6 +105,7 @@ class TeamTypeClass : public AbstractTypeClass
 		*/
 		static void Read_INI(char *buffer);
 		void  Fill_In(char *name, char *entry);
+		bool  Valid_Team_Mission_Arg(TeamMissionStruct mission, int missions);
 #ifdef SCENARIO_EDITOR
 		static void Write_INI(char *buffer, bool refresh);
 #endif // SCENARIO_EDITOR
@@ -157,12 +158,12 @@ class TeamTypeClass : public AbstractTypeClass
 		unsigned IsActive:1;
 
 		/*
-		**	If RoundAbout, the team avoids high-threat areas
+		**	If RoundAbout, the team avoids high-threat areas.
 		*/
 		unsigned IsRoundAbout:1;
 
 		/*
-		**	If Learning, the team learns from mistakes
+		**	If Learning, the team learns from mistakes. [UNUSED]
 		*/
 		unsigned IsLearning:1;
 
@@ -179,7 +180,7 @@ class TeamTypeClass : public AbstractTypeClass
 		unsigned IsAutocreate:1;
 
 		/*
-		**	Mercenaries will change sides if they start to lose.
+		**	Mercenaries will change sides if they start to lose. [UNUSED]
 		*/
 		unsigned IsMercenary:1;
 
@@ -206,48 +207,48 @@ class TeamTypeClass : public AbstractTypeClass
 
 		/*
 		**	Priority given the team for recruiting purposes; higher priority means
-		**	it can steal members from other teams (scale: 0 - 15)
+		**	it can steal members from other teams. (scale: 0 - 15)
 		*/
 		int RecruitPriority;
 
 		/*
-		**	Initial # of this type of team
+		**	Initial # of this type of team. [UNUSED]
 		*/
 		unsigned char InitNum;
 
 		/*
-		**	Max # of this type of team allowed at one time
+		**	Max # of this type of team allowed at one time.
 		*/
 		unsigned char MaxAllowed;
 
 		/*
-		**	Fear level of this team
+		**	Fear level of this team. [UNUSED]
 		*/
 		unsigned char Fear;
 
 		/*
-		**	House the team belongs to
+		**	House the team belongs to.
 		*/
 		HousesType House;
 
 		/*
-		**	The mission list for this team
+		**	The mission list for this team.
 		*/
 		int MissionCount;
 		TeamMissionStruct MissionList[MAX_TEAM_MISSIONS];
 
 		/*
-		**	Number of different classes in the team
+		**	Number of different classes in the team.
 		*/
 		unsigned char ClassCount;
 
 		/*
-		**	Array of object types comprising the team
+		**	Array of object types comprising the team.
 		*/
 		TechnoTypeClass const * Class[MAX_TEAM_CLASSCOUNT];
 
 		/*
-		**	Desired # of each type of object comprising the team
+		**	Desired # of each type of object comprising the team.
 		*/
 		unsigned char DesiredNum[MAX_TEAM_CLASSCOUNT];
 
@@ -255,7 +256,7 @@ class TeamTypeClass : public AbstractTypeClass
 		static char const * TMissions[TMISSION_COUNT];
 
 		/*
-		** This contains the value of the Virtual Function Table Pointer
+		** This contains the value of the Virtual Function Table Pointer.
 		*/
 		static void * VTable;
 };

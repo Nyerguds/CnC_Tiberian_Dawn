@@ -56,7 +56,8 @@ typedef enum KindType {
 	KIND_ANIMATION,
 	KIND_TRIGGER,
 	KIND_TEAM,
-	KIND_TEAMTYPE
+	KIND_TEAMTYPE,
+	KIND_COUNT
 } KindType;
 
 
@@ -67,6 +68,8 @@ typedef enum KindType {
 
 inline KindType Target_Kind(TARGET a){return (KindType)(((unsigned)a)>>TARGET_MANTISSA);}
 inline unsigned Target_Value(TARGET a){return (((unsigned)a) & TARGET_MANTISSA_MASK);}
+
+inline bool Is_Target_Valid(TARGET a) {return Target_Kind(a) > KIND_NONE && Target_Kind(a) < KIND_COUNT; }
 
 inline bool Is_Target_Team(TARGET a) {return (Target_Kind(a) == KIND_TEAM);}
 inline bool Is_Target_TeamType(TARGET a) {return (Target_Kind(a) == KIND_TEAMTYPE);}

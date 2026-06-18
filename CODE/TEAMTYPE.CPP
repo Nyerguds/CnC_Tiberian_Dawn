@@ -276,6 +276,7 @@ void TeamTypeClass::Fill_In(char * name, char *entry)
 {
 	Validate();
 	int num_classes;
+	int num_missions;
 	char *p1;									// parsing pointer
 	char *p2;									// parsing pointer
 	int i;										// loop counter
@@ -298,27 +299,27 @@ void TeamTypeClass::Fill_In(char * name, char *entry)
 	/*
 	-------------------------- 2nd token: RoundAbout -------------------------
 	*/
-	IsRoundAbout = atoi(strtok(NULL,","));
+	IsRoundAbout = atoi(strtok(NULL,",")) > 0 ? 1 : 0;
 
 	/*
 	--------------------------- 3rd token: Learning --------------------------
 	*/
-	IsLearning = atoi(strtok(NULL,","));
+	IsLearning = atoi(strtok(NULL,",")) > 0 ? 1 : 0;
 
 	/*
 	--------------------------- 4th token: Suicide ---------------------------
 	*/
-	IsSuicide = atoi(strtok(NULL,","));
+	IsSuicide = atoi(strtok(NULL,",")) > 0 ? 1 : 0;
 
 	/*
 	----------------------------- 5th token: Spy -----------------------------
 	*/
-	IsAutocreate = atoi(strtok(NULL,","));
+	IsAutocreate = atoi(strtok(NULL,",")) > 0 ? 1 : 0;
 
 	/*
 	-------------------------- 6th token: Mercenary --------------------------
 	*/
-	IsMercenary = atoi(strtok(NULL,","));
+	IsMercenary = atoi(strtok(NULL,",")) > 0 ? 1 : 0;
 
 	/*
 	----------------------- 7th token: RecruitPriority -----------------------
@@ -352,6 +353,10 @@ void TeamTypeClass::Fill_In(char * name, char *entry)
 	for (i = 0; i < num_classes; i++) {
 		p1 = strtok(NULL,",:");
 		p2 = strtok(NULL,",:");
+		if (i >= MAX_TEAM_CLASSCOUNT) {
+			// Keep splitting, but don't add.
+			continue;
+		}
 		otype = NULL;
 
 		/*
@@ -391,23 +396,62 @@ void TeamTypeClass::Fill_In(char * name, char *entry)
 	/*
 	----------------------- next token: Mission count ------------------------
 	*/
-	MissionCount = atoi(strtok(NULL,","));
+	num_missions = atoi(strtok(NULL,","));
 
-	for (i = 0; i < MissionCount; i++) {
+	for (i = 0; i < num_missions; i++) {
 		p1 = strtok(NULL,",:");
 		p2 = strtok(NULL,",:");
+		if (i >= MAX_TEAM_MISSIONS) {
+			// Keep splitting, but don't add.
+			continue;
+		}
 		mission.Mission = Mission_From_Name(p1);
 		mission.Argument = atoi(p2);
-		MissionList[i] = mission;
+		if (mission.Mission != MISSION_NONE && Valid_Team_Mission_Arg(mission, num_missions)) {
+			MissionList[MissionCount] = mission;
+			MissionCount++;
+		}
 	}
 
 	char * ptr = strtok(NULL, ",");
 	if (ptr) {
-		IsReinforcable = atoi(ptr);
+		IsReinforcable = atoi(ptr) > 0 ? 1 : 0;
 	}
 	ptr = strtok(NULL, ",");
 	if (ptr) {
-		IsPrebuilt = atoi(ptr);
+		IsPrebuilt = atoi(ptr) > 0 ? 1 : 0;
+	}
+}
+
+
+bool TeamTypeClass::Valid_Team_Mission_Arg(TeamMissionStruct mission, int missions) {
+	int arg = mission.Argument;
+	switch (mission.Mission) {
+
+		case TMISSION_ATTACKBASE:				// Attack nearest enemy base.
+		case TMISSION_ATTACKUNITS:			// Attack all enemy units.
+		case TMISSION_ATTACKCIVILIANS:		// Attack all civilians
+		case TMISSION_RAMPAGE:					// attack & destroy anything that's not mine
+		case TMISSION_DEFENDBASE:				// Protect my base.
+		case TMISSION_RETREAT:					// order given by superior team, for coordinating
+		case TMISSION_GUARD:					// works like an infantry's guard mission
+			return(arg >= 0);
+
+		case TMISSION_MOVE:						// moves to waypoint specified.
+		case TMISSION_UNLOAD:					// Unload at current location.
+			return(arg >= 0 && arg < WAYPT_COUNT);
+
+		case TMISSION_MOVECELL:				// moves to cell # specified.
+			return((unsigned)arg < MAP_CELL_TOTAL);
+
+		case TMISSION_LOOP:						// loop back to start of mission list
+			return(arg < MIN(missions, MAX_TEAM_MISSIONS));
+
+		case TMISSION_ATTACKTARCOM:			// attack tarcom
+			return(Is_Target_Valid(arg));
+
+		default:
+			return(false);
 	}
 }
 

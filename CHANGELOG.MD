@@ -297,3 +297,5 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * Fixed civilians becoming unselectable when they are put on the map before the units revealing them.
 * Base nodes can now have an owner, so multiple Computer players can each build their own base. This is done either by specifying "Player=" on the Base section, or by suffixing the existing base node lines with an extra comma-separated part containing the node's house.
 * Computer-owned Construction Yards will now only pick buildings to build if other Construction Yards of their House aren't already building them.
+* \[Internal\] Added better checks when reading Teamtypes to avoid possible memory corruption.
+* \[Internal\] The secret "Bibs" option had special exceptions for the placement of the Barracks and Refinery, to enforce leaving space at the bottom of their passable area when placing. This behaviour was migrated to a new IsBibReserved property on buildings.

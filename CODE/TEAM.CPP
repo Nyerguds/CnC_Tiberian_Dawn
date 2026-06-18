@@ -486,24 +486,31 @@ void TeamClass::AI(void)
 
 			TimeOut = mission->Argument * (TICKS_PER_MINUTE/10);
 			Target = TARGET_NONE;
+			TARGET toassign = TARGET_NONE;
+			CELL dest;
 			switch (mission->Mission) {
 				case TMISSION_MOVECELL:
-					Assign_Mission_Target(::As_Target((CELL)mission->Argument));
+					dest = (CELL)mission->Argument;
+					if ((unsigned)dest < MAP_CELL_TOTAL) {
+						toassign = ::As_Target(dest);
+					}
 					break;
 
 				case TMISSION_MOVE:
 				case TMISSION_UNLOAD:
-					Assign_Mission_Target(::As_Target((CELL)Waypoint[mission->Argument]));
+					if (mission->Argument >= 0 && mission->Argument < WAYPT_COUNT) {
+						dest = Waypoint[mission->Argument];
+						if ((unsigned)dest < MAP_CELL_TOTAL) {
+							toassign = ::As_Target((CELL)Waypoint[mission->Argument]);
+						}
+					}
 					break;
 
 				case TMISSION_ATTACKTARCOM:
-					Assign_Mission_Target(mission->Argument);
-					break;
-
-				default:
-					Assign_Mission_Target(TARGET_NONE);
+					toassign = mission->Argument;
 					break;
 			}
+			Assign_Mission_Target(toassign);
 		} else {
 			delete this;
 			return;

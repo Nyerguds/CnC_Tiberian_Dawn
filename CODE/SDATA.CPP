@@ -277,10 +277,13 @@ short const * SmudgeTypeClass::Occupy_List(bool) const
 	static short _occupy[4*4];
 	short * ptr = &_occupy[0];
 
-	for (int x = 0; x < Width; x++) {
-		for (int y = 0; y < Height; y++) {
-			*ptr++ = x + (y*MAP_CELL_W);
+	int lineval = 0;
+	for (int y = 0; y < Height; ++y) {
+		int val = lineval;
+		for (int x = 0; x < Width; ++x) {
+			*ptr++ = val++;
 		}
+		lineval += MAP_CELL_W;
 	}
 	*ptr = REFRESH_EOL;
 	return(_occupy);

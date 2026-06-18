@@ -2805,7 +2805,7 @@ void TemplateTypeClass::Set_Land_Types(char const * landtypes) {
  *=============================================================================================*/
 LandType TemplateTypeClass::Land_Type(int icon) const {
 	if (!LandTypes) {
-		return LAND_CLEAR;
+		return Land;
 	}
 	int index = 0;
 	const char * landtypes = LandTypes;
@@ -2825,8 +2825,8 @@ LandType TemplateTypeClass::Land_Type(int icon) const {
 		// Increase actual index.
 		index++;
 	}
-	// Always default to Clear terrain.
-	return LAND_CLEAR;
+	// Use default for this type.
+	return Land;
 }
 
 

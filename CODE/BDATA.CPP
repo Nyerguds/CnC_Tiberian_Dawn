@@ -199,6 +199,7 @@ static BuildingTypeClass const ClassTemple(
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -258,6 +259,7 @@ static BuildingTypeClass const ClassEye(
 		true,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -317,6 +319,7 @@ static BuildingTypeClass const ClassWeapon(
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		true,			// Is it a factory type building?
@@ -380,6 +383,7 @@ static BuildingTypeClass const ClassGTower(
 		true,			// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -440,6 +444,7 @@ static BuildingTypeClass const ClassATower(
 		true,			// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -500,6 +505,7 @@ static BuildingTypeClass const ClassObelisk(
 		true,			// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -559,6 +565,7 @@ static BuildingTypeClass const ClassTurret(
 		true,			// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -626,6 +633,7 @@ static BuildingTypeClass const ClassConst(
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		true,			// Is it a factory type building?
@@ -686,6 +694,7 @@ static BuildingTypeClass const ClassRefinery(
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
+		true,			// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -746,6 +755,7 @@ static BuildingTypeClass const ClassStorage(
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -807,6 +817,7 @@ static BuildingTypeClass const ClassHelipad(
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		true,		// Is it a factory type building? // Nyerguds's TUC Quick Fix Patch v1.00: helipad
@@ -867,6 +878,7 @@ static BuildingTypeClass const ClassCommand(
 		true,			// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -927,6 +939,7 @@ static BuildingTypeClass const ClassSAM(
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -986,6 +999,7 @@ static BuildingTypeClass const ClassAirStrip(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		true,			// Is it a factory type building?
@@ -1045,6 +1059,7 @@ static BuildingTypeClass const ClassPower(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -1105,6 +1120,7 @@ static BuildingTypeClass const ClassAdvancedPower(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -1165,6 +1181,7 @@ static BuildingTypeClass const ClassHospital(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		true,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -1225,6 +1242,7 @@ static BuildingTypeClass const ClassBioLab(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -1284,6 +1302,7 @@ static BuildingTypeClass const ClassBarracks(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
+		true,			// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		true,			// Is it a factory type building?
@@ -1343,6 +1362,7 @@ static BuildingTypeClass const ClassHand(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		true,			// Is it a factory type building?
@@ -1402,6 +1422,7 @@ static BuildingTypeClass const ClassTanker(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -1461,6 +1482,7 @@ static BuildingTypeClass const ClassRepair(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -1523,6 +1545,7 @@ static BuildingTypeClass const ClassRoad(
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -1584,6 +1607,7 @@ static BuildingTypeClass const ClassV01(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -1643,6 +1667,7 @@ static BuildingTypeClass const ClassV02(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -1702,6 +1727,7 @@ static BuildingTypeClass const ClassV03(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -1761,6 +1787,7 @@ static BuildingTypeClass const ClassV04(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -1820,6 +1847,7 @@ static BuildingTypeClass const ClassV05(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -1879,6 +1907,7 @@ static BuildingTypeClass const ClassV06(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -1938,6 +1967,7 @@ static BuildingTypeClass const ClassV07(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -1997,6 +2027,7 @@ static BuildingTypeClass const ClassV08(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -2056,6 +2087,7 @@ static BuildingTypeClass const ClassV09(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -2115,6 +2147,7 @@ static BuildingTypeClass const ClassV10(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -2174,6 +2207,7 @@ static BuildingTypeClass const ClassV11(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -2233,6 +2267,7 @@ static BuildingTypeClass const ClassV12(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -2292,6 +2327,7 @@ static BuildingTypeClass const ClassV13(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -2351,6 +2387,7 @@ static BuildingTypeClass const ClassV14(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -2410,6 +2447,7 @@ static BuildingTypeClass const ClassV15(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -2469,6 +2507,7 @@ static BuildingTypeClass const ClassV16(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -2528,6 +2567,7 @@ static BuildingTypeClass const ClassV17(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -2587,6 +2627,7 @@ static BuildingTypeClass const ClassV18(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -2646,6 +2687,7 @@ static BuildingTypeClass const ClassV19(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -2706,6 +2748,7 @@ static BuildingTypeClass const ClassV20(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -2766,6 +2809,7 @@ static BuildingTypeClass const ClassV21(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -2826,6 +2870,7 @@ static BuildingTypeClass const ClassV22(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -2886,6 +2931,7 @@ static BuildingTypeClass const ClassV23(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -2946,6 +2992,7 @@ static BuildingTypeClass const ClassV24(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -3006,6 +3053,7 @@ static BuildingTypeClass const ClassV25(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -3066,6 +3114,7 @@ static BuildingTypeClass const ClassV26(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -3126,6 +3175,7 @@ static BuildingTypeClass const ClassV27(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -3186,6 +3236,7 @@ static BuildingTypeClass const ClassV28(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -3246,6 +3297,7 @@ static BuildingTypeClass const ClassV29(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -3306,6 +3358,7 @@ static BuildingTypeClass const ClassV30(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -3366,6 +3419,7 @@ static BuildingTypeClass const ClassV31(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -3426,6 +3480,7 @@ static BuildingTypeClass const ClassV32(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -3486,6 +3541,7 @@ static BuildingTypeClass const ClassV33(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -3546,6 +3602,7 @@ static BuildingTypeClass const ClassV34(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -3606,6 +3663,7 @@ static BuildingTypeClass const ClassV35(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -3666,6 +3724,7 @@ static BuildingTypeClass const ClassV36(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -3726,6 +3785,7 @@ static BuildingTypeClass const ClassV37(
 		false,		// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -3786,6 +3846,7 @@ static BuildingTypeClass const ClassMission(
 		true,			// Has ability to detect adjacent cloaked objects?
 		true,			// Animation rate is regulated for constant speed?
 		true,			// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		true,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -3848,6 +3909,7 @@ static BuildingTypeClass const Sandbag(
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		true,			// Always use the given name for the building?
 		true,			// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -3909,6 +3971,7 @@ static BuildingTypeClass const Cyclone(
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		true,			// Always use the given name for the building?
 		true,			// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -3970,6 +4033,7 @@ static BuildingTypeClass const Brick(
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		true,			// Always use the given name for the building?
 		true,			// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -4031,6 +4095,7 @@ static BuildingTypeClass const Barbwire(
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		true,			// Always use the given name for the building?
 		true,			// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -4093,6 +4158,7 @@ static BuildingTypeClass const Wood(
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
+		false,		// Treat lowest row as impassable for placement?
 		true,			// Always use the given name for the building?
 		true,			// Is this a wall type structure?
 		false,		// Is it a factory type building?
@@ -4243,6 +4309,7 @@ BuildingTypeClass::BuildingTypeClass(
 						bool is_scanner,
 						bool is_regulated,
 						bool is_bibbed,
+						bool is_bib_reserved,
 						bool is_nominal,
 						bool is_wall,
 						bool is_factory,
@@ -4331,6 +4398,7 @@ BuildingTypeClass::BuildingTypeClass(
 	ExitList = exitlist;
 	ExitPoint = exitpoint;
 	IsBibbed = is_bibbed;
+	IsBibReserved = is_bib_reserved;
 	IsCaptureable = is_captureable;
 	IsFactory = is_factory;
 	IsRegulated = is_regulated;
@@ -5091,6 +5159,7 @@ short const * BuildingTypeClass::Occupy_List(bool placement) const
 	SmudgeType bib = SMUDGE_NONE;
 	CELL cell=0;
 
+#ifdef OBSOLETE
 	if ((placement && Bib_And_Offset(bib, cell)) || (Special.IsRoad && (*this == STRUCT_BARRACKS || (placement && *this == STRUCT_REFINERY)))) {
 
 		/*
@@ -5121,6 +5190,48 @@ short const * BuildingTypeClass::Occupy_List(bool placement) const
 		short const * src = smudge.Occupy_List();
 		while (*src != REFRESH_EOL) {
 			*dest++ = (*src++) + cell;
+		}
+
+		/*
+		**	Append the building occupy list to this working buffer.
+		*/
+		src = OccupyList;
+		while (src && *src != REFRESH_EOL) {
+			*dest++ = *src++;
+		}
+		*dest = REFRESH_EOL;
+
+		return(&_list[0]);
+	}
+#endif
+
+	// Nyerguds's C&C Patch Project v1.04: Special.IsRoad placement tweaks changed to IsBibReserved.
+	if (placement && (Bib_And_Offset(bib, cell) || IsBibReserved)) {
+		static short _list[25];
+		short * dest = &_list[0];
+		short const * src;
+
+		if (bib != SMUDGE_NONE) {
+			SmudgeTypeClass const & smudge = SmudgeTypeClass::As_Reference(bib);
+
+			/*
+			**	Copy the bib overlap list into the working buffer.
+			*/
+			src = smudge.Occupy_List();
+			while (*src != REFRESH_EOL) {
+				*dest++ = (*src++) + cell;
+			}
+
+		} else if (IsBibReserved) {
+
+			/*
+			**	Reserve the lowest row of the building dimensions.
+			*/
+			int width = Width();
+			int lastRow = (Height() - 1) * MAP_CELL_W;
+			for (int x = 0; x < width; ++x) {
+				*dest++ = lastRow ++;
+			}
 		}
 
 		/*

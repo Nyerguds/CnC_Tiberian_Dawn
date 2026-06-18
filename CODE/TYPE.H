@@ -686,6 +686,15 @@ class BuildingTypeClass : public TechnoTypeClass {
 		unsigned IsBibbed:1;
 
 		/*
+		**	This flag controls whether a building not equipped with a dirt bib
+		**	will still act as if any passable cells in the bottom row of its
+		**	dimensions are occupied when placing down the building. This is useful
+		**	for structures that need space available for units to exit or enter.
+		**	This also affects placement when Special.IsRoad suppresses the bib.
+		*/
+		unsigned IsBibReserved:1;
+
+		/*
 		**	If this building is a special wall type, such that it exists as a building
 		**	for purposes of construction but transforms into an overlay wall object when
 		**	it is placed on the map, then this flag will be true.
@@ -847,6 +856,7 @@ class BuildingTypeClass : public TechnoTypeClass {
 						bool is_scanner,
 						bool is_regulated,
 						bool is_bibbed,
+						bool is_bib_reserved,
 						bool is_nominal,
 						bool is_wall,
 						bool is_factory,
