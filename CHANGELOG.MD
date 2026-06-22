@@ -299,3 +299,6 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * Computer-owned Construction Yards will now only pick buildings to build if other Construction Yards of their House aren't already building them.
 * \[Internal\] Added better checks when reading Teamtypes to avoid possible memory corruption.
 * \[Internal\] The secret "Bibs" option had special exceptions for the placement of the Barracks and Refinery, to enforce leaving space at the bottom of their passable area when placing. This behaviour was migrated to a new IsBibReserved property on buildings.
+* \[Remaster\] Units assigned to group numbers will now show their group number when selecting them.
+* \[Internal\] Any building type can now be marked as Primary if it has the "IsFactory" option set.
+* Objects with multiple pieces of pip information (e.g. cargo pips and group or primary building indicator) will now automatically stack these.

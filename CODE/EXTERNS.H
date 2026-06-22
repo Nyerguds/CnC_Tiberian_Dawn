@@ -182,6 +182,7 @@ extern void const *	Font8Ptr;
 extern void const *	FontLEDPtr;
 extern void const *	ScoreFontPtr;
 extern void const *	GradFont6Ptr;
+extern void const *	SmallScoreFontPtr;
 extern char const *	SystemStrings;
 extern long SystemStringsLength;
 

@@ -658,6 +658,7 @@ void BuildingClass::Draw_It(int x, int y, WindowNumberType window)
  *                                                                                             *
  *    This paints an icon over the current building graphics indicating what it is currently   *
  *    building.                                                                                *
+ *    BuildingClass::Draw_Production - Created for Nyerguds's C&C Patch Project v1.04.         *
  *                                                                                             *
  * INPUT:   x,y   -- The coordinate to draw the building at.                                   *
  *                                                                                             *
@@ -726,6 +727,7 @@ void BuildingClass::Draw_Production(int x, int y, WindowNumberType window) {
  *    production. For human players, this is their global factory object for the producing     *
  *    type. If the factory is currently idle, or if this building is incapable of producing    *
  *    the object queued up on a human player's factory of this type, this returns NULL.        *
+ *    BuildingClass::Get_Producing_Factory - Created for Nyerguds's C&C Patch Project v1.04.   *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *
@@ -2947,8 +2949,24 @@ ActionType BuildingClass::What_Action(ObjectClass * object) const
 					}
 					break;
 
+				case RTTI_BUILDINGTYPE:
+					if (House->BuildingFactories < 2) {
+						action = ACTION_NONE;
+					}
+					break;
+
 				default:
 					action = ACTION_NONE;
+					// Nyerguds's C&C Patch Project v1.04: allow non-producing primary.
+					// If another building of the same House and the same type exists, allow setting a Leader.
+					// This implies some other game logic does something with non-production buildings marked as IsFactory.
+					for (int index = 0; index < Buildings.Count(); ++index) {
+						BuildingClass * obj = Buildings.Ptr(index);
+						if (obj && !obj->IsInLimbo && obj->House == House && *obj == *this && obj != this) {
+							action = ACTION_SELF;
+							break;
+						}
+					}
 					break;
 			}
 
@@ -3648,7 +3666,7 @@ MoveType BuildingClass::Can_Enter_Cell(CELL cell, FacingType) const
  * BuildingClass::Flame_Spout -- makes the oil derrick spawn the flame spout anim              *
  *                                                                                             *
  *    This routine is called if the Oil Derrick is supposed to catch on fire.                  *
- *    Flame_Spout - Created for Nyerguds's C&C Patch Project v1.04.                            *
+ *    BuildingClass::Flame_Spout - Created for Nyerguds's C&C Patch Project v1.04.             *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *
@@ -3674,7 +3692,7 @@ void BuildingClass::Flame_Spout(void)
  * BuildingClass::Flame_Out -- Makes the oil derrick's flame spout anim vanish                 *
  *                                                                                             *
  *    This routine is called if the Oil Derrick is no longer supposed to be on fire.           *
- *    Flame_Out - Created for Nyerguds's C&C Patch Project v1.04.                              *
+ *    BuildingClass::Flame_Out - Created for Nyerguds's C&C Patch Project v1.04.               *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *

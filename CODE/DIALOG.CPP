@@ -406,7 +406,7 @@ void Simple_Text_Print(char const *text, unsigned x, unsigned y, unsigned fore, 
 			/*
 			**	Special adjustment for fonts that have gradient artwork. When there is
 			**	no special gradient effect desired, then set the font color based on the
-			**	forground color specified.
+			**	foreground color specified.
 			*/
 			memset(&fontpalette[4], fore, 12);
 		}
@@ -439,6 +439,10 @@ void Simple_Text_Print(char const *text, unsigned x, unsigned y, unsigned fore, 
 
 		case TPF_GREEN12_GRAD:
 			font = Green12GradFontPtr;
+			break;
+
+		case TPF_SM_SCORE_GRAD:
+			font = SmallScoreFontPtr;
 			break;
 
 		case TPF_MAP:
@@ -487,8 +491,15 @@ void Simple_Text_Print(char const *text, unsigned x, unsigned y, unsigned fore, 
 	/*
 	**	Change the current font palette according to the dropshadow flags.
 	*/
-	shadow = (flag & (TPF_NOSHADOW|TPF_DROPSHADOW|TPF_FULLSHADOW|TPF_LIGHTSHADOW));
+	shadow = (flag & (TPF_NOSHADOW|TPF_DROPSHADOW|TPF_FULLSHADOW|TPF_LIGHTSHADOW|TPF_FULLFILL));
 	switch (shadow) {
+
+		/*
+		**	Everything is fully filled up with foreground colour.
+		*/
+		case TPF_FULLFILL:
+			memset(&fontpalette[1], fore, 15);
+		break;
 
 		/*
 		**	The text is rendered plain.
@@ -790,3 +801,54 @@ void Conquer_Clip_Text_Print(char const *text, unsigned x, unsigned y, unsigned 
 		}
 	}
 }
+
+
+/***********************************************************************************************
+ * Get_Font_Height -- Looks inside the font data to retrieve the height in the header data.    *
+ *                                                                                             *
+ *    This routine can be used to make accurate measurements of how much things need to be     *
+ *    spaced out on the UI.                                                                    *
+ *    Get_Font_Height - Created for Nyerguds's C&C Patch Project v1.04.                        *
+ *                                                                                             *
+ * INPUT:   dataptr  -- Pointer to the loaded font data.                                       *
+ *                                                                                             *
+ * OUTPUT:  The height of the loaded font, or 0 if nothing was loaded.                         *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/22/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+unsigned char Get_Font_Height(void const *dataptr)
+{
+	if (dataptr) {
+		return(((const char *)dataptr)[0x12]);
+	}
+	return(0);
+}
+
+
+/***********************************************************************************************
+ * Get_Font_Width -- Looks inside the font data to retrieve the width in the header data.      *
+ *                                                                                             *
+ *    This routine can be used to make accurate measurements of how much things need to be     *
+ *    spaced out on the UI.                                                                    *
+ *    Get_Font_Width - Created for Nyerguds's C&C Patch Project v1.04.                         *
+ *                                                                                             *
+ * INPUT:   dataptr  -- Pointer to the loaded font data.                                       *
+ *                                                                                             *
+ * OUTPUT:  The width of the loaded font, or 0 if nothing was loaded.                          *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/22/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+unsigned char Get_Font_Width(void const *dataptr)
+{
+	if (dataptr) {
+		return(((const char *)dataptr)[0x13]);
+	}
+	return(0);
+}
+

@@ -3384,21 +3384,30 @@ void Handle_Team(int team, int action)
 				UnitClass * obj = Units.Ptr(index);
 				if (obj && !obj->IsInLimbo && obj->House == PlayerPtr) {
 				 	if (obj->Group == team) obj->Group = -1;
-					if (obj->IsSelected) obj->Group = team;
+					if (obj->IsSelected) {
+						obj->Group = team;
+						obj->Mark(MARK_CHANGE_REDRAW);
+					}
 				}
 			}
 			for (index = 0; index < Infantry.Count(); index++) {
 				InfantryClass * obj = Infantry.Ptr(index);
 				if (obj && !obj->IsInLimbo && obj->House == PlayerPtr) {
 				 	if (obj->Group == team) obj->Group = -1;
-					if (obj->IsSelected) obj->Group = team;
+					if (obj->IsSelected) {
+						obj->Group = team;
+						obj->Mark(MARK_CHANGE_REDRAW);
+					}
 				}
 			}
 			for (index = 0; index < Aircraft.Count(); index++) {
 				AircraftClass * obj = Aircraft.Ptr(index);
 				if (obj && !obj->IsInLimbo && obj->House == PlayerPtr) {
 				 	if (obj->Group == team) obj->Group = -1;
-					if (obj->IsSelected) obj->Group = team;
+					if (obj->IsSelected) {
+						obj->Group = team;
+						obj->Mark(MARK_CHANGE_REDRAW);
+					}
 				}
 			}
 			break;

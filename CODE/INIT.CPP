@@ -208,9 +208,11 @@ bool Init_Game(int , char *[])
 	Set_Font(FontPtr);
 	Font3Ptr = MixFileClass::Retrieve(FONT3);
 //	Font6Ptr = MixFileClass::Retrieve(FONT6);
-   	 Font6Ptr = Load_Alloc_Data(CCFileClass("6POINT.FNT"));
-	//ScoreFontPtr = MixFileClass::Retrieve("12GRNGRD.FNT");	//GRAD12FN");	//("SCOREFNT.FNT");
+	Font6Ptr = Load_Alloc_Data(CCFileClass("6POINT.FNT"));
+//	ScoreFontPtr = MixFileClass::Retrieve("12GRNGRD.FNT");	//GRAD12FN");	//("SCOREFNT.FNT");
 	ScoreFontPtr = Load_Alloc_Data(CCFileClass("12GRNGRD.FNT"));
+	// DOS score font; used for battlefield group numbers
+	SmallScoreFontPtr = MixFileClass::Retrieve("SCOREFNT.FNT");
 	FontLEDPtr = MixFileClass::Retrieve("LED.FNT");
 	VCRFontPtr = MixFileClass::Retrieve("VCR.FNT");
 //	GradFont6Ptr = MixFileClass::Retrieve("GRAD6FNT.FNT");

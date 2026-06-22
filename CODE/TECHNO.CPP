@@ -377,15 +377,16 @@ int TechnoTypeClass::Cost_Of(void) const
  *                                                                                             *
  *    This routine will return with the name (as a text number) to show for an enemy           *
  *    of this type. Typically, this is always the same per TechnoType implementation.          *
+ *    TechnoTypeClass::Enemy_Name - Created for Nyerguds's C&C Patch Project v1.04.            *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *
- * OUTPUT:  Returns with the full name to use for this techno.                                 *
+ * OUTPUT:  Returns with the full name to use for this techno if it is an enemy.               *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   07/29/1995 JLB : Created.                                                                 *
+ *   06/04/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
 int TechnoTypeClass::Enemy_Name(void) const
 {
@@ -1064,7 +1065,7 @@ void TechnoClass::Draw_It(int x, int y, WindowNumberType window)
 			draw_window.Draw_Line(lefx, boty, lefx, boty-dy, WHITE);
 
 			if (House->Is_Ally(PlayerPtr)) {
-				Draw_Pips(lefx+5, boty-3, window);
+				Draw_Pips(lefx, boty, window);
 			}
 		}
 	}
@@ -4355,8 +4356,8 @@ void TechnoClass::Enter_Idle_Mode(bool )
  *    used for transporter object. It will also display if the techno object is "primary"      *
  *    if necessary.                                                                            *
  *                                                                                             *
- * INPUT:   x,y   -- The pixel coordinate for the center of the first pip. Subsiquent pips     *
- *                   are drawn rightward.                                                      *
+ * INPUT:   x,y   -- The pixel coordinate for the bottom left of the frame.                    *
+ *                   The positions of the pips are calculated relative to this.                *
  *                                                                                             *
  *          window-- The window that pip clipping is relative to.                              *
  *                                                                                             *
@@ -4369,60 +4370,122 @@ void TechnoClass::Enter_Idle_Mode(bool )
  *=============================================================================================*/
 void TechnoClass::Draw_Pips(int x, int y, WindowNumberType window)
 {
-
-	// Nyerguds's C&C Patch Project v1.04: Improved pip positions.
-	// Ensure pip positions no longer get drawn over the edge of the selection box.
-	int width,height;
-	Class_Of().Dimensions(width, height);
 	int maxpips = Class_Of().Max_Pips();
-	// pips width is (pips * 3 + 1); add 1 padding and 2 border.
-	int offset = width < (maxpips * 3 + 4) ? 2 : 3;
-	/*
-	**	Transporter type objects have a different graphic representation for the pips. The
-	**	pip color represents the type of occupant.
-	*/
-	if (Techno_Type_Class()->IsTransporter) {
-		ObjectClass const * object = Attached_Object();
+	// Center location of first pip.
+	int offset_x = 5;
+	int offset_y = -3;
 
-		for (int index = 0; index < maxpips; index++) {
-			PipEnum pip = PIP_EMPTY;
+	if (maxpips > 0) {
+		// Nyerguds's C&C Patch Project v1.04: Improved pip positions.
+		// Ensure pip positions no longer get drawn over the edge of the selection box.
+		int width,height;
+		Class_Of().Dimensions(width, height);
+		// pips width is (pips * 3 + 1); add 1 padding and 2 border.
+		int pips_x = offset_x + (width < (maxpips * 3 + 4) ? 2 : 3);
+		if (Techno_Type_Class()->IsTransporter) {
 
-			if (object) {
-				pip = PIP_FULL;
-				if (object->What_Am_I() == RTTI_INFANTRY) {
-					InfantryClass * inf = ((InfantryClass *)object);
-					if (*inf == INFANTRY_RAMBO) {
-						pip = PIP_COMMANDO;
+			/*
+			**	Transporter type objects have a different graphic representation for the pips. The
+			**	pip color represents the type of occupant.
+			*/
+			ObjectClass const * object = Attached_Object();
+			for (int index = 0; index < maxpips; index++) {
+				PipEnum pip = PIP_EMPTY;
+
+				if (object) {
+					pip = PIP_FULL;
+					if (object->What_Am_I() == RTTI_INFANTRY) {
+						InfantryClass * inf = ((InfantryClass *)object);
+						if (*inf == INFANTRY_RAMBO) {
+							pip = PIP_COMMANDO;
+						} else if (*inf == INFANTRY_E7) {
+							pip = PIP_ENGINEER;
+						} else if (inf->Class->IsCivilian) {
+							pip = PIP_CIVILIAN;
+						}
 					}
-					if (*inf == INFANTRY_E7) {
-						pip = PIP_ENGINEER;
-					}
-					if (inf->Class->IsCivilian) {
-						pip = PIP_CIVILIAN;
-					}
+					object = object->Next;
 				}
-				object = object->Next;
+				CC_Draw_Shape(Class_Of().PipShapes, pip, x + pips_x + index*3, y + offset_y, window, SHAPE_CENTER|SHAPE_WIN_REL);
 			}
-			CC_Draw_Shape(Class_Of().PipShapes, pip, x+offset+index*3, y, window, SHAPE_CENTER|SHAPE_WIN_REL);
-		}
 
-	} else {
+		} else {
 
-		/*
-		**	Display number of how stocked up on ammo the unit is. This is also used
-		**	to display the fullness rating for a harvester.
-		*/
-		int pips = Pip_Count();
-		for (int index = 0; index < maxpips; index++) {
-			CC_Draw_Shape(Class_Of().PipShapes, (index < pips) ? PIP_FULL : PIP_EMPTY, x+offset+index*3, y, window, SHAPE_CENTER|SHAPE_WIN_REL);
+			/*
+			**	Display number of how stocked up on ammo the unit is. This is also used
+			**	to display the fullness rating for a harvester.
+			*/
+			int pips = Pip_Count();
+			for (int index = 0; index < maxpips; index++) {
+				CC_Draw_Shape(Class_Of().PipShapes, (index < pips) ? PIP_FULL : PIP_EMPTY, x + pips_x + index*3, y + offset_y, window, SHAPE_CENTER|SHAPE_WIN_REL);
+			}
 		}
+		// If anything follows this, put it above the pips.
+		offset_y -= 5;
 	}
 
 	/*
-	**	Display whether this unit is a leader unit or not.
+	**	Display whether this building is a leader unit or not.
 	*/
-	if (IsLeader) {
-		CC_Draw_Shape(Class_Of().PipShapes, PIP_PRIMARY, x-2, y-3, window, /*SHAPE_CENTER|*/SHAPE_WIN_REL);
+	RTTIType tp = What_Am_I();
+	if (IsLeader && tp == RTTI_BUILDING) {
+		CC_Draw_Shape(Class_Of().PipShapes, PIP_PRIMARY, x + offset_x - 2, y + offset_y - 3, window, /*SHAPE_CENTER|*/SHAPE_WIN_REL);
+		// If anything follows this, put it above the leader indication.
+		offset_y -= 5;
+	}
+
+	/*
+	**	Nyerguds's C&C Patch Project v1.04: show group numbers.
+	**	For player units, show whether they are in a Group.
+	*/
+	if (SmallScoreFontPtr && House == PlayerPtr
+		&& (tp == RTTI_INFANTRY || tp == RTTI_UNIT || tp == RTTI_AIRCRAFT)
+		&& ((FootClass *)this)->Group != (unsigned char)-1) {
+	
+		int group_x = x + 2;
+		int group_y = y - 3 + offset_y;
+
+		/*
+		**	Get the window dimensions info. Fonts have no trim options, so only
+		**	draw the number if it is fully inside the battlefield frame.
+		*/
+		int frmx = WindowList[window][WINDOWX] << 3;
+		int frmy = WindowList[window][WINDOWY];
+		int frmw = WindowList[window][WINDOWWIDTH] << 3;
+		int frmh = WindowList[window][WINDOWHEIGHT];
+
+		/*
+		**	End takes font size and drop shadow into account.
+		*/
+		int xend = group_x + 1 + Get_Font_Width(SmallScoreFontPtr);
+		int yend = group_y + 1 + Get_Font_Height(SmallScoreFontPtr);
+
+		if (group_x >= 0 && group_y >= 0 && xend < frmw && yend < frmh) {
+			group_x += frmx;
+			group_y += frmy;
+
+			/*
+			**	Transform the group number to the correct ASCII character.
+			**	Input numbers differ from internal indices, so add one and wrap around.
+			*/
+			int group = ((FootClass *)this)->Group + 1;
+			if (group > 9) group -= 10;
+			char textBuffer[2];
+			textBuffer[0] = group + 0x30;
+			textBuffer[1] = 0;
+
+			/*
+			**	Drop shadow: right, down, and right-down.
+			*/
+			Fancy_Text_Print(&textBuffer[0], group_x + 1, group_y + 0, BLACK, TBLACK, TPF_SM_SCORE_GRAD|TPF_FULLFILL);
+			Fancy_Text_Print(&textBuffer[0], group_x + 0, group_y + 1, BLACK, TBLACK, TPF_SM_SCORE_GRAD|TPF_FULLFILL);
+			Fancy_Text_Print(&textBuffer[0], group_x + 1, group_y + 1, BLACK, TBLACK, TPF_SM_SCORE_GRAD|TPF_FULLFILL);
+
+			/*
+			**	Paint real text.
+			*/
+			Fancy_Text_Print(&textBuffer[0], group_x + 0, group_y + 0, WHITE, TBLACK, TPF_SM_SCORE_GRAD|TPF_FULLFILL);
+		}
 	}
 }
 

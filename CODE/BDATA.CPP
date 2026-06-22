@@ -198,25 +198,25 @@ static BuildingTypeClass const ClassTemple(
 	STRUCTF_RADAR,				// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		true, 		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
 		false,		// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
-		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Can it be repaired?
+		true, 		// Can it be manufactured by the player?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,		// Is this a civilian building?
@@ -256,27 +256,27 @@ static BuildingTypeClass const ClassEye(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	7,								// Build level.
 	STRUCTF_RADAR,				// Building prerequisite.
-		true,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		true, 		// Has ability to detect adjacent cloaked objects?
+		true, 		// Animation rate is regulated for constant speed?
+		true, 		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
-		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Can it be repaired?
+		true, 		// Can it be manufactured by the player?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,		// Is this a civilian building?
@@ -318,25 +318,25 @@ static BuildingTypeClass const ClassWeapon(
 	STRUCTF_REFINERY,			// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		true, 		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		true,			// Is it a factory type building?
-		true,			// Can this building be captured?
+		true, 		// Is it a factory type building? (Can it be set to IsLeader?)
+		true, 		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
-		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Can it be repaired?
+		true, 		// Can it be manufactured by the player?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,		// Is this a civilian building?
@@ -380,27 +380,27 @@ static BuildingTypeClass const ClassGTower(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	2,								// Build level.
 	STRUCTF_BARRACKS,			// Building prerequisite.
-		true,			// Has ability to detect adjacent cloaked objects?
+		true, 		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
 		false,		// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
-		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Can it be repaired?
+		true, 		// Can it be manufactured by the player?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,		// Is this a civilian building?
@@ -441,27 +441,27 @@ static BuildingTypeClass const ClassATower(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	4,								// Build level.
 	STRUCTF_RADAR,				// Building prerequisite.
-		true,			// Has ability to detect adjacent cloaked objects?
+		true, 		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
 		false,		// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
-		true,			// Fires multiple shots in quick succession?
-		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Fires multiple shots in quick succession?
+		true, 		// Can it be repaired?
+		true, 		// Can it be manufactured by the player?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,		// Is this a civilian building?
@@ -502,27 +502,27 @@ static BuildingTypeClass const ClassObelisk(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	4,								// Build level.
 	STRUCTF_RADAR,				// Building prerequisite.
-		true,			// Has ability to detect adjacent cloaked objects?
+		true, 		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
-		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Can it be repaired?
+		true, 		// Can it be manufactured by the player?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,		// Is this a civilian building?
@@ -562,27 +562,27 @@ static BuildingTypeClass const ClassTurret(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	2,								// Build level.
 	STRUCTF_BARRACKS,			// Building prerequisite.
-		true,			// Has ability to detect adjacent cloaked objects?
+		true, 		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
-		true,			// Does it have a rotating turret?
+		true, 		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
-		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Can it be repaired?
+		true, 		// Can it be manufactured by the player?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,		// Is this a civilian building?
@@ -632,25 +632,25 @@ static BuildingTypeClass const ClassConst(
 	STRUCTF_NONE,				// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		true, 		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		true,			// Is it a factory type building?
-		true,			// Can this building be captured?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
+		true, 		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
-		true,			// Can it be repaired?
+		true, 		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,		// Is this a civilian building?
@@ -693,25 +693,25 @@ static BuildingTypeClass const ClassRefinery(
 	STRUCTF_POWER,				// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
-		true,			// Treat lowest row as impassable for placement?
+		true, 		// Requires a bib dirt patch?
+		true, 		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
-		true,			// Can this building be captured?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
+		true, 		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
-		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Can it be repaired?
+		true, 		// Can it be manufactured by the player?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,		// Is this a civilian building?
@@ -754,24 +754,24 @@ static BuildingTypeClass const ClassStorage(
 	STRUCTF_REFINERY,			// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		true, 		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
-		true,			// Can this building be captured?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
+		true, 		// Can this building be captured?
 		false,		// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
-		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		true, 		// Can it be repaired?
+		true, 		// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
@@ -816,24 +816,24 @@ static BuildingTypeClass const ClassHelipad(
 	STRUCTF_BARRACKS,			// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
 		false,		// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		true, 		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		true,		// Is it a factory type building? // Nyerguds's TUC Quick Fix Patch v1.00: helipad
-		true,			// Can this building be captured?
+		true, 		// Is it a factory type building? (Can it be set to IsLeader?) // Nyerguds's TUC Quick Fix Patch v1.00: helipad
+		true, 		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
-		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		true, 		// Can it be repaired?
+		true, 		// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
@@ -875,27 +875,27 @@ static BuildingTypeClass const ClassCommand(
 	XYP_COORD(0,0),						// Exit point for produced units.
 	2,								// Build level.
 	STRUCTF_REFINERY,			// Building prerequisite.
-		true,			// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		true, 		// Has ability to detect adjacent cloaked objects?
+		true, 		// Animation rate is regulated for constant speed?
+		true, 		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
-		true,			// Can this building be captured?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
+		true, 		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
-		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Can it be repaired?
+		true, 		// Can it be manufactured by the player?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,		// Is this a civilian building?
@@ -942,20 +942,20 @@ static BuildingTypeClass const ClassSAM(
 		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
-		true,			// Does it have a rotating turret?
-		true,			// Fires multiple shots in quick succession?
-		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		true, 		// Does it have a rotating turret?
+		true, 		// Fires multiple shots in quick succession?
+		true, 		// Can it be repaired?
+		true, 		// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
@@ -997,26 +997,26 @@ static BuildingTypeClass const ClassAirStrip(
 	2,								// Build level.
 	STRUCTF_REFINERY,			// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		true, 		// Animation rate is regulated for constant speed?
+		true, 		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		true,			// Is it a factory type building?
-		true,			// Can this building be captured?
+		true, 		// Is it a factory type building? (Can it be set to IsLeader?)
+		true, 		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
-		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Can it be repaired?
+		true, 		// Can it be manufactured by the player?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,		// Is this a civilian building?
@@ -1057,26 +1057,26 @@ static BuildingTypeClass const ClassPower(
 	0,								// Build level.
 	STRUCTF_NONE,				// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		true, 		// Animation rate is regulated for constant speed?
+		true, 		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
-		true,			// Can this building be captured?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
+		true, 		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,			// Simple (one frame) damage imagery? // Nyerguds's TUC Quick Fix Patch v1.02: damagestates
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
-		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Can it be repaired?
+		true, 		// Can it be manufactured by the player?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,		// Is this a civilian building?
@@ -1118,26 +1118,26 @@ static BuildingTypeClass const ClassAdvancedPower(
 	5,											// Build level.
 	STRUCTF_POWER,							// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		true, 		// Animation rate is regulated for constant speed?
+		true, 		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
-		true,			// Can this building be captured?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
+		true, 		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,			// Simple (one frame) damage imagery? // Nyerguds's TUC Quick Fix Patch v1.02: damagestates
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
-		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Can it be repaired?
+		true, 		// Can it be manufactured by the player?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,		// Is this a civilian building?
@@ -1179,28 +1179,28 @@ static BuildingTypeClass const ClassHospital(
 	99,							// Build level.
 	STRUCTF_BARRACKS,			// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		true, 		// Animation rate is regulated for constant speed?
+		true, 		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		true,		// Always use the given name for the building?
+		true, 	// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
-		true,			// Can this building be captured?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
+		true, 		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
-		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Can it be repaired?
+		true, 		// Can it be manufactured by the player?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
-		true,		// Is this building un-sellable?
+		true, 	// Is this building un-sellable?
 		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
@@ -1240,26 +1240,26 @@ static BuildingTypeClass const ClassBioLab(
 	99,							// Build level.
 	STRUCTF_HOSPITAL,			// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		true, 		// Animation rate is regulated for constant speed?
+		true, 		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		true,			// Always use the given name for the building?
+		true, 		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
-		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Can it be repaired?
+		true, 		// Can it be manufactured by the player?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,			// Is this a civilian building?
@@ -1300,26 +1300,26 @@ static BuildingTypeClass const ClassBarracks(
 	0,								// Build level.
 	STRUCTF_POWER,				// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
-		true,			// Treat lowest row as impassable for placement?
+		true, 		// Animation rate is regulated for constant speed?
+		true, 		// Requires a bib dirt patch?
+		true, 		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		true,			// Is it a factory type building?
-		true,			// Can this building be captured?
+		true, 		// Is it a factory type building? (Can it be set to IsLeader?)
+		true, 		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
-		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Can it be repaired?
+		true, 		// Can it be manufactured by the player?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,		// Is this a civilian building?
@@ -1360,26 +1360,26 @@ static BuildingTypeClass const ClassHand(
 	0,								// Build level.
 	STRUCTF_POWER,				// Building prerequisite.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		true, 		// Animation rate is regulated for constant speed?
+		true, 		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		true,			// Is it a factory type building?
-		true,			// Can this building be captured?
+		true, 		// Is it a factory type building? (Can it be set to IsLeader?)
+		true, 		// Can this building be captured?
 		false,		// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
-		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Can it be repaired?
+		true, 		// Can it be manufactured by the player?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,		// Is this a civilian building?
@@ -1420,18 +1420,18 @@ static BuildingTypeClass const ClassTanker(
 	99,							// Build level.
 	STRUCTF_POWER,							// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
@@ -1439,10 +1439,10 @@ static BuildingTypeClass const ClassTanker(
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
-		true,			// Does building care less if placed on concrete?
+		true, 		// Does it contain a crew?
+		true, 		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	200,									// STRNTH:		Full strength of building.
@@ -1480,26 +1480,26 @@ static BuildingTypeClass const ClassRepair(
 	5,								// Build level.
 	STRUCTF_POWER,							// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		true, 		// Animation rate is regulated for constant speed?
+		true, 		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
-		true,			// Can this building be captured?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
+		true, 		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
-		true,			// Can it be repaired?
-		true,			// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Can it be repaired?
+		true, 		// Can it be manufactured by the player?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,		// Is this a civilian building?
@@ -1548,22 +1548,22 @@ static BuildingTypeClass const ClassRoad(
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		false,		// Can the player select this?
 		false,		// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		true, 		// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
-		true,			// Does building care less if placed on concrete?
+		true, 		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -1605,29 +1605,29 @@ static BuildingTypeClass const ClassV01(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
-		true,			// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
+		true, 		// Is it invisible to radar?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -1665,29 +1665,29 @@ static BuildingTypeClass const ClassV02(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
-		true,			// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
+		true, 		// Is it invisible to radar?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -1725,29 +1725,29 @@ static BuildingTypeClass const ClassV03(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
-		true,			// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
+		true, 		// Is it invisible to radar?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -1785,29 +1785,29 @@ static BuildingTypeClass const ClassV04(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
-		true,			// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
+		true, 		// Is it invisible to radar?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -1845,29 +1845,29 @@ static BuildingTypeClass const ClassV05(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
-		true,			// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
+		true, 		// Is it invisible to radar?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -1905,29 +1905,29 @@ static BuildingTypeClass const ClassV06(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
-		true,			// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
+		true, 		// Is it invisible to radar?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -1965,29 +1965,29 @@ static BuildingTypeClass const ClassV07(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
-		true,			// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
+		true, 		// Is it invisible to radar?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2025,29 +2025,29 @@ static BuildingTypeClass const ClassV08(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
-		true,			// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
+		true, 		// Is it invisible to radar?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2085,29 +2085,29 @@ static BuildingTypeClass const ClassV09(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
-		true,			// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
+		true, 		// Is it invisible to radar?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2145,29 +2145,29 @@ static BuildingTypeClass const ClassV10(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
-		true,			// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
+		true, 		// Is it invisible to radar?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2205,29 +2205,29 @@ static BuildingTypeClass const ClassV11(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
-		true,			// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
+		true, 		// Is it invisible to radar?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2265,29 +2265,29 @@ static BuildingTypeClass const ClassV12(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
-		true,			// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
+		true, 		// Is it invisible to radar?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2325,29 +2325,29 @@ static BuildingTypeClass const ClassV13(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
-		true,			// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
+		true, 		// Is it invisible to radar?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2385,29 +2385,29 @@ static BuildingTypeClass const ClassV14(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
-		true,			// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
+		true, 		// Is it invisible to radar?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2445,29 +2445,29 @@ static BuildingTypeClass const ClassV15(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
-		true,			// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
+		true, 		// Is it invisible to radar?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2505,29 +2505,29 @@ static BuildingTypeClass const ClassV16(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
-		true,			// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
+		true, 		// Is it invisible to radar?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2565,29 +2565,29 @@ static BuildingTypeClass const ClassV17(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
-		true,			// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
+		true, 		// Is it invisible to radar?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2625,29 +2625,29 @@ static BuildingTypeClass const ClassV18(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
-		true,			// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
+		true, 		// Is it invisible to radar?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2685,18 +2685,18 @@ static BuildingTypeClass const ClassV19(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		true, 		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
@@ -2704,10 +2704,10 @@ static BuildingTypeClass const ClassV19(
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2746,29 +2746,29 @@ static BuildingTypeClass const ClassV20(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		true, 		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2807,29 +2807,29 @@ static BuildingTypeClass const ClassV21(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		true, 		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2868,29 +2868,29 @@ static BuildingTypeClass const ClassV22(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		true, 		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2929,29 +2929,29 @@ static BuildingTypeClass const ClassV23(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		true,			// Always use the given name for the building?
+		true, 		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
+		true, 		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -2990,29 +2990,29 @@ static BuildingTypeClass const ClassV24(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3051,29 +3051,29 @@ static BuildingTypeClass const ClassV25(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3112,29 +3112,29 @@ static BuildingTypeClass const ClassV26(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3173,29 +3173,29 @@ static BuildingTypeClass const ClassV27(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3234,29 +3234,29 @@ static BuildingTypeClass const ClassV28(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3295,29 +3295,29 @@ static BuildingTypeClass const ClassV29(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3356,29 +3356,29 @@ static BuildingTypeClass const ClassV30(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		true,			// Always use the given name for the building?
+		true, 		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3417,29 +3417,29 @@ static BuildingTypeClass const ClassV31(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3478,29 +3478,29 @@ static BuildingTypeClass const ClassV32(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3539,29 +3539,29 @@ static BuildingTypeClass const ClassV33(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3600,29 +3600,29 @@ static BuildingTypeClass const ClassV34(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3661,29 +3661,29 @@ static BuildingTypeClass const ClassV35(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3722,29 +3722,29 @@ static BuildingTypeClass const ClassV36(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	400,									// STRNTH:		Full strength of building.
@@ -3783,29 +3783,29 @@ static BuildingTypeClass const ClassV37(
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
 		false,		// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
+		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
 		false,			// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
-		true,			// Theater specific graphic image?
+		true, 		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
-		true,			// Is this a civilian building?
+		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
 	600,									// STRNTH:		Full strength of building.
@@ -3843,27 +3843,27 @@ static BuildingTypeClass const ClassMission(
 	XYP_COORD(38,42),				// Exit point for produced units.
 	99,							// Build level.
 	STRUCTF_NONE,				// PREREQ:		Buildings that must exist first.
-		true,			// Has ability to detect adjacent cloaked objects?
-		true,			// Animation rate is regulated for constant speed?
-		true,			// Requires a bib dirt patch?
+		true, 		// Has ability to detect adjacent cloaked objects?
+		true, 		// Animation rate is regulated for constant speed?
+		true, 		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		true,			// Always use the given name for the building?
+		true, 		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
-		false,		// Is it a factory type building?
-		true,			// Can this building be captured?
-		true,			// Does it catch fire?
-		true,			// Simple (one frame) damage imagery?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
+		true, 		// Can this building be captured?
+		true, 		// Does it catch fire?
+		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
-		true,			// Can the player select this?
-		true,			// Is this a legal target for attack or move?
+		true, 		// Can the player select this?
+		true, 		// Is this a legal target for attack or move?
 		false,		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
-		true,			// Can it be repaired?
+		true, 		// Can it be repaired?
 		false,		// Can it be manufactured by the player?
-		true,			// Does it contain a crew?
+		true, 		// Does it contain a crew?
 		false,		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,			// Is this a civilian building?
@@ -3910,24 +3910,24 @@ static BuildingTypeClass const Sandbag(
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		true,			// Always use the given name for the building?
-		true,			// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		true, 		// Always use the given name for the building?
+		true, 		// Is this a wall type structure?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		false,		// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		true, 		// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
-		true,			// Does building care less if placed on concrete?
+		true, 		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -3972,24 +3972,24 @@ static BuildingTypeClass const Cyclone(
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		true,			// Always use the given name for the building?
-		true,			// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		true, 		// Always use the given name for the building?
+		true, 		// Is this a wall type structure?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		false,		// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		true, 		// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
-		true,			// Does building care less if placed on concrete?
+		true, 		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -4034,24 +4034,24 @@ static BuildingTypeClass const Brick(
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		true,			// Always use the given name for the building?
-		true,			// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		true, 		// Always use the given name for the building?
+		true, 		// Is this a wall type structure?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		false,		// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		true, 		// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
-		true,			// Does building care less if placed on concrete?
+		true, 		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -4096,24 +4096,24 @@ static BuildingTypeClass const Barbwire(
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		true,			// Always use the given name for the building?
-		true,			// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		true, 		// Always use the given name for the building?
+		true, 		// Is this a wall type structure?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		false,		// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		true, 		// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
-		true,			// Does building care less if placed on concrete?
+		true, 		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -4159,24 +4159,24 @@ static BuildingTypeClass const Wood(
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		true,			// Always use the given name for the building?
-		true,			// Is this a wall type structure?
-		false,		// Is it a factory type building?
+		true, 		// Always use the given name for the building?
+		true, 		// Is this a wall type structure?
+		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
 		false,		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		false,		// Can the player select this?
-		true,			// Is this a legal target for attack or move?
-		true,			// Is this an insignificant building?
+		true, 		// Is this a legal target for attack or move?
+		true, 		// Is this an insignificant building?
 		false,		// Is it immune to normal combat damage?
 		false,		// Theater specific graphic image?
 		false,		// Does it have a rotating turret?
 		false,		// Fires multiple shots in quick succession?
 		false,		// Can it be repaired?
-		true,			// Can it be manufactured by the player?
+		true, 		// Can it be manufactured by the player?
 		false,		// Does it contain a crew?
-		true,			// Does building care less if placed on concrete?
+		true, 		// Does building care less if placed on concrete?
 		false,		// Is this building un-sellable?
 		false,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
@@ -4631,13 +4631,17 @@ void BuildingTypeClass::One_Time(void)
 		*/
 		building->CameoData = NULL;
 		building->CameoIsTheaterShape = false;
-		if (building->IsBuildable) {
+		building->SpyCameoData = NULL;
+		building->SpyCameoIsTheaterShape = false;
+		if (building->IsBuildable && (!hires || Special.IsSpyGlass || Special.IsGlobalSpyGlass)) {
 			sprintf(buffer, "%.4sICON", building->IniName);
 			_makepath(fullname, NULL, NULL, buffer, ".SHP");
-			building->SpyCameoData = MixFileClass::Retrieve(fullname);
-			building->SpyCameoIsTheaterShape = false;
+			void const * cameodata = MixFileClass::Retrieve(fullname);
+			if (Special.IsSpyGlass || Special.IsGlobalSpyGlass) {
+				building->SpyCameoData = cameodata;
+			}
 			if (!hires) {
-				building->CameoData = building->SpyCameoData;
+				building->CameoData = cameodata;
 			}
 		}
 
@@ -4681,8 +4685,6 @@ void BuildingTypeClass::One_Time(void)
 		}
 	}
 }
-
-
 
 
 /***********************************************************************************************
@@ -4968,6 +4970,7 @@ int BuildingTypeClass::Legal_Placement(CELL pos) const
  *=============================================================================================*/
 BuildingClass * BuildingTypeClass::Who_Can_Build_Me(bool intheory, bool legal, HousesType house) const
 {
+	BuildingClass * found = NULL;
 	for (int index = Buildings.Count()-1; index >= 0; index--) {
 		BuildingClass * building = Buildings.Ptr(index);
 
@@ -4978,10 +4981,14 @@ BuildingClass * BuildingTypeClass::Who_Can_Build_Me(bool intheory, bool legal, H
 				((1L << building->ActLike) & Ownable) &&
 				(!legal || building->House->Can_Build(Type, building->ActLike)) &&
 				(intheory || !building->In_Radio_Contact())) {
-			return(building);
+			if (building->IsLeader) {
+				return(building);
+			} else if (!found) {
+				found = building;
+			}
 		}
 	}
-	return(0);
+	return(found);
 }
 
 
@@ -5117,6 +5124,7 @@ BuildingTypeClass const & BuildingTypeClass::As_Reference(StructType type)
  *                                                                                             *
  *    This routine will fetch a pointer to the BuildingTypeClass as indicated by the           *
  *    building type number specified.                                                          *
+ *    BuildingTypeClass::As_Pointer - Created for Nyerguds's C&C Patch Project v1.04.          *
  *                                                                                             *
  * INPUT:   type  -- The building type number to convert into a BuildingTypeClass reference.   *
  *                                                                                             *
@@ -5477,10 +5485,11 @@ int BuildingTypeClass::Full_Name(void) const
  *                                                                                             *
  *    This routine will return with the name (as a text number) to show for an enemy           *
  *    of this type. Typically, this is always the same per TechnoType implementation.          *
+ *    BuildingTypeClass::Enemy_Name - Created for Nyerguds's C&C Patch Project v1.04.          *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *
- * OUTPUT:  Returns with the full name to use for this techno.                                 *
+ * OUTPUT:  Returns with the name to use for this building if it owned by an enemy.            *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
  *                                                                                             *

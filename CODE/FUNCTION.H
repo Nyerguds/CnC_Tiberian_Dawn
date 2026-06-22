@@ -440,6 +440,8 @@ void Window_Box(WindowNumberType window, BoxStyleEnum style);
 void Fancy_Text_Print(char const *text, unsigned x, unsigned y, unsigned fore, unsigned back, TextPrintType flag, ...);
 void Fancy_Text_Print(int text, unsigned x, unsigned y, unsigned fore, unsigned back, TextPrintType flag, ...);
 void Simple_Text_Print(char const *text, unsigned x, unsigned y, unsigned fore, unsigned back, TextPrintType flag);
+unsigned char Get_Font_Height(void const *dataptr);
+unsigned char Get_Font_Width(void const *dataptr);
 
 /*
 **	DISPLAY.CPP
