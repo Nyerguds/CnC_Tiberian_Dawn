@@ -259,13 +259,12 @@ SmudgeType SmudgeTypeClass::From_Name(char const *name)
  * SmudgetypeClass::Occupy_List -- Determines occupation list for smudge object.               *
  *                                                                                             *
  *    Smudges are always only one icon in dimension, so this routine always returns a cell     *
- *    occupation offset list of the center cell.                                               *
+ *    occupation offset list of the center cell, except if this is a bib.                      *
  *                                                                                             *
  * INPUT:   placement   -- Is this for placement legality checking only? The normal condition  *
  *                         is for marking occupation flags.                                    *
  *                                                                                             *
- * OUTPUT:  Returns occupation list specifying all the cells that the overlay occupies. This   *
- *          is just the center cell.                                                           *
+ * OUTPUT:  Returns occupation list specifying all the cells that the smudge occupies.         *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
  *                                                                                             *

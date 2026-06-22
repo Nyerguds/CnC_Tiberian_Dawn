@@ -2022,6 +2022,7 @@ UnitTypeClass const & UnitTypeClass::As_Reference(UnitType type)
  *                                                                                             *
  *    This routine will fetch a pointer to the UnitTypeClass as indicated by the               *
  *    unit type number specified.                                                              *
+ *    UnitTypeClass::As_Pointer - Created for Nyerguds's C&C Patch Project v1.04.              *
  *                                                                                             *
  * INPUT:   type  -- The unit type number to convert into a UnitTypeClass reference.           *
  *                                                                                             *
@@ -2147,15 +2148,16 @@ int UnitTypeClass::Max_Pips(void) const
  *                                                                                             *
  *    This routine will return with the name (as a text number) to show for an enemy           *
  *    of this type. Typically, this is always the same per TechnoType implementation.          *
+ *    UnitTypeClass::Enemy_Name - Created for Nyerguds's C&C Patch Project v1.04.              *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *
- * OUTPUT:  Returns with the full name to use for this techno.                                 *
+ * OUTPUT:  Returns with the full name to use for this unit if it is an enemy.                 *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   07/29/1995 JLB : Created.                                                                 *
+ *   06/04/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
 int UnitTypeClass::Enemy_Name(void) const
 {

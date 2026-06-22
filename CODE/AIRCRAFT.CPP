@@ -158,6 +158,7 @@ TARGET AircraftClass::As_Target(void) const
  * AircraftClass::Attach -- Add unit to cargo hold.                                            *
  *                                                                                             *
  *    This routine will add the specified unit to the cargo hold.                              *
+ *    AircraftClass::Attach - Implemented for Nyerguds's C&C Patch Project v1.04.              *
  *                                                                                             *
  * INPUT:   object-- Pointer to the object to attach to the cargo hold.                        *
  *                                                                                             *
@@ -2237,6 +2238,7 @@ ActionType AircraftClass::What_Action(ObjectClass * object) const
  *    This routine will return with the name (as a text number) for this aircraft if it is     *
  *    an enemy. Typically, this is the same as the enemy label on the AircraftTypeClass, but   *
  *    the "PassiveHelis" behavior overrides this and shows the true name.                      *
+ *    AircraftClass::Enemy_Name - Created for Nyerguds's C&C Patch Project v1.04.              *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *

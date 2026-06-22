@@ -1130,7 +1130,8 @@ void const * SidebarClass::StripClass::Get_Special_Cameo(int type)
  *    This routine will return whether a pointer to the cameo data for the special objects     *
  *    that can appear on the sidebar (e.g., nuclear bomb) should be cached as theater          *
  *    specific data.                                                                           *
- *    Special_Cameo_Is_Theater_Shape - Created for Nyerguds's C&C Patch Project v1.04.         *
+ *    SidebarClass::StripClass::Special_Cameo_Is_Theater_Shape - Created for Nyerguds's C&C    *
+ *    Patch Project v1.04.                                                                     *
  *                                                                                             *
  * INPUT:   type  -- The special type to fetch the cameo imagery for.                          *
  *                                                                                             *

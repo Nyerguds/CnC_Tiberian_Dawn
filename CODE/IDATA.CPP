@@ -2068,6 +2068,7 @@ void InfantryTypeClass::One_Time(void)
  *                                                                                             *
  *    This routine will fetch a pointer to the InfantryTypeClass as indicated by the           *
  *    infantry type number specified.                                                          *
+ *    InfantryTypeClass::As_Pointer - Created for Nyerguds's C&C Patch Project v1.04.          *
  *                                                                                             *
  * INPUT:   type  -- The infantry type number to convert into a InfantryTypeClass object       *
  *                   pointer.                                                                  *
@@ -2237,10 +2238,11 @@ int InfantryTypeClass::Full_Name(void) const
  *                                                                                             *
  *    This routine will return with the name (as a text number) to show for an enemy           *
  *    of this type. Typically, this is always the same per TechnoType implementation.          *
+ *    InfantryTypeClass::Enemy_Name - Created for Nyerguds's C&C Patch Project v1.04.          *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *
- * OUTPUT:  Returns with the full name to use for this techno.                                 *
+ * OUTPUT:  Returns with the name to use for this infantry unit if it is an enemy.             *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
  *                                                                                             *

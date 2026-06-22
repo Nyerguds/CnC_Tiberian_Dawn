@@ -309,7 +309,7 @@ void HelpClass::Draw_It(bool forced)
  * HelpClass::Get_Extra_Text -- Gets the second line of text underneath the label              *
  *                                                                                             *
  *    This function generates the extra info line underneath the primary label.                *
- *    Get_Extra_Text - Created for Nyerguds's C&C Patch Project v1.04.                         *
+ *    HelpClass::Get_Extra_Text - Created for Nyerguds's C&C Patch Project v1.04.              *
  *                                                                                             *
  * INPUT:   buffer -- The buffer to generate the text into.                                    *
  *                                                                                             *
@@ -480,7 +480,7 @@ void HelpClass::Set_Cost(int cost, bool showcost)
  *                                                                                             *
  *    Use this routine after the Help_Text() function to activate the second line. The second  *
  *    line displays a cost and/or power value, depending on the context.                       *
- *    Set_Power - Created for Nyerguds's C&C Patch Project v1.04.                              *
+ *    HelpClass::Set_Power - Created for Nyerguds's C&C Patch Project v1.04.                   *
  *                                                                                             *
  * INPUT:   drain  -- The power drained by this item, or total drain for a House. Set to -1    *
  *                    for showing the current live-updated player house drain.                 *

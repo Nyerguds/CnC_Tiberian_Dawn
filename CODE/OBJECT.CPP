@@ -287,7 +287,7 @@ void const * ObjectTypeClass::Get_Cameo_Data(void) const
  * ObjectTypeClass::Cameo_Is_Theater_Shape -- should cameo be cached as theater data?          *
  *                                                                                             *
  *    This routine will return whether the cameo data should be cached as theater data.        *
- *    Cameo_Is_Theater_Shape - Created for Nyerguds's C&C Patch Project v1.04.                 *
+ *    ObjectTypeClass::Cameo_Is_Theater_Shape - Created for Nyerguds's C&C Patch Project v1.04.*
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *
@@ -330,6 +330,8 @@ void const * ObjectTypeClass::Get_Spy_Cameo_Data(void) const
  * ObjectTypeClass::Spy_Cameo_Is_Theater_Shape -- should spy cameo be cached as theater data?  *
  *                                                                                             *
  *    This routine will return whether the spy cameo data should be cached as theater data.    *
+ *    ObjectTypeClass::Spy_Cameo_Is_Theater_Shape - Created for Nyerguds's C&C Patch Project   *
+ *    v1.04.                                                                                   *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *

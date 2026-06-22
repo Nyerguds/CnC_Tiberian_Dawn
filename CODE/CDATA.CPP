@@ -2734,64 +2734,13 @@ TemplateTypeClass::TemplateTypeClass(TemplateType iconset, int theater,
 }
 
 
-#ifdef OBSOLETE
-/***********************************************************************************************
- * TemplateTypeClass::Set_Land_Types -- Sets the land types for this Template.                 *
- *                                                                                             *
- *    This routine uses the landtypes string in the constructor to fill the object's array     *
- *    of land types. The array is initially cleared with the default land type. Non-alphabet   *
- *    characters are ignored. Unknown alphabet characters revert to Clear terrain.             *
- *                                                                                             *
- * INPUT:   landTypes  -- String containing the land types data, as letters defined in         *
- *                        the GroundType.Letter entries in the Ground array.                   *
- *                                                                                             *
- * OUTPUT:  none                                                                               *
- *                                                                                             *
- * WARNINGS:   none                                                                            *
- *                                                                                             *
- * HISTORY:                                                                                    *
- *   01/10/2026 MM  : Created.                                                                 *
- *=============================================================================================*/
-void TemplateTypeClass::Set_Land_Types(char const * landtypes) {
-	memset (LandTypes, (unsigned char)Land, sizeof(LandTypes));
-	if (!landtypes) {
-		return;
-	}
-	int index = 0;
-	while (*landtypes && index < TEMPLATE_MAX_SIZE)
-	{
-		char c = *landtypes;
-		++landtypes;
-		// Always use uppercase.
-		if (c >= 'a' && c <= 'z') c -= ('a' - 'A');
-		// Ignore non-alphabet characters; spaces are added for visual separation.
-		if (c < 'A' || c > 'Z') continue;
-		// Always default to Clear terrain.
-		unsigned char landtype = (unsigned char)LAND_CLEAR;
-		// "X" indicates cells that normally don't have icons. Always default these to clear.
-		if (c != 'X') {
-			for (int i = 0; i < LAND_COUNT; ++i) {
-				unsigned char letter = Ground[i].Letter;
-				// Always use uppercase.
-				if (letter >= 'a' && letter <= 'z') letter -= ('a' - 'A');
-				if (letter == c) {
-					landtype = (unsigned char)i;
-					break;
-				}
-			}
-		}
-		LandTypes[index++] = landtype;
-	}
-}
-#endif
-
-
 /***********************************************************************************************
  * TemplateTypeClass::Land_Type -- Looks up the land type for a given index.                   *
  *                                                                                             *
  *    This routine uses the landtypes string to retrieve the land type for a specific index    *
  *    on a template. Non-alphabet characters are ignored. Unknown alphabet characters revert   *
  *    to Clear terrain.                                                                        *
+ *    TemplateTypeClass::Land_Type - Created for Nyerguds's C&C Patch Project v1.04.           *
  *                                                                                             *
  * INPUT:   index -- Icon index in the template to retrieve the land type for. This is         *
  *                   based on the GroundType.Letter entries in the Ground array.               *

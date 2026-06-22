@@ -289,6 +289,7 @@ TARGET UnitClass::As_Target(void) const
  * UnitClass::Attach -- Add unit to cargo hold.                                                *
  *                                                                                             *
  *    This routine will add the specified unit to the cargo hold.                              *
+ *    UnitClass::Attach - Implemented for Nyerguds's C&C Patch Project v1.04.                  *
  *                                                                                             *
  * INPUT:   object-- Pointer to the object to attach to the cargo hold.                        *
  *                                                                                             *
@@ -4422,6 +4423,7 @@ void UnitClass::APC_Open_Door(void)
  *    This routine examines the navigation computers of other units in order to see if the     *
  *    specified cell is safe to move to. The intent of this routine is to avoid two vehicles   *
  *    from attempting to crush the same vehicle on a cell.                                     *
+ *    UnitClass::No_Other_Crushers - Created for Nyerguds's C&C Patch Project v1.04.           *
  *                                                                                             *
  * INPUT:   cell     -- The cell to examine.                                                   *
  *                                                                                             *

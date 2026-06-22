@@ -750,15 +750,16 @@ int AircraftTypeClass::Max_Pips(void) const
  *                                                                                             *
  *    This routine will return with the name (as a text number) to show for an enemy           *
  *    of this type. Typically, this is always the same per TechnoType implementation.          *
+ *    AircraftTypeClass::Enemy_Name - Created for Nyerguds's C&C Patch Project v1.04.          *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *
- * OUTPUT:  Returns with the full name to use for this techno.                                 *
+ * OUTPUT:  Returns with the name to use for this aircraft unit if it is an enemy.             *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   07/29/1995 JLB : Created.                                                                 *
+ *   06/04/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
 int AircraftTypeClass::Enemy_Name(void) const
 {
@@ -792,6 +793,7 @@ bool AircraftTypeClass::Create_And_Place(CELL, HousesType) const
  *                                                                                             *
  *    This routine will fetch a pointer to the AircraftTypeClass as indicated by the           *
  *    aircraft type number specified.                                                          *
+ *    AircraftTypeClass::As_Pointer - Created for Nyerguds's C&C Patch Project v1.04.          *
  *                                                                                             *
  * INPUT:   type  -- The aircraft type number to convert into a AircraftTypeClass object       *
  *                   pointer.                                                                  *

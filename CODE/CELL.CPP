@@ -1160,11 +1160,11 @@ inline bool Allow_Edge_E(int cell) { return ((cell + 1) % MAP_CELL_W != 0); }
 inline bool Allow_Edge_W(int cell) { return  (cell % MAP_CELL_W != 0); }
 
 /***********************************************************************************************
- * Adjacent_Is_Valid -- Checks if a valid adjacent cell exists for the given facing.           *
+ * CellClass:: Adjacent_Is_Valid -- Checks if adjacent cell is valid for the given facing.     *
  *                                                                                             *
  *    This routine does boundary checking on the current cell to see if a valid adjacent       *
  *    cell can be found in the direction of the specified facing.                              *
- *    Adjacent_Is_Valid - Created for Nyerguds's C&C Patch Project v1.04.                      *
+ *    CellClass:: Adjacent_Is_Valid - Created for Nyerguds's C&C Patch Project v1.04.          *
  *                                                                                             *
  * INPUT:   face      -- The facing to check.                                                  *
  *                                                                                             *
@@ -1271,12 +1271,12 @@ ConcFill Get_Conc_State(CellClass * cell)
 
 
 /***********************************************************************************************
- * Is_Ignorable_Concrete -- Determines if the cell contains a Concrete filler tile.            *
+ * CellClass::Is_Ignorable_Concrete -- Determines if the cell contains a Concrete filler tile. *
  *                                                                                             *
  *    This routine checks if the overlay on the current cell is Concrete, and if so, if        *
  *    its central area is not filled, which means it is an edge filler that can be ignored     *
  *    for the purpose of placing down other tiles.                                             *
- *    Is_Ignorable_Concrete - Created for Nyerguds's C&C Patch Project v1.04.                  *
+ *    CellClass::Is_Ignorable_Concrete - Created for Nyerguds's C&C Patch Project v1.04.       *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *

@@ -631,6 +631,7 @@ int FactoryClass::Completion(void)
  *                                                                                             *
  *    Use this routine to get the amount to be reached by Completion() to consider this        *
  *    factory complete. This can be used to get a percentage of the completion.                *
+ *    FactoryClass::Final - Created for Nyerguds's C&C Patch Project v1.04.                    *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *

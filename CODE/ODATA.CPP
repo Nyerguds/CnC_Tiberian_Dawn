@@ -903,6 +903,7 @@ void OverlayTypeClass::Draw_It(int x, int y, int data) const
  *                                                                                             *
  *    This routine will fetch a pointer to the OverlayTypeClass as indicated by the            *
  *    overlay type number specified.                                                           *
+ *    OverlayTypeClass::As_Pointer - Created for Nyerguds's C&C Patch Project v1.04.           *
  *                                                                                             *
  * INPUT:   type  -- The overlay type number to convert into a OverlayTypeClass object         *
  *                   pointer.                                                                  *

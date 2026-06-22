@@ -961,7 +961,7 @@ void TeamTypeClass::Destroy_All_Of(void) const
  * TeamTypeClass::Has_Unformed_Teams -- Checks for teams of this type that never got filled.   *
  *                                                                                             *
  *    Checks if any teams of this type were created but failed to get any members.             *
- *    Has_Unformed_Teams - Created for Nyerguds's C&C Patch Project v1.04.                     *
+ *    TeamTypeClass::Has_Unformed_Teams - Created for Nyerguds's C&C Patch Project v1.04.      *
  *                                                                                             *
  * INPUT:      none.                                                                           *
  *                                                                                             *
@@ -989,20 +989,20 @@ bool TeamTypeClass::Has_Unformed_Teams(void) const
  *                                                                                             *
  *    Checks if any teams of this type were created but failed to get any members, and         *
  *    removes all but one of the failed teams.                                                 *
- *    Cull_Unformed_Teams - Created for Nyerguds's C&C Patch Project v1.04.                    *
+ *    TeamTypeClass::Cull_Unformed_Teams - Created for Nyerguds's C&C Patch Project v1.04.     *
  *                                                                                             *
  * INPUT:      none.                                                                           *
  *                                                                                             *
  * OUTPUT:     The amount of deleted teams.                                                    *
  *                                                                                             *
- * WARNINGS:   none                                                                            *
+ * WARNINGS:   Not actually used; Create_One_Of() now simply prevents this problem from        *
+ *             ever occurring.                                                                 *
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   12/28/2025 MM  : Created.                                                                 *
  *=============================================================================================*/
 int TeamTypeClass::Cull_Unformed_Teams(void) const
 {
-	// Not actually used, due to Create_One_Of() now simply preventing this problem from ever occuring.
 	bool found = false;
 	int deleted = 0;
 	for (int index = 0; index < Teams.Count(); index++) {

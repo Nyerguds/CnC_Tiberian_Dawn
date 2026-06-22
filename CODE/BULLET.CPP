@@ -778,7 +778,7 @@ bool BulletClass::Unlimbo(COORDINATE coord, DirType dir)
  *                                                                                             *
  *    This routine sets the object to retaliate to, and, if no object is available,            *
  *    then at least the house to blame.                                                        *
- *    Set_Payback - Created for Nyerguds's C&C Patch Project v1.04.                            *
+ *    BulletClass::Set_Payback - Created for Nyerguds's C&C Patch Project v1.04.               *
  *                                                                                             *
  * INPUT:   payback    -- Techno object to pay back for the damage caused.                     *
  *                                                                                             *
