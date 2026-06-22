@@ -4425,7 +4425,7 @@ void TechnoClass::Draw_Pips(int x, int y, WindowNumberType window)
 	}
 
 	/*
-	**	Display whether this building is a leader unit or not.
+	**	Display whether this building is a leader or not.
 	*/
 	RTTIType tp = What_Am_I();
 	if (IsLeader && tp == RTTI_BUILDING) {
@@ -4468,10 +4468,9 @@ void TechnoClass::Draw_Pips(int x, int y, WindowNumberType window)
 			**	Transform the group number to the correct ASCII character.
 			**	Input numbers differ from internal indices, so add one and wrap around.
 			*/
-			int group = ((FootClass *)this)->Group + 1;
-			if (group > 9) group -= 10;
+			int group = (((FootClass *)this)->Group + 1) % 10;
 			char textBuffer[2];
-			textBuffer[0] = group + 0x30;
+			textBuffer[0] = '0' + group;
 			textBuffer[1] = 0;
 
 			/*

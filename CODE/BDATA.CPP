@@ -4633,13 +4633,11 @@ void BuildingTypeClass::One_Time(void)
 		building->CameoIsTheaterShape = false;
 		building->SpyCameoData = NULL;
 		building->SpyCameoIsTheaterShape = false;
-		if (building->IsBuildable && (!hires || Special.IsSpyGlass || Special.IsGlobalSpyGlass)) {
+		if (building->IsBuildable) {
 			sprintf(buffer, "%.4sICON", building->IniName);
 			_makepath(fullname, NULL, NULL, buffer, ".SHP");
 			void const * cameodata = MixFileClass::Retrieve(fullname);
-			if (Special.IsSpyGlass || Special.IsGlobalSpyGlass) {
-				building->SpyCameoData = cameodata;
-			}
+			building->SpyCameoData = cameodata;
 			if (!hires) {
 				building->CameoData = cameodata;
 			}
