@@ -50,7 +50,7 @@
 
 void GameOptionsClass::Adjust_Variables_For_Resolution(void)
 {
-	int factor = (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor = Get_Resolution_Factor();
 
 	OptionWidth		=	(216+8) * factor;
 	OptionHeight	=	100 * factor;
@@ -112,7 +112,7 @@ void GameOptionsClass::Process(void)
 	**	Build the button list for all of the buttons for this dialog.
 	*/
 	int maxwidth = 0;
-	int resfactor = (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int resfactor = Get_Resolution_Factor();
 
 	for (int index = 0; index < sizeof(_constants)/sizeof(_constants[0]); index++ ) {
 		int text = _constants[index].Text;
@@ -521,7 +521,7 @@ void GameOptionsClass::Process(void)
 void Draw_Caption(int text, int x, int y, int w)
 {
 	OptionControlType option = OPTION_NONE;
-	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor			= Get_Resolution_Factor();
 
 
 	/*

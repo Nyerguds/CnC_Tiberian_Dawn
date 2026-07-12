@@ -452,7 +452,7 @@ void AircraftTypeClass::One_Time(void)
 		PatsuxDefault = OrcaHeli.Primary;
 	}
 
-	bool hires = Get_Resolution_Factor() != 0;
+	bool hires = Get_Resolution_Shift() != 0;
 	for (AircraftType index = AIRCRAFT_FIRST; index < AIRCRAFT_COUNT; index++) {
 		char fullname[_MAX_FNAME+_MAX_EXT];
 		char buffer[_MAX_FNAME];
@@ -830,7 +830,7 @@ AircraftTypeClass const * AircraftTypeClass::As_Pointer(AircraftType type)
 void AircraftTypeClass::Init(TheaterType theater)
 {
 	//if (theater != LastTheater){
-	if ( Get_Resolution_Factor() ) {
+	if (Get_Resolution_Shift()) {
 		char buffer[_MAX_FNAME];
 		char fullname[_MAX_FNAME+_MAX_EXT];
 		void * cameo_ptr = NULL;

@@ -1725,7 +1725,7 @@ DialStatusType NullModemClass::Dial_Modem( char *string, DialMethodType method, 
  *=========================================================================*/
 DialStatusType NullModemClass::Answer_Modem( bool reconnect )
 {
-	int factor 		= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor 		= Get_Resolution_Factor();
 
 	/*........................................................................
 	Button Enumerations

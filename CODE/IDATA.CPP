@@ -2033,7 +2033,7 @@ InfantryType InfantryTypeClass::From_Name(char const *name)
  *=============================================================================================*/
 void InfantryTypeClass::One_Time(void)
 {
-	bool hires = Get_Resolution_Factor() != 0;
+	bool hires = Get_Resolution_Shift() > 0;
 	for (InfantryType index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
 		char fullname[_MAX_FNAME+_MAX_EXT];
 		char buffer[_MAX_FNAME];
@@ -2106,7 +2106,7 @@ InfantryTypeClass const * InfantryTypeClass::As_Pointer(InfantryType type)
 void InfantryTypeClass::Init(TheaterType theater)
 {
 	//if (theater != LastTheater){
-	if (Get_Resolution_Factor()) {
+	if (Get_Resolution_Shift() > 0) {
 		char buffer[_MAX_FNAME];
 		char fullname[_MAX_FNAME+_MAX_EXT];
 		void * cameo_ptr = NULL;

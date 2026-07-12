@@ -41,7 +41,7 @@
 #include	"visudlg.h"
 int VisualControlsClass::Init(void)
 {
-	int factor 			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor 			= Get_Resolution_Factor();
  	Option_Width		= 216 * factor;
  	Option_Height		= 122 * factor;
  	Option_X				= (((SeenBuff.Get_Width() - Option_Width) / 2));

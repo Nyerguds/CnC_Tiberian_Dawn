@@ -204,7 +204,7 @@ static BuildingTypeClass const ClassTemple(
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		false,		// Does it catch fire?
+		true, 		// Does it catch fire?
 		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true, 		// Can the player select this?
@@ -264,7 +264,7 @@ static BuildingTypeClass const ClassEye(
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		false,		// Does it catch fire?
+		true, 		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true, 		// Can the player select this?
@@ -324,7 +324,7 @@ static BuildingTypeClass const ClassWeapon(
 		false,		// Is this a wall type structure?
 		true, 		// Is it a factory type building? (Can it be set to IsLeader?)
 		true, 		// Can this building be captured?
-		false,		// Does it catch fire?
+		true, 		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true, 		// Can the player select this?
@@ -388,7 +388,7 @@ static BuildingTypeClass const ClassGTower(
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		false,		// Does it catch fire?
+		true, 		// Does it catch fire?
 		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true, 		// Can the player select this?
@@ -449,7 +449,7 @@ static BuildingTypeClass const ClassATower(
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		false,		// Does it catch fire?
+		true, 		// Does it catch fire?
 		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true, 		// Can the player select this?
@@ -510,7 +510,7 @@ static BuildingTypeClass const ClassObelisk(
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		false,		// Does it catch fire?
+		true, 		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true, 		// Can the player select this?
@@ -570,7 +570,7 @@ static BuildingTypeClass const ClassTurret(
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		false,		// Does it catch fire?
+		true, 		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true, 		// Can the player select this?
@@ -638,7 +638,7 @@ static BuildingTypeClass const ClassConst(
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		true, 		// Can this building be captured?
-		false,		// Does it catch fire?
+		true, 		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true, 		// Can the player select this?
@@ -699,7 +699,7 @@ static BuildingTypeClass const ClassRefinery(
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		true, 		// Can this building be captured?
-		false,		// Does it catch fire?
+		true, 		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true, 		// Can the player select this?
@@ -760,7 +760,7 @@ static BuildingTypeClass const ClassStorage(
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		true, 		// Can this building be captured?
-		false,		// Does it catch fire?
+		true, 		// Does it catch fire?
 		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true, 		// Can the player select this?
@@ -822,7 +822,7 @@ static BuildingTypeClass const ClassHelipad(
 		false,		// Is this a wall type structure?
 		true, 		// Is it a factory type building? (Can it be set to IsLeader?) // Nyerguds's TUC Quick Fix Patch v1.00: helipad
 		true, 		// Can this building be captured?
-		false,		// Does it catch fire?
+		true, 		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true, 		// Can the player select this?
@@ -883,7 +883,7 @@ static BuildingTypeClass const ClassCommand(
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		true, 		// Can this building be captured?
-		false,		// Does it catch fire?
+		true, 		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true, 		// Can the player select this?
@@ -944,7 +944,7 @@ static BuildingTypeClass const ClassSAM(
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		false,		// Does it catch fire?
+		true, 		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true, 		// Can the player select this?
@@ -1004,7 +1004,7 @@ static BuildingTypeClass const ClassAirStrip(
 		false,		// Is this a wall type structure?
 		true, 		// Is it a factory type building? (Can it be set to IsLeader?)
 		true, 		// Can this building be captured?
-		false,		// Does it catch fire?
+		true, 		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true, 		// Can the player select this?
@@ -1064,7 +1064,7 @@ static BuildingTypeClass const ClassPower(
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		true, 		// Can this building be captured?
-		false,		// Does it catch fire?
+		true, 		// Does it catch fire?
 		false,			// Simple (one frame) damage imagery? // Nyerguds's TUC Quick Fix Patch v1.02: damagestates
 		false,		// Is it invisible to radar?
 		true, 		// Can the player select this?
@@ -1125,7 +1125,7 @@ static BuildingTypeClass const ClassAdvancedPower(
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		true, 		// Can this building be captured?
-		false,		// Does it catch fire?
+		true, 		// Does it catch fire?
 		false,			// Simple (one frame) damage imagery? // Nyerguds's TUC Quick Fix Patch v1.02: damagestates
 		false,		// Is it invisible to radar?
 		true, 		// Can the player select this?
@@ -1186,7 +1186,7 @@ static BuildingTypeClass const ClassHospital(
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		true, 		// Can this building be captured?
-		false,		// Does it catch fire?
+		true, 		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true, 		// Can the player select this?
@@ -1247,7 +1247,7 @@ static BuildingTypeClass const ClassBioLab(
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		false,		// Does it catch fire?
+		true, 		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true, 		// Can the player select this?
@@ -1307,7 +1307,7 @@ static BuildingTypeClass const ClassBarracks(
 		false,		// Is this a wall type structure?
 		true, 		// Is it a factory type building? (Can it be set to IsLeader?)
 		true, 		// Can this building be captured?
-		false,		// Does it catch fire?
+		true, 		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true, 		// Can the player select this?
@@ -1367,7 +1367,7 @@ static BuildingTypeClass const ClassHand(
 		false,		// Is this a wall type structure?
 		true, 		// Is it a factory type building? (Can it be set to IsLeader?)
 		true, 		// Can this building be captured?
-		false,		// Does it catch fire?
+		true, 		// Does it catch fire?
 		true, 		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true, 		// Can the player select this?
@@ -1423,7 +1423,7 @@ static BuildingTypeClass const ClassTanker(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -1487,7 +1487,7 @@ static BuildingTypeClass const ClassRepair(
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		true, 		// Can this building be captured?
-		false,		// Does it catch fire?
+		true, 		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		true, 		// Can the player select this?
@@ -1546,7 +1546,7 @@ static BuildingTypeClass const ClassRoad(
 		false,		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -1608,7 +1608,7 @@ static BuildingTypeClass const ClassV01(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -1668,7 +1668,7 @@ static BuildingTypeClass const ClassV02(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -1728,7 +1728,7 @@ static BuildingTypeClass const ClassV03(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -1788,7 +1788,7 @@ static BuildingTypeClass const ClassV04(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -1848,7 +1848,7 @@ static BuildingTypeClass const ClassV05(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -1908,7 +1908,7 @@ static BuildingTypeClass const ClassV06(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -1968,7 +1968,7 @@ static BuildingTypeClass const ClassV07(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -2028,7 +2028,7 @@ static BuildingTypeClass const ClassV08(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -2088,7 +2088,7 @@ static BuildingTypeClass const ClassV09(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -2148,7 +2148,7 @@ static BuildingTypeClass const ClassV10(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -2208,7 +2208,7 @@ static BuildingTypeClass const ClassV11(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -2268,7 +2268,7 @@ static BuildingTypeClass const ClassV12(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -2328,7 +2328,7 @@ static BuildingTypeClass const ClassV13(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -2388,7 +2388,7 @@ static BuildingTypeClass const ClassV14(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -2448,7 +2448,7 @@ static BuildingTypeClass const ClassV15(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -2508,7 +2508,7 @@ static BuildingTypeClass const ClassV16(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -2568,7 +2568,7 @@ static BuildingTypeClass const ClassV17(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -2628,7 +2628,7 @@ static BuildingTypeClass const ClassV18(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -2688,7 +2688,7 @@ static BuildingTypeClass const ClassV19(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -2749,7 +2749,7 @@ static BuildingTypeClass const ClassV20(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -2810,7 +2810,7 @@ static BuildingTypeClass const ClassV21(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -2871,7 +2871,7 @@ static BuildingTypeClass const ClassV22(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -2993,7 +2993,7 @@ static BuildingTypeClass const ClassV24(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -3054,7 +3054,7 @@ static BuildingTypeClass const ClassV25(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -3115,7 +3115,7 @@ static BuildingTypeClass const ClassV26(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -3176,7 +3176,7 @@ static BuildingTypeClass const ClassV27(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -3237,7 +3237,7 @@ static BuildingTypeClass const ClassV28(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -3298,7 +3298,7 @@ static BuildingTypeClass const ClassV29(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -3420,7 +3420,7 @@ static BuildingTypeClass const ClassV31(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -3481,7 +3481,7 @@ static BuildingTypeClass const ClassV32(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -3542,7 +3542,7 @@ static BuildingTypeClass const ClassV33(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -3603,7 +3603,7 @@ static BuildingTypeClass const ClassV34(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -3664,7 +3664,7 @@ static BuildingTypeClass const ClassV35(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -3725,7 +3725,7 @@ static BuildingTypeClass const ClassV36(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -3786,7 +3786,7 @@ static BuildingTypeClass const ClassV37(
 		true, 		// Animation rate is regulated for constant speed?
 		false,		// Requires a bib dirt patch?
 		false,		// Treat lowest row as impassable for placement?
-		false,			// Always use the given name for the building?
+		false,		// Always use the given name for the building?
 		false,		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
@@ -4163,7 +4163,7 @@ static BuildingTypeClass const Wood(
 		true, 		// Is this a wall type structure?
 		false,		// Is it a factory type building? (Can it be set to IsLeader?)
 		false,		// Can this building be captured?
-		false,		// Does it catch fire?
+		true, 		// Does it catch fire?
 		false,		// Simple (one frame) damage imagery?
 		false,		// Is it invisible to radar?
 		false,		// Can the player select this?
@@ -4620,7 +4620,7 @@ void BuildingTypeClass::One_Time(void)
 		{STRUCT_WEAP,		BSTATE_IDLE,			0,	1,	0},
 		{STRUCT_TEMPLE,	BSTATE_ACTIVE,			0,	5,	1},
 	};
-	bool hires = Get_Resolution_Factor() != 0;
+	bool hires = Get_Resolution_Shift() != 0;
 	for (StructType sindex = STRUCT_FIRST; sindex < STRUCT_COUNT; sindex++) {
 		char	fullname[_MAX_FNAME+_MAX_EXT];
 		char	buffer[_MAX_FNAME];
@@ -5015,7 +5015,7 @@ void BuildingTypeClass::Init(TheaterType theater)
 	char cameomixname[_MAX_FNAME+_MAX_EXT];
 	char theatermixname[_MAX_FNAME+_MAX_EXT];
 	sprintf(theatermixname, "%s.MIX", Theaters[theater].Root);
-	int hires = Get_Resolution_Factor();
+	bool hires = Get_Resolution_Shift() != 0;
 	if (hires) {
 		sprintf(cameomixname, "%.4sICNH.MIX", Theaters[theater].Root);
 	}

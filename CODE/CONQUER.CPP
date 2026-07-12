@@ -994,7 +994,7 @@ static void Message_Input(KeyNumType &input)
 	int					sent_so_far;
 	unsigned short		magic_number;
 	unsigned short		crc;
-	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor			= Get_Resolution_Factor();
 
 
 	/*
@@ -4290,14 +4290,22 @@ void const * Hires_Retrieve(char *name)
 {
 	char filename[30];
 
-	if (SeenBuff.Get_Width() != 320) {
+	if (Get_Resolution_Shift()) {
 		sprintf(filename,"H%s", name);
 	} else {
 	   strcpy(filename, name);
 	}
 	return(MixFileClass::Retrieve(filename));
 }
-int Get_Resolution_Factor(void)
+
+
+int Get_Resolution_Shift(void)
 {
 	return ((SeenBuff.Get_Width() == 320) ? 0 : 1);
+}
+
+
+int Get_Resolution_Factor(void)
+{
+	return ((SeenBuff.Get_Width() == 320) ? 1 : 2);
 }

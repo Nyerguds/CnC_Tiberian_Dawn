@@ -1641,7 +1641,8 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 					**	Show pieces of fire to indicate that a significant change in
 					**	damage level has occurred.
 					*/
-					if (warhead == WARHEAD_FIRE) {
+				// Nyerguds's C&C Patch Project v1.04: no fire on buildings deemed "not flammable".
+					if (Class->IsFlammable && warhead == WARHEAD_FIRE) {
 						switch (Random_Pick(0, 13)) {
 							case 0:
 							case 1:

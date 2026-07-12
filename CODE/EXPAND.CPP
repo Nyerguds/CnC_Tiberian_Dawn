@@ -134,11 +134,10 @@ void Add_List_Items(EListClass * list, ScenarioPlayerEnum player, int start, int
 
 bool Expansion_Dialog(void)
 {
-	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
-
+	int factor			= Get_Resolution_Factor();
 	int	option_width 	= 236 * factor;
 	int	option_height	= 162 * factor;
-	int	option_x			= (320*factor - option_width) /2;
+	int	option_x			= (SeenBuff.Get_Width() - option_width) /2;
 	int	option_y			= (200*factor - option_height) /2;
 
 	GadgetClass * buttons = NULL;
@@ -274,11 +273,11 @@ bool Expansion_Dialog(void)
  *=============================================================================================*/
 bool Bonus_Dialog(void)
 {
-	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor			= Get_Resolution_Factor();
 
 	int	option_width 	= 236 * factor;
 	int	option_height	= 162 * factor;
-	int	option_x			= (320*factor - option_width) /2;
+	int	option_x			= (SeenBuff.Get_Width() - option_width) /2;
 	int	option_y			= (200*factor - option_height) /2;
 
 	GadgetClass * buttons = NULL;

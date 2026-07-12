@@ -302,3 +302,4 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * \[Remaster\] Units assigned to group numbers will now show their group number when selecting them.
 * \[Internal\] Any building type can now be marked as Primary if it has the "IsFactory" option set.
 * Objects with multiple pieces of pip information (e.g. cargo pips and group or primary building indicator) will now automatically stack these.
+* \[Internal\] The "IsFlammable" option on buildings will now determine whether a building gets set on fire when receiving heavy damage.

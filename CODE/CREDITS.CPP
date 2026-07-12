@@ -64,6 +64,7 @@ CreditClass::CreditClass(void)
 	Credits = 0;
 	Current = 0;
 	Countdown = 0;
+	Eva_Width = 80;
 }
 
 
@@ -88,7 +89,7 @@ CreditClass::CreditClass(void)
 #define	WW	50
 void CreditClass::Graphic_Logic(bool forced)
 {
-	int factor = Get_Resolution_Factor();
+	int factor = Get_Resolution_Shift();
 	int xx = SeenBuff.Get_Width() - (120 << factor);
 	if (forced || IsToRedraw) {
 
@@ -108,7 +109,7 @@ void CreditClass::Graphic_Logic(bool forced)
 		**	Display the new current value.
 		*/
 		//LogicPage->Fill_Rect(xx-(20 << factor), 1 << factor, xx+(20 << factor), 6 << factor, LTGREY);
-		TabClass::Draw_Credits_Tab();
+		TabClass::Draw_Credits_Tab(Eva_Width);
 		Fancy_Text_Print("%ld", xx, 0, 11, TBLACK, TPF_GREEN12_GRAD|TPF_CENTER | TPF_USE_GRAD_PAL, Current);
 
 		IsToRedraw = false;

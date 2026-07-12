@@ -108,7 +108,7 @@ void TabClass::Draw_It(bool complete)
 			LogicPage->Fill_Rect(0, 0, rightx, Tab_Height-2, BLACK);
 			CC_Draw_Shape(TabShape, 0, 0, 0, WINDOW_MAIN, SHAPE_NORMAL);
 			CC_Draw_Shape(TabShape, 0, width-Eva_Width, 0, WINDOW_MAIN, SHAPE_NORMAL);
-			Draw_Credits_Tab();
+			Draw_Credits_Tab(Eva_Width);
 			LogicPage->Draw_Line(0, Tab_Height-1, rightx, Tab_Height-1, BLACK);
 
 			Fancy_Text_Print(TXT_TAB_BUTTON_CONTROLS, Eva_Width/2, 0, 11, TBLACK, TPF_GREEN12_GRAD|TPF_CENTER | TPF_USE_GRAD_PAL);
@@ -122,9 +122,10 @@ void TabClass::Draw_It(bool complete)
 }
 
 
-void TabClass::Draw_Credits_Tab(void)
+void TabClass::Draw_Credits_Tab(int evawidth)
 {
-	CC_Draw_Shape(TabShape, 0, 320, 0, WINDOW_MAIN, SHAPE_NORMAL);
+	int width  = SeenBuff.Get_Width();
+	CC_Draw_Shape(TabShape, 0, width-(evawidth * 2), 0, WINDOW_MAIN, SHAPE_NORMAL);
 }
 
 
@@ -244,9 +245,10 @@ void TabClass::AI(KeyNumType &input, int x, int y)
 
 void TabClass::One_Time(void)
 {
-	int factor = (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor = Get_Resolution_Factor();
 	Eva_Width	= 80 * factor;
 	Tab_Height	= 8 * factor;
+	Credits.Eva_Width = Eva_Width;
 
 	SidebarClass::One_Time();
 	TabShape = Hires_Retrieve("TABS.SHP");

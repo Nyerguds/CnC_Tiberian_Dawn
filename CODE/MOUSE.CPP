@@ -305,8 +305,10 @@ void MouseClass::One_Time(void)
 	} else {
 		MouseShapes = MixFileClass::Retrieve("MOUSE.SHP");
 	}
+	// The start of the Dune II type shape file indicates the amount of frames inside.
 	short frames;
 	memcpy(&frames, MouseShapes, sizeof(frames));
+	// Check the maximum used frame number in the game's mouse definitions.
 	int defined = Get_Mouse_Range();
 	MouseExpanded = frames >= defined;
 	CCDebugString(" MouseClass::One_Time - Mouse file has %d shapes, game has %d shapes defined. Expanded mouse cursors are %sabled.\n", frames, defined, MouseExpanded ? "en" : "dis");

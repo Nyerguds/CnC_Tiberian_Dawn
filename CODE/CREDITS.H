@@ -59,6 +59,7 @@ class CreditClass {
 		void AI(bool forced=false);
 
 		long	Current;		// Credit value currently displayed.
+		int		Eva_Width;		// For the draw position
 
 		unsigned IsToRedraw:1;
 		unsigned IsUp:1;

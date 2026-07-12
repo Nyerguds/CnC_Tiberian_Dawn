@@ -173,7 +173,7 @@ void SidebarClass::One_Time(void)
 	** sidebar.  They are now variables because we need to change them for
 	** variable resolutions.
 	*/
-	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor			= Get_Resolution_Factor();
 	SideBarWidth		= SIDEBARWIDTH * factor;
 	SideX 				= SeenBuff.Get_Width() - SideBarWidth;
 	SideY 				= Map.RadY + Map.RadHeight + 1;
@@ -264,7 +264,7 @@ void SidebarClass::Init_IO(void)
 	void *oldfont;
 	int oldx;
 	PowerClass::Init_IO();
-
+	int sidebar_x = ScreenWidth - 160;
 	/*
 	** Add the sidebar's buttons only if we're not in editor mode.
 	*/
@@ -297,7 +297,7 @@ void SidebarClass::Init_IO(void)
 
 		Repair.IsSticky = true;
 		Repair.ID = BUTTON_REPAIR;
-		Repair.X = 484;
+		Repair.X = sidebar_x + 4;
 		Repair.Y = 160;
 		Repair.IsPressed = false;
 		Repair.IsToggleType = true;
@@ -314,7 +314,7 @@ void SidebarClass::Init_IO(void)
 
 		Upgrade.IsSticky = true;
 		Upgrade.ID = BUTTON_UPGRADE;
-		Upgrade.X = 480+57;
+		Upgrade.X = sidebar_x + 57;
 		Upgrade.Y = 160;
 		Upgrade.IsPressed = false;
 		Upgrade.IsToggleType = true;
@@ -331,7 +331,7 @@ void SidebarClass::Init_IO(void)
 
 		Zoom.IsSticky = true;
 		Zoom.ID = BUTTON_ZOOM;
-		Zoom.X = 480 + 110;
+		Zoom.X = sidebar_x + 110;
 		Zoom.Y = 160;
 		Zoom.IsPressed = false;
 #if (FRENCH)
@@ -1074,7 +1074,7 @@ void SidebarClass::StripClass::One_Time(int )
 		"ATOM",
 		"BOMB"
 	};
-	int factor = Get_Resolution_Factor();
+	int factor = Get_Resolution_Shift();
 
 	ObjectWidth				= OBJECT_WIDTH << factor;
 	ObjectHeight			= OBJECT_HEIGHT << factor;
@@ -1089,7 +1089,7 @@ void SidebarClass::StripClass::One_Time(int )
 	char buffer[_MAX_FNAME];
 
 	for (int lp = 0; lp < 3; lp++) {
-		if ( Get_Resolution_Factor() ) {
+		if ( Get_Resolution_Shift() ) {
 			sprintf(buffer, "%sICNH", _file[lp]);
 		} else {
 			sprintf(buffer, "%sICON", _file[lp]);
@@ -1248,7 +1248,7 @@ void SidebarClass::StripClass::Init_Theater(TheaterType theater)
 			"ATOM",
 			"BOMB"
 		};
-		int factor = Get_Resolution_Factor();
+		int factor = Get_Resolution_Shift();
 		char	fullname[_MAX_FNAME+_MAX_EXT];
 		char buffer[_MAX_FNAME];
 		void * cameo_ptr;
@@ -1770,7 +1770,7 @@ void SidebarClass::StripClass::Draw_It(bool complete)
 		UpButton[ID].Draw_Me(true);
 		DownButton[ID].Draw_Me(true);
 
-		int factor = Get_Resolution_Factor();
+		int factor = Get_Resolution_Shift();
 
 		/*
 		**	Loop through all the buildable objects that are visible in the strip and render
@@ -2147,7 +2147,7 @@ bool SidebarClass::StripClass::Recalc(void)
 SidebarClass::StripClass::SelectClass::SelectClass(void) :
 	ControlClass(0, 0, 0, 0, 0, LEFTPRESS|RIGHTPRESS|LEFTUP|MOUSEWHEELUP|MOUSEWHEELDN)
 {
-	int factor = Get_Resolution_Factor();
+	int factor = Get_Resolution_Shift();
 
 	Strip = 0;
 	Index = 0;
@@ -2177,7 +2177,7 @@ SidebarClass::StripClass::SelectClass::SelectClass(void) :
  *=============================================================================================*/
 void SidebarClass::StripClass::SelectClass::Set_Owner(StripClass & strip, int index)
 {
-	int factor = Get_Resolution_Factor();
+	int factor = Get_Resolution_Shift();
 	Strip = &strip;
 	Index = index;
 	X = strip.X;

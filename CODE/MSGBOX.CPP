@@ -93,7 +93,7 @@ int CCMessageBox::Process(const char *msg, const char *b1txt, const char *b2txt,
 
 	GraphicBufferClass seen_buff_save(VisiblePage.Get_Width(),VisiblePage.Get_Height(),(void*)NULL);
 
-	int factor = (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor = Get_Resolution_Factor();
 
 	if (b1txt && *b1txt == '\0') b1txt = 0;
 	if (b2txt && *b2txt == '\0') b2txt = 0;

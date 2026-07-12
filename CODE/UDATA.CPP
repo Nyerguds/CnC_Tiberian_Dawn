@@ -1791,7 +1791,7 @@ void UnitTypeClass::Prep_For_Add(void)
  *=============================================================================================*/
 void UnitTypeClass::One_Time(void)
 {
-	bool hires = Get_Resolution_Factor() != 0;
+	bool hires = Get_Resolution_Shift() != 0;
 	for (UnitType index = UNIT_FIRST; index < UNIT_COUNT; index++) {
 		char fullname[_MAX_FNAME+_MAX_EXT];
 		char buffer[_MAX_FNAME];
@@ -1859,7 +1859,7 @@ void UnitTypeClass::One_Time(void)
 void UnitTypeClass::Init(TheaterType theater)
 {
 	//if (theater != LastTheater){
-	if (Get_Resolution_Factor()){
+	if (Get_Resolution_Shift()){
 		char buffer[_MAX_FNAME];
 		char fullname[_MAX_FNAME+_MAX_EXT];
 		void * cameo_ptr = NULL;

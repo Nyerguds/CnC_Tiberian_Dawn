@@ -778,14 +778,16 @@ GraphicBufferClass* Read_PCX_File(char* name, char* Palette, void *Buff, long Si
 
 void Load_Title_Screen(char *name, GraphicViewPortClass *video_page, unsigned char *palette)
 {
-
 	GraphicBufferClass *load_buffer;
 
 
 	load_buffer = Read_PCX_File (name, (char*)palette, NULL, 0);
 
-	if (load_buffer){
-		load_buffer->Blit(*video_page);
+	if (load_buffer) {
+		// Nyerguds's C&C Patch Project v1.04: Higher res support (clear title screen bg)
+		int xdiff = MAX(0, video_page->Get_Width() - load_buffer->Get_Width()) / 2;
+		video_page->Clear(BLACK);
+		load_buffer->Blit(*video_page, xdiff, 0, 0);
 		delete load_buffer;
 	}
 }

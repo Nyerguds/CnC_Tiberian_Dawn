@@ -135,7 +135,7 @@ void PowerClass::One_Time(void)
 {
 	RadarClass::One_Time();
 
-	int factor = Get_Resolution_Factor();
+	int factor = Get_Resolution_Shift();
 	PowX 			= SeenBuff.Get_Width() - Map.RadWidth;
 	PowY 			= Map.RadY+Map.RadHeight + (13 << factor);
 	PowWidth 	= 8 << factor;

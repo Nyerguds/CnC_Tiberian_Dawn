@@ -1671,7 +1671,7 @@ bool Select_Game(bool fade)
 	**	properly set.
 	*/
 	CCDebugString ("C&C95 - Initialising message system.\n");
-	int factor = (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor = Get_Resolution_Factor();
 	Messages.Init(Map.TacPixelX, Map.TacPixelY, 6, MAX_MESSAGE_LENGTH, 6*factor+1);
 
 	/*
@@ -1973,6 +1973,7 @@ void Anim_Init(void)
  *=============================================================================================*/
 bool Parse_Command_Line(int argc, char *argv[])
 {
+	CCDebugString(" In Parse_Command_Line.\n");
 	/*
 	**	Parse the command line and set globals to reflect the parameters
 	**	passed in.
@@ -1991,6 +1992,9 @@ bool Parse_Command_Line(int argc, char *argv[])
 //	Debug_Play_Map = false;
 	Debug_Unshroud = false;
 
+
+	bool is480 = false;
+	bool isWide = false;
 	for (int index = 1; index < argc; index++) {
 		char * string;		// Pointer to argument.
 		long code = 0;
@@ -2322,12 +2326,25 @@ bool Parse_Command_Line(int argc, char *argv[])
 			AllowAttract = true;
 			continue;
 		}
-
 		/*
 		** Set screen to 640x480 instead of 640x400
 		*/
-		if (strstr(string,"-480")){
+		if (!isWide && strstr(string,"-480")){
+			ScreenWidth = 640;
 			ScreenHeight = 480;
+			is480 = true;
+			CCDebugString("Resolution set to %dx%d.\n", ScreenWidth, ScreenHeight);
+			continue;
+		}
+
+		/*
+		** Set screen to 712x400 instead of 640x400
+		*/
+		if (!is480 && strstr(string,"-WIDE")){
+			ScreenWidth = 712;
+			ScreenHeight = 400;
+			isWide = true;
+			CCDebugString(" Resolution set to %dx%d.\n", ScreenWidth, ScreenHeight);
 			continue;
 		}
 

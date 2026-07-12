@@ -665,14 +665,14 @@ bool Do_The_Internet_Menu_Thang(void)
 {
 #ifndef DEMO
 
-	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor			= Get_Resolution_Factor();
 
 	/*
 	** Dialog & button dimensions
 	*/
 	int d_dialog_w = 120 *factor;											// dialog width
 	int d_dialog_h = 80*factor;											// dialog height
-	int d_dialog_x = ((320*factor - d_dialog_w) / 2);				// dialog x-coord
+	int d_dialog_x = (SeenBuff.Get_Width() - d_dialog_w) / 2;				// dialog x-coord
 	int d_dialog_y = ((200*factor - d_dialog_h) / 2);				// centered y-coord
 	int d_dialog_cx = d_dialog_x + (d_dialog_w / 2);		// center x-coord
 
@@ -703,7 +703,7 @@ bool Do_The_Internet_Menu_Thang(void)
 
 #if (GERMAN | FRENCH)
 	d_dialog_w = width + 25*factor;
-	d_dialog_x = ((320*factor - d_dialog_w) / 2);				// dialog x-coord
+	d_dialog_x = (SeenBuff.Get_Width() - d_dialog_w) / 2;				// dialog x-coord
 	d_cancel_x = d_dialog_cx - (d_cancel_w / 2);
 #endif
 

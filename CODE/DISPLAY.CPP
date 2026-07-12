@@ -1214,6 +1214,11 @@ CELL DisplayClass::Click_Cell_Calc(int x, int y)
 
 		COORDINATE tcoord = XY_Coord(Pixel_To_Lepton(Lepton_To_Pixel(Coord_X(TacticalCoord))), Pixel_To_Lepton(Lepton_To_Pixel(Coord_Y(TacticalCoord))));
 
+		// Nyerguds's C&C Patch Project: boundary checking on mouse coordinates.
+		if (tcoord & MAP_COORDS_TEST) {
+			return(-1);
+		}
+
 		return(Coord_Cell(Coord_Add(tcoord, XY_Coord(x, y))));
 	}
 	return(-1);
@@ -2049,7 +2054,7 @@ ObjectClass * DisplayClass::Cell_Object(CELL cell, int x, int y)
 								CELL c = Click_Cell_Calc(Bound(x, 0, Lepton_To_Pixel(TacLeptonWidth)-1) + TacPixelX,
 											Bound(y, 0, Lepton_To_Pixel(TacLeptonHeight)-1) + TacPixelY);
 
-								if (c > 0) (*this)[c].Redraw_Objects(true);
+								if (c != -1) (*this)[c].Redraw_Objects(true);
 							}
 						}
 					}
@@ -2063,7 +2068,7 @@ ObjectClass * DisplayClass::Cell_Object(CELL cell, int x, int y)
 								CELL c = Click_Cell_Calc(Bound(x, 0, Lepton_To_Pixel(TacLeptonWidth)-1) + TacPixelX,
 											Bound(y, 0, Lepton_To_Pixel(TacLeptonHeight)-1) + TacPixelY);
 
-								if (c > 0) (*this)[c].Redraw_Objects(true);
+								if (c != -1) (*this)[c].Redraw_Objects(true);
 							}
 						}
 					}
@@ -2077,7 +2082,7 @@ ObjectClass * DisplayClass::Cell_Object(CELL cell, int x, int y)
 								CELL c = Click_Cell_Calc(Bound(x, 0, Lepton_To_Pixel(TacLeptonWidth)-1) + TacPixelX,
 											Bound(y, 0, Lepton_To_Pixel(TacLeptonHeight)-1) + TacPixelY);
 
-								if (c > 0) (*this)[c].Redraw_Objects(true);
+								if (c != -1) (*this)[c].Redraw_Objects(true);
 							}
 						}
 					}
@@ -2091,7 +2096,7 @@ ObjectClass * DisplayClass::Cell_Object(CELL cell, int x, int y)
 								CELL c = Click_Cell_Calc(Bound(x, 0, Lepton_To_Pixel(TacLeptonWidth)-1) + TacPixelX,
 											Bound(y, 0, Lepton_To_Pixel(TacLeptonHeight)-1) + TacPixelY);
 
-								if (c > 0) (*this)[c].Redraw_Objects(true);
+								if (c != -1) (*this)[c].Redraw_Objects(true);
 							}
 						}
 					}
@@ -2111,7 +2116,7 @@ ObjectClass * DisplayClass::Cell_Object(CELL cell, int x, int y)
 								CELL c = Click_Cell_Calc(Bound(x, 0, Lepton_To_Pixel(TacLeptonWidth)-1) + TacPixelX,
 											Bound(y, 0, Lepton_To_Pixel(TacLeptonHeight)-1) + TacPixelY);
 
-								if (c > 0) {
+								if (c != -1) {
 									(*this)[c].Redraw_Objects(true);
 								}
 							}

@@ -212,7 +212,7 @@ void Modem_Signoff( void )
  *=========================================================================*/
 int Test_Null_Modem( void )
 {
-	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor			= Get_Resolution_Factor();
 	/*........................................................................
 	Button Enumerations
 	........................................................................*/
@@ -250,7 +250,7 @@ int Test_Null_Modem( void )
 	width += 40*factor;
 	height += 60*factor;
 
-	x = (320*factor - width) / 2;
+	x = (SeenBuff.Get_Width() - width) / 2;
 	y = (200*factor - height) / 2;
 
 	TextButtonClass cancelbtn(BUTTON_CANCEL, TXT_CANCEL,
@@ -862,13 +862,13 @@ GameType Select_Serial_Dialog( void )
 	int com = -1, baud = -1;
 	int error = 0;
 
-	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor			= Get_Resolution_Factor();
 	/*........................................................................
 	Dialog & button dimensions
 	........................................................................*/
 	int	d_dialog_w = 160 *factor;											// dialog width
 	int	d_dialog_h = 94 *factor;											// dialog height
-	int	d_dialog_x = ((320*factor - d_dialog_w) / 2);				// dialog x-coord
+	int	d_dialog_x = (SeenBuff.Get_Width() - d_dialog_w) / 2;				// dialog x-coord
 //		D_DIALOG_Y = ((200 - D_DIALOG_H) / 2),				// dialog y-coord
 	int	d_dialog_y = ((136*factor - d_dialog_h) / 2);				// dialog y-coord
 	int	d_dialog_cx = d_dialog_x + (d_dialog_w / 2);		// center x-coord
@@ -1363,13 +1363,13 @@ Debug_Smart_Print = false;
 Advanced_Modem_Settings (SerialSettingsType *settings)
 {
 
-	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor			= Get_Resolution_Factor();
 	/*........................................................................
 	Dialog & button dimensions
 	........................................................................*/
 	int d_dialog_w = 340;													// dialog width
 	int d_dialog_h = 170;													// dialog height
-	int d_dialog_x = 320 - d_dialog_w/2;								// dialog x-coord
+	int d_dialog_x = (SeenBuff.Get_Width() - d_dialog_w) / 2;								// dialog x-coord
 	int d_dialog_y = 200 - d_dialog_h/ 2;								// dialog y-coord
 
 
@@ -1646,13 +1646,13 @@ Advanced_Modem_Settings (SerialSettingsType *settings)
 static int Com_Settings_Dialog( SerialSettingsType *settings )
 {
 /* ###Change collision detected! C:\PROJECTS\CODE\NULLDLG.CPP... */
-	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor			= Get_Resolution_Factor();
 	/*........................................................................
 	Dialog & button dimensions
 	........................................................................*/
 	int d_dialog_w = 301 *factor;											// dialog width
 	int d_dialog_h = 200 *factor;											// dialog height
-	int d_dialog_x = ((320 *factor - d_dialog_w) / 2);				// dialog x-coord
+	int d_dialog_x = (SeenBuff.Get_Width() - d_dialog_w) / 2;				// dialog x-coord
 	int d_dialog_y = ((200 *factor - d_dialog_h) / 2);				// dialog y-coord
 	int d_dialog_cx = d_dialog_x + (d_dialog_w / 2);		// center x-coord
 
@@ -3092,13 +3092,13 @@ static int Init_String_Compare (const void *p1, const void *p2)
 #define TXT_JOIN_INTERNET_GAME 4567+2
 int Com_Scenario_Dialog(void)
 {
-	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor			= Get_Resolution_Factor();
 	/*........................................................................
 	Dialog & button dimensions
 	........................................................................*/
 	int d_dialog_w = 290*factor;											// dialog width
 	int d_dialog_h = 190*factor;											// dialog height
-	int d_dialog_x = ((320*factor - d_dialog_w) / 2);				// dialog x-coord
+	int d_dialog_x = (SeenBuff.Get_Width() - d_dialog_w) / 2;				// dialog x-coord
 	int d_dialog_y = ((200*factor - d_dialog_h) / 2);				// dialog y-coord
 	int d_dialog_cx = d_dialog_x + (d_dialog_w / 2);		// center x-coord
 
@@ -4555,13 +4555,13 @@ CCDebugString (flip);
  *=============================================================================================*/
 int Com_Show_Scenario_Dialog(void)
 {
-	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor			= Get_Resolution_Factor();
 	/*........................................................................
 	Dialog & button dimensions
 	........................................................................*/
 	int d_dialog_w = 306*factor;											// dialog width
 	int d_dialog_h = 187*factor;											// dialog height
-	int d_dialog_x = ((320*factor - d_dialog_w) / 2);				// dialog x-coord
+	int d_dialog_x = (SeenBuff.Get_Width() - d_dialog_w) / 2;				// dialog x-coord
 	int d_dialog_y = ((200*factor - d_dialog_h) / 2);				// dialog y-coord
 	int d_dialog_cx = d_dialog_x + (d_dialog_w / 2);		// center x-coord
 
@@ -5699,13 +5699,13 @@ CCDebugString (flip);
  *=========================================================================*/
 static int Phone_Dialog (void)
 {
-	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor			= Get_Resolution_Factor();
 	/*........................................................................
 	Dialog & button dimensions
 	........................................................................*/
 		int d_dialog_w = 280 *factor;											// dialog width
 		int d_dialog_h = 150 *factor;											// dialog height
-		int d_dialog_x = ((320 *factor - d_dialog_w) / 2);				// dialog x-coord
+		int d_dialog_x = (SeenBuff.Get_Width() - d_dialog_w) / 2;				// dialog x-coord
 		int d_dialog_y = ((200 *factor- d_dialog_h) / 2);				// dialog y-coord
 		int d_dialog_cx = d_dialog_x + (d_dialog_w / 2);		// center x-coord
 
@@ -6315,13 +6315,13 @@ static int Phone_Compare (const void *p1, const void *p2)
  *=========================================================================*/
 static int Edit_Phone_Dialog (PhoneEntryClass *phone)
 {
-	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor			= Get_Resolution_Factor();
 	/*........................................................................
 	Dialog & button dimensions
 	........................................................................*/
 	int d_dialog_w = 230 *factor;											// dialog width
 	int d_dialog_h = 105*factor;											// dialog height
-	int d_dialog_x = ((320*factor - d_dialog_w) / 2);				// dialog x-coord
+	int d_dialog_x = (SeenBuff.Get_Width() - d_dialog_w) / 2;				// dialog x-coord
 //		D_DIALOG_Y = ((200 - D_DIALOG_H) / 2);				// dialog y-coord
 	int d_dialog_y = ((136*factor - d_dialog_h) / 2);				// dialog y-coord
 	int d_dialog_cx = d_dialog_x + (d_dialog_w / 2);		// center x-coord
@@ -7187,7 +7187,7 @@ int Com_Fake_Scenario_Dialog(void)
 	EventClass *event;					// event ptr
 	unsigned long msg_timeout = 60*60;	// init to 60 seconds
 
-	int 	factor 		= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int 	factor 		= Get_Resolution_Factor();
 
 	/*........................................................................
 	Button Enumerations
@@ -7705,7 +7705,7 @@ int Com_Show_Fake_Scenario_Dialog(void)
 	unsigned long msg_timeout = 60*60;	// init to 60 seconds
 
 
-	int 	factor 		= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int 	factor 		= Get_Resolution_Factor();
 
 	/*........................................................................
 	Button Enumerations

@@ -50,7 +50,7 @@ class TabClass: public SidebarClass
 		virtual void Draw_It(bool complete=false);
 
 		virtual void One_Time(void);							// One-time inits
-		static void Draw_Credits_Tab(void);
+		static void Draw_Credits_Tab(int evaWidth);
 		static void Hilite_Tab(int tab);
 		void  Redraw_Tab(void) {IsToRedraw = true;Flag_To_Redraw(false);};
 

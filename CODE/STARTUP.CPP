@@ -121,7 +121,7 @@ int PASCAL WinMain ( HINSTANCE instance , HINSTANCE , char * command_line , int 
 {
 // Heap_Dump_Check( "first thing in main" );
 //	malloc(1);
-
+	//Special.IsLogging = true;
 	CCDebugString ("C&C95 - Starting up.\n");
 
 
@@ -364,24 +364,19 @@ int PASCAL WinMain ( HINSTANCE instance , HINSTANCE , char * command_line , int 
 			/*
 			** Set 640x400 video mode. If its not available then try for 640x480
 			*/
-			if (ScreenHeight == 400){
-				if (Set_Video_Mode (MainWindow, ScreenWidth, ScreenHeight, 8)){
+			if (Set_Video_Mode (MainWindow, ScreenWidth, ScreenHeight, 8)) {
+				video_success = TRUE;
+			} else {
+				if (Set_Video_Mode (MainWindow, 640, 480, 8)){
 					video_success = TRUE;
-				}else{
-					if (Set_Video_Mode (MainWindow, ScreenWidth, 480, 8)){
-						video_success = TRUE;
-						ScreenHeight = 480;
-					}
-				}
-			}else{
-				if (Set_Video_Mode (MainWindow, ScreenWidth, ScreenHeight, 8)){
-					video_success = TRUE;
+					ScreenWidth = 640;
+					ScreenHeight = 480;
 				}
 			}
 
 			if (!video_success){
 				CCDebugString ("C&C95 - Failed to set video mode.\n");
-				MessageBox(MainWindow, Text_String(TXT_UNABLE_TO_SET_VIDEO_MODE), "Command & Conquer", MB_ICONEXCLAMATION|MB_OK);
+				MessageBox(MainWindow, "Error - Unable to set video mode!", "Command & Conquer", MB_ICONEXCLAMATION|MB_OK);
 				if (WindowsTimer) delete WindowsTimer;
 				if (Palette) delete [] Palette;
 				return (EXIT_FAILURE);
@@ -405,7 +400,7 @@ int PASCAL WinMain ( HINSTANCE instance , HINSTANCE , char * command_line , int 
 					** Aaaarrgghh!
 					*/
 					CCDebugString ("C&C95 - Unable to allocate primary surface.\n");
-					MessageBox(MainWindow, Text_String(TXT_UNABLE_TO_ALLOCATE_PRIMARY_VIDEO_BUFFER), "Command & Conquer", MB_ICONEXCLAMATION|MB_OK);
+					MessageBox(MainWindow, "Error - Unable to allocate primary video buffer!", "Command & Conquer", MB_ICONEXCLAMATION|MB_OK);
 					if (WindowsTimer) delete WindowsTimer;
 					if (Palette) delete [] Palette;
 					return (EXIT_FAILURE);
@@ -452,7 +447,7 @@ int PASCAL WinMain ( HINSTANCE instance , HINSTANCE , char * command_line , int 
 					}
 				}
 			}
-
+#ifdef OBSOLETE
 			ScreenHeight = 400;
 
 			if (VisiblePage.Get_Height() == 480){
@@ -462,6 +457,10 @@ int PASCAL WinMain ( HINSTANCE instance , HINSTANCE , char * command_line , int 
 				SeenBuff.Attach(&VisiblePage,0, 0, 640, 400);
 				HidPage.Attach(&HiddenPage, 0, 0, 640, 400);
 			}
+#endif
+			SeenBuff.Attach(&VisiblePage,0, 0, ScreenWidth, ScreenHeight);
+			HidPage.Attach(&HiddenPage, 0, 0, ScreenWidth , ScreenHeight);
+
 			CCDebugString ("C&C95 - Adjusting variables for resolution.\n");
 			Options.Adjust_Variables_For_Resolution();
 

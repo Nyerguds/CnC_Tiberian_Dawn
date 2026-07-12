@@ -700,34 +700,34 @@ bool Client_Remote_Connect(void)
  *                                                                                             *
  * Any game running in Stealth mode won't show up on this dialog.                              *
  *                                                                                             *
- *    ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿                                    *
- *    ³                 Network Games                     ³                                    *
- *    ³                                                   ³                                    *
- *    ³              Your Name: ____________              ³                                    *
- *    ³                  House: [GDI] [NOD]               ³                                    *
- *    ³          Desired Color: [ ][ ][ ][ ]              ³                                    *
- *    ³                                                   ³                                    *
- *    ³            Games                 Players          ³                                    *
- *    ³ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄ¿ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄ¿ ³                                    *
- *    ³ ³(Bill's Game         )³³ ³ Peter Parker GDI ³³ ³                                    *
- *    ³ ³ Peter Parker's Game  ÃÄ´ ³ Mary Jane    GDI ÃÄ´ ³                                    *
- *    ³ ³(Magnum PI's Game    )³ ³ ³ JJ Jameson   NOD ³ ³ ³                                    *
- *    ³ ³                      ÃÄ´ ³                  ÃÄ´ ³                                    *
- *    ³ ³                      ³³ ³                  ³³ ³                                    *
- *    ³ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÙ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÙ ³                                    *
- *    ³           Scenario: Big Long Description          ³                                    *
- *    ³                Starting Credits: xxxx             ³                                    *
- *    ³          Count: ---          Level: ---           ³                                    *
- *    ³          Bases: ON          Crates: ON            ³                                    *
- *    ³       Tiberium: ON      AI Players: ON            ³                                    *
- *    ³                                                   ³                                    *
- *    ³            [Join]  [Cancel]    [New]              ³                                    *
- *    ³  ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿  ³                                    *
- *    ³  ³                                             ³  ³                                    *
- *    ³  ³                                             ³  ³                                    *
- *    ³  ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ  ³                                    *
- *    ³                  [Send Message]                   ³                                    *
- *    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ                                    *
+ *    .---------------------------------------------------.                                    *
+ *    |                 Network Games                     |                                    *
+ *    |                                                   |                                    *
+ *    |              Your Name: ____________              |                                    *
+ *    |                  House: [GDI] [NOD]               |                                    *
+ *    |          Desired Color: [ ][ ][ ][ ]              |                                    *
+ *    |                                                   |                                    *
+ *    |            Games                 Players          |                                    *
+ *    | .----------------------.-. .------------------.-. |                                    *
+ *    | |(Bill's Game         )|^| | Peter Parker GDI |^| |                                    *
+ *    | | Peter Parker's Game  |-| | Mary Jane    GDI |-| |                                    *
+ *    | |(Magnum PI's Game    )| | | JJ Jameson   NOD | | |                                    *
+ *    | |                      |-| |                  |-| |                                    *
+ *    | |                      |V| |                  |v| |                                    *
+ *    | *----------------------*-* *------------------*-* |                                    *
+ *    |           Scenario: Big Long Description          |                                    *
+ *    |                Starting Credits: xxxx             |                                    *
+ *    |          Count: ---          Level: ---           |                                    *
+ *    |          Bases: ON          Crates: ON            |                                    *
+ *    |       Tiberium: ON      AI Players: ON            |                                    *
+ *    |                                                   |                                    *
+ *    |            [Join]  [Cancel]    [New]              |                                    *
+ *    |  .---------------------------------------------.  |                                    *
+ *    |  |                                             |  |                                    *
+ *    |  |                                             |  |                                    *
+ *    |  *---------------------------------------------*  |                                    *
+ *    |                  [Send Message]                   |                                    *
+ *    *---------------------------------------------------*                                    *
  *                                                                                             *
  * INPUT:                                                                                      *
  *    none.                                                                                    *
@@ -743,14 +743,14 @@ bool Client_Remote_Connect(void)
  *=============================================================================================*/
 static int Net_Join_Dialog(void)
 {
-	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor			= Get_Resolution_Factor();
 	/*........................................................................
 	Dialog & button dimensions
 	........................................................................*/
 /* ###Change collision detected! C:\PROJECTS\CODE\NETDLG.CPP... */
 	int d_dialog_w = 287 *factor;											// dialog width
 	int d_dialog_h = 198*factor;											// dialog height
-	int d_dialog_x = ((320*factor - d_dialog_w) / 2);				// dialog x-coord
+	int d_dialog_x = (SeenBuff.Get_Width() - d_dialog_w) / 2;				// dialog x-coord
 	int d_dialog_y = ((200*factor - d_dialog_h) / 2);				// centered y-coord
 	int d_dialog_cx = d_dialog_x + (d_dialog_w / 2);		// center x-coord
 
@@ -2621,31 +2621,31 @@ CCDebugString ("C&C95 - Received the 'GO' packet\n");
  * This dialog shows a list of who's requesting to join this game, and lets                    *
  * the game initiator selectively approve each user.                                           *
  *                                                                                             *
- *    ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿                                           *
- *    ³              New Network Game              ³                                           *
- *    ³                                            ³                                           *
- *    ³     Players               Scenario         ³                                           *
- *    ³ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄ¿   ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄ¿ ³                                           *
- *    ³ ³ Boffo       ³³   ³ Hell's Kitchen   ³³ ³                                           *
- *    ³ ³ Bozo        ÃÄ´   ³ Heaven's Gate    ÃÄ´ ³                                           *
- *    ³ ³ Bonzo       ³ ³   ³      ...         ³ ³ ³                                           *
- *    ³ ³             ÃÄ´   ³                  ÃÄ´ ³                                           *
- *    ³ ³             ³³   ³                  ³³ ³                                           *
- *    ³ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÙ   ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÙ ³                                           *
- *    ³     [Reject]             Count:--- ##      ³                                           *
- *    ³                          Level:--- ##      ³                                           *
- *    ³                                            ³                                           *
- *    ³               Credits: _____               ³                                           *
- *    ³       [  Bases   ]   [   Crates   ]        ³                                           *
- *    ³       [ Tiberium ]   [ AI Players ]        ³                                           *
- *    ³                                            ³                                           *
- *    ³              [OK]    [Cancel]              ³                                           *
- *    ³  ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿   ³                                           *
- *    ³  ³                                     ³   ³                                           *
- *    ³  ³                                     ³   ³                                           *
- *    ³  ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ   ³                                           *
- *    ³               [Send Message]               ³                                           *
- *    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ                                           *
+ *    .--------------------------------------------.                                           *
+ *    |              New Network Game              |                                           *
+ *    |                                            |                                           *
+ *    |     Players               Scenario         |                                           *
+ *    | .-------------.-.   .------------------.-. |                                           *
+ *    | | Boffo       ||   | Hell's Kitchen   || |                                           *
+ *    | | Bozo        |-|   | Heaven's Gate    |-| |                                           *
+ *    | | Bonzo       | |   |      ...         | | |                                           *
+ *    | |             |-|   |                  |-| |                                           *
+ *    | |             ||   |                  || |                                           *
+ *    | *-------------*-*   *------------------*-* |                                           *
+ *    |     [Reject]             Count:--- ##      |                                           *
+ *    |                          Level:--- ##      |                                           *
+ *    |                                            |                                           *
+ *    |               Credits: _____               |                                           *
+ *    |       [  Bases   ]   [   Crates   ]        |                                           *
+ *    |       [ Tiberium ]   [ AI Players ]        |                                           *
+ *    |                                            |                                           *
+ *    |              [OK]    [Cancel]              |                                           *
+ *    |  .-------------------------------------.   |                                           *
+ *    |  |                                     |   |                                           *
+ *    |  |                                     |   |                                           *
+ *    |  *-------------------------------------*   |                                           *
+ *    |               [Send Message]               |                                           *
+ *    *--------------------------------------------*                                           *
  *                                                                                             *
  * INPUT:                                                                                      *
  *    none.                                                                                    *
@@ -2662,14 +2662,14 @@ CCDebugString ("C&C95 - Received the 'GO' packet\n");
 static int Net_New_Dialog(void)
 {
 /* ###Change collision detected! C:\PROJECTS\CODE\NETDLG.CPP... */
-	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor			= Get_Resolution_Factor();
 	/*........................................................................
 	Dialog & button dimensions
 	........................................................................*/
 		//D_DIALOG_W = 281;											// dialog width
 	int d_dialog_w = 287*factor;											// dialog width
 	int d_dialog_h = 177*factor;											// dialog height
-	int d_dialog_x = ((320*factor - d_dialog_w) / 2);				// dialog x-coord
+	int d_dialog_x = (SeenBuff.Get_Width() - d_dialog_w) / 2;				// dialog x-coord
 	int d_dialog_y = ((200*factor - d_dialog_h) / 2);				// centered y-coord
 	int d_dialog_cx = d_dialog_x + (d_dialog_w / 2);		// center x-coord
 
@@ -4018,7 +4018,8 @@ void Net_Reconnect_Dialog(int reconn, int fresh, int oldest_index,
 	char buf2[40] = {0};
 	char const *buf3 = "";
 
-	int factor = (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor = Get_Resolution_Factor();
+	int xdiff = MAX(0, SeenBuff.Get_Width() - (320*factor)) / 2;
 
 	int d_txt6_h = 6*factor+1;
 	int d_margin = 5*factor;
@@ -4044,7 +4045,7 @@ void Net_Reconnect_Dialog(int reconn, int fresh, int oldest_index,
 		w = MAX(String_Pixel_Width(buf3), w);
 		w += (d_margin * 4);
 		h = (d_txt6_h * 3) + (d_margin * 6);
-		x = 160*factor - (w / 2);
+		x = xdiff + 160*factor - (w / 2);
 		y = 100*factor - (h / 2);
 
 		Hide_Mouse();
@@ -4155,11 +4156,11 @@ extern bool Spawn_WChat(bool can_launch);
  *=============================================================================================*/
 static int Net_Fake_New_Dialog(void)
 {
-	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor			= Get_Resolution_Factor();
 
 	int d_dialog_w = 120*factor;											// dialog width
 	int d_dialog_h = 80*factor;											// dialog height
-	int d_dialog_x = ((320*factor - d_dialog_w) / 2);				// dialog x-coord
+	int d_dialog_x = (SeenBuff.Get_Width() - d_dialog_w) / 2;				// dialog x-coord
 	int d_dialog_y = ((200*factor - d_dialog_h) / 2);				// centered y-coord
 	int d_dialog_cx = d_dialog_x + (d_dialog_w / 2);		// center x-coord
 
@@ -4195,7 +4196,7 @@ static int Net_Fake_New_Dialog(void)
 
 #if (GERMAN | FRENCH)
 	d_dialog_w = width + 25*factor;
-	d_dialog_x = ((320*factor - d_dialog_w) / 2);				// dialog x-coord
+	d_dialog_x = ((SeenBuff.Get_Width() - d_dialog_w) / 2);				// dialog x-coord
 	d_cancel_x = d_dialog_cx - (d_cancel_w / 2);
 #endif
 
@@ -4746,14 +4747,14 @@ CCDebugString ("C&C95 - Creating connection to the VSS\n");
 
 static int Net_Fake_Join_Dialog(void)
 {
-	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor			= Get_Resolution_Factor();
 	/*........................................................................
 	Dialog & button dimensions
 	........................................................................*/
 /* ###Change collision detected! C:\PROJECTS\CODE\NETDLG.CPP... */
 	int d_dialog_w = 120 *factor;											// dialog width
 	int d_dialog_h = 80*factor;											// dialog height
-	int d_dialog_x = ((320*factor - d_dialog_w) / 2);				// dialog x-coord
+	int d_dialog_x = (SeenBuff.Get_Width() - d_dialog_w) / 2;				// dialog x-coord
 	int d_dialog_y = ((200*factor - d_dialog_h) / 2);				// centered y-coord
 	int d_dialog_cx = d_dialog_x + (d_dialog_w / 2);		// center x-coord
 
@@ -4796,7 +4797,7 @@ static int Net_Fake_Join_Dialog(void)
 
 #if (GERMAN | FRENCH)
 	d_dialog_w = width + 25*factor;
-	d_dialog_x = ((320*factor - d_dialog_w) / 2);				// dialog x-coord
+	d_dialog_x = ((SeenBuff.Get_Width() - d_dialog_w) / 2);				// dialog x-coord
 	d_cancel_x = d_dialog_cx - (d_cancel_w / 2);
 #endif
 

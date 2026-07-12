@@ -129,7 +129,7 @@ RadarClass::RadarClass(void)
  *=============================================================================================*/
 void RadarClass::One_Time(void)
 {
-	int factor = Get_Resolution_Factor();
+	int factor = Get_Resolution_Shift();
 	RadWidth		= 80 << factor;
 	RadHeight 	= 70 << factor;
 	RadX 			= SeenBuff.Get_Width() - RadWidth;
@@ -1895,7 +1895,7 @@ void RadarClass::Draw_Names(void)
 	int kills;
 	int color;
 	TextPrintType style;
-	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor			= Get_Resolution_Factor();
 
 	/*
 	** Do nothing if the sidebar isn't there

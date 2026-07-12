@@ -377,6 +377,7 @@ unsigned long Disk_Space_Available(void);
 
 void Validate_Error(char *name);
 void const * Hires_Retrieve(char *name);
+int Get_Resolution_Shift(void);
 int Get_Resolution_Factor(void);
 
 

@@ -52,7 +52,7 @@ class MusicListClass : public ListClass
 };
 int SoundControlsClass::Init(void)
 {
-	int factor 		= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor 		= Get_Resolution_Factor();
 	Option_Width	=292 * factor;
 	Option_Height	=146 * factor;
 
@@ -116,7 +116,7 @@ void SoundControlsClass::Process(void)
 {
 //	ThemeType theme;
 
-	int factor 		= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor 		= Get_Resolution_Factor();
 
 	Init();
 	/*

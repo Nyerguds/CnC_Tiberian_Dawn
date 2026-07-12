@@ -59,7 +59,7 @@ bool ConfirmationClass::Process(int text)
  *=============================================================================================*/
 bool ConfirmationClass::Process(char const * string)
 {
-	int factor = (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor = Get_Resolution_Factor();
 
 	enum {
 		NUM_OF_BUTTONS = 2
@@ -83,7 +83,7 @@ bool ConfirmationClass::Process(char const * string)
 	Format_Window_String(buffer, 200*factor, width, height);
 	width += 60*factor;
 	height += 60*factor;
-	int x = (320*factor - width) / 2;
+	int x = (SeenBuff.Get_Width() - width) / 2;
 	int y = (200*factor - height) / 2;
 
 	Set_Logic_Page(SeenBuff);

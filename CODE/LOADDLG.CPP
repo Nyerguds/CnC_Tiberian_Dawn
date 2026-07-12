@@ -112,7 +112,7 @@ int LoadOptionsClass::Process(void)
 	/*
 	**	Dialog & button dimensions
 	*/
-	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor			= Get_Resolution_Factor();
 	int d_dialog_w		= 250 *factor;
 	int d_dialog_h		= 156 * factor;
 	int d_dialog_x		= (SeenBuff.Get_Width() - d_dialog_w) >> 1;

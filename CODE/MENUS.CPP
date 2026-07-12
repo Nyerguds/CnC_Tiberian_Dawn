@@ -453,6 +453,8 @@ int Do_Menu(char const **strings, bool blue)
  *=========================================================================*/
 int Main_Menu(unsigned long timeout)
 {
+	int factor			= Get_Resolution_Factor();
+	int xdiff = MAX(0, SeenBuff.Get_Width() - (320*factor)) / 2;
 	enum {
 		D_DIALOG_W = 152*2,
 		D_DIALOG_H = 136*2,
@@ -558,54 +560,54 @@ int Main_Menu(unsigned long timeout)
 	if (expansions) ystep -= 2*2;
 	TextButtonClass expandbtn (BUTTON_EXPAND, TXT_NEW_MISSIONS,
 		TPF_CENTER | TPF_6PT_GRAD | TPF_USE_GRAD_PAL | TPF_NOSHADOW,
-		D_START_X, starty, D_START_W, D_START_H);
+		xdiff + D_START_X, starty, D_START_W, D_START_H);
 	if (expansions) starty += ystep;
 
 	TextButtonClass startbtn (BUTTON_START, TXT_START_NEW_GAME,
 		TPF_CENTER | TPF_6PT_GRAD | TPF_USE_GRAD_PAL | TPF_NOSHADOW,
-		D_START_X, starty, D_START_W, D_START_H);
+		xdiff + D_START_X, starty, D_START_W, D_START_H);
 	starty += ystep;
 
 #ifdef BONUS_MISSIONS
 	TextButtonClass bonusbtn (BUTTON_BONUS, TXT_BONUS_MISSIONS,
 		TPF_CENTER | TPF_6PT_GRAD | TPF_USE_GRAD_PAL | TPF_NOSHADOW,
-		D_BONUS_X, starty, D_BONUS_W, D_BONUS_H);
+		xdiff + D_BONUS_X, starty, D_BONUS_W, D_BONUS_H);
 	starty += ystep;
 #endif	//BONUS_MISSIONS
 
 	TextButtonClass loadbtn (BUTTON_LOAD, TXT_LOAD_MISSION,
 		TPF_CENTER | TPF_6PT_GRAD | TPF_USE_GRAD_PAL | TPF_NOSHADOW,
-		D_LOAD_X, starty, D_LOAD_W, D_LOAD_H);
+		xdiff + D_LOAD_X, starty, D_LOAD_W, D_LOAD_H);
 	starty += ystep;
 
 	TextButtonClass multibtn (BUTTON_MULTI, TXT_MULTIPLAYER_GAME,
 		TPF_CENTER | TPF_6PT_GRAD | TPF_USE_GRAD_PAL | TPF_NOSHADOW,
-		D_MULTI_X, starty, D_MULTI_W, D_MULTI_H);
+		xdiff + D_MULTI_X, starty, D_MULTI_W, D_MULTI_H);
 	starty += ystep;
 
 	TextButtonClass internetbutton(BUTTON_INTERNET, TXT_INTERNET,
 		TPF_CENTER | TPF_6PT_GRAD | TPF_USE_GRAD_PAL | TPF_NOSHADOW,
-		D_INTERNET_X, starty, D_INTERNET_W, D_INTERNET_H);
+		xdiff + D_INTERNET_X, starty, D_INTERNET_W, D_INTERNET_H);
 	starty += ystep;
 #else // NEWMENU
 
 	TextButtonClass startbtn (BUTTON_START, TXT_START_NEW_GAME,
 		TPF_CENTER | TPF_6PT_GRAD | TPF_USE_GRAD_PAL | TPF_NOSHADOW,
-		D_START_X, D_START_Y, D_START_W, D_START_H);
+		xdiff + D_START_X, D_START_Y, D_START_W, D_START_H);
 
 	TextButtonClass loadbtn (BUTTON_LOAD, TXT_LOAD_MISSION,
 		TPF_CENTER | TPF_6PT_GRAD | TPF_USE_GRAD_PAL | TPF_NOSHADOW,
-		D_LOAD_X, D_LOAD_Y, D_LOAD_W, D_LOAD_H);
+		xdiff + D_LOAD_X, D_LOAD_Y, D_LOAD_W, D_LOAD_H);
 
 #ifdef DEMO
 	TextButtonClass multibtn (BUTTON_MULTI, TXT_ORDER_INFO,
 		TPF_CENTER | TPF_6PT_GRAD | TPF_USE_GRAD_PAL | TPF_NOSHADOW,
-		D_MULTI_X, D_MULTI_Y, D_MULTI_W, D_MULTI_H);
+		xdiff + D_MULTI_X, D_MULTI_Y, D_MULTI_W, D_MULTI_H);
 #else // demo
 
 	TextButtonClass multibtn (BUTTON_MULTI, TXT_MULTIPLAYER_GAME,
 		TPF_CENTER | TPF_6PT_GRAD | TPF_USE_GRAD_PAL | TPF_NOSHADOW,
-		D_MULTI_X, starty, D_MULTI_W, D_MULTI_H);
+		xdiff + D_MULTI_X, starty, D_MULTI_W, D_MULTI_H);
 	starty += ystep;
 
 #endif // demo
@@ -620,16 +622,16 @@ int Main_Menu(unsigned long timeout)
 	TextButtonClass introbtn (BUTTON_INTRO, TXT_INTRO,
 #endif	//DEMO
 		TPF_CENTER | TPF_6PT_GRAD | TPF_USE_GRAD_PAL | TPF_NOSHADOW,
-		D_INTRO_X, starty, D_INTRO_W, D_INTRO_H);
+		xdiff + D_INTRO_X, starty, D_INTRO_W, D_INTRO_H);
 	starty += ystep;
 
 	TextButtonClass exitbtn (BUTTON_EXIT, TXT_EXIT_GAME,
 		TPF_CENTER | TPF_6PT_GRAD | TPF_USE_GRAD_PAL | TPF_NOSHADOW,
 #if (GERMAN | FRENCH)
 		//D_EXIT_X, starty);
-		D_EXIT_X, starty, D_EXIT_W, D_EXIT_H);
+		xdiff + D_EXIT_X, starty, D_EXIT_W, D_EXIT_H);
 #else
-		D_EXIT_X, starty, D_EXIT_W, D_EXIT_H);
+		xdiff + D_EXIT_X, starty, D_EXIT_W, D_EXIT_H);
 #endif
 	starty += ystep;
 
@@ -641,15 +643,15 @@ int Main_Menu(unsigned long timeout)
 	TextButtonClass introbtn (BUTTON_INTRO, TXT_INTRO,
 #endif	//DEMO
 		TPF_CENTER | TPF_6PT_GRAD | TPF_USE_GRAD_PAL | TPF_NOSHADOW,
-		D_INTRO_X, D_INTRO_Y, D_INTRO_W, D_INTRO_H);
+		xdiff + D_INTRO_X, D_INTRO_Y, D_INTRO_W, D_INTRO_H);
 
 	TextButtonClass exitbtn (BUTTON_EXIT, TXT_EXIT_GAME,
 		TPF_CENTER | TPF_6PT_GRAD | TPF_USE_GRAD_PAL | TPF_NOSHADOW,
 #if (GERMAN | FRENCH)
 		//D_EXIT_X, D_EXIT_Y);
-		D_EXIT_X, D_EXIT_Y, D_EXIT_W, D_EXIT_H);
+		xdiff + D_EXIT_X, D_EXIT_Y, D_EXIT_W, D_EXIT_H);
 #else
-		D_EXIT_X, D_EXIT_Y, D_EXIT_W, D_EXIT_H);
+		xdiff + D_EXIT_X, D_EXIT_Y, D_EXIT_W, D_EXIT_H);
 #endif
 #endif
 
@@ -762,20 +764,20 @@ int Main_Menu(unsigned long timeout)
 			**	Display the title and text overlay for the menu.
 			*/
 			Set_Logic_Page(HidPage);
-			Dialog_Box(D_DIALOG_X, D_DIALOG_Y, D_DIALOG_W, D_DIALOG_H);
-			Draw_Caption (TXT_NONE, D_DIALOG_X, D_DIALOG_Y, D_DIALOG_W);
+			Dialog_Box(xdiff + D_DIALOG_X, D_DIALOG_Y, D_DIALOG_W, D_DIALOG_H);
+			Draw_Caption (TXT_NONE, xdiff + D_DIALOG_X, D_DIALOG_Y, D_DIALOG_W);
 #ifdef VIRGIN_CHEAT_KEYS
 #ifdef DEMO
 			Version_Number();
-			Fancy_Text_Print("Demo%s", D_DIALOG_X+D_DIALOG_W-5*2, D_DIALOG_Y+D_DIALOG_H-10*2, DKGREY, TBLACK, TPF_6POINT|TPF_FULLSHADOW|TPF_RIGHT, VersionText);
+			Fancy_Text_Print("Demo%s", xdiff + D_DIALOG_X+D_DIALOG_W-5*2, D_DIALOG_Y+D_DIALOG_H-10*2, DKGREY, TBLACK, TPF_6POINT|TPF_FULLSHADOW|TPF_RIGHT, VersionText);
 #else
-			Fancy_Text_Print("V.%d%s", D_DIALOG_X+D_DIALOG_W-5*2, D_DIALOG_Y+D_DIALOG_H-10*2, DKGREY, TBLACK, TPF_6POINT|TPF_FULLSHADOW|TPF_RIGHT, Version_Number(), VersionText, FOREIGN_VERSION_NUMBER);
+			Fancy_Text_Print("V.%d%s", xdiff + D_DIALOG_X+D_DIALOG_W-5*2, D_DIALOG_Y+D_DIALOG_H-10*2, DKGREY, TBLACK, TPF_6POINT|TPF_FULLSHADOW|TPF_RIGHT, Version_Number(), VersionText, FOREIGN_VERSION_NUMBER);
 #endif
-//			Fancy_Text_Print("V.%d%s%02d", D_DIALOG_X+D_DIALOG_W-5, D_DIALOG_Y+D_DIALOG_H-10, DKGREY, TBLACK, TPF_6POINT|TPF_FULLSHADOW|TPF_RIGHT, Version_Number(), VersionText, FOREIGN_VERSION_NUMBER);
+//			Fancy_Text_Print("V.%d%s%02d", xdiff + D_DIALOG_X+D_DIALOG_W-5, D_DIALOG_Y+D_DIALOG_H-10, DKGREY, TBLACK, TPF_6POINT|TPF_FULLSHADOW|TPF_RIGHT, Version_Number(), VersionText, FOREIGN_VERSION_NUMBER);
 #else
 #ifdef DEMO
 			Version_Number();
-			Fancy_Text_Print("Demo%s", D_DIALOG_X+D_DIALOG_W-5*2, D_DIALOG_Y+D_DIALOG_H-10*2, DKGREY, TBLACK, TPF_6POINT|TPF_FULLSHADOW|TPF_RIGHT, VersionText);
+			Fancy_Text_Print("Demo%s", xdiff + D_DIALOG_X+D_DIALOG_W-5*2, D_DIALOG_Y+D_DIALOG_H-10*2, DKGREY, TBLACK, TPF_6POINT|TPF_FULLSHADOW|TPF_RIGHT, VersionText);
 #else
 
 #ifndef VERSION_PATCH_EXTRA
@@ -785,7 +787,7 @@ int Main_Menu(unsigned long timeout)
 			int extrasubtr = extra ? 10*2 : 0;
 			// TEST CODE - Enable to init VersionText on main memu, in case it's used to output debug data in-game.
 			//sprintf(VersionText, (extra ? ".%02d%s\r%s" : ".%02d%s%s"), VERSION_MINOR, "", VERSION_PATCH_EXTRA);
-			Fancy_Text_Print("V.%d%s", D_DIALOG_X+D_DIALOG_W-5*2, D_DIALOG_Y+D_DIALOG_H-10*2-extrasubtr, DKGREY, TBLACK, TPF_6POINT|TPF_FULLSHADOW|TPF_RIGHT, Version_Number(), VersionText);
+			Fancy_Text_Print("V.%d%s", xdiff + D_DIALOG_X+D_DIALOG_W-5*2, D_DIALOG_Y+D_DIALOG_H-10*2-extrasubtr, DKGREY, TBLACK, TPF_6POINT|TPF_FULLSHADOW|TPF_RIGHT, Version_Number(), VersionText);
 #endif
 #endif
 
@@ -798,7 +800,7 @@ int Main_Menu(unsigned long timeout)
 
 			Set_Logic_Page(SeenBuff);
 			startbtn.Draw_All();
-			if (ScreenWidth==320){
+			if (ScreenWidth==320) {
 				ModeX_Blit (SeenBuff.Get_Graphic_Buffer());
 			}
 			display = false;

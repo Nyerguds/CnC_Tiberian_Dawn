@@ -71,7 +71,7 @@ void Show_Internet_Connection_Progress(void);
 GameType Select_MPlayer_Game (void)
 {
 
-	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor			= Get_Resolution_Factor();
 	bool	ipx_avail = FALSE;
 	int number_of_buttons;
 	/*........................................................................
@@ -79,7 +79,7 @@ GameType Select_MPlayer_Game (void)
 	........................................................................*/
 	int	d_dialog_w = 190*factor;
 	int	d_dialog_h = 26*4*factor;
-	int 	d_dialog_x = ((320*factor - d_dialog_w) / 2);
+	int d_dialog_x = (SeenBuff.Get_Width() - d_dialog_w) / 2;
 //	d_dialog_y = ((200 - d_dialog_h) / 2),
 	int	d_dialog_y = ((136*factor - d_dialog_h) / 2);
 	int	d_dialog_cx = d_dialog_x + (d_dialog_w / 2);
@@ -1250,13 +1250,13 @@ static void Garble_Message(char *buf)
  *=========================================================================*/
 int Surrender_Dialog(void)
 {
-	int factor			= (SeenBuff.Get_Width() == 320) ? 1 : 2;
+	int factor			= Get_Resolution_Factor();
 	/*........................................................................
 	Dialog & button dimensions
 	........................................................................*/
 	int d_dialog_w = 170*factor;											// dialog width
 	int d_dialog_h = 53*factor;											// dialog height
-	int d_dialog_x = ((320*factor - d_dialog_w) / 2);				// centered x-coord
+	int d_dialog_x = (SeenBuff.Get_Width() - d_dialog_w) / 2;				// centered x-coord
 	int d_dialog_y = ((200*factor - d_dialog_h) / 2);				// centered y-coord
 	int d_dialog_cx = d_dialog_x + (d_dialog_w / 2);		// coord of x-center
 
