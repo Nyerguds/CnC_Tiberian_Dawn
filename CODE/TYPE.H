@@ -1074,6 +1074,11 @@ class UnitTypeClass : public TechnoTypeClass
 		unsigned IsTalker:1;
 
 		/*
+		** Does this unit prefer the House's building colour, since it docks with a building or transforms into one?
+		*/
+		unsigned IsBuildingColor:1;
+
+		/*
 		** Until what health ratio does this unit autoheal? Set to 0 to disable.
 		*/
 		unsigned short AutoHealMax;
@@ -1176,6 +1181,7 @@ class UnitTypeClass : public TechnoTypeClass
 						bool is_animating,
 						bool is_smoker,
 						bool is_talker,
+						bool is_building_color,
 						unsigned short autohealmax,
 						unsigned short tibhealmax,
 						int ammo,

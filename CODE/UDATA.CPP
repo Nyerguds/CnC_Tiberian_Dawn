@@ -88,6 +88,7 @@ static UnitTypeClass const UnitVisceroid(
 		true, 			// Does the unit have a constant animation?
 		false,			// Does this unit emit smoke when it is damaged?
 		false,			// Can this unit respond with a human voice?
+		false,			// Does this unit use building colors?
 	0,					// Until what health ratio does this unit autoheal?
 	0x100,				// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
@@ -155,6 +156,7 @@ static UnitTypeClass const UnitFTank(
 		false,			// Does the unit have a constant animation?
 		true, 			// Does this unit emit smoke when it is damaged?
 		true, 			// Can this unit respond with a human voice?
+		false,			// Does this unit use building colors?
 	0,					// Until what health ratio does this unit autoheal?
 	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
@@ -220,6 +222,7 @@ static UnitTypeClass const UnitSTank(
 		false,			// Does the unit have a constant animation?
 		true, 			// Does this unit emit smoke when it is damaged?
 		true, 			// Can this unit respond with a human voice?
+		false,			// Does this unit use building colors?
 	0,					// Until what health ratio does this unit autoheal?
 	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
@@ -285,6 +288,7 @@ static UnitTypeClass const UnitLTank(
 		false,			// Does the unit have a constant animation?
 		true, 			// Does this unit emit smoke when it is damaged?
 		true, 			// Can this unit respond with a human voice?
+		false,			// Does this unit use building colors?
 	0,					// Until what health ratio does this unit autoheal?
 	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
@@ -350,6 +354,7 @@ static UnitTypeClass const UnitMTank(
 		false,			// Does the unit have a constant animation?
 		true, 			// Does this unit emit smoke when it is damaged?
 		true, 			// Can this unit respond with a human voice?
+		false,			// Does this unit use building colors?
 	0,					// Until what health ratio does this unit autoheal?
 	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
@@ -415,6 +420,7 @@ static UnitTypeClass const UnitHTank(
 		false,			// Does the unit have a constant animation?
 		true, 			// Does this unit emit smoke when it is damaged?
 		true, 			// Can this unit respond with a human voice?
+		false,			// Does this unit use building colors?
 	0x80,				// Until what health ratio does this unit autoheal?
 	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
@@ -480,6 +486,7 @@ static UnitTypeClass const UnitMHQ(
 		false,			// Does the unit have a constant animation?
 		true, 			// Does this unit emit smoke when it is damaged?
 		true, 			// Can this unit respond with a human voice?
+		false,			// Does this unit use building colors?
 	0,					// Until what health ratio does this unit autoheal?
 	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
@@ -547,6 +554,7 @@ static UnitTypeClass const UnitHover(
 		false,			// Does the unit have a constant animation?
 		true, 			// Does this unit emit smoke when it is damaged?
 		true, 			// Can this unit respond with a human voice?
+		false,			// Does this unit use building colors?
 	0,					// Until what health ratio does this unit autoheal?
 	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
@@ -613,6 +621,7 @@ static UnitTypeClass const UnitSSM(
 		false,			// Does the unit have a constant animation?
 		true, 			// Does this unit emit smoke when it is damaged?
 		true, 			// Can this unit respond with a human voice?
+		false,			// Does this unit use building colors?
 	0,					// Until what health ratio does this unit autoheal?
 	0,					// Until what health ratio does this unit autoheal on tiberium?
 	2,											// AMMO:			Number of shots it has (default).
@@ -679,6 +688,7 @@ static UnitTypeClass const UnitArty(
 		false,			// Does the unit have a constant animation?
 		true, 			// Does this unit emit smoke when it is damaged?
 		true, 			// Can this unit respond with a human voice?
+		false,			// Does this unit use building colors?
 	0,					// Until what health ratio does this unit autoheal?
 	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
@@ -744,6 +754,7 @@ static UnitTypeClass const UnitHarvester(
 		false,			// Does the unit have a constant animation?
 		true, 			// Does this unit emit smoke when it is damaged?
 		true, 			// Can this unit respond with a human voice?
+		true, 			// Does this unit use building colors?
 	0,					// Until what health ratio does this unit autoheal?
 	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
@@ -811,6 +822,7 @@ static UnitTypeClass const UnitMCV(
 		false,			// Does the unit have a constant animation?
 		true, 			// Does this unit emit smoke when it is damaged?
 		true, 			// Can this unit respond with a human voice?
+		true, 			// Does this unit use building colors?
 	0,					// Until what health ratio does this unit autoheal?
 	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
@@ -877,6 +889,7 @@ static UnitTypeClass const UnitJeep(
 		false,			// Does the unit have a constant animation?
 		true, 			// Does this unit emit smoke when it is damaged?
 		true, 			// Can this unit respond with a human voice?
+		false,			// Does this unit use building colors?
 	0,					// Until what health ratio does this unit autoheal?
 	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
@@ -942,6 +955,7 @@ static UnitTypeClass const UnitBuggy(
 		false,			// Does the unit have a constant animation?
 		true, 			// Does this unit emit smoke when it is damaged?
 		true, 			// Can this unit respond with a human voice?
+		false,			// Does this unit use building colors?
 	0,					// Until what health ratio does this unit autoheal?
 	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
@@ -1007,6 +1021,7 @@ static UnitTypeClass const UnitBike(
 		false,			// Does the unit have a constant animation?
 		true, 			// Does this unit emit smoke when it is damaged?
 		true, 			// Can this unit respond with a human voice?
+		false,			// Does this unit use building colors?
 	0,					// Until what health ratio does this unit autoheal?
 	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
@@ -1076,6 +1091,7 @@ static UnitTypeClass const UnitMLRS(
 		false,			// Does the unit have a constant animation?
 		true, 			// Does this unit emit smoke when it is damaged?
 		true, 			// Can this unit respond with a human voice?
+		false,			// Does this unit use building colors?
 	0,					// Until what health ratio does this unit autoheal?
 	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
@@ -1142,6 +1158,7 @@ static UnitTypeClass const UnitAPC(
 		false,			// Does the unit have a constant animation?
 		true, 			// Does this unit emit smoke when it is damaged?
 		true, 			// Can this unit respond with a human voice?
+		false,			// Does this unit use building colors?
 	0,					// Until what health ratio does this unit autoheal?
 	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
@@ -1208,6 +1225,7 @@ static UnitTypeClass const UnitGunBoat(
 		false,			// Does the unit have a constant animation?
 		true, 			// Does this unit emit smoke when it is damaged?
 		true, 			// Can this unit respond with a human voice?
+		false,			// Does this unit use building colors?
 	0,					// Until what health ratio does this unit autoheal?
 	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
@@ -1274,6 +1292,7 @@ static UnitTypeClass const UnitTric(
 		false,			// Does the unit have a constant animation?
 		false,			// Does this unit emit smoke when it is damaged?
 		false,			// Can this unit respond with a human voice?
+		false,			// Does this unit use building colors?
 	0,					// Until what health ratio does this unit autoheal?
 	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
@@ -1332,6 +1351,7 @@ static UnitTypeClass const UnitTrex(
 		false,			// Does the unit have a constant animation?
 		false,			// Does this unit emit smoke when it is damaged?
 		false,			// Can this unit respond with a human voice?
+		false,			// Does this unit use building colors?
 	0,					// Until what health ratio does this unit autoheal?
 	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
@@ -1390,6 +1410,7 @@ static UnitTypeClass const UnitRapt(
 		false,			// Does the unit have a constant animation?
 		false,			// Does this unit emit smoke when it is damaged?
 		false,			// Can this unit respond with a human voice?
+		false,			// Does this unit use building colors?
 	0,					// Until what health ratio does this unit autoheal?
 	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
@@ -1448,6 +1469,7 @@ static UnitTypeClass const UnitSteg(
 		false,			// Does the unit have a constant animation?
 		false,			// Does this unit emit smoke when it is damaged?
 		false,			// Can this unit respond with a human voice?
+		false,			// Does this unit use building colors?
 	0,					// Until what health ratio does this unit autoheal?
 	0,					// Until what health ratio does this unit autoheal on tiberium?
 	-1,										// AMMO:			Number of shots it has (default).
@@ -1552,6 +1574,7 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 				bool is_animating,
 				bool is_smoker,
 				bool is_talker,
+				bool is_building_color,
 				unsigned short autohealmax,
 				unsigned short tibhealmax,
 				int ammo,
@@ -1629,6 +1652,7 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 	IsAnimating = is_animating;
 	IsSmoker = is_smoker;
 	IsTalker = is_talker;
+	IsBuildingColor = is_building_color;
 	AutoHealMax = autohealmax;
 	TibHealMax = tibhealmax;
 	Mission = order;

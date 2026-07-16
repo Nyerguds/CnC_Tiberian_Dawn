@@ -4510,7 +4510,10 @@ bool UnitClass::No_Other_Crushers(CELL cell) const
 void const * UnitClass::Remap_Table(void)
 {
 	Validate();
-	if (*this == UNIT_MCV || *this == UNIT_HARVESTER) {
+	// Nyerguds's C&C Patch Project v1.04: Units with building color.
+	// Does this unit prefer the House's building colour, since it
+	// docks with a building or transforms into one?
+	if (Class->IsBuildingColor) {
 		return(House->Remap_Table(IsBlushing, false));
 	}
 	return(TarComClass::Remap_Table());
