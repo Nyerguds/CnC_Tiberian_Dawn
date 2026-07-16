@@ -31,7 +31,7 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * Fixed tiberium growth not refreshing unless you scroll away from it.
 * Fixed craters CR02-CR06 not placing correctly from mission files.
 * Fixed crater CR06 never being used as building debris. (It's still not used as projectile impact debris, but that's intentional.)
-* Fixed \[v1.06\] crushed infantry remains logic ("Overrun=pancake" in conquer.ini) messing up tiberium spawning. \[Revised to animation in 1.04\]
+* Fixed \[v1.06\] crushed infantry remains logic ("Overrun=pancake" in conquer.ini, under \[Options\]) messing up tiberium spawning. \[Revised to animation in 1.04\]
 * Fixed crushed infantry overlay decoration SQUISH not being usable from mission files.
 * Fixed tiberium spread and crate spawning not being able to replace SQUISH overlay. \[Removed in 1.04, since it's now an animation\]
 * Fixed force-fire modifier getting ignored on overlay.
@@ -42,12 +42,12 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * \[v1.06\] Fixed the names of Chan and the Hospital not getting shown to the enemy.
 * \[v1.06\] Fixed multiplayer names that are 10 characters long getting abbreviated to 9 characters followed by a dot. They can now be 10 characters before getting abbreviated.
 * \[v1.06\] Fixed German "Abort mission" dialog having an "Abort" option which was actually the "Cancel" one.
-* \[v1.06\] Fixed safe-scrolling ("Scrolling=restricted" in conquer.ini) only restricting half of the top buttons' width.
+* \[v1.06\] Fixed safe-scrolling ("Scrolling=restricted" in conquer.ini, under \[Options\]) only restricting half of the top buttons' width.
 * \[v1.06\] Fixed grenade throw sound not working.
 * Fixed SAM Site not making any sound when firing.
 * \[v1.06\] Fixed steel crate not giving an animation for GDI. This was originally meant to indicate collecting "nuke pieces" for unlocking the nuke in the final Nod mission, but that system is obsolete anyway.
 * \[v1.06\] Fixed radar minimap always starting as zoomed in.
-* \[v1.06\] Fixed "juvenile" sounds ("Sounds=7th grade" in conquer.ini) not working.
+* \[v1.06\] Fixed "juvenile" sounds ("Sounds=7th grade" in conquer.ini, under \[Options\]) not working.
 * Fixed the Commando giving two responses at once when given a sabotage order. The "I got a present for ya!" yell on the map is now suppressed for the player owning the Commando, and is given as actual unit response instead.
 * Using the mouse scrollwheel now has the same effect as the up and down arrows; it scrolls through the sidebar lists. \[Replaced by true scroll support in 1.04, scrolling the specific list your mouse is on\]
 
@@ -56,7 +56,7 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * Fixed harvester giving a "no move" cursor on the minimap when targeting tiberium.
 * Fixed aircraft giving a double response when unloading or when docking to a building.
 * \[v1.06\] Fixed high damage weapons doing slightly less damage than intended, because in the damage balancing of weapons versus armor types, "100%" is actually stored as "255/256".
-* \[v1.06\] Fixed the hidden music tracks "Reaching Out" and "Heartbreak" not getting unlocked when enabling the hidden / remix music ("Scores=remix" in conquer.ini).
+* \[v1.06\] Fixed the hidden music tracks "Reaching Out" and "Heartbreak" not getting unlocked when enabling the hidden / remix music ("Scores=remix" in conquer.ini, under \[Options\]).
 * \[v1.06\] Enabled the cut tracks and credits tracks: "C&C 80s Mix", "DIE!", "Enemies To Be Feared", "I AM" (Destructible Times), "Airstrike", and "Ride of the Valkyries".
 * \[v1.06\] The playlist now shows the correct lengths for the alternate versions of music.
 * \[Remaster\] Fixed Nod score calculation having a negative impact from GDI's losses.
@@ -263,7 +263,7 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * Fixed defense buildings getting a muzzle flash, which was drawn under the building.
 * Fixed the broken pattern logic of the isometric CONC pavement, making it look much nicer. It will now also always place the tiles in pairs, forming full isometric diamond shapes.
 * Fixed ROAD pavement not always giving the speed boost it is supposed to have.
-* Fixed tree targeting option ("TreeTarget=lightning" in conquer.ini) giving an attack cursor over indestructible trees.
+* Fixed tree targeting option ("TreeTarget=lightning" in conquer.ini, under \[Options\]) giving an attack cursor over indestructible trees.
 * \[Internal\] Full map template blocks (map cell terrain pieces) made up of multiple cells are no longer limited to only using two different land types (which determine passability / buildability behavior).
 * Fixed the destroyed Desert bridge (NE-SW) having an impassable tile at the south-west end of the road.
 * Implemented wider bridges and river crossings, mimicking their behavior in the Playstation and Saturn versions.
@@ -276,7 +276,7 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * Computer-owned Construction Yards now animate when placing down a building, just like the player-owned one does.
 * Computer-owned units will no longer scatter to make place for placing a building if enemies are also obstructing the buiding and it can't be placed down anyway.
 * To make place for placing a building, computer-owned units will now specifically scatter away from the building's center.
-* If a computer player attempts to place a building, this will no longer make units owned by another computer player scatter to make space for it, if the two are not allies. This could also affect human-owned unit if the IsScatter option ("CombatIQ=sergent" in conquer.ini) was enabled.
+* If a computer player attempts to place a building, this will no longer make units owned by another computer player scatter to make space for it, if the two are not allies. This could also affect human-owned unit if the IsScatter option ("CombatIQ=sergent" in conquer.ini, under \[Options\]) was enabled.
 * Fixed dinosaur graphics corrupting when firing while moving.
 * The Transport Helicopter now opens its door to unload troops.
 * The Transport Helicopter's passengers will now wait until its door is open before going inside.
@@ -303,3 +303,9 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * \[Internal\] Any building type can now be marked as Primary if it has the "IsFactory" option set.
 * Objects with multiple pieces of pip information (e.g. cargo pips and group or primary building indicator) will now automatically stack these.
 * \[Internal\] The "IsFlammable" option on buildings will now determine whether a building gets set on fire when receiving heavy damage.
+* The building placement grid will now be updated when nearby buildings are destroyed.
+* Stealth units blocking the building placement grid will now no longer explicitly show where they are; the entire grid will turn yellow.
+* Command line parameters to set a specific game resolution will now override the Resolution setting in conquer.ini.
+* 640x400 resolution will now allow using the entire screen size. A 712x400 widescreen resolution is also available, either with command line parameter "-wide", or by setting "Resolution=2." in conquer.ini, under \[Options\].
+* Fixed the power bar being drawn four pixels too low.
+* The game can now play the mmg1.aud "A most remarkable  Metasequoia Glyptostroboides." clip if it is present.

@@ -1063,7 +1063,9 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 		**	Finally, delete the vehicle.
 		*/
 		delete this;
-
+		// Nyerguds's C&C Patch Project v1.04: recheck placement check on object destruction.
+		// If the destroyed object was cloaked, ProximityStealth might need to be changed.
+		Map.Recheck_Placement();
 	} else {
 
 		/*
@@ -1745,6 +1747,9 @@ bool UnitClass::Try_To_Deploy(void)
 					*/
 					Stun();
 					delete this;
+					// Nyerguds's C&C Patch Project v1.04: recheck placement on MCV deploy.
+					// If the deployed object was cloaked, ProximityStealth might need to be changed.
+					Map.Recheck_Placement();
 					return(true);
 				} else {
 
@@ -3362,14 +3367,14 @@ COORDINATE UnitClass::Target_Coord() const
  * HISTORY:                                                                                    *
  *   09/25/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-void UnitClass::Scatter(COORDINATE threat, bool forced)
+bool UnitClass::Scatter(COORDINATE threat, bool forced)
 {
 	Validate();
 	
 	/*
 	** Units in Sleep or Sticky mode do not scatter.
 	*/
-	if ((Mission == MISSION_SLEEP && !IsTethered) || Mission == MISSION_STICKY) return;
+	if ((Mission == MISSION_SLEEP && !IsTethered) || Mission == MISSION_STICKY) return(false);
 	/*
 	**	Nyerguds's C&C Patch Project v1.04: Allow repair bay docked units to scatter.
 	**	Units docked to a repair bay are put to Sleep mode. These units are allowed to scatter if forced.
@@ -3377,10 +3382,10 @@ void UnitClass::Scatter(COORDINATE threat, bool forced)
 	const TechnoClass * tclass = Contact_With_Whom();
 	if (Mission == MISSION_SLEEP && (!forced || !tclass || tclass->What_Am_I() != RTTI_BUILDING || *((BuildingClass *)tclass) != STRUCT_REPAIR))
 	{
-		return;
+		return(false);
 	}
 
-	if (*this == UNIT_GUNBOAT || *this == UNIT_HOVER) return;
+	if (*this == UNIT_GUNBOAT || *this == UNIT_HOVER) return(false);
 
 	if ((!Target_Legal(TarCom) && !Target_Legal(NavCom)) || forced || Random_Pick(1, 4) == 1) {
 		FacingType	toface;
@@ -3409,6 +3414,7 @@ void UnitClass::Scatter(COORDINATE threat, bool forced)
 			}
 		}
 	}
+	return(true);
 }
 
 

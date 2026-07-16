@@ -57,6 +57,7 @@ class PowerClass : public RadarClass
 		** Initialization
 		*/
 		virtual void One_Time(void);							// One-time inits
+		virtual void After_Init(void);						// Init after savegame load
 
 		virtual void Init_Clear(void);						// Clears all to known state
 		virtual void Draw_It(bool complete=false);
@@ -97,6 +98,7 @@ class PowerClass : public RadarClass
 		};
 
 	private:
+		void Reset_Screen_Calculations(void);
 		int  Power_Height(int value);
 
 		unsigned IsActive:1;

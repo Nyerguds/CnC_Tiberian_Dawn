@@ -329,7 +329,7 @@ int Sound_Effect(VocType voc, VolType volume, int variation=1, signed short panv
 void Speak(VoxType voice);
 void Speak_AI(void);
 void Stop_Speaking(void);
-void Sound_Effect(VocType voc, COORDINATE coord=NULL, int variation=1);
+bool Sound_Effect(VocType voc, COORDINATE coord=NULL, int variation=1);
 bool Is_Speaking(void);
 
 /*
@@ -490,7 +490,7 @@ long Obfuscate(char const * string);
 void Anim_Init(void);
 bool Init_Game(int argc, char *argv[]);
 bool Select_Game(bool fade = false);
-bool Parse_Command_Line(int argc, char *argv[]);
+bool Parse_Command_Line(int argc, char *argv[], bool &isres);
 void Parse_INI_File(void);
 int Version_Number(void);
 void Save_Recording_Values(void);

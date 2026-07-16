@@ -1146,6 +1146,11 @@ void BuildingClass::AI(void)
 			// by a Commando. Normal death origin does not get stored in WhomToRepay.
 			Drop_Debris(WhomToRepay);
 			delete this;
+
+			// Nyerguds's C&C Patch Project v1.04: recheck placement check on destruction.
+			// Reset building placement proximity check since something has vanished from the map.
+			// This is already repeated on actual placement, but this updates the visual grid.
+			Map.Recheck_Placement();
 		}
 		return;
 	}
@@ -3579,10 +3584,6 @@ bool BuildingClass::Captured(HouseClass * newowner)
 		// Only give back the tiberium after Grand_Opening, so the receiving House's
 		// capacity is updated to include the new storage space.
 		House->Harvested(booty);
-		// Reset building placement proximity check since something has changed ownership.
-		if (Map.PendingObject) {
-			Map.ProximityCheck = Map.Passes_Proximity_Check(Map.PendingObject);
-		}
 
 		Mark(MARK_CHANGE);
 
@@ -4109,6 +4110,8 @@ int BuildingClass::Mission_Deconstruction(void)
 					*/
 					delete this;
 				}
+				// Nyerguds's C&C Patch Project v1.04: recheck placement check on object removal.
+				Map.Recheck_Placement();
 				House->IsRecalcNeeded = true;
 			}
 			break;
@@ -5394,9 +5397,17 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 		CELL cell = homecell + *ptr++;
 
 		if (!Map.In_Radar(cell)) return(false);
+		CellClass * mapcell = &Map[cell];
 
 		for (FacingType facing = FACING_N; facing < FACING_COUNT; facing++) {
+			// Nyerguds's C&C Patch Project v1.04: upgrade boundary checks on proximity checks.
+			if (!mapcell->Adjacent_Is_Valid(facing)) {
+				continue;
+			}
 			CELL	newcell = Adjacent_Cell(cell, facing);
+			if (!Map.In_Radar(newcell)) {
+				continue;
+			}
 
 			/*
 			**	The special cell ownership flag allows building adjacent
@@ -5407,7 +5418,7 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 				return(true);
 			}
 
-			// Nyerguds's C&C Patch Project v1.04: Fix helis disrupting placement.
+			// Nyerguds's C&C Patch Project v1.04: Fix helipad adjacency blocked by heli.
 			/*
 			**	Only check for buildings. Don't mind if they are covered with
 			**	a unit (e.g. on helipads)

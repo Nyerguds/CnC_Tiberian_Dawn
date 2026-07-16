@@ -433,7 +433,10 @@ bool Load_Game(int id)
 	**	what the Theater is; this must be done before any objects are created, so
 	**	they'll be properly created.
 	*/
-	Map.Load(file);
+	if (!Map.Load(file)){
+		file.Close();
+		return(false);
+	}
 
 	Call_Back();
 	/*
@@ -502,6 +505,7 @@ bool Load_Game(int id)
 	**	Extra initializations. These need to be done after
 	**	reading the Misc values.
 	*/
+	Map.After_Init(); // reset resolution values for UI.
 	TerrainTypeClass::After_Init();
 	TemplateTypeClass::After_Init();
 	OverlayTypeClass::After_Init();

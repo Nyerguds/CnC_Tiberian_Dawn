@@ -115,6 +115,26 @@ void MapClass::One_Time(void)
 
 
 /***********************************************************************************************
+ * MapClass::After_Init -- Reinitializes UI values after savegame load.                        *
+ *                                                                                             *
+ * This routine resets resolution-related values in case a savegame was created in a           *
+ * different game resolution, and this might affect the user interface.                        *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/12/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void MapClass::After_Init(void) {
+	GScreenClass::After_Init();
+}
+
+
+/***********************************************************************************************
  * MapClass::Init_Clear -- clears the map & buffers to a known state                           *
  *                                                                                             *
  * INPUT:                                                                                      *

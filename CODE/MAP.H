@@ -51,6 +51,7 @@ class MapClass: public GScreenClass
 		** Initialization
 		*/
 		virtual void One_Time(void);						// Theater-specific inits
+		virtual void After_Init(void);						// Init after savegame load
 		virtual void Init_Clear(void);						// Clears all to known state
 		virtual void Alloc_Cells(void);						// Allocates buffers
 		virtual void Free_Cells(void);							// Frees buffers

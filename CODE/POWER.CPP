@@ -135,11 +135,44 @@ void PowerClass::One_Time(void)
 {
 	RadarClass::One_Time();
 
+	Reset_Screen_Calculations();
+
+	PowerShape = Hires_Retrieve("POWER.SHP");
+	PowerBarShape = Hires_Retrieve("PWRBAR.SHP");
+}
+
+
+/***********************************************************************************************
+ * PowerClass::After_Init -- Reinitializes UI values after savegame load.                      *
+ *                                                                                             *
+ * This routine resets resolution-related values in case a savegame was created in a           *
+ * different game resolution, and this might affect the user interface.                        *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/12/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void PowerClass::After_Init(void) {
+	RadarClass::After_Init();
+	Reset_Screen_Calculations();
+}
+
+
+void PowerClass::Reset_Screen_Calculations(void)
+{
 	int factor = Get_Resolution_Shift();
 	PowX 			= SeenBuff.Get_Width() - Map.RadWidth;
-	PowY 			= Map.RadY+Map.RadHeight + (13 << factor);
+	// Nyerguds's C&C Patch Project v1.04: Fix power bar position.
+	PowY 			= Map.RadY + Map.RadHeight + (11 << factor);
 	PowWidth 	= 8 << factor;
-	PowHeight 	= SeenBuff.Get_Height() - PowY;
+	// Nyerguds's C&C Patch Project v1.04: Always restrict power bar height to 400.
+	PowHeight 	= (200 << factor) - PowY;
+	//PowHeight 	= SeenBuff.Get_Height() - PowY;
 	PowLineSpace = 5 << factor;
 	PowLineWidth = PowWidth - 4;
 
@@ -147,9 +180,6 @@ void PowerClass::One_Time(void)
 	PowerButton.Y = PowY;
 	PowerButton.Width = PowWidth-1;
 	PowerButton.Height = PowHeight;
-
-	PowerShape = MixFileClass::Retrieve((factor)? "HPOWER.SHP" :"POWER.SHP");
-	PowerBarShape = Hires_Retrieve("PWRBAR.SHP");
 }
 
 
@@ -385,7 +415,7 @@ void PowerClass::Refresh_Cells(CELL cell, short const *list)
 
 
 /***************************************************************************
- * PowHeight -- Given a value figure where it falls on bar              *
+ * PowerClass::Power_Height -- Given a value, find where it falls on bar.  *
  *                                                                         *
  * INPUT:      int value - the value we are testing                        *
  *                                                                         *

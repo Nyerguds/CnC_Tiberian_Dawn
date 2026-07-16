@@ -241,6 +241,26 @@ void MapEditClass::One_Time(void)
 
 
 /***********************************************************************************************
+ * MapEditClass::After_Init -- Reinitializes UI values after savegame load.                    *
+ *                                                                                             *
+ * This routine resets resolution-related values in case a savegame was created in a           *
+ * different game resolution, and this might affect the user interface.                        *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/12/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void MapEditClass::After_Init(void) {
+	MouseClass::After_Init();
+};
+
+
+/***********************************************************************************************
  * MapeditClass::Init_IO -- Reinitializes the radar map at scenario start.                     *
  *                                                                                             *
  * INPUT:   none                                                                               *

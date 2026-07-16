@@ -160,6 +160,7 @@ DisplayClass::DisplayClass(void)
 	ZoneOffset = 0;
 	CursorSize = 0;
 	ProximityCheck = false;
+	ProximityStealth = false;
 	PendingObjectPtr = 0;
 	PendingObject = 0;
 	PendingHouse = HOUSE_NONE;
@@ -253,6 +254,27 @@ void DisplayClass::One_Time(void)
 		}
 	}
 #endif
+}
+
+
+/***********************************************************************************************
+ * DisplayClass::After_Init -- Reinitializes UI values after savegame load.                    *
+ *                                                                                             *
+ * This routine resets resolution-related values in case a savegame was created in a           *
+ * different game resolution, and this might affect the user interface.                        *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/12/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void DisplayClass::After_Init(void) {
+	MapClass::After_Init();
+	Set_View_Dimensions(TacPixelX, TacPixelY);
 }
 
 
@@ -793,9 +815,19 @@ void DisplayClass::Set_Cursor_Shape(short const * list)
 		CursorSize = _list;
 		Get_Occupy_Dimensions (w, h, CursorSize);
 		ZoneOffset = -(((h/2)*MAP_CELL_W)+(w/2));
+		// ZoneOffsetLepton = ((unsigned short)(-(h/2) * 0x100) << 16 | (unsigned short)(-(w/2) * 0x100));
 		Cursor_Mark(ZoneCell+ZoneOffset, true);
 	} else {
 		CursorSize = 0;
+	}
+}
+
+void DisplayClass::Recheck_Placement(void)
+{
+	if (PendingObject) {
+		ProximityCheck = Passes_Proximity_Check(PendingObject);
+		ProximityStealth = Stealth_Proximity_Check(PendingObject);
+		Cursor_Mark(ZoneCell + ZoneOffset, true);
 	}
 }
 
@@ -844,10 +876,18 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object)
 	while (*ptr != REFRESH_EOL) {
 		CELL	cell = ZoneCell + ZoneOffset + *ptr++;
 
-		for (FacingType facing = FACING_N; facing < FACING_COUNT; facing++) {
-			CELL	newcell = Adjacent_Cell(cell, facing);
+		if (!In_Radar(cell)) return(false);
+		CellClass * mapcell = &Map[cell];
 
-			if (!In_Radar(cell)) return(false);
+		for (FacingType facing = FACING_N; facing < FACING_COUNT; facing++) {
+			// Nyerguds's C&C Patch Project v1.04: upgrade boundary checks on proximity checks.
+			if (!mapcell->Adjacent_Is_Valid(facing)) {
+				continue;
+			}
+			CELL	newcell = Adjacent_Cell(cell, facing);
+			if (!Map.In_Radar(newcell)) {
+				continue;
+			}
 
 			/*
 			**	The special cell ownership flag allows building adjacent
@@ -870,6 +910,69 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object)
 		}
 	}
 	return(false);
+}
+
+
+/***********************************************************************************************
+ * DisplayClass::Stealth_Proximity_Check -- Check if placement area contains cloaked objects.  *
+ *                                                                                             *
+ *    This routine is used by the building placement cursor logic to determine whether any     *
+ *    objects in the placement grid are cloaked. If they are, then the precise position of     *
+ *    the cloaked object is not revealed, but instead the entire grid will turn yellow.        *
+ *                                                                                             *
+ * INPUT:   object   -- The building object that the current placement system is examining.    *
+ *                                                                                             *
+ * OUTPUT:  bool; are there any blocking cloaked units?                                        *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/12/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+bool DisplayClass::Stealth_Proximity_Check(ObjectTypeClass const *object) {
+	
+	short const *ptr;
+
+	/*
+	** In editor mode, show stealth units as normal.
+	*/
+	if (Debug_Map) {
+		return(false);
+	}
+
+	if (!object || !CursorSize || object->What_Am_I() != RTTI_BUILDINGTYPE) {
+		return(false);
+	}
+
+	/*
+	**	Scan through all cells that the building foundation would cover.
+	*/
+	ptr = CursorSize;
+	bool anyStealth = false;
+	while (*ptr != REFRESH_EOL) {
+		CELL	cell = ZoneCell + ZoneOffset + *ptr++;
+		CellClass * cellptr = &Map[cell];
+		if (!cellptr->Is_Generally_Clear(false, true)) {
+			continue;
+		}
+		ObjectClass * occ = (*this)[cell].Cell_Techno();
+		bool celluncloaked = false;
+		bool cellcloaked = false;
+		while (occ && occ->Is_Techno()) {
+			TechnoClass * techno = (*this)[cell].Cell_Techno();
+		 	if (techno->House->Class->House != PendingHouse) {
+				if (techno->Cloak != CLOAKED) {
+					celluncloaked = true;
+					break;
+				}
+				cellcloaked = true;
+			}
+			// Only mark as stealth if no uncloaked objects were on this cell.
+			anyStealth = !celluncloaked && cellcloaked;
+			occ = techno->Next;
+		}
+	}
+	return(anyStealth);
 }
 
 
@@ -911,13 +1014,25 @@ CELL DisplayClass::Set_Cursor_Pos(CELL pos)
 		return(prevpos);
 	}
 
+	// The whole ZoneCell+ZoneOffset system was meant to center the mouse on the
+	// placement grid, but it doesn't really work, due to bugs that occur when the
+	// final cell produced by adding them together has a negative X or Y. Because
+	// of this, Get_Occupy_Dimensions has always been disabled and just returns 0.
+	// -Nyerguds
+
 	/*
 	**	Adjusts the position so that the placement cursor is never partway off the
 	**	tactical map.
 	*/
 	int w,h;
-	Get_Occupy_Dimensions (w, h, CursorSize);
+	Get_Occupy_Dimensions(w, h, CursorSize);
 
+	// Nyerguds's C&C Patch Project v1.04: fix placement malfunctioning on lowest cell in nonstandard resolutions.
+	// This code not only has errors with rounding down everything to cells BEFORE
+	// adding coords and dimensions together, but it also restricts the placement
+	// grid to the visible screen, which is extremely annoying for placing large
+	// buildings. This would have been even worse in DOS resolution.
+#ifdef OBSOLETE
 	int x = Cell_X(pos + ZoneOffset);
 	int y = Cell_Y(pos + ZoneOffset);
 
@@ -927,12 +1042,13 @@ CELL DisplayClass::Set_Cursor_Pos(CELL pos)
 //	if (y < TacMapY) y = TacMapY;
 	if (x+w >= Coord_XCell(TacticalCoord) + Lepton_To_Cell(TacLeptonWidth)) x = Coord_XCell(TacticalCoord)+Lepton_To_Cell(TacLeptonWidth)-w;
 //	if (x+w >= TacMapX+TacWidth) x = TacMapX+TacWidth-w;
-	if (y+h >= Coord_YCell(TacticalCoord) + Lepton_To_Cell(TacLeptonHeight)) x = Coord_YCell(TacticalCoord)+Lepton_To_Cell(TacLeptonHeight)-h;
+	if (y+h >= Coord_YCell(TacticalCoord) + Lepton_To_Cell(TacLeptonHeight)) y = Coord_YCell(TacticalCoord)+Lepton_To_Cell(TacLeptonHeight)-h;
 //	if (y+h >= TacMapY+TacHeight) y = TacMapY+TacHeight-h;
 	pos = XY_Cell(x, y) - ZoneOffset;
+#endif
 
 	/*
-	** This checks to see if NO animation or drawing is to occur and, if so,
+	**	This checks to see if NO animation or drawing is to occur and, if so,
 	**	exits.
 	*/
 	if (pos == ZoneCell) return(pos);
@@ -961,7 +1077,7 @@ CELL DisplayClass::Set_Cursor_Pos(CELL pos)
 	}
 	ZoneCell = pos;
 	ProximityCheck = Passes_Proximity_Check(PendingObject);
-
+	ProximityStealth = Stealth_Proximity_Check(PendingObject);
 	return(prevpos);
 }
 
@@ -984,16 +1100,27 @@ CELL DisplayClass::Set_Cursor_Pos(CELL pos)
  *=============================================================================================*/
 void DisplayClass::Get_Occupy_Dimensions(int & w, int & h, short const *list)
 {
+	w = 0;
+	h = 0;
+	if (!list) {
+		return;
+	}
+
 	int min_x = MAP_CELL_W;
 	int max_x = -MAP_CELL_W;
 	int min_y = MAP_CELL_H;
 	int max_y = -MAP_CELL_H;
 	int x,y;
+	
+	// This never worked (it checked for "if (!list)", but enabling it
+	// causes a gigantic mess of bugs related to negative cell coordinates
+	// getting retrieved incorrectly. So I'm leaving this disabled.
+	// -Nyerguds
+	if (list) {
+		return;
+	}
 
-	w = 0;
-	h = 0;
-
-	if (!list) {
+	if (list) {
 		/*
 		** Loop through all cell offsets, accumulating max & min x- & y-coords
 		*/
@@ -1004,7 +1131,7 @@ void DisplayClass::Get_Occupy_Dimensions(int & w, int & h, short const *list)
 			** offset is negative we'll get a bogus coordinate!
 			*/
 			x = (*list) % MAP_CELL_W;
-			y = (*list) / MAP_CELL_H;
+			y = (*list) / MAP_CELL_W;
 
 			max_x = MAX(max_x, x);
 			min_x = MIN(min_x, x);
@@ -3603,7 +3730,7 @@ void DisplayClass::Mouse_Left_Release(CELL cell, int x, int y, ObjectClass * obj
 		/*
 		**	Try to place the pending object onto the map.
 		*/
-		if (ProximityCheck) {
+		if (ProximityCheck && Passes_Proximity_Check(PendingObject)) {			
 			OutList.Add(EventClass(EventClass::PLACE, PendingObjectPtr->What_Am_I(), cell + ZoneOffset));
 		} else {
 			Speak(VOX_DEPLOY);

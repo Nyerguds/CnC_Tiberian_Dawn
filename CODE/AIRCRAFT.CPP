@@ -1651,7 +1651,8 @@ ResultType AircraftClass::Take_Damage(int & damage, int distance, WarheadType wa
 	/*
 	**	Flying aircraft take half damage.
 	*/
-	if (Altitude) {
+	bool landed = Altitude == 0;
+	if (!landed) {
 		damage /= 2;
 	}
 
@@ -1663,7 +1664,7 @@ ResultType AircraftClass::Take_Damage(int & damage, int distance, WarheadType wa
 
 	switch (res) {
 		case RESULT_DESTROYED:
-			if (Altitude == 0) {
+			if (landed) {
 				Mark(MARK_UP);
 				// 224 = 7/8th
 				Dump_Cargo(224, select, source, house);
@@ -1673,6 +1674,11 @@ ResultType AircraftClass::Take_Damage(int & damage, int distance, WarheadType wa
 			Death_Announcement();
 			new AnimClass(ANIM_FBALL1, Target_Coord());
 			delete this;
+			if (landed) {
+				// Nyerguds's C&C Patch Project v1.04: recheck placement check on object destruction.
+				// If the destroyed object was cloaked, ProximityStealth might need to be changed.
+				Map.Recheck_Placement();
+			}
 			break;
 
 		default:
@@ -3477,20 +3483,23 @@ AircraftClass::~AircraftClass(void)
  * HISTORY:                                                                                    *
  *   07/08/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-void AircraftClass::Scatter(COORDINATE , bool )
+bool AircraftClass::Scatter(COORDINATE , bool )
 {
 	Validate();
 
 	/*
 	** Units in Sleep or Sticky mode do not scatter.
 	*/
-	if ((Mission == MISSION_SLEEP && !IsTethered) || Mission == MISSION_STICKY) return;
+	if ((Mission == MISSION_SLEEP && !IsTethered) || Mission == MISSION_STICKY) {
+		return false;
+	}
 
 	if (IsLanding || Altitude == 0) {
 		IsLanding = false;
 		IsTakingOff = true;
 	}
 	Enter_Idle_Mode();
+	return Mission == MISSION_RETREAT;
 }
 
 

@@ -60,6 +60,7 @@ class RadarClass: public DisplayClass
 		** Initialization
 		*/
 		virtual void One_Time(void);							// One-time inits
+		virtual void After_Init(void);						// Init after savegame load
 		virtual void Init_Clear(void);						// Clears all to known state
 
 		virtual bool Map_Cell(CELL cell, HouseClass * house);
@@ -164,7 +165,7 @@ class RadarClass: public DisplayClass
 		static TacticalClass RadarButton;
 
 	private:
-
+		void Reset_Screen_Calculations(void);
 		/*
 		**	The current radar position as the upper left corner cell for the
 		**	radar map display. The width and height is controlled by the

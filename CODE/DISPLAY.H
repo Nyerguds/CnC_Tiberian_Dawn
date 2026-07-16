@@ -96,6 +96,7 @@ class DisplayClass: public MapClass
 		short ZoneOffset;
 		short const *CursorSize;
 		bool ProximityCheck;		// Is proximity check ok?
+		bool ProximityStealth;		// Is proximity check blocked by a stealth object (meaning, we don't know the exact location of the blockade)?
 
 		/*
 		** This holds the building type that is about to be placed upon the map.
@@ -138,6 +139,7 @@ class DisplayClass: public MapClass
 		/*
 		** Initialization
 		*/
+		virtual void After_Init(void);						// init after savegame load
 		virtual void One_Time(void);							// One-time inits
 		virtual void Init_Clear(void);						// Clears all to known state
 		virtual void Init_IO(void);							// Inits button list
@@ -170,6 +172,7 @@ class DisplayClass: public MapClass
 		void  Set_Cursor_Shape(short const * list);
 		CELL  Set_Cursor_Pos(CELL pos = -1);
 		void  Get_Occupy_Dimensions(int & w, int & h, short const *list);
+		void  Recheck_Placement();
 
 		/*
 		**	Tactical map only functionality.
@@ -188,6 +191,7 @@ class DisplayClass: public MapClass
 		CELL  Calculated_Cell(SourceType dir, HousesType house);
 		bool  In_View(register CELL cell);
 		bool  Passes_Proximity_Check(ObjectTypeClass const *object);
+		bool  Stealth_Proximity_Check(ObjectTypeClass const *object);
 		ObjectClass *  Cell_Object(CELL cell, int x=0, int y=0);
 		ObjectClass *  Next_Object(ObjectClass * object);
 		ObjectClass *  Prev_Object(ObjectClass * object);

@@ -122,6 +122,7 @@ bool SidebarClass::StripClass::SpecialShapesTheater[3] = {false, false, false};
 
 void const * SidebarClass::SidebarShape1;
 void const * SidebarClass::SidebarShape2;
+void const * SidebarClass::SidebarShapeFill;
 
 
 /***********************************************************************************************
@@ -168,6 +169,41 @@ SidebarClass::SidebarClass(void)
 void SidebarClass::One_Time(void)
 {
 	PowerClass::One_Time();
+
+	Reset_Screen_Calculations();
+
+	Column[0].One_Time(0);
+	Column[1].One_Time(1);
+
+	SidebarShape1 = Hires_Retrieve("SIDE1.SHP");
+	SidebarShape2 = Hires_Retrieve("SIDE2.SHP");
+	SidebarShapeFill = Get_Resolution_Shift() ? MixFileClass::Retrieve("BTEXTURE.SHP") : NULL;
+}
+
+
+/***********************************************************************************************
+ * SidebarClass::After_Init -- Reinitializes UI values after savegame load.                    *
+ *                                                                                             *
+ * This routine resets resolution-related values in case a savegame was created in a           *
+ * different game resolution, and this might affect the user interface.                        *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/12/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void SidebarClass::After_Init(void) {
+	PowerClass::After_Init();
+	Reset_Screen_Calculations();
+}
+
+
+void SidebarClass::Reset_Screen_Calculations(void)
+{
 	/*
 	** Set up the pixel offsets and widths and heights used to render the
 	** sidebar.  They are now variables because we need to change them for
@@ -208,14 +244,6 @@ void SidebarClass::One_Time(void)
 	Column[0].Y = SideY + TopHeight + 1;
 	Column[1].X = Column[0].X + (StripClass::STRIP_WIDTH * factor) + spacing -1;
 	Column[1].Y = SideY + TopHeight + 1;
-
-	Column[0].One_Time(0);
-	Column[1].One_Time(1);
-
-	SidebarShape1 = Hires_Retrieve("SIDE1.SHP");
-	SidebarShape2 = Hires_Retrieve("SIDE2.SHP");
-
-
 }
 
 
@@ -680,6 +708,7 @@ bool SidebarClass::Scroll(bool up, int column)
 	return(false);
 }
 
+extern void CC_Texture_Fill (void const *shapefile, int shapenum, int xpos, int ypos, int width, int height);
 
 /***********************************************************************************************
  * SidebarClass::Draw_It -- Renders the sidebar display.                                       *
@@ -698,8 +727,7 @@ bool SidebarClass::Scroll(bool up, int column)
  *=============================================================================================*/
 void SidebarClass::Draw_It(bool complete)
 {
-	PowerClass::Draw_It(complete);
-
+	bool drewBottom = false;
 	if (IsSidebarActive && (IsToRedraw || complete) && !Debug_Map) {
 		IsToRedraw = false;
 
@@ -712,6 +740,8 @@ void SidebarClass::Draw_It(bool complete)
 			LogicPage->Draw_Line(SideX, 157, SeenBuff.Get_Width()-1, 157, 0);
 			CC_Draw_Shape(SidebarShape1, 0, SideX, 158, WINDOW_MAIN, SHAPE_WIN_REL);
 			CC_Draw_Shape(SidebarShape2, 0, SideX, 158+118, WINDOW_MAIN, SHAPE_WIN_REL);
+			Fill_Bottom();
+			drewBottom = true;
 
 	#if (0)
 			if ( complete ) {
@@ -732,6 +762,13 @@ void SidebarClass::Draw_It(bool complete)
 		}
 
 	}
+	// Nyerguds's C&C Patch Project v1.04: power indicator smear fix.
+	// Moved PowerClass::Draw_It down here, so power indicator can be drawn over sidebar UI elements.
+	if (IsSidebarActive && (PowerClass::IsToRedraw || complete) && !drewBottom && !Debug_Map) {
+		// Explicitly repaint this if the powerclass needs to repaint; it tends to color outside its lines.
+		Fill_Bottom();
+	}
+	PowerClass::Draw_It(complete);
 	/*
 	**	Draw the side strip elements by calling their respective draw functions.
 	*/
@@ -744,6 +781,19 @@ void SidebarClass::Draw_It(bool complete)
 	}
 
 	IsToRedraw = false;
+}
+
+void SidebarClass::Fill_Bottom() {
+	int y = PowerClass::PowY + PowerClass::PowHeight; // 158+118+124;
+	int height = SeenBuff.Get_Height() - y;
+	int width = SeenBuff.Get_Width() - SideX;
+	if (height > 0 && width > 0) {
+		if (SidebarShapeFill) {
+			CC_Texture_Fill(SidebarShapeFill, 1, SideX, y, 160, height);
+		} else {
+			LogicPage->Fill_Rect(SideX, y, SeenBuff.Get_Width() - 1, SeenBuff.Get_Height() - 1, LTGREY);
+		}
+	}
 }
 
 

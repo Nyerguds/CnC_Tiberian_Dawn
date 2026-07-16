@@ -50,6 +50,7 @@ class MouseClass: public ScrollClass
 		** Initialization
 		*/
 		virtual void One_Time(void);							// One-time inits
+		virtual void After_Init(void);						// Init after savegame load
 		virtual void Init_Clear(void);						// Clears all to known state
 
 		virtual void AI(KeyNumType &input, int x, int y);

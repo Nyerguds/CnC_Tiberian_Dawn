@@ -2407,7 +2407,7 @@ typedef enum VocType{
 	VOC_OF_COURSE,		//	"Of course."
 	VOC_YESYES,			//	"Yes yes yes."
 	VOC_QUIP1,			//	"Mind the Tiberium."
-//	VOC_QUIP2,			//	"A most remarkable Metasequoia Glyptostroboides."
+	VOC_QUIP2,			//	"A most remarkable Metasequoia Glyptostroboides."
 	VOC_THANKS,			//	"Thank you."
 
 	VOC_CASHTURN,		// Sound of money being piled up.

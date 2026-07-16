@@ -1017,7 +1017,7 @@ void InfantryClass::AI(void)
 	if (Fear) {
 
 		/*
-		**	Nikumba is really a coward at heart. He never becomes un-afraid.
+		**	Nikoomba is really a coward at heart. He never becomes un-afraid.
 		*/
 		if (*this != INFANTRY_C10) {
 			Fear--;
@@ -1218,7 +1218,12 @@ void InfantryClass::AI(void)
 			case DO_EXPLOSION2_DEATH:
 			case DO_GRENADE_DEATH:
 			case DO_FIRE_DEATH:
+			case DO_PLEAD_DEATH:
 				delete this;
+
+				// Nyerguds's C&C Patch Project v1.04: recheck placement check on capture.
+				// Reset building placement proximity check since something has changed ownership.
+				Map.Recheck_Placement();
 				return;
 		}
 	}
@@ -1908,9 +1913,16 @@ void InfantryClass::Random_Animate(void)
 //						VOC_EXCELLENT4,
 //						VOC_EXCELLENT5,
 						VOC_QUIP1,
-//						VOC_QUIP2
+						VOC_QUIP2
 					};
-					Sound_Effect(_response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)], Coord);
+					int arrLen = (int)(sizeof(_response) / sizeof(_response[0]));
+					VocType toplay = _response[Sim_Random_Pick(0, arrLen - 1)];
+					bool res = Sound_Effect(toplay, Coord);
+					// QUIP2 is only available in English. If it was not found, pick something else.
+					if (!res && toplay == VOC_QUIP2) {
+						toplay = _response[Sim_Random_Pick(0, arrLen - 2)];
+						Sound_Effect(toplay, Coord);
+					}
 				}
 				break;
 
@@ -1958,7 +1970,7 @@ void InfantryClass::Random_Animate(void)
  *   09/24/1994 JLB : Created.                                                                 *
  *   12/12/1994 JLB : Flame thrower infantry always scatter.                                   *
  *=============================================================================================*/
-void InfantryClass::Scatter(COORDINATE threat, bool forced)
+bool InfantryClass::Scatter(COORDINATE threat, bool forced)
 {
 	Validate();
 
@@ -1971,23 +1983,23 @@ void InfantryClass::Scatter(COORDINATE threat, bool forced)
 	**	If the infantry is currently engaged in legitimate combat, then don't
 	**	scatter unless forced to.
 	*/
-	if (!Class->IsFraidyCat && Target_Legal(TarCom) && !forced) return;
+	if (!Class->IsFraidyCat && Target_Legal(TarCom) && !forced) return false;
 
 	/*
 	**	Don't scatter if performing an action that can't be interrupted.
 	*/
-	if (Doing != DO_NOTHING && !MasterDoControls[Doing].Interrupt) return;
+	if (Doing != DO_NOTHING && !MasterDoControls[Doing].Interrupt) return false;
 
 	/*
 	**	For human players, don't scatter the infantry, if the special
 	**	flag has not been enabled that allows infantry scatter.
 	*/
-	if (!Special.IsScatter && House->IsHuman && !forced && !Team) return;
+	if (!Special.IsScatter && House->IsHuman && !forced && !Team) return false;
 
 	/*
 	** Units in Sleep or Sticky mode do not scatter.
 	*/
-	if (Mission == MISSION_SLEEP || Mission == MISSION_STICKY) return;
+	if (Mission == MISSION_SLEEP || Mission == MISSION_STICKY) return false;
 
 	if (forced || Class->IsFraidyCat /*|| !(Random_Pick(1, 4) == 1)*/) {
 		FacingType	toface;
@@ -2019,6 +2031,7 @@ void InfantryClass::Scatter(COORDINATE threat, bool forced)
 			}
 		}
 	}
+	return true;
 }
 
 

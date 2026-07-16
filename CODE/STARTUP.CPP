@@ -51,7 +51,7 @@ WinTimerClass *WinTimer;
 extern void Create_Main_Window ( HANDLE instance , int command_show , int width , int height);
 
 extern bool ReadyToQuit;
-void Read_Setup_Options(RawFileClass *config_file);
+void Read_Setup_Options(RawFileClass *config_file, bool ignore_res);
 
 bool VideoBackBufferAllowed = true;
 void Check_From_WChat(char *wchat_name);
@@ -264,7 +264,8 @@ int PASCAL WinMain ( HINSTANCE instance , HINSTANCE , char * command_line , int 
 #ifdef JAPANESE
 	ForceEnglish = false;
 #endif
-	if (Parse_Command_Line(argc, argv)) {
+	bool isres = false;
+	if (Parse_Command_Line(argc, argv, isres)) {
 
 
 		WindowsTimer = new WinTimerClass(60,FALSE);
@@ -292,7 +293,7 @@ int PASCAL WinMain ( HINSTANCE instance , HINSTANCE , char * command_line , int 
 
 
 		/*
-		** Check for existance of MMX support on the processor
+		** Check for existence of MMX support on the processor
 		*/
 		//if (Detect_MMX_Availability()){
 			//MessageBox(NULL, "MMX extensions detected - enabling MMX support.", "Command & Conquer",MB_ICONEXCLAMATION|MB_OK);
@@ -347,7 +348,7 @@ int PASCAL WinMain ( HINSTANCE instance , HINSTANCE , char * command_line , int 
 #else
 			Read_Private_Config_Struct((char *)Load_Alloc_Data(cfile), &NewConfig);
 #endif
-			Read_Setup_Options( &cfile );
+			Read_Setup_Options(&cfile, isres);
 
 			CCDebugString ("C&C95 - Creating main window.\n");
 
@@ -360,14 +361,15 @@ int PASCAL WinMain ( HINSTANCE instance , HINSTANCE , char * command_line , int 
 			Palette = new(MEM_CLEAR) unsigned char[768];
 
 			BOOL video_success = FALSE;
-			CCDebugString ("C&C95 - Setting video mode.\n");
+			CCDebugString ("C&C95 - Setting video mode to %dx%d.\n", ScreenWidth, ScreenHeight);
 			/*
 			** Set 640x400 video mode. If its not available then try for 640x480
 			*/
 			if (Set_Video_Mode (MainWindow, ScreenWidth, ScreenHeight, 8)) {
 				video_success = TRUE;
-			} else {
-				if (Set_Video_Mode (MainWindow, 640, 480, 8)){
+			} else if (ScreenWidth != 640 && ScreenHeight != 480) {
+				CCDebugString ("C&C95 - Video mode %dx%d failed Falling back to 640x480.\n", ScreenWidth, ScreenHeight);
+				if (Set_Video_Mode (MainWindow, 640, 480, 8)) {
 					video_success = TRUE;
 					ScreenWidth = 640;
 					ScreenHeight = 480;
@@ -723,7 +725,7 @@ void Print_Error_Exit(char *string)
  * HISTORY:                                                                                    *
  *    6/7/96 4:09PM ST : Created                                                               *
  *=============================================================================================*/
-void Read_Setup_Options( RawFileClass *config_file )
+void Read_Setup_Options(RawFileClass *config_file, bool ignore_res)
 {
 	char *buffer = new char [config_file->Size()];
 
@@ -733,7 +735,24 @@ void Read_Setup_Options( RawFileClass *config_file )
 
 		VideoBackBufferAllowed = WWGetPrivateProfileInt ("Options", "VideoBackBuffer", 1, buffer);
 		AllowHardwareBlitFills = WWGetPrivateProfileInt ("Options", "HardwareFills", 1, buffer);
-		ScreenHeight = WWGetPrivateProfileInt ("Options", "Resolution", 0, buffer) ? 480 : 400;
+		if (!ignore_res) {
+			int res = WWGetPrivateProfileInt ("Options", "Resolution", 0, buffer);
+			switch(res) {
+				case 0:
+				default:
+					ScreenWidth = 640;
+					ScreenHeight = 400;
+					break;
+				case 1:
+					ScreenWidth = 640;
+					ScreenHeight = 480;
+					break;
+				case 2:
+					ScreenWidth = 712;
+					ScreenHeight = 400;
+					break;
+			}
+		}
 		IsV107 = WWGetPrivateProfileInt ("Options", "Compatibility", 0, buffer);
 		// This only enables logging; doesn't disable since command line param should have priority.
 		bool enableLogging = WWGetPrivateProfileBool("Patch", "LogDebug", false, buffer);

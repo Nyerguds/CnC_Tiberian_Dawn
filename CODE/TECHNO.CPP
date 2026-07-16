@@ -1821,14 +1821,17 @@ void TechnoClass::AI(void)
 			if (!Arm && CloakingDevice.Fetch_Stage()) {
 				if (Health_Ratio() > 0x0040) {
 					Do_Cloak();
+					// Refreshing build placement is already done by Do_Cloak.
 				} else {
 					if (Random_Pick(0, 25) == 1) {
 						Do_Cloak();
+						// Refreshing build placement is already done by Do_Cloak.
 					}
 				}
 			}
 		} else {
 
+			CloakType oldcloak = Cloak;
 			VisualType pre = Visual_Character(true);
 			CloakingDevice.Graphic_Logic();
 			switch (Cloak) {
@@ -1907,6 +1910,10 @@ void TechnoClass::AI(void)
 						Mark(MARK_CHANGE);
 					}
 					break;
+			}
+			if (oldcloak != Cloak) {
+				// Nyerguds's C&C Patch Project v1.04: recheck placement check on cloak change.
+				Map.Recheck_Placement();
 			}
 		}
 	}
@@ -2945,6 +2952,10 @@ bool TechnoClass::Captured(HouseClass * newowner)
 		House = newowner;
 		IsOwnedByPlayer = (House == PlayerPtr);
 
+		// Nyerguds's C&C Patch Project v1.04: recheck placement check on capture.
+		// Reset building placement proximity check since something has changed ownership.
+		Map.Recheck_Placement();
+
 		return(true);
 	}
 	return(false);
@@ -3276,6 +3287,9 @@ void TechnoClass::Do_Uncloak(void)
 		Cloak = UNCLOAKING;
 		CloakingDevice.Set_Stage(0);
 		CloakingDevice.Set_Rate(1);
+
+		// Nyerguds's C&C Patch Project v1.04: recheck placement check on object cloak change.
+		Map.Recheck_Placement();
 	}
 }
 
@@ -3302,6 +3316,9 @@ void TechnoClass::Do_Cloak(void)
 		Cloak = CLOAKING;
 		CloakingDevice.Set_Stage(0);
 		CloakingDevice.Set_Rate(1);
+
+		// Nyerguds's C&C Patch Project v1.04: recheck placement check on object cloak change.
+		Map.Recheck_Placement();
 	}
 }
 
@@ -3328,6 +3345,9 @@ void TechnoClass::Do_Shimmer(void)
 		Cloak = CLOAKING;
 		CloakingDevice.Set_Stage(MAX_UNCLOAK_STAGE/2);
 		CloakingDevice.Set_Rate(1);
+
+		// Nyerguds's C&C Patch Project v1.04: recheck placement check on object cloak change.
+		Map.Recheck_Placement();
 	}
 }
 
@@ -4321,8 +4341,9 @@ void TechnoClass::Assign_Destination(TARGET )
  * HISTORY:                                                                                    *
  *   07/24/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-void TechnoClass::Scatter(COORDINATE , bool )
+bool TechnoClass::Scatter(COORDINATE , bool )
 {
+	return(false);
 }
 
 

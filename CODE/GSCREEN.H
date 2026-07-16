@@ -52,6 +52,7 @@ class GScreenClass : public VectorClass<CellClass>
 		*/
 		virtual void One_Time(void);							// One-time initializations
 		virtual void Init(TheaterType = THEATER_NONE);	// Inits everything
+		void After_Init(void) {};							// Init after savegame load
 		virtual void Init_Clear(void);						// Clears all to known state
 		virtual void Init_IO(void);							// Inits button list
 		virtual void Init_Theater(TheaterType theater);	// Theater-specific inits

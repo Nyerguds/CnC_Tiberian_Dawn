@@ -112,6 +112,7 @@ class SidebarClass: public PowerClass
 		** Initialization
 		*/
 		virtual void One_Time(void);							// One-time inits
+		virtual void After_Init(void);						// Init after savegame load
 		virtual void Init_Clear(void);						// Clears all to known state
 		virtual void Init_IO(void);							// Inits button list
 		virtual void Init_Theater(TheaterType theater);	// Theater-specific inits
@@ -129,6 +130,7 @@ class SidebarClass: public PowerClass
 		// Nyerguds's TUC Quick Fix Patch v1.02: mousewheel
 		// No longer private, so it can be called as Map->.
 		bool  Scroll(bool up, int column);
+		void	Fill_Bottom();
 
 		/*
 		**	File I/O.
@@ -385,9 +387,11 @@ class SidebarClass: public PowerClass
 		*/
 		static void const * SidebarShape1;
 		static void const * SidebarShape2;
+		static void const * SidebarShapeFill;
 
 
 	private:
+		void	Reset_Screen_Calculations(void);
 		bool  Activate_Repair(int control);
 		bool  Activate_Upgrade(int control);
 		bool  Activate_Demolish(int control);

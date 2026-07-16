@@ -318,6 +318,26 @@ void MouseClass::One_Time(void)
 
 
 /***********************************************************************************************
+ * MouseClass::After_Init -- Reinitializes UI values after savegame load.                      *
+ *                                                                                             *
+ * This routine resets resolution-related values in case a savegame was created in a           *
+ * different game resolution, and this might affect the user interface.                        *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/12/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void MouseClass::After_Init(void) {
+	ScrollClass::After_Init();
+};
+
+
+/***********************************************************************************************
  * MouseClass::Init_Clear -- Sets the mouse system to a known state                            *
  *                                                                                             *
  *    This routine will reset the mouse handling system. Typically, this routine is called     *

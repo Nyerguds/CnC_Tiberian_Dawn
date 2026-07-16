@@ -658,7 +658,7 @@ void ObjectClass::Clicked_As_Target(int) {};
 bool ObjectClass::In_Range(COORDINATE , int) const {return false;};
 int ObjectClass::Weapon_Range(int /*which*/, bool /*withbarrel*/, TARGET /*target*/) const {return 0x0000;};
 TARGET ObjectClass::As_Target(void) const {return TARGET_NONE;};
-void ObjectClass::Scatter(COORDINATE , bool) {};
+bool ObjectClass::Scatter(COORDINATE , bool) { return(false); };
 bool ObjectClass::Catch_Fire(TechnoClass * /*source*/, HousesType /*house*/) {return false;};
 
 

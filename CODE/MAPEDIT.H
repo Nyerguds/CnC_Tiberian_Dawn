@@ -185,6 +185,7 @@ class MapEditClass : public MouseClass
 		*/
 		MapEditClass(void);
 		virtual void One_Time(void);							// One-time init
+		virtual void After_Init(void);						// Init after savegame load
 		virtual void Init_IO(void);							// Inits button list
 		virtual void AI(KeyNumType &input, int x, int y);
 		virtual void Draw_It(bool forced = true);

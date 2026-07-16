@@ -173,7 +173,7 @@ class UnitClass :	public TarComClass
 		virtual void Enter_Idle_Mode(bool initial=false);
 		virtual MoveType Can_Enter_Cell(CELL cell, FacingType facing=FACING_NONE) const;
 		virtual void Per_Cell_Process(bool center);
-		virtual void Scatter(COORDINATE threat, bool forced=false);
+		virtual bool Scatter(COORDINATE threat, bool forced=false);
 		void  Exit_Repair(void);
 //		MoveType Blocking_Object(TechnoClass const *techno, CELL cell) const;
 

@@ -129,6 +129,42 @@ RadarClass::RadarClass(void)
  *=============================================================================================*/
 void RadarClass::One_Time(void)
 {
+	Reset_Screen_Calculations();
+	DisplayClass::One_Time();
+	RadarButton.X = RadX+RadOffX;
+	RadarButton.Y = RadY+RadOffY;
+	RadarButton.Width = RadIWidth;
+	RadarButton.Height = RadIHeight;
+}
+
+
+/***********************************************************************************************
+ * RadarClass::After_Init -- Reinitializes UI values after savegame load.                      *
+ *                                                                                             *
+ * This routine resets resolution-related values in case a savegame was created in a           *
+ * different game resolution, and this might affect the user interface.                        *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/12/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void RadarClass::After_Init(void) {
+	DisplayClass::After_Init();
+	Reset_Screen_Calculations();
+	RadarButton.X = RadX+RadOffX;
+	RadarButton.Y = RadY+RadOffY;
+	RadarButton.Width = RadIWidth;
+	RadarButton.Height = RadIHeight;
+}
+
+
+void RadarClass::Reset_Screen_Calculations(void)
+{
 	int factor = Get_Resolution_Shift();
 	RadWidth		= 80 << factor;
 	RadHeight 	= 70 << factor;
@@ -136,7 +172,7 @@ void RadarClass::One_Time(void)
 	RadY 			= Map.Get_Tab_Height() - (1 << factor);
 	RadPWidth 	= 64 << factor;
 	RadPHeight 	= 64 << factor;
-	if ( factor ) {
+	if (factor) {
 		RadOffX 		= 16;
 		RadOffY 		= 7;
 		RadIWidth 	= 128;
@@ -147,12 +183,6 @@ void RadarClass::One_Time(void)
 		RadIWidth 	= 72 << factor;
 		RadIHeight	= 69 << factor;
 	}
-
-	DisplayClass::One_Time();
-	RadarButton.X			= RadX+RadOffX;
-	RadarButton.Y 			= RadY+RadOffY;
-	RadarButton.Width 	= RadIWidth;
-	RadarButton.Height 	= RadIHeight;
 }
 
 

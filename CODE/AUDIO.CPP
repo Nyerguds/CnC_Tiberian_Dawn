@@ -196,7 +196,7 @@ static struct {
 	{"MCOURSE1", 	10,	IN_NOVAR},	// VOC_OF_COURSE		"Of course."
 	{"MYESYES1", 	10,	IN_NOVAR},	// VOC_YESYES			"Yes yes yes."
 	{"MTIBER1", 	10,	IN_NOVAR},	//	VOC_QUIP1			"Mind the Tiberium."
-//	{"MMG1", 		10,	IN_NOVAR},	//	VOC_QUIP2			"A most remarkable  Metasequoia Glyptostroboides."
+	{"MMG1", 		10,	IN_NOVAR},	//	VOC_QUIP2			"A most remarkable Metasequoia Glyptostroboides."
 	{"MTHANKS1", 	10,	IN_NOVAR},	//	VOC_THANKS			"Thank you."
 
 	{"CASHTURN", 	1,		IN_NOVAR},	//	VOC_CASHTURN		Sound of money being piled up.
@@ -219,7 +219,8 @@ static struct {
  *                                                                                             *
  *          coord -- The world location that the sound originates from.                        *
  *                                                                                             *
- * OUTPUT:  none                                                                               *
+ * OUTPUT:  false if the sample was not played due to not finding the file.                    *
+ *          Any other reasons still return true.                                               *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
  *                                                                                             *
@@ -227,14 +228,14 @@ static struct {
  *   11/12/1994 JLB : Created.                                                                 *
  *   01/05/1995 JLB : Reduces sound more dramatically when off screen.                         *
  *=============================================================================================*/
-void Sound_Effect(VocType voc, COORDINATE coord, int variation)
+bool Sound_Effect(VocType voc, COORDINATE coord, int variation)
 {
 	unsigned			distance;
 	CELL				cell_pos;
 	int pan_value;
 
 	if (!Options.Volume || voc == VOC_NONE || !SoundOn || SampleType == SAMPLE_NONE) {
-		return;
+		return(true);
 	}
 	if (coord) {
 		cell_pos = Coord_Cell(coord);
@@ -265,7 +266,7 @@ void Sound_Effect(VocType voc, COORDINATE coord, int variation)
 		}
 	}
 
-	Sound_Effect(voc, (VolType)Fixed_To_Cardinal(distance, Options.Volume), variation, pan_value);
+	return Sound_Effect(voc, (VolType)Fixed_To_Cardinal(distance, Options.Volume), variation, pan_value) != -1;
 }
 
 

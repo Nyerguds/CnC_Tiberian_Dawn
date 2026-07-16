@@ -475,6 +475,8 @@ void CellClass::Redraw_Objects(bool forced)
  *                                                                                             *
  * INPUT:   ignoremobile -- ignore temporary occupiers that can move off the cell.             *
  *                                                                                             *
+ *          ignorecloak  -- ignore cloaked occupiers.                                          *
+ *                                                                                             *
  * OUTPUT:  bool; Can the cell be built upon?                                                  *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
@@ -482,17 +484,31 @@ void CellClass::Redraw_Objects(bool forced)
  * HISTORY:                                                                                    *
  *   05/18/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-bool CellClass::Is_Generally_Clear(bool ignoremobile) const
+bool CellClass::Is_Generally_Clear(bool ignoremobile, bool ignorecloak) const
 {
 	Validate();
 	if (ScenarioInit) return(true);
 	// Nyerguds's C&C Patch Project v1.04: Allow placing smudge on unit-occupied cells.
 	// Check ignoring temporary occupiers, to allow placing down smudge.
-	if (!ignoremobile && (Flag.Composite || IsFlagged || Cell_Occupier())) {
-		return(false);
-	}
-	if (Flag.Occupy.Monolith || Flag.Occupy.Building || IsFlagged || Cell_Building()|| Cell_Terrain()) {
-		return(false);
+	if (!ignorecloak) {
+		if (!ignoremobile && (Flag.Composite || IsFlagged || Cell_Occupier())) {
+			return(false);
+		}
+		if (Flag.Occupy.Monolith || Flag.Occupy.Building || IsFlagged || Cell_Building()|| Cell_Terrain()) {
+			return(false);
+		}
+	} else {
+		if (Cell_Terrain()) {
+			return(false);
+		}
+		ObjectClass * occ = Cell_Techno();
+		while (occ && occ->Is_Techno()) {
+			TechnoClass * techno = (TechnoClass *)occ;
+			if (techno->Cloak != CLOAKED && (!ignoremobile || occ->Can_Player_Move())) {
+				return(false);
+			}
+			occ = techno->Next;
+		}
 	}
 	if (Smudge != SMUDGE_NONE && SmudgeTypeClass::As_Reference(Smudge).IsBib && Owner != HOUSE_NONE) {
 		return(false);
@@ -1094,11 +1110,15 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 				/*
 				**	Draw the hash-mark cursor:
 				*/
-				if (Map.ProximityCheck && Is_Generally_Clear()) {
-					LogicPage->Draw_Stamp(Map.TransIconset, 0, x, y, NULL, WINDOW_TACTICAL);
-				} else {
-					LogicPage->Draw_Stamp(Map.TransIconset, 2, x, y, NULL, WINDOW_TACTICAL);
+				int icon = 2;
+				if (Map.ProximityCheck) {
+					if (Is_Generally_Clear()) {
+						icon = Map.ProximityStealth ? 1 : 0;
+					} else if (Map.ProximityStealth && Is_Generally_Clear(false, true)) {
+						icon = 1;
+					}
 				}
+				LogicPage->Draw_Stamp(Map.TransIconset, icon, x, y, NULL, WINDOW_TACTICAL);	
 
 	#ifdef SCENARIO_EDITOR
 				if (Debug_Map && Map.PendingObject) {

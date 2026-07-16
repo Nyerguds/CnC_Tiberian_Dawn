@@ -1964,6 +1964,9 @@ void Anim_Init(void)
  *                                                                                             *
  *          argv  -- Pointer to character string array that holds the individual arguments.    *
  *                                                                                             *
+ *          isres -- Reference that returns whether the resolution was explicitly set by a     *
+ *                   command line argument.                                                    *
+ *                                                                                             *
  * OUTPUT:  bool; Was the command line parsed successfully?                                    *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
@@ -1971,7 +1974,7 @@ void Anim_Init(void)
  * HISTORY:                                                                                    *
  *   03/18/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-bool Parse_Command_Line(int argc, char *argv[])
+bool Parse_Command_Line(int argc, char *argv[], bool &isres)
 {
 	CCDebugString(" In Parse_Command_Line.\n");
 	/*
@@ -2517,6 +2520,7 @@ bool Parse_Command_Line(int argc, char *argv[])
 			continue;
 		}
 	}
+	isres = is480 || isWide;
 	return(true);
 }
 

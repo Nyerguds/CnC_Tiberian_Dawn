@@ -221,7 +221,7 @@ class InfantryClass : public FootClass
 		virtual MoveType Can_Enter_Cell(CELL , FacingType =FACING_NONE) const;
 		virtual void Per_Cell_Process(bool center);
 		virtual void Enter_Idle_Mode(bool initial=false);
-		virtual void Scatter(COORDINATE threat, bool forced =false);
+		virtual bool Scatter(COORDINATE threat, bool forced =false);
 
 		/*
 		**	Dee-buggin' support.
