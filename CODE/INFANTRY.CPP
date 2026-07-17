@@ -560,7 +560,6 @@ ResultType InfantryClass::Take_Damage(int & damage, int distance, WarheadType wa
 	return(res);
 }
 
-
 /***********************************************************************************************
  * InfantryClass::Draw_It -- Draws a unit object.                                              *
  *                                                                                             *
@@ -629,7 +628,7 @@ void InfantryClass::Draw_It(int x, int y, WindowNumberType window)
 	**	Actually draw the root body of the unit.
 	*/
 	Techno_Draw_Object(shapefile, shapenum, x, y, window);
-//	CC_Draw_Shape(shapefile, shapenum, x, y, window, SHAPE_FADING|SHAPE_CENTER|SHAPE_WIN_REL|SHAPE_GHOST, House->Remap_Table(IsBlushing, true), Map.UnitShadow);
+//	CC_Draw_Shape(shapefile, shapenum, x, y, window, SHAPE_FADING|SHAPE_CENTER|SHAPE_WIN_REL|SHAPE_GHOST, House->Remap_Table(IsBlushing, false), Map.UnitShadow);
 
 	// "y - 6" offset: migrated from TechnoClass::Draw_It
 	/*

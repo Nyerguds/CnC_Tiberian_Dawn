@@ -2284,7 +2284,7 @@ void UnitClass::Draw_It(int x, int y, WindowNumberType window)
 	**	If this unit is carrying the flag, then draw that on top of everything else.
 	*/
 	if (Flagged != HOUSE_NONE) {
-		CC_Draw_Shape(MixFileClass::Retrieve("FLAGFLY.SHP"), Frame % 14, x, y, window, SHAPE_CENTER|SHAPE_FADING|SHAPE_GHOST, HouseClass::As_Pointer(Flagged)->Remap_Table(false, false), Map.UnitShadow);
+		CC_Draw_Shape(MixFileClass::Retrieve("FLAGFLY.SHP"), Frame % 14, x, y, window, SHAPE_CENTER|SHAPE_FADING|SHAPE_GHOST, HouseClass::As_Pointer(Flagged)->Remap_Table(false, true), Map.UnitShadow);
 	}
 
 	TarComClass::Draw_It(x, y, window);
@@ -4494,7 +4494,7 @@ bool UnitClass::No_Other_Crushers(CELL cell) const
  * UnitClass::Remap_Table -- Fetches the remap table to use for this object.                   *
  *                                                                                             *
  *    Use this routine to determine the rendering remap table to use for this object. The      *
- *    remap table is normally the unit remap table, except for the MCV and the Harvestor.      *
+ *    remap table is normally the unit remap table, except for the MCV and the Harvester.      *
  *    These units use the building remap table since these units become part of the building   *
  *    animation.                                                                               *
  *                                                                                             *
@@ -4514,7 +4514,7 @@ void const * UnitClass::Remap_Table(void)
 	// Does this unit prefer the House's building colour, since it
 	// docks with a building or transforms into one?
 	if (Class->IsBuildingColor) {
-		return(House->Remap_Table(IsBlushing, false));
+		return(House->Remap_Table(IsBlushing, true));
 	}
 	return(TarComClass::Remap_Table());
 }

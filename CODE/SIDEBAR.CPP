@@ -46,7 +46,6 @@
  *   SidebarClass::Init_IO -- Adds buttons to the button list                                  *
  *   SidebarClass::Init_Theater -- Performs theater-specific initialization                    *
  *   SidebarClass::One_Time -- Handles the one time game initializations.                      *
- *   SidebarClass::One_Time -- Handles the one time game initializations.                      *
  *   SidebarClass::Recalc -- Examines the sidebar data and updates it as necessary.            *
  *   SidebarClass::Refresh_Cells -- Intercepts the refresh, looking for sidebar controls.      *
  *   SidebarClass::SBGadgetClass::Action -- Special function that controls the mouse over the s*
@@ -117,8 +116,8 @@ SidebarClass::StripClass::SelectButton[COLUMNS][MAX_VISIBLE];
 */
 void const * SidebarClass::StripClass::LogoShapes;
 void const * SidebarClass::StripClass::ClockShapes;
-void const * SidebarClass::StripClass::SpecialShapes[3];
-bool SidebarClass::StripClass::SpecialShapesTheater[3] = {false, false, false};
+void const * SidebarClass::StripClass::SpecialShapes[SPC_COUNT];
+bool SidebarClass::StripClass::SpecialShapesTheater[SPC_COUNT] = {false, false, false};
 
 void const * SidebarClass::SidebarShape1;
 void const * SidebarClass::SidebarShape2;
@@ -147,7 +146,6 @@ SidebarClass::SidebarClass(void)
 	IsUpgradeActive = false;
 	IsDemolishActive = false;
 	IsToRedraw = true;
-
 }
 
 
@@ -1094,8 +1092,8 @@ SidebarClass::StripClass::StripClass(void)
 	Slid = 0;
 	BuildableCount = 0;
 	for (int index = 0; index < MAX_BUILDABLES; index++) {
-		Buildables[index].BuildableID = 0;
 		Buildables[index].BuildableType = RTTI_NONE;
+		Buildables[index].BuildableID = -1;
 		Buildables[index].Factory = -1;
 	}
 }
@@ -1119,7 +1117,7 @@ SidebarClass::StripClass::StripClass(void)
  *=============================================================================================*/
 void SidebarClass::StripClass::One_Time(int )
 {
-	static char *_file[3] = {
+	static char *_file[SPC_COUNT] = {
 		"ION",
 		"ATOM",
 		"BOMB"
@@ -1138,8 +1136,8 @@ void SidebarClass::StripClass::One_Time(int )
 	char	fullname[_MAX_FNAME+_MAX_EXT];
 	char buffer[_MAX_FNAME];
 
-	for (int lp = 0; lp < 3; lp++) {
-		if ( Get_Resolution_Shift() ) {
+	for (int lp = 0; lp < SPC_COUNT; lp++) {
+		if (factor) {
 			sprintf(buffer, "%sICNH", _file[lp]);
 		} else {
 			sprintf(buffer, "%sICON", _file[lp]);
@@ -1148,8 +1146,6 @@ void SidebarClass::StripClass::One_Time(int )
 		SpecialShapes[lp] = MixFileClass::Retrieve(fullname);
 		SpecialShapesTheater[lp] = false;
 	}
-
-
 }
 
 
@@ -1168,8 +1164,11 @@ void SidebarClass::StripClass::One_Time(int )
  * HISTORY:                                                                                    *
  *   05/19/1995 JLB : commented                                                                *
  *=============================================================================================*/
-void const * SidebarClass::StripClass::Get_Special_Cameo(int type)
+void const * SidebarClass::StripClass::Get_Special_Cameo(SpecialWeaponType type)
 {
+	if ((unsigned)type >= SPC_COUNT) {
+		return NULL;
+	}
 	return(SpecialShapes[type]);
 }
 
@@ -1192,8 +1191,11 @@ void const * SidebarClass::StripClass::Get_Special_Cameo(int type)
  * HISTORY:                                                                                    *
  *   07/19/2025 MM  : Created.                                                                 *
  *=============================================================================================*/
-bool SidebarClass::StripClass::Special_Cameo_Is_Theater_Shape(int type)
+bool SidebarClass::StripClass::Special_Cameo_Is_Theater_Shape(SpecialWeaponType type)
 {
+	if ((unsigned)type >= SPC_COUNT) {
+		return false;
+	}
 	return(SpecialShapesTheater[type]);
 }
 
@@ -1293,7 +1295,7 @@ void SidebarClass::StripClass::Init_Theater(TheaterType theater)
 	//if (theater != LastTheater) {
 
 
-		static char *_file[3] = {
+		static char *_file[SPC_COUNT] = {
 			"ION",
 			"ATOM",
 			"BOMB"
@@ -1304,34 +1306,28 @@ void SidebarClass::StripClass::Init_Theater(TheaterType theater)
 		void * cameo_ptr;
 
 		char theatermixname[_MAX_FNAME+_MAX_EXT];
-		sprintf(theatermixname, "%s.MIX", Theaters[theater].Root);
 		char cameomixname[_MAX_FNAME+_MAX_EXT];
-		sprintf(cameomixname, "%.4sICNH.MIX", Theaters[theater].Root);
+		if (factor) {
+			sprintf(theatermixname, "%s.MIX", Theaters[theater].Root);
+			sprintf(cameomixname, "%.4sICNH.MIX", Theaters[theater].Root);
 
-
-		for (int lp = 0; lp < 3; lp++) {
-			if (factor) {
+			for (int lp = 0; lp < SPC_COUNT; lp++) {
 				sprintf(buffer, "%sICNH", _file[lp]);
 				_makepath(fullname, NULL, NULL, buffer, Theaters[theater].Suffix);
-			} else {
-				sprintf(buffer, "%sICON", _file[lp]);
-				_makepath(fullname, NULL, NULL, buffer, ".SHP");
-			}
-			MixFileClass *mixptr = 0;
-			cameo_ptr = NULL;
-			MixFileClass::Offset(fullname, &cameo_ptr, &mixptr);
-			if (factor) {
+				MixFileClass *mixptr = 0;
+				cameo_ptr = NULL;
+				MixFileClass::Offset(fullname, &cameo_ptr, &mixptr);
 				if (!cameo_ptr) {
-					_makepath(fullname, NULL, NULL, buffer, "SHP");
+					_makepath(fullname, NULL, NULL, buffer, ".SHP");
 					cameo_ptr = (void*)MixFileClass::Retrieve(fullname);
 					SpecialShapesTheater[lp] = false;
 				} else if (mixptr && mixptr->Filename) {
 					// double-check that it came from a mix file that is considered theater data.
 					// This prevents messups when icons are added from sc*.mix files.
 					SpecialShapesTheater[lp] = strcmpi(mixptr->Filename, cameomixname) == 0 || strcmpi(mixptr->Filename, theatermixname) == 0;
-				} 
+				}
+				SpecialShapes[lp] = cameo_ptr;
 			}
-			SpecialShapes[lp] = cameo_ptr;
 		}
 
 #ifdef FADING_GENERATE
@@ -1854,8 +1850,8 @@ void SidebarClass::StripClass::Draw_It(bool complete)
 			**	slot. This shape pointer is used to draw the underlying graphic there.
 			*/
 			if ((unsigned)index < BuildableCount) {
-				ObjectTypeClass const * obj = NULL;
-				int spc  = 0;
+				TechnoTypeClass const * obj = NULL;
+				SpecialWeaponType spc  = SPC_NONE;
 
 				if (Buildables[index].BuildableType != RTTI_SPECIAL) {
 
@@ -1869,38 +1865,28 @@ void SidebarClass::StripClass::Draw_It(bool complete)
 
 							case RTTI_BUILDINGTYPE:
 								isbusy = (PlayerPtr->BuildingFactory != -1);
-								if (!BuildingTypeClass::As_Reference((StructType)Buildables[index].BuildableID).IsWall) {
-									remapper = PlayerPtr->Remap_Table(false, false);
-								}
 								break;
 
 							case RTTI_UNITTYPE:
 								isbusy = (PlayerPtr->UnitFactory != -1);
-								switch (Buildables[index].BuildableID) {
-									case UNIT_MCV:
-									case UNIT_HARVESTER:
-										remapper = PlayerPtr->Remap_Table(false, false);
-										break;
-
-									default:
-										remapper = PlayerPtr->Remap_Table(false, true);
-										break;
-								}
 								break;
 
 							case RTTI_AIRCRAFTTYPE:
 								isbusy = (PlayerPtr->AircraftFactory != -1);
-								remapper = PlayerPtr->Remap_Table(false, true);
 								break;
 						}
-						if (obj->Get_Cameo_Data()){
+						if (obj->Get_Cameo_Data()) {
 							shapefile = obj->Get_Cameo_Data();
 							istheatershape = obj->Cameo_Is_Theater_Shape();
 							shapenum  = 0;
+							remapper = obj->Cameo_Remap_Table(PlayerPtr, false);
 						} else {
 							shapefile	= LogoShapes;
 							shapenum = SB_BLANK;
 							istheatershape = false;
+							// Make dummy cameo look slightly brighter to
+							// distinguish it from the standard blank one.
+							remapper = Map.FadingBrighten;
 							isdummycameo = true;
 						}
 						if (Buildables[index].Factory != -1) {
@@ -1923,9 +1909,9 @@ void SidebarClass::StripClass::Draw_It(bool complete)
 
 				} else  {
 
-					spc = Buildables[index].BuildableID;
-					shapefile = Get_Special_Cameo(spc - 1);
-					istheatershape = Special_Cameo_Is_Theater_Shape(spc - 1);
+					spc = (SpecialWeaponType)Buildables[index].BuildableID;
+					shapefile = Get_Special_Cameo(spc);
+					istheatershape = Special_Cameo_Is_Theater_Shape(spc);
 					shapenum = 0;
 
 					switch (spc) {
@@ -1952,7 +1938,7 @@ void SidebarClass::StripClass::Draw_It(bool complete)
 					}
 				}
 
-				if (obj || spc) {
+				if (obj || spc != SPC_NONE) {
 					/*
 					** If this item is flashing then take care of it.
 					**
@@ -1971,42 +1957,34 @@ void SidebarClass::StripClass::Draw_It(bool complete)
 				production	= false;
 			}
 
-			if (factor) {
-				if (isdummycameo) {
-					// make dummy cameo look slightly brighter to
-					// distinguish it from the standard blank one.
-					remapper = Map.FadingBrighten;
-				} else {
-					remapper = NULL;
-				}
-			}
-
 			/*
 			**	Now that the shape of the object at the current working slot has been found,
 			**	draw it and any graphic overlays as necessary.
 			**
 			**	Don't draw blank shapes over the new 640x400 sidebar art - ST 5/1/96 6:01PM
-			**	^ IGNORE THAT. Allow fallback to dummy shape - MM 7/19/2025
+			**
+			**	Do draw the blank shape if it is the dummy cameo - MM 7/19/2025
 			*/
-			IsTheaterShape = istheatershape;	// This shape is theater specific
 			int drawx = x-(WindowList[WINDOW_SIDEBAR][WINDOWX]*8)+LeftEdgeOffset;
 			int drawy = y-WindowList[WINDOW_SIDEBAR][WINDOWY];
-			CC_Draw_Shape(shapefile, shapenum, drawx, drawy,
-				WINDOW_SIDEBAR,
-				SHAPE_NORMAL|SHAPE_WIN_REL| (remapper ? SHAPE_FADING : SHAPE_NORMAL),
-				remapper);
-			IsTheaterShape = false;
+			if (shapenum != SB_BLANK || shapefile != LogoShapes || isdummycameo) {
+				IsTheaterShape = istheatershape;	// This shape is theater specific
+				CC_Draw_Shape(shapefile, shapenum, drawx, drawy,
+					WINDOW_SIDEBAR,
+					SHAPE_NORMAL|SHAPE_WIN_REL| (remapper ? SHAPE_FADING : SHAPE_NORMAL),
+					remapper);
+				IsTheaterShape = false;
 
-
-			/*
-			**	Darken this object because it cannot be produced or is otherwise
-			**	unavailable.
-			*/
-			if (darken) {
-				CC_Draw_Shape(ClockShapes, 0, drawx, drawy,
-						WINDOW_SIDEBAR,
-						SHAPE_NORMAL|SHAPE_WIN_REL|SHAPE_GHOST,
-						NULL, ClockTranslucentTable);
+				/*
+				**	Darken this object because it cannot be produced or is otherwise
+				**	unavailable.
+				*/
+				if (darken) {
+					CC_Draw_Shape(ClockShapes, 0, drawx, drawy,
+							WINDOW_SIDEBAR,
+							SHAPE_NORMAL|SHAPE_WIN_REL|SHAPE_GHOST,
+							NULL, ClockTranslucentTable);
+				}
 			}
 
 			/*
@@ -2082,11 +2060,12 @@ bool SidebarClass::StripClass::Recalc(void)
 	*/
 	bool redraw = false;
 	for (int index = 0; index < BuildableCount; index++) {
-		TechnoTypeClass const * tech = Fetch_Techno_Type(Buildables[index].BuildableType, Buildables[index].BuildableID);
+		int id = Buildables[index].BuildableID;
+		TechnoTypeClass const * tech = Fetch_Techno_Type(Buildables[index].BuildableType, id);
 		if (tech) {
 			ok = tech->Who_Can_Build_Me(true, false, PlayerPtr->Class->House) != NULL;
 		} else {
-			switch (Buildables[index].BuildableID) {
+			switch (id) {
 				case SPC_ION_CANNON:
 					ok = PlayerPtr->IonCannon.Is_Present();
 					break;
@@ -2255,13 +2234,14 @@ void SidebarClass::StripClass::SelectClass::Set_Owner(StripClass & strip, int in
 int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & key)
 {
 	int index = Strip->TopIndex + Index;
-	RTTIType otype = Strip->Buildables[index].BuildableType;
-	int oid = Strip->Buildables[index].BuildableID;
-	int fnumber = Strip->Buildables[index].Factory;
+	SidebarClass::StripClass::BuildType bt = Strip->Buildables[index];
+	RTTIType otype = bt.BuildableType;
+	int oid = bt.BuildableID;
+	int fnumber = bt.Factory;
 
 	FactoryClass * factory = NULL;
 	ObjectTypeClass const * choice = NULL;
-	int spc = 0;
+	SpecialWeaponType spc = SPC_NONE;
 
 	/*
 	**	Determine the factory number that would apply to objects of the type
@@ -2299,7 +2279,7 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 		if (otype != RTTI_SPECIAL) {
 			choice  = Fetch_Techno_Type(otype, oid);
 		} else {
-			spc = oid;
+			spc = (SpecialWeaponType)oid;
 		}
 
 		if (fnumber != -1) {
@@ -2315,7 +2295,7 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 	} else {
 		Map.Help_Text(TXT_NONE);
 	}
-	if (spc) {
+	if (spc != SPC_NONE) {
 		/*
 		**	Display the help text if the mouse is over the button.
 		*/
@@ -2341,7 +2321,7 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 		** mode then we don't want to be any more.
 		*/
 		if (flags & RIGHTPRESS) {
-			Map.IsTargettingMode = false;
+			Map.TargetingMode = SPC_NONE;
 		}
 		/*
 		**	A left mouse press signal "activate".  If our weapon type is
@@ -2388,7 +2368,7 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 			Map.Repair_Mode_Control(0);
 			Map.Sell_Mode_Control(0);
 			Unselect_All();
-			Map.IsTargettingMode = spc;
+			Map.TargetingMode = spc;
 			Speak(VOX_SELECT_TARGET);
 		}
 	} else {
@@ -2485,7 +2465,7 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 							TechnoClass * pending = factory->Get_Object();
 							if (!pending && factory->Get_Special_Item()) {
 								// Never handled here, but whatev.
-								Map.IsTargettingMode = factory->Get_Special_Item();
+								Map.TargetingMode = factory->Get_Special_Item();
 							} else {
 								BuildingClass * builder = pending->Who_Can_Build_Me(false, false);
 								if (!builder) {

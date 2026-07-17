@@ -306,6 +306,12 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * The building placement grid will now be updated when nearby buildings are destroyed.
 * Stealth units blocking the building placement grid will now no longer explicitly show where they are; the entire grid will turn yellow.
 * Command line parameters to set a specific game resolution will now override the Resolution setting in conquer.ini.
-* 640x400 resolution will now allow using the entire screen size. A 712x400 widescreen resolution is also available, either with command line parameter "-wide", or by setting "Resolution=2." in conquer.ini, under \[Options\].
+* The 640x480 resolution will now use the entire screen size. This will fill the remaining space under the sidebar area with the standard sidebar pattern.
+* Fixed the bug that a viewport height that does not match an exact number of cells will make it impossible to place buildings on the lowest row of the map.
+* A 712x400 widescreen resolution is now available, either with command line parameter "-wide", or by setting "Resolution=2." in conquer.ini, under \[Options\].
 * Fixed the power bar being drawn four pixels too low.
-* The game can now play the mmg1.aud "A most remarkable  Metasequoia Glyptostroboides." clip if it is present.
+* The game can now play the mmg1.aud "A most remarkable Metasequoia Glyptostroboides" clip if it is present.
+* \[Internal\] The special behavior to make the MCV and Harvester use the building color rather than the unit color is now an option in the unit type properties.
+* \[Internal\] Made everything superweapon-related use the specific "SpecialWeaponType" enum, rather than often using IDs as bare numbers.
+* \[Internal\] The code that determines how to remap a cameo is now centralized in the TechnoTypeClass subclasses.
+* \[Internal\] The code that paints the objects in a list in Map Editor mode was vastly simplified, and is now mostly centralized In TechnoTypeClass.

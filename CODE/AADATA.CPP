@@ -531,37 +531,6 @@ void AircraftTypeClass::Prep_For_Add(void)
 		}
 	}
 }
-
-
-/***********************************************************************************************
- * AircraftTypeClass::Display -- Displays a generic version of the aircraft type.              *
- *                                                                                             *
- *    This routine is used by the scenario editor to display a generic version of the object   *
- *    type. This is displayed in the object selection dialog box.                              *
- *                                                                                             *
- * INPUT:   x,y      -- The coordinates to draw the aircraft at (centered).                    *
- *                                                                                             *
- *          window   -- The window to base the coordinates upon.                               *
- *                                                                                             *
- *          house    -- The owner of this generic aircraft.                                    *
- *                                                                                             *
- * OUTPUT:  none                                                                               *
- *                                                                                             *
- * WARNINGS:   none                                                                            *
- *                                                                                             *
- * HISTORY:                                                                                    *
- *   07/26/1994 JLB : Created.                                                                 *
- *=============================================================================================*/
-void AircraftTypeClass::Display(int x, int y, WindowNumberType window, HousesType house) const
-{
-	int shape = 0;
-	void const * ptr = Get_Cameo_Data();
-	if (!ptr) {
-		ptr = Get_Image_Data();
-		shape = 5;
-	}
-	CC_Draw_Shape(ptr, shape, x, y, window, SHAPE_CENTER|SHAPE_WIN_REL|SHAPE_FADING, HouseClass::As_Pointer(house)->Remap_Table(false, true));
-}
 #endif
 
 
@@ -807,7 +776,7 @@ bool AircraftTypeClass::Create_And_Place(CELL, HousesType) const
  *=============================================================================================*/
 AircraftTypeClass const * AircraftTypeClass::As_Pointer(AircraftType type)
 {
-	if (type <= AIRCRAFT_NONE || type >= AIRCRAFT_COUNT)
+	if ((unsigned)type >= AIRCRAFT_COUNT)
 		return (NULL);
 	return(Pointers[type]);
 }
@@ -920,6 +889,3 @@ void AircraftTypeClass::Dimensions(int &width, int &height) const
 	width = 21;
 	height = 20;
 }
-
-
-RTTIType AircraftTypeClass::What_Am_I(void) const {return RTTI_AIRCRAFTTYPE;};

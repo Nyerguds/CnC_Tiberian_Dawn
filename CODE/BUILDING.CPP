@@ -695,12 +695,9 @@ void BuildingClass::Draw_Production(int x, int y, WindowNumberType window) {
 	int w = Get_Build_Frame_Width(shapefile);
 	int h = Get_Build_Frame_Height(shapefile);
 	void const * remap = NULL;
-	ShapeFlags_Type opts = SHAPE_CENTER|SHAPE_WIN_REL;
-	if (prodtype->What_Am_I() != RTTI_INFANTRYTYPE) {
-		opts = opts | SHAPE_FADING;
-		remap = prod->Remap_Table();
-	}
-	CC_Draw_Shape(shapefile, 0, x, y, window, opts, remap);
+	remap = prodtype->Spy_Cameo_Remap_Table(prod->House);
+	CC_Draw_Shape(shapefile, 0, x, y, window,
+		SHAPE_CENTER|SHAPE_WIN_REL | (remap ? SHAPE_FADING : SHAPE_NORMAL), remap);
 	IsTheaterShape = false;
 
 	/*
@@ -4921,7 +4918,7 @@ DirType BuildingClass::Fire_Direction(void) const
 void const * BuildingClass::Remap_Table(void)
 {
 	Validate();
-	return(House->Remap_Table(IsBlushing, false));
+	return(Class->IsWall ? NULL : House->Remap_Table(IsBlushing, true));
 }
 
 

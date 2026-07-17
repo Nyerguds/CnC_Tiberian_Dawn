@@ -459,6 +459,49 @@ void const * TechnoTypeClass::Get_Spy_Cameo_Data(void) const
 
 
 /***********************************************************************************************
+ * TechnoTypeClass::Cameo_Remap_Table -- Fetches the appropriate remap table for its cameo.    *
+ *                                                                                             *
+ *    This routine is used to fetch the appropriate remap table to use for the cameo of        *
+ *    this object.                                                                             *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the remap table to use for this object's cameo.          *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   17/07/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void const * TechnoTypeClass::Cameo_Remap_Table(HouseClass * house, bool blushing) const
+{
+	if (Get_Resolution_Shift()) return(blushing ? &Map.FadingLight[0] : NULL);
+	return(house->Remap_Table(blushing, false));
+}
+
+
+/***********************************************************************************************
+ * TechnoTypeClass::Spy_Cameo_Remap_Table -- Fetches appropriate remap table for its spy cameo.*
+ *                                                                                             *
+ *    This routine is used to fetch the appropriate remap table to use for the production      *
+ *    spying cameo of this object.                                                             *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the remap table to use for this object's cameo.          *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   17/07/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void const * TechnoTypeClass::Spy_Cameo_Remap_Table(HouseClass * house) const
+{
+	return(house->Remap_Table(false, false));
+}
+
+
+/***********************************************************************************************
  * TechnoTypeClass::Spy_Cameo_Is_Theater_Shape -- should spy cameo be cached as theater data?  *
  *                                                                                             *
  *    This routine will return whether the spy cameo data should be cached as theater data.    *
@@ -520,6 +563,43 @@ int TechnoTypeClass::Repair_Step(void) const
 {
 	return(0);
 }
+
+
+#ifdef SCENARIO_EDITOR
+/***********************************************************************************************
+ * TechnoTypeClass::Display -- Displays a generic version of the techno type.                  *
+ *                                                                                             *
+ *    This routine is used by the scenario editor to display a generic version of the object   *
+ *    type. This is displayed in the object selection dialog box.                              *
+ *                                                                                             *
+ * INPUT:   x,y      -- The coordinates to draw the object at (centered).                      *
+ *                                                                                             *
+ *          window   -- The window to base the coordinates upon.                               *
+ *                                                                                             *
+ *          house    -- The owner of this generic techno object.                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/26/1994 JLB : Created (originally on AircraftTypeClass)                                *
+ *=============================================================================================*/
+void TechnoTypeClass::Display(int x, int y, WindowNumberType window, HousesType house) const
+{
+	if (house == HOUSE_NONE) return;	
+	HouseClass * houseobj = HouseClass::As_Pointer(house);
+	void const * ptr = Get_Cameo_Data();
+	void const * remap = Cameo_Remap_Table(houseobj, false);
+	int shape = 0;
+	if (!ptr) {
+		ptr = Get_Image_Data();
+		remap = houseobj->Remap_Table(false, false);
+		shape = DefaultFrame();
+	}
+	CC_Draw_Shape(ptr, shape, x, y, window, SHAPE_CENTER|SHAPE_WIN_REL|(remap ? SHAPE_FADING : SHAPE_NORMAL), remap);
+}
+#endif
 
 
 #ifdef CHEAT_KEYS
@@ -3463,7 +3543,7 @@ void TechnoClass::Techno_Draw_Object(void const * shapefile, int shapenum, int x
  *=============================================================================================*/
 void const * TechnoClass::Remap_Table(void)
 {
-	return(House->Remap_Table(IsBlushing, true));
+	return(House->Remap_Table(IsBlushing, false));
 }
 
 

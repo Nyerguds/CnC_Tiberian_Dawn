@@ -264,11 +264,10 @@ class DisplayClass: public MapClass
 		unsigned IsSellMode:1;
 
 		/*
-		**	If the player is currently in ion cannon targeting mode, then this
-		** flag will be true.  While in this mode, anything clicked on will be
-		** be destroyed by the ION cannon.
+		**	Stores the current superweapon targeting mode.  While in this mode,
+		**	anything clicked on will be targeted by the selected superweapon.
 		*/
-		unsigned IsTargettingMode:2;
+		SpecialWeaponType TargetingMode;
 
 	protected:
 

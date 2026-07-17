@@ -411,7 +411,7 @@ void AircraftClass::Draw_It(int x, int y, WindowNumberType window)
 	**	Actually draw the root body of the unit.
 	*/
 	Techno_Draw_Object(shapefile, shapenum, x, (y-Altitude)+jitter, window);
-//	CC_Draw_Shape(shapefile, shapenum, x, (y-Altitude)+jitter, window, SHAPE_FADING|SHAPE_CENTER|SHAPE_WIN_REL|SHAPE_GHOST, House->Remap_Table(IsBlushing, true), Map.UnitShadow);
+//	CC_Draw_Shape(shapefile, shapenum, x, (y-Altitude)+jitter, window, SHAPE_FADING|SHAPE_CENTER|SHAPE_WIN_REL|SHAPE_GHOST, House->Remap_Table(IsBlushing, false), Map.UnitShadow);
 
 	/*
 	**	Draw rotor effects. The rotor art can be either generic or custom. Custom rotor

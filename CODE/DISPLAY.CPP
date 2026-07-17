@@ -165,7 +165,7 @@ DisplayClass::DisplayClass(void)
 	PendingObject = 0;
 	PendingHouse = HOUSE_NONE;
 	IsRepairMode = false;
-	IsTargettingMode = false;
+	TargetingMode = SPC_NONE;
 	IsToRedraw = true;
 	IsRubberBand = false;
 	LastClickTick = -1;
@@ -304,7 +304,7 @@ void DisplayClass::Init_Clear(void)
 	PendingObject = 0;
 	PendingHouse = HOUSE_NONE;
 	CursorSize = 0;
-	IsTargettingMode = false;
+	TargetingMode = SPC_NONE;
 	IsRepairMode = false;
 	IsRubberBand = false;
 	LastClickTick = -1;
@@ -3189,11 +3189,11 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 		int amount = CurrentObject.Count();
 		if (Map.PendingObject) {
 			action = ACTION_NONE;
-		} else if (Map.IsTargettingMode == SPC_ION_CANNON) {
+		} else if (Map.TargetingMode == SPC_ION_CANNON) {
 			action = ACTION_ION;
-		} else if (Map.IsTargettingMode == SPC_NUCLEAR_BOMB) {
+		} else if (Map.TargetingMode == SPC_NUCLEAR_BOMB) {
 			action = ACTION_NUKE_BOMB;
-		} else if (Map.IsTargettingMode == SPC_AIR_STRIKE) {
+		} else if (Map.TargetingMode == SPC_AIR_STRIKE) {
 			action = ACTION_AIR_STRIKE;
 		} else if (Map.IsSellMode) {
 			if (object && object->Owner() == PlayerPtr->Class->House && object->Can_Demolish()) {
@@ -3433,20 +3433,14 @@ void DisplayClass::Mouse_Right_Press(void)
 		PendingObject = 0;
 		PendingHouse = HOUSE_NONE;
 		Set_Cursor_Shape(0);
+	} else if (IsRepairMode) {
+		IsRepairMode = false;
+	} else if (IsSellMode) {
+		IsSellMode = false;
+	} else if (TargetingMode != SPC_NONE) {
+		TargetingMode = SPC_NONE;
 	} else {
-		if (IsRepairMode) {
-			IsRepairMode = false;
-		} else {
-			if (IsSellMode) {
-				IsSellMode = false;
-			} else {
-				if (IsTargettingMode) {
-					IsTargettingMode = false;
-				} else {
-					Unselect_All();
-				}
-			}
-		}
+		Unselect_All();
 	}
 	Set_Default_Mouse(MOUSE_NORMAL, false);
 }
@@ -3902,7 +3896,7 @@ void DisplayClass::Mouse_Left_Release(CELL cell, int x, int y, ObjectClass * obj
  *=============================================================================================*/
 void DisplayClass::Mouse_Left_Press(int x, int y)
 {
-	if (!IsRepairMode && !IsSellMode && !IsTargettingMode && !PendingObject) {
+	if (!IsRepairMode && !IsSellMode && TargetingMode == SPC_NONE && !PendingObject) {
 		IsTentative = true;
 		BandX = x;
 		BandY = y;
@@ -4230,7 +4224,7 @@ void DisplayClass::Sell_Mode_Control(int control)
 
 	if (mode != IsSellMode && !PendingObject) {
 		IsRepairMode = false;
-		IsTargettingMode = SPC_NONE;
+		TargetingMode = SPC_NONE;
 		if (mode && PlayerPtr->BScan) {
 			IsSellMode = true;
 			Unselect_All();
@@ -4278,7 +4272,7 @@ void DisplayClass::Repair_Mode_Control(int control)
 
 	if (mode != IsRepairMode && !PendingObject) {
 		IsSellMode = false;
-		IsTargettingMode = SPC_NONE;
+		TargetingMode = SPC_NONE;
 		if (mode && PlayerPtr->BScan) {
 			IsRepairMode = true;
 			Unselect_All();

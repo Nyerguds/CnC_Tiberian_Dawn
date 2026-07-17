@@ -216,9 +216,10 @@
 #define VERSION_MAJOR   	1	// Major version will never change between languages.
 #define VERSION_MINOR    	7	// Win95 minor version number
 
-#define VERSION_PATCH_EXTRA	"CCPP v1.04 pre5"
+#define VERSION_PATCH_EXTRA	"CCPP v1.04 pre6"
 
-// Enable this to load the map screen strings from the strings file instead of using the hardcoded ones.
+// Enable this to load the English map screen strings from the strings file
+// instead of using hardcoded English strings.
 //#define EXPANDED_STRINGS 1
 
 // used by virgin cheat keys
@@ -349,10 +350,12 @@ typedef enum ProdFailType {
 **	mechanism.
 */
 typedef enum SpecialWeaponType {
-	SPC_NONE,
-	SPC_ION_CANNON,			//	Partical beam from satalite (Akira effect).
+	SPC_NONE = -1,
+	SPC_ION_CANNON,			//	Particle beam from sattelite (Akira effect).
 	SPC_NUCLEAR_BOMB,			//	Tactical nuclear weapon.
-	SPC_AIR_STRIKE				//	Conventional air strike.
+	SPC_AIR_STRIKE,				//	Conventional air strike.
+
+	SPC_COUNT
 } SpecialWeaponType;
 
 

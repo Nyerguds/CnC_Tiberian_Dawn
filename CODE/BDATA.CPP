@@ -4738,24 +4738,17 @@ StructType BuildingTypeClass::From_Name(char const *name)
  *=============================================================================================*/
 void BuildingTypeClass::Display(int x, int y, WindowNumberType window, HousesType house) const
 {
-	unsigned char const * remap = NULL;
+	if (house == HOUSE_NONE) return;
+	HouseClass * houseobj = HouseClass::As_Pointer(house);
 	void const * ptr = Get_Cameo_Data();
-	if (!ptr || !Get_Resolution_Factor()) {
-		// Either displays the building graphics, or a remapping cameo.
-		// No actual House is available, so take the House's default color info.
-		PlayerColorType remapColor = HouseTypeClass::As_Reference(house).RemapColor;
-		if ((unsigned)remapColor < REMAP_COUNT) {
-			const PlayerColorTypeClass *remapInfo = &PlayerColors[remapColor];
-			if ((unsigned)remapInfo->RemapBuildings < REMAP_COUNT) {
-				remapInfo = &PlayerColors[remapInfo->RemapBuildings];
-			}
-			remap = remapInfo->RemapTable;
-		}
-	}
+	void const * remap = Cameo_Remap_Table(houseobj, false);
+	int shape = 0;
 	if (!ptr) {
 		ptr = Get_Image_Data();
+		remap = IsWall ? NULL : houseobj->Remap_Table(false, true);
+		shape = DefaultFrame();
 	}
-	CC_Draw_Shape(ptr, 0, x, y, window, SHAPE_FADING|SHAPE_CENTER|SHAPE_WIN_REL, remap);
+	CC_Draw_Shape(ptr, shape, x, y, window, SHAPE_CENTER|SHAPE_WIN_REL|(remap ? SHAPE_FADING : SHAPE_NORMAL), remap);
 }
 
 
@@ -5029,7 +5022,11 @@ void BuildingTypeClass::Init(TheaterType theater)
 			void * image_ptr = NULL;
 			MixFileClass::Offset(fullname, &image_ptr, &mixptr);
 			if (image_ptr && mixptr) {
-				classptr->ImageIsTheaterShape = strcmpi(mixptr->Filename, theatermixname) == 0 || (hires && strcmpi(mixptr->Filename, cameomixname) == 0);
+				// Not sure why anyone would put building graphics inside the cameos archive,
+				// but those are the two theater specific archives, so check them both.
+				classptr->ImageIsTheaterShape =
+					strcmpi(mixptr->Filename, theatermixname) == 0 ||
+					(hires && strcmpi(mixptr->Filename, cameomixname) == 0);
 			}
 			if (!image_ptr) {
 				_makepath(fullname, NULL, NULL, classptr->IniName, ".SHP");
@@ -5136,7 +5133,7 @@ BuildingTypeClass const & BuildingTypeClass::As_Reference(StructType type)
  *=============================================================================================*/
 BuildingTypeClass const * BuildingTypeClass::As_Pointer(StructType type)
 {
-	if (type <= STRUCT_NONE || type >= STRUCT_COUNT)
+	if ((unsigned)type >= STRUCT_COUNT)
 		return (NULL);
 	return(Pointers[type]);
 }
@@ -5500,6 +5497,66 @@ int BuildingTypeClass::Enemy_Name(void) const
 }
 
 
+/***********************************************************************************************
+ * BuildingTypeClass::Cameo_Remap_Table -- Fetches the appropriate remap table for its cameo.  *
+ *                                                                                             *
+ *    This routine is used to fetch the appropriate remap table to use for the cameo of        *
+ *    this object.                                                                             *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the remap table to use for this object's cameo.          *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   17/07/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void const * BuildingTypeClass::Cameo_Remap_Table(HouseClass * house, bool blushing) const
+{
+	if (Get_Resolution_Shift()) return(blushing ? &Map.FadingLight[0] : NULL);
+	return(IsWall && !blushing ? NULL : house->Remap_Table(blushing, true));
+}
+
+
+/***********************************************************************************************
+ * BuildingTypeClass::Spy_Cameo_Remap_Table -- Fetches appropriate remap table for spy cameo.  *
+ *                                                                                             *
+ *    This routine is used to fetch the appropriate remap table to use for the production      *
+ *    spying cameo of this object.                                                             *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the remap table to use for this object's spy cameo.      *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   17/07/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void const * BuildingTypeClass::Spy_Cameo_Remap_Table(HouseClass * house) const
+{
+	return(IsWall ? NULL : house->Remap_Table(false, true));
+}
+
+
+/***********************************************************************************************
+ * BuildingTypeClass::Raw_Cost -- Fetches the raw (base) cost of the object.                   *
+ *                                                                                             *
+ *    This routine is used to find the underlying cost for this object. The underlying cost    *
+ *    does not include any free items that normally come with the object when purchased        *
+ *    directly. Example: The raw cost of a refinery is the normal cost minus the cost of a     *
+ *    harvester.                                                                               *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with the credit cost of the base object type.                              *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   08/13/1995 JLB : Created.                                                                 *
+ *=============================================================================================*/
 int BuildingTypeClass::Raw_Cost(void) const
 {
 #ifdef PATCH
@@ -5524,6 +5581,20 @@ int BuildingTypeClass::Raw_Cost(void) const
 }
 
 
+/***********************************************************************************************
+ * BuildingTypeClass::Cost_Of -- Fetches the cost of this object type.                         *
+ *                                                                                             *
+ *    This routine will return the cost to produce an object of this type.                     *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with the cost to produce one object of this type.                          *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/29/1995 JLB : Created.                                                                 *
+ *=============================================================================================*/
 int BuildingTypeClass::Cost_Of(void) const
 {
 	if (Special.IsSeparate && Type == STRUCT_HELIPAD) {

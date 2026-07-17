@@ -372,7 +372,7 @@ EventClass::EventClass(EventType type, RTTIType object, CELL cell)
  * HISTORY:                                                                                    *
  *   05/18/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-EventClass::EventClass(EventType type, int id, CELL cell)
+EventClass::EventClass(EventType type, SpecialWeaponType id, CELL cell)
 {
 	ID = Houses.ID(PlayerPtr);
 	Type = type;
@@ -659,7 +659,7 @@ CCDebugString ("C&C95 - Primary building packet received\n");
 		*/
 		case SPECIAL_PLACE:
 CCDebugString ("C&C95 - Special blast packet received\n");
-			Houses.Raw_Ptr(ID)->Place_Special_Blast((SpecialWeaponType)Data.Special.ID, Data.Special.Cell);
+			Houses.Raw_Ptr(ID)->Place_Special_Blast(Data.Special.ID, Data.Special.Cell);
 			break;
 
 		/*

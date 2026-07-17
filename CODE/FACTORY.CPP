@@ -234,7 +234,7 @@ void FactoryClass::operator delete(void *ptr)
 void FactoryClass::AI(void)
 {
 	Validate();
-	if (!IsSuspended && (Object != NULL || SpecialItem)) {
+	if (!IsSuspended && (Object != NULL || SpecialItem != SPC_NONE)) {
 		int stages = 1;
 
 		/*
@@ -408,7 +408,7 @@ bool FactoryClass::Set(TechnoTypeClass const & object, HouseClass & house)
  * HISTORY:                                                                                    *
  *   05/22/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-bool FactoryClass::Set(int const & type, HouseClass & house)
+bool FactoryClass::Set(SpecialWeaponType const & type, HouseClass & house)
 {
 	Validate();
 	/*
@@ -519,7 +519,7 @@ bool FactoryClass::Suspend(void)
 bool FactoryClass::Start(void)
 {
 	Validate();
-	if ((Object || SpecialItem) && IsSuspended && !Has_Completed()) {
+	if ((Object || SpecialItem != SPC_NONE) && IsSuspended && !Has_Completed()) {
 		// Nyerguds's C&C Patch Project v1.04: Don't force On Hold status on low funds.
 		// * Construction no longer starts as "On Hold" if no money is available.
 		// * "On Hold" status can be resumed even if no money is currently available.
@@ -586,7 +586,7 @@ bool FactoryClass::Abandon(void)
 			Object = NULL;
 			ScenarioInit--;
 		}
-		if (SpecialItem) {
+		if (SpecialItem != SPC_NONE) {
 			SpecialItem = SPC_NONE;
 		}
 
@@ -669,7 +669,7 @@ bool FactoryClass::Has_Completed(void)
 	if (Object && Fetch_Stage() == STEP_COUNT) {
 		return(true);
 	}
-	if (SpecialItem && Fetch_Stage() == STEP_COUNT) {
+	if (SpecialItem != SPC_NONE && Fetch_Stage() == STEP_COUNT) {
 		return(true);
 	}
 	return(false);
@@ -697,17 +697,17 @@ TechnoClass * FactoryClass::Get_Object(void) const
 }
 
 
-/***************************************************************************
- * FactoryClass::Get_Special_Item -- gets factorys spc prod item           *
- *                                                                         *
- * INPUT:      none                                                        *
- *                                                                         *
- * OUTPUT:     int the item the factory is currently working on            *
- *                                                                         *
- * HISTORY:                                                                *
- *   05/05/1995 PWG : Created.                                             *
- *=========================================================================*/
-int FactoryClass::Get_Special_Item(void) const
+/**********************************************************************************************
+ * FactoryClass::Get_Special_Item -- gets factory's special production item.                  *
+ *                                                                                            *
+ * INPUT:      none                                                                           *
+ *                                                                                            *
+ * OUTPUT:     Returns the special item the factory is currently working on.                  *
+ *                                                                                            *
+ * HISTORY:                                                                                   *
+ *   05/05/1995 PWG : Created.                                                                *
+ *============================================================================================*/
+SpecialWeaponType FactoryClass::Get_Special_Item(void) const
 {
 	Validate();
 	return(SpecialItem);
@@ -772,7 +772,7 @@ bool FactoryClass::Completed(void)
 		return(true);
 	}
 
-	if (SpecialItem && Fetch_Stage() == STEP_COUNT) {
+	if (SpecialItem != SPC_NONE && Fetch_Stage() == STEP_COUNT) {
 		SpecialItem = SPC_NONE;
 		IsSuspended = true;
 		IsDifferent = true;

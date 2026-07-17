@@ -632,7 +632,7 @@ void Keyboard_Process(KeyNumType &input)
 				// Selecting objects with the N key cancels repair, sell and superweapon targeting modes.
 				Map.Repair_Mode_Control(0);
 				Map.Sell_Mode_Control(0);
-				Map.IsTargettingMode = SPC_NONE;
+				Map.TargetingMode = SPC_NONE;
 				Unselect_All();
 			 	obj->Select();
 				Map.Center_Map();

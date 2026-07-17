@@ -1748,26 +1748,17 @@ UnitType UnitTypeClass::From_Name(char const *name)
  *=============================================================================================*/
 void UnitTypeClass::Display(int x, int y, WindowNumberType window, HousesType house) const
 {
-	int shape = 0;
-	unsigned char const * remap = NULL;
+	if (house == HOUSE_NONE) return;
+	HouseClass * houseobj = HouseClass::As_Pointer(house);
 	void const * ptr = Get_Cameo_Data();
-	if (!ptr || !Get_Resolution_Factor()) {
-		PlayerColorType remapColor = HouseTypeClass::As_Reference(house).RemapColor;
-		if ((unsigned)remapColor < REMAP_COUNT) {
-			const PlayerColorTypeClass * remapInfo = &PlayerColors[remapColor];
-			if ((this->Type == UNIT_HARVESTER || this->Type == UNIT_MCV)
-				&& (unsigned)remapInfo->RemapBuildings < REMAP_COUNT) {
-				remapInfo = &PlayerColors[remapInfo->RemapBuildings];
-			}
-			remap = remapInfo->RemapTable;
-		}
-
-	}
+	void const * remap = Cameo_Remap_Table(houseobj, false);
+	int shape = 0;
 	if (!ptr) {
 		ptr = Get_Image_Data();
-		shape = IsChunkyShape ? 0 : 5;
+		remap = houseobj->Remap_Table(false, IsBuildingColor);
+		shape = DefaultFrame();
 	}
-	CC_Draw_Shape(ptr, shape, x, y, window, SHAPE_FADING|SHAPE_CENTER|SHAPE_WIN_REL, remap);
+	CC_Draw_Shape(ptr, shape, x, y, window, SHAPE_CENTER|SHAPE_WIN_REL|(remap ? SHAPE_FADING : SHAPE_NORMAL), remap);
 }
 
 
@@ -1901,7 +1892,7 @@ void UnitTypeClass::Init(TheaterType theater)
 			MixFileClass * mixptr = 0;
 			cameo_ptr = NULL;
 			MixFileClass::Offset(fullname, &cameo_ptr, &mixptr);
-			if (cameo_ptr){
+			if (cameo_ptr) {
 				classptr->CameoData = cameo_ptr;
 				if (mixptr && mixptr->Filename) {
 					// double-check that it came from the theater mix file.
@@ -2060,7 +2051,7 @@ UnitTypeClass const & UnitTypeClass::As_Reference(UnitType type)
  *=============================================================================================*/
 UnitTypeClass const * UnitTypeClass::As_Pointer(UnitType type)
 {
-	if (type <= UNIT_NONE || type >= UNIT_COUNT)
+	if ((unsigned)type >= UNIT_COUNT)
 		return (NULL);
 	return(Pointers[type]);
 }
@@ -2186,4 +2177,47 @@ int UnitTypeClass::Max_Pips(void) const
 int UnitTypeClass::Enemy_Name(void) const
 {
 	return(TXT_ENEMY_VEHICLE);
+}
+
+
+/***********************************************************************************************
+ * UnitTypeClass::Cameo_Remap_Table -- Fetches the appropriate remap table for its cameo.      *
+ *                                                                                             *
+ *    This routine is used to fetch the appropriate remap table to use for the cameo of        *
+ *    this object.                                                                             *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the remap table to use for this object's cameo.          *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   17/07/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void const * UnitTypeClass::Cameo_Remap_Table(HouseClass * house, bool blushing) const
+{
+	if (Get_Resolution_Shift()) return(blushing ? &Map.FadingLight[0] : NULL);
+	return(house->Remap_Table(blushing, IsBuildingColor));
+}
+
+
+/***********************************************************************************************
+ * UnitTypeClass::Spy_Cameo_Remap_Table -- Fetches appropriate remap table for its spy cameo.  *
+ *                                                                                             *
+ *    This routine is used to fetch the appropriate remap table to use for the production      *
+ *    spying cameo of this object.                                                             *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the remap table to use for this object's cameo.          *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   17/07/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void const * UnitTypeClass::Spy_Cameo_Remap_Table(HouseClass * house) const
+{
+	return(house->Remap_Table(false, IsBuildingColor));
 }

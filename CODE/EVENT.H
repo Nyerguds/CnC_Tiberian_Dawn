@@ -160,7 +160,7 @@ class EventClass
 				CELL			Cell;
 			} Place;
 			struct {
-				int			ID;
+				SpecialWeaponType			ID;
 				CELL			Cell;
 			} Special;
 			/*
@@ -209,7 +209,7 @@ class EventClass
 		EventClass(TARGET src, MissionType mission, TARGET target=TARGET_NONE, TARGET destination=TARGET_NONE);
 		EventClass(EventType type, RTTIType object, int id);
 		EventClass(EventType type, RTTIType object, CELL cell);
-		EventClass(EventType type, int id, CELL cell);
+		EventClass(EventType type, SpecialWeaponType id, CELL cell);
 		EventClass(AnimType anim, HousesType owner, COORDINATE coord);
 
 		// Process the event.

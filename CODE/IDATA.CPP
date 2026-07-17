@@ -1927,42 +1927,6 @@ short const * InfantryTypeClass::Occupy_List(bool) const
 
 #ifdef SCENARIO_EDITOR
 /***********************************************************************************************
- * InfantryTypeClass::Display -- Displays a generic infantry object.                           *
- *                                                                                             *
- *    This routine is used by the scenario editor to display a generic representation of the   *
- *    infantry object for the scenario editor. It simply draws a single (nice profile) view    *
- *    of the infantry type.                                                                    *
- *                                                                                             *
- * INPUT:   x,y      -- The display coordinates to render the infantry object at.              *
- *                                                                                             *
- *          window   -- The window that the display coordinates are relative to.               *
- *                                                                                             *
- *          house    -- The house colors to use when rendering this infantry object.           *
- *                                                                                             *
- * OUTPUT:  none                                                                               *
- *                                                                                             *
- * WARNINGS:   none                                                                            *
- *                                                                                             *
- * HISTORY:                                                                                    *
- *   09/24/1994 JLB : Created.                                                                 *
- *=============================================================================================*/
-void InfantryTypeClass::Display(int x, int y, WindowNumberType window, HousesType house) const
-{
-	if (house != HOUSE_NONE) {
-
-		int shape = 0;
-		void const * ptr = Get_Cameo_Data();
-		if (!ptr) {
-			ptr = Get_Image_Data();
-			shape = 2;
-		}
-
-		CC_Draw_Shape(ptr, shape, x, y, window, SHAPE_NORMAL|SHAPE_CENTER|SHAPE_WIN_REL);
-	}
-}
-
-
-/***********************************************************************************************
  * InfantryTypeClass::Prep_For_Add -- Prepares the scenario editor for adding of infantry object.*
  *                                                                                             *
  *    This routine will prepare the scenario editor so that the infantry objects appear on     *
@@ -2082,7 +2046,7 @@ void InfantryTypeClass::One_Time(void)
  *=============================================================================================*/
 InfantryTypeClass const * InfantryTypeClass::As_Pointer(InfantryType type)
 {
-	if (type <= INFANTRY_NONE || type >= INFANTRY_COUNT)
+	if ((unsigned)type >= INFANTRY_COUNT)
 		return (NULL);
 	return(Pointers[type]);
 }
@@ -2140,10 +2104,6 @@ void InfantryTypeClass::Init(TheaterType theater)
 					classptr->CameoData = cameo_ptr;
 				}	
 			}
-			// test code; only works if menu code is edited to Version_Number() doesn't rewrite the VersionText buffer.
-			//if (classptr->Type == INFANTRY_RAMBO) {
-			//	sprintf(VersionText, "C?%d; N: %s, T?%d\rMix: %s <-> %s", classptr->CameoData ? 1:0, fullname, classptr->CameoIsTheaterShape ? 1 : 0, cameomixname, mixptr ? mixptr->Filename : "-");
-			//}
 		}
 		//}
 	}
@@ -2252,4 +2212,46 @@ int InfantryTypeClass::Full_Name(void) const
 int InfantryTypeClass::Enemy_Name(void) const
 {
 	return(TXT_ENEMY_SOLDIER);
+}
+
+
+/***********************************************************************************************
+ * InfantryTypeClass::Cameo_Remap_Table -- Fetches the appropriate remap table for its cameo.  *
+ *                                                                                             *
+ *    This routine is used to fetch the appropriate remap table to use for the cameo of        *
+ *    this object.                                                                             *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the remap table to use for this object's cameo.          *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   17/07/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void const * InfantryTypeClass::Cameo_Remap_Table(HouseClass * /*house*/, bool blushing) const
+{
+	return(blushing ? &Map.FadingLight[0] : NULL);
+}
+
+
+/***********************************************************************************************
+ * InfantryTypeClass::Spy_Cameo_Remap_Table -- Fetches appropriate remap table for spy cameo.  *
+ *                                                                                             *
+ *    This routine is used to fetch the appropriate remap table to use for the production      *
+ *    spying cameo of this object.                                                             *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the remap table to use for this object's spy cameo.      *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   17/07/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void const * InfantryTypeClass::Spy_Cameo_Remap_Table(HouseClass * /*house*/) const
+{
+	return NULL;
 }

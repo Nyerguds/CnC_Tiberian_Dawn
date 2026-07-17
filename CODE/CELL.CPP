@@ -1165,7 +1165,7 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 			**	Draw the flag if there is one located at this cell.
 			*/
 			if (IsFlagged) {
-				void const * remap = HouseClass::As_Pointer(Owner)->Remap_Table(false, false);
+				void const * remap = HouseClass::As_Pointer(Owner)->Remap_Table(false, true);
 				CC_Draw_Shape(MixFileClass::Retrieve("FLAGFLY.SHP"), Frame % 14, x+(ICON_PIXEL_W/2), y+(ICON_PIXEL_H/2), WINDOW_TACTICAL, SHAPE_CENTER|SHAPE_GHOST|SHAPE_FADING, remap, Map.UnitShadow);
 			}
 		}

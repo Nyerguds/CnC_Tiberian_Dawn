@@ -435,7 +435,7 @@ class HouseClass {
 		bool  Can_Build(UnitType unit, HousesType) const;
 		bool  Can_Build(AircraftType aircraft, HousesType house) const;
 		bool  Can_Build(TechnoTypeClass const * type, HousesType house) const;
-		unsigned char const *  Remap_Table(bool blushing=false, bool unit=false) const;
+		unsigned char const *  Remap_Table(bool blushing=false, bool secondary=false) const;
 
 		TechnoTypeClass const *  Suggest_New_Object(RTTIType objectype, bool safetype) const;
 		bool  Does_Enemy_Building_Exist(StructType) const;

@@ -1097,8 +1097,8 @@ void HouseClass::AI(void)
 			if (IonCannon.Remove()) {
 				if (this == PlayerPtr) {
 					Map.Column[1].Flag_To_Redraw();
-					if (Map.IsTargettingMode == SPC_ION_CANNON) {
-						Map.IsTargettingMode = false;
+					if (Map.TargetingMode == SPC_ION_CANNON) {
+						Map.TargetingMode = SPC_NONE;
 					}
 				}
 				IsRecalcNeeded = true;
@@ -1172,8 +1172,8 @@ void HouseClass::AI(void)
 				IsRecalcNeeded = true;
 				if (this == PlayerPtr) {
 					Map.Column[1].Flag_To_Redraw();
-					if (Map.IsTargettingMode == SPC_NUCLEAR_BOMB) {
-						Map.IsTargettingMode = false;
+					if (Map.TargetingMode == SPC_NUCLEAR_BOMB) {
+						Map.TargetingMode = SPC_NONE;
 					}
 				}
 			}
@@ -2022,9 +2022,9 @@ void HouseClass::Make_Enemy(HousesType house)
  *    always used. The "unit" parameter allows proper remap selection for those houses that    *
  *    have a different remap table for buildings or units.                                     *
  *                                                                                             *
- * INPUT:   blushing -- Is the object blushing (flashing)?                                     *
+ * INPUT:   blushing  -- Is the object blushing (flashing)?                                    *
  *                                                                                             *
- *          unit     -- Is the object a vehicle or infantry?                                   *
+ *          secondary -- Does the object use the secondary house color? (generally buildings)  *
  *                                                                                             *
  * OUTPUT:  Returns with a pointer to the remap table to use when drawing this object.         *
  *                                                                                             *
@@ -2033,7 +2033,7 @@ void HouseClass::Make_Enemy(HousesType house)
  * HISTORY:                                                                                    *
  *   05/08/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-unsigned char const * HouseClass::Remap_Table(bool blushing, bool unit) const
+unsigned char const * HouseClass::Remap_Table(bool blushing, bool secondary) const
 {
 	Validate();
 	if (blushing) return(&Map.FadingLight[0]);
@@ -2043,9 +2043,10 @@ unsigned char const * HouseClass::Remap_Table(bool blushing, bool unit) const
 	**	Special case exception for Nod. Remap buildings to red
 	**	as opposed to the default color of bluegrey.
 	*/
-	if (!unit && (unsigned)SecondaryRemapColor < REMAP_COUNT) {
+	if (secondary && (unsigned)SecondaryRemapColor < REMAP_COUNT) {
 		col = &PlayerColors[SecondaryRemapColor];
-	} else if ((unsigned)RemapColor < REMAP_COUNT) {
+	}
+	if (col == NULL && (unsigned)RemapColor < REMAP_COUNT) {
 		col = &PlayerColors[RemapColor];
 	}
 	return col ? col->RemapTable : RemapNone;
@@ -2195,7 +2196,7 @@ ProdFailType HouseClass::Begin_Production(RTTIType type, int id)
 		fptr = new FactoryClass();
 		if (!fptr) return(PROD_CANT);
 		*factory = Factories.ID(fptr);
-		result = (tech) ? fptr->Set(*tech, *this) : fptr->Set(id, *this);
+		result = (tech) ? fptr->Set(*tech, *this) : fptr->Set((SpecialWeaponType)id, *this);
 		initial_start = true;
 	}
 
@@ -2513,7 +2514,7 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 				IsRecalcNeeded = true;
 			}
 			if (this == PlayerPtr) {
-				Map.IsTargettingMode = false;
+				Map.TargetingMode = SPC_NONE;
 			}
 			break;
 
@@ -2561,7 +2562,7 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 					if (GameToPlay == GAME_NORMAL && !NukeStrike.Is_One_Time()) {
 						// Nyerguds's C&C Patch Project v1.04: If no launch site found, abort targeting cursor.
 						if (this == PlayerPtr) {
-							Map.IsTargettingMode = false;
+							Map.TargetingMode = SPC_NONE;
 						}
 						 return(false);
 					}
@@ -2589,7 +2590,7 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 				IsRecalcNeeded = true;
 			}
 			if (this == PlayerPtr) {
-				Map.IsTargettingMode = false;
+				Map.TargetingMode = SPC_NONE;
 			}
 			break;
 
@@ -2606,7 +2607,7 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 				IsRecalcNeeded = true;
 			}
 			if (this == PlayerPtr) {
-				Map.IsTargettingMode = false;
+				Map.TargetingMode = SPC_NONE;
 			}
 			break;
 	}
@@ -2784,7 +2785,7 @@ bool HouseClass::Manual_Place(BuildingClass * builder,  BuildingClass * object)
 		Map.Sell_Mode_Control(0);
 
 		// Nyerguds's C&C Patch Project v1.04: Placing a building cancels SW targeting mode.
-		Map.IsTargettingMode = SPC_NONE;
+		Map.TargetingMode = SPC_NONE;
 		Map.PendingObject = object->Class;
 		Map.PendingObjectPtr = object;
 		Map.PendingHouse = Class->House;

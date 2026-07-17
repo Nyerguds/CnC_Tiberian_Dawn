@@ -65,13 +65,13 @@ class FactoryClass : private StageClass
 		bool  Is_Building(void) const {return(Fetch_Rate() != 0);};
 		bool  Is_Waiting_For_Funds() {return(IsWaitingForFunds);};
 		bool  Set(TechnoTypeClass const & object, HouseClass & house);
-		bool  Set(int const & type, HouseClass & house);
+		bool  Set(SpecialWeaponType const & type, HouseClass & house);
 		bool  Start(void);
 		bool  Suspend(void);
 		int  Completion(void);
 		int  Final(void);
 		TechnoClass *  Get_Object(void) const;
-		int  Get_Special_Item(void) const;
+		SpecialWeaponType  Get_Special_Item(void) const;
 		void  AI(void);
 		void  Set(TechnoClass & object);
 		HouseClass *  Get_House(void) {return(House);};
@@ -142,7 +142,7 @@ class FactoryClass : private StageClass
 		**	If the factory is not producing an object and is instead producing
 		** a special item, then special item will be set.
 		*/
-		int SpecialItem;
+		SpecialWeaponType SpecialItem;
 
 		/*
 		** The factory has to be doing production for one house or another.

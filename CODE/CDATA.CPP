@@ -2909,7 +2909,7 @@ void TemplateTypeClass::Init(TheaterType theater)
  * HISTORY:                                                                                    *
  *   05/23/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-void TemplateTypeClass::Display(int x, int y, WindowNumberType window, HousesType ) const
+void TemplateTypeClass::Display(int x, int y, WindowNumberType window, HousesType /*house*/) const
 {
 	int	w,h;
 	int	index;
