@@ -923,6 +923,7 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 	void * remap = NULL;
 #ifdef SCENARIO_EDITOR
 	TemplateTypeClass * tptr;
+	SmudgeTypeClass const * sptr;
 	TriggerClass * trig;
 	int i;
 	char waypt[2];
@@ -1143,6 +1144,20 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 							break;
 
 						/*
+						** Nyerguds's C&C Patch Project v1.04: map editor preview draws walls as overlay.
+						**	Draw a building that is a wall.
+						*/
+						case RTTI_BUILDINGTYPE:
+							
+							if (((BuildingTypeClass *)Map.PendingObject)->IsWall) {
+								OverlayType ovl = OverlayTypeClass::From_Name(Map.PendingObject->IniName);
+								if (ovl) {
+									OverlayTypeClass::As_Pointer(ovl)->Draw_It(x, y, OverlayData);
+								}
+							}
+							break;
+
+						/*
 						**	Draw an overlay; just use the existing 'OverlayData' even though
 						**	it means nothing.
 						*/
@@ -1154,7 +1169,14 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 						**	Draw a smudge
 						*/
 						case RTTI_SMUDGETYPE:
-							SmudgeTypeClass::As_Reference(((SmudgeTypeClass *)Map.PendingObject)->Type).Draw_It(x, y, 0);
+							// Nyerguds's C&C Patch Project v1.04: map editor preview draws bibs correctly.
+							sptr = SmudgeTypeClass::As_Pointer(((SmudgeTypeClass *)Map.PendingObject)->Type);
+							if (sptr->Get_Image_Data()) {
+								icon = (Cell_X(cell) - Cell_X(Map.ZoneCell + Map.ZoneOffset)) +
+									(Cell_Y(cell) - Cell_Y(Map.ZoneCell + Map.ZoneOffset)) *
+									sptr->Width;
+								sptr->Draw_It(x, y, icon);
+							}
 							break;
 					}
 				}

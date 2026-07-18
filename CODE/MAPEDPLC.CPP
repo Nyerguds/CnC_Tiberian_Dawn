@@ -368,6 +368,7 @@ int MapEditClass::Placement_Dialog(void)
 	TerrainTypeClass::Prep_For_Add();
 	UnitTypeClass::Prep_For_Add();
 	InfantryTypeClass::Prep_For_Add();
+	AircraftTypeClass::Prep_For_Add();
 	BuildingTypeClass::Prep_For_Add();
 
 	/*........................................................................
@@ -861,7 +862,7 @@ void MapEditClass::Start_Placement(void)
 	TerrainTypeClass::Prep_For_Add();
 	UnitTypeClass::Prep_For_Add();
 	InfantryTypeClass::Prep_For_Add();
-	//AircraftTypeClass::Prep_For_Add();
+	AircraftTypeClass::Prep_For_Add();
 	BuildingTypeClass::Prep_For_Add();
 	/*........................................................................
 	Compute offset of each class type in the Objects array
@@ -895,6 +896,13 @@ void MapEditClass::Start_Placement(void)
 		PendingObject = Objects[LastChoice];
 		PendingHouse = LastHouse = Base.House;
 		PendingObjectPtr = PendingObject->Create_One_Of(HouseClass::As_Pointer(LastHouse));
+	}
+	// Nyerguds's C&C Patch Project v1.04: Do not spawn helicopters in the air.
+	if (PendingObjectPtr && PendingObjectPtr->What_Am_I() == RTTI_AIRCRAFT){
+		AircraftClass * air = ((AircraftClass *)PendingObjectPtr);
+		if (!air->Class->IsFixedWing) {
+			air->Altitude = 0;
+		}
 	}
 
 

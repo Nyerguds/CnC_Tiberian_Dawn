@@ -88,14 +88,14 @@
 **	If the scenario editor to to be active in this build then uncomment
 **	the following #define line.
 */
-//#define SCENARIO_EDITOR
+#define SCENARIO_EDITOR
 
 
 /**********************************************************************
 **	This define enables the full set of cheat keys and special
 **	command line options.
 */
-//#define CHEAT_KEYS
+#define CHEAT_KEYS
 
 
 /**********************************************************************

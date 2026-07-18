@@ -655,9 +655,10 @@ class TechnoTypeClass : public ObjectTypeClass
 		virtual int  Repair_Step(void) const;
 		virtual void const *  Get_Cameo_Data(void) const;
 		virtual bool  Cameo_Is_Theater_Shape(void) const;
-		virtual void const *  Cameo_Remap_Table(HouseClass * house, bool blushing) const;
 		virtual void const *  Get_Spy_Cameo_Data(void) const;
 		virtual bool  Spy_Cameo_Is_Theater_Shape(void) const;
+		virtual void const *  Remap_Table(HouseClass * house, bool blushing) const;
+		virtual void const *  Cameo_Remap_Table(HouseClass * house, bool blushing) const;
 		virtual void const *  Spy_Cameo_Remap_Table(HouseClass * house) const;
 		virtual int  Cost_Of(void) const;
 		virtual int  Enemy_Name(void) const;
@@ -667,7 +668,7 @@ class TechnoTypeClass : public ObjectTypeClass
 
 		#ifdef SCENARIO_EDITOR
 		virtual void  Display(int x, int y, WindowNumberType window, HousesType house) const;
-		int DefaultFrame() const { return(0); }
+		virtual int Showcase_Frame() const { return (0); };
 		#endif
 };
 
@@ -921,8 +922,10 @@ class BuildingTypeClass : public TechnoTypeClass {
 		int  Width(void) const;
 		int  Height(void) const;
 
-		virtual void const *  Cameo_Remap_Table(HouseClass * house, bool blushing) const;
-		virtual void const *  Spy_Cameo_Remap_Table(HouseClass * house) const;
+		virtual void const *  Remap_Table(HouseClass * house, bool blushing) const;
+		// Inherit without change.
+		//virtual void const *  Cameo_Remap_Table(HouseClass * house, bool blushing) const;
+		//virtual void const *  Spy_Cameo_Remap_Table(HouseClass * house) const;
 		virtual int  Cost_Of(void) const;
 		virtual int  Full_Name(void) const;
 		virtual int Enemy_Name(void) const;
@@ -943,7 +946,7 @@ class BuildingTypeClass : public TechnoTypeClass {
 		bool  Bib_And_Offset(SmudgeType & bib, CELL & cell) const;
 
 		#ifdef SCENARIO_EDITOR
-		virtual void  Display(int x, int y, WindowNumberType window, HousesType house) const;
+		virtual int Showcase_Frame() const;
 		#endif
 
 
@@ -1229,8 +1232,10 @@ class UnitTypeClass : public TechnoTypeClass
 		virtual ObjectClass *  Create_One_Of(HouseClass * house) const;
 		virtual short const *  Occupy_List(bool placement=false) const;
 		virtual BuildingClass *  Who_Can_Build_Me(bool intheory, bool legal, HousesType house) const;
-		virtual void const *  Cameo_Remap_Table(HouseClass * house, bool blushing) const;
-		virtual void const *  Spy_Cameo_Remap_Table(HouseClass * house) const;
+		virtual void const *  Remap_Table(HouseClass * house, bool blushing) const;
+		// Inherit without change.
+		//virtual void const *  Cameo_Remap_Table(HouseClass * house, bool blushing) const;
+		//virtual void const *  Spy_Cameo_Remap_Table(HouseClass * house) const;
 		virtual int  Enemy_Name(void) const;
 		virtual int  Max_Pips(void) const;
 
@@ -1238,8 +1243,8 @@ class UnitTypeClass : public TechnoTypeClass
 		virtual int  Repair_Step(void) const;
 
 		#ifdef SCENARIO_EDITOR
-		virtual void  Display(int x, int y, WindowNumberType window, HousesType house) const;
-		int DefaultFrame() const { return(IsChunkyShape ? 0 : 5); }
+		virtual void  Display(int x, int y, WindowNumberType window, HousesType house=HOUSE_NONE) const;
+		virtual int Showcase_Frame() const;
 		#endif
 
 		/*
@@ -1363,14 +1368,15 @@ class InfantryTypeClass : public TechnoTypeClass
 		virtual ObjectClass *  Create_One_Of(HouseClass * house) const;
 		virtual short const *  Occupy_List(bool placement=false) const;
 		virtual BuildingClass *  Who_Can_Build_Me(bool intheory, bool legal, HousesType house) const;
+		// Inherit without change.
+		//virtual void const *  Remap_Table(HouseClass * house, bool blushing) const;
 		virtual void const *  Cameo_Remap_Table(HouseClass * house, bool blushing) const;
 		virtual void const *  Spy_Cameo_Remap_Table(HouseClass * house) const;
 		virtual int  Full_Name(void) const;
 		virtual int  Enemy_Name(void) const;
 
 		#ifdef SCENARIO_EDITOR
-		//virtual void  Display(int x, int y, WindowNumberType window, HousesType house) const;
-		int DefaultFrame() const { return(2); }
+		virtual int Showcase_Frame() const;
 		#endif
 };
 
@@ -1630,6 +1636,7 @@ class TerrainTypeClass : public ObjectTypeClass
 
 		static TerrainType  From_Name(char const*name);
 		static TerrainTypeClass const &  As_Reference(TerrainType type) {return *Pointers[type];};
+		static TerrainTypeClass const *  As_Pointer(TerrainType type) {return Pointers[type];};
 		static void Init(TheaterType theater = THEATER_TEMPERATE);
 		static void After_Init(void) {};
 		static void One_Time(void) {};
@@ -2013,8 +2020,7 @@ class AircraftTypeClass : public TechnoTypeClass
 		virtual int  Max_Pips(void) const;
 
 		#ifdef SCENARIO_EDITOR
-		//virtual void  Display(int x, int y, WindowNumberType window, HousesType house) const;
-		int DefaultFrame() const { return(5); }
+		virtual int Showcase_Frame() const;
 		#endif
 
 		static void const * LRotorData;
@@ -2207,6 +2213,7 @@ class SmudgeTypeClass : public ObjectTypeClass
 
 		static SmudgeType  From_Name(char const *name);
 		static SmudgeTypeClass const &  As_Reference(SmudgeType type) {return *Pointers[type];};
+		static SmudgeTypeClass const *  As_Pointer(SmudgeType type) {return Pointers[type];};
 		static void Init(TheaterType);
 		static void After_Init(void) {};
 		static void One_Time(void);

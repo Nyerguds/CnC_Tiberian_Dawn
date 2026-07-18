@@ -313,5 +313,12 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * The game can now play the mmg1.aud "A most remarkable Metasequoia Glyptostroboides" clip if it is present.
 * \[Internal\] The special behavior to make the MCV and Harvester use the building color rather than the unit color is now an option in the unit type properties.
 * \[Internal\] Made everything superweapon-related use the specific "SpecialWeaponType" enum, rather than often using IDs as bare numbers.
-* \[Internal\] The code that determines how to remap a cameo is now centralized in the TechnoTypeClass subclasses.
+* \[Internal\] The code that determines how to remap a unit and its cameo is now centralized in TechnoTypeClass and its subclasses.
 * \[Internal\] The code that paints the objects in a list in Map Editor mode was vastly simplified, and is now mostly centralized In TechnoTypeClass.
+* Fixed theater-specific graphics corrupting and crashing the map editor mode "Add game object" window.
+* Made several fixes to the map editor mode "Add game object" window to display objects more intuitively.
+* Unlocked aircraft in map editor mode "Add game object" window
+* Fixed the bib placement preview in map editor mode repeating the same tile.
+* The preview for placing a Blossom Tree now shows the Blossom Tree frame.
+* The debug keys to spawn helicopters (O, B and T) now only work when no unit is selected and when the terrain under the mouse is clear for placement.
+* Disabled the Monochrome Screen debug key since it just crashes the game.

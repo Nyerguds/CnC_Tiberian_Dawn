@@ -466,6 +466,12 @@ void BuildingClass::Debug_Dump(MonoClass *mono) const
 void BuildingClass::Draw_It(int x, int y, WindowNumberType window)
 {
 	Validate();
+
+
+	// Nyerguds's C&C Patch Project v1.04: map editor preview draws walls as overlay.
+	// Do not render walls as building, ever. They are placed down as overlay.
+	if (Class->IsWall) return;
+
 	void const * shapefile;	// Pointer to loaded shape file.
 	int shapenum;
 
@@ -4898,7 +4904,7 @@ DirType BuildingClass::Fire_Direction(void) const
 	return(Direction(TarCom));
 }
 
-
+#ifdef OBSOLETE
 /***********************************************************************************************
  * BuildingClass::Remap_Table -- Fetches the remap table to use for this building.             *
  *                                                                                             *
@@ -4920,7 +4926,7 @@ void const * BuildingClass::Remap_Table(void)
 	Validate();
 	return(Class->IsWall ? NULL : House->Remap_Table(IsBlushing, true));
 }
-
+#endif
 
 /***********************************************************************************************
  * BuildingClass::Mission_Unload -- Handles the unload mission for a building.                 *

@@ -459,6 +459,26 @@ void const * TechnoTypeClass::Get_Spy_Cameo_Data(void) const
 
 
 /***********************************************************************************************
+ * TechnoTypeClass::Remap_Table -- Fetches the appropriate remap table to use.                 *
+ *                                                                                             *
+ *    This routine is used to fetch the appropriate remap table to use for this type.          *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the remap table to use for this object type.             *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   07/08/1995 JLB : Created.                                                                 *
+ *=============================================================================================*/
+void const * TechnoTypeClass::Remap_Table(HouseClass * house, bool blushing) const
+{
+	return(house->Remap_Table(blushing, false));
+}
+
+
+/***********************************************************************************************
  * TechnoTypeClass::Cameo_Remap_Table -- Fetches the appropriate remap table for its cameo.    *
  *                                                                                             *
  *    This routine is used to fetch the appropriate remap table to use for the cameo of        *
@@ -471,12 +491,12 @@ void const * TechnoTypeClass::Get_Spy_Cameo_Data(void) const
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   17/07/2026 MM  : Created.                                                                 *
+ *   07/17/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
 void const * TechnoTypeClass::Cameo_Remap_Table(HouseClass * house, bool blushing) const
 {
 	if (Get_Resolution_Shift()) return(blushing ? &Map.FadingLight[0] : NULL);
-	return(house->Remap_Table(blushing, false));
+	return(Remap_Table(house, blushing));
 }
 
 
@@ -493,11 +513,11 @@ void const * TechnoTypeClass::Cameo_Remap_Table(HouseClass * house, bool blushin
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   17/07/2026 MM  : Created.                                                                 *
+ *   07/17/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
 void const * TechnoTypeClass::Spy_Cameo_Remap_Table(HouseClass * house) const
 {
-	return(house->Remap_Table(false, false));
+	return(Remap_Table(house, false));
 }
 
 
@@ -513,7 +533,7 @@ void const * TechnoTypeClass::Spy_Cameo_Remap_Table(HouseClass * house) const
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   07/19/1995 JLB : Created.                                                                 *
+ *   07/19/2025 MM  : Created.                                                                 *
  *=============================================================================================*/
 bool TechnoTypeClass::Spy_Cameo_Is_Theater_Shape(void) const
 {
@@ -587,17 +607,27 @@ int TechnoTypeClass::Repair_Step(void) const
  *=============================================================================================*/
 void TechnoTypeClass::Display(int x, int y, WindowNumberType window, HousesType house) const
 {
-	if (house == HOUSE_NONE) return;	
+	if (house == HOUSE_NONE) return;
 	HouseClass * houseobj = HouseClass::As_Pointer(house);
 	void const * ptr = Get_Cameo_Data();
 	void const * remap = Cameo_Remap_Table(houseobj, false);
+	void const * ghost = NULL;
+	bool istheater = CameoIsTheaterShape;
 	int shape = 0;
 	if (!ptr) {
 		ptr = Get_Image_Data();
-		remap = houseobj->Remap_Table(false, false);
-		shape = DefaultFrame();
+		remap = Remap_Table(houseobj, false);
+		ghost = Map.UnitShadow;
+		shape = Showcase_Frame();
+		istheater = ImageIsTheaterShape;
 	}
-	CC_Draw_Shape(ptr, shape, x, y, window, SHAPE_CENTER|SHAPE_WIN_REL|(remap ? SHAPE_FADING : SHAPE_NORMAL), remap);
+	if (ptr) {
+		IsTheaterShape = istheater;
+		CC_Draw_Shape(ptr, shape, x, y, window,
+			SHAPE_CENTER|SHAPE_WIN_REL|(remap ? SHAPE_FADING:SHAPE_NORMAL)|(ghost ? SHAPE_GHOST:SHAPE_NORMAL),
+			remap, ghost);
+		IsTheaterShape = false;
+	}
 }
 #endif
 
@@ -3543,7 +3573,7 @@ void TechnoClass::Techno_Draw_Object(void const * shapefile, int shapenum, int x
  *=============================================================================================*/
 void const * TechnoClass::Remap_Table(void)
 {
-	return(House->Remap_Table(IsBlushing, false));
+	return(Techno_Type_Class()->Remap_Table(House, IsBlushing));
 }
 
 

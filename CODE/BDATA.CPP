@@ -4717,38 +4717,23 @@ StructType BuildingTypeClass::From_Name(char const *name)
 
 #ifdef SCENARIO_EDITOR
 /***********************************************************************************************
- * BuildingTypeClass::Display -- Renders a generic view of building.                           *
+ * BuildingTypeClass::Showcase_Frame -- Gives frame number to render a generic view of this.   *
  *                                                                                             *
- *    This routine is used to display a generic representation of the                          *
- *    building. Typical use of this occurs with the scenario editor.                           *
+ *    This routine is used to help display a generic representation of                         *
+ *    the building. Typical use of this occurs with the scenario editor.                       *
  *                                                                                             *
- * INPUT:   x,y      -- Coordinate to display the building (centered).                         *
+ * INPUT:   none                                                                               *
  *                                                                                             *
- *          window   -- The window the building should be rendered                             *
- *                      relative to.                                                           *
- *                                                                                             *
- *          house    -- The house color to use for the building.                               *
- *                                                                                             *
- * OUTPUT:  none                                                                               *
+ * OUTPUT:  The frame of the building graphics to show as preview.                             *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   05/23/1994 JLB : Created.                                                                 *
+ *   18/07/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
-void BuildingTypeClass::Display(int x, int y, WindowNumberType window, HousesType house) const
+int BuildingTypeClass::Showcase_Frame() const
 {
-	if (house == HOUSE_NONE) return;
-	HouseClass * houseobj = HouseClass::As_Pointer(house);
-	void const * ptr = Get_Cameo_Data();
-	void const * remap = Cameo_Remap_Table(houseobj, false);
-	int shape = 0;
-	if (!ptr) {
-		ptr = Get_Image_Data();
-		remap = IsWall ? NULL : houseobj->Remap_Table(false, true);
-		shape = DefaultFrame();
-	}
-	CC_Draw_Shape(ptr, shape, x, y, window, SHAPE_CENTER|SHAPE_WIN_REL|(remap ? SHAPE_FADING : SHAPE_NORMAL), remap);
+	return(0);
 }
 
 
@@ -5498,45 +5483,22 @@ int BuildingTypeClass::Enemy_Name(void) const
 
 
 /***********************************************************************************************
- * BuildingTypeClass::Cameo_Remap_Table -- Fetches the appropriate remap table for its cameo.  *
+ * BuildingTypeClass::Remap_Table -- Fetches the appropriate remap table to use.               *
  *                                                                                             *
- *    This routine is used to fetch the appropriate remap table to use for the cameo of        *
- *    this object.                                                                             *
+ *    This routine is used to fetch the appropriate remap table to use for this type.          *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *
- * OUTPUT:  Returns with a pointer to the remap table to use for this object's cameo.          *
+ * OUTPUT:  Returns with a pointer to the remap table to use for this object type.             *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   17/07/2026 MM  : Created.                                                                 *
+ *   07/18/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
-void const * BuildingTypeClass::Cameo_Remap_Table(HouseClass * house, bool blushing) const
+void const * BuildingTypeClass::Remap_Table(HouseClass * house, bool blushing) const
 {
-	if (Get_Resolution_Shift()) return(blushing ? &Map.FadingLight[0] : NULL);
-	return(IsWall && !blushing ? NULL : house->Remap_Table(blushing, true));
-}
-
-
-/***********************************************************************************************
- * BuildingTypeClass::Spy_Cameo_Remap_Table -- Fetches appropriate remap table for spy cameo.  *
- *                                                                                             *
- *    This routine is used to fetch the appropriate remap table to use for the production      *
- *    spying cameo of this object.                                                             *
- *                                                                                             *
- * INPUT:   none                                                                               *
- *                                                                                             *
- * OUTPUT:  Returns with a pointer to the remap table to use for this object's spy cameo.      *
- *                                                                                             *
- * WARNINGS:   none                                                                            *
- *                                                                                             *
- * HISTORY:                                                                                    *
- *   17/07/2026 MM  : Created.                                                                 *
- *=============================================================================================*/
-void const * BuildingTypeClass::Spy_Cameo_Remap_Table(HouseClass * house) const
-{
-	return(IsWall ? NULL : house->Remap_Table(false, true));
+	return(IsWall && !blushing ? NULL : house->Remap_Table(false, true));
 }
 
 

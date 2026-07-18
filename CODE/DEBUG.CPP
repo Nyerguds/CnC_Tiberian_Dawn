@@ -130,11 +130,16 @@ void Debug_Key(unsigned input)
 				break;
 
 			case KN_O:
+				if (CurrentObject.Count() == 0)
 				{
-					AircraftClass * air = new AircraftClass(AIRCRAFT_ORCA, PlayerPtr->Class->House);
-					if (air) {
-						air->Altitude = 0;
-						air->Unlimbo(Map.Pixel_To_Coord(Get_Mouse_X(), Get_Mouse_Y()), DIR_N);
+					CELL spawncell = Coord_Cell(Map.Pixel_To_Coord(Get_Mouse_X(), Get_Mouse_Y()));
+					if (Map.In_Radar(spawncell) && Map[spawncell].Is_Generally_Clear()) {
+						AircraftClass * air = new AircraftClass(AIRCRAFT_ORCA, PlayerPtr->Class->House);
+						if (air) {
+							air->Altitude = 0;
+							air->Unlimbo(Cell_Coord(spawncell), DIR_N);
+							air->Select();
+						}
 					}
 				}
 				break;
@@ -145,21 +150,31 @@ void Debug_Key(unsigned input)
 				}
 				break;
 			case KN_B:
+				if (CurrentObject.Count() == 0)
 				{
-					AircraftClass * air = new AircraftClass(AIRCRAFT_HELICOPTER, PlayerPtr->Class->House);
-					if (air) {
-						air->Altitude = 0;
-						air->Unlimbo(Map.Pixel_To_Coord(Get_Mouse_X(), Get_Mouse_Y()), DIR_N);
+					CELL spawncell = Coord_Cell(Map.Pixel_To_Coord(Get_Mouse_X(), Get_Mouse_Y()));
+					if (Map.In_Radar(spawncell) && Map[spawncell].Is_Generally_Clear()) {
+						AircraftClass * air = new AircraftClass(AIRCRAFT_HELICOPTER, PlayerPtr->Class->House);
+						if (air) {
+							air->Altitude = 0;
+							air->Unlimbo(Cell_Coord(spawncell), DIR_N);
+							air->Select();
+						}
 					}
 				}
 				break;
 
 			case KN_T:
+				if (CurrentObject.Count() == 0)
 				{
-					AircraftClass * air = new AircraftClass(AIRCRAFT_TRANSPORT, PlayerPtr->Class->House);
-					if (air) {
-						air->Altitude = 0;
-						air->Unlimbo(Map.Pixel_To_Coord(Get_Mouse_X(), Get_Mouse_Y()), DIR_N);
+					CELL spawncell = Coord_Cell(Map.Pixel_To_Coord(Get_Mouse_X(), Get_Mouse_Y()));
+					if (Map.In_Radar(spawncell) && Map[spawncell].Is_Generally_Clear()) {
+						AircraftClass * air = new AircraftClass(AIRCRAFT_TRANSPORT, PlayerPtr->Class->House);
+						if (air) {
+							air->Altitude = 0;
+							air->Unlimbo(Cell_Coord(spawncell), DIR_N);
+							air->Select();
+						}
 					}
 				}
 				break;
@@ -230,6 +245,7 @@ void Debug_Key(unsigned input)
 				break;
 
 			case KN_M:
+#ifdef OBSOLETE
 				if (Debug_Flag) {
 					if (MonoClass::Is_Enabled()) {
 						MonoClass::Disable();
@@ -237,6 +253,7 @@ void Debug_Key(unsigned input)
 						MonoClass::Enable();
 					}
 				}
+#endif
 				break;
 
 			case (int)KN_W|(int)KN_ALT_BIT:

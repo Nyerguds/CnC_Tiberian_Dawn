@@ -793,8 +793,9 @@ void OverlayTypeClass::Display(int x, int y, WindowNumberType window, HousesType
 		if (IsTiberium) {
 			frame = 7;
 		}
-
+		IsTheaterShape = IsTheater;
 		CC_Draw_Shape(Get_Image_Data(), frame, x, y, window, SHAPE_NORMAL|SHAPE_CENTER|SHAPE_WIN_REL);
+		IsTheaterShape =false;
 	}
 }
 
@@ -894,7 +895,9 @@ ObjectClass * OverlayTypeClass::Create_One_Of(HouseClass *) const
  *=============================================================================================*/
 void OverlayTypeClass::Draw_It(int x, int y, int data) const
 {
+	IsTheaterShape = IsTheater;
 	CC_Draw_Shape(Get_Image_Data(), data, Map.TacPixelX+x+(CELL_PIXEL_W>>1), Map.TacPixelY+y+(CELL_PIXEL_H>>1), WINDOW_MAIN, SHAPE_CENTER|SHAPE_WIN_REL|SHAPE_GHOST, NULL, Map.UnitShadow);
+	IsTheaterShape = false;
 }
 
 

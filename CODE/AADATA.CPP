@@ -509,6 +509,27 @@ ObjectClass * AircraftTypeClass::Create_One_Of(HouseClass * house) const
 
 #ifdef SCENARIO_EDITOR
 /***********************************************************************************************
+ * AircraftTypeClass::Showcase_Frame -- Gives frame number to render a generic view of this.   *
+ *                                                                                             *
+ *    This routine is used to help display a generic representation of                         *
+ *    the aircraft. Typical use of this occurs with the scenario editor.                       *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  The frame of the aircraft graphics to show as preview.                             *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   18/07/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+int AircraftTypeClass::Showcase_Frame() const
+{
+	return(20);
+}
+
+
+/***********************************************************************************************
  * AircraftTypeClass::Prep_For_Add -- Prepares the scenario editor for adding an aircraft objec*
  *                                                                                             *
  *    This routine is used by the scenario editor to prepare for the adding operation. It      *
@@ -526,8 +547,9 @@ ObjectClass * AircraftTypeClass::Create_One_Of(HouseClass * house) const
 void AircraftTypeClass::Prep_For_Add(void)
 {
 	for (AircraftType index = AIRCRAFT_FIRST; index < AIRCRAFT_COUNT; index++) {
-		if (As_Reference(index).Get_Image_Data()) {
-			Map.Add_To_List(As_Pointer(index));
+		AircraftTypeClass const * air = As_Pointer(index);
+		if (air && !air->IsFixedWing && air->IsSelectable && air-> Get_Image_Data()) {
+			Map.Add_To_List(air);
 		}
 	}
 }

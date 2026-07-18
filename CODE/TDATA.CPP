@@ -943,7 +943,15 @@ TerrainType TerrainTypeClass::From_Name(char const * name)
  *=============================================================================================*/
 void TerrainTypeClass::Display(int x, int y, WindowNumberType window, HousesType) const
 {
-	CC_Draw_Shape(Get_Image_Data(), 0, x, y, window, SHAPE_NORMAL|SHAPE_CENTER|SHAPE_WIN_REL);
+	void const * ptr = Get_Image_Data();
+	if (ptr) {
+		IsTheaterShape = Image_Is_Theater_Shape();
+		int shape = IsTransformable ? 30 : 0;
+		CC_Draw_Shape(ptr, shape, x, y, window,
+			SHAPE_NORMAL|SHAPE_CENTER|SHAPE_WIN_REL|SHAPE_GHOST,
+			NULL, Map.UnitShadow);
+		IsTheaterShape = false;
+	}
 }
 
 
@@ -967,7 +975,7 @@ void TerrainTypeClass::Prep_For_Add(void)
 {
 	for (TerrainType index = TERRAIN_FIRST; index < TERRAIN_COUNT; index++) {
 		if (As_Reference(index).Get_Image_Data()) {
-			Map.Add_To_List(&As_Reference(index));
+			Map.Add_To_List(As_Pointer(index));
 		}
 	}
 }

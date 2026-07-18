@@ -2693,8 +2693,6 @@ int Version_Number(void)
 #ifndef VERSION_PATCH_EXTRA
 #define VERSION_PATCH_EXTRA	""
 #endif
-	// TEST CODE - enable comment block to disable VersionText getting updated
-	//*/
 	RawFileClass file("VERSION.TXT");
 	char version [16];
 	memset (version, 0, sizeof (version));
@@ -2709,7 +2707,6 @@ int Version_Number(void)
 	}
 	bool extra = strlen(VERSION_PATCH_EXTRA) > 0;
 	sprintf(VersionText, (extra ? ".%02d%s\r%s" : ".%02d%s%s"), VERSION_MINOR, version, VERSION_PATCH_EXTRA);
-	//*/
 	return (VERSION_MAJOR);
 #else
 

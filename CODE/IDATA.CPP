@@ -1927,6 +1927,27 @@ short const * InfantryTypeClass::Occupy_List(bool) const
 
 #ifdef SCENARIO_EDITOR
 /***********************************************************************************************
+ * InfantryTypeClass::Showcase_Frame -- Gives frame number to render a generic view of this.   *
+ *                                                                                             *
+ *    This routine is used to help display a generic representation of                         *
+ *    the infantry unit. Typical use of this occurs with the scenario editor.                  *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  The frame of the infantry unit graphics to show as preview.                        *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   05/23/1994 JLB : Created.                                                                 *
+ *=============================================================================================*/
+int InfantryTypeClass::Showcase_Frame() const
+{
+	return(2);
+}
+
+
+/***********************************************************************************************
  * InfantryTypeClass::Prep_For_Add -- Prepares the scenario editor for adding of infantry object.*
  *                                                                                             *
  *    This routine will prepare the scenario editor so that the infantry objects appear on     *
@@ -2228,7 +2249,7 @@ int InfantryTypeClass::Enemy_Name(void) const
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   17/07/2026 MM  : Created.                                                                 *
+ *   07/17/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
 void const * InfantryTypeClass::Cameo_Remap_Table(HouseClass * /*house*/, bool blushing) const
 {
@@ -2249,7 +2270,7 @@ void const * InfantryTypeClass::Cameo_Remap_Table(HouseClass * /*house*/, bool b
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   17/07/2026 MM  : Created.                                                                 *
+ *   07/17/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
 void const * InfantryTypeClass::Spy_Cameo_Remap_Table(HouseClass * /*house*/) const
 {

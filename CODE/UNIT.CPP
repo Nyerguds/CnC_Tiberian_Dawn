@@ -2186,7 +2186,7 @@ void UnitClass::Draw_It(int x, int y, WindowNumberType window)
 		*/
 		if (Class->IsRadarEquipped) {
 			shapenum = 32 + (Frame % 32);
-			Techno_Draw_Object(shapefile, shapenum, x, y-5, window);
+			Techno_Draw_Object(shapefile, shapenum, x, y - Class->WeaponOffset, window);
 		}
 
 		/*
@@ -4490,6 +4490,8 @@ bool UnitClass::No_Other_Crushers(CELL cell) const
 	return(true);
 }
 
+
+#ifdef OBSOLETE
 /***********************************************************************************************
  * UnitClass::Remap_Table -- Fetches the remap table to use for this object.                   *
  *                                                                                             *
@@ -4518,6 +4520,7 @@ void const * UnitClass::Remap_Table(void)
 	}
 	return(TarComClass::Remap_Table());
 }
+#endif
 
 
 /***********************************************************************************************

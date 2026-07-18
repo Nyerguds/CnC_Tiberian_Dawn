@@ -221,7 +221,7 @@ class BuildingClass : public TechnoClass
 		**	Display and rendering support functionality. Supports imagery and how
 		**	object interacts with the map and thus indirectly controls rendering.
 		*/
-		virtual void const * Remap_Table(void);
+		//virtual void const * Remap_Table(void);
 		virtual int Exit_Object(TechnoClass * base);
 		virtual void Draw_It(int x, int y, WindowNumberType window);
 		virtual void Draw_Production(int x, int y, WindowNumberType window);

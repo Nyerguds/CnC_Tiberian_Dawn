@@ -510,7 +510,7 @@ static UnitTypeClass const UnitMHQ(
 	MPH_MEDIUM,								// SPEED:		Miles per hour.
 	5,											// ROT:			Rate of turn (degrees per tick).
 	0,											// Turret center offset along body centerline.
-	0,											// Weapon perspective offset from body towards the north.
+	5,											// Weapon perspective offset from body towards the north.
 	0,0,										// Primary / secondary weapon barrel lengths
 	0,0,										// Primary / secondary weapon offset from center for double barrels 
 	MISSION_HUNT							// ORDERS:		Default order to give new unit.
@@ -1749,16 +1749,39 @@ UnitType UnitTypeClass::From_Name(char const *name)
 void UnitTypeClass::Display(int x, int y, WindowNumberType window, HousesType house) const
 {
 	if (house == HOUSE_NONE) return;
-	HouseClass * houseobj = HouseClass::As_Pointer(house);
-	void const * ptr = Get_Cameo_Data();
-	void const * remap = Cameo_Remap_Table(houseobj, false);
-	int shape = 0;
-	if (!ptr) {
-		ptr = Get_Image_Data();
-		remap = houseobj->Remap_Table(false, IsBuildingColor);
-		shape = DefaultFrame();
+	TechnoTypeClass::Display(x, y, window, house);
+	if (!Get_Cameo_Data() && (IsTurretEquipped || IsRadarEquipped)) {
+		// TechnoClass drew basic shape. Draw turret.
+		void const * ptr = Get_Image_Data();
+		HouseClass * houseobj = HouseClass::As_Pointer(house);
+		void const * remap = Remap_Table(houseobj, false);
+		int shape = Showcase_Frame();
+		IsTheaterShape = ImageIsTheaterShape;
+		CC_Draw_Shape(ptr, shape + 32, x, y - WeaponOffset, window,
+			SHAPE_CENTER|SHAPE_WIN_REL|(remap ? SHAPE_FADING : SHAPE_NORMAL)|SHAPE_GHOST,
+			remap, Map.UnitShadow);
+		IsTheaterShape = false;
 	}
-	CC_Draw_Shape(ptr, shape, x, y, window, SHAPE_CENTER|SHAPE_WIN_REL|(remap ? SHAPE_FADING : SHAPE_NORMAL), remap);
+}
+
+/***********************************************************************************************
+ * UnitTypeClass::Showcase_Frame -- Gives frame number to render a generic view of this unit.  *
+ *                                                                                             *
+ *    This routine is used to help display a generic representation of                         *
+ *    the unit. Typical use of this occurs with the scenario editor.                           *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  The frame of the unit graphics to show as preview.                                 *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   18/07/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+int UnitTypeClass::Showcase_Frame() const
+{
+	return((IsChunkyShape || IsAnimating) ? 0 : IsPieceOfEight ? 5 : 20);
 }
 
 
@@ -2181,43 +2204,20 @@ int UnitTypeClass::Enemy_Name(void) const
 
 
 /***********************************************************************************************
- * UnitTypeClass::Cameo_Remap_Table -- Fetches the appropriate remap table for its cameo.      *
+ * UnitTypeClass::Remap_Table -- Fetches the appropriate remap table to use.                   *
  *                                                                                             *
- *    This routine is used to fetch the appropriate remap table to use for the cameo of        *
- *    this object.                                                                             *
+ *    This routine is used to fetch the appropriate remap table to use for this type.          *
  *                                                                                             *
  * INPUT:   none                                                                               *
  *                                                                                             *
- * OUTPUT:  Returns with a pointer to the remap table to use for this object's cameo.          *
+ * OUTPUT:  Returns with a pointer to the remap table to use for this object type.             *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   17/07/2026 MM  : Created.                                                                 *
+ *   07/08/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-void const * UnitTypeClass::Cameo_Remap_Table(HouseClass * house, bool blushing) const
+void const * UnitTypeClass::Remap_Table(HouseClass * house, bool blushing) const
 {
-	if (Get_Resolution_Shift()) return(blushing ? &Map.FadingLight[0] : NULL);
 	return(house->Remap_Table(blushing, IsBuildingColor));
-}
-
-
-/***********************************************************************************************
- * UnitTypeClass::Spy_Cameo_Remap_Table -- Fetches appropriate remap table for its spy cameo.  *
- *                                                                                             *
- *    This routine is used to fetch the appropriate remap table to use for the production      *
- *    spying cameo of this object.                                                             *
- *                                                                                             *
- * INPUT:   none                                                                               *
- *                                                                                             *
- * OUTPUT:  Returns with a pointer to the remap table to use for this object's cameo.          *
- *                                                                                             *
- * WARNINGS:   none                                                                            *
- *                                                                                             *
- * HISTORY:                                                                                    *
- *   17/07/2026 MM  : Created.                                                                 *
- *=============================================================================================*/
-void const * UnitTypeClass::Spy_Cameo_Remap_Table(HouseClass * house) const
-{
-	return(house->Remap_Table(false, IsBuildingColor));
 }
