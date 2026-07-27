@@ -704,7 +704,11 @@ void InfantryClass::Per_Cell_Process(bool center)
 		BuildingClass *building = cellptr->Cell_Building();
 		if (building && building->As_Target() == NavCom) {
 			int temp = Special.IsScatter;
-
+			if (!House->IsHuman) {
+				// For computer players, simply announce it at the moment
+				// they manage to blow it up.
+				Sound_Effect(VOC_RAMBO_PRESENT, Coord);
+			}
 			building->IsGoingToBlow = true;
 			building->Clicked_As_Target(20);
 			building->CountDown.Set(20);
@@ -1743,6 +1747,10 @@ short const * InfantryClass::Overlap_List(bool /*redraw*/) const
 FireErrorType InfantryClass::Can_Fire(TARGET target, int which) const
 {
 	Validate();
+	// Prevent bombing run commandos from firing at their target.
+	if (Mission == MISSION_SABOTAGE && As_Building(target)) {
+		return(FIRE_RANGE);
+	}
 	WeaponTypeClass const * weapon = (which == 0) ? &Weapons[Class->Primary] : &Weapons[Class->Secondary];
 
 #ifdef BOXING
@@ -2814,7 +2822,7 @@ void InfantryClass::Assign_Mission(MissionType order)
 	Validate();
 	// Nyerguds's TUC Quick Fix Patch v1.02: commando-voice
 	// Only yell bombing warning when not owned by this player.
-	if (order == MISSION_SABOTAGE && PlayerPtr->Class->House != Owner()) {
+	if (order == MISSION_SABOTAGE && Owner() != *PlayerPtr && House->IsHuman) {
 		Sound_Effect(VOC_RAMBO_PRESENT, Coord);
 	}
 

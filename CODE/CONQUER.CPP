@@ -731,7 +731,7 @@ void Keyboard_Process(KeyNumType &input)
 
 					// Nyerguds's TUC Quick Fix Patch v1.03: building-stop-key
 					// Don't block Stop order on defense buildings unless it's building up or selling.
-					if (tech && tech->Is_Techno()
+					if (tech && tech->Is_Techno() && ((TechnoClass *)tech)->House == PlayerPtr
 					 	&& (tech->Can_Player_Move() || tech->Can_Player_Fire())
 						&& (tech->What_Am_I() != RTTI_BUILDING || ((BuildingClass *)tech)->BState != BSTATE_CONSTRUCTION)) {
 						((TechnoClass *)tech)->Player_Assign_Mission(MISSION_GUARD, TARGET_NONE, TARGET_NONE);
