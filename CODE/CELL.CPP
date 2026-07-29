@@ -82,26 +82,11 @@
 /**********************************************************************
  * Concrete fill states. These are bits that can be combined.
  */
-enum ConcFill {
+enum ConcFillType {
 	CONC_FILL_NONE   = 0,
 	CONC_FILL_CENTER = 1 << 0,
 	CONC_FILL_TOP    = 1 << 1,
 	CONC_FILL_BOTTOM = 1 << 2,
-};
-
-
-/**********************************************************************
- * Concrete adjacency with neighboring cells that are also concrete.
- * These are bits that can be combined to determine which icon it
- * should get.
- */
-enum ConcAdj {
-	CONC_ADJ_NONE       = 0,
-	CONC_ADJ_TOP        = 1 << 0,
-	CONC_ADJ_TOPSIDE    = 1 << 1,
-	CONC_ADJ_SIDE       = 1 << 2,
-	CONC_ADJ_BOTTOMSIDE = 1 << 3,
-	CONC_ADJ_BOTTOM     = 1 << 4,
 };
 
 
@@ -112,7 +97,7 @@ enum ConcAdj {
  * Note that the first state has these switched on the sprite; it has
  * the even graphics first.
  */
-const ConcFill ConcIconFillStates[7] = {
+const ConcFillType ConcIconFillStates[7] = {
 	/* 0 */ CONC_FILL_CENTER,
 	/* 1 */ CONC_FILL_CENTER | CONC_FILL_BOTTOM | CONC_FILL_TOP,
 	/* 2 */ CONC_FILL_TOP,
@@ -500,9 +485,13 @@ void CellClass::Redraw_Objects(bool forced)
  *    This determines if the cell can become a proper foundation for                           *
  *    building placement.                                                                      *
  *                                                                                             *
- * INPUT:   ignoremobile -- ignore temporary occupiers that can move off the cell.             *
+ * INPUT:   ignoremobile    -- ignore temporary occupiers that can move off the cell.          *
  *                                                                                             *
- *          ignorecloak  -- ignore cloaked occupiers.                                          *
+ *          ignorecloak     -- ignore cloaked occupiers.                                       *
+ *                                                                                             *
+ *          ignoredmgwall   -- If given, damaged walls of this type are ignored.               *
+ *                                                                                             *
+ *          ignorewallhouse -- Specific House to ignore the specified wall type for.           *
  *                                                                                             *
  * OUTPUT:  bool; Can the cell be built upon?                                                  *
  *                                                                                             *
@@ -511,7 +500,7 @@ void CellClass::Redraw_Objects(bool forced)
  * HISTORY:                                                                                    *
  *   05/18/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-bool CellClass::Is_Generally_Clear(bool ignoremobile, bool ignorecloak) const
+bool CellClass::Is_Generally_Clear(bool ignoremobile, bool ignorecloak, OverlayType ignoredmgwall, HousesType ignorewallhouse) const
 {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("bool CellClass::Is_Generally_Clear(bool ignoremobile, bool ignorecloak) const");
@@ -544,6 +533,11 @@ bool CellClass::Is_Generally_Clear(bool ignoremobile, bool ignorecloak) const
 		return(false);
 	}
 	if (Overlay != OVERLAY_NONE && OverlayTypeClass::As_Reference(Overlay).IsWall) {
+		// Nyerguds's C&C Patch Project v1.04: allow wall repair-replacement.
+		// Walls can be put on damaged walls of the same type.
+		if (Overlay == ignoredmgwall && Owner == ignorewallhouse && (OverlayData >> 4) > 0) {
+			return(true);
+		}
 		return(false);
 	}
 
@@ -1167,9 +1161,16 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 				*/
 				int icon = 2;
 				if (Map.ProximityCheck) {
-					if (Is_Generally_Clear()) {
+					OverlayType ovl = OVERLAY_NONE;
+					HousesType ovlhouse = HOUSE_NONE;
+					if (Map.PendingObject && Map.PendingObject->What_Am_I() == RTTI_BUILDINGTYPE
+							&& ((BuildingTypeClass *)Map.PendingObject)->IsWall) {
+						ovl = OverlayTypeClass::From_Name(Map.PendingObject->IniName);
+						ovlhouse = PlayerPtr->Class->House;
+					}
+					if (Is_Generally_Clear(false, false, ovl, ovlhouse)) {
 						icon = Map.ProximityStealth ? 1 : 0;
-					} else if (Map.ProximityStealth && Is_Generally_Clear(false, true)) {
+					} else if (Map.ProximityStealth && Is_Generally_Clear(false, true, ovl, ovlhouse)) {
 						icon = 1;
 					}
 				}
@@ -1198,7 +1199,7 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 							break;
 
 						/*
-						** Nyerguds's C&C Patch Project v1.04: map editor preview draws walls as overlay.
+						**	Nyerguds's C&C Patch Project v1.04: map editor preview draws walls as overlay.
 						**	Draw a building that is a wall.
 						*/
 						case RTTI_BUILDINGTYPE:
@@ -1329,10 +1330,10 @@ bool CellClass:: Adjacent_Is_Valid(FacingType face, bool foroverlay)
  * HISTORY:                                                                                    *
  *   08/13/2025 MM  : Created.                                                                 *
  *=============================================================================================*/
-int Get_Conc_Icon(ConcFill fillState, bool isOdd)
+int Get_Conc_Icon(ConcFillType fillState, bool isOdd)
 {
 #ifdef INCLUDE_FUNCTION_NAMES
-	CCDebugFunc("int Get_Conc_Icon(ConcFill fillState, bool isOdd)");
+	CCDebugFunc("int Get_Conc_Icon(ConcFillType fillState, bool isOdd)");
 #endif
 	int odd = isOdd ? 1 : 0;
 	int val = fillState < 0 || fillState >= 8 ? 0 : ConcFillStateToIcon[fillState];
@@ -1343,7 +1344,7 @@ int Get_Conc_Icon(ConcFill fillState, bool isOdd)
 
 
 /***********************************************************************************************
- * Get_Conc_State -- Gets the Concrete fill state as ConcFill bit flags.                       *
+ * Get_Conc_State -- Gets the Concrete fill state as ConcFillType bit flags.                   *
  *                                                                                             *
  *    This routine checks if the overlay on the current cell is Concrete, and if so, which     *
  *    combination of filled parts it is made of.                                               *
@@ -1358,10 +1359,10 @@ int Get_Conc_Icon(ConcFill fillState, bool isOdd)
  * HISTORY:                                                                                    *
  *   08/13/2025 MM  : Created.                                                                 *
  *=============================================================================================*/
-ConcFill Get_Conc_State(CellClass * cell)
+ConcFillType Get_Conc_State(CellClass * cell)
 {
 #ifdef INCLUDE_FUNCTION_NAMES
-	CCDebugFunc("ConcFill Get_Conc_State(CellClass * cell)");
+	CCDebugFunc("ConcFillType Get_Conc_State(CellClass * cell)");
 #endif
 	if (!cell->Overlay == OVERLAY_CONCRETE) {
 		return CONC_FILL_NONE;
@@ -1398,7 +1399,7 @@ bool CellClass::Is_Ignorable_Concrete()
 	CCDebugFunc("bool CellClass::Is_Ignorable_Concrete()");
 #endif
 	// only true if it is concrete without its center filled.
-	ConcFill fill = Get_Conc_State(this);
+	ConcFillType fill = Get_Conc_State(this);
 	return fill != CONC_FILL_NONE && (fill & CONC_FILL_CENTER) == 0;
 }
 
@@ -1412,7 +1413,7 @@ bool CellClass::Is_Ignorable_Concrete()
  *    concrete icon shape to use (if any).                                                     *
  *    Build_Conc_Fill_State - Created for Nyerguds's C&C Patch Project v1.04.                  *
  *                                                                                             *
- * INPUT:   none                                                                               *
+ * INPUT:   cell  -- The cell to build the concrete fill type for.                             *
  *                                                                                             *
  * OUTPUT:  none                                                                               *
  *                                                                                             *
@@ -1421,13 +1422,31 @@ bool CellClass::Is_Ignorable_Concrete()
  * HISTORY:                                                                                    *
  *   12/31/2025 MM  : Created.                                                                 *
  *=============================================================================================*/
-ConcFill Build_Conc_Fill_State(CELL cell, FacingType * checkCells)
+ConcFillType Build_Conc_Fill_State(CELL cell)
 {
 #ifdef INCLUDE_FUNCTION_NAMES
-	CCDebugFunc("ConcFill Build_Conc_Fill_State(CELL cell, FacingType * checkCells)");
+	CCDebugFunc("ConcFillType Build_Conc_Fill_State(CELL cell)");
 #endif
+
+	// Facings to check for adjacent cells around even and odd-cell concrete.
+	// The order in this array matches the bits order in the CONC_ADJ values.
+ 	// In order: top, top-aside, aside, bottom-aside, bottom.
+	static FacingType _even[5] = {FACING_N, FACING_NW, FACING_W, FACING_SW, FACING_S};
+	static FacingType _odd[5] = {FACING_N, FACING_NE, FACING_E, FACING_SE, FACING_S};
+	bool isodd = Cell_X(cell) % 2 == 1;
+	FacingType * checkCells = isodd ? _odd : _even;
+
+	// Concrete adjacency with neighboring cells that are also concrete.
+	// These are bits that can be combined to determine which icon it should get.
+	int CONC_ADJ_NONE       = 0;
+	int CONC_ADJ_TOP        = 1 << 0;
+	int CONC_ADJ_TOPSIDE    = 1 << 1;
+	int CONC_ADJ_SIDE       = 1 << 2;
+	int CONC_ADJ_BOTTOMSIDE = 1 << 3;
+	int CONC_ADJ_BOTTOM     = 1 << 4;
+
 	CellClass * mapcell = &Map[cell];
-	ConcAdj mask = CONC_ADJ_NONE;
+	int mask = CONC_ADJ_NONE;
 	for (int i = 0; i < 5; ++i) {
 		FacingType facing = checkCells[i];
 		if (!mapcell->Adjacent_Is_Valid(facing, true)) {
@@ -1437,7 +1456,7 @@ ConcFill Build_Conc_Fill_State(CELL cell, FacingType * checkCells)
 		CellClass * neighbor = &Map[neighborcell];
 		if (neighbor->Overlay == OVERLAY_CONCRETE) {
 			if ((Get_Conc_State(neighbor) & CONC_FILL_CENTER) != 0) {
-				mask = (ConcAdj)(mask | (1 << i));
+				mask = mask | (1 << i);
 			}
 		}
 	}
@@ -1450,37 +1469,37 @@ ConcFill Build_Conc_Fill_State(CELL cell, FacingType * checkCells)
 	// Logic to fill the main cell. Standard for a placed cell is to fill the center.
 	bool isFilled = (Get_Conc_State(mapcell) & CONC_FILL_CENTER) != 0;
 	// Start with a clean slate.
-	ConcFill fillState = isFilled ? CONC_FILL_CENTER : CONC_FILL_NONE;
+	ConcFillType fillState = isFilled ? CONC_FILL_CENTER : CONC_FILL_NONE;
 #ifndef FIX_CONCRETE_SQUARE
 	if (isFilled) {
 		if (top || (topSide && side)) {
-			fillState = (ConcFill)(fillState | CONC_FILL_TOP);
+			fillState = (ConcFillType)(fillState | CONC_FILL_TOP);
 		}
 		if (bottom || (bottomSide && side)) {
-			fillState = (ConcFill)(fillState | CONC_FILL_BOTTOM);
+			fillState = (ConcFillType)(fillState | CONC_FILL_BOTTOM);
 		}
 	} else {
 		if (top && topSide && side) {
-			fillState = (ConcFill)(fillState | CONC_FILL_TOP);
+			fillState = (ConcFillType)(fillState | CONC_FILL_TOP);
 		}
 		if (bottom && bottomSide && side) {
-			fillState = (ConcFill)(fillState | CONC_FILL_BOTTOM);
+			fillState = (ConcFillType)(fillState | CONC_FILL_BOTTOM);
 		}
 	}
 #else
 	if (isFilled) {
 		if (top || side || topSide) {
-			fillState = (ConcFill)(fillState | CONC_FILL_TOP);
+			fillState = (ConcFillType)(fillState | CONC_FILL_TOP);
 		}
 		if (bottom || side || bottomSide) {
-			fillState = (ConcFill)(fillState | CONC_FILL_BOTTOM);
+			fillState = (ConcFillType)(fillState | CONC_FILL_BOTTOM);
 		}
 	} else {
 		if ((topSide && side) || (topSide && top) || (top && side)) {
-			fillState = (ConcFill)(fillState | CONC_FILL_TOP);
+			fillState = (ConcFillType)(fillState | CONC_FILL_TOP);
 		}
 		if ((bottomSide && side) || (bottomSide && bottom) || (bottom && side)) {
-			fillState = (ConcFill)(fillState | CONC_FILL_BOTTOM);
+			fillState = (ConcFillType)(fillState | CONC_FILL_BOTTOM);
 		}
 	}
 #endif
@@ -1509,11 +1528,6 @@ void CellClass::Concrete_Calc(void)
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("void CellClass::Concrete_Calc(void)");
 #endif
-  // Facings to check for adjacent cells around even and odd-cell concrete.
-	// The order in this array matches the bits order in the CONC_ADJ values.
- 	// In order: top, top-aside, aside, bottom-aside, bottom.
-	static FacingType _even[5] = {FACING_N, FACING_NW, FACING_W, FACING_SW, FACING_S};
-	static FacingType _odd[5] = {FACING_N, FACING_NE, FACING_E, FACING_SE, FACING_S};
 
 	int cell = Cell_Number();
 
@@ -1526,8 +1540,7 @@ void CellClass::Concrete_Calc(void)
 	if (!this->Adjacent_Is_Valid(FACING_NONE, true)) {
 		return;
 	}
-	bool isodd = Cell_X(cell) % 2 == 1;
-	ConcFill fillState = Build_Conc_Fill_State(cell, isodd ? _odd : _even);
+	ConcFillType fillState = Build_Conc_Fill_State(cell);
 	if (overlay == OVERLAY_NONE && fillState == CONC_FILL_NONE) {
 		return;
 	}
@@ -1536,6 +1549,7 @@ void CellClass::Concrete_Calc(void)
 		if (overlay == OVERLAY_NONE) {
 			this->Overlay = OVERLAY_CONCRETE;
 		}
+		bool isodd = Cell_X(cell) % 2 == 1;
 		this->OverlayData = Get_Conc_Icon(fillState, isodd);
 	} else if (overlay == OVERLAY_CONCRETE) {
 		// If nothing is on there, remove.

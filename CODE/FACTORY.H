@@ -63,6 +63,7 @@ class FactoryClass : private StageClass
 		bool  Has_Changed(void);
 		bool  Has_Completed(void);
 		bool  Is_Building(void) const {return(Fetch_Rate() != 0);};
+		bool  Is_Suspended(void) const {return(IsSuspended);}
 		bool  Is_Waiting_For_Funds() {return(IsWaitingForFunds);};
 		bool  Set(TechnoTypeClass const & object, HouseClass & house);
 		bool  Set(SpecialWeaponType const & type, HouseClass & house);

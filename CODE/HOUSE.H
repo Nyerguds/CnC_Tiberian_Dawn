@@ -46,6 +46,7 @@
 //unsigned Cardinal_To_Fixed(unsigned base, unsigned cardinal);
 //}
 class TriggerClass;
+class FactoryClass;
 /****************************************************************************
 **	Player control structure. Each player (computer or human) has one of
 **	these structures associated. These are located in a global array.
@@ -315,7 +316,7 @@ class HouseClass {
 		int InfantryFactories;
 		int UnitFactories;
 		int BuildingFactories;
-		int SpecialFactories;
+		//int SpecialFactories;
 
 		/*
 		**	This is the accumulation of the total power and drain factors. From these
@@ -339,7 +340,8 @@ class HouseClass {
 		int InfantryFactory;
 		int UnitFactory;
 		int BuildingFactory;
-		int SpecialFactory;
+		// Not actually used.
+		//int SpecialFactory;
 
 		/*
 		**	This target value specifies where the flag is located. It might be a cell
@@ -405,6 +407,7 @@ class HouseClass {
 		ProdFailType  Begin_Production(RTTIType type, int id);
 		ProdFailType  Suspend_Production(RTTIType type);
 		ProdFailType  Abandon_Production(RTTIType type);
+		FactoryClass * Get_Factory(RTTIType type);
 		bool  Place_Object(RTTIType type, CELL cell);
 		bool  Manual_Place(BuildingClass * builder, BuildingClass * object);
 		void  Special_Weapon_AI(SpecialWeaponType id);
@@ -544,6 +547,7 @@ class HouseClass {
 	private:
 		void Silo_Redraw_Check(long oldtib, long oldcap);
 		BuildingClass * Find_Launch_Site(StructType origin, long originMask);
+		int * Get_Factory_Ptr(RTTIType type);
 		/*
 		**	This is a bit field record of all the other houses that are allies with
 		**	this house. It is presumed that any house that isn't an ally, is therefore

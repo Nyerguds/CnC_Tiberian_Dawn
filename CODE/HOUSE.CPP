@@ -408,8 +408,8 @@ HouseClass::HouseClass(HousesType house) :
 	SpeakMaxedDelay = 1;
 	SpeakMoneyDelay = 1;
 	SpeakPowerDelay = 1;
-	SpecialFactories = 0;
-	SpecialFactory = -1;
+	//SpecialFactories = 0;
+	//SpecialFactory = -1;
 	TeamTime = TEAM_DELAY;
 	Tiberium = 0;
 	TriggerTime = 0;
@@ -2254,31 +2254,7 @@ ProdFailType HouseClass::Begin_Production(RTTIType type, int id)
 	FactoryClass * fptr;
 	TechnoTypeClass const * tech = Fetch_Techno_Type(type, id);
 
-	switch (type) {
-		case RTTI_AIRCRAFT:
-		case RTTI_AIRCRAFTTYPE:
-			factory = &AircraftFactory;
-			break;
-
-		case RTTI_UNIT:
-		case RTTI_UNITTYPE:
-			factory = &UnitFactory;
-			break;
-
-		case RTTI_BUILDING:
-		case RTTI_BUILDINGTYPE:
-			factory = &BuildingFactory;
-			break;
-
-		case RTTI_INFANTRY:
-		case RTTI_INFANTRYTYPE:
-			factory = &InfantryFactory;
-			break;
-
-		case RTTI_SPECIAL:
-			factory = &SpecialFactory;
-			break;
-	}
+	factory = Get_Factory_Ptr(type);
 
 	/*
 	**	Check for legality of the production object type suggested.
@@ -2297,7 +2273,8 @@ ProdFailType HouseClass::Begin_Production(RTTIType type, int id)
 		fptr = new FactoryClass();
 		if (!fptr) return(PROD_CANT);
 		*factory = Factories.ID(fptr);
-		result = (tech) ? fptr->Set(*tech, *this) : fptr->Set((SpecialWeaponType)id, *this);
+		//result = (tech) ? fptr->Set(*tech, *this) : fptr->Set((SpecialWeaponType)id, *this);
+		result = fptr->Set(*tech, *this);
 		initial_start = true;
 	}
 
@@ -2340,33 +2317,7 @@ ProdFailType HouseClass::Suspend_Production(RTTIType type)
 	CCDebugFunc("ProdFailType HouseClass::Suspend_Production(RTTIType type)");
 #endif
 	Validate();
-	int * factory = 0;
-
-	switch (type) {
-		case RTTI_AIRCRAFT:
-		case RTTI_AIRCRAFTTYPE:
-			factory = &AircraftFactory;
-			break;
-
-		case RTTI_UNIT:
-		case RTTI_UNITTYPE:
-			factory = &UnitFactory;
-			break;
-
-		case RTTI_BUILDING:
-		case RTTI_BUILDINGTYPE:
-			factory = &BuildingFactory;
-			break;
-
-		case RTTI_INFANTRY:
-		case RTTI_INFANTRYTYPE:
-			factory = &InfantryFactory;
-			break;
-
-		case RTTI_SPECIAL:
-			factory = &SpecialFactory;
-			break;
-	}
+	int * factory = Get_Factory_Ptr(type);
 
 	/*
 	**	Check for legality of the production object type suggested.
@@ -2385,6 +2336,11 @@ ProdFailType HouseClass::Suspend_Production(RTTIType type)
 	*/
 	FactoryClass * fptr = Factories.Raw_Ptr(*factory);
 	if (!fptr) return(PROD_CANT);
+
+	/*
+	**	Nothing to change; production ias already suspended.
+	 */
+	if (!fptr->Is_Suspended()) return(PROD_NOCHANGE);
 
 	/*
 	**	Actually suspend the production.
@@ -2427,33 +2383,7 @@ ProdFailType HouseClass::Abandon_Production(RTTIType type)
 	CCDebugFunc("ProdFailType HouseClass::Abandon_Production(RTTIType type)");
 #endif
 	Validate();
-	int * factory = 0;
-
-	switch (type) {
-		case RTTI_AIRCRAFT:
-		case RTTI_AIRCRAFTTYPE:
-			factory = &AircraftFactory;
-			break;
-
-		case RTTI_UNIT:
-		case RTTI_UNITTYPE:
-			factory = &UnitFactory;
-			break;
-
-		case RTTI_BUILDING:
-		case RTTI_BUILDINGTYPE:
-			factory = &BuildingFactory;
-			break;
-
-		case RTTI_INFANTRY:
-		case RTTI_INFANTRYTYPE:
-			factory = &InfantryFactory;
-			break;
-
-		case RTTI_SPECIAL:
-			factory = &SpecialFactory;
-			break;
-	}
+	int * factory = Get_Factory_Ptr(type);
 
 	/*
 	**	Check for legality of the production object type suggested.
@@ -2463,7 +2393,7 @@ ProdFailType HouseClass::Abandon_Production(RTTIType type)
 	/*
 	**	If there is no factory to abandon, then return with a failure code.
 	*/
-	if (*factory == -1) return(PROD_CANT);
+	if (*factory == -1) return(PROD_NOCHANGE);
 
 	/*
 	**	Fetch the factory pointer object.
@@ -2493,6 +2423,77 @@ ProdFailType HouseClass::Abandon_Production(RTTIType type)
 	*factory = -1;
 
 	return(PROD_OK);
+}
+
+
+/***********************************************************************************************
+ * HouseClass::Get_Factory -- Gets the player factory pointer for the item type specified.     *
+ *                                                                                             *
+ *    This routine is called to look up the player production factory for a specific type      *
+ *    of production. It will return a pointer to the requested factory.                        *
+ *                                                                                             *
+ * INPUT:   type  -- The object type that the factory is requested for.                        *
+ *                                                                                             *
+ * OUTPUT:  A pointer to the FactoryClass for the specified type.                              *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   29/07/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+FactoryClass * HouseClass::Get_Factory(RTTIType type) {
+	int * factory = Get_Factory_Ptr(type);
+	if (factory == NULL) return NULL;
+	if (*factory == -1) return NULL;
+	return (Factories.Raw_Ptr(*factory));
+}
+
+
+/***********************************************************************************************
+ * HouseClass::Get_Factory_Ptr -- Gets player factory index pointer for the requested type.    *
+ *                                                                                             *
+ *    This routine is called to look up the player production factory for a specific type      *
+ *    of production. It will return a pointer to the index of the requested factory.           *
+ *                                                                                             *
+ * INPUT:   type  -- The object type that the factory is requested for.                        *
+ *                                                                                             *
+ * OUTPUT:  A pointer to the location storing the factory index for the specified type.        *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   29/07/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+int * HouseClass::Get_Factory_Ptr(RTTIType type)
+{
+	int * factory = 0;
+
+	switch (type) {
+		case RTTI_AIRCRAFT:
+		case RTTI_AIRCRAFTTYPE:
+			factory = &AircraftFactory;
+			break;
+
+		case RTTI_UNIT:
+		case RTTI_UNITTYPE:
+			factory = &UnitFactory;
+			break;
+
+		case RTTI_BUILDING:
+		case RTTI_BUILDINGTYPE:
+			factory = &BuildingFactory;
+			break;
+
+		case RTTI_INFANTRY:
+		case RTTI_INFANTRYTYPE:
+			factory = &InfantryFactory;
+			break;
+
+		//case RTTI_SPECIAL:
+		//	factory = &SpecialFactory;
+		//	break;
+	}
+	return factory;
 }
 
 

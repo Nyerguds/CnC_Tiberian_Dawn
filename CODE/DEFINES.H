@@ -343,6 +343,7 @@ typedef enum ProdFailType {
 	PROD_LIMIT,					//	Failed with production capacity limit reached.
 	PROD_ILLEGAL,				//	Failed because of illegal request.
 	PROD_CANT,					//	Failed because unable to comply (busy or occupied).
+	PROD_NOCHANGE,				//	Failed because factory is already in requested state.
 } ProdFailType;
 
 

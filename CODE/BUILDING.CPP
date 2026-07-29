@@ -1462,12 +1462,24 @@ bool BuildingClass::Unlimbo(COORDINATE coord, DirType dir)
 		if (ovl != OVERLAY_NONE) {
 			OverlayTypeClass otc = OverlayTypeClass::As_Reference(ovl);
 			if (otc.IsWall && Can_Enter_Cell(Coord_Cell(coord), FACING_NONE) == MOVE_OK) {
-				ObjectClass * o = otc.Create_One_Of(House);
-				if (o && o->Unlimbo(coord)) {
-					Map[Coord_Cell(coord)].Owner = House->Class->House;
+				CellClass * c = &Map[Coord_Cell(coord)];
+				if (c->Overlay == ovl && c->Owner == *House && (c->OverlayData >> 4) > 0) {
+					// Nyerguds's C&C Patch Project v1.04: allow wall repair-replacement.
+					c->OverlayData = 0;
+					c->Wall_Update(ovl);
+					// This acts as if the wall was sold and then replaced, so you get a refund.
+					House->Refund_Money(Refund_Amount());
 					Transmit_Message(RADIO_OVER_OUT);
 					delete this;
 					return(true);
+				} else {
+					ObjectClass * o = otc.Create_One_Of(House);
+						if (o && o->Unlimbo(coord)) {
+						c->Owner = House->Class->House;
+						Transmit_Message(RADIO_OVER_OUT);
+						delete this;
+						return(true);
+					}
 				}
 			}
 		}
@@ -3796,7 +3808,7 @@ MoveType BuildingClass::Can_Enter_Cell(CELL cell, FacingType) const
 	CCDebugFunc("MoveType BuildingClass::Can_Enter_Cell(CELL cell, FacingType) const");
 #endif
 	Validate();
-	return(Class->Legal_Placement(cell) ? MOVE_OK : MOVE_NO);
+	return(Class->Legal_Placement(cell, *House) ? MOVE_OK : MOVE_NO);
 }
 
 /***********************************************************************************************
@@ -5383,9 +5395,9 @@ void BuildingClass::Detach_All(bool all)
 				fnum = House->BuildingFactory;
 				break;
 
-			case RTTI_SPECIAL:
-				fnum = House->SpecialFactory;
-				break;
+			//case RTTI_SPECIAL:
+			//	fnum = House->SpecialFactory;
+			//	break;
 
 		}
 
@@ -5605,6 +5617,15 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 		return(true);
 	}
 
+	// Nyerguds's C&C Patch Project v1.04: allow wall repair-replacement.
+	if (Class->IsWall && Map.In_Radar(homecell))
+	{
+		OverlayType ovl = OverlayTypeClass::From_Name(Class->IniName);
+		CellClass * hcell = &Map[homecell];
+		if (ovl != OVERLAY_NONE && hcell->Overlay == ovl && hcell->Owner == *House) {
+			return(true);
+		}
+	}
 	/*
 	**	Scan through all cells that the building foundation would cover. If any adjacent
 	**	cells to these are of friendly persuasion, then consider the proximity check to

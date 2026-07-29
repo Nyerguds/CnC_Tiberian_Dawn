@@ -322,3 +322,7 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * The preview for placing a Blossom Tree now shows the Blossom Tree frame.
 * The debug keys to spawn helicopters (O, B and T) now only work when no unit is selected and when the terrain under the mouse is clear for placement.
 * Disabled the Monochrome Screen debug key since it just crashes the game.
+* Fixed computer-owned Commandos constantly stopping to shoot at their target when on their way to bomb it.
+* The 'B' hotkey will restart construction of the last built building. If a building is finished, the key will activate  the building placement.
+* Players can now build walls on top of damaged existing walls they own, to repair them. This will refund half of the old wall's cost, making it equivalent to the player selling the old wall first.
+* Clicks on greyed out sidebar items will now count as if you clicked on the currently building item of that type.

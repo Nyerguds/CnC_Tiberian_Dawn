@@ -524,6 +524,12 @@ class TechnoTypeClass : public ObjectTypeClass
 		unsigned char Scenario;
 
 		/*
+		**	Generally accessible type ID. Combine this with the RTTI and you can
+		**	look up this object.
+		*/
+		int Type;
+
+		/*
 		**	Special build prerequisite control values. These are primarily used for
 		**	multi-player or special events.
 		*/
@@ -608,6 +614,7 @@ class TechnoTypeClass : public ObjectTypeClass
 
 		//--------------------------------------------------------------------
 		TechnoTypeClass(
+				int type,
 				int name,
 				char const *ininame,
 				unsigned char level,
@@ -932,7 +939,7 @@ class BuildingTypeClass : public TechnoTypeClass {
 		virtual COORDINATE  Coord_Fixup(COORDINATE coord) const {return coord & 0xFF00FF00L;}
 		virtual int  Max_Pips(void) const;
 		virtual void  Dimensions(int &width, int &height) const;
-		virtual int  Legal_Placement(CELL pos) const;
+		virtual int  Legal_Placement(CELL pos, HousesType house) const;
 		virtual bool  Create_And_Place(CELL cell, HousesType house) const;
 		virtual ObjectClass *  Create_One_Of(HouseClass * house) const;
 		virtual short const *  Occupy_List(bool placement=false) const;

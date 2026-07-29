@@ -355,6 +355,7 @@ int ScenarioInit;
 bool SpecialFlag = false;
 bool AllowDetachedAISupers;			// Allow the AI to use superweapons without owning the required building.
 bool PassiveHelis;							// Helicopters are passive in this scenario.
+StructType LastConstruction = STRUCT_NONE; // To allow hotkey to rebuild last construction.
 
 
 /***************************************************************************

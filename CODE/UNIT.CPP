@@ -1687,7 +1687,7 @@ bool UnitClass::Goto_Clear_Spot(void)
 #endif
 	Validate();
 	Mark(MARK_UP);
-	if (!Target_Legal(NavCom) && BuildingTypeClass::As_Reference(STRUCT_CONST).Legal_Placement(Coord_Cell(Coord))) {
+	if (!Target_Legal(NavCom) && BuildingTypeClass::As_Reference(STRUCT_CONST).Legal_Placement(Coord_Cell(Coord), *House)) {
 		Mark(MARK_DOWN);
 		return(true);
 	}
@@ -1720,7 +1720,7 @@ bool UnitClass::Goto_Clear_Spot(void)
 		while (*ptr) {
 			CELL	cell = Coord_Cell(Coord)+*ptr++;
 
-			if (BuildingTypeClass::As_Reference(STRUCT_CONST).Legal_Placement(cell)) {
+			if (BuildingTypeClass::As_Reference(STRUCT_CONST).Legal_Placement(cell, *House)) {
 				Assign_Destination(::As_Target(cell));
 				break;
 			}
@@ -1765,7 +1765,7 @@ bool UnitClass::Try_To_Deploy(void)
 			**	player.
 			*/
 			Mark(MARK_UP);
-			if (!BuildingTypeClass::As_Reference(STRUCT_CONST).Legal_Placement(Coord_Cell(Adjacent_Cell(Center_Coord(), FACING_NW)))) {
+			if (!BuildingTypeClass::As_Reference(STRUCT_CONST).Legal_Placement(Coord_Cell(Adjacent_Cell(Center_Coord(), FACING_NW)), *House)) {
 				if (PlayerPtr == House) {
 					Speak(VOX_DEPLOY);
 				}
@@ -3868,7 +3868,7 @@ ActionType UnitClass::What_Action(ObjectClass * object) const
 			}
 		} else {
 			((ObjectClass &)(*this)).Mark(MARK_UP);
-			if (!BuildingTypeClass::As_Reference(STRUCT_CONST).Legal_Placement(Coord_Cell(Adjacent_Cell(Center_Coord(), FACING_NW)))) {
+			if (!BuildingTypeClass::As_Reference(STRUCT_CONST).Legal_Placement(Coord_Cell(Adjacent_Cell(Center_Coord(), FACING_NW)), *House)) {
  				// Nyerguds's C&C Patch Project v1.04: Added "Cannot deploy here" cursor.
 				action = ACTION_NO_SELF;
 			}

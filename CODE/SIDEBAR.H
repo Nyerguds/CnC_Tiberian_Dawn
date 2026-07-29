@@ -131,6 +131,7 @@ class SidebarClass: public PowerClass
 		// No longer private, so it can be called as Map->.
 		bool  Scroll(bool up, int column);
 		void	Fill_Bottom();
+		static int  Which_Column(RTTIType type);
 
 		/*
 		**	File I/O.
@@ -395,7 +396,6 @@ class SidebarClass: public PowerClass
 		bool  Activate_Repair(int control);
 		bool  Activate_Upgrade(int control);
 		bool  Activate_Demolish(int control);
-		int  Which_Column(RTTIType type);
 
 		unsigned IsRepairActive:1;
 		unsigned IsUpgradeActive:1;

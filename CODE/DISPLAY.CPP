@@ -855,8 +855,8 @@ void DisplayClass::Recheck_Placement(void)
 	CCDebugFunc("void DisplayClass::Recheck_Placement(void)");
 #endif
 	if (PendingObject) {
-		ProximityCheck = Passes_Proximity_Check(PendingObject);
-		ProximityStealth = Stealth_Proximity_Check(PendingObject);
+		ProximityCheck = Passes_Proximity_Check(PendingObject, *PlayerPtr);
+		ProximityStealth = Stealth_Proximity_Check(PendingObject, *PlayerPtr);
 		Cursor_Mark(ZoneCell + ZoneOffset, true);
 	}
 }
@@ -882,7 +882,7 @@ void DisplayClass::Recheck_Placement(void)
  *   06/06/1994 JLB : Created.                                                                 *
  *   06/07/1994 JLB : Handles concrete check.                                                  *
  *=============================================================================================*/
-bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object)
+bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object, HousesType house)
 {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object)");
@@ -900,6 +900,18 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object)
 		return(true);
 	}
 
+	// Nyerguds's C&C Patch Project v1.04: allow wall repair-replacement.
+	CELL	homecell = ZoneCell + ZoneOffset;
+	BuildingTypeClass * btc = (BuildingTypeClass * )object;
+	if (btc->IsWall && Map.In_Radar(homecell))
+	{
+		OverlayType ovl = OverlayTypeClass::From_Name(btc->IniName);
+		CellClass * hcell = &Map[homecell];
+		if (ovl != OVERLAY_NONE && hcell->Overlay == ovl && hcell->Owner == house && !hcell->Cell_Techno()) {
+			return(true);
+		}
+	}
+
 	/*
 	**	Scan through all cells that the building foundation would cover. If any adjacent
 	**	cells to these are of friendly persuasion, then consider the proximity check to
@@ -907,7 +919,7 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object)
 	*/
 	ptr = CursorSize;
 	while (*ptr != REFRESH_EOL) {
-		CELL	cell = ZoneCell + ZoneOffset + *ptr++;
+		CELL	cell = homecell + *ptr++;
 
 		if (!In_Radar(cell)) return(false);
 		CellClass * mapcell = &Map[cell];
@@ -962,7 +974,7 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object)
  * HISTORY:                                                                                    *
  *   07/12/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
-bool DisplayClass::Stealth_Proximity_Check(ObjectTypeClass const *object) {
+bool DisplayClass::Stealth_Proximity_Check(ObjectTypeClass const *object, HousesType house) {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("bool DisplayClass::Stealth_Proximity_Check(ObjectTypeClass const *object)");
 #endif
@@ -978,6 +990,18 @@ bool DisplayClass::Stealth_Proximity_Check(ObjectTypeClass const *object) {
 
 	if (!object || !CursorSize || object->What_Am_I() != RTTI_BUILDINGTYPE) {
 		return(false);
+	}
+
+	// Nyerguds's C&C Patch Project v1.04: allow wall repair-replacement.
+	CELL	homecell = ZoneCell + ZoneOffset;
+	BuildingTypeClass * btc = (BuildingTypeClass * )object;
+	if (btc->IsWall && Map.In_Radar(homecell))
+	{
+		OverlayType ovl = OverlayTypeClass::From_Name(btc->IniName);
+		CellClass * hcell = &Map[homecell];
+		if (ovl != OVERLAY_NONE && hcell->Overlay == ovl && hcell->Owner == house && !hcell->Cell_Techno()) {
+			return(false);
+		}
 	}
 
 	/*
@@ -1115,8 +1139,8 @@ CELL DisplayClass::Set_Cursor_Pos(CELL pos)
 		}
 	}
 	ZoneCell = pos;
-	ProximityCheck = Passes_Proximity_Check(PendingObject);
-	ProximityStealth = Stealth_Proximity_Check(PendingObject);
+	ProximityCheck = Passes_Proximity_Check(PendingObject, *PlayerPtr);
+	ProximityStealth = Stealth_Proximity_Check(PendingObject, *PlayerPtr);
 	return(prevpos);
 }
 
@@ -1217,7 +1241,7 @@ void DisplayClass::Cursor_Mark(CELL pos, bool on)
 	CELL const *ptr;
 	CellClass *cellptr;
 
-	if (pos == -1) return;
+	if (pos == -1 || CursorSize == NULL) return;
 
 	/*
 	**	For every cell in the CursorSize list, invoke its Redraw_Objects and
@@ -3853,7 +3877,7 @@ void DisplayClass::Mouse_Left_Release(CELL cell, int x, int y, ObjectClass * obj
 		/*
 		**	Try to place the pending object onto the map.
 		*/
-		if (ProximityCheck && Passes_Proximity_Check(PendingObject)) {			
+		if (ProximityCheck && Passes_Proximity_Check(PendingObject, *PlayerPtr)) {			
 			OutList.Add(EventClass(EventClass::PLACE, PendingObjectPtr->What_Am_I(), cell + ZoneOffset));
 		} else {
 			Speak(VOX_DEPLOY);

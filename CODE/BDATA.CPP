@@ -4351,7 +4351,8 @@ BuildingTypeClass::BuildingTypeClass(
 						short const *exitlist,
 						short const *sizelist,
 						short const *overlap) :
-								TechnoTypeClass(name,
+								TechnoTypeClass(type,
+													name,
 													ininame,
 													level,
 													pre,
@@ -4898,7 +4899,7 @@ void BuildingTypeClass::Init_Anim(BStateType state, int start, int count, int ra
  *   06/07/1994 JLB : Handles concrete special check.                                          *
  *   06/21/1994 JLB : Converted to building type class member function.                        *
  *=============================================================================================*/
-int BuildingTypeClass::Legal_Placement(CELL pos) const
+int BuildingTypeClass::Legal_Placement(CELL pos, HousesType house) const
 {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("int BuildingTypeClass::Legal_Placement(CELL pos) const");
@@ -4935,11 +4936,17 @@ int BuildingTypeClass::Legal_Placement(CELL pos) const
 	**	obstacles. If this check passes for all foundation squares, only then does the
 	**	routine return that it is legal to place.
 	*/
+
+	// Nyerguds's C&C Patch Project v1.04: allow wall repair-replacement.
+	OverlayType ovl = OVERLAY_NONE;
+	if (IsWall) {
+		ovl = OverlayTypeClass::From_Name(IniName);
+	}
 	offset = Occupy_List(true);
 	while (*offset != REFRESH_EOL) {
 		CELL cell = pos + *offset++;
 		if (!Map.In_Radar(cell)) return(false);
-		if (!Map[cell].Is_Generally_Clear()) {
+		if (!Map[cell].Is_Generally_Clear(false, false, ovl, house)) {
 			return(false);
 		}
 	}

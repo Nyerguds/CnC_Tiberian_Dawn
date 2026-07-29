@@ -147,6 +147,7 @@ int const TechnoClass::BodyShape[32] = {0,31,30,29,28,27,26,25,24,23,22,21,20,19
  *   03/19/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 TechnoTypeClass::TechnoTypeClass(
+		int type,
 		int name,
 		char const *ininame,
 		unsigned char level,
@@ -203,6 +204,7 @@ TechnoTypeClass::TechnoTypeClass(
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("TechnoTypeClass::TechnoTypeClass(...)");
 #endif
+	Type = type;
 	Level = level;
 	Pre = pre;
 	MaxAmmo = ammo;
@@ -1132,7 +1134,9 @@ void TechnoClass::Per_Cell_Process(bool /*center*/)
 		if (What_Am_I() == RTTI_UNIT) {
 			UnitClass * u = (UnitClass *)this;
 
-			if (*u != UNIT_HOVER && *u != UNIT_GUNBOAT) {
+			// Nyerguds's C&C Patch Project v1.04: Fix reinforced gunboats.
+			//if (*u != UNIT_HOVER && *u != UNIT_GUNBOAT) {
+			if (*u != UNIT_HOVER) {
 				IsLocked = true;
 			}
 		} else {

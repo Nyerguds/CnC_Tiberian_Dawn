@@ -1676,7 +1676,7 @@ InfantryTypeClass::InfantryTypeClass	(
 						WeaponType primary, WeaponType secondary,
 						int weapoffs,
 						MPHType maxspeed)
-	: TechnoTypeClass(name, ininame, level, pre,
+	: TechnoTypeClass(type, name, ininame, level, pre,
 							is_leader, true, is_nominal, false, false, true, true, true, true, false, false,
 							is_theater, false, false, false, false, true, false, is_spy, false, is_civilian,
 							ammo, strength, maxspeed, sightrange, cost,

@@ -894,6 +894,7 @@ void Keyboard_Process(KeyNumType &input)
 			}
 			AllowVoice = true;
 		break;
+
 		/*
 		**	All selected units will attempt to go into guard area mode.
 		*/
@@ -914,6 +915,41 @@ void Keyboard_Process(KeyNumType &input)
 				AllowVoice = true;
 			}
 			break;
+
+		/*
+		**	Re-build last construction.
+		*/
+		case VK_B:
+			if (LastConstruction != STRUCT_NONE) {
+				if (PlayerPtr->BuildingFactory != -1) {
+					FactoryClass * factory = Factories.Raw_Ptr(PlayerPtr->BuildingFactory);
+					TechnoClass * pending = factory->Get_Object();
+					if (factory->Is_Building()) {
+						if (factory->Is_Waiting_For_Funds()) {
+							Speak(VOX_NEED_MO_MONEY);
+						} else {
+							Speak(VOX_NO_FACTORY);
+						}
+					} else if (factory->Has_Completed()) {
+						if (pending && pending->What_Am_I() == RTTI_BUILDING) {
+							BuildingClass * builder = pending->Who_Can_Build_Me(false, false);
+							if (builder) {
+								PlayerPtr->Manual_Place(builder, (BuildingClass *)pending);
+							}
+						}
+					} else { // factory->IsSuspended
+						Speak(VOX_BUILDING);
+						if (pending) {
+							// The type should always match LastConstruction, but better to take it out of the object.
+							OutList.Add(EventClass(EventClass::PRODUCE, RTTI_BUILDINGTYPE, pending->Techno_Type_Class()->Type));
+						}
+					}
+				} else {
+					Speak(VOX_BUILDING);
+					OutList.Add(EventClass(EventClass::PRODUCE, RTTI_BUILDINGTYPE, LastConstruction));
+				}
+			} else {
+			}
 
 		default:
 			break;

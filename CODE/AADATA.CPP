@@ -352,7 +352,8 @@ AircraftTypeClass::AircraftTypeClass(
 				MPHType maxspeed,
 				int rot,
 				MissionType deforder) :
-					TechnoTypeClass(name,
+					TechnoTypeClass(airtype,
+										name,
 										ininame,
 										level,
 										pre,

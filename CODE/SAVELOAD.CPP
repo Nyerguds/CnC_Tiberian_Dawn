@@ -100,7 +100,8 @@
 										sizeof(PassiveHelis) + \
 										sizeof(MissionTargetSpawn) + \
 										sizeof(MissionTargetHouse) + \
-										sizeof(MissionTargetTrigger)))
+										sizeof(MissionTargetTrigger) + \
+										sizeof(LastConstruction)))
 
 
 /***************************************************************************
@@ -658,7 +659,8 @@ bool Save_Misc_Values(FileClass &file)
 	// Added options to customize spawn from tech center destruction.
 	file.Write(&MissionTargetSpawn, sizeof(MissionTargetSpawn));
 	file.Write(&MissionTargetHouse, sizeof(MissionTargetHouse));
-	file.Write(MissionTargetTrigger, sizeof(MissionTargetTrigger));		
+	file.Write(MissionTargetTrigger, sizeof(MissionTargetTrigger));
+	file.Write(&LastConstruction, sizeof(LastConstruction));
 	return(true);
 }
 
@@ -772,7 +774,8 @@ bool Load_Misc_Values(FileClass &file)
 	// Added options to customize spawn from tech center destruction.
 	file.Read(&MissionTargetSpawn, sizeof(MissionTargetSpawn));
 	file.Read(&MissionTargetHouse, sizeof(MissionTargetHouse));
-	file.Read(MissionTargetTrigger, sizeof(MissionTargetTrigger));		
+	file.Read(MissionTargetTrigger, sizeof(MissionTargetTrigger));
+	file.Read(&LastConstruction, sizeof(LastConstruction));
 	return(true);
 }
 
@@ -974,9 +977,11 @@ void Decode_All_Pointers(ScenarioPlayerType campaign)
 	if (Map.PendingObjectPtr) {
 		Map.PendingObject = &Map.PendingObjectPtr->Class_Of();
 		Check_Ptr((void *)Map.PendingObject, __FILE__, __LINE__);
+		Map.CursorSize = NULL;
 		Map.Set_Cursor_Shape(Map.PendingObject->Occupy_List(true));
 	} else {
 		Map.PendingObject = 0;
+		Map.CursorSize = NULL;
 		Map.Set_Cursor_Shape(0);
 	}
 }

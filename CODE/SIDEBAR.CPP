@@ -1301,7 +1301,7 @@ void SidebarClass::StripClass::Init_Clear(void)
 	** Since we're resetting the strips, clear out all the buildables & factory pointers.
 	*/
 	for (int index = 0; index < MAX_BUILDABLES; index++) {
-		Buildables[index].BuildableID = 0;
+		Buildables[index].BuildableID = -1;
 		Buildables[index].BuildableType = RTTI_NONE;
 		Buildables[index].Factory = -1;
 	}
@@ -2155,7 +2155,7 @@ bool SidebarClass::StripClass::Recalc(void)
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("bool SidebarClass::StripClass::Recalc(void)");
 #endif
-	int ok;
+	bool ok;
 
 	if (Debug_Map || !BuildableCount) {
 		return(false);
@@ -2169,10 +2169,11 @@ bool SidebarClass::StripClass::Recalc(void)
 	bool redraw = false;
 	for (int index = 0; index < BuildableCount; index++) {
 		int id = Buildables[index].BuildableID;
-		TechnoTypeClass const * tech = Fetch_Techno_Type(Buildables[index].BuildableType, id);
+		RTTIType btype = Buildables[index].BuildableType;
+		TechnoTypeClass const * tech = Fetch_Techno_Type(btype, id);
 		if (tech) {
 			ok = tech->Who_Can_Build_Me(true, false, PlayerPtr->Class->House) != NULL;
-		} else {
+		} else if (btype == RTTI_SPECIAL) {
 			switch (id) {
 				case SPC_ION_CANNON:
 					ok = PlayerPtr->IonCannon.Is_Present();
@@ -2238,6 +2239,11 @@ bool SidebarClass::StripClass::Recalc(void)
 				//Buildables[index].Factory = -1;
 			//}
 //			Buildables[index].Factory = -1;
+
+			// If the entry was the remembered last construction, clear it.
+			if (btype == RTTI_BUILDINGTYPE && LastConstruction != STRUCT_NONE && id == LastConstruction) {
+				LastConstruction = STRUCT_NONE;
+			}
 
 			/*
 			**	Removes this entry from the list.
@@ -2357,7 +2363,7 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 	int fnumber = bt.Factory;
 
 	FactoryClass * factory = NULL;
-	ObjectTypeClass const * choice = NULL;
+	TechnoTypeClass const * choice = NULL;
 	SpecialWeaponType spc = SPC_NONE;
 
 	/*
@@ -2520,6 +2526,12 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 				**	manager deleted, and the object under construction is returned to
 				**	the free pool.
 				*/
+				if (!factory) {
+					// Nyerguds's C&C Patch Project v1.04: no scroll needed to hold / cancel.
+					// If an item was clicked that was not in production but which is
+					// busy, allow it to execute on hold and cancel orders for its type.
+					factory = PlayerPtr->Get_Factory(otype);
+				}
 				if (factory) {
 
 					/*
@@ -2535,10 +2547,10 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 
 					if (!factory->Is_Building()) {
 						Speak(VOX_CANCELED);
-						OutList.Add(EventClass(EventClass::ABANDON, otype, oid));
+						OutList.Add(EventClass(EventClass::ABANDON, otype, -1));
 					} else {
 						Speak(VOX_SUSPENDED);
-						OutList.Add(EventClass(EventClass::SUSPEND, otype, oid));
+						OutList.Add(EventClass(EventClass::SUSPEND, otype, -1));
 					}
 				}
 			}
@@ -2550,10 +2562,23 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 				**	on the icon that has the attached factory, then say that the factory is busy and
 				**	ignore the click.
 				*/
+			
 				if (fnumber == -1 && genfactory != -1) {
-					Speak(VOX_NO_FACTORY);
-					ControlClass::Action(flags, key);
-					return(true);
+					// Nyerguds's C&C Patch Project v1.04: no scroll needed to resume / place.
+					// If an item was clicked that was not in production but which is
+					// busy, allow it to execute resume or place orders for its type.
+					FactoryClass * fact2 = PlayerPtr->Get_Factory(otype);
+					if (fact2 && fact2->Is_Suspended() && fact2->Get_Object()) {
+						// Either On Hold or ready. Treat as a click on the actual build icon.
+						factory = fact2;
+						// To allow production to resume on the correct type.
+						oid = fact2->Get_Object()->Techno_Type_Class()->Type;
+					}
+					if (!factory) {
+						Speak(VOX_NO_FACTORY);
+						ControlClass::Action(flags, key);
+						return(true);
+					}
 				}
 
 				if (factory) {
@@ -2632,6 +2657,12 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 //					} else {
 					Speak(VOX_BUILDING);
 					OutList.Add(EventClass(EventClass::PRODUCE, otype, oid));
+					// Nyerguds's C&C Patch Project v1.04: "Build last" key support
+					// IF this is a building, set the "last building the player built" to this.
+					if (otype == RTTI_BUILDINGTYPE) {
+						LastConstruction = (StructType)oid;
+					}
+
 //					}
 				}
 			}
