@@ -72,7 +72,9 @@ extern int PreserveVQAScreen;
  *=============================================================================================*/
 bool Start_Scenario(char *root, int nukepieces, bool briefing)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Start_Scenario(char *root, int nukepieces, bool briefing)");
+#endif
 	if (!Read_Scenario(root, nukepieces)) {
 		CCDebugString ("C&C95 - Failed to read scenario.\n");
 		return(false);
@@ -180,6 +182,9 @@ bool Start_Scenario(char *root, int nukepieces, bool briefing)
  *=============================================================================================*/
 bool Read_Scenario(char *root, int nukepieces)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Read_Scenario(char *root, int nukepieces)");
+#endif
 	CCDebugString ("C&C95 - In Read_Scenario.\n");
 	Clear_Scenario();
 	ScenarioInit++;
@@ -230,6 +235,9 @@ bool Read_Scenario(char *root, int nukepieces)
  *=============================================================================================*/
 void Fill_In_Data(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Fill_In_Data(void)");
+#endif
 	/*
 	**	The basic scenario data load does not contain the full set of
 	**	game data. We now must fill in the missing pieces.
@@ -274,6 +282,9 @@ void Fill_In_Data(void)
  *=============================================================================================*/
 void Clear_Scenario(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Clear_Scenario(void)");
+#endif
 	EndCountDown = TICKS_PER_SECOND * 30;
 	CrateCount = 0;
 	CrateTimer = 0;
@@ -333,6 +344,9 @@ void Clear_Scenario(void)
  *=============================================================================================*/
 void Do_Win(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Do_Win(void)");
+#endif
 	Map.Set_Default_Mouse(MOUSE_NORMAL);
 	Hide_Mouse();
 
@@ -589,6 +603,9 @@ void Do_Win(void)
  *=============================================================================================*/
 void Do_Lose(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Do_Lose(void)");
+#endif
 	Map.Set_Default_Mouse(MOUSE_NORMAL);
 	Hide_Mouse();
 
@@ -686,6 +703,9 @@ void Do_Lose(void)
  *=============================================================================================*/
 void Do_Restart(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Do_Restart(void)");
+#endif
 	bool hidden = Get_Mouse_State();
 
 	if (hidden) Show_Mouse();
@@ -720,6 +740,9 @@ void Do_Restart(void)
  *=============================================================================================*/
 bool Restate_Mission(char const * name, int button1, int button2)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Restate_Mission(char const * name, int button1, int button2)");
+#endif
 	bool hidden = Get_Mouse_State();
 	bool image_shown = false;
 	if (name) {

@@ -60,6 +60,9 @@
  *=============================================================================================*/
 DoorClass::DoorClass(void) 
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("DoorClass::DoorClass(void)");
+#endif
 	State = IS_CLOSED;
 	IsToRedraw = false;
 	Stages = 0;
@@ -83,6 +86,9 @@ DoorClass::DoorClass(void)
  *=============================================================================================*/
 void DoorClass::AI(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DoorClass::AI(void)");
+#endif
 	if (Control.Graphic_Logic()) {
 		if (Control.Fetch_Stage() >= Stages) {
 			Control.Set_Rate(0);
@@ -120,6 +126,9 @@ void DoorClass::AI(void)
  *=============================================================================================*/
 bool DoorClass::Open_Door(int rate, int stages)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool DoorClass::Open_Door(int rate, int stages)");
+#endif
 	switch (State) {
 		case IS_CLOSED:
 		case IS_CLOSING:
@@ -152,6 +161,9 @@ bool DoorClass::Open_Door(int rate, int stages)
  *=============================================================================================*/
 bool DoorClass::Close_Door(int rate, int stages)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool DoorClass::Close_Door(int rate, int stages)");
+#endif
 	switch (State) {
 		case IS_OPEN:
 		case IS_OPENING:
@@ -181,6 +193,9 @@ bool DoorClass::Close_Door(int rate, int stages)
  *   05/08/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 void DoorClass::Change_Rate(int rate) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DoorClass::Change_Rate(int rate)");
+#endif
 	// Only relevant if currently animating, and there is anything to change.
 	int currate = Control.Fetch_Rate();
 	if (rate == 0 || rate == currate || currate == 0 || (State != IS_OPENING && State != IS_CLOSING)) {
@@ -213,6 +228,9 @@ void DoorClass::Change_Rate(int rate) {
  *=============================================================================================*/
 int DoorClass::Door_Stage(void) const 
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int DoorClass::Door_Stage(void) const");
+#endif
 	switch (State) {
 		case IS_CLOSING:
 			return((Stages-1) - Control.Fetch_Stage());

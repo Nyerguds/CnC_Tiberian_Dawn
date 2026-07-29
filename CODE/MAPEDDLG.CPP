@@ -76,6 +76,9 @@
  *=========================================================================*/
 int MapEditClass::New_Scenario(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MapEditClass::New_Scenario(void)");
+#endif
 	int scen_num = Scenario;
 	ScenarioPlayerType player = ScenPlayer;
 	ScenarioDirType dir = ScenDir;
@@ -183,6 +186,9 @@ int MapEditClass::New_Scenario(void)
  *=========================================================================*/
 int MapEditClass::Load_Scenario(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MapEditClass::Load_Scenario(void)");
+#endif
 	int scen_num = Scenario;
 	ScenarioPlayerType player = ScenPlayer;
 	ScenarioDirType dir = ScenDir;
@@ -272,6 +278,9 @@ int MapEditClass::Load_Scenario(void)
  *=========================================================================*/
 int MapEditClass::Save_Scenario(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MapEditClass::Save_Scenario(void)");
+#endif
 	int scen_num = Scenario;
 	ScenarioPlayerType player = ScenPlayer;
 	ScenarioDirType dir = ScenDir;
@@ -885,6 +894,9 @@ int MapEditClass::Pick_Scenario(char const * caption, int *scen_nump,
  *=========================================================================*/
 int MapEditClass::Size_Map(int x, int y, int w, int h)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MapEditClass::Size_Map(int x, int y, int w, int h)");
+#endif
 	/*........................................................................
 	Dialog & button dimensions
 	........................................................................*/
@@ -1535,6 +1547,9 @@ int MapEditClass::Size_Map(int x, int y, int w, int h)
  *=========================================================================*/
 int MapEditClass::Scenario_Dialog(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MapEditClass::Scenario_Dialog(void)");
+#endif
 	/*........................................................................
 	Dialog & button dimensions
 	........................................................................*/
@@ -2133,6 +2148,9 @@ int MapEditClass::Scenario_Dialog(void)
  *=========================================================================*/
 void MapEditClass::Handle_Triggers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Handle_Triggers(void)");
+#endif
 	int rc;
 
 	/*------------------------------------------------------------------------
@@ -2255,6 +2273,9 @@ void MapEditClass::Handle_Triggers(void)
  *=========================================================================*/
 int MapEditClass::Select_Trigger(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MapEditClass::Select_Trigger(void)");
+#endif
 	/*........................................................................
 	Dialog & button dimensions
 	........................................................................*/
@@ -2591,6 +2612,9 @@ int MapEditClass::Select_Trigger(void)
  *=========================================================================*/
 int MapEditClass::Edit_Trigger(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MapEditClass::Edit_Trigger(void)");
+#endif
 	/*........................................................................
 	Dialog & button dimensions
 	........................................................................*/
@@ -3207,6 +3231,9 @@ int MapEditClass::Edit_Trigger(void)
  *=========================================================================*/
 int MapEditClass::Import_Triggers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MapEditClass::Import_Triggers(void)");
+#endif
 	/*........................................................................
 	Dialog & button dimensions
 	........................................................................*/
@@ -3546,6 +3573,9 @@ int MapEditClass::Import_Triggers(void)
  *=========================================================================*/
 int MapEditClass::Import_Teams(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MapEditClass::Import_Teams(void)");
+#endif
 	/*........................................................................
 	Dialog & button dimensions
 	........................................................................*/

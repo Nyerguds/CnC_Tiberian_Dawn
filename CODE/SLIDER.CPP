@@ -65,6 +65,9 @@
 SliderClass::SliderClass(unsigned id, int x, int y, int w, int h, int belong_to_list)
 	: GaugeClass(id, x, y, w, h)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("SliderClass::SliderClass(unsigned id, int x, int y, int w, int h, int belong_to_list)");
+#endif
 	BelongToList = belong_to_list ? true : false;
 
 	PlusGadget = 0;
@@ -96,6 +99,9 @@ SliderClass::SliderClass(unsigned id, int x, int y, int w, int h, int belong_to_
 
 virtual SliderClass::~SliderClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("virtual SliderClass::~SliderClass(void)");
+#endif
 	if (PlusGadget) {
 		delete PlusGadget;
 		PlusGadget = 0;
@@ -121,6 +127,9 @@ virtual SliderClass::~SliderClass(void)
  *=============================================================================================*/
 int SliderClass::Set_Maximum(int value)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int SliderClass::Set_Maximum(int value)");
+#endif
 	if (GaugeClass::Set_Maximum(value)) {
 		Recalc_Thumb();
 		return(true);
@@ -144,6 +153,9 @@ int SliderClass::Set_Maximum(int value)
  *=============================================================================================*/
 void SliderClass::Set_Thumb_Size(int value)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SliderClass::Set_Thumb_Size(int value)");
+#endif
 	Thumb = MIN(value, MaxValue);
 	Thumb = MAX(Thumb, 1);
 	Flag_To_Redraw();
@@ -165,6 +177,9 @@ void SliderClass::Set_Thumb_Size(int value)
  *=============================================================================================*/
 int SliderClass::Set_Value(int value) 
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int SliderClass::Set_Value(int value)");
+#endif
 	value = MIN(value, MaxValue-Thumb);
 
 	if (GaugeClass::Set_Value(value)) {
@@ -189,6 +204,9 @@ int SliderClass::Set_Value(int value)
  *=============================================================================================*/
 void SliderClass::Recalc_Thumb(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SliderClass::Recalc_Thumb(void)");
+#endif
 	int length = IsHorizontal ? Width : Height;
 	int size   = Fixed_To_Cardinal(length, Cardinal_To_Fixed(MaxValue, Thumb));
 	ThumbSize  = MAX(size, 4);
@@ -213,6 +231,9 @@ void SliderClass::Recalc_Thumb(void)
  *=============================================================================================*/
 int SliderClass::Action(unsigned flags, KeyNumType &key)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int SliderClass::Action(unsigned flags, KeyNumType &key)");
+#endif
 	/*
 	**	Handle the mouse click in a special way. If the click was not on the thumb, then 
 	**	jump the thumb position one "step" in the appropriate direction. Otherwise, let normal
@@ -277,6 +298,9 @@ int SliderClass::Action(unsigned flags, KeyNumType &key)
  *=============================================================================================*/
 int SliderClass::Bump(int up)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int SliderClass::Bump(int up)");
+#endif
 	if (up) {
 		return(Set_Value(CurValue - Thumb));
 	}
@@ -297,6 +321,9 @@ int SliderClass::Bump(int up)
  *=============================================================================================*/
 int SliderClass::Step(int up)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int SliderClass::Step(int up)");
+#endif
 	if (up) {
 		return(Set_Value(CurValue - 1));
 	}
@@ -317,6 +344,9 @@ int SliderClass::Step(int up)
  *=============================================================================================*/
 int SliderClass::StepBy(int amount)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int SliderClass::StepBy(int amount)");
+#endif
 	return(Set_Value(CurValue + amount));
 }	
 
@@ -334,6 +364,9 @@ int SliderClass::StepBy(int amount)
  *=============================================================================================*/
 void SliderClass::Draw_Thumb(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SliderClass::Draw_Thumb(void)");
+#endif
 	if (IsHorizontal) {
 		Draw_Box(X+ThumbStart, Y, ThumbSize, Height, BOXSTYLE_GREEN_RAISED, true);
 	} else {
@@ -354,6 +387,9 @@ void SliderClass::Draw_Thumb(void)
  *=============================================================================================*/
 int SliderClass::Draw_Me(int forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int SliderClass::Draw_Me(int forced)");
+#endif
 	if (BelongToList) {
 		if (ControlClass::Draw_Me(forced)) {
 
@@ -412,6 +448,9 @@ int SliderClass::Draw_Me(int forced)
  *=============================================================================================*/
 void SliderClass::Peer_To_Peer(unsigned flags, KeyNumType & , ControlClass & whom)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SliderClass::Peer_To_Peer(unsigned flags, KeyNumType & , ControlClass & whom)");
+#endif
 	if (flags & LEFTRELEASE) {
 		if (&whom == PlusGadget) {
 			Step(false);

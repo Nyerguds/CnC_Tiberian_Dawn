@@ -83,6 +83,9 @@
 EditClass::EditClass(int id, char * text, int max_len, TextPrintType flags, int x, int y, int w, int h, EditStyle style) :
 	ControlClass (id, x, y, w, h, LEFTPRESS), String(text)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("EditClass::EditClass(int id, char * text, int max_len, TextPrintType flags, int x, int y, int w, int h, EditStyle style)");
+#endif
 	TextFlags = flags;
 	EditFlags = style;
 	Color = CC_GREEN;
@@ -122,6 +125,9 @@ EditClass::EditClass(int id, char * text, int max_len, TextPrintType flags, int 
  *=============================================================================================*/
 EditClass::~EditClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("EditClass::~EditClass(void)");
+#endif
 	if (Has_Focus()) {
 		Clear_Focus();
 	}
@@ -144,6 +150,9 @@ EditClass::~EditClass(void)
  *=============================================================================================*/
 void EditClass::Set_Text(char * text, int max_len)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void EditClass::Set_Text(char * text, int max_len)");
+#endif
 	String = text;
 	MaxLength = max_len-1;
 	Length = strlen(String);
@@ -168,6 +177,9 @@ void EditClass::Set_Text(char * text, int max_len)
  *=============================================================================================*/
 int EditClass::Draw_Me(int forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int EditClass::Draw_Me(int forced)");
+#endif
 	if (ControlClass::Draw_Me(forced)) {
 		/*
 		**	Hide the mouse.
@@ -218,7 +230,9 @@ int EditClass::Draw_Me(int forced)
  *=============================================================================================*/
 int EditClass::Action(unsigned flags, KeyNumType & key)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int EditClass::Action(unsigned flags, KeyNumType & key)");
+#endif
 	/*
 	** If this is a read-only edit box, it's a display-only device
 	*/
@@ -317,6 +331,9 @@ int EditClass::Action(unsigned flags, KeyNumType & key)
  *=============================================================================================*/
 void EditClass::Draw_Background(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void EditClass::Draw_Background(void)");
+#endif
 	Draw_Box (X, Y, Width, Height, BOXSTYLE_GREEN_BOX, true);
 }
 
@@ -339,6 +356,9 @@ void EditClass::Draw_Background(void)
  *=============================================================================================*/
 void EditClass::Draw_Text(char const * text)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void EditClass::Draw_Text(char const * text)");
+#endif
 	if (FontPtr == GradFont6Ptr) {
 		TextPrintType flags;
 
@@ -385,6 +405,9 @@ void EditClass::Draw_Text(char const * text)
  *=============================================================================================*/
 bool EditClass::Handle_Key(KeyASCIIType ascii)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool EditClass::Handle_Key(KeyASCIIType ascii)");
+#endif
 	switch (ascii) {
 		/*
 		**	Handle the special case of a non-keyboard event. It is possible that this

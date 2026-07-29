@@ -69,6 +69,9 @@
  *=============================================================================================*/
 LinkClass::LinkClass(void) 
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LinkClass::LinkClass(void)");
+#endif
 	LinkClass::Zap();
 }
 
@@ -91,6 +94,9 @@ LinkClass::LinkClass(void)
  *=============================================================================================*/
 LinkClass::LinkClass(LinkClass & link)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LinkClass::LinkClass(LinkClass & link)");
+#endif
 	LinkClass::Zap();
 	Add(link);
 }	
@@ -112,6 +118,9 @@ LinkClass::LinkClass(LinkClass & link)
  *=============================================================================================*/
 LinkClass::~LinkClass(void) 
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LinkClass::~LinkClass(void)");
+#endif
 	Remove();
 }
 
@@ -135,6 +144,9 @@ LinkClass::~LinkClass(void)
  *=============================================================================================*/
 void LinkClass::Zap(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void LinkClass::Zap(void)");
+#endif
 	Next = 0;
 	Prev = 0;
 }	
@@ -164,6 +176,9 @@ void LinkClass::Zap(void)
  *=============================================================================================*/
 LinkClass & LinkClass::operator=(LinkClass & link)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LinkClass & LinkClass::operator=(LinkClass & link)");
+#endif
 	Remove();
 	Add(link);
 	return(link);
@@ -187,6 +202,9 @@ LinkClass & LinkClass::operator=(LinkClass & link)
  *=============================================================================================*/
 LinkClass * LinkClass::Get_Next(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LinkClass * LinkClass::Get_Next(void) const");
+#endif
 	return(Next);
 }
 
@@ -208,6 +226,9 @@ LinkClass * LinkClass::Get_Next(void) const
  *=============================================================================================*/
 LinkClass * LinkClass::Get_Prev(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LinkClass * LinkClass::Get_Prev(void) const");
+#endif
 	return(Prev);
 }
 
@@ -229,6 +250,9 @@ LinkClass * LinkClass::Get_Prev(void) const
  *=============================================================================================*/
 LinkClass const & LinkClass::Head_Of_List(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LinkClass const & LinkClass::Head_Of_List(void) const");
+#endif
 	LinkClass const * link = this;
 	while (link->Prev) {
 		link = link->Prev;
@@ -255,6 +279,9 @@ LinkClass const & LinkClass::Head_Of_List(void) const
  *=============================================================================================*/
 LinkClass const & LinkClass::Tail_Of_List(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LinkClass const & LinkClass::Tail_Of_List(void) const");
+#endif
 	LinkClass const * link = this;
 	while (link->Next) {
 		link = link->Next;
@@ -282,6 +309,9 @@ LinkClass const & LinkClass::Tail_Of_List(void) const
  *=============================================================================================*/
 LinkClass & LinkClass::Add(LinkClass & list)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LinkClass & LinkClass::Add(LinkClass & list)");
+#endif
 	LinkClass *ptr;
 
 	/*
@@ -322,6 +352,9 @@ LinkClass & LinkClass::Add(LinkClass & list)
  *=============================================================================================*/
 LinkClass & LinkClass::Add_Head(LinkClass & list) 
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LinkClass & LinkClass::Add_Head(LinkClass & list)");
+#endif
 	LinkClass *ptr;
 
 	/*
@@ -355,6 +388,9 @@ LinkClass & LinkClass::Add_Head(LinkClass & list)
  *=============================================================================================*/
 LinkClass & LinkClass::Add_Tail(LinkClass & list) 
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LinkClass & LinkClass::Add_Tail(LinkClass & list)");
+#endif
 	LinkClass *ptr;
 
 	/*
@@ -392,6 +428,9 @@ LinkClass & LinkClass::Add_Tail(LinkClass & list)
  *=============================================================================================*/
 LinkClass * LinkClass::Remove(void) 
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LinkClass * LinkClass::Remove(void)");
+#endif
 	LinkClass * head = &Head_Of_List();
 	LinkClass * tail = &Tail_Of_List();
 

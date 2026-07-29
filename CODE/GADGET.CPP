@@ -103,6 +103,9 @@ GadgetClass * GadgetClass::Focused = 0;
  *=============================================================================================*/
 GadgetClass::GadgetClass(int x, int y, int w, int h, unsigned flags, int sticky)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("GadgetClass::GadgetClass(int x, int y, int w, int h, unsigned flags, int sticky)");
+#endif
 	X = x;
 	Y = y;
 	Width = w;
@@ -135,6 +138,9 @@ GadgetClass::GadgetClass(int x, int y, int w, int h, unsigned flags, int sticky)
  *=============================================================================================*/
 GadgetClass::~GadgetClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("GadgetClass::~GadgetClass(void)");
+#endif
 	if (Has_Focus()) {
 		Clear_Focus();
 	}
@@ -155,6 +161,9 @@ GadgetClass::~GadgetClass(void)
  *=========================================================================*/
 int GadgetClass::Clicked_On(KeyNumType & key, unsigned flags, int mousex, int mousey)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int GadgetClass::Clicked_On(KeyNumType & key, unsigned flags, int mousex, int mousey)");
+#endif
 	/*
 	**	Set flags to match only those events that occur AND are being looked for. If
 	**	the result is NULL, then we know that this button should be ignored.
@@ -197,6 +206,9 @@ int GadgetClass::Clicked_On(KeyNumType & key, unsigned flags, int mousex, int mo
  *=============================================================================================*/
 void GadgetClass::Enable(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GadgetClass::Enable(void)");
+#endif
 	IsDisabled = false;
 	IsToRepaint = true;
 	Clear_Focus();
@@ -220,6 +232,9 @@ void GadgetClass::Enable(void)
  *=============================================================================================*/
 void GadgetClass::Disable(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GadgetClass::Disable(void)");
+#endif
 	IsDisabled = true;
 	IsToRepaint = true;
 	Clear_Focus();
@@ -243,6 +258,9 @@ void GadgetClass::Disable(void)
  *=============================================================================================*/
 GadgetClass * GadgetClass::Remove(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("GadgetClass * GadgetClass::Remove(void)");
+#endif
 	Clear_Focus();
 	return(GadgetClass *)LinkClass::Remove();
 }
@@ -265,6 +283,9 @@ GadgetClass * GadgetClass::Remove(void)
  *=============================================================================================*/
 GadgetClass * GadgetClass::Get_Next(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("GadgetClass * GadgetClass::Get_Next(void) const");
+#endif
 	return(GadgetClass*)LinkClass::Get_Next();
 }
 
@@ -286,6 +307,9 @@ GadgetClass * GadgetClass::Get_Next(void) const
  *=============================================================================================*/
 GadgetClass * GadgetClass::Get_Prev(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("GadgetClass * GadgetClass::Get_Prev(void) const");
+#endif
 	return(GadgetClass*)LinkClass::Get_Prev();
 }
 
@@ -307,6 +331,9 @@ GadgetClass * GadgetClass::Get_Prev(void) const
  *=============================================================================================*/
 void GadgetClass::Delete_List(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GadgetClass::Delete_List(void)");
+#endif
 	GadgetClass * g = this;
 
 	/*
@@ -353,6 +380,9 @@ void GadgetClass::Delete_List(void)
  *=============================================================================================*/
 int GadgetClass::Action(unsigned flags, KeyNumType &)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int GadgetClass::Action(unsigned flags, KeyNumType &)");
+#endif
 	/*
 	**	If any of the event flags are active, then this indicates that something probably
 	**	has changed the gadget. Flag the gadget to be redrawn. Also, make sure that
@@ -385,6 +415,9 @@ int GadgetClass::Action(unsigned flags, KeyNumType &)
  *=============================================================================================*/
 int GadgetClass::Draw_Me(int forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int GadgetClass::Draw_Me(int forced)");
+#endif
 	if (forced || IsToRepaint) {
 		IsToRepaint = false;
 		return(true);
@@ -410,6 +443,9 @@ int GadgetClass::Draw_Me(int forced)
  *=============================================================================================*/
 void GadgetClass::Draw_All(bool forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GadgetClass::Draw_All(bool forced)");
+#endif
 	GadgetClass *gadget = this;
 
 	while (gadget != NULL) {
@@ -432,6 +468,9 @@ void GadgetClass::Draw_All(bool forced)
  *=========================================================================*/
 KeyNumType GadgetClass::Input(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("KeyNumType GadgetClass::Input(void)");
+#endif
 	int mousex, mousey;
 	KeyNumType key;
 	unsigned flags;
@@ -657,6 +696,9 @@ KeyNumType GadgetClass::Input(void)
  *=============================================================================================*/
 ControlClass * GadgetClass::Extract_Gadget(unsigned id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ControlClass * GadgetClass::Extract_Gadget(unsigned id)");
+#endif
 	GadgetClass * g = this;
 
 	if (id) {
@@ -689,6 +731,9 @@ ControlClass * GadgetClass::Extract_Gadget(unsigned id)
  *=============================================================================================*/
 void GadgetClass::Flag_To_Redraw(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GadgetClass::Flag_To_Redraw(void)");
+#endif
 	IsToRepaint = true;
 }
 
@@ -712,6 +757,9 @@ void GadgetClass::Flag_To_Redraw(void)
  *=============================================================================================*/
 void GadgetClass::Sticky_Process(unsigned flags)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GadgetClass::Sticky_Process(unsigned flags)");
+#endif
 	if (IsSticky && (flags & LEFTPRESS)) {
 		StuckOn = this;
 	}
@@ -739,6 +787,9 @@ void GadgetClass::Sticky_Process(unsigned flags)
  *=============================================================================================*/
 void GadgetClass::Set_Focus(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GadgetClass::Set_Focus(void)");
+#endif
 	if (Focused) {
 		Focused->Flag_To_Redraw();
 		Focused->Clear_Focus();
@@ -766,6 +817,9 @@ void GadgetClass::Set_Focus(void)
  *=============================================================================================*/
 void GadgetClass::Clear_Focus(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GadgetClass::Clear_Focus(void)");
+#endif
 	if (Focused == this) {
 		Flags &= ~KEYBOARD;
 		Focused = 0;
@@ -790,6 +844,9 @@ void GadgetClass::Clear_Focus(void)
  *=============================================================================================*/
 bool GadgetClass::Has_Focus(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool GadgetClass::Has_Focus(void)");
+#endif
 	return(this == Focused);
 }
 
@@ -810,6 +867,9 @@ bool GadgetClass::Has_Focus(void)
  *=============================================================================================*/
 int GadgetClass::Is_List_To_Redraw(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int GadgetClass::Is_List_To_Redraw(void)");
+#endif
 	GadgetClass *gadget = this;
 
 	while (gadget != NULL) {

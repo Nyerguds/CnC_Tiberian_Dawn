@@ -61,6 +61,9 @@ void const * TabClass::TabShape = NULL;
  *=============================================================================================*/
 TabClass::TabClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TabClass::TabClass(void)");
+#endif
 	IsToRedraw = false;
 //	Select = -1;
 }
@@ -86,7 +89,9 @@ TabClass::TabClass(void)
  *=============================================================================================*/
 void TabClass::Draw_It(bool complete)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TabClass::Draw_It(bool complete)");
+#endif
 	SidebarClass::Draw_It(complete);
 
 	if (Debug_Map){
@@ -124,6 +129,9 @@ void TabClass::Draw_It(bool complete)
 
 void TabClass::Draw_Credits_Tab(int evawidth)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TabClass::Draw_Credits_Tab(int evawidth)");
+#endif
 	int width  = SeenBuff.Get_Width();
 	CC_Draw_Shape(TabShape, 0, width-(evawidth * 2), 0, WINDOW_MAIN, SHAPE_NORMAL);
 }
@@ -146,6 +154,9 @@ void TabClass::Draw_Credits_Tab(int evawidth)
 
 void TabClass::Hilite_Tab(int tab)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TabClass::Hilite_Tab(int tab)");
+#endif
 	int xpos = 0;
 	int text = TXT_TAB_BUTTON_CONTROLS;
 	tab = tab;
@@ -177,6 +188,9 @@ void TabClass::Hilite_Tab(int tab)
  *=============================================================================================*/
 void TabClass::AI(KeyNumType &input, int x, int y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TabClass::AI(KeyNumType &input, int x, int y)");
+#endif
 	if (y >= 0 && y < Tab_Height && x < (SeenBuff.Get_Width() - 1) && x > 0) {
 
 		bool ok = false;
@@ -227,8 +241,11 @@ void TabClass::AI(KeyNumType &input, int x, int y)
  * HISTORY:                                                                                    *
  *   12/15/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
- void TabClass::Set_Active(int select)
+void TabClass::Set_Active(int select)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TabClass::Set_Active(int select)");
+#endif
 	switch (select) {
 		case 0:
 			Queue_Options();
@@ -245,6 +262,9 @@ void TabClass::AI(KeyNumType &input, int x, int y)
 
 void TabClass::One_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TabClass::One_Time(void)");
+#endif
 	int factor = Get_Resolution_Factor();
 	Eva_Width	= 80 * factor;
 	Tab_Height	= 8 * factor;

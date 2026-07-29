@@ -67,6 +67,9 @@
  *=============================================================================================*/
 void * Small_Icon(void const * iconptr, int iconnum)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void * Small_Icon(void const * iconptr, int iconnum)");
+#endif
 	static unsigned char _icon[9];
 	IControl_Type const * iptr = (IControl_Type const *)iconptr;
 	unsigned char * data;
@@ -119,6 +122,9 @@ void * Small_Icon(void const * iconptr, int iconnum)
  *=============================================================================================*/
 void Set_Window(int window, int x, int y, int w, int h)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Set_Window(int window, int x, int y, int w, int h)");
+#endif
 	WindowList[window][WINDOWWIDTH] = w >> 3; 
 	WindowList[window][WINDOWHEIGHT] = h;
 	WindowList[window][WINDOWX] = x >> 3;
@@ -145,6 +151,9 @@ void Set_Window(int window, int x, int y, int w, int h)
  *=============================================================================================*/
 void Fatal(char const *message, ...)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Fatal(char const *message, ...)");
+#endif
 	va_list	va;
 
 	va_start(va, message);
@@ -158,6 +167,9 @@ void Fatal(char const *message, ...)
 #ifdef NEVER
 void File_Fatal(char const *message)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void File_Fatal(char const *message)");
+#endif
 	Prog_End();
 	perror(message);
 	exit(EXIT_FAILURE);
@@ -191,6 +203,9 @@ void File_Fatal(char const *message)
  *=============================================================================================*/
 long Load_Uncompress(FileClass &file, BuffType &uncomp_buff, BuffType &dest_buff, void *reserved_data)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long Load_Uncompress(FileClass &file, BuffType &uncomp_buff, BuffType &dest_buff, void *reserved_data)");
+#endif
 	unsigned short	size;
 	void	*sptr = uncomp_buff.Get_Buffer();
 	void	*dptr = dest_buff.Get_Buffer();
@@ -285,6 +300,9 @@ long Load_Uncompress(FileClass &file, BuffType &uncomp_buff, BuffType &dest_buff
  *=============================================================================================*/
 void * Load_Alloc_Data(FileClass &file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void * Load_Alloc_Data(FileClass &file)");
+#endif
 	void *ptr = 0;
 	long size = file.Size();
 
@@ -316,6 +334,9 @@ void * Load_Alloc_Data(FileClass &file)
  *=============================================================================================*/
 void * Load_Alloc_Data_Size(FileClass &file, long *filesize)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void * Load_Alloc_Data_Size(FileClass &file, long *filesize)");
+#endif
 	void *ptr = 0;
 	long size = file.Size();
 
@@ -346,6 +367,9 @@ void * Load_Alloc_Data_Size(FileClass &file, long *filesize)
  *=============================================================================================*/
 long Translucent_Table_Size(int count)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long Translucent_Table_Size(int count)");
+#endif
 	return(256L + (256L * count));
 }
 
@@ -383,6 +407,9 @@ long Translucent_Table_Size(int count)
  *=============================================================================================*/
 void *Build_Translucent_Table(void const *sourcepal, void const *targetpal, TLucentType const *control, int count, void *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void *Build_Translucent_Table(void const *sourcepal, void const *targetpal, TLucentType const *control, int count, void *buffer)");
+#endif
 	unsigned char	const *table;		// Remap table pointer.
 	int			index;		// Working color index.
 
@@ -441,6 +468,9 @@ void *Build_Translucent_Table(void const *sourcepal, void const *targetpal, TLuc
  *=============================================================================================*/
 void *Conquer_Build_Translucent_Table(void const *sourcepal, void const *targetpal, TLucentType const *control, int count, void *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void *Conquer_Build_Translucent_Table(void const *sourcepal, void const *targetpal, TLucentType const *control, int count, void *buffer)");
+#endif
 	unsigned char	const *table;		// Remap table pointer.
 	int			index;		// Working color index.
 
@@ -505,6 +535,9 @@ void *Conquer_Build_Translucent_Table(void const *sourcepal, void const *targetp
  *=============================================================================================*/
 void *Build_Fading_Table(void const *sourcepal, void const *targetpal, void *dest, long color, long frac, int rangestart, int rangecount, bool freezerange)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void *Build_Fading_Table(void const *sourcepal, void const *targetpal, void *dest, long color, long frac, int rangestart, int rangecount, bool freezerange)");
+#endif
 	// Nyerguds's C&C Patch Project v1.04: Fixes in translucent table generation.
 	unsigned char *trgpal = (unsigned char *)targetpal;
 	unsigned char *srcpal = (unsigned char *)sourcepal;
@@ -607,5 +640,8 @@ void *Build_Fading_Table(void const *sourcepal, void const *targetpal, void *des
  *   09/17/2025 MM  : Unified with Build_Fading_Table.                                         *
  *=============================================================================================*/
 void *Conquer_Build_Fading_Table(void const *sourcepal, void const *targetpal, void *dest, int color, int frac) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void *Conquer_Build_Fading_Table(void const *sourcepal, void const *targetpal, void *dest, int color, int frac)");
+#endif
 	return Build_Fading_Table(sourcepal, targetpal, dest, color, frac, 240, 15, true);
 }

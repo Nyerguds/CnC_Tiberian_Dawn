@@ -53,7 +53,11 @@ void * OverlayClass::VTable;
 
 HousesType OverlayClass::ToOwn = HOUSE_NONE;
 
-OverlayClass::OverlayClass(void) : Class(0) {ToOwn = HOUSE_NONE;};
+OverlayClass::OverlayClass(void) : Class(0) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("OverlayClass::OverlayClass(void)");
+#endif
+ToOwn = HOUSE_NONE;};
 
 
 /***********************************************************************************************
@@ -74,6 +78,9 @@ OverlayClass::OverlayClass(void) : Class(0) {ToOwn = HOUSE_NONE;};
 #ifdef CHEAT_KEYS
 int OverlayClass::Validate(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int OverlayClass::Validate(void) const");
+#endif
 	int num;
 
 	num = Overlays.ID(this);
@@ -106,6 +113,9 @@ int OverlayClass::Validate(void) const
  *=============================================================================================*/
 void OverlayClass::Init(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OverlayClass::Init(void)");
+#endif
 	OverlayClass *ptr;
 
 	Overlays.Free_All();
@@ -133,6 +143,9 @@ void OverlayClass::Init(void)
  *=============================================================================================*/
 void * OverlayClass::operator new(size_t )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void * OverlayClass::operator new(size_t )");
+#endif
 	void * ptr = Overlays.Allocate();
 	if (ptr) {
 		((OverlayClass *)ptr)->IsActive = true;
@@ -158,6 +171,9 @@ void * OverlayClass::operator new(size_t )
  *=============================================================================================*/
 void OverlayClass::operator delete(void *ptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OverlayClass::operator delete(void *ptr)");
+#endif
 	if (ptr) {
 		((OverlayClass *)ptr)->IsActive = false;
 	}
@@ -184,6 +200,9 @@ void OverlayClass::operator delete(void *ptr)
 OverlayClass::OverlayClass(OverlayType type, CELL pos, HousesType house) :
 	Class(&OverlayTypeClass::As_Reference(type))
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("OverlayClass::OverlayClass(OverlayType type, CELL pos, HousesType house)");
+#endif
 	if (pos != -1) {
 		ToOwn = house;
 		Unlimbo(Cell_Coord(pos));
@@ -211,6 +230,9 @@ OverlayClass::OverlayClass(OverlayType type, CELL pos, HousesType house) :
  *=============================================================================================*/
 bool OverlayClass::Mark(MarkType mark)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool OverlayClass::Mark(MarkType mark)");
+#endif
 	Validate();
 	if (ObjectClass::Mark(mark)) {
 		if (mark == MARK_DOWN) {
@@ -373,6 +395,9 @@ bool OverlayClass::Mark(MarkType mark)
  *=============================================================================================*/
 void OverlayClass::Read_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OverlayClass::Read_INI(char *buffer)");
+#endif
 	char	*tbuffer;
 	int	len;				// Length of data in buffer.
 	char	buf[128];
@@ -425,6 +450,9 @@ void OverlayClass::Read_INI(char *buffer)
 #ifdef SCENARIO_EDITOR
 void OverlayClass::Write_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OverlayClass::Write_INI(char *buffer)");
+#endif
 	int	index;
 	char	uname[10];
 	char	buf[128];

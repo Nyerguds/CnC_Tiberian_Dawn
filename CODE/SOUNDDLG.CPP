@@ -52,6 +52,9 @@ class MusicListClass : public ListClass
 };
 int SoundControlsClass::Init(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int SoundControlsClass::Init(void)");
+#endif
 	int factor 		= Get_Resolution_Factor();
 	Option_Width	=292 * factor;
 	Option_Height	=146 * factor;
@@ -114,6 +117,9 @@ int SoundControlsClass::Init(void)
  *=============================================================================================*/
 void SoundControlsClass::Process(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SoundControlsClass::Process(void)");
+#endif
 //	ThemeType theme;
 
 	int factor 		= Get_Resolution_Factor();
@@ -414,6 +420,9 @@ void SoundControlsClass::Process(void)
 
 void MusicListClass::Draw_Entry(int index, int x, int y, int width, int selected)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MusicListClass::Draw_Entry(int index, int x, int y, int width, int selected)");
+#endif
 	if (TextFlags & TPF_6PT_GRAD) {
 		TextPrintType flags = TextFlags;
 

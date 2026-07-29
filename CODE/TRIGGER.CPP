@@ -132,6 +132,9 @@ static const char * ActionText[TriggerClass::ACTION_COUNT + 1] = {
 #ifdef CHEAT_KEYS
 int TriggerClass::Validate(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TriggerClass::Validate(void) const");
+#endif
 	int num;
 
 	num = Triggers.ID(this);
@@ -164,6 +167,9 @@ int TriggerClass::Validate(void) const
  *=============================================================================================*/
 bool TriggerClass::Event_Need_Object(EventType event)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TriggerClass::Event_Need_Object(EventType event)");
+#endif
 	switch (event) {
 		case EVENT_PLAYER_ENTERED:
 		case EVENT_DISCOVERED:
@@ -193,6 +199,9 @@ bool TriggerClass::Event_Need_Object(EventType event)
  *=============================================================================================*/
 bool TriggerClass::Event_Need_House(EventType event)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TriggerClass::Event_Need_House(EventType event)");
+#endif
 	switch (event) {
 		case EVENT_PLAYER_ENTERED:
 		case EVENT_HOUSE_DISCOVERED:
@@ -230,6 +239,9 @@ bool TriggerClass::Event_Need_House(EventType event)
  *=============================================================================================*/
 bool TriggerClass::Event_Need_Data(EventType event)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TriggerClass::Event_Need_Data(EventType event)");
+#endif
 	switch (event) {
 		case EVENT_CREDITS:
 		case EVENT_TIME:
@@ -261,6 +273,9 @@ bool TriggerClass::Event_Need_Data(EventType event)
  *=============================================================================================*/
 bool TriggerClass::Action_Need_Team(TriggerClass::ActionType action)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TriggerClass::Action_Need_Team(TriggerClass::ActionType action)");
+#endif
 	switch (action) {
 		case ACTION_CREATE_TEAM:
 		case ACTION_DESTROY_TEAM:
@@ -288,6 +303,9 @@ bool TriggerClass::Action_Need_Team(TriggerClass::ActionType action)
  *=============================================================================================*/
 TriggerClass::TriggerClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TriggerClass::TriggerClass(void)");
+#endif
 	IsPersistent = VOLATILE;
 	AttachCount = 0;
 	Event = EVENT_NONE;
@@ -316,6 +334,9 @@ TriggerClass::TriggerClass(void)
  *=============================================================================================*/
 TriggerClass::~TriggerClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TriggerClass::~TriggerClass(void)");
+#endif
 	if (GameActive && House != HOUSE_NONE && Action == ACTION_ALLOWWIN) {
 		if (Houses.Ptr(House)->Blockage) Houses.Ptr(House)->Blockage--;
 		Houses.Ptr(House)->BorrowedTime = TICKS_PER_SECOND*4;
@@ -340,6 +361,9 @@ TriggerClass::~TriggerClass(void)
  *=============================================================================================*/
 void TriggerClass::Init(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TriggerClass::Init(void)");
+#endif
 	Triggers.Free_All();
 }
 
@@ -366,6 +390,9 @@ void TriggerClass::Init(void)
  *=============================================================================================*/
 bool TriggerClass::Spring(EventType event, ObjectClass *obj)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TriggerClass::Spring(EventType event, ObjectClass *obj)");
+#endif
 	Validate();
 	/*
 	**	If this is not the event for this trigger, just return.
@@ -602,6 +629,9 @@ bool TriggerClass::Spring(EventType event, ObjectClass *obj)
  *=============================================================================================*/
 bool TriggerClass::Spring(EventType event, CELL cell)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TriggerClass::Spring(EventType event, CELL cell)");
+#endif
 	Validate();
 	/*
 	**	If this is not the event for this trigger, just return.
@@ -836,6 +866,9 @@ bool TriggerClass::Spring(EventType event, CELL cell)
  *=============================================================================================*/
 bool TriggerClass::Spring(EventType event, HousesType house, long data)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TriggerClass::Spring(EventType event, HousesType house, long data)");
+#endif
 	Validate();
 	/*
 	**	If this is not the event for this trigger, just return.
@@ -1060,6 +1093,9 @@ bool TriggerClass::Spring(EventType event, HousesType house, long data)
  *=============================================================================================*/
 bool TriggerClass::Remove(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TriggerClass::Remove(void)");
+#endif
 	Validate();
 	CELL cell;
 	HousesType h;
@@ -1155,6 +1191,9 @@ bool TriggerClass::Remove(void)
  *=============================================================================================*/
 void TriggerClass::Read_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TriggerClass::Read_INI(char *buffer)");
+#endif
 	TriggerClass *trigger;				// Working trigger pointer.
 	char *tbuffer;							// Accumulation buffer of trigger IDs.
 	int len;									// Length of data in buffer.
@@ -1241,6 +1280,9 @@ void TriggerClass::Read_INI(char *buffer)
  *=============================================================================================*/
 void TriggerClass::Fill_In(char * name, char *entry)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TriggerClass::Fill_In(char * name, char *entry)");
+#endif
 	Validate();
 	char *p;
 
@@ -1311,6 +1353,9 @@ void TriggerClass::Fill_In(char * name, char *entry)
 #ifdef SCENARIO_EDITOR
 void TriggerClass::Write_INI(char *buffer, bool refresh)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TriggerClass::Write_INI(char *buffer, bool refresh)");
+#endif
 	int index;
 	char buf[128];
 	TriggerClass *trigger;
@@ -1383,6 +1428,9 @@ void TriggerClass::Write_INI(char *buffer, bool refresh)
  *=============================================================================================*/
 TriggerClass * TriggerClass::As_Pointer(char const * name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TriggerClass * TriggerClass::As_Pointer(char const * name)");
+#endif
 	if (name == NULL) {
 		return(NULL);
 	}
@@ -1416,6 +1464,9 @@ TriggerClass * TriggerClass::As_Pointer(char const * name)
  *=============================================================================================*/
 void * TriggerClass::operator new(size_t )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void * TriggerClass::operator new(size_t )");
+#endif
 	void * ptr = Triggers.Allocate();
 	if (ptr) {
 		((TriggerClass *)ptr)->IsActive = true;
@@ -1441,6 +1492,9 @@ void * TriggerClass::operator new(size_t )
  *=============================================================================================*/
 void TriggerClass::operator delete(void *ptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TriggerClass::operator delete(void *ptr)");
+#endif
 	if (ptr) {
 		((TriggerClass *)ptr)->IsActive = false;
 	}
@@ -1465,6 +1519,9 @@ void TriggerClass::operator delete(void *ptr)
  *=============================================================================================*/
 EventType TriggerClass::Event_From_Name (char const *name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("EventType TriggerClass::Event_From_Name (char const *name)");
+#endif
 	int i;
 
 	if (name == NULL) {
@@ -1498,6 +1555,9 @@ EventType TriggerClass::Event_From_Name (char const *name)
  *=============================================================================================*/
 char const *TriggerClass::Name_From_Event(EventType event)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char const *TriggerClass::Name_From_Event(EventType event)");
+#endif
 	return(EventText[event + 1]);
 }
 
@@ -1519,6 +1579,9 @@ char const *TriggerClass::Name_From_Event(EventType event)
  *=============================================================================================*/
 TriggerClass::ActionType TriggerClass::Action_From_Name (char const *name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TriggerClass::ActionType TriggerClass::Action_From_Name (char const *name)");
+#endif
 	int i;
 
 	if (name == NULL) {
@@ -1552,6 +1615,9 @@ TriggerClass::ActionType TriggerClass::Action_From_Name (char const *name)
  *=============================================================================================*/
 char const *TriggerClass::Name_From_Action(ActionType action)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char const *TriggerClass::Name_From_Action(ActionType action)");
+#endif
 	return(ActionText[action + 1]);
 }
 
@@ -1570,6 +1636,9 @@ char const *TriggerClass::Name_From_Action(ActionType action)
  *=============================================================================================*/
 TARGET TriggerClass::As_Target(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TARGET TriggerClass::As_Target(void) const");
+#endif
 	Validate();
 	return(Build_Target(KIND_TRIGGER, Triggers.ID(this)));
 }
@@ -1593,6 +1662,9 @@ TARGET TriggerClass::As_Target(void) const
  *=============================================================================================*/
 static void Do_All_To_Hunt(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static void Do_All_To_Hunt(void)");
+#endif
 	int index;
 
 	for (index = 0; index < Units.Count(); index++) {

@@ -50,6 +50,9 @@
 
 void GameOptionsClass::Adjust_Variables_For_Resolution(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GameOptionsClass::Adjust_Variables_For_Resolution(void)");
+#endif
 	int factor = Get_Resolution_Factor();
 
 	OptionWidth		=	(216+8) * factor;
@@ -82,6 +85,9 @@ void GameOptionsClass::Adjust_Variables_For_Resolution(void)
  *=============================================================================================*/
 void GameOptionsClass::Process(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GameOptionsClass::Process(void)");
+#endif
 	static struct {
 		int ID;				// Button ID to use.
 		int Text;			// Text number to use for this button.
@@ -520,6 +526,9 @@ void GameOptionsClass::Process(void)
  *=============================================================================================*/
 void Draw_Caption(int text, int x, int y, int w)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Draw_Caption(int text, int x, int y, int w)");
+#endif
 	OptionControlType option = OPTION_NONE;
 	int factor			= Get_Resolution_Factor();
 

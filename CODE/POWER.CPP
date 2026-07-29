@@ -71,6 +71,9 @@ PowerClass::PowerButtonClass PowerClass::PowerButton;
  *=============================================================================================*/
 PowerClass::PowerClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("PowerClass::PowerClass(void)");
+#endif
 	IsToRedraw	= false;
 	RecordedDrain = -1;
 	RecordedPower = -1;
@@ -103,6 +106,9 @@ PowerClass::PowerClass(void)
  *=============================================================================================*/
 void PowerClass::Init_Clear(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void PowerClass::Init_Clear(void)");
+#endif
 	RadarClass::Init_Clear();
 	RecordedDrain = -1;
 	RecordedPower = -1;
@@ -133,6 +139,9 @@ void PowerClass::Init_Clear(void)
  *=============================================================================================*/
 void PowerClass::One_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void PowerClass::One_Time(void)");
+#endif
 	RadarClass::One_Time();
 
 	Reset_Screen_Calculations();
@@ -158,6 +167,9 @@ void PowerClass::One_Time(void)
  *   07/12/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
 void PowerClass::After_Init(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void PowerClass::After_Init(void)");
+#endif
 	RadarClass::After_Init();
 	Reset_Screen_Calculations();
 }
@@ -165,6 +177,9 @@ void PowerClass::After_Init(void) {
 
 void PowerClass::Reset_Screen_Calculations(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void PowerClass::Reset_Screen_Calculations(void)");
+#endif
 	int factor = Get_Resolution_Shift();
 	PowX 			= SeenBuff.Get_Width() - Map.RadWidth;
 	// Nyerguds's C&C Patch Project v1.04: Fix power bar position.
@@ -201,6 +216,9 @@ void PowerClass::Reset_Screen_Calculations(void)
  *=============================================================================================*/
 void PowerClass::Draw_It(bool complete)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void PowerClass::Draw_It(bool complete)");
+#endif
 	static int _modtable[]={
 		0, -1, 0, 1, 0, -1, -2, -1, 0, 1, 2, 1 ,0
 	};
@@ -305,6 +323,9 @@ void PowerClass::Draw_It(bool complete)
  *=============================================================================================*/
 void PowerClass::AI(KeyNumType &input, int x, int y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void PowerClass::AI(KeyNumType &input, int x, int y)");
+#endif
 //	if (!IsActive) {
 //		IsActive = true;
 //		IsToRedraw = true;
@@ -406,6 +427,9 @@ void PowerClass::AI(KeyNumType &input, int x, int y)
  *=============================================================================================*/
 void PowerClass::Refresh_Cells(CELL cell, short const *list)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void PowerClass::Refresh_Cells(CELL cell, short const *list)");
+#endif
 	if (*list == REFRESH_SIDEBAR) {
 		IsToRedraw = true;
 		Flag_To_Redraw(false);
@@ -428,6 +452,9 @@ void PowerClass::Refresh_Cells(CELL cell, short const *list)
  *=========================================================================*/
 int PowerClass::Power_Height(int value)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int PowerClass::Power_Height(int value)");
+#endif
 	int num		= value/ POWER_STEP_LEVEL;	// figure out the initial num of DRAIN_VALUE's
 	int retval	= 0;									// currently there is no power
 
@@ -471,6 +498,9 @@ int PowerClass::Power_Height(int value)
  *=============================================================================================*/
 int PowerClass::PowerButtonClass::Action(unsigned flags, KeyNumType & key)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int PowerClass::PowerButtonClass::Action(unsigned flags, KeyNumType & key)");
+#endif
 	if (!Map.IsSidebarActive) {
 		return(false);
 	}

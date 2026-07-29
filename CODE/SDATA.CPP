@@ -219,6 +219,9 @@ SmudgeTypeClass const * const SmudgeTypeClass::Pointers[SMUDGE_COUNT] = {
 SmudgeTypeClass::SmudgeTypeClass(SmudgeType smudge, char const *ininame, int fullname, int width, int height, bool isbib, bool iscrater) :
 	ObjectTypeClass(false, false, false, true, false, false, true, true, fullname, ininame, ARMOR_NONE, 0)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("SmudgeTypeClass::SmudgeTypeClass(SmudgeType smudge, char const *ininame, int fullname, int width, int height, bool isbib, bool iscrater)");
+#endif
 	IsBib = isbib;
 	Width = width;
 	Height = height;
@@ -244,6 +247,9 @@ SmudgeTypeClass::SmudgeTypeClass(SmudgeType smudge, char const *ininame, int ful
  *=============================================================================================*/
 SmudgeType SmudgeTypeClass::From_Name(char const *name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("SmudgeType SmudgeTypeClass::From_Name(char const *name)");
+#endif
 	if (name) {
 		for (SmudgeType index = SMUDGE_FIRST; index < SMUDGE_COUNT; index++) {
 			if (stricmp(As_Reference(index).IniName, name) == 0) {
@@ -273,6 +279,9 @@ SmudgeType SmudgeTypeClass::From_Name(char const *name)
  *=============================================================================================*/
 short const * SmudgeTypeClass::Occupy_List(bool) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const * SmudgeTypeClass::Occupy_List(bool) const");
+#endif
 	static short _occupy[4*4];
 	short * ptr = &_occupy[0];
 
@@ -306,6 +315,9 @@ short const * SmudgeTypeClass::Occupy_List(bool) const
  *=============================================================================================*/
 void SmudgeTypeClass::Init(TheaterType theater)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SmudgeTypeClass::Init(TheaterType theater)");
+#endif
 	//if (theater != LastTheater){
 	for (SmudgeType index = SMUDGE_FIRST; index < SMUDGE_COUNT; index++) {
 		SmudgeTypeClass const & smudge = As_Reference(index);
@@ -338,6 +350,9 @@ void SmudgeTypeClass::Init(TheaterType theater)
  *=============================================================================================*/
 void SmudgeTypeClass::Display(int x, int y, WindowNumberType window, HousesType ) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SmudgeTypeClass::Display(int x, int y, WindowNumberType window, HousesType ) const");
+#endif
 	void const *ptr = Get_Image_Data();
 	if (!ptr) return;
 	x -= Width * ICON_PIXEL_W / 2;
@@ -373,6 +388,9 @@ void SmudgeTypeClass::Display(int x, int y, WindowNumberType window, HousesType 
  *=============================================================================================*/
 void SmudgeTypeClass::Prep_For_Add(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SmudgeTypeClass::Prep_For_Add(void)");
+#endif
 	for (SmudgeType index = SMUDGE_FIRST; index < SMUDGE_COUNT; index++) {
 		if (As_Reference(index).Get_Image_Data()) {
 			Map.Add_To_List(&As_Reference(index));
@@ -401,6 +419,9 @@ void SmudgeTypeClass::Prep_For_Add(void)
  *=============================================================================================*/
 bool SmudgeTypeClass::Create_And_Place(CELL cell, HousesType ) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SmudgeTypeClass::Create_And_Place(CELL cell, HousesType ) const");
+#endif
 	if (new SmudgeClass(Type, Cell_Coord(cell))) {
 		return(true);
 	}
@@ -428,6 +449,9 @@ bool SmudgeTypeClass::Create_And_Place(CELL cell, HousesType ) const
  *=============================================================================================*/
 ObjectClass * SmudgeTypeClass::Create_One_Of(HouseClass *) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ObjectClass * SmudgeTypeClass::Create_One_Of(HouseClass *) const");
+#endif
 	return(new SmudgeClass(Type, -1));
 }
 
@@ -449,6 +473,9 @@ ObjectClass * SmudgeTypeClass::Create_One_Of(HouseClass *) const
  *=============================================================================================*/
 void SmudgeTypeClass::Draw_It(int x, int y, int data) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SmudgeTypeClass::Draw_It(int x, int y, int data) const");
+#endif
 	void const * ptr = Get_Image_Data();
 	if (ptr) {
 		IsTheaterShape = true;		// Smudges are theater specific
@@ -473,5 +500,8 @@ void SmudgeTypeClass::Draw_It(int x, int y, int data) const
  *=============================================================================================*/
 void SmudgeTypeClass::One_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SmudgeTypeClass::One_Time(void)");
+#endif
 }
 

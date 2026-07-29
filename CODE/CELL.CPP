@@ -159,6 +159,9 @@ const int ConcFillStateToIcon[8] = {
 #ifdef CHEAT_KEYS
 int CellClass::Validate(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CellClass::Validate(void) const");
+#endif
 	int num;
 
 	num = Cell_Number();
@@ -191,6 +194,9 @@ int CellClass::Validate(void) const
  *=============================================================================================*/
 CellClass::CellClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CellClass::CellClass(void)");
+#endif
 	memset(this, 0, sizeof(CellClass));
 	Smudge	= SMUDGE_NONE;
 	Overlay	= OVERLAY_NONE;
@@ -221,6 +227,9 @@ CellClass::CellClass(void)
  *=============================================================================================*/
 int CellClass::Cell_Color(bool override) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CellClass::Cell_Color(bool override) const");
+#endif
 	Validate();
 	BuildingClass * object = Cell_Building();
 	if (object) {
@@ -256,6 +265,9 @@ int CellClass::Cell_Color(bool override) const
  *=============================================================================================*/
 TechnoClass * CellClass::Cell_Techno(int x, int y) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TechnoClass * CellClass::Cell_Techno(int x, int y) const");
+#endif
 	Validate();
 	ObjectClass * object;
 	COORDINATE		click = 0;			// Coordinate of click relative to cell corner.
@@ -306,6 +318,9 @@ TechnoClass * CellClass::Cell_Techno(int x, int y) const
  *=========================================================================*/
 ObjectClass * CellClass::Cell_Find_Object(RTTIType rtti) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ObjectClass * CellClass::Cell_Find_Object(RTTIType rtti) const");
+#endif
 	Validate();
 	ObjectClass * object = Cell_Occupier();
 
@@ -339,6 +354,9 @@ ObjectClass * CellClass::Cell_Find_Object(RTTIType rtti) const
  *=============================================================================================*/
 BuildingClass * CellClass::Cell_Building(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BuildingClass * CellClass::Cell_Building(void) const");
+#endif
 	Validate();
 	return((BuildingClass *)Cell_Find_Object(RTTI_BUILDING));
 }
@@ -363,6 +381,9 @@ BuildingClass * CellClass::Cell_Building(void) const
  *=============================================================================================*/
 TerrainClass * CellClass::Cell_Terrain(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TerrainClass * CellClass::Cell_Terrain(void) const");
+#endif
 	Validate();
 	return((TerrainClass *)Cell_Find_Object(RTTI_TERRAIN));
 }
@@ -391,6 +412,9 @@ TerrainClass * CellClass::Cell_Terrain(void) const
  *=============================================================================================*/
 ObjectClass * CellClass::Cell_Object(int x, int y) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ObjectClass * CellClass::Cell_Object(int x, int y) const");
+#endif
 	Validate();
 	ObjectClass * ptr;
 
@@ -434,6 +458,9 @@ ObjectClass * CellClass::Cell_Object(int x, int y) const
  *=============================================================================================*/
 void CellClass::Redraw_Objects(bool forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CellClass::Redraw_Objects(bool forced)");
+#endif
 	Validate();
 	CELL	cell = Cell_Number();
 
@@ -486,6 +513,9 @@ void CellClass::Redraw_Objects(bool forced)
  *=============================================================================================*/
 bool CellClass::Is_Generally_Clear(bool ignoremobile, bool ignorecloak) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool CellClass::Is_Generally_Clear(bool ignoremobile, bool ignorecloak) const");
+#endif
 	Validate();
 	if (ScenarioInit) return(true);
 	// Nyerguds's C&C Patch Project v1.04: Allow placing smudge on unit-occupied cells.
@@ -561,6 +591,9 @@ bool CellClass::Is_Generally_Clear(bool ignoremobile, bool ignorecloak) const
  *=============================================================================================*/
 void CellClass::Recalc_Attributes(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CellClass::Recalc_Attributes(void)");
+#endif
 	Validate();
 	/*
 	**	Check for wall effects.
@@ -636,6 +669,9 @@ void CellClass::Recalc_Attributes(void)
  *=============================================================================================*/
 void CellClass::Occupy_Down(ObjectClass * object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CellClass::Occupy_Down(ObjectClass * object)");
+#endif
 	Validate();
 	ObjectClass * optr;
 
@@ -709,6 +745,9 @@ void CellClass::Occupy_Down(ObjectClass * object)
  *=============================================================================================*/
 void CellClass::Occupy_Up(ObjectClass * object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CellClass::Occupy_Up(ObjectClass * object)");
+#endif
 	Validate();
 	ObjectClass * optr = NULL;			// Working pointer to the objects in the chain.
 
@@ -780,6 +819,9 @@ void CellClass::Occupy_Up(ObjectClass * object)
  *=============================================================================================*/
 void CellClass::Overlap_Down(ObjectClass * object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CellClass::Overlap_Down(ObjectClass * object)");
+#endif
 	Validate();
 	ObjectClass **ptr = 0;
 
@@ -837,6 +879,9 @@ void CellClass::Overlap_Down(ObjectClass * object)
  *=============================================================================================*/
 void CellClass::Overlap_Up(ObjectClass *object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CellClass::Overlap_Up(ObjectClass *object)");
+#endif
 	Validate();
 	for (int index = 0; index < sizeof(Overlapper)/sizeof(Overlapper[0]); index++) {
 		if (Overlapper[index] == object) {
@@ -864,6 +909,9 @@ void CellClass::Overlap_Up(ObjectClass *object)
  *=============================================================================================*/
 UnitClass * CellClass::Cell_Unit(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("UnitClass * CellClass::Cell_Unit(void) const");
+#endif
 	Validate();
 	return((UnitClass*)Cell_Find_Object(RTTI_UNIT));
 }
@@ -887,6 +935,9 @@ UnitClass * CellClass::Cell_Unit(void) const
  *=============================================================================================*/
 InfantryClass * CellClass::Cell_Infantry(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("InfantryClass * CellClass::Cell_Infantry(void) const");
+#endif
 	Validate();
 	return((InfantryClass*)Cell_Find_Object(RTTI_INFANTRY));
 }
@@ -916,6 +967,9 @@ InfantryClass * CellClass::Cell_Infantry(void) const
  *=============================================================================================*/
 void CellClass::Draw_It(int x, int y, int draw_type) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CellClass::Draw_It(int x, int y, int draw_type) const");
+#endif
 	Validate();
 	TemplateTypeClass const *ttype = 0;
 	int	icon;		// The icon number to use from the template set.
@@ -1222,6 +1276,9 @@ inline bool Allow_Edge_W(int cell) { return  (cell % MAP_CELL_W != 0); }
  *=============================================================================================*/
 bool CellClass:: Adjacent_Is_Valid(FacingType face, bool foroverlay)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool CellClass:: Adjacent_Is_Valid(FacingType face, bool foroverlay)");
+#endif
 	int cell = Cell_Number();
 	
 	switch (face) {
@@ -1274,6 +1331,9 @@ bool CellClass:: Adjacent_Is_Valid(FacingType face, bool foroverlay)
  *=============================================================================================*/
 int Get_Conc_Icon(ConcFill fillState, bool isOdd)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Get_Conc_Icon(ConcFill fillState, bool isOdd)");
+#endif
 	int odd = isOdd ? 1 : 0;
 	int val = fillState < 0 || fillState >= 8 ? 0 : ConcFillStateToIcon[fillState];
 	// For some reason the odd and even icons for state 0 are swapped compared to all the others, so
@@ -1300,6 +1360,9 @@ int Get_Conc_Icon(ConcFill fillState, bool isOdd)
  *=============================================================================================*/
 ConcFill Get_Conc_State(CellClass * cell)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ConcFill Get_Conc_State(CellClass * cell)");
+#endif
 	if (!cell->Overlay == OVERLAY_CONCRETE) {
 		return CONC_FILL_NONE;
 	}
@@ -1331,6 +1394,9 @@ ConcFill Get_Conc_State(CellClass * cell)
  *=============================================================================================*/
 bool CellClass::Is_Ignorable_Concrete()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool CellClass::Is_Ignorable_Concrete()");
+#endif
 	// only true if it is concrete without its center filled.
 	ConcFill fill = Get_Conc_State(this);
 	return fill != CONC_FILL_NONE && (fill & CONC_FILL_CENTER) == 0;
@@ -1357,6 +1423,9 @@ bool CellClass::Is_Ignorable_Concrete()
  *=============================================================================================*/
 ConcFill Build_Conc_Fill_State(CELL cell, FacingType * checkCells)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ConcFill Build_Conc_Fill_State(CELL cell, FacingType * checkCells)");
+#endif
 	CellClass * mapcell = &Map[cell];
 	ConcAdj mask = CONC_ADJ_NONE;
 	for (int i = 0; i < 5; ++i) {
@@ -1437,6 +1506,9 @@ ConcFill Build_Conc_Fill_State(CELL cell, FacingType * checkCells)
  *=============================================================================================*/
 void CellClass::Concrete_Calc(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CellClass::Concrete_Calc(void)");
+#endif
   // Facings to check for adjacent cells around even and odd-cell concrete.
 	// The order in this array matches the bits order in the CONC_ADJ values.
  	// In order: top, top-aside, aside, bottom-aside, bottom.
@@ -1495,6 +1567,9 @@ void CellClass::Concrete_Calc(void)
  *=============================================================================================*/
 void CellClass::Concrete_Calc(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CellClass::Concrete_Calc(void)");
+#endif
 	Validate();
 	static FacingType _even[5] = {FACING_N, FACING_S, FACING_SW, FACING_W, FACING_NW};
 	static FacingType _odd[5] = {FACING_N, FACING_NE, FACING_E, FACING_SE, FACING_S};
@@ -1722,6 +1797,9 @@ void CellClass::Concrete_Calc(void)
  *=============================================================================================*/
 void CellClass::Wall_Update(OverlayType overlay)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CellClass::Wall_Update(OverlayType overlay)");
+#endif
 	Validate();
 	if (overlay == OVERLAY_NONE) {
 			return;
@@ -1795,6 +1873,9 @@ void CellClass::Wall_Update(OverlayType overlay)
  *=============================================================================================*/
 COORDINATE CellClass::Cell_Coord(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE CellClass::Cell_Coord(void) const");
+#endif
 	Validate();
 	return(::Cell_Coord(Cell_Number()));
 }
@@ -1817,6 +1898,9 @@ COORDINATE CellClass::Cell_Coord(void) const
  *=============================================================================================*/
 int CellClass::Reduce_Tiberium(int levels)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CellClass::Reduce_Tiberium(int levels)");
+#endif
 	Validate();
 	int reducer = 0;
 	// Nyerguds's TUC Quick Fix Patch v1.00: harvesting
@@ -1854,6 +1938,9 @@ int CellClass::Reduce_Tiberium(int levels)
  *=============================================================================================*/
 int CellClass::Reduce_Wall(int damage)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CellClass::Reduce_Wall(int damage)");
+#endif
 	Validate();
 	if (Overlay == OVERLAY_NONE) {
 		return(false);
@@ -1906,6 +1993,9 @@ int CellClass::Reduce_Wall(int damage)
  *=============================================================================================*/
 TriggerClass * CellClass::Get_Trigger(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TriggerClass * CellClass::Get_Trigger(void) const");
+#endif
 	Validate();
 	if (IsTrigger) {
 		return(CellTriggers[Cell_Number()]);
@@ -1932,6 +2022,9 @@ TriggerClass * CellClass::Get_Trigger(void) const
  *=============================================================================================*/
 int CellClass::Spot_Index(COORDINATE coord)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CellClass::Spot_Index(COORDINATE coord)");
+#endif
 	COORDINATE rel = coord & 0x00FF00FFL;		// Sub coordinate value within cell.
 
 	/*
@@ -1983,6 +2076,9 @@ int CellClass::Spot_Index(COORDINATE coord)
  *=============================================================================================*/
 COORDINATE CellClass::Closest_Free_Spot(COORDINATE coord, bool any) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE CellClass::Closest_Free_Spot(COORDINATE coord, bool any) const");
+#endif
 	Validate();
 	int spot_index = Spot_Index(coord);
 
@@ -2075,6 +2171,9 @@ COORDINATE CellClass::Closest_Free_Spot(COORDINATE coord, bool any) const
  *=============================================================================================*/
 int CellClass::Clear_Icon(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CellClass::Clear_Icon(void) const");
+#endif
 	Validate();
 	CELL cell = Cell_Number();
 	return((Cell_X(cell) & 0x03) | ((Cell_Y(cell) & 0x03) << 2));
@@ -2102,6 +2201,9 @@ int CellClass::Clear_Icon(void) const
  *=============================================================================================*/
 void CellClass::Incoming(COORDINATE threat, bool forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CellClass::Incoming(COORDINATE threat, bool forced)");
+#endif
 	Validate();
 	ObjectClass * object = NULL;
 
@@ -2143,6 +2245,9 @@ void CellClass::Incoming(COORDINATE threat, bool forced)
  *=============================================================================================*/
 CellClass const & CellClass::Adjacent_Cell(FacingType face) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CellClass const & CellClass::Adjacent_Cell(FacingType face) const");
+#endif
 	Validate();
 	if ((unsigned)face >= FACING_COUNT) {
 		return(*this);
@@ -2177,6 +2282,9 @@ CellClass const & CellClass::Adjacent_Cell(FacingType face) const
  *=========================================================================*/
 void CellClass::Adjust_Threat(HousesType house, int threat_value)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CellClass::Adjust_Threat(HousesType house, int threat_value)");
+#endif
 	Validate();
 	int region = Map.Cell_Region(Cell_Number());
 
@@ -2215,6 +2323,9 @@ void CellClass::Adjust_Threat(HousesType house, int threat_value)
  *=============================================================================================*/
 long CellClass::Tiberium_Adjust(bool pregame)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long CellClass::Tiberium_Adjust(bool pregame)");
+#endif
 	Validate();
 	if (Overlay != OVERLAY_NONE) {
 		if (OverlayTypeClass::As_Reference(Overlay).Land == LAND_TIBERIUM) {
@@ -2270,6 +2381,9 @@ long CellClass::Tiberium_Adjust(bool pregame)
  *=============================================================================================*/
 bool CellClass::Goodie_Check(FootClass * object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool CellClass::Goodie_Check(FootClass * object)");
+#endif
 	Validate();
 	enum {
 		MONEY,			// Cash award.
@@ -2660,6 +2774,9 @@ bool CellClass::Goodie_Check(FootClass * object)
  *=============================================================================================*/
 bool CellClass::Flag_Place(HousesType house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool CellClass::Flag_Place(HousesType house)");
+#endif
 	Validate();
 	if (!IsFlagged && Is_Generally_Clear()) {
 		IsFlagged = true;
@@ -2687,6 +2804,9 @@ bool CellClass::Flag_Place(HousesType house)
  *=============================================================================================*/
 bool CellClass::Flag_Remove(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool CellClass::Flag_Remove(void)");
+#endif
 	Validate();
 	if (IsFlagged) {
 		IsFlagged = false;
@@ -2716,6 +2836,9 @@ bool CellClass::Flag_Remove(void)
  *=============================================================================================*/
 void CellClass::Shimmer(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CellClass::Shimmer(void)");
+#endif
 	Validate();
 	ObjectClass * object = Cell_Occupier();
 
@@ -2744,6 +2867,9 @@ void CellClass::Shimmer(void)
  *=============================================================================================*/
 ObjectClass * CellClass::Cell_Occupier(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ObjectClass * CellClass::Cell_Occupier(void) const");
+#endif
 	ObjectClass * ptr = OccupierPtr;
 	bool reset = false;
 	while (ptr && !ptr->IsActive) {

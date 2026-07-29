@@ -53,6 +53,9 @@
  *=========================================================================*/
 bool Read_Private_Config_Struct (char *profile, NewConfigType *config)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Read_Private_Config_Struct (char *profile, NewConfigType *config)");
+#endif
 	config->DigitCard 	= WWGetPrivateProfileHex ("Sound", "Card", 			 profile);
 	config->IRQ 			= WWGetPrivateProfileInt ("Sound", "IRQ", 			 0,profile);
 	config->DMA 			= WWGetPrivateProfileInt ("Sound", "DMA", 			 0,profile);
@@ -78,6 +81,9 @@ bool Read_Private_Config_Struct (char *profile, NewConfigType *config)
  *=========================================================================*/
 unsigned WWGetPrivateProfileHex (char const *section, char const *entry, char *profile)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned WWGetPrivateProfileHex (char const *section, char const *entry, char *profile)");
+#endif
 	char	buffer[MAX_ENTRY_SIZE];					// Integer staging buffer.
 	unsigned card;
 
@@ -119,6 +125,9 @@ unsigned WWGetPrivateProfileHex (char const *section, char const *entry, char *p
  *=============================================================================================*/
 int WWGetPrivateProfileInt(char const *section, char const *entry, int def, char *profile)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int WWGetPrivateProfileInt(char const *section, char const *entry, int def, char *profile)");
+#endif
 	char	buffer[16];			// Integer staging buffer.
 
 	/*
@@ -161,6 +170,9 @@ int WWGetPrivateProfileInt(char const *section, char const *entry, int def, char
  *=============================================================================================*/
 bool WWWritePrivateProfileInt(char const *section, char const *entry, int value, char *profile)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool WWWritePrivateProfileInt(char const *section, char const *entry, int value, char *profile)");
+#endif
 	char	buffer[250];			// Working section buffer.
 
 	/*
@@ -207,6 +219,9 @@ bool WWWritePrivateProfileInt(char const *section, char const *entry, int value,
  *=============================================================================================*/
 bool WWGetPrivateProfileBool(char const *section, char const *entry, bool def, char *profile)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool WWGetPrivateProfileBool(char const *section, char const *entry, bool def, char *profile)");
+#endif
 	char	buffer[16];			// Integer staging buffer.
 
 	/*
@@ -262,6 +277,9 @@ bool WWGetPrivateProfileBool(char const *section, char const *entry, bool def, c
  *=============================================================================================*/
 bool WWWritePrivateProfileBool(char const *section, char const *entry, bool value, char *profile)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool WWWritePrivateProfileBool(char const *section, char const *entry, bool value, char *profile)");
+#endif
 	char	buffer[250];			// Working section buffer.
 
 	/*
@@ -312,6 +330,9 @@ bool WWWritePrivateProfileBool(char const *section, char const *entry, bool valu
  *=============================================================================================*/
 char * WWGetPrivateProfileString(char const *section, char const *entry, char const *def, char *retbuffer, int retlen, char *profile)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char * WWGetPrivateProfileString(char const *section, char const *entry, char const *def, char *retbuffer, int retlen, char *profile)");
+#endif
 	char	* workptr,		// Working pointer into profile block.
 			* altworkptr;	// Alternate work pointer.
 	char	sec[50];			// Working section buffer.
@@ -622,6 +643,9 @@ char * WWGetPrivateProfileString(char const *section, char const *entry, char co
  *=============================================================================================*/
 bool WWWritePrivateProfileString(char const *section, char const *entry, char const *string, char *profile)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool WWWritePrivateProfileString(char const *section, char const *entry, char const *string, char *profile)");
+#endif
 	char	buffer[250];			// Working section buffer
 	char	*offset;
 	char *next;						// ptr to next section

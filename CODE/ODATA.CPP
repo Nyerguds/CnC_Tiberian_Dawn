@@ -641,6 +641,9 @@ OverlayTypeClass::OverlayTypeClass(
 							ARMOR_NONE,
 							0)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("OverlayTypeClass::OverlayTypeClass(...)");
+#endif
 	IsRadarVisible = isradarvisible;
 	IsCrate = iscrate;
 	IsWooden = iswooden;
@@ -672,6 +675,9 @@ OverlayTypeClass::OverlayTypeClass(
  *=============================================================================================*/
 void OverlayTypeClass::One_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OverlayTypeClass::One_Time(void)");
+#endif
 	for (OverlayType index = OVERLAY_FIRST; index < OVERLAY_COUNT; index++) {
 		OverlayTypeClass & overlay = (OverlayTypeClass)As_Reference(index);
 		// Nyerguds's C&C Patch Project v1.04: Structure type for wall is cached.
@@ -703,6 +709,9 @@ void OverlayTypeClass::One_Time(void)
  *=============================================================================================*/
 OverlayType OverlayTypeClass::From_Name(char const *name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("OverlayType OverlayTypeClass::From_Name(char const *name)");
+#endif
 	if (name) {
 		for (OverlayType index = OVERLAY_FIRST; index < OVERLAY_COUNT; index++) {
 			if (stricmp(As_Reference(index).IniName, name) == 0) {
@@ -734,6 +743,9 @@ OverlayType OverlayTypeClass::From_Name(char const *name)
  *=============================================================================================*/
 short const * OverlayTypeClass::Occupy_List(bool) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const * OverlayTypeClass::Occupy_List(bool) const");
+#endif
 	static short _simple[] = {0, REFRESH_EOL};
 
 	return(_simple);
@@ -755,6 +767,9 @@ short const * OverlayTypeClass::Occupy_List(bool) const
  *=========================================================================*/
 unsigned char * OverlayTypeClass::Radar_Icon(int data) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned char * OverlayTypeClass::Radar_Icon(int data) const");
+#endif
 	unsigned char *icon = (unsigned char *)Get_Radar_Data();		// Get pointer to radar icons
 	if (!icon) {
 		return(NULL);
@@ -784,6 +799,9 @@ unsigned char * OverlayTypeClass::Radar_Icon(int data) const
  *=============================================================================================*/
 void OverlayTypeClass::Display(int x, int y, WindowNumberType window, HousesType ) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OverlayTypeClass::Display(int x, int y, WindowNumberType window, HousesType ) const");
+#endif
 	/*
 	---------------------------- Draw the shape ------------------------------
 	*/
@@ -819,6 +837,9 @@ void OverlayTypeClass::Display(int x, int y, WindowNumberType window, HousesType
  *=============================================================================================*/
 void OverlayTypeClass::Prep_For_Add(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OverlayTypeClass::Prep_For_Add(void)");
+#endif
 	for (OverlayType index = OVERLAY_FIRST; index < OVERLAY_COUNT; index++) {
 		OverlayTypeClass const & overlay = As_Reference(index);
 		if (overlay.Get_Image_Data() && !overlay.IsWall && (!overlay.IsTiberium || index == OVERLAY_TIBERIUM1)) {
@@ -846,6 +867,9 @@ void OverlayTypeClass::Prep_For_Add(void)
  *=============================================================================================*/
 bool OverlayTypeClass::Create_And_Place(CELL cell, HousesType ) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool OverlayTypeClass::Create_And_Place(CELL cell, HousesType ) const");
+#endif
 	if (new OverlayClass(Type, cell)) {
 		return(true);
 	}
@@ -871,6 +895,9 @@ bool OverlayTypeClass::Create_And_Place(CELL cell, HousesType ) const
  *=============================================================================================*/
 ObjectClass * OverlayTypeClass::Create_One_Of(HouseClass *) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ObjectClass * OverlayTypeClass::Create_One_Of(HouseClass *) const");
+#endif
 	return(new OverlayClass(Type, -1));
 }
 
@@ -895,6 +922,9 @@ ObjectClass * OverlayTypeClass::Create_One_Of(HouseClass *) const
  *=============================================================================================*/
 void OverlayTypeClass::Draw_It(int x, int y, int data) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OverlayTypeClass::Draw_It(int x, int y, int data) const");
+#endif
 	IsTheaterShape = IsTheater;
 	CC_Draw_Shape(Get_Image_Data(), data, Map.TacPixelX+x+(CELL_PIXEL_W>>1), Map.TacPixelY+y+(CELL_PIXEL_H>>1), WINDOW_MAIN, SHAPE_CENTER|SHAPE_WIN_REL|SHAPE_GHOST, NULL, Map.UnitShadow);
 	IsTheaterShape = false;
@@ -920,6 +950,9 @@ void OverlayTypeClass::Draw_It(int x, int y, int data) const
  *=============================================================================================*/
 OverlayTypeClass const * OverlayTypeClass::As_Pointer(OverlayType type)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("OverlayTypeClass const * OverlayTypeClass::As_Pointer(OverlayType type)");
+#endif
 	if (type <= OVERLAY_NONE || type >= OVERLAY_COUNT)
 		return (NULL);
 	return(Pointers[type]);
@@ -944,6 +977,9 @@ OverlayTypeClass const * OverlayTypeClass::As_Pointer(OverlayType type)
  *=============================================================================================*/
 void OverlayTypeClass::Init(TheaterType theater)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OverlayTypeClass::Init(TheaterType theater)");
+#endif
 	//if (theater != LastTheater){
 	for (OverlayType index = OVERLAY_FIRST; index < OVERLAY_COUNT; index++) {
 		OverlayTypeClass & overlay = (OverlayTypeClass)As_Reference(index);

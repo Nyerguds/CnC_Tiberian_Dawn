@@ -79,6 +79,9 @@
  *=============================================================================================*/
 FixedHeapClass::FixedHeapClass(int size)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FixedHeapClass::FixedHeapClass(int size)");
+#endif
 	Size = size;
 	Buffer = 0;
 	IsAllocated = false;
@@ -104,6 +107,9 @@ FixedHeapClass::FixedHeapClass(int size)
  *=============================================================================================*/
 FixedHeapClass::~FixedHeapClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FixedHeapClass::~FixedHeapClass(void)");
+#endif
 	FixedHeapClass::Clear();
 }	
 
@@ -130,6 +136,9 @@ FixedHeapClass::~FixedHeapClass(void)
  *=============================================================================================*/
 int FixedHeapClass::Set_Heap(int count, void * buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FixedHeapClass::Set_Heap(int count, void * buffer)");
+#endif
 	/*
 	**	Clear out the old heap data.
 	*/
@@ -186,6 +195,9 @@ int FixedHeapClass::Set_Heap(int count, void * buffer)
  *=============================================================================================*/
 void * FixedHeapClass::Allocate(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void * FixedHeapClass::Allocate(void)");
+#endif
 	if (ActiveCount < TotalCount) {
 		int index = FreeFlag.First_False();
 
@@ -217,6 +229,9 @@ void * FixedHeapClass::Allocate(void)
  *=============================================================================================*/
 int FixedHeapClass::Free(void * pointer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FixedHeapClass::Free(void * pointer)");
+#endif
 	if (pointer && ActiveCount) {
 		int index = ID(pointer);
 
@@ -251,6 +266,9 @@ int FixedHeapClass::Free(void * pointer)
  *=============================================================================================*/
 int FixedHeapClass::ID(void const * pointer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FixedHeapClass::ID(void const * pointer)");
+#endif
 	if (pointer && Size) {
 		return((int)(((char *)pointer - (char *)Buffer) / Size));
 	}
@@ -276,6 +294,9 @@ int FixedHeapClass::ID(void const * pointer)
  *=============================================================================================*/
 void FixedHeapClass::Clear(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FixedHeapClass::Clear(void)");
+#endif
 	/*
 	**	Free the old buffer (if present).
 	*/
@@ -307,6 +328,9 @@ void FixedHeapClass::Clear(void)
  *=============================================================================================*/
 int FixedHeapClass::Free_All(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FixedHeapClass::Free_All(void)");
+#endif
 	ActiveCount = 0;
 	FreeFlag.Reset();
 	return(true);
@@ -333,6 +357,9 @@ int FixedHeapClass::Free_All(void)
  *=============================================================================================*/
 int FixedIHeapClass::Free_All(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FixedIHeapClass::Free_All(void)");
+#endif
 	ActivePointers.Delete_All();
 	return(FixedHeapClass::Free_All());
 }
@@ -340,6 +367,9 @@ int FixedIHeapClass::Free_All(void)
 
 void FixedIHeapClass::Clear(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FixedIHeapClass::Clear(void)");
+#endif
 	FixedHeapClass::Clear();
 	ActivePointers.Clear();
 }	
@@ -347,6 +377,9 @@ void FixedIHeapClass::Clear(void)
 
 int FixedIHeapClass::Set_Heap(int count, void * buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FixedIHeapClass::Set_Heap(int count, void * buffer)");
+#endif
 	Clear();
 	if (FixedHeapClass::Set_Heap(count, buffer)) {
 		ActivePointers.Resize(count);
@@ -358,6 +391,9 @@ int FixedIHeapClass::Set_Heap(int count, void * buffer)
 
 void * FixedIHeapClass::Allocate(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void * FixedIHeapClass::Allocate(void)");
+#endif
 	void * ptr = FixedHeapClass::Allocate();
 	if (ptr)	{
 		ActivePointers.Add(ptr);
@@ -385,6 +421,9 @@ void * FixedIHeapClass::Allocate(void)
  *=============================================================================================*/
 int FixedIHeapClass::Free(void * pointer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FixedIHeapClass::Free(void * pointer)");
+#endif
 	if (FixedHeapClass::Free(pointer)) {
 		ActivePointers.Delete(pointer);
 	}
@@ -407,6 +446,9 @@ int FixedIHeapClass::Free(void * pointer)
 template<class T>
 int TFixedIHeapClass<T>::Save(FileClass &file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TFixedIHeapClass<T>::Save(FileClass &file)");
+#endif
 	int i;				// loop counter
 	int idx;				// object index
 
@@ -457,6 +499,9 @@ int TFixedIHeapClass<T>::Save(FileClass &file)
 template<class T>
 int TFixedIHeapClass<T>::Load(FileClass &file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TFixedIHeapClass<T>::Load(FileClass &file)");
+#endif
 	int i;			// loop counter
 	int idx;			// object index
 	T *ptr;			// object pointer
@@ -522,6 +567,9 @@ int TFixedIHeapClass<T>::Load(FileClass &file)
 template<class T>
 void TFixedIHeapClass<T>::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TFixedIHeapClass<T>::Code_Pointers(void)");
+#endif
 	int i;
 
 	for (i = 0; i < ActiveCount; i++) {
@@ -545,6 +593,9 @@ void TFixedIHeapClass<T>::Code_Pointers(void)
 template<class T>
 void TFixedIHeapClass<T>::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TFixedIHeapClass<T>::Decode_Pointers(void)");
+#endif
 	int i;
 
 	for (i = 0; i < ActiveCount; i++) {

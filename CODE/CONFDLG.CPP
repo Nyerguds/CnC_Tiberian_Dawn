@@ -43,6 +43,9 @@
 
 bool ConfirmationClass::Process(int text)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ConfirmationClass::Process(int text)");
+#endif
 	return(Process(Text_String(text)));
 }
 
@@ -59,6 +62,9 @@ bool ConfirmationClass::Process(int text)
  *=============================================================================================*/
 bool ConfirmationClass::Process(char const * string)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ConfirmationClass::Process(char const * string)");
+#endif
 	int factor = Get_Resolution_Factor();
 
 	enum {

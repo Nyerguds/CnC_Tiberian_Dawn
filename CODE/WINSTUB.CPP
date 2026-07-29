@@ -43,7 +43,11 @@
 #include "tcpip.h"
 
 void output(short,short)
-{}
+{
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void output(short,short)");
+#endif
+}
 
 bool InDebugger = false;
 bool ReadyToQuit = false;
@@ -71,6 +75,9 @@ bool ReadyToQuit = false;
  *=========================================================================*/
 int __cdecl Extract_Shape_Count(VOID const *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int __cdecl Extract_Shape_Count(VOID const *buffer)");
+#endif
 	ShapeBlock_Type *block = (ShapeBlock_Type *)buffer;
 
 	return (block->NumShapes);
@@ -98,6 +105,9 @@ int __cdecl Extract_Shape_Count(VOID const *buffer)
  *=========================================================================*/
 VOID * __cdecl Extract_Shape(VOID const *buffer, int shape)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("VOID * __cdecl Extract_Shape(VOID const *buffer, int shape)");
+#endif
 	ShapeBlock_Type *block = (ShapeBlock_Type*) buffer;
 	long offset;			// Offset of shape data, from start of block
 	char *bytebuf = (char*) buffer;
@@ -142,6 +152,9 @@ ThemeType OldTheme = THEME_NONE;
 
 void Focus_Loss(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Focus_Loss(void)");
+#endif
 	if (SoundOn){
 		if (OldTheme == THEME_NONE){
 			OldTheme = Theme.What_Is_Playing();
@@ -155,6 +168,9 @@ void Focus_Loss(void)
 
 void Focus_Restore(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Focus_Restore(void)");
+#endif
 	Restore_Cached_Icons();
 	Map.Flag_To_Redraw(true);
 	Start_Primary_Sound_Buffer(TRUE);
@@ -182,6 +198,9 @@ void Focus_Restore(void)
 
 void Check_For_Focus_Loss(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Check_For_Focus_Loss(void)");
+#endif
 	static BOOL	focus_last_time = 1;
 			 MSG	msg;
 
@@ -232,7 +251,9 @@ extern BOOL InMovie;
 
 long FAR PASCAL _export Windows_Procedure (HWND hwnd, UINT message, UINT wParam, LONG lParam)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long FAR PASCAL _export Windows_Procedure (HWND hwnd, UINT message, UINT wParam, LONG lParam)");
+#endif
 	int	low_param = LOWORD(wParam);
 	bool up = false;
 
@@ -391,6 +412,9 @@ int ShowCommand;
 void Create_Main_Window ( HANDLE instance ,int command_show , int width , int height )
 
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Create_Main_Window ( HANDLE instance ,int command_show , int width , int height )");
+#endif
 	HWND        	hwnd ;
 	WNDCLASS    	wndclass ;
 	//
@@ -445,6 +469,9 @@ void Create_Main_Window ( HANDLE instance ,int command_show , int width , int he
 
 void Window_Dialog_Box(HANDLE  hinst, LPCTSTR  lpszTemplate, HWND  hwndOwner, DLGPROC  dlgprc)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Window_Dialog_Box(HANDLE  hinst, LPCTSTR  lpszTemplate, HWND  hwndOwner, DLGPROC  dlgprc)");
+#endif
 	MSG					msg;
 	/*
 	** Get rid of the Westwood mouse cursor because we are showing a
@@ -505,6 +532,9 @@ extern "C" void Set_Palette_Register(int number,int red ,int green ,int blue);
 #pragma off (unreferenced)
 void Colour_Debug (int call_number)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Colour_Debug (int call_number)");
+#endif
 	//#if 0
 	//if (DebugColour==call_number || !call_number){
 
@@ -527,6 +557,9 @@ void Colour_Debug (int call_number)
 
 BOOL Any_Locked (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BOOL Any_Locked (void)");
+#endif
 	if (SeenBuff.Get_LockCount() ||
 		HidPage.Get_LockCount()){
 		return (TRUE);
@@ -560,6 +593,9 @@ HANDLE DebugFile = INVALID_HANDLE_VALUE;
  *=============================================================================================*/
 void CCDebugString (char *string, ...)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CCDebugString (char *string, ...)");
+#endif
 	// Nyerguds's C&C Patch Project v1.04: added string formatting args to debug logging.
 	va_list	va;
 	
@@ -592,6 +628,16 @@ void CCDebugString (char *string, ...)
 
 }
 
+#ifdef INCLUDE_FUNCTION_NAMES
+// This "function" exists purely to leave a string reference in every function
+// in the game, to allow easy disassembly.
+void CCDebugFunc(char * /*string*/)
+{
+#ifdef INCLUDE_FUNCTION_NAMES
+#endif
+	// Dummy function for putting names in functions.
+}
+#endif
 
 
 
@@ -684,6 +730,9 @@ extern "C"{
 
 void Flag_To_Set_Palette(unsigned char *palette,long numbytes,unsigned long slowpal)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Flag_To_Set_Palette(unsigned char *palette,long numbytes,unsigned long slowpal)");
+#endif
 	VQPalette = palette;
 	VQNumBytes = numbytes;
 	VQSlowpal = slowpal;
@@ -694,6 +743,9 @@ void Flag_To_Set_Palette(unsigned char *palette,long numbytes,unsigned long slow
 
 void Check_VQ_Palette_Set(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Check_VQ_Palette_Set(void)");
+#endif
 	if (VQPaletteChange){
 		SetPalette(VQPalette, VQNumBytes, VQSlowpal);
 		VQPaletteChange = false;
@@ -706,6 +758,9 @@ void Check_VQ_Palette_Set(void)
 
 void __cdecl SetPalette(unsigned char *palette,long,unsigned long)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void __cdecl SetPalette(unsigned char *palette,long,unsigned long)");
+#endif
 	for (int i=0 ; i<256*3 ; i++){
 		*(palette+i)&=63;
 	}
@@ -735,6 +790,9 @@ void __cdecl SetPalette(unsigned char *palette,long,unsigned long)
  *=============================================================================================*/
 void Memory_Error_Handler(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Memory_Error_Handler(void)");
+#endif
 	VisiblePage.Clear();
 	Set_Palette(GamePalette);
 	while (Get_Mouse_State()){Show_Mouse();};
@@ -778,6 +836,9 @@ GraphicBufferClass* Read_PCX_File(char* name, char* Palette, void *Buff, long Si
 
 void Load_Title_Screen(char *name, GraphicViewPortClass *video_page, unsigned char *palette)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Load_Title_Screen(char *name, GraphicViewPortClass *video_page, unsigned char *palette)");
+#endif
 	GraphicBufferClass *load_buffer;
 
 
@@ -832,6 +893,9 @@ void Load_Title_Screen(char *name, GraphicViewPortClass *video_page, unsigned ch
 
 GraphicBufferClass* Read_PCX_File(char* name, char* palette, void *Buff, long Size)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("GraphicBufferClass* Read_PCX_File(char* name, char* palette, void *Buff, long Size)");
+#endif
 	unsigned					i, j;
 	unsigned					rle;
 	unsigned					color;

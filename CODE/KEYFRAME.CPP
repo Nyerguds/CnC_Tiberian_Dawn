@@ -96,6 +96,9 @@ static int Length;
 
 void *Get_Shape_Header_Data(void *ptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void *Get_Shape_Header_Data(void *ptr)");
+#endif
 	if (UseBigShapeBuffer){
 
 		ShapeHeaderType *header = (ShapeHeaderType*) ptr;
@@ -108,6 +111,9 @@ void *Get_Shape_Header_Data(void *ptr)
 
 int Get_Last_Frame_Length(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Get_Last_Frame_Length(void)");
+#endif
 	return(Length);
 }
 
@@ -115,6 +121,9 @@ int Get_Last_Frame_Length(void)
 
 void Reset_Theater_Shapes (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Reset_Theater_Shapes (void)");
+#endif
 	/*
 	** Delete any previously allocated slots
 	*/
@@ -131,6 +140,9 @@ void Reset_Theater_Shapes (void)
 
 void Reallocate_Big_Shape_Buffer(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Reallocate_Big_Shape_Buffer(void)");
+#endif
 	if (ReallocShapeBufferFlag){
 		BigShapeBufferLength += 200 * 1024;							//Extra 2 Mb of uncompressed shape space
 		BigShapeBufferPtr -= (unsigned)BigShapeBufferStart;
@@ -155,6 +167,9 @@ void Reallocate_Big_Shape_Buffer(void)
 
 void Check_Use_Compressed_Shapes (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Check_Use_Compressed_Shapes (void)");
+#endif
 	MEMORYSTATUS	mem_info;
 
 	mem_info.dwLength=sizeof(mem_info);
@@ -185,6 +200,9 @@ void Check_Use_Compressed_Shapes (void)
  *=============================================================================================*/
 void Disable_Uncompressed_Shapes (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Disable_Uncompressed_Shapes (void)");
+#endif
 	UseBigShapeBuffer = false;
 }
 
@@ -206,6 +224,9 @@ void Disable_Uncompressed_Shapes (void)
  *=============================================================================================*/
 void Enable_Uncompressed_Shapes (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Enable_Uncompressed_Shapes (void)");
+#endif
 	UseBigShapeBuffer = OriginalUseBigShapeBuffer;
 }
 
@@ -214,6 +235,9 @@ void Enable_Uncompressed_Shapes (void)
 
 unsigned long Build_Frame(void const *dataptr, unsigned short framenumber, void *buffptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned long Build_Frame(void const *dataptr, unsigned short framenumber, void *buffptr)");
+#endif
 	char *ptr, *lockptr;//, *uncomp_ptr;
 	unsigned long offset[SUBFRAMEOFFS];
 	unsigned long offcurr, off16, offdiff;
@@ -505,6 +529,9 @@ unsigned long Build_Frame(void const *dataptr, unsigned short framenumber, void 
  *=============================================================================================*/
 unsigned short Get_Build_Frame_Count(void const *dataptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned short Get_Build_Frame_Count(void const *dataptr)");
+#endif
 	if (dataptr) {
 		return(((KeyFrameHeaderType const *)dataptr)->frames);
 	}
@@ -514,6 +541,9 @@ unsigned short Get_Build_Frame_Count(void const *dataptr)
 
 unsigned short Get_Build_Frame_X(void const *dataptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned short Get_Build_Frame_X(void const *dataptr)");
+#endif
 	if (dataptr) {
 		return(((KeyFrameHeaderType const *)dataptr)->x);
 	}
@@ -523,6 +553,9 @@ unsigned short Get_Build_Frame_X(void const *dataptr)
 
 unsigned short Get_Build_Frame_Y(void const *dataptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned short Get_Build_Frame_Y(void const *dataptr)");
+#endif
 	if (dataptr) {
 		return(((KeyFrameHeaderType const *)dataptr)->y);
 	}
@@ -547,6 +580,9 @@ unsigned short Get_Build_Frame_Y(void const *dataptr)
  *=============================================================================================*/
 unsigned short Get_Build_Frame_Width(void const *dataptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned short Get_Build_Frame_Width(void const *dataptr)");
+#endif
 	if (dataptr) {
 		return(((KeyFrameHeaderType const *)dataptr)->width);
 	}
@@ -571,6 +607,9 @@ unsigned short Get_Build_Frame_Width(void const *dataptr)
  *=============================================================================================*/
 unsigned short Get_Build_Frame_Height(void const *dataptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned short Get_Build_Frame_Height(void const *dataptr)");
+#endif
 	if (dataptr) {
 		return(((KeyFrameHeaderType const *)dataptr)->height);
 	}
@@ -580,6 +619,9 @@ unsigned short Get_Build_Frame_Height(void const *dataptr)
 
 bool Get_Build_Frame_Palette(void const * dataptr, void * palette)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Get_Build_Frame_Palette(void const * dataptr, void * palette)");
+#endif
 	if (dataptr && (((KeyFrameHeaderType const *)dataptr)->flags & 1)) {
 		char const * ptr = (char const *)Add_Long_To_Pointer( dataptr,
 							( (( (long)sizeof(unsigned long) << 1) *

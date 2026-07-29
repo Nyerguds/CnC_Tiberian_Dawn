@@ -117,6 +117,9 @@ void * AircraftClass::VTable;
 #ifdef CHEAT_KEYS
 int AircraftClass::Validate(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AircraftClass::Validate(void) const");
+#endif
 	int num;
 
 	num = Aircraft.ID(this);
@@ -149,6 +152,9 @@ int AircraftClass::Validate(void) const
  *=============================================================================================*/
 TARGET AircraftClass::As_Target(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TARGET AircraftClass::As_Target(void) const");
+#endif
 	Validate();
 	return(Build_Target(KIND_AIRCRAFT, Aircraft.ID(this)));
 }
@@ -171,6 +177,9 @@ TARGET AircraftClass::As_Target(void) const
  *=============================================================================================*/
 void AircraftClass::Attach(FootClass * object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftClass::Attach(FootClass * object)");
+#endif
 	CargoClass::Attach(object);
 	if (How_Many() == Class->Max_Passengers()) {
 		Close_Door(5, 3);
@@ -196,6 +205,9 @@ void AircraftClass::Attach(FootClass * object)
  *=============================================================================================*/
 void * AircraftClass::operator new(size_t)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void * AircraftClass::operator new(size_t)");
+#endif
 	void * ptr = Aircraft.Allocate();
 	if (ptr) {
 		((AircraftClass *)ptr)->IsActive = true;
@@ -220,6 +232,9 @@ void * AircraftClass::operator new(size_t)
  *=============================================================================================*/
 void AircraftClass::operator delete(void *ptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftClass::operator delete(void *ptr)");
+#endif
 	if (ptr) {
 		((AircraftClass *)ptr)->IsActive = false;
 	}
@@ -248,6 +263,9 @@ AircraftClass::AircraftClass(AircraftType classid, HousesType house) :
 	Class(&AircraftTypeClass::As_Reference(classid)),
 	FootClass(house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("AircraftClass::AircraftClass(AircraftType classid, HousesType house)");
+#endif
 	/*
 	**	For two shooters, clear out the second shot flag -- it will be set the first time
 	**	the object fires. For non two shooters, set the flag since it will never be cleared
@@ -305,6 +323,9 @@ AircraftClass::AircraftClass(AircraftType classid, HousesType house) :
  *=============================================================================================*/
 bool AircraftClass::Unlimbo(COORDINATE coord, DirType dir)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool AircraftClass::Unlimbo(COORDINATE coord, DirType dir)");
+#endif
 	Validate();
 	if (FootClass::Unlimbo(coord, dir)) {
 
@@ -359,6 +380,9 @@ bool AircraftClass::Unlimbo(COORDINATE coord, DirType dir)
  *=============================================================================================*/
 void AircraftClass::Draw_It(int x, int y, WindowNumberType window)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftClass::Draw_It(int x, int y, WindowNumberType window)");
+#endif
 	Validate();
 	void const * shapefile;		// Working shape file pointer.
 	int shapenum = 0;
@@ -479,6 +503,9 @@ void AircraftClass::Draw_It(int x, int y, WindowNumberType window)
  *=============================================================================================*/
 void AircraftClass::Read_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftClass::Read_INI(char *buffer)");
+#endif
 	AircraftClass	*air;			// Working unit pointer.
 	char				*tbuffer;		// Accumulation buffer of unit IDs.
 	HousesType		inhouse;			// Unit house.
@@ -551,6 +578,9 @@ void AircraftClass::Read_INI(char *buffer)
 #ifdef SCENARIO_EDITOR
 void AircraftClass::Write_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftClass::Write_INI(char *buffer)");
+#endif
 	int	index;
 	char	uname[10];
 	char	buf[128];
@@ -609,6 +639,9 @@ void AircraftClass::Write_INI(char *buffer)
  *=============================================================================================*/
 int AircraftClass::Mission_Hunt(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AircraftClass::Mission_Hunt(void)");
+#endif
 	Validate();
 	if (Class->IsFixedWing) {
 		// Nyerguds's C&C Patch Project v1.04: Unarmed air units can't hunt.
@@ -722,6 +755,9 @@ int AircraftClass::Mission_Hunt(void)
  *=============================================================================================*/
 void AircraftClass::AI(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftClass::AI(void)");
+#endif
 	Validate();
 	/*
 	**	A Mission change can always occur if the aircraft is landed or flying.
@@ -942,6 +978,9 @@ void AircraftClass::AI(void)
  *=============================================================================================*/
 bool AircraftClass::Mark(MarkType mark)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool AircraftClass::Mark(MarkType mark)");
+#endif
 	Validate();
 	if (FootClass::Mark(mark)) {
 		Map.Refresh_Cells(Coord_Cell(Coord), Occupy_List());
@@ -972,6 +1011,9 @@ bool AircraftClass::Mark(MarkType mark)
  *=============================================================================================*/
 short const *AircraftClass::Overlap_List(bool /*redraw*/) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const *AircraftClass::Overlap_List(bool /*redraw*/) const");
+#endif
 	Validate();
 	static short const _list[] = {
 		-(MAP_CELL_W-1), -MAP_CELL_W, -(MAP_CELL_W+1),
@@ -1007,6 +1049,9 @@ short const *AircraftClass::Overlap_List(bool /*redraw*/) const
  *=============================================================================================*/
 void AircraftClass::Init(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftClass::Init(void)");
+#endif
 	AircraftClass *ptr;
 
 	Aircraft.Free_All();
@@ -1035,6 +1080,9 @@ void AircraftClass::Init(void)
  *=============================================================================================*/
 int AircraftClass::Mission_Unload(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AircraftClass::Mission_Unload(void)");
+#endif
 	Validate();
 	if (Class->IsFixedWing) {
 		enum {
@@ -1364,6 +1412,9 @@ int AircraftClass::Mission_Unload(void)
  *=============================================================================================*/
 bool AircraftClass::Is_LZ_Clear(TARGET target) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool AircraftClass::Is_LZ_Clear(TARGET target) const");
+#endif
 	Validate();
 	if (!Target_Legal(target)) return(false);
 	CELL cell = ::As_Cell(target);
@@ -1403,6 +1454,9 @@ bool AircraftClass::Is_LZ_Clear(TARGET target) const
  *=============================================================================================*/
 LayerType AircraftClass::In_Which_Layer(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LayerType AircraftClass::In_Which_Layer(void) const");
+#endif
 	Validate();
 	if (Class->IsFixedWing) return(LAYER_TOP);
 
@@ -1432,6 +1486,9 @@ LayerType AircraftClass::In_Which_Layer(void) const
  *=============================================================================================*/
 COORDINATE AircraftClass::Sort_Y(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE AircraftClass::Sort_Y(void) const");
+#endif
 	Validate();
 	return(Coord_Add(Coord, 0x00800000L));
 }
@@ -1456,6 +1513,9 @@ COORDINATE AircraftClass::Sort_Y(void) const
  *=============================================================================================*/
 int AircraftClass::Mission_Retreat(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AircraftClass::Mission_Retreat(void)");
+#endif
 	Validate();
 	if (Class->IsFixedWing) {
 		if (Class->IsFixedWing && Altitude < FLIGHT_LEVEL) {
@@ -1534,6 +1594,9 @@ int AircraftClass::Mission_Retreat(void)
  *=============================================================================================*/
 int AircraftClass::Exit_Object(TechnoClass * unit)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AircraftClass::Exit_Object(TechnoClass * unit)");
+#endif
 	Validate();
 	static FacingType _toface[FACING_COUNT] = {FACING_S, FACING_SW, FACING_SE, FACING_NW, FACING_NE, FACING_N, FACING_W, FACING_E};
 	CELL	cell;
@@ -1588,6 +1651,9 @@ int AircraftClass::Exit_Object(TechnoClass * unit)
  *=============================================================================================*/
 BulletClass * AircraftClass::Fire_At(TARGET target, int which)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BulletClass * AircraftClass::Fire_At(TARGET target, int which)");
+#endif
 	Validate();
 	BulletClass * bullet = FootClass::Fire_At(target, which);
 
@@ -1639,6 +1705,9 @@ BulletClass * AircraftClass::Fire_At(TARGET target, int which)
  *=============================================================================================*/
 ResultType AircraftClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ResultType AircraftClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)");
+#endif
 	Validate();
 	ResultType res = RESULT_NONE;
 
@@ -1709,6 +1778,9 @@ ResultType AircraftClass::Take_Damage(int & damage, int distance, WarheadType wa
  *=============================================================================================*/
 int AircraftClass::Mission_Move(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AircraftClass::Mission_Move(void)");
+#endif
 	Validate();
 	if (Class->IsFixedWing) {
 
@@ -1884,6 +1956,9 @@ int AircraftClass::Mission_Move(void)
  *=============================================================================================*/
 void AircraftClass::Enter_Idle_Mode(bool )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftClass::Enter_Idle_Mode(bool )");
+#endif
 	Validate();
 	MissionType mission = MISSION_GUARD;
 	if (In_Which_Layer() == LAYER_GROUND) {
@@ -1996,6 +2071,9 @@ void AircraftClass::Enter_Idle_Mode(bool )
  *=============================================================================================*/
 int AircraftClass::Process_Fly_To(bool slowdown)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AircraftClass::Process_Fly_To(bool slowdown)");
+#endif
 	Validate();
 	COORDINATE coord;
 	if (Is_Target_Building(NavCom)) {
@@ -2043,6 +2121,9 @@ int AircraftClass::Process_Fly_To(bool slowdown)
  *=============================================================================================*/
 void AircraftClass::Debug_Dump(MonoClass *mono) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftClass::Debug_Dump(MonoClass *mono) const");
+#endif
 	Validate();
 	mono->Set_Cursor(0, 0);
 	mono->Print(
@@ -2098,6 +2179,9 @@ void AircraftClass::Debug_Dump(MonoClass *mono) const
  *=============================================================================================*/
 void AircraftClass::Active_Click_With(ActionType action, ObjectClass * object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftClass::Active_Click_With(ActionType action, ObjectClass * object)");
+#endif
 	Validate();
 	// Nyerguds's TUC Quick Fix Patch v1.03: Aircraft-dock-unload
 	// Nothing here is any different from the default FootClass behaviour, and, in fact
@@ -2140,6 +2224,9 @@ void AircraftClass::Active_Click_With(ActionType action, ObjectClass * object)
  *=============================================================================================*/
 void AircraftClass::Active_Click_With(ActionType action, CELL cell)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftClass::Active_Click_With(ActionType action, CELL cell)");
+#endif
 	Validate();
 #ifdef NEVER
 	switch (action) {
@@ -2184,6 +2271,9 @@ void AircraftClass::Active_Click_With(ActionType action, CELL cell)
  *=============================================================================================*/
 void AircraftClass::Player_Assign_Mission(MissionType mission, TARGET target, TARGET destination)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftClass::Player_Assign_Mission(MissionType mission, TARGET target, TARGET destination)");
+#endif
 	Validate();
 	if (AllowVoice) {
 		if (mission == MISSION_ATTACK) {
@@ -2215,6 +2305,9 @@ void AircraftClass::Player_Assign_Mission(MissionType mission, TARGET target, TA
  *=============================================================================================*/
 ActionType AircraftClass::What_Action(ObjectClass * object) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ActionType AircraftClass::What_Action(ObjectClass * object) const");
+#endif
 	Validate();
 	ActionType action = FootClass::What_Action(object);
 
@@ -2257,6 +2350,9 @@ ActionType AircraftClass::What_Action(ObjectClass * object) const
  *=============================================================================================*/
 int AircraftClass::Enemy_Name(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AircraftClass::Enemy_Name(void) const");
+#endif
 	Validate();
 	// Nyerguds's C&C Patch Project v1.04: Passive helis to be captured will show their name.
 	if (PassiveHelis && !Class->IsFixedWing) {
@@ -2285,6 +2381,9 @@ int AircraftClass::Enemy_Name(void) const
  *=============================================================================================*/
 ActionType AircraftClass::What_Action(CELL cell) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ActionType AircraftClass::What_Action(CELL cell) const");
+#endif
 	Validate();
 	ActionType action = FootClass::What_Action(cell);
 
@@ -2319,6 +2418,9 @@ ActionType AircraftClass::What_Action(CELL cell) const
  *=============================================================================================*/
 bool AircraftClass::Can_Capture(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool AircraftClass::Can_Capture(void) const");
+#endif
 	return !Class->IsFixedWing && Class->IsTransporter && Pip_Count() == 0;
 }
 
@@ -2338,6 +2440,9 @@ bool AircraftClass::Can_Capture(void) const
  *=============================================================================================*/
 DirType AircraftClass::Pose_Dir(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("DirType AircraftClass::Pose_Dir(void) const");
+#endif
 	Validate();
 	if (*this == AIRCRAFT_TRANSPORT) {
 		return(DIR_N);
@@ -2364,6 +2469,9 @@ DirType AircraftClass::Pose_Dir(void) const
  *=============================================================================================*/
 int AircraftClass::Mission_Attack(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AircraftClass::Mission_Attack(void)");
+#endif
 	Validate();
 	if (Class->IsFixedWing) {
 		Assign_Mission(MISSION_HUNT);
@@ -2586,6 +2694,9 @@ int AircraftClass::Mission_Attack(void)
  *=============================================================================================*/
 TARGET AircraftClass::New_LZ(TARGET oldlz) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TARGET AircraftClass::New_LZ(TARGET oldlz) const");
+#endif
 	Validate();
 	if (Target_Legal(oldlz) && (!Is_LZ_Clear(oldlz) || !Cell_Seems_Ok(As_Cell(oldlz)))) {
 		COORDINATE coord = As_Coord(oldlz);
@@ -2643,6 +2754,9 @@ TARGET AircraftClass::New_LZ(TARGET oldlz) const
  *=============================================================================================*/
 COORDINATE AircraftClass::Fire_Coord(int /*which*/, bool forrange, COORDINATE coords) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE AircraftClass::Fire_Coord(int /*which*/, bool forrange, COORDINATE coords) const");
+#endif
 	Validate();
 	COORDINATE coord = Center_Coord();
 	// Nyerguds's C&C Patch Project v1.04: Range check on Fire_Coord.
@@ -2679,6 +2793,9 @@ COORDINATE AircraftClass::Fire_Coord(int /*which*/, bool forrange, COORDINATE co
  *=============================================================================================*/
 COORDINATE AircraftClass::Target_Coord() const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE AircraftClass::Target_Coord() const");
+#endif
 	Validate();
 	return(Coord_Add(XYP_Coord(0, -Altitude), Coord));
 }
@@ -2707,6 +2824,9 @@ COORDINATE AircraftClass::Target_Coord() const
  *=============================================================================================*/
 RadioMessageType AircraftClass::Receive_Message(RadioClass * from, RadioMessageType message, long & param)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("RadioMessageType AircraftClass::Receive_Message(RadioClass * from, RadioMessageType message, long & param)");
+#endif
 	Validate();
 	switch (message) {
 
@@ -2900,6 +3020,9 @@ RadioMessageType AircraftClass::Receive_Message(RadioClass * from, RadioMessageT
  *=============================================================================================*/
 DirType AircraftClass::Desired_Load_Dir(ObjectClass * object, CELL & moveto) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("DirType AircraftClass::Desired_Load_Dir(ObjectClass * object, CELL & moveto) const");
+#endif
 	Validate();
 	CELL center = Coord_Cell(Center_Coord());
 	for (int sweep = FACING_N; sweep < FACING_S; sweep++) {
@@ -2930,6 +3053,9 @@ DirType AircraftClass::Desired_Load_Dir(ObjectClass * object, CELL & moveto) con
  *=============================================================================================*/
 bool AircraftClass::Process_Take_Off(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool AircraftClass::Process_Take_Off(void)");
+#endif
 	Validate();
 	IsLanding = false;
 	IsTakingOff = true;
@@ -2979,6 +3105,9 @@ bool AircraftClass::Process_Take_Off(void)
  *=============================================================================================*/
 bool AircraftClass::Process_Landing(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool AircraftClass::Process_Landing(void)");
+#endif
 	Validate();
 	IsTakingOff = false;
 	IsLanding = true;
@@ -3015,6 +3144,9 @@ bool AircraftClass::Process_Landing(void)
  *=============================================================================================*/
 MoveType AircraftClass::Can_Enter_Cell(CELL cell, FacingType ) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MoveType AircraftClass::Can_Enter_Cell(CELL cell, FacingType ) const");
+#endif
 	Validate();
 	if (!Map.In_Radar(cell)) return(MOVE_NO);
 
@@ -3054,6 +3186,9 @@ MoveType AircraftClass::Can_Enter_Cell(CELL cell, FacingType ) const
  *=============================================================================================*/
 TARGET AircraftClass::Good_Fire_Location(TARGET target) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TARGET AircraftClass::Good_Fire_Location(TARGET target) const");
+#endif
 	Validate();
 	if (Target_Legal(target)) {
 		// Seems air units do not take the bonus distance for buildings into account.
@@ -3153,6 +3288,9 @@ TARGET AircraftClass::Good_Fire_Location(TARGET target) const
  *=============================================================================================*/
 bool AircraftClass::Cell_Seems_Ok(CELL cell, bool strict) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool AircraftClass::Cell_Seems_Ok(CELL cell, bool strict) const");
+#endif
 	Validate();
 	/*
 	**	Make sure that no other aircraft are heading to the selected location. If they
@@ -3190,6 +3328,9 @@ bool AircraftClass::Cell_Seems_Ok(CELL cell, bool strict) const
  *=============================================================================================*/
 int AircraftClass::Pip_Count(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AircraftClass::Pip_Count(void) const");
+#endif
 	Validate();
 	int retval = 0;
 
@@ -3225,6 +3366,9 @@ int AircraftClass::Pip_Count(void) const
  *=============================================================================================*/
 int AircraftClass::Mission_Enter(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AircraftClass::Mission_Enter(void)");
+#endif
 	Validate();
 	enum {
 		INITIAL,
@@ -3354,6 +3498,9 @@ int AircraftClass::Mission_Enter(void)
  *=============================================================================================*/
 TARGET AircraftClass::Good_LZ(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TARGET AircraftClass::Good_LZ(void) const");
+#endif
 	Validate();
 	/*
 	**	Scan through all of the buildings and try to land near
@@ -3408,6 +3555,9 @@ TARGET AircraftClass::Good_LZ(void) const
  *=============================================================================================*/
 void AircraftClass::Set_Speed(int speed)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftClass::Set_Speed(int speed)");
+#endif
 	Validate();
 	Fly_Speed(speed, Class->MaxSpeed);
 }
@@ -3430,6 +3580,9 @@ void AircraftClass::Set_Speed(int speed)
  *=============================================================================================*/
 DirType AircraftClass::Fire_Direction(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("DirType AircraftClass::Fire_Direction(void) const");
+#endif
 	Validate();
 	return(SecondaryFacing.Current());
 }
@@ -3452,6 +3605,9 @@ DirType AircraftClass::Fire_Direction(void) const
  *=============================================================================================*/
 AircraftClass::~AircraftClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("AircraftClass::~AircraftClass(void)");
+#endif
 	if (GameActive && Class) {
 		/*
 		**	If there are any cargo members, delete them.
@@ -3485,6 +3641,9 @@ AircraftClass::~AircraftClass(void)
  *=============================================================================================*/
 bool AircraftClass::Scatter(COORDINATE , bool )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool AircraftClass::Scatter(COORDINATE , bool )");
+#endif
 	Validate();
 
 	/*
@@ -3523,6 +3682,9 @@ bool AircraftClass::Scatter(COORDINATE , bool )
  *=============================================================================================*/
 int AircraftClass::Rearm_Delay(bool second) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AircraftClass::Rearm_Delay(bool second) const");
+#endif
 	Validate();
 	return(FootClass::Rearm_Delay(second)/2);
 }
@@ -3551,6 +3713,9 @@ int AircraftClass::Rearm_Delay(bool second) const
  *=============================================================================================*/
 int AircraftClass::Threat_Range(int control) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AircraftClass::Threat_Range(int control) const");
+#endif
 	Validate();
 	if (control == -1) return(-1);
 
@@ -3579,6 +3744,9 @@ int AircraftClass::Threat_Range(int control) const
  *=============================================================================================*/
 int AircraftClass::Mission_Guard(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AircraftClass::Mission_Guard(void)");
+#endif
 	Validate();
 	// No sticky mode available for aircraft.
 	if (Mission == MISSION_STICKY) return Mission_Sleep();
@@ -3702,6 +3870,9 @@ int AircraftClass::Mission_Guard(void)
  *=============================================================================================*/
 int AircraftClass::Mission_Guard_Area(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AircraftClass::Mission_Guard_Area(void)");
+#endif
 	Validate();
 	if (Altitude == FLIGHT_LEVEL) {
 		Enter_Idle_Mode();
@@ -3738,6 +3909,9 @@ int AircraftClass::Mission_Guard_Area(void)
  *=============================================================================================*/
 void AircraftClass::Response_Attack(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftClass::Response_Attack(void)");
+#endif
 	Validate();
 	static VocType _response[] = {
 		VOC_AFFIRM,
@@ -3769,6 +3943,9 @@ void AircraftClass::Response_Attack(void)
  *=============================================================================================*/
 void AircraftClass::Response_Move(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftClass::Response_Move(void)");
+#endif
 	Validate();
 	static VocType _response[] = {
 		VOC_MOVEOUT,
@@ -3801,6 +3978,9 @@ void AircraftClass::Response_Move(void)
  *=============================================================================================*/
 void AircraftClass::Response_Select(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftClass::Response_Select(void)");
+#endif
 	Validate();
 	static VocType _response[] = {
 		VOC_VEHIC,

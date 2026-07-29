@@ -91,6 +91,9 @@ extern GraphicBufferClass	HidPage;
  *=============================================================================================*/
 void RawFileClass::Error(int error, int canretry, char const * filename)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RawFileClass::Error(int error, int canretry, char const * filename)");
+#endif
 	char	message[256];				// Staging buffer for error message string.
 
 	/*
@@ -306,11 +309,17 @@ RawFileClass::RawFileClass(char const *filename) :
 	Filename(filename), 
 	Allocated(false)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("RawFileClass::RawFileClass(char const *filename)");
+#endif
 }
 
 
 RawFileClass::~RawFileClass(void) 
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("RawFileClass::~RawFileClass(void)");
+#endif
 	if (Allocated && Filename) {
 		free((char *)Filename); 
 	}
@@ -341,6 +350,9 @@ RawFileClass::~RawFileClass(void)
  *=============================================================================================*/
 char const * RawFileClass::Set_Name(char const *filename)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char const * RawFileClass::Set_Name(char const *filename)");
+#endif
 	if (Filename && Allocated) {
 		free((char*)Filename);
 		Filename = 0;
@@ -381,6 +393,9 @@ char const * RawFileClass::Set_Name(char const *filename)
  *=============================================================================================*/
 int RawFileClass::Open(char const *filename, int rights)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int RawFileClass::Open(char const *filename, int rights)");
+#endif
 	Set_Name(filename);
 	return(Open(rights));
 }
@@ -406,6 +421,9 @@ int RawFileClass::Open(char const *filename, int rights)
  *=============================================================================================*/
 int RawFileClass::Open(int rights)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int RawFileClass::Open(int rights)");
+#endif
 	Close();
 
 	/*
@@ -501,6 +519,9 @@ int RawFileClass::Open(int rights)
  *=============================================================================================*/
 int RawFileClass::Is_Available(int forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int RawFileClass::Is_Available(int forced)");
+#endif
 	int	file;		// Working file handle.
 	int	open_failed;
 
@@ -599,7 +620,9 @@ int RawFileClass::Is_Available(int forced)
  *=============================================================================================*/
 void RawFileClass::Close(void)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RawFileClass::Close(void)");
+#endif
 	/*
 	**	If the file is open, then close it. If the file is already closed, then just return. This
 	**	isn't considered an error condition.
@@ -664,6 +687,9 @@ void RawFileClass::Close(void)
  *=============================================================================================*/
 long RawFileClass::Read(void *buffer, long size)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long RawFileClass::Read(void *buffer, long size)");
+#endif
 	long	bytesread = 0;			// Running count of the number of bytes read into the buffer.
 	int	opened = false;		// Was the file opened by this routine?
 	int	readresult;
@@ -762,6 +788,9 @@ long RawFileClass::Read(void *buffer, long size)
  *=============================================================================================*/
 long RawFileClass::Write(void const *buffer, long size)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long RawFileClass::Write(void const *buffer, long size)");
+#endif
 	long	bytesread = 0;
 	int	opened = false;		// Was the file manually opened?
 	int	writeresult;
@@ -865,6 +894,9 @@ long RawFileClass::Write(void const *buffer, long size)
  *=============================================================================================*/
 long RawFileClass::Seek(long pos, int dir)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long RawFileClass::Seek(long pos, int dir)");
+#endif
 	/*
 	**	If the file isn't opened, then this is a fatal error condition.
 	*/
@@ -929,6 +961,9 @@ long RawFileClass::Seek(long pos, int dir)
  *=============================================================================================*/
 long RawFileClass::Size(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long RawFileClass::Size(void)");
+#endif
 	long	size = 0;
 
 	/*
@@ -996,6 +1031,9 @@ long RawFileClass::Size(void)
  *=============================================================================================*/
 int RawFileClass::Create(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int RawFileClass::Create(void)");
+#endif
 	Close();
 	if (Open(WRITE)) {
 		Close();
@@ -1024,6 +1062,9 @@ int RawFileClass::Create(void)
  *=============================================================================================*/
 int RawFileClass::Delete(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int RawFileClass::Delete(void)");
+#endif
 	/*
 	**	If the file was open, then it must be closed first.
 	*/

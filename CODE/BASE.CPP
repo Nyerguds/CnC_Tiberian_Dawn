@@ -67,6 +67,9 @@
  *=============================================================================================*/
 int BaseNodeClass::operator == (BaseNodeClass const & node)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BaseNodeClass::operator == (BaseNodeClass const & node)");
+#endif
 	return(Type == node.Type && Coord == node.Coord && House == node.House);
 }
 
@@ -88,6 +91,9 @@ int BaseNodeClass::operator == (BaseNodeClass const & node)
  *=============================================================================================*/
 int BaseNodeClass::operator !=(BaseNodeClass const & node)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BaseNodeClass::operator !=(BaseNodeClass const & node)");
+#endif
 	return(Type != node.Type || Coord != node.Coord || House != node.House);
 }
 
@@ -109,6 +115,9 @@ int BaseNodeClass::operator !=(BaseNodeClass const & node)
  *=============================================================================================*/
 int BaseNodeClass::operator > (BaseNodeClass const & )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BaseNodeClass::operator > (BaseNodeClass const & )");
+#endif
 	return(true);
 }
 
@@ -135,6 +144,9 @@ int BaseNodeClass::operator > (BaseNodeClass const & )
  *=============================================================================================*/
 void BaseClass::Read_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BaseClass::Read_INI(char *buffer)");
+#endif
 	char buf[128];
 	char uname[10];
 	BaseNodeClass node;						// node to add to list
@@ -221,6 +233,9 @@ void BaseClass::Read_INI(char *buffer)
 #ifdef SCENARIO_EDITOR
 void BaseClass::Write_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BaseClass::Write_INI(char *buffer)");
+#endif
 	char buf[128];
 	char uname[10];
 
@@ -268,6 +283,9 @@ void BaseClass::Write_INI(char *buffer)
  *=============================================================================================*/
 bool BaseClass::Load(FileClass &file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool BaseClass::Load(FileClass &file)");
+#endif
 	int num_struct;
 	int i;
 	BaseNodeClass node;
@@ -325,6 +343,9 @@ bool BaseClass::Load(FileClass &file)
  *=============================================================================================*/
 bool BaseClass::Save(FileClass &file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool BaseClass::Save(FileClass &file)");
+#endif
 	int num_struct;
 	int i;
 	BaseNodeClass node;
@@ -380,6 +401,9 @@ bool BaseClass::Save(FileClass &file)
  *=============================================================================================*/
 bool BaseClass::Is_Built(int index)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool BaseClass::Is_Built(int index)");
+#endif
 	if (Get_Built_Overlay(index, true) != NULL || Get_Building(index, false) != NULL) {
 		return(true);
 	} else {
@@ -404,6 +428,9 @@ bool BaseClass::Is_Built(int index)
  *=============================================================================================*/
 BuildingClass * BaseClass::Get_Building(int index, bool checkHouse)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BuildingClass * BaseClass::Get_Building(int index, bool checkHouse)");
+#endif
 	BaseNodeClass * node = &Nodes[index];
 	StructType nodestruct = node->Type;
 	if (nodestruct == STRUCT_NONE) {
@@ -467,6 +494,9 @@ BuildingClass * BaseClass::Get_Building(int index, bool checkHouse)
  *=============================================================================================*/
 CellClass * BaseClass::Get_Built_Overlay(int index, bool anywall) 
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CellClass * BaseClass::Get_Built_Overlay(int index, bool anywall)");
+#endif
 	BaseNodeClass * node = &Nodes[index];
 	StructType nodestruct = node->Type;
 	if (nodestruct == STRUCT_NONE) {
@@ -507,6 +537,9 @@ CellClass * BaseClass::Get_Built_Overlay(int index, bool anywall)
  *=============================================================================================*/
 bool BaseClass::Is_Node(BuildingClass *obj)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool BaseClass::Is_Node(BuildingClass *obj)");
+#endif
 	if (Get_Node(obj) != NULL) {
 		return(true);
 	} else {
@@ -532,6 +565,9 @@ bool BaseClass::Is_Node(BuildingClass *obj)
  *=============================================================================================*/
 BaseNodeClass * BaseClass::Get_Node(BuildingClass *obj)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BaseNodeClass * BaseClass::Get_Node(BuildingClass *obj)");
+#endif
 	for (int i = 0; i < Nodes.Count(); i++) {
 		if (obj->Class->Type == Nodes[i].Type && obj->Coord == Nodes[i].Coord) {
 			return(&Nodes[i]);
@@ -563,6 +599,9 @@ BaseNodeClass * BaseClass::Get_Node(BuildingClass *obj)
  *=============================================================================================*/
 BaseNodeClass * BaseClass::Next_Buildable(HousesType house, StructType type, BaseNodeClass * afterthis)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BaseNodeClass * BaseClass::Next_Buildable(HousesType house, StructType type, BaseNodeClass * afterthis)");
+#endif
 	/*
 	** Loop through all node entries, returning a pointer to the first
 	** un-built one that matches the requested type.

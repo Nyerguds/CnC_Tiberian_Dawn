@@ -826,6 +826,9 @@ TerrainTypeClass::TerrainTypeClass(
 								is_legal_target, is_insignificant, is_immune,
 								fullname, ininame, armor, strength)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TerrainTypeClass::TerrainTypeClass(...)");
+#endif
 	CenterBase = centerbase;
 	IsTiberiumSpawn = is_spawn;
 	IsDestroyable = is_destroyable;
@@ -854,6 +857,9 @@ TerrainTypeClass::TerrainTypeClass(
  *=============================================================================================*/
 void TerrainTypeClass::Init(TheaterType theater)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TerrainTypeClass::Init(TheaterType theater)");
+#endif
 	//if (theater != LastTheater){
 	char fullname[_MAX_FNAME+_MAX_EXT];
 	char theatermixname[_MAX_FNAME+_MAX_EXT];
@@ -910,6 +916,9 @@ void TerrainTypeClass::Init(TheaterType theater)
  *=============================================================================================*/
 TerrainType TerrainTypeClass::From_Name(char const * name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TerrainType TerrainTypeClass::From_Name(char const * name)");
+#endif
 	TerrainType	index;
 
 	if (name) {
@@ -943,6 +952,9 @@ TerrainType TerrainTypeClass::From_Name(char const * name)
  *=============================================================================================*/
 void TerrainTypeClass::Display(int x, int y, WindowNumberType window, HousesType) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TerrainTypeClass::Display(int x, int y, WindowNumberType window, HousesType) const");
+#endif
 	void const * ptr = Get_Image_Data();
 	if (ptr) {
 		IsTheaterShape = Image_Is_Theater_Shape();
@@ -973,6 +985,9 @@ void TerrainTypeClass::Display(int x, int y, WindowNumberType window, HousesType
  *=============================================================================================*/
 void TerrainTypeClass::Prep_For_Add(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TerrainTypeClass::Prep_For_Add(void)");
+#endif
 	for (TerrainType index = TERRAIN_FIRST; index < TERRAIN_COUNT; index++) {
 		if (As_Reference(index).Get_Image_Data()) {
 			Map.Add_To_List(As_Pointer(index));
@@ -998,6 +1013,9 @@ void TerrainTypeClass::Prep_For_Add(void)
  *=============================================================================================*/
 bool TerrainTypeClass::Create_And_Place(CELL cell, HousesType ) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TerrainTypeClass::Create_And_Place(CELL cell, HousesType ) const");
+#endif
 	if (new TerrainClass(Type, cell)) {
 		return(true);
 	}
@@ -1024,12 +1042,18 @@ bool TerrainTypeClass::Create_And_Place(CELL cell, HousesType ) const
  *=============================================================================================*/
 ObjectClass * TerrainTypeClass::Create_One_Of(HouseClass *) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ObjectClass * TerrainTypeClass::Create_One_Of(HouseClass *) const");
+#endif
 	return(new TerrainClass(Type, -1));
 }
 
 
 short const * TerrainTypeClass::Occupy_List(bool /*placement*/) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const * TerrainTypeClass::Occupy_List(bool /*placement*/) const");
+#endif
 	if (Occupy) return(Occupy);
 
 	static short const _simple[1] = {
@@ -1041,6 +1065,9 @@ short const * TerrainTypeClass::Occupy_List(bool /*placement*/) const
 
 short const * TerrainTypeClass::Overlap_List(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const * TerrainTypeClass::Overlap_List(void) const");
+#endif
 	if (Overlap) return(Overlap);
 
 	static short const _simple[1] = {

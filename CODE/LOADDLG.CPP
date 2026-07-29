@@ -63,6 +63,9 @@
  *=============================================================================================*/
 LoadOptionsClass::LoadOptionsClass(LoadStyleType style)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LoadOptionsClass::LoadOptionsClass(LoadStyleType style)");
+#endif
 	Style = style;
 	Files.Clear();
 }
@@ -85,6 +88,9 @@ LoadOptionsClass::LoadOptionsClass(LoadStyleType style)
  *=============================================================================================*/
 LoadOptionsClass::~LoadOptionsClass()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LoadOptionsClass::~LoadOptionsClass()");
+#endif
 	for (int i = 0; i < Files.Count(); i++) {
 		delete Files[i];
 	}
@@ -109,6 +115,9 @@ LoadOptionsClass::~LoadOptionsClass()
  *=============================================================================================*/
 int LoadOptionsClass::Process(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int LoadOptionsClass::Process(void)");
+#endif
 	/*
 	**	Dialog & button dimensions
 	*/
@@ -555,6 +564,9 @@ int LoadOptionsClass::Process(void)
  *=============================================================================================*/
 void LoadOptionsClass::Clear_List(ListClass *list)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void LoadOptionsClass::Clear_List(ListClass *list)");
+#endif
 	/*
 	** For every item in the list, free its buffer & remove it from the list.
 	*/
@@ -591,6 +603,9 @@ void LoadOptionsClass::Clear_List(ListClass *list)
  *=============================================================================================*/
 void LoadOptionsClass::Fill_List(ListClass *list)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void LoadOptionsClass::Fill_List(ListClass *list)");
+#endif
 	FileEntryClass *fdata;	// for adding entries to 'Files'
 	char descr[DESCRIP_MAX];
 	unsigned scenario;			// scenario #
@@ -703,6 +718,9 @@ void LoadOptionsClass::Fill_List(ListClass *list)
  *=============================================================================================*/
 int LoadOptionsClass::Num_From_Ext(char *fname)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int LoadOptionsClass::Num_From_Ext(char *fname)");
+#endif
 	char ext[_MAX_EXT];
 
 	_splitpath(fname, NULL, NULL, NULL, ext);
@@ -728,6 +746,9 @@ int LoadOptionsClass::Num_From_Ext(char *fname)
  *=============================================================================================*/
 int LoadOptionsClass::Compare(const void *p1, const void *p2)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int LoadOptionsClass::Compare(const void *p1, const void *p2)");
+#endif
 	class FileEntryClass *fe1,*fe2;
 
 	fe1 = *((class FileEntryClass **)p1);

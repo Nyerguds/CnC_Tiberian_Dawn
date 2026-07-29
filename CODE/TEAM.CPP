@@ -91,6 +91,9 @@ void * TeamClass::VTable;
 #ifdef CHEAT_KEYS
 int TeamClass::Validate(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TeamClass::Validate(void) const");
+#endif
 	int num;
 
 	num = Teams.ID(this);
@@ -123,6 +126,9 @@ int TeamClass::Validate(void) const
  *=============================================================================================*/
 void TeamClass::Init(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamClass::Init(void)");
+#endif
 	TeamClass *ptr;
 
 	Teams.Free_All();
@@ -137,6 +143,9 @@ void TeamClass::Init(void)
 
 void * TeamClass::operator new (size_t)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void * TeamClass::operator new (size_t)");
+#endif
 	void * ptr = Teams.Allocate();
 	if (ptr) {
 		((TeamClass *)ptr)->IsActive = true;
@@ -147,6 +156,9 @@ void * TeamClass::operator new (size_t)
 
 void TeamClass::operator delete(void * ptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamClass::operator delete(void * ptr)");
+#endif
 	if (ptr) {
 		((TeamClass *)ptr)->IsActive = false;
 	}
@@ -156,6 +168,9 @@ void TeamClass::operator delete(void * ptr)
 
 TeamClass::~TeamClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TeamClass::~TeamClass(void)");
+#endif
 	if (GameActive && Class) {
 		Number[TeamTypes.ID(Class)]--;
 		while (Member) {
@@ -173,6 +188,9 @@ TeamClass::TeamClass(TeamTypeClass const * type, HouseClass * owner) :
 	Class(type),
 	House(owner)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TeamClass::TeamClass(TeamTypeClass const * type, HouseClass * owner)");
+#endif
 	memset(Quantity, 0, sizeof(Quantity));
 	IsAltered = true;
 	IsForcedActive = false;
@@ -212,6 +230,9 @@ TeamClass::TeamClass(TeamTypeClass const * type, HouseClass * owner) :
  *=========================================================================*/
 void TeamClass::Assign_Mission_Target(TARGET new_target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamClass::Assign_Mission_Target(TARGET new_target)");
+#endif
 	Validate();
 	/*
 	** First go through and find anyone who is currently targeting
@@ -282,6 +303,9 @@ void TeamClass::Assign_Mission_Target(TARGET new_target)
  *=============================================================================================*/
 void TeamClass::AI(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamClass::AI(void)");
+#endif
 	Validate();
 	int	desired		= 0;
 	int	old_under	= IsUnderStrength;
@@ -654,6 +678,9 @@ void TeamClass::AI(void)
  *=============================================================================================*/
 bool TeamClass::Add(FootClass * obj, int typeindex)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TeamClass::Add(FootClass * obj, int typeindex)");
+#endif
 	Validate();
 	/*
 	**	If this team doesn't accept new members, then don't accept this one either.
@@ -768,6 +795,9 @@ bool TeamClass::Add(FootClass * obj, int typeindex)
  *=============================================================================================*/
 bool TeamClass::Remove(FootClass * obj, int typeindex)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TeamClass::Remove(FootClass * obj, int typeindex)");
+#endif
 	Validate();
 	/*
 	**	Make sure that the object is in fact a member of this team. If not, then it can't
@@ -876,6 +906,9 @@ bool TeamClass::Remove(FootClass * obj, int typeindex)
  *=============================================================================================*/
 int TeamClass::Recruit(int typeindex)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TeamClass::Recruit(int typeindex)");
+#endif
 	Validate();
 	int added = 0;				// Total number added to team.
 
@@ -964,6 +997,9 @@ int TeamClass::Recruit(int typeindex)
  *=============================================================================================*/
 void TeamClass::Detach(TARGET target, bool )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamClass::Detach(TARGET target, bool )");
+#endif
 	Validate();
 
 	/*
@@ -998,6 +1034,9 @@ void TeamClass::Detach(TARGET target, bool )
  *=============================================================================================*/
 TARGET TeamClass::As_Target(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TARGET TeamClass::As_Target(void) const");
+#endif
 	Validate();
 	return(Build_Target(KIND_TEAM, Teams.ID(this)));
 }
@@ -1022,6 +1061,9 @@ TARGET TeamClass::As_Target(void) const
  *=============================================================================================*/
 void TeamClass::Calc_Center(CELL &center, CELL &obj_center) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamClass::Calc_Center(CELL &center, CELL &obj_center) const");
+#endif
 	Validate();
 	long	x = 0;
 	long	y = 0;
@@ -1077,6 +1119,9 @@ void TeamClass::Calc_Center(CELL &center, CELL &obj_center) const
  *=============================================================================================*/
 void TeamClass::Took_Damage(FootClass * , ResultType result, TechnoClass * source)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamClass::Took_Damage(FootClass * , ResultType result, TechnoClass * source)");
+#endif
 	Validate();
 	if ((result != RESULT_NONE) && (!Class->IsSuicide)) {
 		if (!IsMoving) {
@@ -1124,6 +1169,9 @@ void TeamClass::Took_Damage(FootClass * , ResultType result, TechnoClass * sourc
  *=============================================================================================*/
 void TeamClass::Coordinate_Attack(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamClass::Coordinate_Attack(void)");
+#endif
 	Validate();
 	if (!Target_Legal(Target)) {
 		Target = MissionTarget;
@@ -1176,6 +1224,9 @@ void TeamClass::Coordinate_Attack(void)
  *=============================================================================================*/
 bool TeamClass::Coordinate_Regroup(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TeamClass::Coordinate_Regroup(void)");
+#endif
 	Validate();
 	FootClass * unit   = Member;
 	bool			retval = true;
@@ -1238,6 +1289,9 @@ bool TeamClass::Coordinate_Regroup(void)
  *=============================================================================================*/
 void TeamClass::Coordinate_Move(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamClass::Coordinate_Move(void)");
+#endif
 	Validate();
 	FootClass * unit = Member;
 	bool finished = true;
@@ -1311,6 +1365,9 @@ void TeamClass::Coordinate_Move(void)
  *=========================================================================*/
 bool TeamClass::Lagging_Units(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TeamClass::Lagging_Units(void)");
+#endif
 	Validate();
 	FootClass * unit = Member;
 	bool lag = false;
@@ -1376,6 +1433,9 @@ bool TeamClass::Lagging_Units(void)
  *=============================================================================================*/
 void TeamClass::Coordinate_Unload(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamClass::Coordinate_Unload(void)");
+#endif
 	Validate();
 	FootClass * unit = Member;
 	bool finished = true;
@@ -1436,6 +1496,9 @@ void TeamClass::Coordinate_Unload(void)
  *=============================================================================================*/
 void TeamClass::Coordinate_Conscript(FootClass * unit)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamClass::Coordinate_Conscript(FootClass * unit)");
+#endif
 	Validate();
 	if (unit && !unit->IsInitiated && !unit->IsInLimbo) {
 		if (unit->Distance(Center) > STRAY_DISTANCE) {
@@ -1471,6 +1534,9 @@ void TeamClass::Coordinate_Conscript(FootClass * unit)
  *=========================================================================*/
 bool TeamClass::Is_A_Member(void const * who) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TeamClass::Is_A_Member(void const * who) const");
+#endif
 	Validate();
 	FootClass * unit = Member;
 	while (unit) {
@@ -1497,6 +1563,9 @@ bool TeamClass::Is_A_Member(void const * who) const
  *=========================================================================*/
 void TeamClass::Suspend_Teams(int priority)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamClass::Suspend_Teams(int priority)");
+#endif
 	for (int index = 0; index < Teams.Count(); index++) {
 		TeamClass *team =	Teams.Ptr(index);
 

@@ -75,6 +75,9 @@ void * TemplateClass::VTable;
 #ifdef CHEAT_KEYS
 int TemplateClass::Validate(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TemplateClass::Validate(void) const");
+#endif
 	int num;
 
 	num = Templates.ID(this);
@@ -107,6 +110,9 @@ int TemplateClass::Validate(void) const
  *=============================================================================================*/
 void TemplateClass::Read_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TemplateClass::Read_INI(char *buffer)");
+#endif
 	char	*tbuffer;	// Accumulation buffer of unit IDs.
 	int	len;			// Size of data in buffer.
 	CELL	cell;			// Cell of building.
@@ -148,6 +154,9 @@ void TemplateClass::Read_INI(char *buffer)
 #ifdef SCENARIO_EDITOR
 void TemplateClass::Write_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TemplateClass::Write_INI(char *buffer)");
+#endif
 	char	uname[10];
 	char	buf[127];
 	char	*tbuffer;		// Accumulation buffer of unit IDs.
@@ -198,6 +207,9 @@ void TemplateClass::Write_INI(char *buffer)
 TemplateClass::TemplateClass(void) :
 	Class(0)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TemplateClass::TemplateClass(void)");
+#endif
 }
 
 
@@ -218,6 +230,9 @@ TemplateClass::TemplateClass(void) :
  *=============================================================================================*/
 TARGET TemplateClass::As_Target(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TARGET TemplateClass::As_Target(void) const");
+#endif
 	Validate();
 	return(Build_Target(KIND_TEMPLATE, Templates.ID(this)));
 }
@@ -240,6 +255,9 @@ TARGET TemplateClass::As_Target(void) const
  *=============================================================================================*/
 void TemplateClass::Init(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TemplateClass::Init(void)");
+#endif
 	TemplateClass *ptr;
 
 	Templates.Free_All();
@@ -269,6 +287,9 @@ void TemplateClass::Init(void)
  *=============================================================================================*/
 bool TemplateClass::Mark(MarkType mark)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TemplateClass::Mark(MarkType mark)");
+#endif
 	Validate();
 	static bool noup = false;
 	void const * iset = Class->Get_Image_Data();
@@ -356,6 +377,9 @@ bool TemplateClass::Mark(MarkType mark)
  *=============================================================================================*/
 void * TemplateClass::operator new(size_t )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void * TemplateClass::operator new(size_t )");
+#endif
 	void * ptr = Templates.Allocate();
 	if (ptr) {
 		((TemplateClass *)ptr)->IsActive = true;
@@ -381,6 +405,9 @@ void * TemplateClass::operator new(size_t )
  *=============================================================================================*/
 void TemplateClass::operator delete(void *ptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TemplateClass::operator delete(void *ptr)");
+#endif
 	if (ptr) {
 		((TemplateClass *)ptr)->IsActive = false;
 	}
@@ -407,6 +434,9 @@ void TemplateClass::operator delete(void *ptr)
 TemplateClass::TemplateClass(TemplateType type, CELL pos) :
 	Class(&TemplateTypeClass::As_Reference(type))
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TemplateClass::TemplateClass(TemplateType type, CELL pos)");
+#endif
 	if (pos != -1) {
 		Unlimbo(Cell_Coord(pos));
 	}

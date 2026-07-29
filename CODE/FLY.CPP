@@ -61,6 +61,9 @@
  *=============================================================================================*/
 ImpactType FlyClass::Physics(COORDINATE & coord, DirType facing)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ImpactType FlyClass::Physics(COORDINATE & coord, DirType facing)");
+#endif
 	if (SpeedAdd != MPH_IMMOBILE) {
 		int actual = (int)SpeedAdd + SpeedAccum;
 		div_t result = div(actual, PIXEL_LEPTON_W);
@@ -128,6 +131,9 @@ ImpactType FlyClass::Physics(COORDINATE & coord, DirType facing)
  *=============================================================================================*/
 void FlyClass::Fly_Speed(int speed, MPHType maximum)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FlyClass::Fly_Speed(int speed, MPHType maximum)");
+#endif
 	SpeedAdd = (MPHType)Fixed_To_Cardinal((int)maximum, speed);
 }
 

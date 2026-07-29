@@ -65,6 +65,9 @@
  *=============================================================================================*/
 bool Do_Reinforcements(TeamTypeClass *teamtype)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Do_Reinforcements(TeamTypeClass *teamtype)");
+#endif
 	/*
 	**	perform some preliminary checks for validity.
 	*/
@@ -483,6 +486,9 @@ bool Do_Reinforcements(TeamTypeClass *teamtype)
  *=============================================================================================*/
 bool Create_Special_Reinforcement(HouseClass * house, TechnoTypeClass const * type, TechnoTypeClass const * another, TeamMissionType mission, int argument)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Create_Special_Reinforcement(HouseClass * house, TechnoTypeClass const * type, TechnoTypeClass const * another, TeamMissionType mission, int argument)");
+#endif
 	if (house && type) {
 		TeamTypeClass * team = new TeamTypeClass();
 
@@ -605,6 +611,9 @@ bool Create_Special_Reinforcement(HouseClass * house, TechnoTypeClass const * ty
  *=============================================================================================*/
 int Create_Air_Reinforcement(HouseClass *house, AircraftType air, int number, MissionType mission, TARGET tarcom, TARGET navcom)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Create_Air_Reinforcement(HouseClass *house, AircraftType air, int number, MissionType mission, TARGET tarcom, TARGET navcom)");
+#endif
 	/*
 	** Get a pointer to the class of the object that we are going to create.
 	*/

@@ -90,6 +90,9 @@ void * TerrainClass::VTable;
 #ifdef CHEAT_KEYS
 int TerrainClass::Validate(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TerrainClass::Validate(void) const");
+#endif
 	int num;
 
 	num = Terrains.ID(this);
@@ -122,6 +125,9 @@ int TerrainClass::Validate(void) const
  *=============================================================================================*/
 TerrainClass::~TerrainClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TerrainClass::~TerrainClass(void)");
+#endif
 	if (GameActive && Class) {
 		TerrainClass::Limbo();
 	}
@@ -159,6 +165,9 @@ TerrainClass::~TerrainClass(void)
  *=============================================================================================*/
 ResultType TerrainClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ResultType TerrainClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)");
+#endif
 	Validate();
 	ResultType res = RESULT_NONE;
 
@@ -216,6 +225,9 @@ ResultType TerrainClass::Take_Damage(int & damage, int distance, WarheadType war
  *=============================================================================================*/
 TARGET TerrainClass::As_Target(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TARGET TerrainClass::As_Target(void) const");
+#endif
 	Validate();
 	return(Build_Target(KIND_TERRAIN, Terrains.ID(this)));
 }
@@ -238,6 +250,9 @@ TARGET TerrainClass::As_Target(void) const
  *=============================================================================================*/
 void * TerrainClass::operator new(size_t)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void * TerrainClass::operator new(size_t)");
+#endif
 	void * ptr = Terrains.Allocate();
 	if (ptr) {
 		((TerrainClass *)ptr)->IsActive = true;
@@ -263,6 +278,9 @@ void * TerrainClass::operator new(size_t)
  *=============================================================================================*/
 void TerrainClass::operator delete(void *ptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TerrainClass::operator delete(void *ptr)");
+#endif
 	if (ptr) {
 		((TerrainClass *)ptr)->IsActive = false;
 	}
@@ -291,6 +309,9 @@ void TerrainClass::operator delete(void *ptr)
 TerrainClass::TerrainClass(TerrainType type, CELL cell) :
 	Class(&TerrainTypeClass::As_Reference(type))
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TerrainClass::TerrainClass(TerrainType type, CELL cell)");
+#endif
 	IsBlossoming = false;
 	IsBarnacled = false;
 	IsSporing = false;
@@ -326,6 +347,9 @@ TerrainClass::TerrainClass(TerrainType type, CELL cell) :
  *=============================================================================================*/
 bool TerrainClass::Mark(MarkType mark)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TerrainClass::Mark(MarkType mark)");
+#endif
 	Validate();
 	if (ObjectClass::Mark(mark)) {
 		short const *overlap = Class->Overlap_List();
@@ -373,6 +397,9 @@ bool TerrainClass::Mark(MarkType mark)
  *=============================================================================================*/
 void TerrainClass::Draw_It(int x, int y, WindowNumberType window)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TerrainClass::Draw_It(int x, int y, WindowNumberType window)");
+#endif
 	Validate();
 	void const * shapedata;
 
@@ -419,6 +446,9 @@ void TerrainClass::Draw_It(int x, int y, WindowNumberType window)
  *=============================================================================================*/
 void TerrainClass::Init(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TerrainClass::Init(void)");
+#endif
 	TerrainClass *ptr;
 
 	Terrains.Free_All();
@@ -448,6 +478,9 @@ void TerrainClass::Init(void)
  *=============================================================================================*/
 MoveType TerrainClass::Can_Enter_Cell(CELL cell, FacingType) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MoveType TerrainClass::Can_Enter_Cell(CELL cell, FacingType) const");
+#endif
 	Validate();
 	short const	*offset;		// Pointer to cell offset list.
 
@@ -485,6 +518,9 @@ MoveType TerrainClass::Can_Enter_Cell(CELL cell, FacingType) const
  *=============================================================================================*/
 bool TerrainClass::Catch_Fire(TechnoClass * source, HousesType house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TerrainClass::Catch_Fire(TechnoClass * source, HousesType house)");
+#endif
 	Validate();
 	if (!IsCrumbling && Strength && Class->IsFlammable) {
 		bool fireadded = false;
@@ -534,6 +570,9 @@ bool TerrainClass::Catch_Fire(TechnoClass * source, HousesType house)
  *=============================================================================================*/
 void TerrainClass::Fire_Out()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TerrainClass::Fire_Out()");
+#endif
 	Validate();
 	if (IsOnFire) {
 		IsOnFire = false;
@@ -572,6 +611,9 @@ void TerrainClass::Fire_Out()
  *=============================================================================================*/
 void TerrainClass::AI(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TerrainClass::AI(void)");
+#endif
 	Validate();
 	ObjectClass::AI();
 
@@ -651,6 +693,9 @@ void TerrainClass::AI(void)
  *=============================================================================================*/
 void TerrainClass::Debug_Dump(MonoClass *mono) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TerrainClass::Debug_Dump(MonoClass *mono) const");
+#endif
 	Validate();
 	ObjectClass::Debug_Dump(mono);
 }
@@ -681,6 +726,9 @@ void TerrainClass::Debug_Dump(MonoClass *mono) const
  *=============================================================================================*/
 bool TerrainClass::Unlimbo(COORDINATE coord, DirType dir)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TerrainClass::Unlimbo(COORDINATE coord, DirType dir)");
+#endif
 	Validate();
 	if (Class->Theater & (1 << Map.Theater)) {
 		return(ObjectClass::Unlimbo(coord, dir));
@@ -706,6 +754,9 @@ bool TerrainClass::Unlimbo(COORDINATE coord, DirType dir)
  *=============================================================================================*/
 void TerrainClass::Start_To_Crumble(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TerrainClass::Start_To_Crumble(void)");
+#endif
 	Validate();
 	if (!IsCrumbling) {
 		IsCrumbling = true;
@@ -732,6 +783,9 @@ void TerrainClass::Start_To_Crumble(void)
  *=============================================================================================*/
 bool TerrainClass::Limbo(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TerrainClass::Limbo(void)");
+#endif
 	Validate();
 	if (!IsInLimbo) {
 		CELL cell = Coord_Cell(Coord);
@@ -757,6 +811,9 @@ bool TerrainClass::Limbo(void)
  *=============================================================================================*/
 COORDINATE TerrainClass::Center_Coord(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE TerrainClass::Center_Coord(void) const");
+#endif
 	Validate();
 	return(Coord_Add(Coord, Class->CenterBase));
 }
@@ -780,6 +837,9 @@ COORDINATE TerrainClass::Center_Coord(void) const
 TerrainClass::TerrainClass(void) :
 	Class(0)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TerrainClass::TerrainClass(void)");
+#endif
 	IsOnFire = false;
 	IsCrumbling = false;
 	IsBlossoming = false;
@@ -807,6 +867,9 @@ TerrainClass::TerrainClass(void) :
  *=============================================================================================*/
 unsigned char * TerrainClass::Radar_Icon(CELL cell)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned char * TerrainClass::Radar_Icon(CELL cell)");
+#endif
 	Validate();
 	unsigned char *icon = (unsigned char *)Class->Get_Radar_Data();	// get a pointer to radar icons
 	if (!icon) {
@@ -853,6 +916,9 @@ unsigned char * TerrainClass::Radar_Icon(CELL cell)
  *=============================================================================================*/
 void TerrainClass::Read_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TerrainClass::Read_INI(char *buffer)");
+#endif
 	char	*tbuffer;	// Accumulation buffer of unit IDs.
 	int	len;			// Size of data in buffer.
 	char	buf[128];
@@ -901,6 +967,9 @@ void TerrainClass::Read_INI(char *buffer)
 #ifdef SCENARIO_EDITOR
 void TerrainClass::Write_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TerrainClass::Write_INI(char *buffer)");
+#endif
 	int	index;
 	char	uname[10];
 	char	buf[127];

@@ -53,6 +53,9 @@
  *=============================================================================================*/
 void DescriptionClass::Process(char *string)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DescriptionClass::Process(char *string)");
+#endif
 	/*
 	-----------------------------------------------------------------
 	Set up the window.  Window x-coords are in bytes not pixels.

@@ -83,6 +83,9 @@ static CELL Clip_Move(CELL cell, FacingType facing, int dist);
  *=============================================================================================*/
 void Set_Scenario_Name(char *buf, int scenario, ScenarioPlayerType player, ScenarioDirType dir, ScenarioVarType var)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Set_Scenario_Name(char *buf, int scenario, ScenarioPlayerType player, ScenarioDirType dir, ScenarioVarType var)");
+#endif
 	char c_player;			// character representing player type
 	char c_dir;				// character representing direction type
 	char c_var;				// character representing variation type
@@ -214,6 +217,9 @@ void Set_Scenario_Name(char *buf, int scenario, ScenarioPlayerType player, Scena
  *=============================================================================================*/
 bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)");
+#endif
 	char *buffer;				// Scenario.ini staging buffer pointer.
 	char fname[_MAX_FNAME+_MAX_EXT];			// full INI filename
 	char buf[128];				// Working string staging buffer.
@@ -688,6 +694,9 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 #ifdef SCENARIO_EDITOR
 void Write_Scenario_Ini(char *root)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Write_Scenario_Ini(char *root)");
+#endif
 	char * buffer;			// Scenario.ini staging buffer pointer.
 	char fname[_MAX_FNAME+_MAX_EXT];		// full scenario name
 	HousesType house;
@@ -808,6 +817,9 @@ void Write_Scenario_Ini(char *root)
  *=============================================================================================*/
 static void Assign_Houses(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static void Assign_Houses(void)");
+#endif
 	HousesType house;
 	HousesType pref_house;
 	HouseClass *housep;
@@ -954,6 +966,9 @@ CCDebugString (wibble);
  *=============================================================================================*/
 static void Remove_AI_Players(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static void Remove_AI_Players(void)");
+#endif
 	int i;
 	HousesType house;
 	HouseClass *housep;
@@ -1015,6 +1030,9 @@ static void Remove_AI_Players(void)
  *=============================================================================================*/
 static void Create_Units(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static void Create_Units(void)");
+#endif
 	enum {
 		NUM_UNIT_CATEGORIES = 8,
 		NUM_INFANTRY_CATEGORIES = 5,
@@ -1379,6 +1397,9 @@ static void Create_Units(void)
  *=============================================================================================*/
 int Scan_Place_Object(ObjectClass *obj, CELL cell)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Scan_Place_Object(ObjectClass *obj, CELL cell)");
+#endif
 	int dist;				// for object placement
 	FacingType rot;		// for object placement
 	FacingType fcounter;	// for object placement
@@ -1487,6 +1508,9 @@ int Scan_Place_Object(ObjectClass *obj, CELL cell)
  *=============================================================================================*/
 static void Sort_Cells(CELL *cells, int numcells, CELL *outcells)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static void Sort_Cells(CELL *cells, int numcells, CELL *outcells)");
+#endif
 	int i,j,k;
 	int num_sorted = 0;
 	int num_unsorted = numcells;
@@ -1541,6 +1565,9 @@ static void Sort_Cells(CELL *cells, int numcells, CELL *outcells)
  *=============================================================================================*/
 static int Furthest_Cell(CELL *cells, int numcells, CELL *tcells, int numtcells)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static int Furthest_Cell(CELL *cells, int numcells, CELL *tcells, int numtcells)");
+#endif
 	int i;
 	int j;
 	int mindist;			// minimum distance a 'tcell' is from a 'cell'
@@ -1603,6 +1630,9 @@ static int Furthest_Cell(CELL *cells, int numcells, CELL *tcells, int numtcells)
  *=============================================================================================*/
 static CELL Clip_Scatter(CELL cell, int maxdist)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static CELL Clip_Scatter(CELL cell, int maxdist)");
+#endif
 	int x,y;
 	int xdist;
 	int ydist;
@@ -1678,6 +1708,9 @@ static CELL Clip_Scatter(CELL cell, int maxdist)
  *=============================================================================================*/
 static CELL Clip_Move(CELL cell, FacingType facing, int dist)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static CELL Clip_Move(CELL cell, FacingType facing, int dist)");
+#endif
 	int x,y;
 	int xmin,xmax;
 	int ymin,ymax;

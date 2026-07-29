@@ -69,6 +69,9 @@ extern HWND 			MainWindow;
 extern TimerClass	GameTimer;
 extern BOOL			GameTimerInUse;
 extern void 			CCDebugString (char *string, ...);
+#ifdef INCLUDE_FUNCTION_NAMES
+extern void 			CCDebugFunc (char *string);
+#endif
 
 
 /***********************************************************************************************
@@ -88,6 +91,9 @@ extern void 			CCDebugString (char *string, ...);
  *=============================================================================================*/
 BOOL CALLBACK DDE_Callback (unsigned char *data, long length)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BOOL CALLBACK DDE_Callback (unsigned char *data, long length)");
+#endif
 	return (DDEServer.Callback(data, length));
 }
 
@@ -110,6 +116,9 @@ BOOL CALLBACK DDE_Callback (unsigned char *data, long length)
  *=============================================================================================*/
 DDEServerClass::DDEServerClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("DDEServerClass::DDEServerClass(void)");
+#endif
 	MPlayerGameInfo = NULL;		//Flag that we havnt received a start game info packet yet
 
 	DDE_Class = new Instance_Class ("CONQUER", "WCHAT");
@@ -128,6 +137,9 @@ DDEServerClass::DDEServerClass(void)
 
 void DDEServerClass::Enable(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DDEServerClass::Enable(void)");
+#endif
 	if (!IsEnabled){
 		DDE_Class->Enable_Callback( TRUE );
 		IsEnabled = TRUE;
@@ -152,6 +164,9 @@ void DDEServerClass::Enable(void)
  *=============================================================================================*/
 void DDEServerClass::Disable(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DDEServerClass::Disable(void)");
+#endif
 	if (IsEnabled){
 		DDE_Class->Enable_Callback( FALSE );
 		IsEnabled = FALSE;
@@ -179,6 +194,9 @@ void DDEServerClass::Disable(void)
  *=============================================================================================*/
 DDEServerClass::~DDEServerClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("DDEServerClass::~DDEServerClass(void)");
+#endif
 	Delete_MPlayer_Game_Info();
 	delete( DDE_Class );
 }
@@ -202,7 +220,9 @@ DDEServerClass::~DDEServerClass(void)
  *=============================================================================================*/
 BOOL DDEServerClass::Callback(unsigned char *data, long length)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BOOL DDEServerClass::Callback(unsigned char *data, long length)");
+#endif
 	/*
 	** If the packet length < 0 then this is a special advisory packet
 	*/
@@ -310,6 +330,9 @@ BOOL DDEServerClass::Callback(unsigned char *data, long length)
  *=============================================================================================*/
 char *DDEServerClass::Get_MPlayer_Game_Info (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char *DDEServerClass::Get_MPlayer_Game_Info (void)");
+#endif
 	return (MPlayerGameInfo);
 }
 
@@ -331,6 +354,9 @@ char *DDEServerClass::Get_MPlayer_Game_Info (void)
  *=============================================================================================*/
 void DDEServerClass::Delete_MPlayer_Game_Info(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DDEServerClass::Delete_MPlayer_Game_Info(void)");
+#endif
 	if (MPlayerGameInfo){
 		delete [] MPlayerGameInfo;
 		MPlayerGameInfo = NULL;
@@ -355,6 +381,9 @@ void DDEServerClass::Delete_MPlayer_Game_Info(void)
  *=============================================================================================*/
 int DDEServerClass::Time_Since_Heartbeat(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int DDEServerClass::Time_Since_Heartbeat(void)");
+#endif
 	return (GameTimer.Time() - LastHeartbeat);
 }
 
@@ -379,6 +408,9 @@ int DDEServerClass::Time_Since_Heartbeat(void)
  *=============================================================================================*/
 BOOL Send_Data_To_DDE_Server (char *data, int length, int packet_type)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BOOL Send_Data_To_DDE_Server (char *data, int length, int packet_type)");
+#endif
 #if (0)
 	BOOL	app_exists;
 

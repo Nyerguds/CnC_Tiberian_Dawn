@@ -58,7 +58,12 @@
 #include	"function.h"
 
 
-DriveClass::DriveClass(void) : Class(0) {};
+DriveClass::DriveClass(void) : Class(0)
+{
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("DriveClass::DriveClass(void)");
+#endif
+};
 
 
 /***********************************************************************************************
@@ -79,6 +84,9 @@ DriveClass::DriveClass(void) : Class(0) {};
  *=============================================================================================*/
 void DriveClass::Do_Turn(DirType dir)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DriveClass::Do_Turn(DirType dir)");
+#endif
 	if (dir != PrimaryFacing) {
 
 		/*
@@ -130,6 +138,9 @@ void DriveClass::Do_Turn(DirType dir)
  *=============================================================================================*/
 void DriveClass::Force_Track(int track, COORDINATE coord)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DriveClass::Force_Track(int track, COORDINATE coord)");
+#endif
 	TrackNumber = track;
 	TrackIndex = 0;
 	Start_Driver(coord);
@@ -153,6 +164,9 @@ void DriveClass::Force_Track(int track, COORDINATE coord)
  *=============================================================================================*/
 int DriveClass::Tiberium_Load(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int DriveClass::Tiberium_Load(void) const");
+#endif
 	if (*this == UNIT_HARVESTER) {
 		return(Cardinal_To_Fixed(UnitTypeClass::STEP_COUNT, Tiberium));
 	}
@@ -180,6 +194,9 @@ int DriveClass::Tiberium_Load(void) const
  *=============================================================================================*/
 void DriveClass::Approach_Target(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DriveClass::Approach_Target(void)");
+#endif
 	/*
 	**	Only if there is a legal target should the approach check occur.
 	*/
@@ -228,6 +245,9 @@ void DriveClass::Approach_Target(void)
  *=============================================================================================*/
 void DriveClass::Overrun_Square(CELL cell, bool threaten)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DriveClass::Overrun_Square(CELL cell, bool threaten)");
+#endif
 	CellClass * cellptr = &Map[cell];
 
 	if (Class->IsCrusher) {
@@ -324,6 +344,9 @@ DriveClass::DriveClass(UnitType classid, HousesType house) :
 	Class(&UnitTypeClass::As_Reference(classid)),
 	FootClass(house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("DriveClass::DriveClass(UnitType classid, HousesType house)");
+#endif
 	/*
 	**	For two shooters, clear out the second shot flag -- it will be set the first time
 	**	the object fires. For non two shooters, set the flag since it will never be cleared
@@ -365,6 +388,9 @@ DriveClass::DriveClass(UnitType classid, HousesType house) :
  *=============================================================================================*/
 void DriveClass::Debug_Dump(MonoClass *mono) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DriveClass::Debug_Dump(MonoClass *mono) const");
+#endif
 	mono->Set_Cursor(33, 7);
 	mono->Printf("%2d:%2d", TrackNumber, TrackIndex);
 	mono->Text_Print("X", 16 + (IsTurretLockedDown?2:0), 10);
@@ -393,6 +419,9 @@ void DriveClass::Debug_Dump(MonoClass *mono) const
  *=============================================================================================*/
 void DriveClass::Exit_Map(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DriveClass::Exit_Map(void)");
+#endif
 	CELL	cell;		// Map exit cell number.
 
 	if (*this == UNIT_HOVER && !Target_Legal(NavCom)) {
@@ -447,6 +476,9 @@ void DriveClass::Exit_Map(void)
  *=============================================================================================*/
 COORDINATE DriveClass::Smooth_Turn(COORDINATE adj, DirType *dir)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE DriveClass::Smooth_Turn(COORDINATE adj, DirType *dir)");
+#endif
 	DirType	workdir = *dir;
 	int	x,y;
 	int   temp;
@@ -497,7 +529,9 @@ COORDINATE DriveClass::Smooth_Turn(COORDINATE adj, DirType *dir)
  *=============================================================================================*/
 void DriveClass::Assign_Destination(TARGET target)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DriveClass::Assign_Destination(TARGET target)");
+#endif
 	/*
 	**	Abort early if there is anything wrong with the parameters
 	**	or the unit already is assigned the specified destination.
@@ -615,6 +649,9 @@ void DriveClass::Assign_Destination(TARGET target)
  *=============================================================================================*/
 bool DriveClass::While_Moving(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool DriveClass::While_Moving(void)");
+#endif
 	int	actual;			// Working movement addition value.
 
 	/*
@@ -802,6 +839,9 @@ bool DriveClass::While_Moving(void)
  *=============================================================================================*/
 void DriveClass::Per_Cell_Process(bool center)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DriveClass::Per_Cell_Process(bool center)");
+#endif
 	CELL	cell = Coord_Cell(Coord);
 
 	/*
@@ -856,6 +896,9 @@ void DriveClass::Per_Cell_Process(bool center)
  *=============================================================================================*/
 bool DriveClass::Start_Of_Move(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool DriveClass::Start_Of_Move(void)");
+#endif
 	FacingType		facing;				// Direction movement will commence.
 	DirType			dir;				// Desired actual facing toward destination.
 	int				facediff;			// Difference between current and desired facing.
@@ -1252,6 +1295,9 @@ bool DriveClass::Start_Of_Move(void)
  *=============================================================================================*/
 void DriveClass::AI(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DriveClass::AI(void)");
+#endif
 	FootClass::AI();
 
 	/*
@@ -1332,6 +1378,9 @@ void DriveClass::AI(void)
  *=============================================================================================*/
 void DriveClass::Fixup_Path(PathType *path)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DriveClass::Fixup_Path(PathType *path)");
+#endif
 	FacingType stage[6]={FACING_N,FACING_N,FACING_N,FACING_N,FACING_N,FACING_N};		// Prefix path elements.
 	int	facediff;		// The facing difference value (0..4 | 0..-4).
 	static FacingType _path[4][6] = {
@@ -1507,6 +1556,9 @@ void DriveClass::Fixup_Path(PathType *path)
  *=============================================================================================*/
 void DriveClass::Lay_Track(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DriveClass::Lay_Track(void)");
+#endif
 #ifdef NEVER
 	static IconCommandType *_trackdirs[8] = {
 		TrackN_S,
@@ -1545,6 +1597,9 @@ void DriveClass::Lay_Track(void)
  *=============================================================================================*/
 void DriveClass::Mark_Track(COORDINATE headto, MarkType type)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DriveClass::Mark_Track(COORDINATE headto, MarkType type)");
+#endif
 	int value;
 
 	if (type == MARK_UP) {
@@ -1603,6 +1658,9 @@ void DriveClass::Mark_Track(COORDINATE headto, MarkType type)
  *=============================================================================================*/
 int DriveClass::Offload_Tiberium_Bail(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int DriveClass::Offload_Tiberium_Bail(void)");
+#endif
 	if (Tiberium) {
 		Tiberium--;
 		if (House->IsHuman) {
@@ -1631,6 +1689,9 @@ int DriveClass::Offload_Tiberium_Bail(void)
  *=============================================================================================*/
 bool DriveClass::Ok_To_Move(DirType ) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool DriveClass::Ok_To_Move(DirType ) const");
+#endif
 	return true;
 }
 
@@ -1651,6 +1712,9 @@ bool DriveClass::Ok_To_Move(DirType ) const
  *=============================================================================================*/
 ObjectTypeClass const & DriveClass::Class_Of(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ObjectTypeClass const & DriveClass::Class_Of(void) const");
+#endif
 	return *Class;
 }
 

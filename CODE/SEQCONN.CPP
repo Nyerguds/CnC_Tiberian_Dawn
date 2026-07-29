@@ -74,6 +74,9 @@ SequencedConnClass::SequencedConnClass (int numsend, int numreceive,
 	unsigned long max_retries, unsigned long timeout) :
 	ConnectionClass (maxlen, magicnum, retry_delta, max_retries, timeout)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("SequencedConnClass::SequencedConnClass (int numsend, int numreceive, int maxlen, unsigned short magicnum, unsigned long retry_delta, unsigned long max_retries, unsigned long timeout)");
+#endif
 	NumRecNoAck = 0;
 	NumRecAck = 0;
 	NumSendNoAck = 0;
@@ -106,6 +109,9 @@ SequencedConnClass::SequencedConnClass (int numsend, int numreceive,
  *=========================================================================*/
 SequencedConnClass::~SequencedConnClass ()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("SequencedConnClass::~SequencedConnClass ()");
+#endif
 	delete Queue;
 }
 
@@ -127,6 +133,9 @@ SequencedConnClass::~SequencedConnClass ()
  *=========================================================================*/
 void SequencedConnClass::Init (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SequencedConnClass::Init (void)");
+#endif
 	Queue->Init();
 
 }	/* end of Init */
@@ -156,6 +165,9 @@ void SequencedConnClass::Init (void)
  *=========================================================================*/
 int SequencedConnClass::Send_Packet (void * buf, int buflen, int ack_req)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int SequencedConnClass::Send_Packet (void * buf, int buflen, int ack_req)");
+#endif
 	/*........................................................................
 	Set the magic # for the packet
 	........................................................................*/
@@ -213,6 +225,9 @@ int SequencedConnClass::Send_Packet (void * buf, int buflen, int ack_req)
  *=========================================================================*/
 int SequencedConnClass::Receive_Packet (void * buf, int buflen)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int SequencedConnClass::Receive_Packet (void * buf, int buflen)");
+#endif
 	CommHeaderType *packet;					// ptr to this packet
 	SendQueueType *send_entry;				// ptr to send entry header
 	ReceiveQueueType *rec_entry;			// ptr to receive entry header
@@ -344,6 +359,9 @@ printf("ACK received (%d)\n",packet->PacketID);
  *=========================================================================*/
 int SequencedConnClass::Get_Packet (void * buf, int *buflen)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int SequencedConnClass::Get_Packet (void * buf, int *buflen)");
+#endif
 	ReceiveQueueType *rec_entry;					// ptr to receive entry header
 	int packetlen;										// size of received packet
 
@@ -393,6 +411,9 @@ int SequencedConnClass::Get_Packet (void * buf, int *buflen)
  *=========================================================================*/
 int SequencedConnClass::Service_Send_Queue (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int SequencedConnClass::Service_Send_Queue (void)");
+#endif
 	SendQueueType *send_entry;						// ptr to send queue entry
 	CommHeaderType *packet_hdr;					// packet header
 	unsigned long curtime;							// current time
@@ -505,6 +526,9 @@ if (packet_hdr->Code == PACKET_DATA_NOACK) {
  *=========================================================================*/
 int SequencedConnClass::Service_Receive_Queue (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int SequencedConnClass::Service_Receive_Queue (void)");
+#endif
 	CommHeaderType ackpacket;						// ACK packet to send
 	ReceiveQueueType *rec_entry;					// ptr to receive entry header
 	CommHeaderType *packet_hdr;					// packet header

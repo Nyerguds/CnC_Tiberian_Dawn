@@ -66,6 +66,9 @@
  *=============================================================================================*/
 UnitTrackerClass::UnitTrackerClass (int unit_count)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("UnitTrackerClass::UnitTrackerClass (int unit_count)");
+#endif
 	UnitTotals = new long [unit_count];		// Allocate memory for the unit totals
 	UnitCount = unit_count;						// Keep a record of how many unit entries there are
 	InNetworkFormat = 0;							// The unit entries are in host format
@@ -89,6 +92,9 @@ UnitTrackerClass::UnitTrackerClass (int unit_count)
  *=============================================================================================*/
 UnitTrackerClass::~UnitTrackerClass (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("UnitTrackerClass::~UnitTrackerClass (void)");
+#endif
 	delete UnitTotals;
 }
 
@@ -110,6 +116,9 @@ UnitTrackerClass::~UnitTrackerClass (void)
  *=============================================================================================*/
 void UnitTrackerClass::Increment_Unit_Total(int unit_type)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitTrackerClass::Increment_Unit_Total(int unit_type)");
+#endif
 	UnitTotals[unit_type]++;
 }
 
@@ -130,6 +139,9 @@ void UnitTrackerClass::Increment_Unit_Total(int unit_type)
  *=============================================================================================*/
 void UnitTrackerClass::Decrement_Unit_Total(int unit_type)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitTrackerClass::Decrement_Unit_Total(int unit_type)");
+#endif
 	UnitTotals[unit_type]--;
 }
 
@@ -150,6 +162,9 @@ void UnitTrackerClass::Decrement_Unit_Total(int unit_type)
  *=============================================================================================*/
 long *UnitTrackerClass::Get_All_Totals (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long *UnitTrackerClass::Get_All_Totals (void)");
+#endif
 	return (UnitTotals);
 }
 
@@ -170,6 +185,9 @@ long *UnitTrackerClass::Get_All_Totals (void)
  *=============================================================================================*/
 void UnitTrackerClass::Clear_Unit_Total (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitTrackerClass::Clear_Unit_Total (void)");
+#endif
 	memset (UnitTotals, 0, UnitCount * sizeof(long) );
 }
 
@@ -191,6 +209,9 @@ void UnitTrackerClass::Clear_Unit_Total (void)
  *=============================================================================================*/
 void UnitTrackerClass::To_Network_Format (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitTrackerClass::To_Network_Format (void)");
+#endif
 	if (!InNetworkFormat){
 		for (int i=0 ; i<UnitCount ; i++){
 			UnitTotals[i] = htonl (UnitTotals[i]);
@@ -216,6 +237,9 @@ void UnitTrackerClass::To_Network_Format (void)
  *=============================================================================================*/
 void UnitTrackerClass::To_PC_Format (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitTrackerClass::To_PC_Format (void)");
+#endif
 	if (InNetworkFormat){
 		for (int i=0 ; i<UnitCount ; i++){
 			UnitTotals[i] = ntohl (UnitTotals[i]);

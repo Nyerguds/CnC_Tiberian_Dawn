@@ -200,6 +200,9 @@ TechnoTypeClass::TechnoTypeClass(
 							armor,
 							strength)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TechnoTypeClass::TechnoTypeClass(...)");
+#endif
 	Level = level;
 	Pre = pre;
 	MaxAmmo = ammo;
@@ -253,6 +256,9 @@ TechnoTypeClass::TechnoTypeClass(
  *=============================================================================================*/
 void TechnoTypeClass::Recalculate_Risk(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoTypeClass::Recalculate_Risk(void)");
+#endif
 	/*
 	** Units risk value is based on the type of weapon it has, and the
 	** rate of fire it shoots at.
@@ -283,6 +289,9 @@ void TechnoTypeClass::Recalculate_Risk(void)
  *=============================================================================================*/
 int TechnoTypeClass::Raw_Cost(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TechnoTypeClass::Raw_Cost(void) const");
+#endif
 	return(Cost);
 }
 
@@ -304,6 +313,9 @@ int TechnoTypeClass::Raw_Cost(void) const
  *=============================================================================================*/
 unsigned short TechnoTypeClass::Get_Ownable(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned short TechnoTypeClass::Get_Ownable(void) const");
+#endif
 	return(Ownable);
 }
 
@@ -326,6 +338,9 @@ unsigned short TechnoTypeClass::Get_Ownable(void) const
  *=============================================================================================*/
 int TechnoTypeClass::Time_To_Build(HousesType house) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TechnoTypeClass::Time_To_Build(HousesType house) const");
+#endif
 	int cost = Raw_Cost();
 
 	/*
@@ -368,6 +383,9 @@ int TechnoTypeClass::Time_To_Build(HousesType house) const
  *=============================================================================================*/
 int TechnoTypeClass::Cost_Of(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TechnoTypeClass::Cost_Of(void) const");
+#endif
 	return(Cost);
 }
 
@@ -390,6 +408,9 @@ int TechnoTypeClass::Cost_Of(void) const
  *=============================================================================================*/
 int TechnoTypeClass::Enemy_Name(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TechnoTypeClass::Enemy_Name(void) const");
+#endif
 	return(Full_Name());
 }
 
@@ -412,6 +433,9 @@ int TechnoTypeClass::Enemy_Name(void) const
  *=============================================================================================*/
 void const * TechnoTypeClass::Get_Cameo_Data(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void const * TechnoTypeClass::Get_Cameo_Data(void) const");
+#endif
 	return(CameoData);
 }
 
@@ -432,6 +456,9 @@ void const * TechnoTypeClass::Get_Cameo_Data(void) const
  *=============================================================================================*/
 bool TechnoTypeClass::Cameo_Is_Theater_Shape(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TechnoTypeClass::Cameo_Is_Theater_Shape(void) const");
+#endif
 	return(CameoIsTheaterShape);
 }
 
@@ -454,6 +481,9 @@ bool TechnoTypeClass::Cameo_Is_Theater_Shape(void) const
  *=============================================================================================*/
 void const * TechnoTypeClass::Get_Spy_Cameo_Data(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void const * TechnoTypeClass::Get_Spy_Cameo_Data(void) const");
+#endif
 	return(SpyCameoData);
 }
 
@@ -474,6 +504,9 @@ void const * TechnoTypeClass::Get_Spy_Cameo_Data(void) const
  *=============================================================================================*/
 void const * TechnoTypeClass::Remap_Table(HouseClass * house, bool blushing) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void const * TechnoTypeClass::Remap_Table(HouseClass * house, bool blushing) const");
+#endif
 	return(house->Remap_Table(blushing, false));
 }
 
@@ -495,6 +528,9 @@ void const * TechnoTypeClass::Remap_Table(HouseClass * house, bool blushing) con
  *=============================================================================================*/
 void const * TechnoTypeClass::Cameo_Remap_Table(HouseClass * house, bool blushing) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void const * TechnoTypeClass::Cameo_Remap_Table(HouseClass * house, bool blushing) const");
+#endif
 	if (Get_Resolution_Shift()) return(blushing ? &Map.FadingLight[0] : NULL);
 	return(Remap_Table(house, blushing));
 }
@@ -517,6 +553,9 @@ void const * TechnoTypeClass::Cameo_Remap_Table(HouseClass * house, bool blushin
  *=============================================================================================*/
 void const * TechnoTypeClass::Spy_Cameo_Remap_Table(HouseClass * house) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void const * TechnoTypeClass::Spy_Cameo_Remap_Table(HouseClass * house) const");
+#endif
 	return(Remap_Table(house, false));
 }
 
@@ -537,6 +576,9 @@ void const * TechnoTypeClass::Spy_Cameo_Remap_Table(HouseClass * house) const
  *=============================================================================================*/
 bool TechnoTypeClass::Spy_Cameo_Is_Theater_Shape(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TechnoTypeClass::Spy_Cameo_Is_Theater_Shape(void) const");
+#endif
 	return(SpyCameoIsTheaterShape);
 }
 
@@ -559,6 +601,9 @@ bool TechnoTypeClass::Spy_Cameo_Is_Theater_Shape(void) const
  *=============================================================================================*/
 int TechnoTypeClass::Repair_Cost(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TechnoTypeClass::Repair_Cost(void) const");
+#endif
 	return(0);
 }
 
@@ -581,6 +626,9 @@ int TechnoTypeClass::Repair_Cost(void) const
  *=============================================================================================*/
 int TechnoTypeClass::Repair_Step(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TechnoTypeClass::Repair_Step(void) const");
+#endif
 	return(0);
 }
 
@@ -607,6 +655,9 @@ int TechnoTypeClass::Repair_Step(void) const
  *=============================================================================================*/
 void TechnoTypeClass::Display(int x, int y, WindowNumberType window, HousesType house) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoTypeClass::Display(int x, int y, WindowNumberType window, HousesType house) const");
+#endif
 	if (house == HOUSE_NONE) return;
 	HouseClass * houseobj = HouseClass::As_Pointer(house);
 	void const * ptr = Get_Cameo_Data();
@@ -650,6 +701,9 @@ void TechnoTypeClass::Display(int x, int y, WindowNumberType window, HousesType 
  *=============================================================================================*/
 void TechnoClass::Debug_Dump(MonoClass *mono) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Debug_Dump(MonoClass *mono) const");
+#endif
 	mono->Set_Cursor(0,0);mono->Printf("(%04X)p=%d,d=%d", House->Power_Fraction(), House->Power, House->Drain);
 //	mono->Set_Cursor(0,0);mono->Printf("(%d)", House->Blockage);
 	mono->Text_Print("X", 16 + (IsALoaner?2:0), 11);
@@ -690,6 +744,9 @@ TechnoClass::TechnoClass(void) :
 	TarCom(TARGET_NONE),
 	House(0)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TechnoClass::TechnoClass(void)");
+#endif
 	Arm = 0;
 	ActiveDetection = 0;
 	Ammo = -1;
@@ -733,6 +790,9 @@ TechnoClass::TechnoClass(void) :
  *=============================================================================================*/
 bool TechnoClass::Revealed(HouseClass * house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TechnoClass::Revealed(HouseClass * house)");
+#endif
 	if (house == PlayerPtr && IsDiscoveredByPlayer) return(false);
 	if (house != PlayerPtr && IsDiscoveredByComputer) return(false);
 
@@ -803,6 +863,9 @@ bool TechnoClass::Revealed(HouseClass * house)
  *=============================================================================================*/
 void TechnoClass::Hidden(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Hidden(void)");
+#endif
 	if (!IsDiscoveredByPlayer) return;
 	if (!House->IsHuman) {
 		IsDiscoveredByPlayer = false;
@@ -827,6 +890,9 @@ void TechnoClass::Hidden(void)
  *=============================================================================================*/
 bool TechnoClass::Mark(MarkType mark)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TechnoClass::Mark(MarkType mark)");
+#endif
 	if (RadioClass::Mark(mark)) {
 		/*
 		**	When redrawing an object, if there is another object teathered to this one,
@@ -865,6 +931,9 @@ bool TechnoClass::Mark(MarkType mark)
  *=============================================================================================*/
 RadioMessageType TechnoClass::Receive_Message(RadioClass * from, RadioMessageType message, long & param)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("RadioMessageType TechnoClass::Receive_Message(RadioClass * from, RadioMessageType message, long & param)");
+#endif
 	switch (message) {
 
 		/*
@@ -992,6 +1061,9 @@ TechnoClass::TechnoClass(HousesType house) :
 	House(HouseClass::As_Pointer(house)),
 	TarCom(TARGET_NONE)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TechnoClass::TechnoClass(HousesType house)");
+#endif
 	Arm = 0;
 	ActiveDetection = 0;
 	Ammo = -1;
@@ -1046,6 +1118,9 @@ TechnoClass::TechnoClass(HousesType house) :
  *=============================================================================================*/
 void TechnoClass::Per_Cell_Process(bool /*center*/)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Per_Cell_Process(bool /*center*/)");
+#endif
 	CELL cell = Coord_Cell(Center_Coord());
 
 	/*
@@ -1096,6 +1171,9 @@ void TechnoClass::Per_Cell_Process(bool /*center*/)
  *=============================================================================================*/
 void TechnoClass::Draw_It(int x, int y, WindowNumberType window)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Draw_It(int x, int y, WindowNumberType window)");
+#endif
 	Clear_Redraw_Flag();
 	if (IsSelected || (Special.IsBarOn && (House == PlayerPtr || Cloak != CLOAKED))) {
 		GraphicViewPortClass draw_window(	LogicPage->Get_Graphic_Buffer(),
@@ -1201,6 +1279,9 @@ void TechnoClass::Draw_It(int x, int y, WindowNumberType window)
  *=============================================================================================*/
 bool TechnoClass::Unlimbo(COORDINATE coord, DirType dir)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TechnoClass::Unlimbo(COORDINATE coord, DirType dir)");
+#endif
 	if (RadioClass::Unlimbo(coord, dir)) {
 		PrimaryFacing = dir;
 		Enter_Idle_Mode(true);
@@ -1235,6 +1316,9 @@ bool TechnoClass::Unlimbo(COORDINATE coord, DirType dir)
  *=============================================================================================*/
 void TechnoClass::Look(bool incremental)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Look(bool incremental)");
+#endif
 	if (!IsInLimbo && IsOwnedByPlayer) {
 		int sight = Techno_Type_Class()->SightRange;
 		if (sight) {
@@ -1264,6 +1348,9 @@ void TechnoClass::Look(bool incremental)
  *=============================================================================================*/
 bool TechnoClass::In_Range(TARGET target, int which) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TechnoClass::In_Range(TARGET target, int which) const");
+#endif
 	if (IsLocked && Target_Legal(target)) {
 		int range = Weapon_Range(which, false, target);
 		// Nyerguds's C&C Patch Project v1.04: Fixed range checks to be facing independent.
@@ -1296,6 +1383,9 @@ bool TechnoClass::In_Range(TARGET target, int which) const
  *=============================================================================================*/
 bool TechnoClass::In_Range(ObjectClass const * target, int which) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TechnoClass::In_Range(ObjectClass const * target, int which) const");
+#endif
 	if (IsLocked && target) {
 		int range = Weapon_Range(which, false, target->As_Target());
 		// Nyerguds's C&C Patch Project v1.04: Fixed range checks to be facing independent.
@@ -1327,6 +1417,9 @@ bool TechnoClass::In_Range(ObjectClass const * target, int which) const
  *=============================================================================================*/
 bool TechnoClass::In_Range(COORDINATE coord, int which) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TechnoClass::In_Range(COORDINATE coord, int which) const");
+#endif
 	// Nyerguds's C&C Patch Project v1.04: Fixed range checks to be facing independent.
 	// Creating a TARGET for a location can only take a cell number, not coords,
 	// so an extra arg was added to correct that to the real coords.
@@ -1372,6 +1465,9 @@ bool TechnoClass::In_Range(COORDINATE coord, int which) const
  *=============================================================================================*/
 bool TechnoClass::Evaluate_Object(ThreatType method, int mask, int range, TechnoClass const * object, int & value) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TechnoClass::Evaluate_Object(ThreatType method, int mask, int range, TechnoClass const * object, int & value) const");
+#endif
 	/*
 	**	An object in limbo can never be a valid target.
 	*/
@@ -1564,6 +1660,9 @@ bool TechnoClass::Evaluate_Object(ThreatType method, int mask, int range, Techno
  *=============================================================================================*/
 bool TechnoClass::Evaluate_Cell(ThreatType method, int mask, CELL cell, int range, TechnoClass const * * object, int & value) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TechnoClass::Evaluate_Cell(ThreatType method, int mask, CELL cell, int range, TechnoClass const * * object, int & value) const");
+#endif
 	*object = NULL;
 	value = 0;
 
@@ -1608,6 +1707,9 @@ bool TechnoClass::Evaluate_Cell(ThreatType method, int mask, CELL cell, int rang
 **	Refactored this to add sub-cell scan logic, and fix updating bestval
 */
 void TechnoClass::Update_Best_Object(ThreatType method, int mask, CELL cell, int range, ObjectClass const ** bestobject, int & bestval) const {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Update_Best_Object(ThreatType method, int mask, CELL cell, int range, ObjectClass const ** bestobject, int & bestval) const");
+#endif
 	TechnoClass const * object;
 	int value;
 
@@ -1653,6 +1755,9 @@ void TechnoClass::Update_Best_Object(ThreatType method, int mask, CELL cell, int
  *=============================================================================================*/
 TARGET TechnoClass::Greatest_Threat(ThreatType method) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TARGET TechnoClass::Greatest_Threat(ThreatType method) const");
+#endif
 	ObjectClass const * bestobject = NULL;
 	int bestval = -1;
 
@@ -1860,6 +1965,9 @@ TARGET TechnoClass::Greatest_Threat(ThreatType method) const
  *=============================================================================================*/
 HousesType TechnoClass::Owner(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("HousesType TechnoClass::Owner(void) const");
+#endif
 	return(House ? House->Class->House : HOUSE_NONE);
 }
 
@@ -1882,6 +1990,9 @@ HousesType TechnoClass::Owner(void) const
  *=============================================================================================*/
 void TechnoClass::Clicked_As_Target(int count)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Clicked_As_Target(int count)");
+#endif
 	FlashCount = count;
 }
 
@@ -1903,6 +2014,9 @@ void TechnoClass::Clicked_As_Target(int count)
  *=============================================================================================*/
 void TechnoClass::AI(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::AI(void)");
+#endif
 	// Nyerguds's C&C Patch Project v1.04 Recoil state migrated to TechnoClass.
 	/*
 	**	Handle recoil recovery here.
@@ -2095,6 +2209,9 @@ void TechnoClass::AI(void)
  *=============================================================================================*/
 bool TechnoClass::Select(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TechnoClass::Select(void)");
+#endif
 	if (!IsDiscoveredByPlayer && !IsOwnedByPlayer && !Debug_Unshroud) {
 		return(false);
 	}
@@ -2130,6 +2247,9 @@ bool TechnoClass::Select(void)
  *=============================================================================================*/
 FireErrorType TechnoClass::Can_Fire(TARGET target, int which) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FireErrorType TechnoClass::Can_Fire(TARGET target, int which) const");
+#endif
 	/*
 	**	Don't allow firing if the target is illegal.
 	*/
@@ -2217,6 +2337,9 @@ FireErrorType TechnoClass::Can_Fire(TARGET target, int which) const
  *=============================================================================================*/
 void TechnoClass::Stun(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Stun(void)");
+#endif
 	Assign_Target(TARGET_NONE);
 	Assign_Destination(TARGET_NONE);
 	Transmit_Message(RADIO_OVER_OUT);
@@ -2242,6 +2365,9 @@ void TechnoClass::Stun(void)
  *=============================================================================================*/
 void TechnoClass::Assign_Target(TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Assign_Target(TARGET target)");
+#endif
 	if (target == TarCom) return;
 
 	if (!Target_Legal(target)) {
@@ -2292,6 +2418,9 @@ void TechnoClass::Assign_Target(TARGET target)
  *=============================================================================================*/
 int TechnoClass::Rearm_Delay(bool second) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TechnoClass::Rearm_Delay(bool second) const");
+#endif
 	if (second) {
 		return(Weapons[Techno_Type_Class()->Primary].ROF + 3);
 	}
@@ -2321,6 +2450,9 @@ int TechnoClass::Rearm_Delay(bool second) const
  *=============================================================================================*/
 BulletClass * TechnoClass::Fire_At(TARGET target, int which)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BulletClass * TechnoClass::Fire_At(TARGET target, int which)");
+#endif
 	BulletClass		*bullet;				// Projectile.
 	DirType			dir;					// The facing to impart upon the projectile.
 	COORDINATE				target_coord;		// Coordinate of the target.
@@ -2510,6 +2642,9 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
  *   07/01/2025 MM : Migrated from BuildingClass::Fire_At, added directional offsets           *
  *=============================================================================================*/
 void TechnoClass::Draw_Laser(TARGET target, int which) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Draw_Laser(TARGET target, int which)");
+#endif
 	//                                             N   NE  E   SE  S   SW  W   NW
 	static const char _nudge_x1a[FACING_COUNT] = { -1, -1,  0,  0,  1,  1,  0,  0};
 	static const char _nudge_y1a[FACING_COUNT] = {  0,  0, -1, -1,  0,  0,  1,  1};
@@ -2570,6 +2705,9 @@ void TechnoClass::Draw_Laser(TARGET target, int which) {
  *=============================================================================================*/
 void TechnoClass::Player_Assign_Mission(MissionType mission, TARGET target, TARGET destination)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Player_Assign_Mission(MissionType mission, TARGET target, TARGET destination)");
+#endif
 	if (AllowVoice) {
 		switch(mission)
 		{
@@ -2618,6 +2756,9 @@ void TechnoClass::Player_Assign_Mission(MissionType mission, TARGET target, TARG
  *=============================================================================================*/
 ActionType TechnoClass::What_Action(ObjectClass * object) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ActionType TechnoClass::What_Action(ObjectClass * object) const");
+#endif
 	if (object) {
 
 		/*
@@ -2715,6 +2856,9 @@ ActionType TechnoClass::What_Action(ObjectClass * object) const
  *=============================================================================================*/
 ActionType TechnoClass::What_Action(CELL cell) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ActionType TechnoClass::What_Action(CELL cell) const");
+#endif
 	CellClass const * cellptr = &Map[cell];
 	OverlayTypeClass const * optr = NULL;
 
@@ -2795,6 +2939,9 @@ ActionType TechnoClass::What_Action(CELL cell) const
  *=============================================================================================*/
 bool TechnoClass::Can_Player_Move(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TechnoClass::Can_Player_Move(void) const");
+#endif
 	return(PlayerPtr == House);
 }
 
@@ -2817,6 +2964,9 @@ bool TechnoClass::Can_Player_Move(void) const
  *=============================================================================================*/
 bool TechnoClass::Can_Player_Fire(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TechnoClass::Can_Player_Fire(void) const");
+#endif
 	if (House->IsHuman && Is_Techno() && Techno_Type_Class()->Primary != WEAPON_NONE) {
 		return(true);
 	}
@@ -2841,6 +2991,9 @@ bool TechnoClass::Can_Player_Fire(void) const
  *=============================================================================================*/
 bool TechnoClass::Is_Weapon_Equipped(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TechnoClass::Is_Weapon_Equipped(void) const");
+#endif
 	return(Techno_Type_Class()->Primary != WEAPON_NONE);
 }
 
@@ -2864,6 +3017,9 @@ bool TechnoClass::Is_Weapon_Equipped(void) const
  *=============================================================================================*/
 bool TechnoClass::Can_Repair(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TechnoClass::Can_Repair(void) const");
+#endif
 	/*
 	**	Temporary hack to disable repair cursor over non-buildings.
 	*/
@@ -2897,6 +3053,9 @@ bool TechnoClass::Can_Repair(void) const
  *=============================================================================================*/
 int TechnoClass::Weapon_Range(int which, bool withbarrel, TARGET target) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TechnoClass::Weapon_Range(int which, bool withbarrel, TARGET target) const");
+#endif
 	WeaponType weapon = WEAPON_NONE;
 	TechnoTypeClass const & ttype = *Techno_Type_Class();
 	int barrel = 0;
@@ -2957,6 +3116,9 @@ int TechnoClass::Weapon_Range(int which, bool withbarrel, TARGET target) const
  *=========================================================================*/
 void TechnoClass::Override_Mission(MissionType mission, TARGET tarcom, TARGET navcom)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Override_Mission(MissionType mission, TARGET tarcom, TARGET navcom)");
+#endif
 	SuspendedTarCom = TarCom;
 	RadioClass::Override_Mission(mission, tarcom, navcom);
 	Assign_Target(tarcom);
@@ -2977,6 +3139,9 @@ void TechnoClass::Override_Mission(MissionType mission, TARGET tarcom, TARGET na
  *=========================================================================*/
 bool TechnoClass::Restore_Mission(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TechnoClass::Restore_Mission(void)");
+#endif
 	if (RadioClass::Restore_Mission()) {
 		Assign_Target(SuspendedTarCom);
 		return(true);
@@ -3004,6 +3169,9 @@ bool TechnoClass::Restore_Mission(void)
  *=============================================================================================*/
 bool TechnoClass::Captured(HouseClass * newowner)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TechnoClass::Captured(HouseClass * newowner)");
+#endif
 	if (newowner && newowner != House) {
 
 		/*
@@ -3101,6 +3269,9 @@ bool TechnoClass::Captured(HouseClass * newowner)
  *=============================================================================================*/
 ResultType TechnoClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ResultType TechnoClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)");
+#endif
 	ResultType result = ObjectClass::Take_Damage(damage, distance, warhead, source, house, fromburn);
 
 	switch (result) {
@@ -3144,6 +3315,9 @@ ResultType TechnoClass::Take_Damage(int & damage, int distance, WarheadType warh
  *=============================================================================================*/
 int TechnoTypeClass::Max_Passengers(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TechnoTypeClass::Max_Passengers(void) const");
+#endif
 	if (IsTransporter) {
 		return(5);
 	}
@@ -3174,6 +3348,9 @@ int TechnoTypeClass::Max_Passengers(void) const
  *=============================================================================================*/
 void TechnoClass::Record_The_Kill(TechnoClass * source, HousesType house, bool sold)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Record_The_Kill(TechnoClass * source, HousesType house, bool sold)");
+#endif
 	/*
 	**	Handle any trigger event associated with this object.
 	*/
@@ -3331,6 +3508,9 @@ void TechnoClass::Record_The_Kill(TechnoClass * source, HousesType house, bool s
  *=============================================================================================*/
 CELL TechnoClass::Nearby_Location(TechnoClass const * ) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CELL TechnoClass::Nearby_Location(TechnoClass const * ) const");
+#endif
 	/*
 	**	Radiate outward from the object's location, looking for the best
 	**	target.
@@ -3392,6 +3572,9 @@ CELL TechnoClass::Nearby_Location(TechnoClass const * ) const
  *=============================================================================================*/
 void TechnoClass::Do_Uncloak(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Do_Uncloak(void)");
+#endif
 	if (IsCloakable && (Cloak == CLOAKED || Cloak == CLOAKING)) {
 		Sound_Effect(VOC_CLOAK, Coord);
 		Cloak = UNCLOAKING;
@@ -3420,6 +3603,9 @@ void TechnoClass::Do_Uncloak(void)
  *=============================================================================================*/
 void TechnoClass::Do_Cloak(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Do_Cloak(void)");
+#endif
 	if (IsCloakable && (Cloak == UNCLOAKED || Cloak == UNCLOAKING)) {
 		Sound_Effect(VOC_CLOAK, Coord);
 		Detach_All(false);
@@ -3451,6 +3637,9 @@ void TechnoClass::Do_Cloak(void)
  *=============================================================================================*/
 void TechnoClass::Do_Shimmer(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Do_Shimmer(void)");
+#endif
 	if (IsCloakable && Cloak == CLOAKED) {
 		Cloak = CLOAKING;
 		CloakingDevice.Set_Stage(MAX_UNCLOAK_STAGE/2);
@@ -3481,6 +3670,9 @@ void TechnoClass::Do_Shimmer(void)
  *=============================================================================================*/
 VisualType TechnoClass::Visual_Character(bool raw)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("VisualType TechnoClass::Visual_Character(bool raw)");
+#endif
 	/*
 	**	When uncloaked or in map editor mode, always draw the object normally.
 	*/
@@ -3536,6 +3728,9 @@ VisualType TechnoClass::Visual_Character(bool raw)
  *=============================================================================================*/
 void TechnoClass::Techno_Draw_Object(void const * shapefile, int shapenum, int x, int y, WindowNumberType window)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Techno_Draw_Object(void const * shapefile, int shapenum, int x, int y, WindowNumberType window)");
+#endif
 	if (shapefile) {
 		VisualType visual = Visual_Character();
 		void const * remap = Remap_Table();
@@ -3573,6 +3768,9 @@ void TechnoClass::Techno_Draw_Object(void const * shapefile, int shapenum, int x
  *=============================================================================================*/
 void const * TechnoClass::Remap_Table(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void const * TechnoClass::Remap_Table(void)");
+#endif
 	return(Techno_Type_Class()->Remap_Table(House, IsBlushing));
 }
 
@@ -3600,6 +3798,9 @@ void const * TechnoClass::Remap_Table(void)
  *=============================================================================================*/
 void TechnoClass::Detach(TARGET target, bool all)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Detach(TARGET target, bool all)");
+#endif
 	RadioClass::Detach(target, all);
 
 	if (SuspendedMission != MISSION_NONE && SuspendedTarCom == target) {
@@ -3645,6 +3846,9 @@ void TechnoClass::Detach(TARGET target, bool all)
  *=============================================================================================*/
 void TechnoClass::Kill_Cargo(TechnoClass * source, HousesType house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Kill_Cargo(TechnoClass * source, HousesType house)");
+#endif
 	while (Is_Something_Attached()) {
 		FootClass * foot = Detach_Object();
 		if (foot) {
@@ -3685,6 +3889,9 @@ void TechnoClass::Kill_Cargo(TechnoClass * source, HousesType house)
  *=============================================================================================*/
 void TechnoClass::Dump_Cargo(int damage, bool select, TechnoClass * source, HousesType house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Dump_Cargo(int damage, bool select, TechnoClass * source, HousesType house)");
+#endif
 	while (Is_Something_Attached()) {
 		FootClass * foot = Detach_Object();
 		if (!foot) continue; // Not sure how this can happen		
@@ -3767,6 +3974,9 @@ void TechnoClass::Dump_Cargo(int damage, bool select, TechnoClass * source, Hous
  *=============================================================================================*/
 InfantryType TechnoClass::Crew_Type(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("InfantryType TechnoClass::Crew_Type(void) const");
+#endif
 	InfantryType infantry = INFANTRY_E1;
 	if (House->ActLike == HOUSE_NEUTRAL) {
 		infantry = Random_Pick(INFANTRY_C1, INFANTRY_C9);
@@ -3801,6 +4011,9 @@ InfantryType TechnoClass::Crew_Type(void) const
  *=============================================================================================*/
 int TechnoClass::Value(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TechnoClass::Value(void) const");
+#endif
 	int value = 0;
 
 	/*
@@ -3844,6 +4057,9 @@ int TechnoClass::Value(void) const
  *=============================================================================================*/
 int TechnoClass::Threat_Range(int control) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TechnoClass::Threat_Range(int control) const");
+#endif
 	if (control == -1) return(-1);
 	if (control == 0) return(0);
 
@@ -3873,6 +4089,9 @@ int TechnoClass::Threat_Range(int control) const
  *=============================================================================================*/
 void TechnoClass::Base_Is_Attacked(TechnoClass const *enemy)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Base_Is_Attacked(TechnoClass const *enemy)");
+#endif
 	FootClass *defender[6];
 	int value[6];
 	int count = 0;
@@ -4100,6 +4319,9 @@ void TechnoClass::Base_Is_Attacked(TechnoClass const *enemy)
  *=============================================================================================*/
 unsigned char TechnoClass::Get_Ownable(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned char TechnoClass::Get_Ownable(void) const");
+#endif
 	return ((TechnoTypeClass const &)Class_Of()).Ownable;
 }
 
@@ -4121,6 +4343,9 @@ unsigned char TechnoClass::Get_Ownable(void) const
  *=============================================================================================*/
 bool TechnoClass::Is_Techno(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TechnoClass::Is_Techno(void) const");
+#endif
 	return(true);
 }
 
@@ -4141,6 +4366,9 @@ bool TechnoClass::Is_Techno(void) const
  *=============================================================================================*/
 int TechnoClass::Risk(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TechnoClass::Risk(void) const");
+#endif
 	return(Techno_Type_Class()->Risk);
 }
 
@@ -4167,6 +4395,9 @@ int TechnoClass::Risk(void) const
  *=============================================================================================*/
 int TechnoClass::Tiberium_Load(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TechnoClass::Tiberium_Load(void) const");
+#endif
 	return(0x0000);
 }
 
@@ -4193,6 +4424,9 @@ int TechnoClass::Tiberium_Load(void) const
  *=============================================================================================*/
 DirType TechnoClass::Desired_Load_Dir(ObjectClass * , CELL & moveto) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("DirType TechnoClass::Desired_Load_Dir(ObjectClass * , CELL & moveto) const");
+#endif
 	moveto = 0;
 	return(DIR_N);
 }
@@ -4216,6 +4450,9 @@ DirType TechnoClass::Desired_Load_Dir(ObjectClass * , CELL & moveto) const
  *=============================================================================================*/
 int TechnoClass::Pip_Count(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TechnoClass::Pip_Count(void) const");
+#endif
 	return(0);
 }
 
@@ -4238,6 +4475,9 @@ int TechnoClass::Pip_Count(void) const
  *=============================================================================================*/
 DirType TechnoClass::Fire_Direction(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("DirType TechnoClass::Fire_Direction(void) const");
+#endif
 	return(PrimaryFacing.Current());
 }
 
@@ -4259,6 +4499,9 @@ DirType TechnoClass::Fire_Direction(void) const
  *=============================================================================================*/
 void TechnoClass::Response_Select(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Response_Select(void)");
+#endif
 }
 
 
@@ -4279,6 +4522,9 @@ void TechnoClass::Response_Select(void)
  *=============================================================================================*/
 void TechnoClass::Response_Move(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Response_Move(void)");
+#endif
 }
 
 
@@ -4299,6 +4545,9 @@ void TechnoClass::Response_Move(void)
  *=============================================================================================*/
 void TechnoClass::Response_Attack(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Response_Attack(void)");
+#endif
 }
 
 
@@ -4321,6 +4570,9 @@ void TechnoClass::Response_Attack(void)
  *=============================================================================================*/
 void TechnoClass::Response_Sabotage(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Response_Sabotage(void)");
+#endif
 }
 
 /***********************************************************************************************
@@ -4341,6 +4593,9 @@ void TechnoClass::Response_Sabotage(void)
  *=============================================================================================*/
 bool TechnoClass::Target_Something_Nearby(ThreatType threat)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TechnoClass::Target_Something_Nearby(ThreatType threat)");
+#endif
 	threat = threat & (THREAT_RANGE|THREAT_AREA);
 
 	/*
@@ -4386,6 +4641,9 @@ bool TechnoClass::Target_Something_Nearby(ThreatType threat)
  *=============================================================================================*/
 int TechnoClass::Exit_Object(TechnoClass *)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TechnoClass::Exit_Object(TechnoClass *)");
+#endif
 	return(0);
 }
 
@@ -4409,6 +4667,9 @@ int TechnoClass::Exit_Object(TechnoClass *)
  *=============================================================================================*/
 void TechnoClass::Random_Animate(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Random_Animate(void)");
+#endif
 }
 
 
@@ -4429,6 +4690,9 @@ void TechnoClass::Random_Animate(void)
  *=============================================================================================*/
 void TechnoClass::Assign_Destination(TARGET )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Assign_Destination(TARGET )");
+#endif
 }
 
 
@@ -4453,6 +4717,9 @@ void TechnoClass::Assign_Destination(TARGET )
  *=============================================================================================*/
 bool TechnoClass::Scatter(COORDINATE , bool )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TechnoClass::Scatter(COORDINATE , bool )");
+#endif
 	return(false);
 }
 
@@ -4477,6 +4744,9 @@ bool TechnoClass::Scatter(COORDINATE , bool )
  *=============================================================================================*/
 void TechnoClass::Enter_Idle_Mode(bool )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Enter_Idle_Mode(bool )");
+#endif
 }
 
 
@@ -4501,6 +4771,9 @@ void TechnoClass::Enter_Idle_Mode(bool )
  *=============================================================================================*/
 void TechnoClass::Draw_Pips(int x, int y, WindowNumberType window)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Draw_Pips(int x, int y, WindowNumberType window)");
+#endif
 	int maxpips = Class_Of().Max_Pips();
 	// Center location of first pip.
 	int offset_x = 5;
@@ -4645,6 +4918,9 @@ void TechnoClass::Draw_Pips(int x, int y, WindowNumberType window)
  *=============================================================================================*/
 BuildingClass * TechnoClass::Find_Docking_Bay(StructType b, bool leader, bool friendly) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BuildingClass * TechnoClass::Find_Docking_Bay(StructType b, bool leader, bool friendly) const");
+#endif
 	/*
 	**	First check to see if there are ANY buildings of the specified
 	**	type in this house's inventory. If not, then don't bother to scan
@@ -4711,6 +4987,9 @@ BuildingClass * TechnoClass::Find_Docking_Bay(StructType b, bool leader, bool fr
  *=============================================================================================*/
 CELL TechnoClass::Find_Exit_Cell(TechnoClass const * ) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CELL TechnoClass::Find_Exit_Cell(TechnoClass const * ) const");
+#endif
 	return(Coord_Cell(Docking_Coord()));
 }
 
@@ -4732,6 +5011,9 @@ CELL TechnoClass::Find_Exit_Cell(TechnoClass const * ) const
  *=============================================================================================*/
 int TechnoClass::Refund_Amount(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TechnoClass::Refund_Amount(void) const");
+#endif
 	int cost = Techno_Type_Class()->Raw_Cost();
 
 	/*

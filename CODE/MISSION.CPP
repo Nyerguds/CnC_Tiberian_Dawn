@@ -66,6 +66,9 @@
  *=============================================================================================*/
 MissionClass::MissionClass(void) 
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MissionClass::MissionClass(void)");
+#endif
 	Status = 0;
 	Timer = 0;
 	Mission = MISSION_NONE;
@@ -74,25 +77,101 @@ MissionClass::MissionClass(void)
 }
 
 
-int MissionClass::Mission_Sleep(void) {return TICKS_PER_SECOND*30;};
-int MissionClass::Mission_Ambush(void) {return TICKS_PER_SECOND*30;};
-int MissionClass::Mission_Attack(void) {return TICKS_PER_SECOND*30;};
-int MissionClass::Mission_Capture(void) {return TICKS_PER_SECOND*30;};
-int MissionClass::Mission_Guard(void) {return TICKS_PER_SECOND*30;};
-int MissionClass::Mission_Guard_Area(void) {return TICKS_PER_SECOND*30;};
-int MissionClass::Mission_Harvest(void) {return TICKS_PER_SECOND*30;};
-int MissionClass::Mission_Hunt(void) {return TICKS_PER_SECOND*30;};
-int MissionClass::Mission_Timed_Hunt(void) {return TICKS_PER_SECOND*30;};
-int MissionClass::Mission_Move(void) {return TICKS_PER_SECOND*30;};
-int MissionClass::Mission_Retreat(void) {return TICKS_PER_SECOND*30;};
-int MissionClass::Mission_Return(void) {return TICKS_PER_SECOND*30;};
-int MissionClass::Mission_Stop(void) {return TICKS_PER_SECOND*30;};
-int MissionClass::Mission_Unload(void) {return TICKS_PER_SECOND*30;};
-int MissionClass::Mission_Enter(void) {return TICKS_PER_SECOND*30;};
-int MissionClass::Mission_Construction(void) {return TICKS_PER_SECOND*30;};
-int MissionClass::Mission_Deconstruction(void) {return TICKS_PER_SECOND*30;};
-int MissionClass::Mission_Repair(void) {return TICKS_PER_SECOND*30;};
-int MissionClass::Mission_Missile(void) {return TICKS_PER_SECOND*30;};
+int MissionClass::Mission_Sleep(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MissionClass::Mission_Sleep(void)");
+#endif
+return TICKS_PER_SECOND*30;};
+int MissionClass::Mission_Ambush(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MissionClass::Mission_Ambush(void)");
+#endif
+return TICKS_PER_SECOND*30;};
+int MissionClass::Mission_Attack(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MissionClass::Mission_Attack(void)");
+#endif
+return TICKS_PER_SECOND*30;};
+int MissionClass::Mission_Capture(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MissionClass::Mission_Capture(void)");
+#endif
+return TICKS_PER_SECOND*30;};
+int MissionClass::Mission_Guard(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MissionClass::Mission_Guard(void)");
+#endif
+return TICKS_PER_SECOND*30;};
+int MissionClass::Mission_Guard_Area(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MissionClass::Mission_Guard_Area(void)");
+#endif
+return TICKS_PER_SECOND*30;};
+int MissionClass::Mission_Harvest(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MissionClass::Mission_Harvest(void)");
+#endif
+return TICKS_PER_SECOND*30;};
+int MissionClass::Mission_Hunt(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MissionClass::Mission_Hunt(void)");
+#endif
+return TICKS_PER_SECOND*30;};
+int MissionClass::Mission_Timed_Hunt(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MissionClass::Mission_Timed_Hunt(void)");
+#endif
+return TICKS_PER_SECOND*30;};
+int MissionClass::Mission_Move(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MissionClass::Mission_Move(void)");
+#endif
+return TICKS_PER_SECOND*30;};
+int MissionClass::Mission_Retreat(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MissionClass::Mission_Retreat(void)");
+#endif
+return TICKS_PER_SECOND*30;};
+int MissionClass::Mission_Return(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MissionClass::Mission_Return(void)");
+#endif
+return TICKS_PER_SECOND*30;};
+int MissionClass::Mission_Stop(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MissionClass::Mission_Stop(void)");
+#endif
+return TICKS_PER_SECOND*30;};
+int MissionClass::Mission_Unload(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MissionClass::Mission_Unload(void)");
+#endif
+return TICKS_PER_SECOND*30;};
+int MissionClass::Mission_Enter(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MissionClass::Mission_Enter(void)");
+#endif
+return TICKS_PER_SECOND*30;};
+int MissionClass::Mission_Construction(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MissionClass::Mission_Construction(void)");
+#endif
+return TICKS_PER_SECOND*30;};
+int MissionClass::Mission_Deconstruction(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MissionClass::Mission_Deconstruction(void)");
+#endif
+return TICKS_PER_SECOND*30;};
+int MissionClass::Mission_Repair(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MissionClass::Mission_Repair(void)");
+#endif
+return TICKS_PER_SECOND*30;};
+int MissionClass::Mission_Missile(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MissionClass::Mission_Missile(void)");
+#endif
+return TICKS_PER_SECOND*30;};
 
 
 /***********************************************************************************************
@@ -113,6 +192,9 @@ int MissionClass::Mission_Missile(void) {return TICKS_PER_SECOND*30;};
  *=============================================================================================*/
 void MissionClass::Set_Mission(MissionType mission)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MissionClass::Set_Mission(MissionType mission)");
+#endif
 	Mission = mission; 
 	MissionQueue = MISSION_NONE;
 }
@@ -136,6 +218,9 @@ void MissionClass::Set_Mission(MissionType mission)
  *=============================================================================================*/
 MissionType MissionClass::Get_Mission(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MissionType MissionClass::Get_Mission(void) const");
+#endif
 	return(Mission == MISSION_NONE ? MissionQueue : Mission);
 }
 
@@ -158,6 +243,9 @@ MissionType MissionClass::Get_Mission(void) const
  *=============================================================================================*/
 void MissionClass::Debug_Dump(MonoClass *mono) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MissionClass::Debug_Dump(MonoClass *mono) const");
+#endif
 	mono->Set_Cursor(21, 1);mono->Printf("%5.5s[%4.4s]", MissionClass::Mission_Name(Mission), MissionClass::Mission_Name(MissionQueue));
 //	mono->Text_Print(MissionClass::Mission_Name(Mission), 21, 1);
 	mono->Set_Cursor(20, 7);mono->Printf("%2d", (long)Timer);
@@ -187,6 +275,9 @@ void MissionClass::Debug_Dump(MonoClass *mono) const
  *=============================================================================================*/
 void MissionClass::AI(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MissionClass::AI(void)");
+#endif
 	ObjectClass::AI();
 
 	/*
@@ -304,6 +395,9 @@ void MissionClass::AI(void)
  *=============================================================================================*/
 bool MissionClass::Commence(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool MissionClass::Commence(void)");
+#endif
 	if (MissionQueue != MISSION_NONE) {
 		Mission = MissionQueue;
 		MissionQueue = MISSION_NONE;
@@ -338,6 +432,9 @@ bool MissionClass::Commence(void)
  *=============================================================================================*/
 void MissionClass::Assign_Mission(MissionType order)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MissionClass::Assign_Mission(MissionType order)");
+#endif
 	if (order == MISSION_NONE || Mission == order) return;
 
 //	Status = 0;
@@ -365,6 +462,9 @@ void MissionClass::Assign_Mission(MissionType order)
  *=============================================================================================*/
 MissionType MissionClass::Mission_From_Name(char const *name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MissionType MissionClass::Mission_From_Name(char const *name)");
+#endif
 	MissionType	order;
 
 	if (name) {
@@ -395,6 +495,9 @@ MissionType MissionClass::Mission_From_Name(char const *name)
  *=============================================================================================*/
 char const * MissionClass::Mission_Name(MissionType mission)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char const * MissionClass::Mission_Name(MissionType mission)");
+#endif
 	return(mission == MISSION_NONE ? "None" : Missions[mission]);
 }
 
@@ -418,6 +521,9 @@ char const * MissionClass::Mission_Name(MissionType mission)
  *=============================================================================================*/
 void MissionClass::Override_Mission(MissionType mission, TARGET, TARGET)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MissionClass::Override_Mission(MissionType mission, TARGET, TARGET)");
+#endif
 	if (MissionQueue != MISSION_NONE) {
 		SuspendedMission = MissionQueue;
 	} else {
@@ -442,6 +548,9 @@ void MissionClass::Override_Mission(MissionType mission, TARGET, TARGET)
  *=============================================================================================*/
 bool MissionClass::Restore_Mission(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool MissionClass::Restore_Mission(void)");
+#endif
 	if (SuspendedMission != MISSION_NONE) {
 		Assign_Mission(SuspendedMission);
 	 	SuspendedMission= MISSION_NONE;

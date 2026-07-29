@@ -41,6 +41,9 @@
 #include	"visudlg.h"
 int VisualControlsClass::Init(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int VisualControlsClass::Init(void)");
+#endif
 	int factor 			= Get_Resolution_Factor();
  	Option_Width		= 216 * factor;
  	Option_Height		= 122 * factor;
@@ -73,6 +76,9 @@ int VisualControlsClass::Init(void)
  *=============================================================================================*/
 void VisualControlsClass::Process(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void VisualControlsClass::Process(void)");
+#endif
 	static int _titles[4] = {
 		TXT_BRIGHTNESS,
 		TXT_COLOR,

@@ -67,6 +67,9 @@ ColorListClass::ColorListClass (int id, int x, int y, int w, int h,
 	TextPrintType flags, void const * up, void const * down) :
 	ListClass (id, x, y, w, h, flags, up, down)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ColorListClass::ColorListClass (int id, int x, int y, int w, int h, TextPrintType flags, void const * up, void const * down)");
+#endif
 	Style = SELECT_HIGHLIGHT;
 	SelectColor = -1;
 }
@@ -89,6 +92,9 @@ ColorListClass::ColorListClass (int id, int x, int y, int w, int h,
  *=========================================================================*/
 ColorListClass::~ColorListClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ColorListClass::~ColorListClass(void)");
+#endif
 	Colors.Clear();
 }
 
@@ -111,6 +117,9 @@ ColorListClass::~ColorListClass(void)
  *=========================================================================*/
 int ColorListClass::Add_Item(char const * text, char color)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ColorListClass::Add_Item(char const * text, char color)");
+#endif
 	Colors.Add(color);
 	return(ListClass::Add_Item(text));
 }
@@ -134,6 +143,9 @@ int ColorListClass::Add_Item(char const * text, char color)
  *=========================================================================*/
 int ColorListClass::Add_Item(int text, char color)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ColorListClass::Add_Item(int text, char color)");
+#endif
 	Colors.Add(color);
 	return(ListClass::Add_Item(text));
 }
@@ -155,6 +167,9 @@ int ColorListClass::Add_Item(int text, char color)
  *=========================================================================*/
 void ColorListClass::Remove_Item(char const * text)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ColorListClass::Remove_Item(char const * text)");
+#endif
 	int index = List.ID(text);
 	if (index != -1) {
 		Colors.Delete_Index(index);
@@ -181,6 +196,9 @@ void ColorListClass::Remove_Item(char const * text)
  *=========================================================================*/
 void ColorListClass::Set_Selected_Style(SelectStyleType style, int color)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ColorListClass::Set_Selected_Style(SelectStyleType style, int color)");
+#endif
 	Style = style;
 	SelectColor = color;
 }
@@ -206,6 +224,9 @@ void ColorListClass::Set_Selected_Style(SelectStyleType style, int color)
  *=========================================================================*/
 void ColorListClass::Draw_Entry(int index, int x, int y, int width, int selected)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ColorListClass::Draw_Entry(int index, int x, int y, int width, int selected)");
+#endif
 	int color;
 
 	/*

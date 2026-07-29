@@ -170,6 +170,9 @@ PRIVATE int Coordinates_In_Region(int x,int y,int inx1,int iny1,int inx2,int iny
 /*=========================================================================*/
 void Setup_Menu(int menu,char const *text[], unsigned long field, int index, int skip)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Setup_Menu(int menu,char const *text[], unsigned long field, int index, int skip)");
+#endif
 	int *menuptr,lp;
 	int menuy,menux,idx,item,num,drawy;
 
@@ -204,6 +207,9 @@ void Setup_Menu(int menu,char const *text[], unsigned long field, int index, int
 /*=========================================================================*/
 int Check_Menu(int menu,char const *text[],char *,long field,int index)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Check_Menu(int menu,char const *text[],char *,long field,int index)");
+#endif
 	int maxitem,select,key,menuy,menux;
 	int mx1,mx2,my1,my2,tempy;
 	int drawy,menuskip,halfskip;
@@ -367,6 +373,9 @@ int Check_Menu(int menu,char const *text[],char *,long field,int index)
  *=========================================================================*/
 int Do_Menu(char const **strings, bool blue)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Do_Menu(char const **strings, bool blue)");
+#endif
 	int	count;		// Number of entries in this menu.
 	int	length;		// The width of the menu (in pixels).
 	char	const **ptr;		// Working menu text pointer.
@@ -453,6 +462,9 @@ int Do_Menu(char const **strings, bool blue)
  *=========================================================================*/
 int Main_Menu(unsigned long timeout)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Main_Menu(unsigned long timeout)");
+#endif
 	int factor			= Get_Resolution_Factor();
 	int xdiff = MAX(0, SeenBuff.Get_Width() - (320*factor)) / 2;
 	enum {

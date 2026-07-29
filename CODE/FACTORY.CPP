@@ -75,6 +75,9 @@
 #ifdef CHEAT_KEYS
 int FactoryClass::Validate(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FactoryClass::Validate(void) const");
+#endif
 	int num;
 
 	num = Factories.ID(this);
@@ -107,6 +110,9 @@ int FactoryClass::Validate(void) const
  *=============================================================================================*/
 FactoryClass::FactoryClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FactoryClass::FactoryClass(void)");
+#endif
 	IsSuspended = false;
 	IsDifferent = false;
 	IsWaitingForFunds = false;
@@ -136,6 +142,9 @@ FactoryClass::FactoryClass(void)
  *=============================================================================================*/
 FactoryClass::~FactoryClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FactoryClass::~FactoryClass(void)");
+#endif
 	if (GameActive) {
 		Abandon();
 	}
@@ -160,6 +169,9 @@ FactoryClass::~FactoryClass(void)
  *=============================================================================================*/
 void FactoryClass::Init(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FactoryClass::Init(void)");
+#endif
 	Factories.Free_All();
 }
 
@@ -181,6 +193,9 @@ void FactoryClass::Init(void)
  *=============================================================================================*/
 void * FactoryClass::operator new(size_t)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void * FactoryClass::operator new(size_t)");
+#endif
 	void * ptr = Factories.Allocate();
 	if (ptr) {
 		((FactoryClass *)ptr)->IsActive = true;
@@ -206,6 +221,9 @@ void * FactoryClass::operator new(size_t)
  *=============================================================================================*/
 void FactoryClass::operator delete(void *ptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FactoryClass::operator delete(void *ptr)");
+#endif
 	if (ptr) {
 		((FactoryClass *)ptr)->IsActive = false;
 	}
@@ -233,6 +251,9 @@ void FactoryClass::operator delete(void *ptr)
  *=============================================================================================*/
 void FactoryClass::AI(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FactoryClass::AI(void)");
+#endif
 	Validate();
 	if (!IsSuspended && (Object != NULL || SpecialItem != SPC_NONE)) {
 		int stages = 1;
@@ -326,6 +347,9 @@ void FactoryClass::AI(void)
  *=============================================================================================*/
 bool FactoryClass::Has_Changed(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FactoryClass::Has_Changed(void)");
+#endif
 	Validate();
 	bool changed = IsDifferent;
 	IsDifferent = false;
@@ -357,6 +381,9 @@ bool FactoryClass::Has_Changed(void)
  *=============================================================================================*/
 bool FactoryClass::Set(TechnoTypeClass const & object, HouseClass & house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FactoryClass::Set(TechnoTypeClass const & object, HouseClass & house)");
+#endif
 	Validate();
 	/*
 	**	If there is any production currently in progress, abandon it.
@@ -410,6 +437,9 @@ bool FactoryClass::Set(TechnoTypeClass const & object, HouseClass & house)
  *=============================================================================================*/
 bool FactoryClass::Set(SpecialWeaponType const & type, HouseClass & house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FactoryClass::Set(SpecialWeaponType const & type, HouseClass & house)");
+#endif
 	Validate();
 	/*
 	**	If there is any production currently in progress, abandon it.
@@ -458,6 +488,9 @@ bool FactoryClass::Set(SpecialWeaponType const & type, HouseClass & house)
  *=============================================================================================*/
 void FactoryClass::Set(TechnoClass & object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FactoryClass::Set(TechnoClass & object)");
+#endif
 	Validate();
 	Abandon();
 	Object = &object;
@@ -490,6 +523,9 @@ void FactoryClass::Set(TechnoClass & object)
  *=============================================================================================*/
 bool FactoryClass::Suspend(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FactoryClass::Suspend(void)");
+#endif
 	Validate();
 	if (!IsSuspended) {
 		IsSuspended = true;
@@ -518,6 +554,9 @@ bool FactoryClass::Suspend(void)
  *=============================================================================================*/
 bool FactoryClass::Start(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FactoryClass::Start(void)");
+#endif
 	Validate();
 	if ((Object || SpecialItem != SPC_NONE) && IsSuspended && !Has_Completed()) {
 		// Nyerguds's C&C Patch Project v1.04: Don't force On Hold status on low funds.
@@ -568,6 +607,9 @@ bool FactoryClass::Start(void)
  *=============================================================================================*/
 bool FactoryClass::Abandon(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FactoryClass::Abandon(void)");
+#endif
 	Validate();
 	if (Object) {
 
@@ -621,6 +663,9 @@ bool FactoryClass::Abandon(void)
  *=============================================================================================*/
 int FactoryClass::Completion(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FactoryClass::Completion(void)");
+#endif
 	Validate();
 	return(Fetch_Stage());
 }
@@ -644,6 +689,9 @@ int FactoryClass::Completion(void)
  *=============================================================================================*/
 int FactoryClass::Final(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FactoryClass::Final(void)");
+#endif
 	return(STEP_COUNT);
 }
 
@@ -665,6 +713,9 @@ int FactoryClass::Final(void)
  *=============================================================================================*/
 bool FactoryClass::Has_Completed(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FactoryClass::Has_Completed(void)");
+#endif
 	Validate();
 	if (Object && Fetch_Stage() == STEP_COUNT) {
 		return(true);
@@ -692,6 +743,9 @@ bool FactoryClass::Has_Completed(void)
  *=============================================================================================*/
 TechnoClass * FactoryClass::Get_Object(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TechnoClass * FactoryClass::Get_Object(void) const");
+#endif
 	Validate();
 	return(Object);
 }
@@ -709,6 +763,9 @@ TechnoClass * FactoryClass::Get_Object(void) const
  *============================================================================================*/
 SpecialWeaponType FactoryClass::Get_Special_Item(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("SpecialWeaponType FactoryClass::Get_Special_Item(void) const");
+#endif
 	Validate();
 	return(SpecialItem);
 }
@@ -730,6 +787,9 @@ SpecialWeaponType FactoryClass::Get_Special_Item(void) const
  *=============================================================================================*/
 int FactoryClass::Cost_Per_Tick(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FactoryClass::Cost_Per_Tick(void)");
+#endif
 	Validate();
 	if (Object) {
 		int steps = STEP_COUNT - Fetch_Stage();
@@ -761,6 +821,9 @@ int FactoryClass::Cost_Per_Tick(void)
  *=============================================================================================*/
 bool FactoryClass::Completed(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FactoryClass::Completed(void)");
+#endif
 	Validate();
 	if (Object && Fetch_Stage() == STEP_COUNT) {
 		Object = NULL;

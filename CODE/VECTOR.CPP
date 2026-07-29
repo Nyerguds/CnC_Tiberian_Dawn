@@ -78,6 +78,9 @@
 template<class T>
 VectorClass<T>::VectorClass(unsigned size, T const * array)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("VectorClass<T>::VectorClass(unsigned size, T const * array)");
+#endif
 	Vector = 0;
 	VectorMax = size;
 	IsAllocated = false;
@@ -115,6 +118,9 @@ VectorClass<T>::VectorClass(unsigned size, T const * array)
 template<class T>
 VectorClass<T>::~VectorClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("VectorClass<T>::~VectorClass(void)");
+#endif
 	VectorClass<T>::Clear();
 }
 
@@ -137,6 +143,9 @@ VectorClass<T>::~VectorClass(void)
 template<class T>
 VectorClass<T>::VectorClass(VectorClass<T> const & vector)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("VectorClass<T>::VectorClass(VectorClass<T> const & vector)");
+#endif
 	VectorMax = 0;
 	IsAllocated = false;
 	Vector = 0;
@@ -162,6 +171,9 @@ VectorClass<T>::VectorClass(VectorClass<T> const & vector)
 template<class T>
 VectorClass<T> & VectorClass<T>::operator =(VectorClass<T> const & vector)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("VectorClass<T> & VectorClass<T>::operator =(VectorClass<T> const & vector)");
+#endif
 	Clear();
 	VectorMax = vector.Length();
 	if (VectorMax) {
@@ -199,6 +211,9 @@ VectorClass<T> & VectorClass<T>::operator =(VectorClass<T> const & vector)
 template<class T>
 int VectorClass<T>::operator == (VectorClass<T> const & vector) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int VectorClass<T>::operator == (VectorClass<T> const & vector) const");
+#endif
 	if (VectorMax == vector.Length()) {
 		for (int index = 0; index < VectorMax; index++) {
 			if (Vector[index] != vector[index]) {
@@ -255,6 +270,9 @@ inline int VectorClass<T>::ID(T const * ptr)
 template<class T>
 int VectorClass<T>::ID(T const & object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int VectorClass<T>::ID(T const & object)");
+#endif
 	for (int index = 0; index < VectorMax; index++) {
 		if ((*this)[index] == object) {
 			return(index);
@@ -283,6 +301,9 @@ int VectorClass<T>::ID(T const & object)
 template<class T>
 void VectorClass<T>::Clear(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void VectorClass<T>::Clear(void)");
+#endif
 	if (Vector && IsAllocated) {
 		delete[] Vector;
 		Vector = 0;
@@ -314,6 +335,9 @@ void VectorClass<T>::Clear(void)
 template<class T>
 int VectorClass<T>::Resize(unsigned newsize, T const * array)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int VectorClass<T>::Resize(unsigned newsize, T const * array)");
+#endif
 	if (newsize) {
 
 		/*
@@ -400,6 +424,9 @@ template<class T>
 DynamicVectorClass<T>::DynamicVectorClass(unsigned size, T const * array)
 	: VectorClass<T>(size, array)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("DynamicVectorClass<T>::DynamicVectorClass(unsigned size, T const * array)");
+#endif
 	GrowthStep = 10;
 	ActiveCount = 0;
 }
@@ -427,6 +454,9 @@ DynamicVectorClass<T>::DynamicVectorClass(unsigned size, T const * array)
 template<class T>
 int DynamicVectorClass<T>::Resize(unsigned newsize, T const * array)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int DynamicVectorClass<T>::Resize(unsigned newsize, T const * array)");
+#endif
 	if (VectorClass<T>::Resize(newsize, array)) {
 		if (Length() < ActiveCount) ActiveCount = Length();
 		return(true);
@@ -456,6 +486,9 @@ int DynamicVectorClass<T>::Resize(unsigned newsize, T const * array)
 template<class T>
 int DynamicVectorClass<T>::ID(T const & object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int DynamicVectorClass<T>::ID(T const & object)");
+#endif
 	for (int index = 0; index < Count(); index++) {
 		if ((*this)[index] == object) return(index);
 	}
@@ -483,6 +516,9 @@ int DynamicVectorClass<T>::ID(T const & object)
 template<class T>
 int DynamicVectorClass<T>::Add(T const & object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int DynamicVectorClass<T>::Add(T const & object)");
+#endif
 	if (ActiveCount >= Length()) {
 		if ((IsAllocated || !VectorMax) && GrowthStep > 0) {
 			if (!Resize(Length() + GrowthStep)) {
@@ -514,6 +550,9 @@ int DynamicVectorClass<T>::Add(T const & object)
 template<class T>
 int DynamicVectorClass<T>::Add_Head(T const & object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int DynamicVectorClass<T>::Add_Head(T const & object)");
+#endif
 	if (ActiveCount >= Length()) {
 		if ((IsAllocated || !VectorMax) && GrowthStep > 0) {
 			if (!Resize(Length() + GrowthStep)) {
@@ -566,6 +605,9 @@ int DynamicVectorClass<T>::Add_Head(T const & object)
 template<class T>
 int DynamicVectorClass<T>::Delete(T const & object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int DynamicVectorClass<T>::Delete(T const & object)");
+#endif
 	int index = ID(object);
 	if (index != -1){
 		return(Delete_Index(index));
@@ -595,6 +637,9 @@ int DynamicVectorClass<T>::Delete(T const & object)
 template<class T>
 int DynamicVectorClass<T>::Delete_Index(int index)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int DynamicVectorClass<T>::Delete_Index(int index)");
+#endif
 	if ((unsigned)index < ActiveCount) {
 		ActiveCount--;
 
@@ -634,6 +679,9 @@ int DynamicVectorClass<T>::Delete_Index(int index)
  *=============================================================================================*/
 BooleanVectorClass::BooleanVectorClass(unsigned size, unsigned char * array)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BooleanVectorClass::BooleanVectorClass(unsigned size, unsigned char * array)");
+#endif
 	BitArray.Resize(((size + (8-1)) / 8), array);
 	LastIndex = -1;
 	BitCount = size;
@@ -657,6 +705,9 @@ BooleanVectorClass::BooleanVectorClass(unsigned size, unsigned char * array)
  *=============================================================================================*/
 BooleanVectorClass::BooleanVectorClass(BooleanVectorClass const & vector)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BooleanVectorClass::BooleanVectorClass(BooleanVectorClass const & vector)");
+#endif
 	LastIndex = -1;
 	*this = vector;
 }
@@ -680,6 +731,9 @@ BooleanVectorClass::BooleanVectorClass(BooleanVectorClass const & vector)
  *=============================================================================================*/
 BooleanVectorClass & BooleanVectorClass::operator =(BooleanVectorClass const & vector)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BooleanVectorClass & BooleanVectorClass::operator =(BooleanVectorClass const & vector)");
+#endif
 	Fixup();
 	Copy = vector.Copy;
 	LastIndex = vector.LastIndex;
@@ -706,6 +760,9 @@ BooleanVectorClass & BooleanVectorClass::operator =(BooleanVectorClass const & v
  *=============================================================================================*/
 int BooleanVectorClass::operator == (const BooleanVectorClass & vector)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BooleanVectorClass::operator == (const BooleanVectorClass & vector)");
+#endif
 	Fixup(LastIndex);
 	return(BitCount == vector.BitCount && BitArray == vector.BitArray);
 }
@@ -728,6 +785,9 @@ int BooleanVectorClass::operator == (const BooleanVectorClass & vector)
  *=============================================================================================*/
 int BooleanVectorClass::Resize(unsigned size)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BooleanVectorClass::Resize(unsigned size)");
+#endif
 	Fixup();
 
 	if (size) {
@@ -786,6 +846,9 @@ int BooleanVectorClass::Resize(unsigned size)
  *=============================================================================================*/
 void BooleanVectorClass::Clear(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BooleanVectorClass::Clear(void)");
+#endif
 	Fixup();
 	BitCount = 0;
 	BitArray.Clear();
@@ -808,6 +871,9 @@ void BooleanVectorClass::Clear(void)
  *=============================================================================================*/
 void BooleanVectorClass::Reset(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BooleanVectorClass::Reset(void)");
+#endif
 	LastIndex = -1;
 	if (BitArray.Length()) {
 		memset(&BitArray[0], '\0', BitArray.Length());
@@ -831,6 +897,9 @@ void BooleanVectorClass::Reset(void)
  *=============================================================================================*/
 void BooleanVectorClass::Set(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BooleanVectorClass::Set(void)");
+#endif
 	LastIndex = -1;
 	if (BitArray.Length()) {
 		memset(&BitArray[0], '\xFF', BitArray.Length());
@@ -861,6 +930,9 @@ void BooleanVectorClass::Set(void)
  *=============================================================================================*/
 void BooleanVectorClass::Fixup(int index) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BooleanVectorClass::Fixup(int index) const");
+#endif
 	/*
 	**	If the requested index value is illegal, then force the index
 	**	to be -1. This is the default non-index value.

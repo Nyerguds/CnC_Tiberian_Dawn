@@ -65,6 +65,9 @@
 ToggleClass::ToggleClass(unsigned id, int x, int y, int w, int h) 
 	: ControlClass(id, x, y, w, h, LEFTPRESS|LEFTRELEASE, true)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ToggleClass::ToggleClass(unsigned id, int x, int y, int w, int h)");
+#endif
 	IsPressed = false;
 	IsOn = false;
 	IsToggleType = false;
@@ -88,6 +91,9 @@ ToggleClass::ToggleClass(unsigned id, int x, int y, int w, int h)
  *=============================================================================================*/
 void ToggleClass::Turn_On(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ToggleClass::Turn_On(void)");
+#endif
 	IsOn = true;
 	Flag_To_Redraw();
 }	
@@ -110,6 +116,9 @@ void ToggleClass::Turn_On(void)
  *=============================================================================================*/
 void ToggleClass::Turn_Off(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ToggleClass::Turn_Off(void)");
+#endif
 	IsOn = false;	
 	Flag_To_Redraw();
 }	
@@ -139,6 +148,9 @@ void ToggleClass::Turn_Off(void)
  *=============================================================================================*/
 int ToggleClass::Action(unsigned flags, KeyNumType &key)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ToggleClass::Action(unsigned flags, KeyNumType &key)");
+#endif
 	/*
 	**	If there are no action flag bits set, then this must be a forced call. A forced call
 	**	must never actually function like a real call, but rather only performs any necessary

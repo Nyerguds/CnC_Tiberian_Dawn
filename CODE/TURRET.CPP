@@ -66,6 +66,9 @@
  *=============================================================================================*/
 TurretClass::~TurretClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TurretClass::~TurretClass(void)");
+#endif
 }
 
 
@@ -85,6 +88,9 @@ TurretClass::~TurretClass(void)
  *=============================================================================================*/
 TurretClass::TurretClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TurretClass::TurretClass(void)");
+#endif
 }
 
 
@@ -108,6 +114,9 @@ TurretClass::TurretClass(void)
 TurretClass::TurretClass(UnitType classid, HousesType house) :
 	DriveClass(classid, house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TurretClass::TurretClass(UnitType classid, HousesType house)");
+#endif
 	Reload = 0;
 }
 
@@ -130,6 +139,9 @@ TurretClass::TurretClass(UnitType classid, HousesType house) :
  *=============================================================================================*/
 void TurretClass::Debug_Dump(MonoClass *mono) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TurretClass::Debug_Dump(MonoClass *mono) const");
+#endif
 	mono->Set_Cursor(36, 3);mono->Printf("%02X:%02X", SecondaryFacing.Current(), SecondaryFacing.Desired());
 	mono->Set_Cursor(28, 7);mono->Printf("%2d", Arm);
 	DriveClass::Debug_Dump(mono);
@@ -158,6 +170,9 @@ void TurretClass::Debug_Dump(MonoClass *mono) const
  *=============================================================================================*/
 bool TurretClass::Ok_To_Move(DirType dir)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TurretClass::Ok_To_Move(DirType dir)");
+#endif
 	if (Class->IsLockTurret) {
 		if (IsRotating) {
 			return(false);
@@ -189,6 +204,9 @@ bool TurretClass::Ok_To_Move(DirType dir)
  *=============================================================================================*/
 void TurretClass::AI(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TurretClass::AI(void)");
+#endif
 	DriveClass::AI();
 
 	/*
@@ -250,6 +268,9 @@ void TurretClass::AI(void)
  *=============================================================================================*/
 BulletClass * TurretClass::Fire_At(TARGET target, int which)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BulletClass * TurretClass::Fire_At(TARGET target, int which)");
+#endif
 	BulletClass * bullet = NULL;
 	WeaponTypeClass const * weapon = (which == 0) ? &Weapons[Class->Primary] : &Weapons[Class->Secondary];
 
@@ -292,6 +313,9 @@ BulletClass * TurretClass::Fire_At(TARGET target, int which)
  *=============================================================================================*/
 FireErrorType TurretClass::Can_Fire(TARGET target, int which) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FireErrorType TurretClass::Can_Fire(TARGET target, int which) const");
+#endif
 	DirType			dir;					// The facing to impart upon the projectile.
 	int				diff;
 	FireErrorType	fire = DriveClass::Can_Fire(target, which);
@@ -373,6 +397,9 @@ FireErrorType TurretClass::Can_Fire(TARGET target, int which) const
  *=============================================================================================*/
 COORDINATE TurretClass::Fire_Coord(int which, bool forrange, COORDINATE coords) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE TurretClass::Fire_Coord(int which, bool forrange, COORDINATE coords) const");
+#endif
 	COORDINATE coord = Center_Coord();
 	int barrellen = 0;
 	int lateral = 0;
@@ -460,6 +487,9 @@ COORDINATE TurretClass::Fire_Coord(int which, bool forrange, COORDINATE coords) 
  *=============================================================================================*/
 bool TurretClass::Unlimbo(COORDINATE coord, DirType dir)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TurretClass::Unlimbo(COORDINATE coord, DirType dir)");
+#endif
 	if (DriveClass::Unlimbo(coord, dir)) {
 		SecondaryFacing = dir;
 		return(true);
@@ -487,6 +517,9 @@ bool TurretClass::Unlimbo(COORDINATE coord, DirType dir)
  *=============================================================================================*/
 DirType TurretClass::Fire_Direction(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("DirType TurretClass::Fire_Direction(void) const");
+#endif
 	if (Class->IsTurretEquipped) {
 		if (*this == UNIT_SSM) {
 			int diff1 = SecondaryFacing.Difference(DIR_E);

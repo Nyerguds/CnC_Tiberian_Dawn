@@ -120,6 +120,9 @@
 #ifdef CHEAT_KEYS
 int HouseClass::Validate(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int HouseClass::Validate(void) const");
+#endif
 	int num;
 
 	num = Houses.ID(this);
@@ -152,6 +155,9 @@ int HouseClass::Validate(void) const
  *=============================================================================================*/
 HouseClass::operator HousesType(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("HouseClass::operator HousesType(void) const");
+#endif
 	Validate();
 	return(Class->House);
 }
@@ -176,6 +182,9 @@ HouseClass::operator HousesType(void) const
  *=============================================================================================*/
 HouseClass * HouseClass::As_Pointer(HousesType house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("HouseClass * HouseClass::As_Pointer(HousesType house)");
+#endif
 	for (int index = 0; index < Houses.Count(); index++) {
 		if (Houses.Ptr(index)->Class->House == house) {
 			return(Houses.Ptr(index));
@@ -202,6 +211,9 @@ HouseClass * HouseClass::As_Pointer(HousesType house)
  *=============================================================================================*/
 void HouseClass::One_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::One_Time(void)");
+#endif
 //	for (HousesType index = HOUSE_FIRST; index < HOUSE_COUNT; index++) {
 //		new(index) HouseClass;
 //	}
@@ -226,6 +238,9 @@ void HouseClass::One_Time(void)
  *=============================================================================================*/
 void HouseClass::Debug_Dump(MonoClass *) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Debug_Dump(MonoClass *) const");
+#endif
 	Validate();
 }
 #endif
@@ -251,6 +266,9 @@ void HouseClass::Debug_Dump(MonoClass *) const
  *=============================================================================================*/
 void * HouseClass::operator new(size_t)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void * HouseClass::operator new(size_t)");
+#endif
 	void * ptr = Houses.Allocate();
 	if (ptr) {
 		((HouseClass *)ptr)->IsActive = true;
@@ -276,6 +294,9 @@ void * HouseClass::operator new(size_t)
  *=============================================================================================*/
 void HouseClass::operator delete(void *ptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::operator delete(void *ptr)");
+#endif
 	if (ptr) {
 		((HouseClass *)ptr)->IsActive = false;
 	}
@@ -304,7 +325,9 @@ HouseClass::HouseClass(HousesType house) :
 	AirStrike(AIR_CANNON_GONE_TIME, VOX_AIRSTRIKE_READY, VOX_NONE, VOX_NOT_READY, VOX_NOT_READY),
 	NukeStrike(NUKE_GONE_TIME, VOX_NUKE_AVAILABLE, VOX_NONE, VOX_NOT_READY, VOX_NO_POWER)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("HouseClass::HouseClass(HousesType house)");
+#endif
 	for (HousesType i = HOUSE_FIRST; i < HOUSE_COUNT; i++) {
 		UnitsKilled[i] = 0;
 		BuildingsKilled[i] = 0;
@@ -412,6 +435,9 @@ HouseClass::HouseClass(HousesType house) :
 
 HouseClass::~HouseClass (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("HouseClass::~HouseClass (void)");
+#endif
 	delete AircraftTotals;
 	delete InfantryTotals;
 	delete UnitTotals;
@@ -448,6 +474,9 @@ HouseClass::~HouseClass (void)
  *=============================================================================================*/
 bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const");
+#endif
 	Validate();
 	if (!type || !type->IsBuildable || !((1L << house) & type->Ownable)) return(false);
 
@@ -646,6 +675,9 @@ bool HouseClass::Can_Build(TechnoTypeClass const * type, HousesType house) const
  *=============================================================================================*/
 bool HouseClass::Can_Build(StructType s, HousesType house) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HouseClass::Can_Build(StructType s, HousesType house) const");
+#endif
 	Validate();
 	return(Can_Build(&BuildingTypeClass::As_Reference(s), house));
 }
@@ -677,6 +709,9 @@ bool HouseClass::Can_Build(StructType s, HousesType house) const
  *=============================================================================================*/
 bool HouseClass::Can_Build(InfantryType infantry, HousesType house) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HouseClass::Can_Build(InfantryType infantry, HousesType house) const");
+#endif
 	Validate();
 	return(Can_Build(&InfantryTypeClass::As_Reference(infantry), house));
 }
@@ -706,6 +741,9 @@ bool HouseClass::Can_Build(InfantryType infantry, HousesType house) const
  *=============================================================================================*/
 bool HouseClass::Can_Build(UnitType unit, HousesType house) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HouseClass::Can_Build(UnitType unit, HousesType house) const");
+#endif
 	Validate();
 	return(Can_Build(&UnitTypeClass::As_Reference(unit), house));
 }
@@ -732,6 +770,9 @@ bool HouseClass::Can_Build(UnitType unit, HousesType house) const
  *=============================================================================================*/
 bool HouseClass::Can_Build(AircraftType aircraft, HousesType house) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HouseClass::Can_Build(AircraftType aircraft, HousesType house) const");
+#endif
 	Validate();
 	return(Can_Build(&AircraftTypeClass::As_Reference(aircraft), house));
 }
@@ -755,6 +796,9 @@ bool HouseClass::Can_Build(AircraftType aircraft, HousesType house) const
  *=========================================================================*/
 void HouseClass::Init(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Init(void)");
+#endif
 	Houses.Free_All();
 
 	for (HousesType index = HOUSE_FIRST; index < HOUSE_COUNT; index++) {
@@ -782,6 +826,9 @@ void HouseClass::Init(void)
  *=============================================================================================*/
 void HouseClass::AI(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::AI(void)");
+#endif
 	Validate();
 
 	/*
@@ -1470,6 +1517,9 @@ void HouseClass::AI(void)
  *=============================================================================================*/
 void HouseClass::Attacked(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Attacked(void)");
+#endif
 	Validate();
 	if (SpeakAttackDelay.Expired() && PlayerPtr->Class->House == Class->House) {
 		Speak(VOX_BASE_UNDER_ATTACK);
@@ -1505,6 +1555,9 @@ void HouseClass::Attacked(void)
  *=============================================================================================*/
 void HouseClass::Harvested(unsigned tiberium)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Harvested(unsigned tiberium)");
+#endif
 	Validate();
 	long oldtib = Tiberium;
 
@@ -1535,6 +1588,9 @@ void HouseClass::Harvested(unsigned tiberium)
  *=============================================================================================*/
 long HouseClass::Available_Money(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long HouseClass::Available_Money(void) const");
+#endif
 	Validate();
 	return(Tiberium + Credits);
 }
@@ -1559,6 +1615,9 @@ long HouseClass::Available_Money(void) const
  *=============================================================================================*/
 void HouseClass::Spend_Money(unsigned money)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Spend_Money(unsigned money)");
+#endif
 	Validate();
 	long oldtib = Tiberium;
 	if (money > Tiberium) {
@@ -1593,6 +1652,9 @@ void HouseClass::Spend_Money(unsigned money)
  *=============================================================================================*/
 void HouseClass::Refund_Money(unsigned money)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Refund_Money(unsigned money)");
+#endif
 	Validate();
 	Credits += money;
 }
@@ -1617,6 +1679,9 @@ void HouseClass::Refund_Money(unsigned money)
  *=============================================================================================*/
 int HouseClass::Adjust_Capacity(int adjust, bool inanger)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int HouseClass::Adjust_Capacity(int adjust, bool inanger)");
+#endif
 	Validate();
 	long oldcap = Capacity;
 	int retval = 0;
@@ -1659,6 +1724,9 @@ int HouseClass::Adjust_Capacity(int adjust, bool inanger)
  *=============================================================================================*/
 void HouseClass::Silo_Redraw_Check(long oldtib, long oldcap)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Silo_Redraw_Check(long oldtib, long oldcap)");
+#endif
 	Validate();
 	int oldratio = 0;
 	if (oldcap) oldratio = (oldtib * 5) / oldcap;
@@ -1695,6 +1763,9 @@ void HouseClass::Silo_Redraw_Check(long oldtib, long oldcap)
  *=============================================================================================*/
 void HouseClass::Read_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Read_INI(char *buffer)");
+#endif
 	HouseClass 	*p;				// Pointer to current player data.
 	char const	*hname;			//	Pointer to house name.
 	char			buf[128];
@@ -1814,6 +1885,9 @@ void HouseClass::Read_INI(char *buffer)
 #ifdef SCENARIO_EDITOR
 void HouseClass::Write_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Write_INI(char *buffer)");
+#endif
 	for (HousesType i = HOUSE_FIRST; i < HOUSE_COUNT; i++) {
 		HouseClass * p = As_Pointer(i);
 
@@ -1855,6 +1929,9 @@ void HouseClass::Write_INI(char *buffer)
  *=============================================================================================*/
 bool HouseClass::Is_Ally(HousesType house) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HouseClass::Is_Ally(HousesType house) const");
+#endif
 	Validate();
 	if (house != HOUSE_NONE) {
 		return(((1<<house) & Allies) != 0);
@@ -1879,6 +1956,9 @@ bool HouseClass::Is_Ally(HousesType house) const
  *=============================================================================================*/
 bool HouseClass::Is_Ally(HouseClass const * house) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HouseClass::Is_Ally(HouseClass const * house) const");
+#endif
 	Validate();
 	if (house) {
 		return(Is_Ally(house->Class->House));
@@ -1903,6 +1983,9 @@ bool HouseClass::Is_Ally(HouseClass const * house) const
  *=============================================================================================*/
 bool HouseClass::Is_Ally(ObjectClass const * object) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HouseClass::Is_Ally(ObjectClass const * object) const");
+#endif
 	Validate();
 	if (object) {
 		return(Is_Ally(object->Owner()));
@@ -1929,6 +2012,9 @@ bool HouseClass::Is_Ally(ObjectClass const * object) const
  *=============================================================================================*/
 void HouseClass::Make_Ally(HousesType house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Make_Ally(HousesType house)");
+#endif
 	Validate();
 	if (house != HOUSE_NONE && !Is_Ally(house)) {
 
@@ -1995,6 +2081,9 @@ void HouseClass::Make_Ally(HousesType house)
  *=============================================================================================*/
 void HouseClass::Make_Enemy(HousesType house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Make_Enemy(HousesType house)");
+#endif
 	Validate();
 	if (house != HOUSE_NONE && Is_Ally(house)) {
 		HouseClass * enemy = HouseClass::As_Pointer(house);
@@ -2035,6 +2124,9 @@ void HouseClass::Make_Enemy(HousesType house)
  *=============================================================================================*/
 unsigned char const * HouseClass::Remap_Table(bool blushing, bool secondary) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned char const * HouseClass::Remap_Table(bool blushing, bool secondary) const");
+#endif
 	Validate();
 	if (blushing) return(&Map.FadingLight[0]);
 
@@ -2072,6 +2164,9 @@ unsigned char const * HouseClass::Remap_Table(bool blushing, bool secondary) con
  *=============================================================================================*/
 TeamTypeClass const * HouseClass::Suggested_New_Team(bool alertcheck)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TeamTypeClass const * HouseClass::Suggested_New_Team(bool alertcheck)");
+#endif
 	Validate();
 	return(TeamTypeClass::Suggested_New_Team(this, UScan, IScan, IsAlerted && alertcheck));
 }
@@ -2096,6 +2191,9 @@ TeamTypeClass const * HouseClass::Suggested_New_Team(bool alertcheck)
  *=============================================================================================*/
 void HouseClass::Adjust_Threat(int region, int threat)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Adjust_Threat(int region, int threat)");
+#endif
 	Validate();
 	static int _val[] = {
 		-MAP_REGION_WIDTH - 1,	-MAP_REGION_WIDTH, -MAP_REGION_WIDTH + 1,
@@ -2146,6 +2244,9 @@ void HouseClass::Adjust_Threat(int region, int threat)
  *=============================================================================================*/
 ProdFailType HouseClass::Begin_Production(RTTIType type, int id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ProdFailType HouseClass::Begin_Production(RTTIType type, int id)");
+#endif
 	Validate();
 	int * factory = 0;
 	int result = true;
@@ -2235,6 +2336,9 @@ ProdFailType HouseClass::Begin_Production(RTTIType type, int id)
  *=============================================================================================*/
 ProdFailType HouseClass::Suspend_Production(RTTIType type)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ProdFailType HouseClass::Suspend_Production(RTTIType type)");
+#endif
 	Validate();
 	int * factory = 0;
 
@@ -2319,6 +2423,9 @@ ProdFailType HouseClass::Suspend_Production(RTTIType type)
  *=============================================================================================*/
 ProdFailType HouseClass::Abandon_Production(RTTIType type)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ProdFailType HouseClass::Abandon_Production(RTTIType type)");
+#endif
 	Validate();
 	int * factory = 0;
 
@@ -2405,6 +2512,9 @@ ProdFailType HouseClass::Abandon_Production(RTTIType type)
  *=============================================================================================*/
 void HouseClass::Special_Weapon_AI(SpecialWeaponType id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Special_Weapon_AI(SpecialWeaponType id)");
+#endif
 	Validate();
 	/*
 	** Loop through all of the building objects on the map
@@ -2456,6 +2566,9 @@ void HouseClass::Special_Weapon_AI(SpecialWeaponType id)
  *=============================================================================================*/
 BuildingClass * HouseClass::Find_Launch_Site(StructType origin, long originMask)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BuildingClass * HouseClass::Find_Launch_Site(StructType origin, long originMask)");
+#endif
 	// Quick check; if not in the buildings scan, there's no point in looking.
 	if (!(ActiveBScan & originMask)) {
 		return NULL;
@@ -2500,6 +2613,9 @@ BuildingClass * HouseClass::Find_Launch_Site(StructType origin, long originMask)
  *=============================================================================================*/
 bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)");
+#endif
 	Validate();
 	BuildingClass * launchsite = NULL;
 	AnimClass * anim = 0;
@@ -2636,6 +2752,9 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
  *=============================================================================================*/
 bool HouseClass::Place_Object(RTTIType type, CELL cell)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HouseClass::Place_Object(RTTIType type, CELL cell)");
+#endif
 	Validate();
 	TechnoClass * tech = 0;
 	FactoryClass * factory = 0;
@@ -2772,6 +2891,9 @@ bool HouseClass::Place_Object(RTTIType type, CELL cell)
  *=============================================================================================*/
 bool HouseClass::Manual_Place(BuildingClass * builder,  BuildingClass * object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HouseClass::Manual_Place(BuildingClass * builder,  BuildingClass * object)");
+#endif
 	Validate();
 	if (this == PlayerPtr && !Map.PendingObject && builder && object) {
 
@@ -2817,6 +2939,9 @@ bool HouseClass::Manual_Place(BuildingClass * builder,  BuildingClass * object)
  *=============================================================================================*/
 void HouseClass::Init_Ion_Cannon(SpecialControlType control)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Init_Ion_Cannon(SpecialControlType control)");
+#endif
 	Validate();
 	switch (control) {
 		case CONTROL_RESET:
@@ -2893,6 +3018,9 @@ void HouseClass::Init_Ion_Cannon(SpecialControlType control)
 #ifdef NEVER
 void HouseClass::Init_Ion_Cannon(bool first_time, bool one_time_effect)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Init_Ion_Cannon(bool first_time, bool one_time_effect)");
+#endif
 	Validate();
 	if (!(first_time && IonCannonPresent)) {
 
@@ -2943,6 +3071,9 @@ void HouseClass::Init_Ion_Cannon(bool first_time, bool one_time_effect)
  *=============================================================================================*/
 void HouseClass::Remove_Ion_Cannon(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Remove_Ion_Cannon(void)");
+#endif
 	Validate();
 	if (IonCannonPresent) {
 		IonCannonPresent = false;
@@ -2973,6 +3104,9 @@ void HouseClass::Remove_Ion_Cannon(void)
  *=========================================================================*/
 void HouseClass::Clobber_All(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Clobber_All(void)");
+#endif
 	Validate();
 	int i;
 
@@ -3035,6 +3169,9 @@ void HouseClass::Clobber_All(void)
  *=============================================================================================*/
 void HouseClass::Init_Nuke_Bomb(bool first_time, bool one_time_effect)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Init_Nuke_Bomb(bool first_time, bool one_time_effect)");
+#endif
 	Validate();
 	if (!first_time || !NukePresent) {
 
@@ -3080,6 +3217,9 @@ void HouseClass::Init_Nuke_Bomb(bool first_time, bool one_time_effect)
  *=============================================================================================*/
 void HouseClass::Remove_Nuke_Bomb(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Remove_Nuke_Bomb(void)");
+#endif
 	Validate();
 	if (NukePresent && !NukeOneTimeFlag) {
 		NukePresent = false;
@@ -3107,6 +3247,9 @@ void HouseClass::Remove_Nuke_Bomb(void)
  *=============================================================================================*/
 void HouseClass::Init_Air_Strike(bool first_time, bool one_time_effect)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Init_Air_Strike(bool first_time, bool one_time_effect)");
+#endif
 	Validate();
 	if (!(first_time && AirPresent)) {
 
@@ -3159,6 +3302,9 @@ void HouseClass::Init_Air_Strike(bool first_time, bool one_time_effect)
  *=============================================================================================*/
 void HouseClass::Remove_Air_Strike(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Remove_Air_Strike(void)");
+#endif
 	Validate();
 	AirPresent = false;
 	AirReady = false;
@@ -3184,6 +3330,9 @@ void HouseClass::Remove_Air_Strike(void)
  *=============================================================================================*/
 void HouseClass::Make_Air_Strike_Available(bool present, bool one_time_effect)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Make_Air_Strike_Available(bool present, bool one_time_effect)");
+#endif
 	Validate();
 	Init_Air_Strike(true, one_time_effect);
 	AirPresent = present;
@@ -3209,6 +3358,9 @@ void HouseClass::Make_Air_Strike_Available(bool present, bool one_time_effect)
  *=============================================================================================*/
 void HouseClass::Add_Nuke_Piece()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Add_Nuke_Piece()");
+#endif
 	Validate();
 	// Nyerguds's C&C Patch Project v1.04: Treat nuke pieces as int, without limit.
 	// If NukePieces is set to -1, this is treated as as infinite, and never modified.
@@ -3254,6 +3406,9 @@ void HouseClass::Add_Nuke_Piece()
  *=============================================================================================*/
 void HouseClass::Detach(TARGET, bool )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Detach(TARGET, bool )");
+#endif
 	Validate();
 //	if (LaunchSite == target) {
 //		LaunchSite = TARGET_NONE;
@@ -3278,6 +3433,9 @@ void HouseClass::Detach(TARGET, bool )
  *=============================================================================================*/
 bool HouseClass::Does_Enemy_Building_Exist(StructType btype) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HouseClass::Does_Enemy_Building_Exist(StructType btype) const");
+#endif
 	Validate();
 	int bflag = 1L << btype;
 	for (HousesType index = HOUSE_FIRST; index < HOUSE_COUNT; index++) {
@@ -3313,6 +3471,9 @@ bool HouseClass::Does_Enemy_Building_Exist(StructType btype) const
  *=============================================================================================*/
 TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype, bool safetype) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype, bool safetype) const");
+#endif
 	Validate();
 	TechnoTypeClass const * techno = NULL;
 
@@ -3617,6 +3778,9 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype, bool
  *=============================================================================================*/
 bool HouseClass::Flag_Remove(TARGET target, bool set_home)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HouseClass::Flag_Remove(TARGET target, bool set_home)");
+#endif
 	Validate();
 	int rc;
 
@@ -3684,6 +3848,9 @@ bool HouseClass::Flag_Remove(TARGET target, bool set_home)
  *=============================================================================================*/
 bool HouseClass::Flag_Attach(CELL cell, bool set_home)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HouseClass::Flag_Attach(CELL cell, bool set_home)");
+#endif
 	Validate();
 	bool rc;
 	bool clockwise;
@@ -3798,6 +3965,9 @@ bool HouseClass::Flag_Attach(CELL cell, bool set_home)
  *=============================================================================================*/
 bool HouseClass::Flag_Attach(UnitClass * object, bool set_home)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HouseClass::Flag_Attach(UnitClass * object, bool set_home)");
+#endif
 	Validate();
 	if (object && !object->IsInLimbo) {
 		Flag_Remove(FlagLocation, set_home);
@@ -3830,6 +4000,9 @@ bool HouseClass::Flag_Attach(UnitClass * object, bool set_home)
  *=========================================================================*/
 void HouseClass::MPlayer_Defeated(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::MPlayer_Defeated(void)");
+#endif
 	Validate();
 	char txt[80];
 	int i,j,k;
@@ -4153,6 +4326,9 @@ void HouseClass::MPlayer_Defeated(void)
  *=========================================================================*/
 void HouseClass::Blowup_All(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Blowup_All(void)");
+#endif
 	Validate();
 	int i;
 	int damage;
@@ -4295,6 +4471,9 @@ void HouseClass::Blowup_All(void)
  *=============================================================================================*/
 bool HouseClass::Flag_To_Die(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HouseClass::Flag_To_Die(void)");
+#endif
 	Validate();
 	if (!IsToWin && !IsToDie && !IsToLose) {
 		IsToDie = true;
@@ -4325,6 +4504,9 @@ bool HouseClass::Flag_To_Die(void)
  *=============================================================================================*/
 bool HouseClass::Flag_To_Win(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HouseClass::Flag_To_Win(void)");
+#endif
 	Validate();
 	if (!IsToWin && !IsToDie && !IsToLose) {
 		IsToWin = true;
@@ -4356,6 +4538,9 @@ bool HouseClass::Flag_To_Win(void)
  *=============================================================================================*/
 bool HouseClass::Flag_To_Lose(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HouseClass::Flag_To_Lose(void)");
+#endif
 	Validate();
 	IsToWin = false;
 	if (!IsToDie && !IsToLose) {
@@ -4391,6 +4576,9 @@ bool HouseClass::Flag_To_Lose(void)
  *=============================================================================================*/
 void HouseClass::Init_Data(PlayerColorType color, HousesType house, int credits)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Init_Data(PlayerColorType color, HousesType house, int credits)");
+#endif
 	Validate();
 	Credits = InitialCredits = credits;
 	ActLike = house;
@@ -4413,6 +4601,9 @@ void HouseClass::Init_Data(PlayerColorType color, HousesType house, int credits)
  *=============================================================================================*/
 void HouseClass::Init_Color(PlayerColorType color, bool radaronly)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Init_Color(PlayerColorType color, bool radaronly)");
+#endif
 	const PlayerColorTypeClass *col = NULL;
 	if ((unsigned)color < REMAP_COUNT) {
 		col = &PlayerColors[color];
@@ -4448,6 +4639,9 @@ void HouseClass::Init_Color(PlayerColorType color, bool radaronly)
  *=============================================================================================*/
 int HouseClass::Power_Fraction(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int HouseClass::Power_Fraction(void) const");
+#endif
 	Validate();
 	// This should be fixed; 0/0 is actually not low power. But this unfortunately has serious
 	// repercussions in combination with the 32-bit overflows on the house "Scan" logic.
@@ -4481,6 +4675,9 @@ int HouseClass::Power_Fraction(void) const
  *=============================================================================================*/
 bool HouseClass::Has_Nuke_Device(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HouseClass::Has_Nuke_Device(void)");
+#endif
 	Validate();
 	if (GameToPlay != GAME_NORMAL || !IsHuman) return(true);
 	// Nyerguds's C&C Patch Project v1.04: Treat nuke pieces as int.
@@ -4510,6 +4707,9 @@ bool HouseClass::Has_Nuke_Device(void)
  *=============================================================================================*/
 void HouseClass::Sell_Wall(CELL cell)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Sell_Wall(CELL cell)");
+#endif
 	Validate();
 	if ((unsigned)cell > 0) {
 		CellClass * cellptr = &Map[cell];

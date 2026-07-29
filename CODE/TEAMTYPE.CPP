@@ -95,6 +95,9 @@ void * TeamTypeClass::VTable;
 #ifdef CHEAT_KEYS
 int TeamTypeClass::Validate(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TeamTypeClass::Validate(void) const");
+#endif
 	int num;
 
 	num = TeamTypes.ID(this);
@@ -124,6 +127,9 @@ int TeamTypeClass::Validate(void) const
  *=========================================================================*/
 TeamTypeClass::TeamTypeClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TeamTypeClass::TeamTypeClass(void)");
+#endif
 	IsPrebuilt = true;
 	IsReinforcable = true;
 	IsRoundAbout = false;
@@ -161,6 +167,9 @@ TeamTypeClass::TeamTypeClass(void)
  *=========================================================================*/
 void TeamTypeClass::Init(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamTypeClass::Init(void)");
+#endif
 	TeamTypeClass *ptr;
 
 	TeamTypes.Free_All();
@@ -195,6 +204,9 @@ void TeamTypeClass::Init(void)
  *=========================================================================*/
 void TeamTypeClass::Read_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamTypeClass::Read_INI(char *buffer)");
+#endif
 	TeamTypeClass * team;					// Working team pointer.
 	char *tbuffer;								// Accumulation buffer of team names.
 	int len;										// Length of data in buffer.
@@ -274,6 +286,9 @@ void TeamTypeClass::Read_INI(char *buffer)
  *=============================================================================================*/
 void TeamTypeClass::Fill_In(char * name, char *entry)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamTypeClass::Fill_In(char * name, char *entry)");
+#endif
 	Validate();
 	int num_classes;
 	int num_missions;
@@ -425,6 +440,9 @@ void TeamTypeClass::Fill_In(char * name, char *entry)
 
 
 bool TeamTypeClass::Valid_Team_Mission_Arg(TeamMissionStruct mission, int missions) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TeamTypeClass::Valid_Team_Mission_Arg(TeamMissionStruct mission, int missions)");
+#endif
 	int arg = mission.Argument;
 	switch (mission.Mission) {
 
@@ -480,6 +498,9 @@ bool TeamTypeClass::Valid_Team_Mission_Arg(TeamMissionStruct mission, int missio
 #ifdef SCENARIO_EDITOR
 void TeamTypeClass::Write_INI(char *buffer, bool refresh)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamTypeClass::Write_INI(char *buffer, bool refresh)");
+#endif
 	int index;
 	int i;
 	char buf[500];
@@ -591,6 +612,9 @@ void TeamTypeClass::Write_INI(char *buffer, bool refresh)
  *=========================================================================*/
 void TeamTypeClass::Read_Old_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamTypeClass::Read_Old_INI(char *buffer)");
+#endif
 	TeamTypeClass * team;					// Working team pointer.
 	char *tbuffer;								// Accumulation buffer of team names.
 	int len;										// Length of data in buffer.
@@ -760,6 +784,9 @@ void TeamTypeClass::Read_Old_INI(char *buffer)
  *=========================================================================*/
 TeamTypeClass * TeamTypeClass::As_Pointer(char *name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TeamTypeClass * TeamTypeClass::As_Pointer(char *name)");
+#endif
 	int i;
 
 	if (name == NULL) {
@@ -793,6 +820,9 @@ TeamTypeClass * TeamTypeClass::As_Pointer(char *name)
  *=========================================================================*/
 void TeamTypeClass::Remove(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamTypeClass::Remove(void)");
+#endif
 	Validate();
 	int i;
 	TriggerClass * trigger;
@@ -831,6 +861,9 @@ void TeamTypeClass::Remove(void)
  *=========================================================================*/
 TeamMissionType TeamTypeClass::Mission_From_Name(char const *name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TeamMissionType TeamTypeClass::Mission_From_Name(char const *name)");
+#endif
 	int order;
 
 	if (name) {
@@ -862,6 +895,9 @@ TeamMissionType TeamTypeClass::Mission_From_Name(char const *name)
  *=========================================================================*/
 char const * TeamTypeClass::Name_From_Mission(TeamMissionType order)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char const * TeamTypeClass::Name_From_Mission(TeamMissionType order)");
+#endif
 	if (order <= TMISSION_NONE || order >= TMISSION_COUNT) {
 		return("None");
 	} else {
@@ -887,6 +923,9 @@ char const * TeamTypeClass::Name_From_Mission(TeamMissionType order)
  *=========================================================================*/
 void * TeamTypeClass::operator new(size_t )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void * TeamTypeClass::operator new(size_t )");
+#endif
 	void * ptr = TeamTypes.Allocate();
 	if (ptr) {
 		((TeamTypeClass *)ptr)->IsActive = true;
@@ -912,6 +951,9 @@ void * TeamTypeClass::operator new(size_t )
  *=========================================================================*/
 void TeamTypeClass::operator delete(void *ptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamTypeClass::operator delete(void *ptr)");
+#endif
 	if (ptr) {
 		((TeamTypeClass *)ptr)->IsActive = false;
 	}
@@ -922,6 +964,9 @@ void TeamTypeClass::operator delete(void *ptr)
 
 TeamClass * TeamTypeClass::Create_One_Of(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TeamClass * TeamTypeClass::Create_One_Of(void) const");
+#endif
 	// Nyerguds's C&C Patch Project v1.04: Fix unformed teams overflowing teams list.
 	// Never allow creating a team if at least one completely unfilled one
 	// still exists; it indicates the AI is unable to make units to fill it.
@@ -939,6 +984,9 @@ TeamClass * TeamTypeClass::Create_One_Of(void) const
 
 TARGET TeamTypeClass::As_Target(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TARGET TeamTypeClass::As_Target(void) const");
+#endif
 	Validate();
 	return(Build_Target(KIND_TEAMTYPE, TeamTypes.ID(this)));
 }
@@ -946,6 +994,9 @@ TARGET TeamTypeClass::As_Target(void) const
 
 void TeamTypeClass::Destroy_All_Of(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamTypeClass::Destroy_All_Of(void) const");
+#endif
 	for (int index = 0; index < Teams.Count(); index++) {
 		TeamClass * team = Teams.Ptr(index);
 
@@ -974,6 +1025,9 @@ void TeamTypeClass::Destroy_All_Of(void) const
  *=============================================================================================*/
 bool TeamTypeClass::Has_Unformed_Teams(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TeamTypeClass::Has_Unformed_Teams(void) const");
+#endif
 	for (int index = 0; index < Teams.Count(); index++) {
 		TeamClass * team = Teams.Ptr(index);
 		if (team->Class == this && !team->IsHasBeen && team->Total == 0) {
@@ -1003,6 +1057,9 @@ bool TeamTypeClass::Has_Unformed_Teams(void) const
  *=============================================================================================*/
 int TeamTypeClass::Cull_Unformed_Teams(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TeamTypeClass::Cull_Unformed_Teams(void) const");
+#endif
 	bool found = false;
 	int deleted = 0;
 	for (int index = 0; index < Teams.Count(); index++) {
@@ -1048,6 +1105,9 @@ int TeamTypeClass::Cull_Unformed_Teams(void) const
  *=============================================================================================*/
 TeamTypeClass const * TeamTypeClass::Suggested_New_Team(HouseClass * house, long utypes, long itypes, bool alerted)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TeamTypeClass const * TeamTypeClass::Suggested_New_Team(HouseClass * house, long utypes, long itypes, bool alerted)");
+#endif
 	TeamTypeClass const * best = NULL;
 	int bestvalue = 0;
 

@@ -56,6 +56,9 @@
  *=============================================================================================*/
 FuseClass::FuseClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FuseClass::FuseClass(void)");
+#endif
 	Timer = 0;
 	Arming = 0;
 	HeadTo = 0;
@@ -93,6 +96,9 @@ FuseClass::FuseClass(void)
  *=============================================================================================*/
 void FuseClass::Arm_Fuse(COORDINATE location, COORDINATE target, int timeto, int arming)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FuseClass::Arm_Fuse(COORDINATE location, COORDINATE target, int timeto, int arming)");
+#endif
 	timeto = MAX(timeto, arming);
 	Timer = MIN(timeto, 0xFF);
 	Arming = MIN(arming, 0xFF);
@@ -119,6 +125,9 @@ void FuseClass::Arm_Fuse(COORDINATE location, COORDINATE target, int timeto, int
  *=============================================================================================*/
 bool FuseClass::Fuse_Checkup(COORDINATE newlocation)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FuseClass::Fuse_Checkup(COORDINATE newlocation)");
+#endif
 	int	proximity;
 
 	/*
@@ -165,6 +174,9 @@ bool FuseClass::Fuse_Checkup(COORDINATE newlocation)
  *=============================================================================================*/
 void FuseClass::Fuse_Write(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FuseClass::Fuse_Write(FileClass & file)");
+#endif
 	file.Write(&Timer, sizeof(Timer));
 	file.Write(&Arming, sizeof(Arming));
 	file.Write(&HeadTo, sizeof(HeadTo));
@@ -188,6 +200,9 @@ void FuseClass::Fuse_Write(FileClass & file)
  *=============================================================================================*/
 void FuseClass::Fuse_Read(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FuseClass::Fuse_Read(FileClass & file)");
+#endif
 	file.Read(&Timer, sizeof(Timer));
 	file.Read(&Arming, sizeof(Arming));
 	file.Read(&HeadTo, sizeof(HeadTo));

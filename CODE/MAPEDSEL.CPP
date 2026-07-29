@@ -65,6 +65,9 @@
  *=========================================================================*/
 int MapEditClass::Select_Object(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MapEditClass::Select_Object(void)");
+#endif
 	ObjectClass	*object=NULL;		// Generic object clicked on.
 	int			x,y;
 	CELL			cell;					// Cell that was selected.
@@ -160,6 +163,9 @@ int MapEditClass::Select_Object(void)
  *=========================================================================*/
 void MapEditClass::Select_Next(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Select_Next(void)");
+#endif
 	ObjectClass * obj;
 	CELL obj_cell;
 	int smap_w;						// screen map width in icons
@@ -268,6 +274,9 @@ void MapEditClass::Select_Next(void)
  *=========================================================================*/
 void MapEditClass::Popup_Controls(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Popup_Controls(void)");
+#endif
 	const TechnoTypeClass * objtype = NULL;
 	HousesType owner;							// object's current owner
 	int mission_index;						// object's current mission
@@ -428,6 +437,9 @@ void MapEditClass::Popup_Controls(void)
  *=========================================================================*/
 void MapEditClass::Grab_Object(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Grab_Object(void)");
+#endif
 	CELL cell;
 
 	if (CurrentObject.Count()) {
@@ -459,6 +471,9 @@ void MapEditClass::Grab_Object(void)
  *=========================================================================*/
 int MapEditClass::Move_Grabbed_Object(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MapEditClass::Move_Grabbed_Object(void)");
+#endif
 	COORDINATE new_coord = 0;
 	int retval = -1;
 
@@ -557,6 +572,9 @@ int MapEditClass::Move_Grabbed_Object(void)
  *=========================================================================*/
 bool MapEditClass::Change_House(HousesType newhouse)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool MapEditClass::Change_House(HousesType newhouse)");
+#endif
 	TechnoClass *tp;
 
 	/*------------------------------------------------------------------------

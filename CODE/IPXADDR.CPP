@@ -68,6 +68,9 @@
  *=========================================================================*/
 IPXAddressClass::IPXAddressClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("IPXAddressClass::IPXAddressClass(void)");
+#endif
 	NetworkNumber[0] = 0xff;
 	NetworkNumber[1] = 0xff;
 	NetworkNumber[2] = 0xff;
@@ -100,6 +103,9 @@ IPXAddressClass::IPXAddressClass(void)
  *=========================================================================*/
 IPXAddressClass::IPXAddressClass(NetNumType net, NetNodeType node)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("IPXAddressClass::IPXAddressClass(NetNumType net, NetNodeType node)");
+#endif
 	memcpy(NetworkNumber,net,4);
 	memcpy(NodeAddress,node,6);
 
@@ -126,6 +132,9 @@ IPXAddressClass::IPXAddressClass(NetNumType net, NetNodeType node)
  *=========================================================================*/
 IPXAddressClass::IPXAddressClass(IPXHeaderType *header)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("IPXAddressClass::IPXAddressClass(IPXHeaderType *header)");
+#endif
 	memcpy(NetworkNumber,header->SourceNetworkNumber,4);
 	memcpy(NodeAddress,header->SourceNetworkNode,6);
 
@@ -150,6 +159,9 @@ IPXAddressClass::IPXAddressClass(IPXHeaderType *header)
  *=========================================================================*/
 void IPXAddressClass::Set_Address(NetNumType net, NetNodeType node)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void IPXAddressClass::Set_Address(NetNumType net, NetNodeType node)");
+#endif
 	memcpy(NetworkNumber,net,4);
 	memcpy(NodeAddress,node,6);
 
@@ -176,7 +188,9 @@ void IPXAddressClass::Set_Address(NetNumType net, NetNodeType node)
  *=========================================================================*/
 void IPXAddressClass::Set_Address(IPXHeaderType *header)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void IPXAddressClass::Set_Address(IPXHeaderType *header)");
+#endif
 #ifdef VIRTUAL_SUBNET_SERVER
 	if (Winsock.Get_Connected()){
 		memset(NetworkNumber, 1 ,4);
@@ -233,6 +247,9 @@ void IPXAddressClass::Set_Address(IPXHeaderType *header)
  *=========================================================================*/
 void IPXAddressClass::Get_Address(NetNumType net, NetNodeType node)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void IPXAddressClass::Get_Address(NetNumType net, NetNodeType node)");
+#endif
 	memcpy(net,NetworkNumber,4);
 	memcpy(node,NodeAddress,6);
 
@@ -257,6 +274,9 @@ void IPXAddressClass::Get_Address(NetNumType net, NetNodeType node)
  *=========================================================================*/
 void IPXAddressClass::Get_Address(IPXHeaderType *header)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void IPXAddressClass::Get_Address(IPXHeaderType *header)");
+#endif
 	memcpy(header->DestNetworkNumber,NetworkNumber,4);
 	memcpy(header->DestNetworkNode,NodeAddress,6);
 
@@ -280,6 +300,9 @@ void IPXAddressClass::Get_Address(IPXHeaderType *header)
  *=========================================================================*/
 bool IPXAddressClass::Is_Broadcast(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool IPXAddressClass::Is_Broadcast(void)");
+#endif
 	if (	NetworkNumber[0] == 0xff &&
 			NetworkNumber[1] == 0xff &&
 			NetworkNumber[2] == 0xff &&
@@ -318,6 +341,9 @@ bool IPXAddressClass::Is_Broadcast(void)
  *=========================================================================*/
 int IPXAddressClass::operator == (IPXAddressClass & addr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXAddressClass::operator == (IPXAddressClass & addr)");
+#endif
 	/*------------------------------------------------------------------------
 	If either Network Number is all 0's (which can happen if the system is
 	not running NETX), compare only the Node Addresses.
@@ -372,6 +398,9 @@ int IPXAddressClass::operator == (IPXAddressClass & addr)
  *=========================================================================*/
 int IPXAddressClass::operator != (IPXAddressClass & addr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXAddressClass::operator != (IPXAddressClass & addr)");
+#endif
 	/*------------------------------------------------------------------------
 	If either Network Number is all 0's (which can happen if the system is
 	not running NETX), compare only the Node Addresses.
@@ -421,6 +450,9 @@ int IPXAddressClass::operator != (IPXAddressClass & addr)
  *=========================================================================*/
 int IPXAddressClass::operator > (IPXAddressClass & addr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXAddressClass::operator > (IPXAddressClass & addr)");
+#endif
 	return(memcmp(this, &addr, 10) > 0);
 
 }	/* end of operator != */
@@ -443,6 +475,9 @@ int IPXAddressClass::operator > (IPXAddressClass & addr)
  *=========================================================================*/
 int IPXAddressClass::operator < (IPXAddressClass & addr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXAddressClass::operator < (IPXAddressClass & addr)");
+#endif
 	return(memcmp(this, &addr, 10) < 0);
 
 }	/* end of operator != */
@@ -465,6 +500,9 @@ int IPXAddressClass::operator < (IPXAddressClass & addr)
  *=========================================================================*/
 int IPXAddressClass::operator >= (IPXAddressClass & addr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXAddressClass::operator >= (IPXAddressClass & addr)");
+#endif
 	return(memcmp(this, &addr, 10) >= 0);
 
 }	/* end of operator != */
@@ -487,6 +525,9 @@ int IPXAddressClass::operator >= (IPXAddressClass & addr)
  *=========================================================================*/
 int IPXAddressClass::operator <= (IPXAddressClass & addr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXAddressClass::operator <= (IPXAddressClass & addr)");
+#endif
 	return(memcmp(this, &addr, 10) <= 0);
 
 }	/* end of operator != */

@@ -172,6 +172,9 @@ static int Net_Fake_Join_Dialog(void);
  *=============================================================================================*/
 bool Init_Network (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Init_Network (void)");
+#endif
 	NetNumType net;
 	NetNodeType node;
 
@@ -221,7 +224,9 @@ bool Init_Network (void)
  *=============================================================================================*/
 void Shutdown_Network (void)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Shutdown_Network (void)");
+#endif
 //
 // Note: The thought behind this section of code was that if the program
 // terminates early, without an EventClass::EXIT event, it still needs to
@@ -301,6 +306,9 @@ void Shutdown_Network (void)
  *=============================================================================================*/
 bool Process_Global_Packet(GlobalPacketType *packet, IPXAddressClass *address)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Process_Global_Packet(GlobalPacketType *packet, IPXAddressClass *address)");
+#endif
 	GlobalPacketType mypacket;
 
 	/*
@@ -378,6 +386,9 @@ bool Process_Global_Packet(GlobalPacketType *packet, IPXAddressClass *address)
  *=============================================================================================*/
 void Destroy_Connection(int id, int error)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Destroy_Connection(int id, int error)");
+#endif
 	int i,j;
 	HousesType house;
 	HouseClass *housep;
@@ -460,6 +471,9 @@ void Destroy_Connection(int id, int error)
  *=============================================================================================*/
 bool Remote_Connect(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Remote_Connect(void)");
+#endif
 	int rc;
 	int stealth;				// original state of NetStealth flag
 
@@ -566,6 +580,9 @@ bool Remote_Connect(void)
  *=============================================================================================*/
 bool Server_Remote_Connect(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Server_Remote_Connect(void)");
+#endif
 	int stealth;				// original state of NetStealth flag
 
 	/*------------------------------------------------------------------------
@@ -623,6 +640,9 @@ bool Server_Remote_Connect(void)
  *=============================================================================================*/
 bool Client_Remote_Connect(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Client_Remote_Connect(void)");
+#endif
 	int rc;
 	int stealth;				// original state of NetStealth flag
 
@@ -743,6 +763,9 @@ bool Client_Remote_Connect(void)
  *=============================================================================================*/
 static int Net_Join_Dialog(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static int Net_Join_Dialog(void)");
+#endif
 	int factor			= Get_Resolution_Factor();
 	/*........................................................................
 	Dialog & button dimensions
@@ -1953,6 +1976,9 @@ static int Net_Join_Dialog(void)
  *=========================================================================*/
 static void Clear_Game_List (ListClass *gamelist)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static void Clear_Game_List (ListClass *gamelist)");
+#endif
 	char * item;
 	int i;
 
@@ -1996,6 +2022,9 @@ static void Clear_Game_List (ListClass *gamelist)
  *=========================================================================*/
 static void Clear_Player_List (ListClass *playerlist)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static void Clear_Player_List (ListClass *playerlist)");
+#endif
 	char * item;
 	int i;
 
@@ -2044,6 +2073,9 @@ static void Clear_Player_List (ListClass *playerlist)
 static int Request_To_Join (char *playername, int join_index, ListClass *playerlist,
 	HousesType house, int color)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static int Request_To_Join (char *playername, int join_index, ListClass *playerlist, HousesType house, int color)");
+#endif
 	int i;
 
 	playerlist = playerlist;	// shaddup, Mr stupid compiler!
@@ -2155,6 +2187,9 @@ static int Request_To_Join (char *playername, int join_index, ListClass *playerl
  *=============================================================================================*/
 static void Send_Join_Queries(int curgame, int gamenow, int playernow)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static void Send_Join_Queries(int curgame, int gamenow, int playernow)");
+#endif
 	static int lasttime1 = 0;		// time since last Game query sent out
 	static int lasttime2 = 0;		// time since last Player query sent out
 
@@ -2248,6 +2283,9 @@ static void Send_Join_Queries(int curgame, int gamenow, int playernow)
 static JoinEventType Get_Join_Responses(JoinStateType *joinstate, ListClass *gamelist,
 	ColorListClass *playerlist, int join_index)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static JoinEventType Get_Join_Responses(JoinStateType *joinstate, ListClass *gamelist, ColorListClass *playerlist, int join_index)");
+#endif
 	int rc;
 	char * item;						// general-purpose string
 	NodeNameType *who;				// node to add to Games or Players
@@ -2661,6 +2699,9 @@ CCDebugString ("C&C95 - Received the 'GO' packet\n");
  *=============================================================================================*/
 static int Net_New_Dialog(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static int Net_New_Dialog(void)");
+#endif
 /* ###Change collision detected! C:\PROJECTS\CODE\NETDLG.CPP... */
 	int factor			= Get_Resolution_Factor();
 	/*........................................................................
@@ -3783,6 +3824,9 @@ static int Net_New_Dialog(void)
  *=========================================================================*/
 static JoinEventType Get_NewGame_Responses(ColorListClass *playerlist)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static JoinEventType Get_NewGame_Responses(ColorListClass *playerlist)");
+#endif
 	int rc;
 	char * item;						// general-purpose string
 	NodeNameType *who;				// node to add to Players Vector
@@ -3976,6 +4020,9 @@ static JoinEventType Get_NewGame_Responses(ColorListClass *playerlist)
  *=========================================================================*/
 unsigned long Compute_Name_CRC(char *name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned long Compute_Name_CRC(char *name)");
+#endif
 	char buf[80];
 	unsigned long crc = 0L;
 	int i;
@@ -4012,6 +4059,9 @@ unsigned long Compute_Name_CRC(char *name)
 void Net_Reconnect_Dialog(int reconn, int fresh, int oldest_index,
 	unsigned long timeval)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Net_Reconnect_Dialog(int reconn, int fresh, int oldest_index, unsigned long timeval)");
+#endif
 	static int x,y,w,h;
 	int id;
 	char buf1[40] = {0};
@@ -4107,6 +4157,9 @@ void Net_Reconnect_Dialog(int reconn, int fresh, int oldest_index,
  *=============================================================================================*/
 void Wait_For_Focus (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Wait_For_Focus (void)");
+#endif
 	CountDownTimerClass focus_timer;
 	focus_timer.Set(5*60);
 	ShowWindow ( MainWindow, SW_SHOWMAXIMIZED );
@@ -4156,6 +4209,9 @@ extern bool Spawn_WChat(bool can_launch);
  *=============================================================================================*/
 static int Net_Fake_New_Dialog(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static int Net_Fake_New_Dialog(void)");
+#endif
 	int factor			= Get_Resolution_Factor();
 
 	int d_dialog_w = 120*factor;											// dialog width
@@ -4747,6 +4803,9 @@ CCDebugString ("C&C95 - Creating connection to the VSS\n");
 
 static int Net_Fake_Join_Dialog(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static int Net_Fake_Join_Dialog(void)");
+#endif
 	int factor			= Get_Resolution_Factor();
 	/*........................................................................
 	Dialog & button dimensions

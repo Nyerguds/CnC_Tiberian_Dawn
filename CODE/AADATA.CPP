@@ -392,6 +392,9 @@ AircraftTypeClass::AircraftTypeClass(
 										0,0,
 										armor)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("AircraftTypeClass::AircraftTypeClass(...)");
+#endif
 	IsRotorEquipped = is_rotorequipped;
 	IsRotorCustom = is_rotorcustom;
 	IsLandable = is_landable;
@@ -420,6 +423,9 @@ AircraftTypeClass::AircraftTypeClass(
  *=============================================================================================*/
 AircraftType AircraftTypeClass::From_Name(char const *name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("AircraftType AircraftTypeClass::From_Name(char const *name)");
+#endif
 	if (name) {
 		for (AircraftType classid = AIRCRAFT_FIRST; classid < AIRCRAFT_COUNT; classid++) {
 			if (stricmp(Pointers[classid]->IniName, name) == 0) {
@@ -448,6 +454,9 @@ AircraftType AircraftTypeClass::From_Name(char const *name)
  *=============================================================================================*/
 void AircraftTypeClass::One_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftTypeClass::One_Time(void)");
+#endif
 	if (PatsuxDefault == WEAPON_NONE) {
 		PatsuxDefault = OrcaHeli.Primary;
 	}
@@ -503,6 +512,9 @@ void AircraftTypeClass::One_Time(void)
  *=============================================================================================*/
 ObjectClass * AircraftTypeClass::Create_One_Of(HouseClass * house) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ObjectClass * AircraftTypeClass::Create_One_Of(HouseClass * house) const");
+#endif
 	return(new AircraftClass(Type, house->Class->House));
 }
 
@@ -525,6 +537,9 @@ ObjectClass * AircraftTypeClass::Create_One_Of(HouseClass * house) const
  *=============================================================================================*/
 int AircraftTypeClass::Showcase_Frame() const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AircraftTypeClass::Showcase_Frame() const");
+#endif
 	return(20);
 }
 
@@ -546,6 +561,9 @@ int AircraftTypeClass::Showcase_Frame() const
  *=============================================================================================*/
 void AircraftTypeClass::Prep_For_Add(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftTypeClass::Prep_For_Add(void)");
+#endif
 	for (AircraftType index = AIRCRAFT_FIRST; index < AIRCRAFT_COUNT; index++) {
 		AircraftTypeClass const * air = As_Pointer(index);
 		if (air && !air->IsFixedWing && air->IsSelectable && air-> Get_Image_Data()) {
@@ -573,6 +591,9 @@ void AircraftTypeClass::Prep_For_Add(void)
  *=============================================================================================*/
 short const * AircraftTypeClass::Occupy_List(bool) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const * AircraftTypeClass::Occupy_List(bool) const");
+#endif
 	static short const _list[] = {0, REFRESH_EOL};
 	return(_list);
 }
@@ -594,6 +615,9 @@ short const * AircraftTypeClass::Occupy_List(bool) const
  *=============================================================================================*/
 short const * AircraftTypeClass::Overlap_List(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const * AircraftTypeClass::Overlap_List(void) const");
+#endif
 	static short const _list[] = {-(MAP_CELL_W-1), -MAP_CELL_W, -(MAP_CELL_W+1), -1, 1, (MAP_CELL_W-1), MAP_CELL_W, (MAP_CELL_W+1), REFRESH_EOL};
 	return(_list);
 }
@@ -624,6 +648,9 @@ short const * AircraftTypeClass::Overlap_List(void) const
  *=============================================================================================*/
 BuildingClass * AircraftTypeClass::Who_Can_Build_Me(bool , bool legal, HousesType house) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BuildingClass * AircraftTypeClass::Who_Can_Build_Me(bool , bool legal, HousesType house) const");
+#endif
 	BuildingClass * anybuilding = NULL;
 	BuildingClass * anyfreebuilding = NULL;
 	bool foundLeader = false;
@@ -684,6 +711,9 @@ BuildingClass * AircraftTypeClass::Who_Can_Build_Me(bool , bool legal, HousesTyp
  *=============================================================================================*/
 int AircraftTypeClass::Repair_Cost(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AircraftTypeClass::Repair_Cost(void) const");
+#endif
 	return(Fixed_To_Cardinal(Cost/(MaxStrength/REPAIR_STEP), REPAIR_PERCENT));
 }
 
@@ -704,6 +734,9 @@ int AircraftTypeClass::Repair_Cost(void) const
  *=============================================================================================*/
 int AircraftTypeClass::Repair_Step(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AircraftTypeClass::Repair_Step(void) const");
+#endif
 	return(REPAIR_STEP);
 }
 
@@ -725,6 +758,9 @@ int AircraftTypeClass::Repair_Step(void) const
  *=============================================================================================*/
 int AircraftTypeClass::Max_Pips(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AircraftTypeClass::Max_Pips(void) const");
+#endif
 	if (IsTransporter) {
 		return(Max_Passengers());
 	} else {
@@ -754,6 +790,9 @@ int AircraftTypeClass::Max_Pips(void) const
  *=============================================================================================*/
 int AircraftTypeClass::Enemy_Name(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AircraftTypeClass::Enemy_Name(void) const");
+#endif
 	return(TXT_ENEMY_VEHICLE);
 }
 
@@ -775,6 +814,9 @@ int AircraftTypeClass::Enemy_Name(void) const
  *=============================================================================================*/
 bool AircraftTypeClass::Create_And_Place(CELL, HousesType) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool AircraftTypeClass::Create_And_Place(CELL, HousesType) const");
+#endif
 	return(false);
 }
 
@@ -798,6 +840,9 @@ bool AircraftTypeClass::Create_And_Place(CELL, HousesType) const
  *=============================================================================================*/
 AircraftTypeClass const * AircraftTypeClass::As_Pointer(AircraftType type)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("AircraftTypeClass const * AircraftTypeClass::As_Pointer(AircraftType type)");
+#endif
 	if ((unsigned)type >= AIRCRAFT_COUNT)
 		return (NULL);
 	return(Pointers[type]);
@@ -820,6 +865,9 @@ AircraftTypeClass const * AircraftTypeClass::As_Pointer(AircraftType type)
  *=============================================================================================*/
 void AircraftTypeClass::Init(TheaterType theater)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftTypeClass::Init(TheaterType theater)");
+#endif
 	//if (theater != LastTheater){
 	if (Get_Resolution_Shift()) {
 		char buffer[_MAX_FNAME];
@@ -880,6 +928,9 @@ void AircraftTypeClass::Init(TheaterType theater)
  *=============================================================================================*/
 void AircraftTypeClass::After_Init()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftTypeClass::After_Init()");
+#endif
 	AircraftTypeClass & orca = ((AircraftTypeClass&)AircraftTypeClass::As_Reference(AIRCRAFT_ORCA));
 	WeaponType weapon = Patsux ? WEAPON_OBELISK_LASER : PatsuxDefault;
 	if (orca.Primary != weapon) {
@@ -908,6 +959,9 @@ void AircraftTypeClass::After_Init()
  *=============================================================================================*/
 void AircraftTypeClass::Dimensions(int &width, int &height) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftTypeClass::Dimensions(int &width, int &height) const");
+#endif
 	width = 21;
 	height = 20;
 }

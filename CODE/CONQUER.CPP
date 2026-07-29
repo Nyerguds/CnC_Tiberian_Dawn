@@ -139,6 +139,9 @@ extern bool Spawn_WChat(bool can_launch);
 extern bool SpawnedFromWChat;
 void Main_Game(int argc, char *argv[])
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Main_Game(int argc, char *argv[])");
+#endif
 	bool fade = false;	// don't fade title screen the first time through
 
 	/*
@@ -429,6 +432,9 @@ void Main_Game(int argc, char *argv[])
 extern int DebugColour;
 void Keyboard_Process(KeyNumType &input)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Keyboard_Process(KeyNumType &input)");
+#endif
 	ObjectClass * obj;
 	int index;
 
@@ -949,6 +955,9 @@ void Keyboard_Process(KeyNumType &input)
 }
 
 void ShowUIMessage(bool mute, bool forcenew, char* message, ...) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ShowUIMessage(bool mute, bool forcenew, char* message, ...)");
+#endif
 	va_list	va;
 	char txt[128];
 	va_start(va, message);
@@ -985,6 +994,9 @@ void ShowUIMessage(bool mute, bool forcenew, char* message, ...) {
  *=============================================================================================*/
 static void Message_Input(KeyNumType &input)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static void Message_Input(KeyNumType &input)");
+#endif
 	int 					rc;
 	char 					txt[MAX_MESSAGE_LENGTH+12];
 	int 					id;
@@ -1269,6 +1281,9 @@ static void Message_Input(KeyNumType &input)
  *=============================================================================================*/
 bool Color_Cycle(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Color_Cycle(void)");
+#endif
 	static CountDownTimerClass _timer(BT_SYSTEM,0L);
 	static CountDownTimerClass _ftimer(BT_SYSTEM,0L);
 	static bool _up = false;
@@ -1354,6 +1369,9 @@ bool Color_Cycle(void)
  *=============================================================================================*/
 void Call_Back(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Call_Back(void)");
+#endif
 #ifndef DEMO
 	int i;
 	int id;
@@ -1489,6 +1507,9 @@ void Call_Back(void)
  *=============================================================================================*/
 char const *Language_Name(char const *basename, bool standardext)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char const *Language_Name(char const *basename, bool standardext)");
+#endif
 	static char _fullname[_MAX_FNAME+_MAX_EXT];
 
 	if (!basename) return(NULL);
@@ -1520,6 +1541,9 @@ char const *Language_Name(char const *basename, bool standardext)
  *=============================================================================================*/
 SourceType Source_From_Name(char const *name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("SourceType Source_From_Name(char const *name)");
+#endif
 	if (name) {
 		for (SourceType source = SOURCE_FIRST; source < SOURCE_COUNT; source++) {
 			if (stricmp(SourceName[source], name) == 0) {
@@ -1545,6 +1569,9 @@ SourceType Source_From_Name(char const *name)
  *=============================================================================================*/
 char const *Name_From_Source(SourceType source)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char const *Name_From_Source(SourceType source)");
+#endif
 	if ((unsigned)source < SOURCE_COUNT) {
 		return(SourceName[source]);
 	}
@@ -1571,6 +1598,9 @@ char const *Name_From_Source(SourceType source)
  *=============================================================================================*/
 PlayerColorType PlayerColor_From_Name(char const *name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("PlayerColorType PlayerColor_From_Name(char const *name)");
+#endif
 	if (name) {
 		if (stricmp("None", name) == 0) {
 			return(REMAP_EXPLICIT_NONE);
@@ -1599,6 +1629,9 @@ PlayerColorType PlayerColor_From_Name(char const *name)
  *=============================================================================================*/
 char const *Name_From_PlayerColor(PlayerColorType remap)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char const *Name_From_PlayerColor(PlayerColorType remap)");
+#endif
 	if ((unsigned)remap < REMAP_COUNT) {
 		return(PlayerColors[remap].IniName);
 	}
@@ -1623,6 +1656,9 @@ char const *Name_From_PlayerColor(PlayerColorType remap)
  *=============================================================================================*/
 TheaterType Theater_From_Name(char const *name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TheaterType Theater_From_Name(char const *name)");
+#endif
 	TheaterType	index;
 
 	if (name) {
@@ -1655,6 +1691,9 @@ TheaterType Theater_From_Name(char const *name)
  *=============================================================================================*/
 FacingType KN_To_Facing(int input)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FacingType KN_To_Facing(int input)");
+#endif
 	input &= ~(KN_ALT_BIT|KN_SHIFT_BIT|KN_CTRL_BIT);
 	switch (input) {
 		case KN_LEFT:
@@ -1704,6 +1743,9 @@ FacingType KN_To_Facing(int input)
  *=============================================================================================*/
 static void Sync_Delay(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static void Sync_Delay(void)");
+#endif
 	/*
 	**	Delay one tick and keep a record that one tick was "wasted" here.
 	**	This accumulates into a running histogram of performance.
@@ -1750,6 +1792,9 @@ void Reallocate_Big_Shape_Buffer(void);
 
 bool Main_Loop()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Main_Loop()");
+#endif
 	KeyNumType	input;					// Player input.
 	int 			x;
 	int 			y;
@@ -1994,6 +2039,9 @@ bool Main_Loop()
  *=========================================================================*/
 bool Map_Edit_Loop(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Map_Edit_Loop(void)");
+#endif
 	/*
 	**	Redraw the map.
 	*/
@@ -2039,6 +2087,9 @@ bool Map_Edit_Loop(void)
  *=========================================================================*/
 void Go_Editor(bool flag)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Go_Editor(bool flag)");
+#endif
 	/*
 	**	Go into Scenario Editor mode
 	*/
@@ -2110,6 +2161,9 @@ unsigned long VQBytesRead;
 
 void Init_VQ_Threading(CCFileClass *file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Init_VQ_Threading(CCFileClass *file)");
+#endif
 	if (!VQThreadBuffer){
 		VQThreadBuffer = new unsigned char [VQ_THREAD_BUFFER_SIZE];
 	}
@@ -2123,6 +2177,9 @@ void Init_VQ_Threading(CCFileClass *file)
 
 void Cleanup_VQ_Threading(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Cleanup_VQ_Threading(void)");
+#endif
 	while (ThreadReading){}
 	if (VQThreadBuffer){
 		delete VQThreadBuffer;
@@ -2132,6 +2189,9 @@ void Cleanup_VQ_Threading(void)
 
 unsigned long __stdcall Thread_Read(void *file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned long __stdcall Thread_Read(void *file)");
+#endif
 	int bytes_to_read;
 	int left_to_read;
 	int read_this_time;
@@ -2181,6 +2241,9 @@ unsigned long __stdcall Thread_Read(void *file)
 
 void Read_VQ_Thread_Block(CCFileClass *file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Read_VQ_Thread_Block(CCFileClass *file)");
+#endif
 	HANDLE 	thread_handle;
 	DWORD		thread_id;
 	if (!ThreadReading){
@@ -2197,6 +2260,9 @@ void Read_VQ_Thread_Block(CCFileClass *file)
 
 int VQ_Thread_Read (CCFileClass *file, void *buffer, long bytes)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int VQ_Thread_Read (CCFileClass *file, void *buffer, long bytes)");
+#endif
 	long bytes_to_read;
 
 	do {
@@ -2236,6 +2302,9 @@ int VQ_Thread_Read (CCFileClass *file, void *buffer, long bytes)
 
 int VQ_Thread_Seek (long bytes)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int VQ_Thread_Seek (long bytes)");
+#endif
 	VQThreadBlockTail += bytes;
 	VQBytesRead += bytes;
 	return (VQBytesRead);
@@ -2268,6 +2337,9 @@ int VQ_Thread_Seek (long bytes)
  *=============================================================================================*/
 long MixFileHandler(VQAHandle *vqa, long action, void *buffer, long nbytes)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long MixFileHandler(VQAHandle *vqa, long action, void *buffer, long nbytes)");
+#endif
 	CCFileClass *file;
 	long        error;
 
@@ -2401,6 +2473,9 @@ long MixFileHandler(VQAHandle *vqa, long action, void *buffer, long nbytes)
  *=============================================================================================*/
 long MixFileHandler(VQAHandle *vqa, long action, void *buffer, long nbytes)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long MixFileHandler(VQAHandle *vqa, long action, void *buffer, long nbytes)");
+#endif
 	CCFileClass *file;
 	long        error;
 
@@ -2502,6 +2577,9 @@ long MixFileHandler(VQAHandle *vqa, long action, void *buffer, long nbytes)
 
 void Rebuild_Interpolated_Palette(unsigned char *interpal)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Rebuild_Interpolated_Palette(unsigned char *interpal)");
+#endif
 	for (int y=0 ; y<255 ; y++){
 		for (int x=y+1 ; x<256 ; x++){
 			*(interpal + (y*256+x)) = *(interpal + (x*256+y));
@@ -2517,6 +2595,9 @@ unsigned			PaletteCounter;
 
 int Load_Interpolated_Palettes(char const *filename, BOOL add)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Load_Interpolated_Palettes(char const *filename, BOOL add)");
+#endif
 	int	num_palettes=0;
 	int	i;
 	int 	start_palette;
@@ -2563,6 +2644,9 @@ int Load_Interpolated_Palettes(char const *filename, BOOL add)
 
 void Free_Interpolated_Palettes(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Free_Interpolated_Palettes(void)");
+#endif
 	for (int i=0 ; i<ARRAY_SIZE(InterpolatedPalettes) ; i++){
 		if (InterpolatedPalettes[i]){
 			free(InterpolatedPalettes[i]);
@@ -2598,6 +2682,9 @@ extern void Suspend_Audio_Thread(void);
 extern void Resume_Audio_Thread(void);
 void Play_Movie(char const * name, ThemeType theme, bool clrscrn)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Play_Movie(char const * name, ThemeType theme, bool clrscrn)");
+#endif
 	/*
 	** Don't play movies in editor mode
 	*/
@@ -2757,6 +2844,9 @@ void Play_Movie(char const * name, ThemeType theme, bool clrscrn)
  *=============================================================================================*/
 void Unselect_All(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Unselect_All(void)");
+#endif
 	while (CurrentObject.Count()) {
 		CurrentObject[0]->Unselect();
 	}
@@ -2784,6 +2874,9 @@ void Unselect_All(void)
  *=============================================================================================*/
 char const * Fading_Table_Name(char const * base, TheaterType theater)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char const * Fading_Table_Name(char const * base, TheaterType theater)");
+#endif
 	static char _buffer[_MAX_FNAME+_MAX_EXT];
 	char root[_MAX_FNAME];
 
@@ -2807,6 +2900,9 @@ char const * Fading_Table_Name(char const * base, TheaterType theater)
  *=============================================================================================*/
 void const * Get_Radar_Icon(void const * shapefile, int shapenum, int frames, int zoomfactor)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void const * Get_Radar_Icon(void const * shapefile, int shapenum, int frames, int zoomfactor)");
+#endif
 	static int _offx[]={	0, 0,  -1,  1, 0, -1, 1, -1, 1};
 	static int _offy[]={	0, 0,  -1,  1, 0, -1, 1, -1, 1};
 	int lp,framelp;
@@ -2906,6 +3002,9 @@ void const * Get_Radar_Icon(void const * shapefile, int shapenum, int frames, in
 
 void CC_Texture_Fill (void const *shapefile, int shapenum, int xpos, int ypos, int width, int height)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CC_Texture_Fill (void const *shapefile, int shapenum, int xpos, int ypos, int width, int height)");
+#endif
 	unsigned char	*shape_pointer;
 	//unsigned char	*shape_save;
 	unsigned	long	shape_size;
@@ -2989,6 +3088,9 @@ void CC_Texture_Fill (void const *shapefile, int shapenum, int xpos, int ypos, i
 #pragma off(unreferenced)
 void CC_Draw_Shape(void const * shapefile, int shapenum, int x, int y, WindowNumberType window, ShapeFlags_Type flags, void const * fadingdata, void const * ghostdata)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CC_Draw_Shape(void const * shapefile, int shapenum, int x, int y, WindowNumberType window, ShapeFlags_Type flags, void const * fadingdata, void const * ghostdata)");
+#endif
 #if(TRUE)
 	int predoffset;
 	char				*shape_pointer;
@@ -3078,6 +3180,9 @@ void CC_Draw_Shape(void const * shapefile, int shapenum, int x, int y, WindowNum
  *=============================================================================================*/
 TechnoTypeClass const * Fetch_Techno_Type(RTTIType type, int id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TechnoTypeClass const * Fetch_Techno_Type(RTTIType type, int id)");
+#endif
 	switch (type) {
 		case RTTI_UNITTYPE:
 		case RTTI_UNIT:
@@ -3113,6 +3218,9 @@ TechnoTypeClass const * Fetch_Techno_Type(RTTIType type, int id)
  *=========================================================================*/
 void Trap_Object(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Trap_Object(void)");
+#endif
 	int i;
 
 	TrapObject.Ptr.All = NULL;
@@ -3247,6 +3355,9 @@ void Check_VQ_Palette_Set(void);
 
 long VQ_Call_Back(unsigned char *, long )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long VQ_Call_Back(unsigned char *, long )");
+#endif
 	int key = 0;
 	if (Keyboard::Check()){
 		key = Keyboard::Get();
@@ -3300,6 +3411,9 @@ long VQ_Call_Back(unsigned char *, long )
  *=============================================================================================*/
 void Handle_Team(int team, int action)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Handle_Team(int team, int action)");
+#endif
 	int index;
 
 	AllowVoice = true;
@@ -3436,6 +3550,9 @@ void Handle_Team(int team, int action)
  *=============================================================================================*/
 void Handle_View(int view, int action)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Handle_View(int view, int action)");
+#endif
 	if ((unsigned)view < sizeof(Views)/sizeof(Views[0])) {
 		if (action == 0) {
 			Map.Set_Tactical_Position(Cell_Coord(Views[view])&0xFF00FF00L);
@@ -3449,6 +3566,9 @@ void Handle_View(int view, int action)
 #ifdef CHEAT_KEYS
 void Heap_Dump_Check( char *string )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Heap_Dump_Check( char *string )");
+#endif
 #if 0
 	struct _heapinfo h_info;
 	int heap_status;
@@ -3535,6 +3655,9 @@ void Heap_Dump_Check( char *string )
 
 void Dump_Heap_Pointers( void )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Dump_Heap_Pointers( void )");
+#endif
 	char *ptr, *lptr, *nptr, *cptr, *dptr, *wlptr, *nlptr, *aptr, *clptr;
 	int numallocs, numfrees, sizefree;
 	static char _freeorused[2][5] = { "FREE", "USED" };
@@ -3755,6 +3878,9 @@ void Dump_Heap_Pointers( void )
 
 void Error_In_Heap_Pointers( char *string )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Error_In_Heap_Pointers( char *string )");
+#endif
 	Smart_Printf( "Error in Heap for %s\n", string );
 }
 #endif
@@ -3784,6 +3910,9 @@ void Error_In_Heap_Pointers( char *string )
  *=============================================================================================*/
 int Get_CD_Index (int cd_drive, int timeout)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Get_CD_Index (int cd_drive, int timeout)");
+#endif
 	char		volume_name[128];
 	unsigned	filename_length;
 	unsigned	misc_dword;
@@ -3878,6 +4007,9 @@ int Get_CD_Index (int cd_drive, int timeout)
  *=============================================================================================*/
 bool Force_CD_Available(int cd)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Force_CD_Available(int cd)");
+#endif
 #ifndef TUC_BUILD
 #ifndef DEMO
 	static int _last = -1;
@@ -4105,6 +4237,9 @@ bool Force_CD_Available(int cd)
  *=========================================================================*/
 unsigned long Disk_Space_Available(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned long Disk_Space_Available(void)");
+#endif
 	// Nyerguds fix: not sure how to modernize, so it just always returns a gigabyte.
 	return(0x3FFFFFFF);
 #if (0)
@@ -4136,6 +4271,9 @@ unsigned long Disk_Space_Available(void)
  *=============================================================================================*/
 void Validate_Error(char *name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Validate_Error(char *name)");
+#endif
 #ifdef CHEAT_KEYS
 	Prog_End();
 	printf("%s object error!\n",name);
@@ -4163,6 +4301,9 @@ void Validate_Error(char *name)
  *=============================================================================================*/
 static void Do_Record_Playback(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static void Do_Record_Playback(void)");
+#endif
 	int count;
 	TARGET tgt;
 	int i;
@@ -4288,6 +4429,9 @@ static void Do_Record_Playback(void)
  *=========================================================================*/
 void const * Hires_Retrieve(char *name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void const * Hires_Retrieve(char *name)");
+#endif
 	char filename[30];
 
 	if (Get_Resolution_Shift()) {
@@ -4301,11 +4445,17 @@ void const * Hires_Retrieve(char *name)
 
 int Get_Resolution_Shift(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Get_Resolution_Shift(void)");
+#endif
 	return ((SeenBuff.Get_Width() == 320) ? 0 : 1);
 }
 
 
 int Get_Resolution_Factor(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Get_Resolution_Factor(void)");
+#endif
 	return ((SeenBuff.Get_Width() == 320) ? 1 : 2);
 }

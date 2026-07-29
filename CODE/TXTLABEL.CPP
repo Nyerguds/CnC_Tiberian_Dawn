@@ -60,6 +60,9 @@
 TextLabelClass::TextLabelClass(char *txt, int x, int y, int color,
  TextPrintType style) : GadgetClass(x,y,1,1,0,0)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TextLabelClass::TextLabelClass(char *txt, int x, int y, int color, TextPrintType style)");
+#endif
 	Text = txt;
 	Color = color;
 	Style = style;
@@ -86,6 +89,9 @@ TextLabelClass::TextLabelClass(char *txt, int x, int y, int color,
  *=============================================================================================*/
 virtual int TextLabelClass::Draw_Me(int forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("virtual int TextLabelClass::Draw_Me(int forced)");
+#endif
 	if (GadgetClass::Draw_Me(forced)) {
 		if (PixWidth == -1) {
 			Fancy_Text_Print("%s", X, Y, Color, TBLACK, Style, Text);

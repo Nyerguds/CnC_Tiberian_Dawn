@@ -57,6 +57,9 @@
 ShapeButtonClass::ShapeButtonClass(void) :
 	ToggleClass(0, 0, 0, 0, 0)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ShapeButtonClass::ShapeButtonClass(void)");
+#endif
 	ReflectButtonState = false;
 }
 
@@ -87,6 +90,9 @@ ShapeButtonClass::ShapeButtonClass(void) :
 ShapeButtonClass::ShapeButtonClass(unsigned id, void const * shape, int x, int y) :
 	ToggleClass(id, x, y, 0, 0)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ShapeButtonClass::ShapeButtonClass(unsigned id, void const * shape, int x, int y)");
+#endif
 	Width = 0;
 	Height = 0;
 	ReflectButtonState = false;
@@ -96,6 +102,9 @@ ShapeButtonClass::ShapeButtonClass(unsigned id, void const * shape, int x, int y
 
 void ShapeButtonClass::Set_Shape(void const * data)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ShapeButtonClass::Set_Shape(void const * data)");
+#endif
 	ShapeData = data;
 	if (ShapeData) {
 		Width = Get_Build_Frame_Width(ShapeData);
@@ -122,6 +131,9 @@ void ShapeButtonClass::Set_Shape(void const * data)
  *=============================================================================================*/
 int ShapeButtonClass::Draw_Me(int forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ShapeButtonClass::Draw_Me(int forced)");
+#endif
 	if (ControlClass::Draw_Me(forced) && ShapeData) {
 
 		/*

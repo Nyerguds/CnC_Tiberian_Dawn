@@ -76,6 +76,9 @@
  *=========================================================================*/
 CommQueueClass::CommQueueClass(int numsend, int numreceive, int maxlen)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CommQueueClass::CommQueueClass(int numsend, int numreceive, int maxlen)");
+#endif
 	int i;
 
 	/*
@@ -124,6 +127,9 @@ CommQueueClass::CommQueueClass(int numsend, int numreceive, int maxlen)
  *=========================================================================*/
 CommQueueClass::~CommQueueClass()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CommQueueClass::~CommQueueClass()");
+#endif
 	int i;
 
 	/*
@@ -160,6 +166,9 @@ CommQueueClass::~CommQueueClass()
  *=========================================================================*/
 void CommQueueClass::Init(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CommQueueClass::Init(void)");
+#endif
 	int i;
 
 	/*------------------------------------------------------------------------
@@ -228,6 +237,9 @@ void CommQueueClass::Init(void)
  *=========================================================================*/
 int CommQueueClass::Queue_Send(void *buf, int buflen)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CommQueueClass::Queue_Send(void *buf, int buflen)");
+#endif
 	/*
 	--------------------- Error if no room in the queue ----------------------
 	*/
@@ -282,6 +294,9 @@ int CommQueueClass::Queue_Send(void *buf, int buflen)
  *=========================================================================*/
 int CommQueueClass::UnQueue_Send(void *buf, int *buflen)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CommQueueClass::UnQueue_Send(void *buf, int *buflen)");
+#endif
 	/*
 	--------------------- Error if no entry to retrieve ----------------------
 	*/
@@ -332,6 +347,9 @@ int CommQueueClass::UnQueue_Send(void *buf, int *buflen)
  *=========================================================================*/
 SendQueueType * CommQueueClass::Next_Send(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("SendQueueType * CommQueueClass::Next_Send(void)");
+#endif
 	if (SendCount==0) {
 		return(NULL);
 	} else {
@@ -361,6 +379,9 @@ SendQueueType * CommQueueClass::Next_Send(void)
  *=========================================================================*/
 SendQueueType * CommQueueClass::Get_Send(int index)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("SendQueueType * CommQueueClass::Get_Send(int index)");
+#endif
 	int i;
 
 	i = SendNext + index;
@@ -393,6 +414,9 @@ SendQueueType * CommQueueClass::Get_Send(int index)
  *=========================================================================*/
 int CommQueueClass::Queue_Receive(void *buf, int buflen)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CommQueueClass::Queue_Receive(void *buf, int buflen)");
+#endif
 	/*
 	--------------------- Error if no room in the queue ----------------------
 	*/
@@ -449,6 +473,9 @@ int CommQueueClass::Queue_Receive(void *buf, int buflen)
  *=========================================================================*/
 int CommQueueClass::UnQueue_Receive(void *buf, int *buflen)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CommQueueClass::UnQueue_Receive(void *buf, int *buflen)");
+#endif
 	/*
 	--------------------- Error if no entry to retrieve ----------------------
 	*/
@@ -499,6 +526,9 @@ int CommQueueClass::UnQueue_Receive(void *buf, int *buflen)
  *=========================================================================*/
 ReceiveQueueType * CommQueueClass::Next_Receive(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ReceiveQueueType * CommQueueClass::Next_Receive(void)");
+#endif
 	if (ReceiveCount==0) {
 		return(NULL);
 	} else {
@@ -528,6 +558,9 @@ ReceiveQueueType * CommQueueClass::Next_Receive(void)
  *=========================================================================*/
 ReceiveQueueType * CommQueueClass::Get_Receive(int index)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ReceiveQueueType * CommQueueClass::Get_Receive(int index)");
+#endif
 	int i;
 
 	i = ReceiveNext + index;
@@ -569,6 +602,9 @@ ReceiveQueueType * CommQueueClass::Get_Receive(int index)
  *=========================================================================*/
 void CommQueueClass::Add_Delay(unsigned long delay)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CommQueueClass::Add_Delay(unsigned long delay)");
+#endif
 	int roundoff = 0;
 
 	if (NumDelay==256) {
@@ -607,6 +643,9 @@ void CommQueueClass::Add_Delay(unsigned long delay)
  *=========================================================================*/
 unsigned long CommQueueClass::Avg_Response_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned long CommQueueClass::Avg_Response_Time(void)");
+#endif
 	return(MeanDelay);
 
 }	/* end of Avg_Response_Time */
@@ -629,6 +668,9 @@ unsigned long CommQueueClass::Avg_Response_Time(void)
  *=========================================================================*/
 unsigned long CommQueueClass::Max_Response_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned long CommQueueClass::Max_Response_Time(void)");
+#endif
 	return(MaxDelay);
 
 }	/* end of Max_Response_Time */
@@ -651,6 +693,9 @@ unsigned long CommQueueClass::Max_Response_Time(void)
  *=========================================================================*/
 void CommQueueClass::Reset_Response_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CommQueueClass::Reset_Response_Time(void)");
+#endif
 	DelaySum = 0L;
 	NumDelay = 0L;
 	MeanDelay = 0L;
@@ -686,6 +731,9 @@ void CommQueueClass::Reset_Response_Time(void)
 void CommQueueClass::Configure_Debug(int offset, int size, char **names,
 	int maxnames)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CommQueueClass::Configure_Debug(int offset, int size, char **names, int maxnames)");
+#endif
 	DebugOffset = offset;
 	DebugSize = size;
 	DebugNames = names;
@@ -713,6 +761,9 @@ void CommQueueClass::Configure_Debug(int offset, int size, char **names,
  *=========================================================================*/
 void CommQueueClass::Mono_Debug_Print(int refresh)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CommQueueClass::Mono_Debug_Print(int refresh)");
+#endif
 #ifdef WWLIB32_H
 	int i;												// loop counter
 	static int send_col[] = {1,14,28};			// coords of send queue columns
@@ -849,6 +900,9 @@ void CommQueueClass::Mono_Debug_Print(int refresh)
  *=========================================================================*/
 void CommQueueClass::Mono_Debug_Print2(int refresh)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CommQueueClass::Mono_Debug_Print2(int refresh)");
+#endif
 #ifdef WWLIB32_H
 	int i;												// loop counter
 	char txt[80];

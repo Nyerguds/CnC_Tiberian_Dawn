@@ -44,6 +44,9 @@
 
 void Special_Dialog(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Special_Dialog(void)");
+#endif
 	SpecialClass oldspecial = Special;
 	GadgetClass * buttons = NULL;
 	static struct {

@@ -99,6 +99,9 @@ static GraphicBufferClass _TileStage(24,24);
  *=============================================================================================*/
 RadarClass::RadarClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("RadarClass::RadarClass(void)");
+#endif
 	IsZoomed        = false;
 	IsRadarActive		= false;
 	IsToRedraw			= false;
@@ -129,6 +132,9 @@ RadarClass::RadarClass(void)
  *=============================================================================================*/
 void RadarClass::One_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::One_Time(void)");
+#endif
 	Reset_Screen_Calculations();
 	DisplayClass::One_Time();
 	RadarButton.X = RadX+RadOffX;
@@ -154,6 +160,9 @@ void RadarClass::One_Time(void)
  *   07/12/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
 void RadarClass::After_Init(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::After_Init(void)");
+#endif
 	DisplayClass::After_Init();
 	Reset_Screen_Calculations();
 	RadarButton.X = RadX+RadOffX;
@@ -165,6 +174,9 @@ void RadarClass::After_Init(void) {
 
 void RadarClass::Reset_Screen_Calculations(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::Reset_Screen_Calculations(void)");
+#endif
 	int factor = Get_Resolution_Shift();
 	RadWidth		= 80 << factor;
 	RadHeight 	= 70 << factor;
@@ -203,6 +215,9 @@ void RadarClass::Reset_Screen_Calculations(void)
  *=============================================================================================*/
 void RadarClass::Init_Clear(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::Init_Clear(void)");
+#endif
 	DisplayClass::Init_Clear();
 	IsRadarActive			= false;
 	IsToRedraw 				= true;
@@ -248,6 +263,9 @@ void RadarClass::Init_Clear(void)
  *=============================================================================================*/
 bool RadarClass::Radar_Activate(int control)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool RadarClass::Radar_Activate(int control)");
+#endif
 	bool old = IsRadarActive;
 
 	switch (control) {
@@ -362,6 +380,9 @@ bool RadarClass::Radar_Activate(int control)
  *=============================================================================================*/
 void RadarClass::Draw_It(bool forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::Draw_It(bool forced)");
+#endif
 	DisplayClass::Draw_It(forced);
 //	if (!In_Debugger)	while (!HidPage.Lock()) {}
 
@@ -548,6 +569,9 @@ void RadarClass::Draw_It(bool forced)
  *=========================================================================*/
 void RadarClass::Render_Terrain(CELL cell, int x, int y, int size)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::Render_Terrain(CELL cell, int x, int y, int size)");
+#endif
 	TerrainClass	*list[4];
 	int				listidx = 0;
 	int				lp,lp2;
@@ -634,6 +658,9 @@ void RadarClass::Render_Terrain(CELL cell, int x, int y, int size)
  *=============================================================================================*/
 void RadarClass::Render_Infantry(CELL cell, int x, int y, int size)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::Render_Infantry(CELL cell, int x, int y, int size)");
+#endif
 	ObjectClass 	*obj;
 	int 				xoff,yoff;
 
@@ -689,6 +716,9 @@ void RadarClass::Render_Infantry(CELL cell, int x, int y, int size)
  *=========================================================================*/
 void RadarClass::Render_Overlay(CELL cell, int x, int y, int size)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::Render_Overlay(CELL cell, int x, int y, int size)");
+#endif
 	OverlayType overlay = (*this)[cell].Overlay;
  	if (overlay != OVERLAY_NONE) {
 		OverlayTypeClass const * otype = &OverlayTypeClass::As_Reference(overlay);
@@ -719,6 +749,9 @@ void RadarClass::Render_Overlay(CELL cell, int x, int y, int size)
  *=========================================================================*/
 void RadarClass::Zoom_Mode(CELL cell)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::Zoom_Mode(CELL cell)");
+#endif
 	int map_c_width;
 	int map_c_height;
 	/*
@@ -817,6 +850,9 @@ void RadarClass::Zoom_Mode(CELL cell)
  *=============================================================================================*/
 void RadarClass::Plot_Radar_Pixel(CELL cell)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::Plot_Radar_Pixel(CELL cell)");
+#endif
 	if (cell == -1) cell = 1;
 
 	int	x,y;					// Coordinate of cell location.
@@ -934,6 +970,9 @@ void RadarClass::Plot_Radar_Pixel(CELL cell)
  *=============================================================================================*/
 void RadarClass::Radar_Pixel(CELL cell)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::Radar_Pixel(CELL cell)");
+#endif
 	if (IsRadarActive && Map.IsSidebarActive && Cell_On_Radar(cell)) {
 		IsToRedraw 						= true;
 		(*this)[cell].IsPlot 		= true;
@@ -967,6 +1006,9 @@ void RadarClass::Radar_Pixel(CELL cell)
  *=============================================================================================*/
 int RadarClass::Click_In_Radar(int &ptr_x, int &ptr_y, bool change)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int RadarClass::Click_In_Radar(int &ptr_x, int &ptr_y, bool change)");
+#endif
 	int x	= ptr_x;
 	int y	= ptr_y;
 
@@ -1015,6 +1057,9 @@ int RadarClass::Click_In_Radar(int &ptr_x, int &ptr_y, bool change)
  *=============================================================================================*/
 CELL RadarClass::Click_Cell_Calc(int x, int y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CELL RadarClass::Click_Cell_Calc(int x, int y)");
+#endif
 	int result = Click_In_Radar(x, y, true);
 	switch (result) {
 		case 1:
@@ -1045,6 +1090,9 @@ CELL RadarClass::Click_Cell_Calc(int x, int y)
  *=============================================================================================*/
 bool RadarClass::Map_Cell(CELL cell, HouseClass * house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool RadarClass::Map_Cell(CELL cell, HouseClass * house)");
+#endif
 	if (DisplayClass::Map_Cell(cell, house)) {
 		Radar_Pixel(cell);
 		return(true);
@@ -1054,6 +1102,9 @@ bool RadarClass::Map_Cell(CELL cell, HouseClass * house)
 
 void RadarClass::Cursor_Cell(CELL cell, int value)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::Cursor_Cell(CELL cell, int value)");
+#endif
 	int	temp			= (*this)[cell].IsRadarCursor;
 
 	/*
@@ -1078,6 +1129,9 @@ void RadarClass::Cursor_Cell(CELL cell, int value)
 
 void RadarClass::Mark_Radar(int x1, int y1, int x2, int y2, int value, int barlen)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::Mark_Radar(int x1, int y1, int x2, int y2, int value, int barlen)");
+#endif
 	int x, y;
 	/*
 	** First step is to convert pixel coordinates back to a CellX and CellY.
@@ -1147,6 +1201,9 @@ void RadarClass::Mark_Radar(int x1, int y1, int x2, int y2, int value, int barle
  *=============================================================================================*/
 void RadarClass::Cell_XY_To_Radar_Pixel(int cellx, int celly, int &x, int &y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::Cell_XY_To_Radar_Pixel(int cellx, int celly, int &x, int &y)");
+#endif
 	x     = (cellx - RadarX) * ZoomFactor;
 	y     = (celly - RadarY) * ZoomFactor;
 }
@@ -1173,6 +1230,9 @@ void RadarClass::Cell_XY_To_Radar_Pixel(int cellx, int celly, int &x, int &y)
 #pragma argsused
 void RadarClass::Radar_Cursor(int forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::Radar_Cursor(int forced)");
+#endif
 	static 					_last_pos = -1;
 	static 					_last_frame = -1;
 	GraphicViewPortClass 	*oldpage;
@@ -1306,6 +1366,9 @@ void RadarClass::Radar_Cursor(int forced)
  *=========================================================================*/
 void RadarClass::Radar_Anim(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::Radar_Anim(void)");
+#endif
 	/*
 	** Do nothing if we're in player-name mode
 	*/
@@ -1353,6 +1416,9 @@ void RadarClass::Radar_Anim(void)
  *=============================================================================================*/
 void RadarClass::AI(KeyNumType & input, int x, int y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::AI(KeyNumType & input, int x, int y)");
+#endif
 	/*
 	** Check to see if we need to animate the radar cursor
 	*/
@@ -1419,6 +1485,9 @@ void RadarClass::AI(KeyNumType & input, int x, int y)
  *=============================================================================================*/
 int RadarClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int RadarClass::TacticalClass::Action(unsigned flags, KeyNumType & key)");
+#endif
 	CELL			cell;							// cell num click happened over
 	int			x,y;							// Sub cell pixel coordinates.
 	int			cellx,celly;				// Sub cell pixel coordinates.
@@ -1618,6 +1687,9 @@ int RadarClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
  *=============================================================================================*/
 void RadarClass::Refresh_Cells(CELL cell, short const *list)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::Refresh_Cells(CELL cell, short const *list)");
+#endif
 	if (*list == REFRESH_SIDEBAR) {
 		IsToRedraw = true;
 		Flag_To_Redraw(false);
@@ -1642,6 +1714,9 @@ void RadarClass::Refresh_Cells(CELL cell, short const *list)
  *=============================================================================================*/
 void RadarClass::Set_Radar_Position(CELL cell)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::Set_Radar_Position(CELL cell)");
+#endif
 	int oldx, oldy;
 	int newx, newy;
 	int newcell;
@@ -1788,6 +1863,9 @@ void RadarClass::Set_Radar_Position(CELL cell)
  *=============================================================================================*/
 CELL RadarClass::Radar_Position(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CELL RadarClass::Radar_Position(void)");
+#endif
 	return(RadarCell);
 }
 
@@ -1811,6 +1889,9 @@ CELL RadarClass::Radar_Position(void)
  *=============================================================================================*/
 void RadarClass::Set_Map_Dimensions(int x, int y, int w, int h)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::Set_Map_Dimensions(int x, int y, int w, int h)");
+#endif
 	Set_Radar_Position(XY_Cell(x, y));
 	DisplayClass::Set_Map_Dimensions(x, y, w, h);
 }
@@ -1834,6 +1915,9 @@ void RadarClass::Set_Map_Dimensions(int x, int y, int w, int h)
  *=============================================================================================*/
 void RadarClass::Set_Tactical_Position(COORDINATE coord)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::Set_Tactical_Position(COORDINATE coord)");
+#endif
 	DisplayClass::Set_Tactical_Position(coord);
 	Set_Radar_Position(Coord_Cell(DesiredTacticalCoord));
 }
@@ -1856,6 +1940,9 @@ void RadarClass::Set_Tactical_Position(COORDINATE coord)
  *=============================================================================================*/
 bool RadarClass::Cell_On_Radar(CELL cell)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool RadarClass::Cell_On_Radar(CELL cell)");
+#endif
 	if ((unsigned)cell > MAP_CELL_TOTAL)
 		return(false);
 
@@ -1886,6 +1973,9 @@ bool RadarClass::Cell_On_Radar(CELL cell)
  *=============================================================================================*/
 void RadarClass::Player_Names(bool on)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::Player_Names(bool on)");
+#endif
 	IsPlayerNames = on;
 	IsToRedraw = true;
 	if (on) {
@@ -1914,6 +2004,9 @@ void RadarClass::Player_Names(bool on)
  *=============================================================================================*/
 void RadarClass::Draw_Names(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::Draw_Names(void)");
+#endif
 	int c_idx;
 	HousesType house;
 	HouseClass *ptr;

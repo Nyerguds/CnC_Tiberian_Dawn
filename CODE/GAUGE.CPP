@@ -62,6 +62,9 @@
 GaugeClass::GaugeClass(unsigned id, int x, int y, int w, int h)
 	: ControlClass(id, x, y, w, h, LEFTHELD|LEFTPRESS|LEFTRELEASE, true)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("GaugeClass::GaugeClass(unsigned id, int x, int y, int w, int h)");
+#endif
 	Set_Maximum(255);
 	Set_Value(0);
 
@@ -92,6 +95,9 @@ GaugeClass::GaugeClass(unsigned id, int x, int y, int w, int h)
  *=============================================================================================*/
 int GaugeClass::Set_Maximum(int value)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int GaugeClass::Set_Maximum(int value)");
+#endif
 	if (value != MaxValue) {
 	   MaxValue = value;
 		Flag_To_Redraw();
@@ -119,6 +125,9 @@ int GaugeClass::Set_Maximum(int value)
  *=============================================================================================*/
 int GaugeClass::Set_Value(int value)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int GaugeClass::Set_Value(int value)");
+#endif
 	value = Bound(value, 0, MaxValue);
 //	value = MIN(value, MaxValue);
 //	value = MAX(value, 0);
@@ -148,6 +157,9 @@ int GaugeClass::Set_Value(int value)
  *=============================================================================================*/
 int GaugeClass::Pixel_To_Value(int pixel)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int GaugeClass::Pixel_To_Value(int pixel)");
+#endif
 	int maximum;
 
 	if (IsHorizontal) {
@@ -183,6 +195,9 @@ int GaugeClass::Pixel_To_Value(int pixel)
  *=============================================================================================*/
 int GaugeClass::Value_To_Pixel(int value)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int GaugeClass::Value_To_Pixel(int value)");
+#endif
 	int maximum;
 	int start;
 	if (IsHorizontal) {
@@ -212,6 +227,9 @@ int GaugeClass::Value_To_Pixel(int value)
  *=============================================================================================*/
 int GaugeClass::Draw_Me(int forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int GaugeClass::Draw_Me(int forced)");
+#endif
 	if (ControlClass::Draw_Me(forced)) {
 
 		/*
@@ -274,6 +292,9 @@ int GaugeClass::Draw_Me(int forced)
  *=============================================================================================*/
 int GaugeClass::Action(unsigned flags, KeyNumType &key)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int GaugeClass::Action(unsigned flags, KeyNumType &key)");
+#endif
 	/*
 	** If there's no thumb on this gauge, it's a display-only device; ignore
 	** any input.
@@ -369,6 +390,9 @@ int GaugeClass::Action(unsigned flags, KeyNumType &key)
  *=============================================================================================*/
 void GaugeClass::Draw_Thumb(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GaugeClass::Draw_Thumb(void)");
+#endif
 	int x = Value_To_Pixel(CurValue);
 
 //	if ((x + 8) > Value_To_Pixel(MaxValue)) {
@@ -402,6 +426,9 @@ void GaugeClass::Draw_Thumb(void)
 TriColorGaugeClass::TriColorGaugeClass(unsigned id, int x, int y, int w, int h)
 	: GaugeClass(id, x, y, w, h)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TriColorGaugeClass::TriColorGaugeClass(unsigned id, int x, int y, int w, int h)");
+#endif
 	RedLimit = 0;				// maximum value for red
 	YellowLimit = 0;			// maximum value for yellow
 }
@@ -420,6 +447,9 @@ TriColorGaugeClass::TriColorGaugeClass(unsigned id, int x, int y, int w, int h)
  *=============================================================================================*/
 int TriColorGaugeClass::Set_Red_Limit(int value)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TriColorGaugeClass::Set_Red_Limit(int value)");
+#endif
 	if (value >= 0 && value < MaxValue) {
 
 //		if (value > YellowLimit) {
@@ -448,6 +478,9 @@ int TriColorGaugeClass::Set_Red_Limit(int value)
  *=============================================================================================*/
 int TriColorGaugeClass::Set_Yellow_Limit(int value)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TriColorGaugeClass::Set_Yellow_Limit(int value)");
+#endif
 	if (value >= 0 && value < MaxValue) {
 
 //		if (value < RedLimit) {
@@ -476,6 +509,9 @@ int TriColorGaugeClass::Set_Yellow_Limit(int value)
  *=============================================================================================*/
 int TriColorGaugeClass::Draw_Me(int forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TriColorGaugeClass::Draw_Me(int forced)");
+#endif
 	if (ControlClass::Draw_Me(forced)) {
 
 		/*

@@ -87,6 +87,9 @@ MixFileClass * MixFileClass::First = 0;
  *=============================================================================================*/
 bool MixFileClass::Free(char const *filename)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool MixFileClass::Free(char const *filename)");
+#endif
 	MixFileClass * ptr = Finder(filename);
 
 	if (ptr) {
@@ -100,6 +103,9 @@ bool MixFileClass::Free(char const *filename)
 #ifndef NOMEMCHECK
 void MixFileClass::Free_All(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MixFileClass::Free_All(void)");
+#endif
 	while (First) {
 		delete First;
 	}
@@ -126,7 +132,9 @@ void MixFileClass::Free_All(void)
  *=============================================================================================*/
 MixFileClass::~MixFileClass(void)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MixFileClass::~MixFileClass(void)");
+#endif
 	/*
 	**	Deallocate any allocated memory.
 	*/
@@ -170,6 +178,9 @@ MixFileClass::~MixFileClass(void)
  *=============================================================================================*/
 MixFileClass::MixFileClass(char const *filename)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MixFileClass::MixFileClass(char const *filename)");
+#endif
 	CCFileClass file;		// Working file object.
 
 	/*
@@ -245,6 +256,9 @@ MixFileClass::MixFileClass(char const *filename)
  *   01/28/2026 MM  : Added size output overload.                                              *
  *=============================================================================================*/
 void const * MixFileClass::Retrieve(char const *filename, long *size) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void const * MixFileClass::Retrieve(char const *filename, long *size)");
+#endif
 	void *ptr = 0;
 	Offset(filename, &ptr, NULL, NULL, size);
 //	if (!ptr) {
@@ -272,6 +286,9 @@ void const * MixFileClass::Retrieve(char const *filename, long *size) {
  *=============================================================================================*/
 MixFileClass * MixFileClass::Finder(char const *filename)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MixFileClass * MixFileClass::Finder(char const *filename)");
+#endif
 	MixFileClass * ptr;
 
 	ptr = First;
@@ -301,6 +318,9 @@ MixFileClass * MixFileClass::Finder(char const *filename)
  *=============================================================================================*/
 bool MixFileClass::Cache(char const *filename)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool MixFileClass::Cache(char const *filename)");
+#endif
 	MixFileClass * mixer = Finder(filename);
 
 	if (mixer) {
@@ -328,6 +348,9 @@ bool MixFileClass::Cache(char const *filename)
  *=============================================================================================*/
 bool MixFileClass::Cache(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool MixFileClass::Cache(void)");
+#endif
 	if (Data) return(true);
 
 	Data = new char [DataSize];
@@ -383,6 +406,9 @@ bool MixFileClass::Cache(void)
  *=============================================================================================*/
 void MixFileClass::Free(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MixFileClass::Free(void)");
+#endif
 	if (Data) {
 		delete [] Data;
 		Data = 0;
@@ -424,6 +450,9 @@ void MixFileClass::Free(void)
 // int _USERENTRY compfunc(void const *ptr1, void const *ptr2) 
 int compfunc(void const *ptr1, void const *ptr2) 
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int compfunc(void const *ptr1, void const *ptr2)");
+#endif
 //	long diff = *(long const *)ptr1 - *(long const *)ptr2;
 //	return FP_SEG(diff);
 
@@ -465,6 +494,9 @@ int compfunc(void const *ptr1, void const *ptr2)
  *=============================================================================================*/
 bool MixFileClass::Offset(char const *filename, void ** realptr, MixFileClass ** mixfile, long * offset, long * size)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool MixFileClass::Offset(char const *filename, void ** realptr, MixFileClass ** mixfile, long * offset, long * size)");
+#endif
 	MixFileClass * ptr;
 
 	if (!filename) return(false);

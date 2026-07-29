@@ -157,6 +157,9 @@ DoStruct const InfantryClass::MasterDoControls[DO_COUNT] = {
 #ifdef CHEAT_KEYS
 int InfantryClass::Validate(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int InfantryClass::Validate(void) const");
+#endif
 	int num;
 
 	num = Infantry.ID(this);
@@ -190,6 +193,9 @@ int InfantryClass::Validate(void) const
  *=============================================================================================*/
 void InfantryClass::Debug_Dump(MonoClass *mono) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Debug_Dump(MonoClass *mono) const");
+#endif
 	Validate();
 	mono->Set_Cursor(0, 0);mono->Print(
 		"ÚName:ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂMission:ÄÄÄÂTarCom:ÂNavCom:ÂRadio:ÂCoord:ÄÄÂHeadTo:ÄÂSt:Ä¿\n"
@@ -220,7 +226,11 @@ void InfantryClass::Debug_Dump(MonoClass *mono) const
 }
 #endif
 
-InfantryClass::InfantryClass(void) : Class(0) {};		// Default constructor does nothing.
+InfantryClass::InfantryClass(void) : Class(0) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("InfantryClass::InfantryClass(void)");
+#endif
+};		// Default constructor does nothing.
 
 
 /***********************************************************************************************
@@ -243,7 +253,9 @@ InfantryClass::InfantryClass(InfantryType classid, HousesType house) :
 	Class(&InfantryTypeClass::As_Reference(classid)),
 	FootClass(house)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("InfantryClass::InfantryClass(InfantryType classid, HousesType house)");
+#endif
 	/*
 	**	For two shooters, clear out the second shot flag -- it will be set the first time
 	**	the object fires. For non two shooters, set the flag since it will never be cleared
@@ -295,6 +307,9 @@ InfantryClass::InfantryClass(InfantryType classid, HousesType house) :
  *=============================================================================================*/
 InfantryClass::~InfantryClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("InfantryClass::~InfantryClass(void)");
+#endif
 	if (GameActive && Class) {
 		Limbo();
 	}
@@ -320,6 +335,9 @@ InfantryClass::~InfantryClass(void)
  *=============================================================================================*/
 void * InfantryClass::operator new(size_t)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void * InfantryClass::operator new(size_t)");
+#endif
 	void * ptr = Infantry.Allocate();
 	if (ptr) {
 		((InfantryClass *)ptr)->IsActive = true;
@@ -344,6 +362,9 @@ void * InfantryClass::operator new(size_t)
  *=============================================================================================*/
 void InfantryClass::operator delete(void *ptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::operator delete(void *ptr)");
+#endif
 	if (ptr) {
 		((InfantryClass *)ptr)->IsActive = false;
 	}
@@ -382,6 +403,9 @@ void InfantryClass::operator delete(void *ptr)
  *=============================================================================================*/
 ResultType InfantryClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ResultType InfantryClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)");
+#endif
 	Validate();
 	ResultType res = RESULT_NONE;
 
@@ -581,6 +605,9 @@ ResultType InfantryClass::Take_Damage(int & damage, int distance, WarheadType wa
  *=============================================================================================*/
 void InfantryClass::Draw_It(int x, int y, WindowNumberType window)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Draw_It(int x, int y, WindowNumberType window)");
+#endif
 	Validate();
 	void const * shapefile;		// Working shape file pointer.
 	int facing = Facing_To_32(PrimaryFacing.Current());
@@ -658,6 +685,9 @@ void InfantryClass::Draw_It(int x, int y, WindowNumberType window)
  *=============================================================================================*/
 void InfantryClass::Per_Cell_Process(bool center)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Per_Cell_Process(bool center)");
+#endif
 	Validate();
 	CellClass *cellptr = &Map[Coord_Cell(Coord)];
 
@@ -793,6 +823,9 @@ void InfantryClass::Per_Cell_Process(bool center)
  *=============================================================================================*/
 void InfantryClass::Detach(TARGET target, bool all)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Detach(TARGET target, bool all)");
+#endif
 	Validate();
 	if (TarCom == target) {
 		IsFiring = false;
@@ -818,6 +851,9 @@ void InfantryClass::Detach(TARGET target, bool all)
  *=============================================================================================*/
 TARGET InfantryClass::As_Target(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TARGET InfantryClass::As_Target(void) const");
+#endif
 	Validate();
 	return(Build_Target(KIND_INFANTRY, Infantry.ID(this)));
 }
@@ -840,6 +876,9 @@ TARGET InfantryClass::As_Target(void) const
  *=============================================================================================*/
 void InfantryClass::Init(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Init(void)");
+#endif
 	InfantryClass *ptr;
 
 	Infantry.Free_All();
@@ -867,6 +906,9 @@ void InfantryClass::Init(void)
  *=============================================================================================*/
 void InfantryClass::Assign_Destination(TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Assign_Destination(TARGET target)");
+#endif
 	Validate();
 	/*
 	**	Special flag so that infantry will start heading in the right direction immediately.
@@ -947,6 +989,9 @@ void InfantryClass::Assign_Destination(TARGET target)
  *=============================================================================================*/
 void InfantryClass::Assign_Target(TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Assign_Target(TARGET target)");
+#endif
 	Validate();
 	Path[0] = FACING_NONE;
 	FootClass::Assign_Target(target);
@@ -984,6 +1029,9 @@ void InfantryClass::Assign_Target(TARGET target)
  *=============================================================================================*/
 void InfantryClass::AI(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::AI(void)");
+#endif
 	Validate();
 	FootClass::AI();
 
@@ -1426,6 +1474,9 @@ void InfantryClass::AI(void)
  *=========================================================================*/
 MoveBitType InfantryClass::Blocking_Object(TechnoClass const *techno, CELL cell) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MoveBitType InfantryClass::Blocking_Object(TechnoClass const *techno, CELL cell) const");
+#endif
 	Validate();
 	bool inf  = (techno->What_Am_I() == RTTI_INFANTRY);
 	bool unit = (techno->What_Am_I() == RTTI_UNIT) || inf;
@@ -1509,6 +1560,9 @@ MoveBitType InfantryClass::Blocking_Object(TechnoClass const *techno, CELL cell)
  *=============================================================================================*/
 MoveType InfantryClass::Can_Enter_Cell(CELL cell, FacingType ) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MoveType InfantryClass::Can_Enter_Cell(CELL cell, FacingType ) const");
+#endif
 	Validate();
 	/*
 	** If we are moving into an illegal cell, then we can't do that.
@@ -1720,6 +1774,9 @@ MoveType InfantryClass::Can_Enter_Cell(CELL cell, FacingType ) const
  *=============================================================================================*/
 short const * InfantryClass::Overlap_List(bool /*redraw*/) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const * InfantryClass::Overlap_List(bool /*redraw*/) const");
+#endif
 	Validate();
 	//return(Coord_Spillage_List(Coord, 24 + ((IsSelected || Doing > DO_WALK)?12:0)));
 	return(Coord_Spillage_List(Coord, 24 + ((Doing > DO_WALK || IsSelected)?12:0)));
@@ -1746,6 +1803,9 @@ short const * InfantryClass::Overlap_List(bool /*redraw*/) const
  *=============================================================================================*/
 FireErrorType InfantryClass::Can_Fire(TARGET target, int which) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FireErrorType InfantryClass::Can_Fire(TARGET target, int which) const");
+#endif
 	Validate();
 	// Prevent bombing run commandos from firing at their target.
 	if (Mission == MISSION_SABOTAGE && As_Building(target)) {
@@ -1819,6 +1879,9 @@ FireErrorType InfantryClass::Can_Fire(TARGET target, int which) const
  *=============================================================================================*/
 void InfantryClass::Enter_Idle_Mode(bool )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Enter_Idle_Mode(bool )");
+#endif
 	Validate();
 	MissionType order;
 
@@ -1859,6 +1922,9 @@ void InfantryClass::Enter_Idle_Mode(bool )
  *=============================================================================================*/
 void InfantryClass::Random_Animate(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Random_Animate(void)");
+#endif
 	Validate();
 	if (!IsDriving && !IsProne && (Doing == DO_STAND_GUARD || Doing == DO_STAND_READY) && !IsFiring) {
 
@@ -1979,6 +2045,9 @@ void InfantryClass::Random_Animate(void)
  *=============================================================================================*/
 bool InfantryClass::Scatter(COORDINATE threat, bool forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool InfantryClass::Scatter(COORDINATE threat, bool forced)");
+#endif
 	Validate();
 
 	/*
@@ -2063,6 +2132,9 @@ bool InfantryClass::Scatter(COORDINATE threat, bool forced)
  *=============================================================================================*/
 bool InfantryClass::Do_Action(DoType todo, bool force)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool InfantryClass::Do_Action(DoType todo, bool force)");
+#endif
 	Validate();
 	if (todo != Doing && (Doing == DO_NOTHING || force || MasterDoControls[Doing].Interrupt)) {
 		Mark(MARK_CHANGE);
@@ -2136,6 +2208,9 @@ bool InfantryClass::Do_Action(DoType todo, bool force)
  *=============================================================================================*/
 bool InfantryClass::Stop_Driver(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool InfantryClass::Stop_Driver(void)");
+#endif
 	Validate();
 	if (Head_To_Coord()) {
 
@@ -2181,6 +2256,9 @@ bool InfantryClass::Stop_Driver(void)
  *=============================================================================================*/
 bool InfantryClass::Start_Driver(COORDINATE & headto)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool InfantryClass::Start_Driver(COORDINATE & headto)");
+#endif
 	Validate();
 	COORDINATE old = headto;
 
@@ -2231,6 +2309,9 @@ bool InfantryClass::Start_Driver(COORDINATE & headto)
  *=============================================================================================*/
 void InfantryClass::Set_Primary_Facing(DirType facing, bool )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Set_Primary_Facing(DirType facing, bool )");
+#endif
 	Validate();
 	FootClass::Set_Primary_Facing(facing, true);
 }
@@ -2254,6 +2335,9 @@ void InfantryClass::Set_Primary_Facing(DirType facing, bool )
  *=============================================================================================*/
 bool InfantryClass::Limbo(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool InfantryClass::Limbo(void)");
+#endif
 	Validate();
 	if (!IsInLimbo) {
 		Stop_Driver();
@@ -2285,6 +2369,9 @@ bool InfantryClass::Limbo(void)
  *=============================================================================================*/
 BulletClass * InfantryClass::Fire_At(TARGET target, int which)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BulletClass * InfantryClass::Fire_At(TARGET target, int which)");
+#endif
 	Validate();
 	BulletClass * bullet = NULL;
 	WeaponTypeClass const * weapon = (which == 0) ? &Weapons[Class->Primary] : &Weapons[Class->Secondary];
@@ -2365,6 +2452,9 @@ BulletClass * InfantryClass::Fire_At(TARGET target, int which)
  *=============================================================================================*/
 bool InfantryClass::Unlimbo(COORDINATE coord, DirType facing)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool InfantryClass::Unlimbo(COORDINATE coord, DirType facing)");
+#endif
 	Validate();
 	/*
 	**	Make sure that the infantry start in a legal position on the map.
@@ -2419,6 +2509,9 @@ bool InfantryClass::Unlimbo(COORDINATE coord, DirType facing)
  *=============================================================================================*/
 TARGET InfantryClass::Greatest_Threat(ThreatType threat) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TARGET InfantryClass::Greatest_Threat(ThreatType threat) const");
+#endif
 	Validate();
 	/*
 	**	Engineers consider only buildings that can be captured as being a threat. All others
@@ -2480,6 +2573,9 @@ TARGET InfantryClass::Greatest_Threat(ThreatType threat) const
  *=============================================================================================*/
 void InfantryClass::Response_Select(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Response_Select(void)");
+#endif
 	Validate();
 	VocType response;
 	if (*this == INFANTRY_RAMBO) {
@@ -2543,6 +2639,9 @@ void InfantryClass::Response_Select(void)
  *=============================================================================================*/
 void InfantryClass::Response_Move(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Response_Move(void)");
+#endif
 	Validate();
 	VocType response;
 	if (*this == INFANTRY_RAMBO) {
@@ -2607,6 +2706,9 @@ void InfantryClass::Response_Move(void)
  *=============================================================================================*/
 void InfantryClass::Response_Attack(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Response_Attack(void)");
+#endif
 	Validate();
 	VocType response;
 	if (*this == INFANTRY_RAMBO) {
@@ -2663,6 +2765,9 @@ void InfantryClass::Response_Attack(void)
  *=============================================================================================*/
 void InfantryClass::Response_Sabotage(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Response_Sabotage(void)");
+#endif
     Validate();
     if (*this == INFANTRY_RAMBO && AllowVoice) {
         Sound_Effect(VOC_RAMBO_PRESENT, 0, 0);
@@ -2693,6 +2798,9 @@ void InfantryClass::Response_Sabotage(void)
  *=============================================================================================*/
 COORDINATE InfantryClass::Fire_Coord(int /*which*/, bool forrange, COORDINATE /*coords*/) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE InfantryClass::Fire_Coord(int /*which*/, bool forrange, COORDINATE /*coords*/) const");
+#endif
 	Validate();
 	// Nyerguds's C&C Patch Project v1.04: Remove north shift for range calculations.
 	// Allow getting the fire coords for any given target to correctly calculate range.
@@ -2729,6 +2837,9 @@ COORDINATE InfantryClass::Fire_Coord(int /*which*/, bool forrange, COORDINATE /*
  *=========================================================================*/
 RadioMessageType InfantryClass::Receive_Message(RadioClass * from, RadioMessageType message, long & param)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("RadioMessageType InfantryClass::Receive_Message(RadioClass * from, RadioMessageType message, long & param)");
+#endif
 	Validate();
 	int damage;
 
@@ -2793,6 +2904,9 @@ RadioMessageType InfantryClass::Receive_Message(RadioClass * from, RadioMessageT
  *=========================================================================*/
 int InfantryClass::Rearm_Delay(bool second) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int InfantryClass::Rearm_Delay(bool second) const");
+#endif
 	Validate();
 #ifdef BOXING
 	if (IsBoxing) {
@@ -2819,6 +2933,9 @@ int InfantryClass::Rearm_Delay(bool second) const
  *=============================================================================================*/
 void InfantryClass::Assign_Mission(MissionType order)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Assign_Mission(MissionType order)");
+#endif
 	Validate();
 	// Nyerguds's TUC Quick Fix Patch v1.02: commando-voice
 	// Only yell bombing warning when not owned by this player.
@@ -2849,6 +2966,9 @@ void InfantryClass::Assign_Mission(MissionType order)
  *=============================================================================================*/
 ActionType InfantryClass::What_Action(ObjectClass * object) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ActionType InfantryClass::What_Action(ObjectClass * object) const");
+#endif
 	Validate();
 	ActionType action = FootClass::What_Action(object);
 
@@ -2913,6 +3033,9 @@ ActionType InfantryClass::What_Action(ObjectClass * object) const
  *=============================================================================================*/
 void InfantryClass::Read_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Read_INI(char *buffer)");
+#endif
 	InfantryClass	*infantry;			// Working infantry pointer.
 	char				*tbuffer;		// Accumulation buffer of infantry IDs.
 	HousesType		inhouse;			// Infantry house.
@@ -3022,6 +3145,9 @@ void InfantryClass::Read_INI(char *buffer)
 #ifdef SCENARIO_EDITOR
 void InfantryClass::Write_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Write_INI(char *buffer)");
+#endif
 	int			index;
 	char			uname[10];
 	char			buf[128];
@@ -3085,6 +3211,9 @@ void InfantryClass::Write_INI(char *buffer)
  *=============================================================================================*/
 void InfantryClass::Active_Click_With(ActionType action, ObjectClass * object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Active_Click_With(ActionType action, ObjectClass * object)");
+#endif
 	Validate();
 	if (What_Action(object) != action) {
 		switch (action) {
@@ -3125,6 +3254,9 @@ void InfantryClass::Active_Click_With(ActionType action, ObjectClass * object)
  *=============================================================================================*/
 int InfantryClass::Made_A_Kill(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int InfantryClass::Made_A_Kill(void)");
+#endif
 	Validate();
 	if (*this == INFANTRY_RAMBO || Random_Pick(0, 5) < Kills) {
 		IsStoked = true;
@@ -3148,6 +3280,9 @@ int InfantryClass::Made_A_Kill(void)
  *=============================================================================================*/
 void InfantryClass::Set_Occupy_Bit(CELL cell, int spot_index)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Set_Occupy_Bit(CELL cell, int spot_index)");
+#endif
 	Validate();
 
 	if ((unsigned)cell >= MAP_CELL_TOTAL) {
@@ -3180,6 +3315,9 @@ void InfantryClass::Set_Occupy_Bit(CELL cell, int spot_index)
  *=========================================================================*/
 void InfantryClass::Clear_Occupy_Bit(CELL cell, int spot_index)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Clear_Occupy_Bit(CELL cell, int spot_index)");
+#endif
 	Validate();
 
 	if ((unsigned)cell >= MAP_CELL_TOTAL) {
@@ -3220,6 +3358,9 @@ void InfantryClass::Clear_Occupy_Bit(CELL cell, int spot_index)
  *=============================================================================================*/
 int InfantryClass::Full_Name(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int InfantryClass::Full_Name(void) const");
+#endif
 	Validate();
 	if (IsTechnician) {
 		return(TXT_TECHNICIAN);
@@ -3246,6 +3387,9 @@ int InfantryClass::Full_Name(void) const
  *=============================================================================================*/
 int InfantryClass::Mission_Attack(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int InfantryClass::Mission_Attack(void)");
+#endif
 	Validate();
 	if (*this == INFANTRY_E7 && As_Building(TarCom)) {
 		Assign_Destination(TarCom);
@@ -3263,24 +3407,36 @@ int InfantryClass::Mission_Attack(void)
 
 RTTIType InfantryClass::What_Am_I(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("RTTIType InfantryClass::What_Am_I(void) const");
+#endif
 	Validate();
 	return(RTTI_INFANTRY);
 }
 
 ActionType InfantryClass::What_Action(CELL cell) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ActionType InfantryClass::What_Action(CELL cell) const");
+#endif
 	Validate();
 	return FootClass::What_Action(cell);
 }
 
 ObjectTypeClass const & InfantryClass::Class_Of(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ObjectTypeClass const & InfantryClass::Class_Of(void) const");
+#endif
 	Validate();
 	return(*Class);
 }
 
 bool InfantryClass::Is_Infantry(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool InfantryClass::Is_Infantry(void) const");
+#endif
 	Validate();
 	return(true);
 }

@@ -86,6 +86,9 @@
  *=============================================================================================*/
 bool CellClass::Should_Save(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool CellClass::Should_Save(void) const");
+#endif
 	return(
 			(Smudge != SMUDGE_NONE) ||
 			(TType != TEMPLATE_NONE) ||
@@ -114,6 +117,9 @@ bool CellClass::Should_Save(void) const
  *=============================================================================================*/
 bool CellClass::Load(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool CellClass::Load(FileClass & file)");
+#endif
 	int rc;
 	TriggerClass * trig;
 
@@ -151,6 +157,9 @@ bool CellClass::Load(FileClass & file)
  *=============================================================================================*/
 bool CellClass::Save(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool CellClass::Save(FileClass & file)");
+#endif
 	int rc;
 	TriggerClass * trig;
 
@@ -196,6 +205,9 @@ bool CellClass::Save(FileClass & file)
  *=============================================================================================*/
 void CellClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CellClass::Code_Pointers(void)");
+#endif
 	if (Cell_Occupier()) {
 		OccupierPtr = (ObjectClass *)OccupierPtr->As_Target();
 	}
@@ -241,6 +253,9 @@ void CellClass::Code_Pointers(void)
  *=============================================================================================*/
 void CellClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CellClass::Decode_Pointers(void)");
+#endif
 	if (OccupierPtr) {
 		OccupierPtr = As_Object((TARGET)OccupierPtr);
 		Check_Ptr((void *)OccupierPtr,__FILE__,__LINE__);
@@ -297,6 +312,9 @@ void CellClass::Decode_Pointers(void)
  *=============================================================================================*/
 bool MouseClass::Load(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool MouseClass::Load(FileClass & file)");
+#endif
 	unsigned count;
 	CELL cell = 0;
 	int index;
@@ -397,6 +415,9 @@ bool MouseClass::Load(FileClass & file)
  *=============================================================================================*/
 bool MouseClass::Save(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool MouseClass::Save(FileClass & file)");
+#endif
 	unsigned count;
 	long pos;
 
@@ -472,6 +493,9 @@ bool MouseClass::Save(FileClass & file)
  *=============================================================================================*/
 void MouseClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MouseClass::Code_Pointers(void)");
+#endif
 //	Control.Code_Pointers();
 
 	ScrollClass::Code_Pointers();
@@ -498,6 +522,9 @@ void MouseClass::Code_Pointers(void)
  *=============================================================================================*/
 void MouseClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MouseClass::Decode_Pointers(void)");
+#endif
 //	Control.Decode_Pointers();
 
 	ScrollClass::Decode_Pointers();
@@ -526,6 +553,9 @@ void MouseClass::Decode_Pointers(void)
  *=============================================================================================*/
 void ScrollClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ScrollClass::Code_Pointers(void)");
+#endif
 	HelpClass::Code_Pointers();
 }
 
@@ -550,6 +580,9 @@ void ScrollClass::Code_Pointers(void)
  *=============================================================================================*/
 void ScrollClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ScrollClass::Decode_Pointers(void)");
+#endif
 	HelpClass::Decode_Pointers();
 }
 
@@ -576,6 +609,9 @@ void ScrollClass::Decode_Pointers(void)
  *=============================================================================================*/
 void HelpClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HelpClass::Code_Pointers(void)");
+#endif
 	TabClass::Code_Pointers();
 }
 
@@ -600,6 +636,9 @@ void HelpClass::Code_Pointers(void)
  *=============================================================================================*/
 void HelpClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HelpClass::Decode_Pointers(void)");
+#endif
 	TabClass::Decode_Pointers();
 }
 
@@ -626,6 +665,9 @@ void HelpClass::Decode_Pointers(void)
  *=============================================================================================*/
 void TabClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TabClass::Code_Pointers(void)");
+#endif
 	SidebarClass::Code_Pointers();
 }
 
@@ -650,6 +692,9 @@ void TabClass::Code_Pointers(void)
  *=============================================================================================*/
 void TabClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TabClass::Decode_Pointers(void)");
+#endif
 	SidebarClass::Decode_Pointers();
 }
 
@@ -676,6 +721,9 @@ void TabClass::Decode_Pointers(void)
  *=============================================================================================*/
 void PowerClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void PowerClass::Code_Pointers(void)");
+#endif
 	RadarClass::Code_Pointers();
 }
 
@@ -700,6 +748,9 @@ void PowerClass::Code_Pointers(void)
  *=============================================================================================*/
 void PowerClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void PowerClass::Decode_Pointers(void)");
+#endif
 	RadarClass::Decode_Pointers();
 }
 
@@ -726,6 +777,9 @@ void PowerClass::Decode_Pointers(void)
  *=============================================================================================*/
 void SidebarClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::Code_Pointers(void)");
+#endif
 	for (int i = 0; i < COLUMNS; i++) {
 		Column[i].Code_Pointers();
 	}
@@ -754,6 +808,9 @@ void SidebarClass::Code_Pointers(void)
  *=============================================================================================*/
 void SidebarClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::Decode_Pointers(void)");
+#endif
 	for (int i = 0; i < COLUMNS; i++) {
 		Column[i].Decode_Pointers();
 	}
@@ -784,6 +841,9 @@ void SidebarClass::Decode_Pointers(void)
  *=============================================================================================*/
 void SidebarClass::StripClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::StripClass::Code_Pointers(void)");
+#endif
 }
 
 
@@ -807,6 +867,9 @@ void SidebarClass::StripClass::Code_Pointers(void)
  *=============================================================================================*/
 void SidebarClass::StripClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::StripClass::Decode_Pointers(void)");
+#endif
 }
 
 
@@ -832,6 +895,9 @@ void SidebarClass::StripClass::Decode_Pointers(void)
  *=============================================================================================*/
 void RadarClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::Code_Pointers(void)");
+#endif
 	DisplayClass::Code_Pointers();
 }
 
@@ -856,6 +922,9 @@ void RadarClass::Code_Pointers(void)
  *=============================================================================================*/
 void RadarClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadarClass::Decode_Pointers(void)");
+#endif
 	DisplayClass::Decode_Pointers();
 }
 
@@ -882,6 +951,9 @@ void RadarClass::Decode_Pointers(void)
  *=============================================================================================*/
 void DisplayClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Code_Pointers(void)");
+#endif
 	/*
 	**	Code PendingObjectPtr.
 	*/
@@ -916,6 +988,9 @@ void DisplayClass::Code_Pointers(void)
  *=============================================================================================*/
 void DisplayClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Decode_Pointers(void)");
+#endif
 	/*
 	**	Decode PendingObjectPtr.  We can't decode PendingObject here, because we'd
 	**	have to reference PendingObjectPtr->Class_Of(), and the object that
@@ -957,6 +1032,9 @@ void DisplayClass::Decode_Pointers(void)
  *=============================================================================================*/
 void MapClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapClass::Code_Pointers(void)");
+#endif
 	CELL cell;
 
 	/*
@@ -990,6 +1068,9 @@ void MapClass::Code_Pointers(void)
  *=============================================================================================*/
 void MapClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapClass::Decode_Pointers(void)");
+#endif
 	CELL cell;
 
 	/*
@@ -1025,6 +1106,9 @@ void MapClass::Decode_Pointers(void)
  *=============================================================================================*/
 void GScreenClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GScreenClass::Code_Pointers(void)");
+#endif
 }
 
 
@@ -1048,4 +1132,7 @@ void GScreenClass::Code_Pointers(void)
  *=============================================================================================*/
 void GScreenClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GScreenClass::Decode_Pointers(void)");
+#endif
 }

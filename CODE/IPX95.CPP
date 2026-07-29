@@ -48,12 +48,18 @@
 
 int IPX_Open_Socket(unsigned short socket)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPX_Open_Socket(unsigned short socket)");
+#endif
 	return (IPX_Open_Socket95((int)socket));
 }
 
 
 int IPX_Close_Socket(unsigned short socket)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPX_Close_Socket(unsigned short socket)");
+#endif
 	IPX_Close_Socket95((int)socket);
 	return (0);
 }
@@ -61,6 +67,9 @@ int IPX_Close_Socket(unsigned short socket)
 
 int IPX_Get_Connection_Number(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPX_Get_Connection_Number(void)");
+#endif
 	return (IPX_Get_Connection_Number95());
 }
 
@@ -68,6 +77,9 @@ int IPX_Get_Connection_Number(void)
 
 int IPX_Broadcast_Packet(unsigned char *buf, int buflen)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPX_Broadcast_Packet(unsigned char *buf, int buflen)");
+#endif
 	return(IPX_Broadcast_Packet95(buf, buflen));
 }
 
@@ -78,6 +90,9 @@ extern "C"{
 int IPX_Get_Local_Target(unsigned char *dest_network, unsigned char *dest_node,
 	unsigned short dest_socket, unsigned char *bridge_address)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPX_Get_Local_Target(unsigned char *dest_network, unsigned char *dest_node, unsigned short dest_socket, unsigned char *bridge_address)");
+#endif
 	//Int3();
 	return (IPX_Get_Local_Target95(dest_network, dest_node, dest_socket, bridge_address));
 }

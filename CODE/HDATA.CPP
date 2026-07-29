@@ -226,6 +226,9 @@ HouseTypeClass::HouseTypeClass(HousesType house,
  *=============================================================================================*/
 HousesType HouseTypeClass::From_Name(char const *name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("HousesType HouseTypeClass::From_Name(char const *name)");
+#endif
 	if (name) {
 		for (HousesType house = HOUSE_FIRST; house < HOUSE_COUNT; house++) {
 			if (stricmp(Pointers[house]->IniName, name) == 0) {
@@ -251,6 +254,9 @@ HousesType HouseTypeClass::From_Name(char const *name)
  *=============================================================================================*/
 void HouseTypeClass::One_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseTypeClass::One_Time(void)");
+#endif
 	// Nyerguds's C&C Patch Project v1.04: Remove House Special init code for Funpark.
 	// Make funpark campaign independent from Jurassic mode.
 	// Now handled in the scenario read.
@@ -284,5 +290,8 @@ void HouseTypeClass::One_Time(void)
  *=============================================================================================*/
 HouseTypeClass const & HouseTypeClass::As_Reference(HousesType house) 
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("HouseTypeClass const & HouseTypeClass::As_Reference(HousesType house)");
+#endif
 	return(*Pointers[house]);
 }

@@ -63,6 +63,9 @@ CountDownTimerClass ScrollClass::ScrollTimer;
  *=============================================================================================*/
 ScrollClass::ScrollClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ScrollClass::ScrollClass(void)");
+#endif
 	IsAutoScroll = true;
 	Counter.Set(SCROLL_DELAY);
 	Inertia = 0;
@@ -93,6 +96,9 @@ ScrollClass::ScrollClass(void)
 //#define	EVA_WIDTH		80
 void ScrollClass::AI(KeyNumType &input, int x, int y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ScrollClass::AI(KeyNumType &input, int x, int y)");
+#endif
 	static DirType direction;
 	bool				player_scrolled=false;
 
@@ -263,6 +269,9 @@ void ScrollClass::AI(KeyNumType &input, int x, int y)
  *=============================================================================================*/
 bool ScrollClass::Set_Autoscroll(int control)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ScrollClass::Set_Autoscroll(int control)");
+#endif
 	bool old = IsAutoScroll;
 
 	switch (control) {

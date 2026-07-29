@@ -124,6 +124,9 @@ ThemeClass::ThemeControl ThemeClass::_themes[THEME_COUNT] = {
  *=============================================================================================*/
 char const * ThemeClass::Base_Name(ThemeType theme) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char const * ThemeClass::Base_Name(ThemeType theme) const");
+#endif
 	if (theme != THEME_NONE) {
 		return(_themes[theme].Name);
 	}
@@ -147,6 +150,9 @@ char const * ThemeClass::Base_Name(ThemeType theme) const
  *=============================================================================================*/
 ThemeClass::ThemeClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ThemeClass::ThemeClass(void)");
+#endif
 	Current = -1;
 	Score = THEME_NONE;
 	Pending = THEME_NONE;
@@ -171,6 +177,9 @@ ThemeClass::ThemeClass(void)
  *=============================================================================================*/
 char const * ThemeClass::Full_Name(ThemeType theme) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char const * ThemeClass::Full_Name(ThemeType theme) const");
+#endif
 	if (theme != THEME_NONE) {
 		return(Text_String(_themes[theme].Fullname));
 	}
@@ -196,6 +205,9 @@ char const * ThemeClass::Full_Name(ThemeType theme) const
  *=============================================================================================*/
 void ThemeClass::AI(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ThemeClass::AI(void)");
+#endif
 	if (SampleType && !Debug_Quiet) {
 		if (ScoresPresent && Options.ScoreVolume && !Still_Playing() && Pending != THEME_NONE) {
 
@@ -237,6 +249,9 @@ void ThemeClass::AI(void)
  *=============================================================================================*/
 ThemeType ThemeClass::Next_Song(ThemeType theme)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ThemeType ThemeClass::Next_Song(ThemeType theme)");
+#endif
 	if (theme == THEME_NONE) {
 		theme = Next_Song(THEME_PICK_ANOTHER);
 	} else {
@@ -289,6 +304,9 @@ ThemeType ThemeClass::Next_Song(ThemeType theme)
  *=============================================================================================*/
 void ThemeClass::Queue_Song(ThemeType theme)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ThemeClass::Queue_Song(ThemeType theme)");
+#endif
 	if (ScoresPresent && SampleType && !Debug_Quiet && (Pending == THEME_NONE || Pending == THEME_PICK_ANOTHER)) {
 		if (!Options.ScoreVolume && theme != THEME_NONE) return;
 
@@ -316,6 +334,9 @@ void ThemeClass::Queue_Song(ThemeType theme)
  *=============================================================================================*/
 int ThemeClass::Play_Song(ThemeType theme)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ThemeClass::Play_Song(ThemeType theme)");
+#endif
 	if (ScoresPresent && SampleType && !Debug_Quiet && Options.ScoreVolume) {
 		Stop();
 		Score = theme;
@@ -361,6 +382,9 @@ int ThemeClass::Play_Song(ThemeType theme)
  *=============================================================================================*/
 char const * ThemeClass::Theme_File_Name(ThemeType theme)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char const * ThemeClass::Theme_File_Name(ThemeType theme)");
+#endif
 	// Nyerguds's TUC Quick Fix Patch v1.03: var-music-length
 	return Theme_File_Name(theme, _themes[theme].VariationAvailable);
 }
@@ -386,6 +410,9 @@ char const * ThemeClass::Theme_File_Name(ThemeType theme)
  *=============================================================================================*/
 char const * ThemeClass::Theme_File_Name(ThemeType theme, bool variation)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char const * ThemeClass::Theme_File_Name(ThemeType theme, bool variation)");
+#endif
 	// Nyerguds's TUC Quick Fix Patch v1.03: var-music-length
 	static char name[_MAX_FNAME+_MAX_EXT];
 
@@ -416,6 +443,9 @@ char const * ThemeClass::Theme_File_Name(ThemeType theme, bool variation)
  *=============================================================================================*/
 int ThemeClass::Track_Length(ThemeType theme)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ThemeClass::Track_Length(ThemeType theme)");
+#endif
 	// Nyerguds's TUC Quick Fix Patch v1.03: var-music-length
 	if ((unsigned)theme < THEME_COUNT) {
 		if (Special.IsVariation && _themes[theme].VariationAvailable) {
@@ -445,6 +475,9 @@ int ThemeClass::Track_Length(ThemeType theme)
  *=============================================================================================*/
 void ThemeClass::Stop(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ThemeClass::Stop(void)");
+#endif
 	if (ScoresPresent && SampleType && !Debug_Quiet) {
 		if (Current != -1) {
 			Stop_Sample(Current);
@@ -472,6 +505,9 @@ void ThemeClass::Stop(void)
  *=============================================================================================*/
 int ThemeClass::Still_Playing(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ThemeClass::Still_Playing(void)");
+#endif
 	if (ScoresPresent && SampleType && Current != -1 && !Debug_Quiet) {
 		return(Sample_Status(Current));
 	}
@@ -497,6 +533,9 @@ int ThemeClass::Still_Playing(void)
  *=============================================================================================*/
 bool ThemeClass::Is_Allowed(ThemeType index) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ThemeClass::Is_Allowed(ThemeType index) const");
+#endif
 #ifdef DEMO
 	char buffer[128];
 
@@ -538,6 +577,9 @@ bool ThemeClass::Is_Allowed(ThemeType index) const
  *=============================================================================================*/
 ThemeType ThemeClass::From_Name(char const * name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ThemeType ThemeClass::From_Name(char const * name)");
+#endif
 	if (name && strlen(name) > 0) {
 		/*
 		**	First search for an exact name match with the filename
@@ -585,6 +627,9 @@ ThemeType ThemeClass::From_Name(char const * name)
  *=============================================================================================*/
 void ThemeClass::Scan(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ThemeClass::Scan(void)");
+#endif
 	// Nyerguds's TUC Quick Fix Patch v1.03: var-music-length
 	for (ThemeType theme = THEME_FIRST; theme < THEME_COUNT; theme++) {
 		if (Special.IsVariation && _themes[theme].Variation && CCFileClass(Theme_File_Name(theme, true)).Is_Available()) {

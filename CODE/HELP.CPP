@@ -80,6 +80,9 @@ CountDownTimerClass HelpClass::CountDownTimer;
  *=============================================================================================*/
 HelpClass::HelpClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("HelpClass::HelpClass(void)");
+#endif
 	X = 0;
 	Y = 0;
 	Width = 0;
@@ -105,6 +108,9 @@ HelpClass::HelpClass(void)
  *=============================================================================================*/
 void HelpClass::Init_Clear(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HelpClass::Init_Clear(void)");
+#endif
 	TabClass::Init_Clear();
 
 	Set_Text(TXT_NONE);
@@ -129,6 +135,9 @@ void HelpClass::Init_Clear(void)
  *=============================================================================================*/
 short const * HelpClass::Overlap_List(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const * HelpClass::Overlap_List(void) const");
+#endif
 	if (Text == TXT_NONE || CountDownTimer.Time()) {
 		((short &)(OverlapList[0])) = REFRESH_EOL;
 	}
@@ -159,6 +168,9 @@ short const * HelpClass::Overlap_List(void) const
  *=============================================================================================*/
 void HelpClass::AI(KeyNumType &key, int x, int y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HelpClass::AI(KeyNumType &key, int x, int y)");
+#endif
 	/*
 	**	If there is any keyboard input, then the help text goes away.
 	*/
@@ -218,6 +230,9 @@ void HelpClass::AI(KeyNumType &key, int x, int y)
  *=============================================================================================*/
 void HelpClass::Help_Text(int text, int x, int y, int color, bool quick, int cost, bool showcost, int drain, int power, bool showpower)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HelpClass::Help_Text(int text, int x, int y, int color, bool quick, int cost, bool showcost, int drain, int power, bool showpower)");
+#endif
 	if (text != Text || color != Color) {
 
 		/*
@@ -276,6 +291,9 @@ void HelpClass::Help_Text(int text, int x, int y, int color, bool quick, int cos
  *=============================================================================================*/
 void HelpClass::Draw_It(bool forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HelpClass::Draw_It(bool forced)");
+#endif
 	TabClass::Draw_It(forced);
 
 	if (Text != TXT_NONE && (forced || !CountDownTimer.Time())) {
@@ -324,6 +342,9 @@ void HelpClass::Draw_It(bool forced)
  *=============================================================================================*/
 bool HelpClass::Get_Extra_Text(char buffer[], bool fortest)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HelpClass::Get_Extra_Text(char buffer[], bool fortest)");
+#endif
 	bool printed = false;
 	if (ShowCost) {
 		if (ShowPower) {
@@ -363,6 +384,9 @@ bool HelpClass::Get_Extra_Text(char buffer[], bool fortest)
  *=============================================================================================*/
 void HelpClass::Set_Text(int text)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HelpClass::Set_Text(int text)");
+#endif
 	if (text != TXT_NONE) {
 		Text = text;
 		/*
@@ -441,6 +465,9 @@ void HelpClass::Set_Text(int text)
  *=============================================================================================*/
 bool HelpClass::Scroll_Map(DirType facing, int & distance, bool really)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HelpClass::Scroll_Map(DirType facing, int & distance, bool really)");
+#endif
 	if (really) {
 		Help_Text(TXT_NONE);
 	}
@@ -470,6 +497,9 @@ bool HelpClass::Scroll_Map(DirType facing, int & distance, bool really)
  *=============================================================================================*/
 void HelpClass::Set_Cost(int cost, bool showcost)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HelpClass::Set_Cost(int cost, bool showcost)");
+#endif
 	Cost = cost;
 	ShowCost = showcost;
 }
@@ -500,6 +530,9 @@ void HelpClass::Set_Cost(int cost, bool showcost)
  *=============================================================================================*/
 void HelpClass::Set_Power(int drain, int power, bool showpower)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HelpClass::Set_Power(int drain, int power, bool showpower)");
+#endif
 	Drain = drain;
 	Power = power;
 	ShowPower = showpower;
@@ -508,6 +541,9 @@ void HelpClass::Set_Power(int drain, int power, bool showpower)
 
 void HelpClass::Set_Tactical_Position(COORDINATE coord)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HelpClass::Set_Tactical_Position(COORDINATE coord)");
+#endif
 	if (TacticalCoord != coord) {
 		Help_Text(TXT_NONE);
 	}

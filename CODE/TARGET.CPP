@@ -71,6 +71,9 @@
  *=============================================================================================*/
 TriggerClass * As_Trigger(TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TriggerClass * As_Trigger(TARGET target)");
+#endif
 	return(Is_Target_Trigger(target) ? Triggers.Raw_Ptr(Target_Value(target)) : NULL);
 }
 
@@ -92,6 +95,9 @@ TriggerClass * As_Trigger(TARGET target)
  *=============================================================================================*/
 TeamClass * As_Team(TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TeamClass * As_Team(TARGET target)");
+#endif
 	return(Is_Target_Team(target) ? Teams.Raw_Ptr(Target_Value(target)) : NULL);
 }
 
@@ -113,6 +119,9 @@ TeamClass * As_Team(TARGET target)
  *=============================================================================================*/
 TeamTypeClass * As_TeamType(TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TeamTypeClass * As_TeamType(TARGET target)");
+#endif
 	return(Is_Target_TeamType(target) ? TeamTypes.Raw_Ptr(Target_Value(target)) : NULL);
 }
 
@@ -134,6 +143,9 @@ TeamTypeClass * As_TeamType(TARGET target)
  *=============================================================================================*/
 AnimClass * As_Animation(TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("AnimClass * As_Animation(TARGET target)");
+#endif
 	return(Is_Target_Animation(target) ? Anims.Raw_Ptr(Target_Value(target)) : NULL);
 }
 
@@ -155,6 +167,9 @@ AnimClass * As_Animation(TARGET target)
  *=============================================================================================*/
 BulletClass * As_Bullet(TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BulletClass * As_Bullet(TARGET target)");
+#endif
 	return(Is_Target_Bullet(target) ? Bullets.Raw_Ptr(Target_Value(target)) : NULL);
 }
 
@@ -176,6 +191,9 @@ BulletClass * As_Bullet(TARGET target)
  *=============================================================================================*/
 AircraftClass * As_Aircraft(TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("AircraftClass * As_Aircraft(TARGET target)");
+#endif
 	return(Is_Target_Aircraft(target) ? Aircraft.Raw_Ptr(Target_Value(target)) : NULL);
 }
 
@@ -198,6 +216,9 @@ AircraftClass * As_Aircraft(TARGET target)
  *=============================================================================================*/
 TechnoClass * As_Techno(TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TechnoClass * As_Techno(TARGET target)");
+#endif
 	ObjectClass * obj = As_Object(target);
 
 	if (obj && obj->Is_Techno()) {
@@ -225,6 +246,9 @@ TechnoClass * As_Techno(TARGET target)
  *=============================================================================================*/
 ObjectClass * As_Object(TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ObjectClass * As_Object(TARGET target)");
+#endif
 	int val = Target_Value(target);
 	ObjectClass * object = NULL;
 
@@ -295,6 +319,9 @@ ObjectClass * As_Object(TARGET target)
  *=============================================================================================*/
 UnitClass * As_Unit(TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("UnitClass * As_Unit(TARGET target)");
+#endif
 	return(Is_Target_Unit(target) ? Units.Raw_Ptr(Target_Value(target)) : NULL);
 }
 
@@ -317,6 +344,9 @@ UnitClass * As_Unit(TARGET target)
  *=============================================================================================*/
 InfantryClass * As_Infantry(TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("InfantryClass * As_Infantry(TARGET target)");
+#endif
 	return(Is_Target_Infantry(target) ? Infantry.Raw_Ptr(Target_Value(target)) : NULL);
 }
 
@@ -324,6 +354,9 @@ InfantryClass * As_Infantry(TARGET target)
 #ifdef NEVER
 TerrainClass * As_Terrain(TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TerrainClass * As_Terrain(TARGET target)");
+#endif
 	return(Is_Target_Terrain(target) ? &Terrains[Target_Value(target)] : NULL);
 }
 #endif
@@ -346,6 +379,9 @@ TerrainClass * As_Terrain(TARGET target)
  *=============================================================================================*/
 BuildingClass * As_Building(TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BuildingClass * As_Building(TARGET target)");
+#endif
 	return(Is_Target_Building(target) ? Buildings.Raw_Ptr(Target_Value(target)) : NULL);
 }
 
@@ -370,6 +406,9 @@ BuildingClass * As_Building(TARGET target)
  *=============================================================================================*/
 bool Target_Legal(TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Target_Legal(TARGET target)");
+#endif
 	if (!Target_Legal(target)) return(false);
 
 	ObjectClass * obj = As_Object(target);
@@ -400,6 +439,9 @@ bool Target_Legal(TARGET target)
  *=============================================================================================*/
 CELL As_Cell(TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CELL As_Cell(TARGET target)");
+#endif
 	return(Coord_Cell(As_Coord(target)));
 }
 
@@ -424,6 +466,9 @@ CELL As_Cell(TARGET target)
  *=============================================================================================*/
 COORDINATE As_Coord(TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE As_Coord(TARGET target)");
+#endif
 	if (Target_Legal(target)) {
 		/*
 		**	Cell target values are handled as a special case. The value of the target number is
@@ -479,6 +524,9 @@ COORDINATE As_Coord(TARGET target)
  *=============================================================================================*/
 COORDINATE As_Movement_Coord(TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE As_Movement_Coord(TARGET target)");
+#endif
 	if (Target_Legal(target)) {
 		/*
 		**	Cell target values are handled as a special case. The value of the target number is

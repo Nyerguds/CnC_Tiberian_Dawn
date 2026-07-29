@@ -80,6 +80,9 @@
  *=============================================================================================*/
 OptionsClass::OptionsClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("OptionsClass::OptionsClass(void)");
+#endif
 	GameSpeed = TIMER_SECOND / TICKS_PER_SECOND;
 	ScrollRate = TIMER_SECOND / TICKS_PER_SECOND;
 	Volume = 0xE0;
@@ -119,6 +122,9 @@ OptionsClass::OptionsClass(void)
  *=============================================================================================*/
 void OptionsClass::One_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OptionsClass::One_Time(void)");
+#endif
 	Set_Score_Vol(ScoreVolume);
 }
 
@@ -140,6 +146,9 @@ void OptionsClass::One_Time(void)
  *=============================================================================================*/
 void OptionsClass::Process(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OptionsClass::Process(void)");
+#endif
 }
 
 
@@ -160,6 +169,9 @@ void OptionsClass::Process(void)
  *=============================================================================================*/
 void OptionsClass::Set_Shuffle(int on)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OptionsClass::Set_Shuffle(int on)");
+#endif
 	IsScoreShuffle = on;
 }
 
@@ -181,6 +193,9 @@ void OptionsClass::Set_Shuffle(int on)
  *=============================================================================================*/
 void OptionsClass::Set_Repeat(int on)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OptionsClass::Set_Repeat(int on)");
+#endif
 	IsScoreRepeat = on;
 }
 
@@ -202,6 +217,9 @@ void OptionsClass::Set_Repeat(int on)
  *=============================================================================================*/
 void OptionsClass::Set_Score_Volume(int volume)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OptionsClass::Set_Score_Volume(int volume)");
+#endif
 	volume = Bound(volume, 0, 255);
 	ScoreVolume = volume;
 	Set_Score_Vol(ScoreVolume);
@@ -228,6 +246,9 @@ void OptionsClass::Set_Score_Volume(int volume)
  *=============================================================================================*/
 void OptionsClass::Set_Sound_Volume(int volume, int feedback)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OptionsClass::Set_Sound_Volume(int volume, int feedback)");
+#endif
 	volume = Bound(volume, 0, 255);
 	Volume = volume;
 	if (feedback) {
@@ -253,6 +274,9 @@ void OptionsClass::Set_Sound_Volume(int volume, int feedback)
  *=============================================================================================*/
 void OptionsClass::Set_Brightness(int brightness)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OptionsClass::Set_Brightness(int brightness)");
+#endif
 	Brightness = 0x40 + Fixed_To_Cardinal(0x80, brightness);
 		Adjust_Palette(OriginalPalette, GamePalette, Brightness, Color, Tint, Contrast);
 	if (InMainLoop){
@@ -278,6 +302,9 @@ void OptionsClass::Set_Brightness(int brightness)
  *=============================================================================================*/
 int OptionsClass::Get_Brightness(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int OptionsClass::Get_Brightness(void) const");
+#endif
 	return(Cardinal_To_Fixed(0x80, Brightness-0x40));
 }
 
@@ -299,6 +326,9 @@ int OptionsClass::Get_Brightness(void) const
  *=============================================================================================*/
 void OptionsClass::Set_Color(int color)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OptionsClass::Set_Color(int color)");
+#endif
 	Color = color;
 	Adjust_Palette(OriginalPalette, GamePalette, Brightness, Color, Tint, Contrast);
 	if (InMainLoop){
@@ -325,6 +355,9 @@ void OptionsClass::Set_Color(int color)
  *=============================================================================================*/
 int OptionsClass::Get_Color(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int OptionsClass::Get_Color(void) const");
+#endif
 	return(Color);
 }
 
@@ -346,6 +379,9 @@ int OptionsClass::Get_Color(void) const
  *=============================================================================================*/
 void OptionsClass::Set_Contrast(int contrast)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OptionsClass::Set_Contrast(int contrast)");
+#endif
 	Contrast = 0x40 + Fixed_To_Cardinal(0x80, contrast);
 	Adjust_Palette(OriginalPalette, GamePalette, Brightness, Color, Tint, Contrast);
 	if (InMainLoop){
@@ -371,6 +407,9 @@ void OptionsClass::Set_Contrast(int contrast)
  *=============================================================================================*/
 int OptionsClass::Get_Contrast(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int OptionsClass::Get_Contrast(void) const");
+#endif
 	return(Cardinal_To_Fixed(0x80, Contrast-0x40));
 }
 
@@ -391,6 +430,9 @@ int OptionsClass::Get_Contrast(void) const
  *=============================================================================================*/
 void OptionsClass::Set_Tint(int tint)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OptionsClass::Set_Tint(int tint)");
+#endif
 	Tint = tint;
 	Adjust_Palette(OriginalPalette, GamePalette, Brightness, Color, Tint, Contrast);
 	if (InMainLoop){
@@ -416,6 +458,9 @@ void OptionsClass::Set_Tint(int tint)
  *=============================================================================================*/
 int OptionsClass::Get_Tint(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int OptionsClass::Get_Tint(void) const");
+#endif
 	return(Tint);
 }
 
@@ -447,6 +492,9 @@ int OptionsClass::Get_Tint(void) const
  *=============================================================================================*/
 void OptionsClass::Adjust_Palette(void *oldpal, void *newpal, unsigned char brightness, unsigned char color, unsigned char tint, unsigned char contrast) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OptionsClass::Adjust_Palette(void *oldpal, void *newpal, unsigned char brightness, unsigned char color, unsigned char tint, unsigned char contrast) const");
+#endif
 	int	index;
 	unsigned	h,s,v;
 	unsigned	r,g,b;
@@ -509,6 +557,9 @@ void OptionsClass::Adjust_Palette(void *oldpal, void *newpal, unsigned char brig
  *=============================================================================================*/
 void OptionsClass::Load_Settings (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OptionsClass::Load_Settings (void)");
+#endif
 	char *buffer;							// INI staging buffer pointer.
 
 	/*
@@ -747,6 +798,9 @@ void OptionsClass::Load_Settings (void)
  *=============================================================================================*/
 void OptionsClass::Save_Settings (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OptionsClass::Save_Settings (void)");
+#endif
 	char * buffer;			// INI staging buffer pointer.
 	CCFileClass file;
 
@@ -810,6 +864,9 @@ void OptionsClass::Save_Settings (void)
  *=============================================================================================*/
 void OptionsClass::Set(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OptionsClass::Set(void)");
+#endif
 	Set_Brightness(Brightness);
 	Set_Contrast(Contrast);
 	Set_Color(Color);
@@ -844,6 +901,9 @@ void OptionsClass::Set(void)
  *=============================================================================================*/
 int OptionsClass::Normalize_Delay(int delay) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int OptionsClass::Normalize_Delay(int delay) const");
+#endif
 	static int _adjust[][8] = {
 		{2,2,1,1,1,1,1,1},
 		{3,3,3,2,2,2,1,1},
@@ -864,11 +924,17 @@ int OptionsClass::Normalize_Delay(int delay) const
 
 void OptionsClass::Fixup_Palette(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OptionsClass::Fixup_Palette(void) const");
+#endif
 	Adjust_Palette(OriginalPalette, GamePalette, Brightness, Color, Tint, Contrast);
 }
 
 
 int OptionsClass::Normalize_Sound(int volume) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int OptionsClass::Normalize_Sound(int volume) const");
+#endif
 	return(Fixed_To_Cardinal(volume, Volume));
 }

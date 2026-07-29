@@ -64,6 +64,9 @@
  *=========================================================================*/
 void MapEditClass::Handle_Teams(char const * caption)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Handle_Teams(char const * caption)");
+#endif
 	int rc;
 
 	/*------------------------------------------------------------------------
@@ -178,6 +181,9 @@ void MapEditClass::Handle_Teams(char const * caption)
  *=========================================================================*/
 int MapEditClass::Select_Team(char const * caption)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MapEditClass::Select_Team(char const * caption)");
+#endif
 	/*........................................................................
 	Dialog & button dimensions
 	........................................................................*/
@@ -515,6 +521,9 @@ int MapEditClass::Select_Team(char const * caption)
  *=========================================================================*/
 int MapEditClass::Edit_Team(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MapEditClass::Edit_Team(void)");
+#endif
 	/*........................................................................
 	Dialog & button dimensions
 	........................................................................*/
@@ -1476,6 +1485,9 @@ enum {
  *=========================================================================*/
 int MapEditClass::Team_Members(HousesType house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MapEditClass::Team_Members(HousesType house)");
+#endif
 	/*
 	**	Button enumerations:
 	*/

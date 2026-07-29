@@ -73,6 +73,9 @@ GraphicBufferClass * GScreenClass::ShadowPage = 0;
  *=============================================================================================*/
 GScreenClass::GScreenClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("GScreenClass::GScreenClass(void)");
+#endif
 	IsToUpdate = true;
 	IsToRedraw = true;
 }
@@ -104,6 +107,9 @@ GScreenClass::GScreenClass(void)
  *=============================================================================================*/
 void GScreenClass::One_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GScreenClass::One_Time(void)");
+#endif
 	/*
 	**	Allocate the screen shadow page. This page is used to reduce access to the
 	**	actual screen memory. It contains a duplicate of what the SEENPAGE is.
@@ -138,6 +144,9 @@ void GScreenClass::One_Time(void)
  *=============================================================================================*/
 void GScreenClass::Init(TheaterType theater)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GScreenClass::Init(TheaterType theater)");
+#endif
 	Init_Clear();
 	Init_IO();
 	Init_Theater(theater);
@@ -165,6 +174,9 @@ void GScreenClass::Init(TheaterType theater)
  *=============================================================================================*/
 void GScreenClass::Init_Clear(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GScreenClass::Init_Clear(void)");
+#endif
 	/*
 	** Clear the ShadowPage & HidPage to force a complete shadow blit.
 	*/
@@ -198,6 +210,9 @@ void GScreenClass::Init_Clear(void)
  *=============================================================================================*/
 void GScreenClass::Init_Theater(TheaterType )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GScreenClass::Init_Theater(TheaterType )");
+#endif
 }
 
 
@@ -218,6 +233,9 @@ void GScreenClass::Init_Theater(TheaterType )
  *=============================================================================================*/
 void GScreenClass::Init_IO(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GScreenClass::Init_IO(void)");
+#endif
 	/*
 	** Reset the button list.  This means that any other elements of the map that need
 	** buttons must attach them after this routine is called!
@@ -249,6 +267,9 @@ void GScreenClass::Init_IO(void)
  *=============================================================================================*/
 void GScreenClass::Flag_To_Redraw(bool complete)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GScreenClass::Flag_To_Redraw(bool complete)");
+#endif
 	IsToUpdate = true;
 	if (complete) {
 		IsToRedraw = true;
@@ -275,6 +296,9 @@ void GScreenClass::Flag_To_Redraw(bool complete)
  *=============================================================================================*/
 void GScreenClass::Input(KeyNumType & key, int & x, int & y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GScreenClass::Input(KeyNumType & key, int & x, int & y)");
+#endif
 	key = Keyboard::Check();
 
 	x = Keyboard::Mouse_X();
@@ -324,6 +348,9 @@ void GScreenClass::Input(KeyNumType & key, int & x, int & y)
  *=============================================================================================*/
 void GScreenClass::Add_A_Button(GadgetClass & gadget)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GScreenClass::Add_A_Button(GadgetClass & gadget)");
+#endif
 	/*------------------------------------------------------------------------
 	If this gadget is already in the list, remove it before adding it in:
 	- If 1st gadget in list, use Remove_A_Button to remove it, to reset the
@@ -365,6 +392,9 @@ void GScreenClass::Add_A_Button(GadgetClass & gadget)
  *=============================================================================================*/
 void GScreenClass::Remove_A_Button(GadgetClass & gadget)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GScreenClass::Remove_A_Button(GadgetClass & gadget)");
+#endif
 	Buttons = gadget.Remove();
 }
 
@@ -389,6 +419,9 @@ void GScreenClass::Remove_A_Button(GadgetClass & gadget)
  *=============================================================================================*/
 void GScreenClass::Render(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GScreenClass::Render(void)");
+#endif
 	//if (Buttons && Buttons->Is_List_To_Redraw()) {
 	//	IsToRedraw = true;
 	//}
@@ -447,6 +480,9 @@ bool ScreenRecording = false;
 
 void Add_Current_Screen(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Add_Current_Screen(void)");
+#endif
 	if (ScreenRecording){
 		ScreenList[CurrentScreen] = new GraphicBufferClass;
 		ScreenList[CurrentScreen]->Init ( SeenBuff.Get_Width(), SeenBuff.Get_Height(), NULL, 0, (GBC_Enum) 0);
@@ -493,6 +529,9 @@ extern bool CanVblankSync;
  *=============================================================================================*/
 void GScreenClass::Blit_Display(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GScreenClass::Blit_Display(void)");
+#endif
 	if (SeenBuff.Get_Width()!=320){
 #if (0)
 		if (HidPage.Get_IsDirectDraw() && (Options.GameSpeed >1 || Options.ScrollRate==6 && CanVblankSync) ){

@@ -122,6 +122,9 @@ void * UnitClass::VTable;
 #ifdef CHEAT_KEYS
 int UnitClass::Validate(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int UnitClass::Validate(void) const");
+#endif
 	int num;
 
 	num = Units.ID(this);
@@ -158,6 +161,9 @@ int UnitClass::Validate(void) const
  *=============================================================================================*/
 void Recoil_Adjust(DirType dir, int &x, int &y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Recoil_Adjust(DirType dir, int &x, int &y)");
+#endif
 	static struct {
 		signed char X,Y;
 	} _adjust[32] = {
@@ -221,6 +227,9 @@ void Recoil_Adjust(DirType dir, int &x, int &y)
  *=============================================================================================*/
 void Turret_Adjust(DirType dir, int &x, int &y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Turret_Adjust(DirType dir, int &x, int &y)");
+#endif
 	static struct {
 		signed char X,Y;
 	} _adjust[32] = {
@@ -281,6 +290,9 @@ void Turret_Adjust(DirType dir, int &x, int &y)
  *=============================================================================================*/
 TARGET UnitClass::As_Target(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TARGET UnitClass::As_Target(void) const");
+#endif
 	Validate();
 	return(Build_Target(KIND_UNIT, Units.ID(this)));
 }
@@ -302,6 +314,9 @@ TARGET UnitClass::As_Target(void) const
  *=============================================================================================*/
 void UnitClass::Attach(FootClass * object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::Attach(FootClass * object)");
+#endif
 	CargoClass::Attach(object);
 	if (How_Many() == Class->Max_Passengers()) {
 		APC_Close_Door();
@@ -326,6 +341,9 @@ void UnitClass::Attach(FootClass * object)
  *=============================================================================================*/
 void UnitClass::Debug_Dump(MonoClass *mono) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::Debug_Dump(MonoClass *mono) const");
+#endif
 	Validate();
 	mono->Set_Cursor(0, 0);
 	mono->Print(
@@ -375,6 +393,9 @@ void UnitClass::Debug_Dump(MonoClass *mono) const
  *=============================================================================================*/
 COORDINATE UnitClass::Sort_Y(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE UnitClass::Sort_Y(void) const");
+#endif
 	Validate();
 	if (IsTethered && *this == UNIT_HOVER) {
 		return(Coord_Add(Coord, 0xFF800000L));
@@ -400,6 +421,9 @@ COORDINATE UnitClass::Sort_Y(void) const
  *=============================================================================================*/
 void UnitClass::AI(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::AI(void)");
+#endif
 	Validate();
 
 	/*
@@ -585,6 +609,9 @@ void UnitClass::AI(void)
  *=============================================================================================*/
 FireErrorType UnitClass::Can_Fire(TARGET target, int which) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FireErrorType UnitClass::Can_Fire(TARGET target, int which) const");
+#endif
 	Validate();
 	FireErrorType cf;
 
@@ -637,6 +664,9 @@ FireErrorType UnitClass::Can_Fire(TARGET target, int which) const
  *=============================================================================================*/
 RadioMessageType UnitClass::Receive_Message(RadioClass * from, RadioMessageType message, long & param)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("RadioMessageType UnitClass::Receive_Message(RadioClass * from, RadioMessageType message, long & param)");
+#endif
 	Validate();
 	switch (message) {
 
@@ -835,6 +865,9 @@ RadioMessageType UnitClass::Receive_Message(RadioClass * from, RadioMessageType 
  *=============================================================================================*/
 bool UnitClass::Unlimbo(COORDINATE coord, DirType dir)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool UnitClass::Unlimbo(COORDINATE coord, DirType dir)");
+#endif
 	Validate();
 	/*
 	**	All units must start out facing one of the 8 major directions.
@@ -922,6 +955,9 @@ bool UnitClass::Unlimbo(COORDINATE coord, DirType dir)
  *=============================================================================================*/
 ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)");
+#endif
 	Validate();
 	ResultType res = RESULT_NONE;
 
@@ -1158,6 +1194,9 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
  *=============================================================================================*/
 void UnitClass::Death_Announcement(TechnoClass const * source) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::Death_Announcement(TechnoClass const * source) const");
+#endif
 	// Nyerguds's C&C Patch Project v1.04: "Need harvester" announcement.
 	// Whoops, looks like somebody's in the market for a new harvester!
 	if (*this == UNIT_HARVESTER && IsOwnedByPlayer) {
@@ -1218,6 +1257,9 @@ void UnitClass::Death_Announcement(TechnoClass const * source) const
  *=============================================================================================*/
 void * UnitClass::operator new(size_t)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void * UnitClass::operator new(size_t)");
+#endif
 	void * ptr = (UnitClass *)Units.Allocate();
 	if (ptr) {
 		((UnitClass *)ptr)->IsActive = true;
@@ -1244,6 +1286,9 @@ void * UnitClass::operator new(size_t)
  *=============================================================================================*/
 void UnitClass::operator delete(void *ptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::operator delete(void *ptr)");
+#endif
 	if (ptr) {
 		((UnitClass *)ptr)->IsActive = false;
 	}
@@ -1268,6 +1313,9 @@ void UnitClass::operator delete(void *ptr)
  *=============================================================================================*/
 UnitClass::~UnitClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("UnitClass::~UnitClass(void)");
+#endif
 	if (GameActive && Class) {
 
 		/*
@@ -1304,6 +1352,9 @@ UnitClass::~UnitClass(void)
 UnitClass::UnitClass(UnitType classid, HousesType house) :
 	TarComClass(classid, house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("UnitClass::UnitClass(UnitType classid, HousesType house)");
+#endif
 	Flagged = HOUSE_NONE;
 	Reload = 0;
 	Ammo = Class->MaxAmmo;
@@ -1340,6 +1391,9 @@ UnitClass::UnitClass(UnitType classid, HousesType house) :
  *=============================================================================================*/
 void UnitClass::Active_Click_With(ActionType action, ObjectClass * object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::Active_Click_With(ActionType action, ObjectClass * object)");
+#endif
 	Validate();
 	if (action != What_Action(object)) {
 		switch (action) {
@@ -1361,7 +1415,11 @@ void UnitClass::Active_Click_With(ActionType action, ObjectClass * object)
 }
 
 
-void UnitClass::Active_Click_With(ActionType action, CELL cell) {TarComClass::Active_Click_With(action, cell);};
+void UnitClass::Active_Click_With(ActionType action, CELL cell) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::Active_Click_With(ActionType action, CELL cell)");
+#endif
+TarComClass::Active_Click_With(action, cell);};
 
 
 /***********************************************************************************************
@@ -1386,6 +1444,9 @@ void UnitClass::Active_Click_With(ActionType action, CELL cell) {TarComClass::Ac
  *=============================================================================================*/
 void UnitClass::Enter_Idle_Mode(bool initial)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::Enter_Idle_Mode(bool initial)");
+#endif
 	Validate();
 	MissionType	order;
 
@@ -1461,6 +1522,9 @@ void UnitClass::Enter_Idle_Mode(bool initial)
  *=============================================================================================*/
 void UnitClass::Find_LZ(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::Find_LZ(void)");
+#endif
 	Validate();
 	CELL	cell;		// Map exit cell number.
 
@@ -1495,6 +1559,9 @@ void UnitClass::Find_LZ(void)
  *=============================================================================================*/
 bool UnitClass::Unload_Hovercraft_Process(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool UnitClass::Unload_Hovercraft_Process(void)");
+#endif
 	Validate();
 	bool			unloaded = false;
 	FootClass	*unit;		// The unit to be unloaded.
@@ -1615,6 +1682,9 @@ return(false);
  *=============================================================================================*/
 bool UnitClass::Goto_Clear_Spot(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool UnitClass::Goto_Clear_Spot(void)");
+#endif
 	Validate();
 	Mark(MARK_UP);
 	if (!Target_Legal(NavCom) && BuildingTypeClass::As_Reference(STRUCT_CONST).Legal_Placement(Coord_Cell(Coord))) {
@@ -1683,6 +1753,9 @@ bool UnitClass::Goto_Clear_Spot(void)
  *=============================================================================================*/
 bool UnitClass::Try_To_Deploy(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool UnitClass::Try_To_Deploy(void)");
+#endif
 	Validate();
 	if (!Target_Legal(NavCom) && !PrimaryFacing.Is_Rotating()) {
 		if (*this == UNIT_MCV) {
@@ -1789,6 +1862,9 @@ bool UnitClass::Try_To_Deploy(void)
  *=============================================================================================*/
 void UnitClass::Per_Cell_Process(bool center)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::Per_Cell_Process(bool center)");
+#endif
 	Validate();
 	CELL	cell = Coord_Cell(Coord);
 	TechnoClass	* whom;
@@ -2049,6 +2125,9 @@ void UnitClass::Per_Cell_Process(bool center)
  *=============================================================================================*/
 void UnitClass::Draw_It(int x, int y, WindowNumberType window)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::Draw_It(int x, int y, WindowNumberType window)");
+#endif
 	Validate();
 	int			shapenum;		// Working shape number.
 	void const	*shapefile;		// Working shape file pointer.
@@ -2310,6 +2389,9 @@ void UnitClass::Draw_It(int x, int y, WindowNumberType window)
  *=============================================================================================*/
 int UnitClass::Tiberium_Check(CELL &center, int x, int y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int UnitClass::Tiberium_Check(CELL &center, int x, int y)");
+#endif
 	Validate();
 	/*
 	**	If the specified offset from the origin will cause it
@@ -2333,6 +2415,9 @@ int UnitClass::Tiberium_Check(CELL &center, int x, int y)
 
 bool UnitClass::Goto_Tiberium(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool UnitClass::Goto_Tiberium(void)");
+#endif
 	Validate();
 	if (!Target_Legal(NavCom)) {
 		CELL center = Coord_Cell(Center_Coord());
@@ -2435,6 +2520,9 @@ bool UnitClass::Goto_Tiberium(void)
  *=============================================================================================*/
 bool UnitClass::Harvesting(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool UnitClass::Harvesting(void)");
+#endif
 	Validate();
 	CELL	cell = Coord_Cell(Coord);
 	CellClass * ptr = &Map[cell];
@@ -2491,6 +2579,9 @@ bool UnitClass::Harvesting(void)
  *=============================================================================================*/
 int UnitClass::Mission_Unload(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int UnitClass::Mission_Unload(void)");
+#endif
 	Validate();
 	enum {
 		INITIAL_CHECK,
@@ -2671,6 +2762,9 @@ int UnitClass::Mission_Unload(void)
  *=============================================================================================*/
 int UnitClass::Mission_Harvest(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int UnitClass::Mission_Harvest(void)");
+#endif
 	Validate();
 	enum {
 		LOOKING,
@@ -2820,6 +2914,9 @@ int UnitClass::Mission_Harvest(void)
  *=============================================================================================*/
 int UnitClass::Mission_Hunt(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int UnitClass::Mission_Hunt(void)");
+#endif
 	Validate();
 	if (*this == UNIT_MCV) {
 		switch (Status) {
@@ -2895,6 +2992,9 @@ int UnitClass::Mission_Hunt(void)
  *=============================================================================================*/
 void UnitClass::Look(bool incremental)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::Look(bool incremental)");
+#endif
 	Validate();
 	if (!IsInLimbo && IsOwnedByPlayer) {
 		int sight = Class->SightRange;
@@ -2926,6 +3026,9 @@ void UnitClass::Look(bool incremental)
  *=============================================================================================*/
 short const * UnitClass::Overlap_List(bool redraw) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const * UnitClass::Overlap_List(bool redraw) const");
+#endif
 	Validate();
 	static short const _gunboat[] = {-3, -2, 2, 3, REFRESH_EOL};
 	int	size;
@@ -2963,6 +3066,9 @@ short const * UnitClass::Overlap_List(bool redraw) const
  *=============================================================================================*/
 MoveBitType UnitClass::Blocking_Object(TechnoClass const *techno, CELL cell) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MoveBitType UnitClass::Blocking_Object(TechnoClass const *techno, CELL cell) const");
+#endif
 	Validate();
 	/*
 	** There are some extra checks we need to make if the techno is a unit
@@ -3072,6 +3178,9 @@ MoveBitType UnitClass::Blocking_Object(TechnoClass const *techno, CELL cell) con
  *=============================================================================================*/
 MoveType UnitClass::Can_Enter_Cell(CELL cell, FacingType ) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MoveType UnitClass::Can_Enter_Cell(CELL cell, FacingType ) const");
+#endif
 	Validate();
 	CellClass const * cellptr = &Map[cell];
 
@@ -3313,6 +3422,9 @@ MoveType UnitClass::Can_Enter_Cell(CELL cell, FacingType ) const
  *=============================================================================================*/
 void UnitClass::Init(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::Init(void)");
+#endif
 	UnitClass * ptr;
 
 	Units.Free_All();
@@ -3341,6 +3453,9 @@ void UnitClass::Init(void)
  *=============================================================================================*/
 COORDINATE UnitClass::Target_Coord() const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE UnitClass::Target_Coord() const");
+#endif
 	Validate();
 //	if (*this == UNIT_GUNBOAT) {
 //		return(Coord_Move(Coord, PrimaryFacing.Current(), 0x0080));
@@ -3369,6 +3484,9 @@ COORDINATE UnitClass::Target_Coord() const
  *=============================================================================================*/
 bool UnitClass::Scatter(COORDINATE threat, bool forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool UnitClass::Scatter(COORDINATE threat, bool forced)");
+#endif
 	Validate();
 	
 	/*
@@ -3435,6 +3553,9 @@ bool UnitClass::Scatter(COORDINATE threat, bool forced)
  *=============================================================================================*/
 bool UnitClass::Stop_Driver(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool UnitClass::Stop_Driver(void)");
+#endif
 	Validate();
 
 	/*
@@ -3493,6 +3614,9 @@ bool UnitClass::Stop_Driver(void)
  *=============================================================================================*/
 bool UnitClass::Start_Driver(COORDINATE & headto)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool UnitClass::Start_Driver(COORDINATE & headto)");
+#endif
 	Validate();
 	if (TarComClass::Start_Driver(headto)) {
 		Mark_Track(headto, MARK_DOWN);
@@ -3519,6 +3643,9 @@ bool UnitClass::Start_Driver(COORDINATE & headto)
  *=============================================================================================*/
 bool UnitClass::Limbo(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool UnitClass::Limbo(void)");
+#endif
 	Validate();
 	if (!IsInLimbo) {
 		Stop_Driver();
@@ -3543,6 +3670,9 @@ bool UnitClass::Limbo(void)
  *=============================================================================================*/
 void UnitClass::Response_Select(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::Response_Select(void)");
+#endif
 	Validate();
 	static VocType _response[] = {
 		VOC_VEHIC,
@@ -3584,6 +3714,9 @@ void UnitClass::Response_Select(void)
  *=============================================================================================*/
 void UnitClass::Response_Move(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::Response_Move(void)");
+#endif
 	Validate();
 	static VocType _response[] = {
 		VOC_MOVEOUT,
@@ -3625,6 +3758,9 @@ void UnitClass::Response_Move(void)
  *=============================================================================================*/
 void UnitClass::Response_Attack(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::Response_Attack(void)");
+#endif
 	Validate();
 	static VocType _response[] = {
 		VOC_AFFIRM,
@@ -3673,6 +3809,9 @@ void UnitClass::Response_Attack(void)
  *=============================================================================================*/
 void UnitClass::Player_Assign_Mission(MissionType mission, TARGET target, TARGET destination)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::Player_Assign_Mission(MissionType mission, TARGET target, TARGET destination)");
+#endif
 	Validate();
 	// Nyerguds's C&C Patch Project v1.04: Copied from Remaster: harvest logic upgrade.
 	if (mission == MISSION_HARVEST) {
@@ -3701,6 +3840,9 @@ void UnitClass::Player_Assign_Mission(MissionType mission, TARGET target, TARGET
  *=============================================================================================*/
 ActionType UnitClass::What_Action(ObjectClass * object) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ActionType UnitClass::What_Action(ObjectClass * object) const");
+#endif
 	Validate();
 	ActionType action = TarComClass::What_Action(object);
 
@@ -3765,6 +3907,9 @@ ActionType UnitClass::What_Action(ObjectClass * object) const
 
 ActionType UnitClass::What_Action(CELL cell) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ActionType UnitClass::What_Action(CELL cell) const");
+#endif
 	Validate();
 	ActionType action = TarComClass::What_Action(cell);
 	if (action == ACTION_MOVE && Map[cell].Land_Type() == LAND_TIBERIUM && Class->IsToHarvest) {
@@ -3792,6 +3937,9 @@ ActionType UnitClass::What_Action(CELL cell) const
  *=============================================================================================*/
 bool UnitClass::Can_Player_Move(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool UnitClass::Can_Player_Move(void) const");
+#endif
 	Validate();
 	return(TarComClass::Can_Player_Move() && *this != UNIT_GUNBOAT && *this != UNIT_HOVER);
 }
@@ -3818,6 +3966,9 @@ bool UnitClass::Can_Player_Move(void) const
  *=============================================================================================*/
 void UnitClass::Read_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::Read_INI(char *buffer)");
+#endif
 	UnitClass	*unit;			// Working unit pointer.
 	char			*tbuffer;		// Accumulation buffer of unit IDs.
 	HousesType	inhouse;			// Unit house.
@@ -3917,6 +4068,9 @@ void UnitClass::Read_INI(char *buffer)
 #ifdef SCENARIO_EDITOR
 void UnitClass::Write_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::Write_INI(char *buffer)");
+#endif
 	int	index;
 	char	uname[10];
 	char	buf[128];
@@ -3973,6 +4127,9 @@ void UnitClass::Write_INI(char *buffer)
 #define XYCELL(x,y)	(y*MAP_CELL_W+x)
 void UnitClass::Exit_Repair(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::Exit_Repair(void)");
+#endif
 	Validate();
 	int	i;
 	CELL	cell;
@@ -4026,6 +4183,9 @@ void UnitClass::Exit_Repair(void)
  *=============================================================================================*/
 int UnitClass::Mission_Guard(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int UnitClass::Mission_Guard(void)");
+#endif
 	Validate();
 	if (*this == UNIT_HOVER) {
 		if (Is_Something_Attached()) {
@@ -4068,6 +4228,9 @@ int UnitClass::Mission_Guard(void)
  *=============================================================================================*/
 int UnitClass::Mission_Move(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int UnitClass::Mission_Move(void)");
+#endif
 	Validate();
 	IsHarvesting = false;
 
@@ -4111,6 +4274,9 @@ int UnitClass::Mission_Move(void)
  *=============================================================================================*/
 DirType UnitClass::Desired_Load_Dir(ObjectClass * passenger, CELL & moveto) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("DirType UnitClass::Desired_Load_Dir(ObjectClass * passenger, CELL & moveto) const");
+#endif
 	Validate();
 	/*
 	**	Determine the ideal facing that provides the least resistance. This would be the direction
@@ -4250,6 +4416,9 @@ DirType UnitClass::Desired_Load_Dir(ObjectClass * passenger, CELL & moveto) cons
  *=============================================================================================*/
 int UnitClass::Mission_Attack(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int UnitClass::Mission_Attack(void)");
+#endif
 	Validate();
 	if (*this == UNIT_GUNBOAT) {
 		Assign_Mission(MISSION_HUNT);
@@ -4279,6 +4448,9 @@ int UnitClass::Mission_Attack(void)
  *=============================================================================================*/
 bool UnitClass::Flag_Attach(HousesType house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool UnitClass::Flag_Attach(HousesType house)");
+#endif
 	Validate();
 	if (house != HOUSE_NONE && Flagged == HOUSE_NONE)	{
 		Flagged = house;
@@ -4306,6 +4478,9 @@ bool UnitClass::Flag_Attach(HousesType house)
  *=============================================================================================*/
 bool UnitClass::Flag_Remove(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool UnitClass::Flag_Remove(void)");
+#endif
 	Validate();
 	if (Flagged != HOUSE_NONE) {
 		Flagged = HOUSE_NONE;
@@ -4333,6 +4508,9 @@ bool UnitClass::Flag_Remove(void)
  *=============================================================================================*/
 void UnitClass::Stun(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::Stun(void)");
+#endif
 	Validate();
 	if (Flagged != HOUSE_NONE) {
 		HouseClass::As_Pointer(Flagged)->Flag_Attach(Coord_Cell(Coord));
@@ -4359,6 +4537,9 @@ void UnitClass::Stun(void)
  *=============================================================================================*/
 int UnitClass::Pip_Count(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int UnitClass::Pip_Count(void) const");
+#endif
 	Validate();
 	if (Class->IsTransporter) {
 		return(How_Many());
@@ -4387,6 +4568,9 @@ int UnitClass::Pip_Count(void) const
  *=============================================================================================*/
 void UnitClass::APC_Close_Door(bool fast)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::APC_Close_Door(bool fast)");
+#endif
 	Validate();
 	DoorTimeout = 0;
 	if (Is_Door_Closed()) return;
@@ -4414,6 +4598,9 @@ void UnitClass::APC_Close_Door(bool fast)
  *=============================================================================================*/
 void UnitClass::APC_Open_Door(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::APC_Open_Door(void)");
+#endif
 	Validate();
 	DoorTimeout = 0;
 	if (Is_Door_Open()) return;
@@ -4442,6 +4629,9 @@ void UnitClass::APC_Open_Door(void)
  *=============================================================================================*/
 bool UnitClass::No_Other_Crushers(CELL cell) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool UnitClass::No_Other_Crushers(CELL cell) const");
+#endif
 	// Nyerguds's C&C Patch Project v1.04: unit crushing fixes.
 	Validate();
 	/*
@@ -4511,6 +4701,9 @@ bool UnitClass::No_Other_Crushers(CELL cell) const
  *=============================================================================================*/
 void const * UnitClass::Remap_Table(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void const * UnitClass::Remap_Table(void)");
+#endif
 	Validate();
 	// Nyerguds's C&C Patch Project v1.04: Units with building color.
 	// Does this unit prefer the House's building colour, since it
@@ -4541,6 +4734,9 @@ void const * UnitClass::Remap_Table(void)
  *=============================================================================================*/
 InfantryType UnitClass::Crew_Type(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("InfantryType UnitClass::Crew_Type(void) const");
+#endif
 	Validate();
 	if (Class->Primary == WEAPON_NONE) {
 		if (Random_Pick(0, 1) == 0) {
@@ -4570,6 +4766,9 @@ InfantryType UnitClass::Crew_Type(void) const
  *=============================================================================================*/
 RTTIType UnitClass::What_Am_I(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("RTTIType UnitClass::What_Am_I(void) const");
+#endif
 	Validate();
 	return(RTTI_UNIT);
 }

@@ -92,6 +92,9 @@ void const * ObjectTypeClass::PipShapes = 0;
 
 bool ObjectClass::Is_Infantry(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ObjectClass::Is_Infantry(void) const");
+#endif
 	return(false);
 }
 
@@ -128,6 +131,9 @@ ObjectTypeClass::ObjectTypeClass(
 						unsigned short strength) :
 	AbstractTypeClass(name, ini)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ObjectTypeClass::ObjectTypeClass(...)");
+#endif
 	IsSentient = is_sentient;
 	IsFlammable = is_flammable;
 	IsCrushable = is_crushable;
@@ -161,6 +167,9 @@ ObjectTypeClass::ObjectTypeClass(
  *=============================================================================================*/
 int ObjectTypeClass::Max_Pips(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ObjectTypeClass::Max_Pips(void) const");
+#endif
 	return(0);
 }
 
@@ -185,6 +194,9 @@ int ObjectTypeClass::Max_Pips(void) const
  *=============================================================================================*/
 void ObjectTypeClass::Dimensions(int &width, int &height) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ObjectTypeClass::Dimensions(int &width, int &height) const");
+#endif
 	width = 10;
 	height = 10;
 }
@@ -208,6 +220,9 @@ void ObjectTypeClass::Dimensions(int &width, int &height) const
  *=============================================================================================*/
 int ObjectTypeClass::Cost_Of(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ObjectTypeClass::Cost_Of(void) const");
+#endif
 	return(0);
 }
 
@@ -229,6 +244,9 @@ int ObjectTypeClass::Cost_Of(void) const
  *=============================================================================================*/
 int ObjectTypeClass::Time_To_Build(HousesType ) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ObjectTypeClass::Time_To_Build(HousesType ) const");
+#endif
 	return(0);
 }
 
@@ -256,6 +274,9 @@ int ObjectTypeClass::Time_To_Build(HousesType ) const
  *=============================================================================================*/
 BuildingClass * ObjectTypeClass::Who_Can_Build_Me(bool /*intheory*/, bool /*legal*/, HousesType /*house*/) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BuildingClass * ObjectTypeClass::Who_Can_Build_Me(bool /*intheory*/, bool /*legal*/, HousesType /*house*/) const");
+#endif
 	return(NULL);
 }
 
@@ -278,6 +299,9 @@ BuildingClass * ObjectTypeClass::Who_Can_Build_Me(bool /*intheory*/, bool /*lega
  *=============================================================================================*/
 void const * ObjectTypeClass::Get_Cameo_Data(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void const * ObjectTypeClass::Get_Cameo_Data(void) const");
+#endif
 	return(NULL);
 }
 
@@ -300,6 +324,9 @@ void const * ObjectTypeClass::Get_Cameo_Data(void) const
  *=============================================================================================*/
 bool ObjectTypeClass::Cameo_Is_Theater_Shape(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ObjectTypeClass::Cameo_Is_Theater_Shape(void) const");
+#endif
 	return(false);
 }
 
@@ -322,6 +349,9 @@ bool ObjectTypeClass::Cameo_Is_Theater_Shape(void) const
  *=============================================================================================*/
 void const * ObjectTypeClass::Get_Spy_Cameo_Data(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void const * ObjectTypeClass::Get_Spy_Cameo_Data(void) const");
+#endif
 	return(NULL);
 }
 
@@ -344,6 +374,9 @@ void const * ObjectTypeClass::Get_Spy_Cameo_Data(void) const
  *=============================================================================================*/
 bool ObjectTypeClass::Spy_Cameo_Is_Theater_Shape(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ObjectTypeClass::Spy_Cameo_Is_Theater_Shape(void) const");
+#endif
 	return(false);
 }
 
@@ -366,6 +399,9 @@ bool ObjectTypeClass::Spy_Cameo_Is_Theater_Shape(void) const
  *=============================================================================================*/
 ObjectClass::ObjectClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ObjectClass::ObjectClass(void)");
+#endif
 	Coord = 0xFFFFFFFFL;				// Some bogus illegal value.
 	Next = 0;							// Not part of any object list.
 	Trigger = 0;						// No associated trigger.
@@ -397,6 +433,9 @@ ObjectClass::ObjectClass(void)
  *=============================================================================================*/
 RTTIType ObjectClass::What_Am_I(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("RTTIType ObjectClass::What_Am_I(void) const");
+#endif
 	return(RTTI_OBJECT);
 }
 
@@ -421,6 +460,9 @@ RTTIType ObjectClass::What_Am_I(void) const
  *=============================================================================================*/
 ActionType ObjectClass::What_Action(ObjectClass *) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ActionType ObjectClass::What_Action(ObjectClass *) const");
+#endif
 	return(ACTION_NONE);
 }
 
@@ -446,6 +488,9 @@ ActionType ObjectClass::What_Action(ObjectClass *) const
  *=============================================================================================*/
 ActionType ObjectClass::What_Action(CELL) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ActionType ObjectClass::What_Action(CELL) const");
+#endif
 	return(ACTION_NONE);
 }
 
@@ -467,6 +512,9 @@ ActionType ObjectClass::What_Action(CELL) const
  *=============================================================================================*/
 LayerType ObjectClass::In_Which_Layer(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LayerType ObjectClass::In_Which_Layer(void) const");
+#endif
 	return(LAYER_GROUND);
 }
 
@@ -490,6 +538,9 @@ LayerType ObjectClass::In_Which_Layer(void) const
  *=============================================================================================*/
 bool ObjectClass::Is_Techno(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ObjectClass::Is_Techno(void) const");
+#endif
 	return(false);
 }
 
@@ -511,6 +562,9 @@ bool ObjectClass::Is_Techno(void) const
  *=============================================================================================*/
 unsigned char ObjectClass::Get_Ownable(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned char ObjectClass::Get_Ownable(void) const");
+#endif
 	return(0xff);
 }
 
@@ -532,6 +586,9 @@ unsigned char ObjectClass::Get_Ownable(void) const
  *=============================================================================================*/
 bool ObjectClass::Can_Repair(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ObjectClass::Can_Repair(void) const");
+#endif
 	return(false);
 }
 
@@ -553,6 +610,9 @@ bool ObjectClass::Can_Repair(void) const
  *=============================================================================================*/
 bool ObjectClass::Can_Demolish(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ObjectClass::Can_Demolish(void) const");
+#endif
 	return(false);
 }
 
@@ -574,6 +634,9 @@ bool ObjectClass::Can_Demolish(void) const
  *=============================================================================================*/
 bool ObjectClass::Can_Capture(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ObjectClass::Can_Capture(void) const");
+#endif
 	return(false);
 }
 
@@ -595,6 +658,9 @@ bool ObjectClass::Can_Capture(void) const
  *=============================================================================================*/
 bool ObjectClass::Can_Player_Fire(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ObjectClass::Can_Player_Fire(void) const");
+#endif
 	return(false);
 }
 
@@ -617,6 +683,9 @@ bool ObjectClass::Can_Player_Fire(void) const
  *=============================================================================================*/
 bool ObjectClass::Can_Player_Move(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ObjectClass::Can_Player_Move(void) const");
+#endif
 	return(false);
 }
 
@@ -639,27 +708,102 @@ bool ObjectClass::Can_Player_Move(void) const
  *=============================================================================================*/
 COORDINATE ObjectClass::Target_Coord() const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE ObjectClass::Target_Coord() const");
+#endif
 	return(Center_Coord());
 }
 
-COORDINATE ObjectClass::Center_Coord(void) const {return Coord;};
-COORDINATE ObjectClass::Render_Coord(void) const {return(Center_Coord());}
-COORDINATE ObjectClass::Docking_Coord(void) const {return(Center_Coord());}
-COORDINATE ObjectClass::Sort_Y(void) const {return Coord;};
-COORDINATE ObjectClass::Fire_Coord(int /*which*/, bool /*forrange*/, COORDINATE /*coords*/) const {return Coord;};
-void ObjectClass::Record_The_Kill(TechnoClass * /*source*/, HousesType /*house*/, bool /*sold*/) {};
-void ObjectClass::Do_Shimmer(void) {};
-int ObjectClass::Exit_Object(TechnoClass *) {return 0;};
-void ObjectClass::Hidden(void) {};
-void ObjectClass::Look(bool ) {};
-void ObjectClass::Active_Click_With(ActionType , ObjectClass *) {};
-void ObjectClass::Active_Click_With(ActionType , CELL ) {};
-void ObjectClass::Clicked_As_Target(int) {};
-bool ObjectClass::In_Range(COORDINATE , int) const {return false;};
-int ObjectClass::Weapon_Range(int /*which*/, bool /*withbarrel*/, TARGET /*target*/) const {return 0x0000;};
-TARGET ObjectClass::As_Target(void) const {return TARGET_NONE;};
-bool ObjectClass::Scatter(COORDINATE , bool) { return(false); };
-bool ObjectClass::Catch_Fire(TechnoClass * /*source*/, HousesType /*house*/) {return false;};
+COORDINATE ObjectClass::Center_Coord(void) const {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE ObjectClass::Center_Coord(void) const");
+#endif
+return Coord;};
+COORDINATE ObjectClass::Render_Coord(void) const {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE ObjectClass::Render_Coord(void) const");
+#endif
+return(Center_Coord());}
+COORDINATE ObjectClass::Docking_Coord(void) const {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE ObjectClass::Docking_Coord(void) const");
+#endif
+return(Center_Coord());}
+COORDINATE ObjectClass::Sort_Y(void) const {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE ObjectClass::Sort_Y(void) const");
+#endif
+return Coord;};
+COORDINATE ObjectClass::Fire_Coord(int /*which*/, bool /*forrange*/, COORDINATE /*coords*/) const {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE ObjectClass::Fire_Coord(int /*which*/, bool /*forrange*/, COORDINATE /*coords*/) const");
+#endif
+return Coord;};
+void ObjectClass::Record_The_Kill(TechnoClass * /*source*/, HousesType /*house*/, bool /*sold*/) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ObjectClass::Record_The_Kill(TechnoClass * /*source*/, HousesType /*house*/, bool /*sold*/)");
+#endif
+};
+void ObjectClass::Do_Shimmer(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ObjectClass::Do_Shimmer(void)");
+#endif
+};
+int ObjectClass::Exit_Object(TechnoClass *) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ObjectClass::Exit_Object(TechnoClass *)");
+#endif
+return 0;};
+void ObjectClass::Hidden(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ObjectClass::Hidden(void)");
+#endif
+};
+void ObjectClass::Look(bool ) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ObjectClass::Look(bool )");
+#endif
+};
+void ObjectClass::Active_Click_With(ActionType , ObjectClass *) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ObjectClass::Active_Click_With(ActionType , ObjectClass *)");
+#endif
+};
+void ObjectClass::Active_Click_With(ActionType , CELL ) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ObjectClass::Active_Click_With(ActionType , CELL )");
+#endif
+};
+void ObjectClass::Clicked_As_Target(int) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ObjectClass::Clicked_As_Target(int)");
+#endif
+};
+bool ObjectClass::In_Range(COORDINATE , int) const {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ObjectClass::In_Range(COORDINATE , int) const");
+#endif
+return false;};
+int ObjectClass::Weapon_Range(int /*which*/, bool /*withbarrel*/, TARGET /*target*/) const {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ObjectClass::Weapon_Range(int /*which*/, bool /*withbarrel*/, TARGET /*target*/) const");
+#endif
+return 0x0000;};
+TARGET ObjectClass::As_Target(void) const {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TARGET ObjectClass::As_Target(void) const");
+#endif
+return TARGET_NONE;};
+bool ObjectClass::Scatter(COORDINATE , bool) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ObjectClass::Scatter(COORDINATE , bool)");
+#endif
+ return(false); };
+bool ObjectClass::Catch_Fire(TechnoClass * /*source*/, HousesType /*house*/) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ObjectClass::Catch_Fire(TechnoClass * /*source*/, HousesType /*house*/)");
+#endif
+return false;};
 
 
 /***********************************************************************************************
@@ -679,6 +823,9 @@ bool ObjectClass::Catch_Fire(TechnoClass * /*source*/, HousesType /*house*/) {re
  *=============================================================================================*/
 void ObjectClass::Fire_Out()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ObjectClass::Fire_Out()");
+#endif
 }
 
 
@@ -703,6 +850,9 @@ void ObjectClass::Fire_Out()
  *=============================================================================================*/
 int ObjectClass::Value(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ObjectClass::Value(void) const");
+#endif
 	return(0);
 }
 
@@ -725,6 +875,9 @@ int ObjectClass::Value(void) const
  *=============================================================================================*/
 MissionType ObjectClass::Get_Mission(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MissionType ObjectClass::Get_Mission(void) const");
+#endif
 	return(MISSION_NONE);
 }
 
@@ -750,6 +903,9 @@ MissionType ObjectClass::Get_Mission(void) const
  *=============================================================================================*/
 void ObjectClass::Repair(int )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ObjectClass::Repair(int )");
+#endif
 }
 
 
@@ -774,6 +930,9 @@ void ObjectClass::Repair(int )
  *=============================================================================================*/
 void ObjectClass::Sell_Back(int )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ObjectClass::Sell_Back(int )");
+#endif
 }
 
 
@@ -795,6 +954,9 @@ void ObjectClass::Sell_Back(int )
  *=============================================================================================*/
 void ObjectClass::Move(FacingType facing)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ObjectClass::Move(FacingType facing)");
+#endif
 	COORDINATE	coord;
 
 	Mark(MARK_UP);
@@ -823,6 +985,9 @@ void ObjectClass::Move(FacingType facing)
  *=============================================================================================*/
 void ObjectClass::Unselect(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ObjectClass::Unselect(void)");
+#endif
 	if (IsSelected) {
 		CurrentObject.Delete(this);
 
@@ -859,6 +1024,9 @@ void ObjectClass::Unselect(void)
  *=============================================================================================*/
 bool ObjectClass::Select(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ObjectClass::Select(void)");
+#endif
 	if (!Debug_Map && (IsSelected || !Class_Of().IsSelectable)) return(false);
 
 	if (Can_Player_Move() && Is_Techno() && ((TechnoClass *)this)->IsALoaner) return(false);
@@ -915,6 +1083,9 @@ bool ObjectClass::Select(void)
  *=============================================================================================*/
 bool ObjectClass::Render(bool forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ObjectClass::Render(bool forced)");
+#endif
 	int	x,y;
 	COORDINATE	coord = Render_Coord();
 	CELL	cell = Coord_Cell(coord);
@@ -993,6 +1164,9 @@ bool ObjectClass::Render(bool forced)
  *=============================================================================================*/
 void ObjectClass::Debug_Dump(MonoClass *mono) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ObjectClass::Debug_Dump(MonoClass *mono) const");
+#endif
 	mono->Text_Print("X", 16 + (IsToDisplay?2:0), 18);
 	mono->Text_Print("X", 16 + (IsActive?2:0), 3);
 	mono->Text_Print("X", 16 + (IsInLimbo?2:0), 4);
@@ -1024,6 +1198,9 @@ void ObjectClass::Debug_Dump(MonoClass *mono) const
  *=============================================================================================*/
 short const * ObjectTypeClass::Occupy_List(bool) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const * ObjectTypeClass::Occupy_List(bool) const");
+#endif
 	static short const _list[] = {0, REFRESH_EOL};
 	return(_list);
 }
@@ -1048,6 +1225,9 @@ short const * ObjectTypeClass::Occupy_List(bool) const
  *=============================================================================================*/
 short const * ObjectTypeClass::Overlap_List(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const * ObjectTypeClass::Overlap_List(void) const");
+#endif
 	static short const _list[] = {REFRESH_EOL};
 	return(_list);
 }
@@ -1070,6 +1250,9 @@ short const * ObjectTypeClass::Overlap_List(void) const
  *=============================================================================================*/
 void ObjectTypeClass::One_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ObjectTypeClass::One_Time(void)");
+#endif
 	SelectShapes = MixFileClass::Retrieve("SELECT.SHP");
 #if (FRENCH)
 	PipShapes = Hires_Retrieve("PIPS_F.SHP");
@@ -1106,6 +1289,9 @@ void ObjectTypeClass::One_Time(void)
  *=============================================================================================*/
 void ObjectClass::Mark_For_Redraw(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ObjectClass::Mark_For_Redraw(void)");
+#endif
 	if (!IsToDisplay) {
 		IsToDisplay = true;
 
@@ -1137,6 +1323,9 @@ void ObjectClass::Mark_For_Redraw(void)
  *=============================================================================================*/
 bool ObjectClass::Limbo(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ObjectClass::Limbo(void)");
+#endif
 	if (GameActive && !IsInLimbo) {
 
 		Unselect();
@@ -1185,6 +1374,9 @@ bool ObjectClass::Limbo(void)
  *=============================================================================================*/
 bool ObjectClass::Unlimbo(COORDINATE coord, DirType )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ObjectClass::Unlimbo(COORDINATE coord, DirType )");
+#endif
 	if (GameActive && IsInLimbo && !IsDown) {
 		if (ScenarioInit || Can_Enter_Cell(Coord_Cell(coord), FACING_NONE) == MOVE_OK) {
 			IsInLimbo = false;
@@ -1234,6 +1426,9 @@ bool ObjectClass::Unlimbo(COORDINATE coord, DirType )
  *=============================================================================================*/
 void ObjectClass::Detach_All(bool all)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ObjectClass::Detach_All(bool all)");
+#endif
 	/*
 	**	Unselect this object if it was selected.
 	*/
@@ -1268,6 +1463,9 @@ void ObjectClass::Detach_All(bool all)
  *=============================================================================================*/
 void ObjectClass::Detach_This_From_All(TARGET target, bool all)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ObjectClass::Detach_This_From_All(TARGET target, bool all)");
+#endif
 	int index;
 	if (Target_Legal(target)) {
 
@@ -1318,6 +1516,9 @@ void ObjectClass::Detach_This_From_All(TARGET target, bool all)
  *=============================================================================================*/
 RadioMessageType ObjectClass::Receive_Message(RadioClass *, RadioMessageType message, long & )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("RadioMessageType ObjectClass::Receive_Message(RadioClass *, RadioMessageType message, long & )");
+#endif
 	switch (message) {
 
 		/*
@@ -1369,6 +1570,9 @@ RadioMessageType ObjectClass::Receive_Message(RadioClass *, RadioMessageType mes
  *=============================================================================================*/
 ResultType ObjectClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ResultType ObjectClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)");
+#endif
 	ResultType result = RESULT_NONE;
 	int oldstrength = Strength;
 
@@ -1477,6 +1681,9 @@ ResultType ObjectClass::Take_Damage(int & damage, int distance, WarheadType warh
  *=============================================================================================*/
 bool ObjectClass::Mark(MarkType mark)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ObjectClass::Mark(MarkType mark)");
+#endif
 	TechnoClass *tech;
 	CELL			cell;
 	int			threat;
@@ -1576,6 +1783,9 @@ bool ObjectClass::Mark(MarkType mark)
  *=============================================================================================*/
 void ObjectClass::Init(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ObjectClass::Init(void)");
+#endif
 	CurrentObject.Clear();
 }
 
@@ -1597,14 +1807,47 @@ void ObjectClass::Init(void)
  *=============================================================================================*/
 bool ObjectClass::Revealed(HouseClass * house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ObjectClass::Revealed(HouseClass * house)");
+#endif
 	return(house != NULL);
 }
 
 // These can't be made inline (for various reasons).
-short const * ObjectClass::Occupy_List(bool placement) const {return(Class_Of().Occupy_List(placement));};
-short const * ObjectClass::Overlap_List(bool /*redraw*/) const {return(Class_Of().Overlap_List());};
-BuildingClass * ObjectClass::Who_Can_Build_Me(bool intheory, bool legal) const {return(Class_Of().Who_Can_Build_Me(intheory, legal, Owner()));};
-unsigned ObjectClass::Health_Ratio(void) const {return(Cardinal_To_Fixed(Class_Of().MaxStrength, Strength));};
-int ObjectClass::Full_Name(void) const {return Class_Of().Full_Name();};
-int ObjectClass::Enemy_Name(void) const {return Class_Of().Enemy_Name();};
+short const * ObjectClass::Occupy_List(bool placement) const {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const * ObjectClass::Occupy_List(bool placement) const");
+#endif
+	return(Class_Of().Occupy_List(placement));
+}
+short const * ObjectClass::Overlap_List(bool /*redraw*/) const {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const * ObjectClass::Overlap_List(bool /*redraw*/) const");
+#endif
+	return(Class_Of().Overlap_List());
+}
+BuildingClass * ObjectClass::Who_Can_Build_Me(bool intheory, bool legal) const {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BuildingClass * ObjectClass::Who_Can_Build_Me(bool intheory, bool legal) const");
+#endif
+	return(Class_Of().Who_Can_Build_Me(intheory, legal, Owner()));
+}
+unsigned ObjectClass::Health_Ratio(void) const {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned ObjectClass::Health_Ratio(void) const");
+#endif
+	return(Cardinal_To_Fixed(Class_Of().MaxStrength, Strength));
+}
+int ObjectClass::Full_Name(void) const {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ObjectClass::Full_Name(void) const");
+#endif
+	return Class_Of().Full_Name();
+}
+int ObjectClass::Enemy_Name(void) const {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ObjectClass::Enemy_Name(void) const");
+#endif
+	return Class_Of().Enemy_Name();
+}
 

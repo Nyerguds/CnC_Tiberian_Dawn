@@ -86,6 +86,9 @@ TcpipManagerClass	Winsock;			//The object for interfacing with Winsock
  *=============================================================================================*/
 TcpipManagerClass::TcpipManagerClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TcpipManagerClass::TcpipManagerClass(void)");
+#endif
 	WinsockInitialised = FALSE;
 	Connected = FALSE;
 	UseUDP = TRUE;
@@ -109,9 +112,11 @@ TcpipManagerClass::TcpipManagerClass(void)
  * HISTORY:                                                                                    *
  *    3/20/96 2:52PM ST : Created                                                              *
  *=============================================================================================*/
-
 TcpipManagerClass::~TcpipManagerClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TcpipManagerClass::~TcpipManagerClass(void)");
+#endif
 	Close();
 }
 
@@ -130,9 +135,11 @@ TcpipManagerClass::~TcpipManagerClass(void)
  * HISTORY:                                                                                    *
  *    3/20/96 2:52PM ST : Created                                                              *
  *=============================================================================================*/
-
 void TcpipManagerClass::Close(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TcpipManagerClass::Close(void)");
+#endif
 	/*
 	** If we never initialised the class in the first place then just return
 	*/
@@ -188,9 +195,11 @@ void TcpipManagerClass::Close(void)
  * HISTORY:                                                                                    *
  *    3/20/96 2:54PM ST : Created                                                              *
  *=============================================================================================*/
-
 BOOL TcpipManagerClass::Init(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BOOL TcpipManagerClass::Init(void)");
+#endif
 	short version;
 	int 	rc;
 
@@ -248,9 +257,11 @@ BOOL TcpipManagerClass::Init(void)
  * HISTORY:                                                                                    *
  *    3/20/96 2:56PM ST : Created                                                              *
  *=============================================================================================*/
-
 void TcpipManagerClass::Start_Server(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TcpipManagerClass::Start_Server(void)");
+#endif
 	int i;
 	//struct sockaddr_in addr;
 
@@ -343,9 +354,11 @@ void TcpipManagerClass::Start_Server(void)
  * HISTORY:                                                                                    *
  *    3/20/96 2:58PM ST : Created                                                              *
  *=============================================================================================*/
-
 int TcpipManagerClass::Read(void *buffer, int buffer_len)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TcpipManagerClass::Read(void *buffer, int buffer_len)");
+#endif
 	int 	bytes_copied = 0;
 	char 	*dest_buf = (char*) buffer;
 
@@ -388,9 +401,11 @@ int TcpipManagerClass::Read(void *buffer, int buffer_len)
  * HISTORY:                                                                                    *
  *    3/20/96 3:00PM ST : Created                                                              *
  *=============================================================================================*/
-
 void TcpipManagerClass::Write(void *buffer, int buffer_len)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TcpipManagerClass::Write(void *buffer, int buffer_len)");
+#endif
 	char 	*source_buf = (char*) buffer;
 
 	/*
@@ -435,9 +450,11 @@ void TcpipManagerClass::Write(void *buffer, int buffer_len)
  * HISTORY:                                                                                    *
  *    3/20/96 3:02PM ST : Created                                                              *
  *=============================================================================================*/
-
 BOOL TcpipManagerClass::Add_Client(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BOOL TcpipManagerClass::Add_Client(void)");
+#endif
 	struct 	sockaddr_in addr;
 	int 		addrsize;
 	bool 		delay = TRUE;
@@ -543,9 +560,11 @@ BOOL TcpipManagerClass::Add_Client(void)
  * HISTORY:                                                                                    *
  *    3/20/96 3:05PM ST : Created                                                              *
  *=============================================================================================*/
-
 void TcpipManagerClass::Message_Handler(HWND, UINT message, UINT , LONG lParam)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TcpipManagerClass::Message_Handler(HWND, UINT message, UINT , LONG lParam)");
+#endif
 	struct 	hostent *hentry;
 	struct 	sockaddr_in addr;
 	int	 	event;
@@ -807,6 +826,9 @@ void TcpipManagerClass::Message_Handler(HWND, UINT message, UINT , LONG lParam)
  *=============================================================================================*/
 void TcpipManagerClass::Copy_To_In_Buffer(int bytes)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TcpipManagerClass::Copy_To_In_Buffer(int bytes)");
+#endif
 	if (!ReceiveBuffers[RXBufferHead].InUse){
 		memcpy (ReceiveBuffers[RXBufferHead].Buffer, ReceiveBuffer, MIN(bytes, WS_INTERNET_BUFFER_LEN));
 		ReceiveBuffers[RXBufferHead].InUse = true;
@@ -833,6 +855,9 @@ void TcpipManagerClass::Copy_To_In_Buffer(int bytes)
  *=============================================================================================*/
 void TcpipManagerClass::Set_Host_Address(char *address)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TcpipManagerClass::Set_Host_Address(char *address)");
+#endif
 	strcpy(HostAddress, address);
 }
 
@@ -852,9 +877,11 @@ void TcpipManagerClass::Set_Host_Address(char *address)
  * HISTORY:                                                                                    *
  *    3/20/96 3:19PM ST : Created                                                              *
  *=============================================================================================*/
-
 void TcpipManagerClass::Start_Client(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TcpipManagerClass::Start_Client(void)");
+#endif
 	struct 	sockaddr_in addr;
 	bool		delay = true;
 	int 		i;
@@ -968,9 +995,11 @@ void TcpipManagerClass::Start_Client(void)
  * HISTORY:                                                                                    *
  *    3/20/96 3:24PM ST : Created                                                              *
  *=============================================================================================*/
-
 void TcpipManagerClass::Close_Socket(SOCKET s)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TcpipManagerClass::Close_Socket(SOCKET s)");
+#endif
 	LINGER ling;
 
 	ling.l_onoff = 0;		// linger off
@@ -982,6 +1011,9 @@ void TcpipManagerClass::Close_Socket(SOCKET s)
 
 void TcpipManagerClass::Set_Protocol_UDP(BOOL state)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TcpipManagerClass::Set_Protocol_UDP(BOOL state)");
+#endif
 	UseUDP = state;
 }
 
@@ -989,6 +1021,9 @@ void TcpipManagerClass::Set_Protocol_UDP(BOOL state)
 
 void TcpipManagerClass::Clear_Socket_Error(SOCKET socket)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TcpipManagerClass::Clear_Socket_Error(SOCKET socket)");
+#endif
 	unsigned long error_code;
 	int length = 4;
 

@@ -57,6 +57,9 @@ int SimRandIndex = 0;
  *=========================================================================*/
 int Sim_Random(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Sim_Random(void)");
+#endif
 	static unsigned char _randvals[] = {
 		0x47, 0xce, 0xc6, 0x6e, 0xd7, 0x9f, 0x98, 0x29, 0x92, 0x0c, 0x74, 0xa2, 
 		0x65, 0x20, 0x4b, 0x4f, 0x1e, 0xed, 0x3a, 0xdf, 0xa5, 0x7d, 0xb5, 0xc8,
@@ -106,6 +109,9 @@ int Sim_Random(void)
  *=========================================================================*/
 int Sim_IRandom(int minval, int maxval)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Sim_IRandom(int minval, int maxval)");
+#endif
 	return(Fixed_To_Cardinal((maxval-minval), Sim_Random()) + minval);
 }
 
@@ -124,6 +130,9 @@ void main(void);
 
 void main(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void main(void)");
+#endif
 	int i;
 	FILE *fp;
 	int r;

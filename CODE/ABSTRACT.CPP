@@ -57,6 +57,9 @@
  *=============================================================================================*/
 int AbstractClass::Distance(TARGET target) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AbstractClass::Distance(TARGET target) const");
+#endif
 	/*
 	**	Should subtract a fudge-factor distance for building targets.
 	*/
@@ -99,13 +102,41 @@ int AbstractClass::Distance(TARGET target) const
  *=============================================================================================*/
 AbstractTypeClass::AbstractTypeClass(int name, char const * ini)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("AbstractTypeClass::AbstractTypeClass(int name, char const * ini)");
+#endif
 	Name = name;
 	strncpy((char *)IniName, ini, sizeof(IniName));
 	((char &)IniName[sizeof(IniName)-1]) = '\0';
 }
 
-RTTIType AbstractTypeClass::What_Am_I(void) const {return RTTI_ABSTRACTTYPE;};
-COORDINATE AbstractTypeClass::Coord_Fixup(COORDINATE coord) const {return coord;}
-int AbstractTypeClass::Full_Name(void) const {return Name;};
-int AbstractTypeClass::Enemy_Name(void) const {return Full_Name();};
-unsigned short AbstractTypeClass::Get_Ownable(void) const {return 0xffff;};
+RTTIType AbstractTypeClass::What_Am_I(void) const {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("RTTIType AbstractTypeClass::What_Am_I(void) const");
+#endif
+	return RTTI_ABSTRACTTYPE;
+}
+COORDINATE AbstractTypeClass::Coord_Fixup(COORDINATE coord) const {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE AbstractTypeClass::Coord_Fixup(COORDINATE coord) const");
+#endif
+	return coord;
+}
+int AbstractTypeClass::Full_Name(void) const {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AbstractTypeClass::Full_Name(void) const");
+#endif
+	return Name;
+}
+int AbstractTypeClass::Enemy_Name(void) const {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AbstractTypeClass::Enemy_Name(void) const");
+#endif
+	return Full_Name();
+}
+unsigned short AbstractTypeClass::Get_Ownable(void) const {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned short AbstractTypeClass::Get_Ownable(void) const");
+#endif
+	return 0xffff;
+}

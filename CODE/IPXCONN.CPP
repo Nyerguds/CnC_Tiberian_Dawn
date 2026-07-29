@@ -100,6 +100,9 @@ IPXConnClass::IPXConnClass (int numsend, int numreceive, int maxlen,
 		-1,		// max retries
 		60)		// timeout
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("IPXConnClass::IPXConnClass (int numsend, int numreceive, int maxlen, unsigned short magicnum, IPXAddressClass *address, int id, char *name)");
+#endif
 	NetNumType net;
 	NetNodeType node;
 
@@ -163,6 +166,9 @@ IPXConnClass::IPXConnClass (int numsend, int numreceive, int maxlen,
  *=========================================================================*/
 void IPXConnClass::Init (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void IPXConnClass::Init (void)");
+#endif
 	/*------------------------------------------------------------------------
 	Invoke the parent's Init routine
 	------------------------------------------------------------------------*/
@@ -209,6 +215,9 @@ void IPXConnClass::Configure (unsigned short socket, int conn_num,
 	IPXHeaderType *send_header, char *listen_buf, char *send_buf,
 	long handler_rm_ptr, int maxpacketlen)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void IPXConnClass::Configure (unsigned short socket, int conn_num, ECBType *listen_ecb, ECBType *send_ecb, IPXHeaderType *listen_header, IPXHeaderType *send_header, char *listen_buf, char *send_buf, long handler_rm_ptr, int maxpacketlen)");
+#endif
 	/*------------------------------------------------------------------------
 	Save the values passed in
 	------------------------------------------------------------------------*/
@@ -251,7 +260,9 @@ void IPXConnClass::Configure (unsigned short socket, int conn_num,
  *=========================================================================*/
 bool IPXConnClass::Start_Listening(void)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool IPXConnClass::Start_Listening(void)");
+#endif
 #ifndef NOT_FOR_WIN95
 
 	if (Winsock.Get_Connected()) return (true);
@@ -349,6 +360,9 @@ bool IPXConnClass::Start_Listening(void)
  *=========================================================================*/
 bool IPXConnClass::Stop_Listening(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool IPXConnClass::Stop_Listening(void)");
+#endif
 	/*------------------------------------------------------------------------
 	Don't do anything unless we're already Listening.
 	------------------------------------------------------------------------*/
@@ -402,6 +416,9 @@ bool IPXConnClass::Stop_Listening(void)
  *=========================================================================*/
 int IPXConnClass::Send(char *buf, int buflen)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXConnClass::Send(char *buf, int buflen)");
+#endif
 	/*------------------------------------------------------------------------
 	Invoke our own Send_To routine, filling in our Address as the destination.
 	------------------------------------------------------------------------*/
@@ -431,6 +448,9 @@ int IPXConnClass::Send(char *buf, int buflen)
  *=========================================================================*/
 int IPXConnClass::Open_Socket(unsigned short socket)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXConnClass::Open_Socket(unsigned short socket)");
+#endif
 	int rc;
 
 	if (Winsock.Get_Connected()){
@@ -485,6 +505,9 @@ int IPXConnClass::Open_Socket(unsigned short socket)
  *=========================================================================*/
 void IPXConnClass::Close_Socket(unsigned short socket)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void IPXConnClass::Close_Socket(unsigned short socket)");
+#endif
 	if (Winsock.Get_Connected()){
 		SocketOpen = 0;
 		return;
@@ -534,7 +557,9 @@ void IPXConnClass::Close_Socket(unsigned short socket)
 int IPXConnClass::Send_To(char *buf, int buflen, IPXAddressClass *address,
 	NetNodeType immed)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXConnClass::Send_To(char *buf, int buflen, IPXAddressClass *address, NetNodeType immed)");
+#endif
 	void *hdr_ptr;
 	void *buf_ptr;
 	unsigned long hdr_val;
@@ -642,7 +667,9 @@ CCDebugString (tempbuf);
  *=========================================================================*/
 int IPXConnClass::Broadcast(char *buf, int buflen)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXConnClass::Broadcast(char *buf, int buflen)");
+#endif
 	if (Winsock.Get_Connected()){
 #ifdef VIRTUAL_SUBNET_SERVER
 		char *tempsend = new char [buflen + sizeof (unsigned short)];

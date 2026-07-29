@@ -99,6 +99,9 @@ void (*Memory_Error_Exit)(char *string) = NULL;
 #include"mono.h"
 void DPMI_Lock(VOID const *ptr, long const size)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DPMI_Lock(VOID const *ptr, long const size)");
+#endif
 	union REGS regs;
 	struct SREGS sregs;
 
@@ -144,6 +147,9 @@ void DPMI_Lock(VOID const *ptr, long const size)
  *=========================================================================*/
 void DPMI_Unlock(void const *ptr, long const size)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DPMI_Unlock(void const *ptr, long const size)");
+#endif
 	union REGS regs;
 	struct SREGS sregs;
 
@@ -193,6 +199,9 @@ void DPMI_Unlock(void const *ptr, long const size)
  *=========================================================================*/
 void *Alloc(unsigned long bytes_to_alloc, MemoryFlagType flags)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void *Alloc(unsigned long bytes_to_alloc, MemoryFlagType flags)");
+#endif
 	union REGS		regs ;
 	struct SREGS 	sregs ;
 	unsigned char *retval=NULL;	// Pointer to allocated block.
@@ -384,6 +393,9 @@ void *Alloc(unsigned long bytes_to_alloc, MemoryFlagType flags)
  ***************************************************************************/
 void Free(void const *pointer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Free(void const *pointer)");
+#endif
 	union REGS		regs ;
 	struct SREGS 	sregs ;
 
@@ -503,7 +515,9 @@ void Free(void const *pointer)
  *=========================================================================*/
 void *Resize_Alloc(void *original_ptr, unsigned long new_size_in_bytes)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void *Resize_Alloc(void *original_ptr, unsigned long new_size_in_bytes)");
+#endif
 	unsigned long *temp;
 //	unsigned long diff, flags;
 
@@ -539,6 +553,9 @@ void *Resize_Alloc(void *original_ptr, unsigned long new_size_in_bytes)
  *=========================================================================*/
 long Ram_Free(MemoryFlagType)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long Ram_Free(MemoryFlagType)");
+#endif
 	return(_memmax());
 //	return Largest_Mem_Block();
 }
@@ -560,6 +577,9 @@ long Ram_Free(MemoryFlagType)
  *=========================================================================*/
 long Heap_Size(MemoryFlagType )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long Heap_Size(MemoryFlagType )");
+#endif
 	if (!TotalRam) {
 		TotalRam = Total_Ram_Free(MEM_NORMAL);
 	}
@@ -584,6 +604,9 @@ long Heap_Size(MemoryFlagType )
  *=========================================================================*/
 long Total_Ram_Free(MemoryFlagType )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long Total_Ram_Free(MemoryFlagType )");
+#endif
 	return(_memavl());
 //	return Largest_Mem_Block () ;
 }

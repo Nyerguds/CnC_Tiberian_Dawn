@@ -155,6 +155,9 @@ void			*PacketLater = NULL;
 
 void Send_Statistics_Packet(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Send_Statistics_Packet(void)");
+#endif
 #ifndef DEMO
 
 	PacketClass	stats;
@@ -663,7 +666,9 @@ void Send_Statistics_Packet(void)
 
 void Register_Game_Start_Time(void)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Register_Game_Start_Time(void)");
+#endif
 	GameTimer.Set (0, true);
 	GameTimerInUse = true;
 }
@@ -671,6 +676,9 @@ void Register_Game_Start_Time(void)
 
 extern void Register_Game_End_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("extern void Register_Game_End_Time(void)");
+#endif
 	GameEndTime = GameTimer.Time();
 	GameTimerInUse = false;
 }

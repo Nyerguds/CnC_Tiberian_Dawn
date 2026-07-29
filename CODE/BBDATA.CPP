@@ -643,6 +643,9 @@ BulletTypeClass::BulletTypeClass(
  *=============================================================================================*/
 void BulletTypeClass::One_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BulletTypeClass::One_Time(void)");
+#endif
 	BulletType index;
 
 	/*

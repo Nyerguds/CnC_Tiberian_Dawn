@@ -68,6 +68,9 @@ char MessageListClass::BufferAvail[MAX_NUM_MESSAGES];
  *=========================================================================*/
 MessageListClass::MessageListClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MessageListClass::MessageListClass(void)");
+#endif
 	int i;
 
 	MessageList = 0;
@@ -106,6 +109,9 @@ MessageListClass::MessageListClass(void)
  *=========================================================================*/
 MessageListClass::~MessageListClass()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MessageListClass::~MessageListClass()");
+#endif
 	Init(0,0,0,0,0);
 }
 
@@ -129,6 +135,9 @@ MessageListClass::~MessageListClass()
  *=========================================================================*/
 void MessageListClass::Init(int x, int y, int max_msg, int maxchars, int height)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MessageListClass::Init(int x, int y, int max_msg, int maxchars, int height)");
+#endif
 	TextLabelClass *txtlabel;
 	int i;
 
@@ -195,6 +204,9 @@ void MessageListClass::Init(int x, int y, int max_msg, int maxchars, int height)
 TextLabelClass * MessageListClass::Add_Message(char *txt, int color,
 	TextPrintType style, int timeout, unsigned short magic_number, unsigned short crc, bool forcenew, bool mute)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TextLabelClass * MessageListClass::Add_Message(char *txt, int color, TextPrintType style, int timeout, unsigned short magic_number, unsigned short crc, bool forcenew, bool mute)");
+#endif
 	int num_msg;
 	TextLabelClass *txtlabel;
 	int x,y;
@@ -470,6 +482,9 @@ TextLabelClass * MessageListClass::Add_Message(char *txt, int color,
 TextLabelClass * MessageListClass::Add_Edit(int color, TextPrintType style,
 	char *to, int width)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TextLabelClass * MessageListClass::Add_Edit(int color, TextPrintType style, char *to, int width)");
+#endif
 	/*------------------------------------------------------------------------
 	Do nothing if we're already in "edit" mode
 	------------------------------------------------------------------------*/
@@ -512,6 +527,9 @@ TextLabelClass * MessageListClass::Add_Edit(int color, TextPrintType style,
  *=========================================================================*/
 char * MessageListClass::Get_Edit_Buf(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char * MessageListClass::Get_Edit_Buf(void)");
+#endif
 	if (!EditBuf)
 		return(NULL);
 
@@ -538,6 +556,9 @@ char * MessageListClass::Get_Edit_Buf(void)
  *=========================================================================*/
 int MessageListClass::Manage (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MessageListClass::Manage (void)");
+#endif
 	TextLabelClass *txtlabel;
 	TextLabelClass *next;
 	int changed = 0;
@@ -620,6 +641,9 @@ int MessageListClass::Manage (void)
  *=========================================================================*/
 int MessageListClass::Input(KeyNumType &input)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MessageListClass::Input(KeyNumType &input)");
+#endif
 	KeyASCIIType ascii;
 	int retcode = 0;
 
@@ -747,6 +771,9 @@ int MessageListClass::Input(KeyNumType &input)
  *=========================================================================*/
 void MessageListClass::Draw(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MessageListClass::Draw(void)");
+#endif
 	if (MessageList) {
 		Hide_Mouse();
 		MessageList->Draw_All();
@@ -772,6 +799,9 @@ void MessageListClass::Draw(void)
  *=========================================================================*/
 int MessageListClass::Num_Messages(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MessageListClass::Num_Messages(void)");
+#endif
 	GadgetClass *gadg;
 	int num;
 
@@ -806,6 +836,9 @@ int MessageListClass::Num_Messages(void)
  *=========================================================================*/
 void MessageListClass::Set_Width(int width)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MessageListClass::Set_Width(int width)");
+#endif
 	GadgetClass *gadg;
 
 	if (MessageList) {

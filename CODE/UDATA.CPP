@@ -1637,6 +1637,9 @@ UnitTypeClass::UnitTypeClass(UnitType type,
 										secondary_barrel_length,
 										armor)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("UnitTypeClass::UnitTypeClass(...)");
+#endif
 	Explosion = exp;
 	IsCrateGoodie = is_goodie;
 	IsPieceOfEight = is_eight;
@@ -1685,6 +1688,9 @@ UnitTypeClass::UnitTypeClass(UnitType type,
  *=============================================================================================*/
 short const * UnitTypeClass::Occupy_List(bool ) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const * UnitTypeClass::Occupy_List(bool ) const");
+#endif
 	static short const _simple[] = {0, REFRESH_EOL};
 	static short const _gun[] = {0, -1, 1, REFRESH_EOL};
 
@@ -1714,6 +1720,9 @@ short const * UnitTypeClass::Occupy_List(bool ) const
  *=============================================================================================*/
 UnitType UnitTypeClass::From_Name(char const *name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("UnitType UnitTypeClass::From_Name(char const *name)");
+#endif
 	if (name) {
 		for (UnitType classid = UNIT_FIRST; classid < UNIT_COUNT; classid++) {
 			if (stricmp(Pointers[classid]->IniName, name) == 0) {
@@ -1748,6 +1757,9 @@ UnitType UnitTypeClass::From_Name(char const *name)
  *=============================================================================================*/
 void UnitTypeClass::Display(int x, int y, WindowNumberType window, HousesType house) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitTypeClass::Display(int x, int y, WindowNumberType window, HousesType house) const");
+#endif
 	if (house == HOUSE_NONE) return;
 	TechnoTypeClass::Display(x, y, window, house);
 	if (!Get_Cameo_Data() && (IsTurretEquipped || IsRadarEquipped)) {
@@ -1781,6 +1793,9 @@ void UnitTypeClass::Display(int x, int y, WindowNumberType window, HousesType ho
  *=============================================================================================*/
 int UnitTypeClass::Showcase_Frame() const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int UnitTypeClass::Showcase_Frame() const");
+#endif
 	return((IsChunkyShape || IsAnimating) ? 0 : IsPieceOfEight ? 5 : 20);
 }
 
@@ -1803,6 +1818,9 @@ int UnitTypeClass::Showcase_Frame() const
  *=============================================================================================*/
 void UnitTypeClass::Prep_For_Add(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitTypeClass::Prep_For_Add(void)");
+#endif
 	for (UnitType index = UNIT_FIRST; index < UNIT_COUNT; index++) {
 		if (As_Reference(index).Get_Image_Data() != NULL) {
 			Map.Add_To_List(As_Pointer(index));
@@ -1829,6 +1847,9 @@ void UnitTypeClass::Prep_For_Add(void)
  *=============================================================================================*/
 void UnitTypeClass::One_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitTypeClass::One_Time(void)");
+#endif
 	bool hires = Get_Resolution_Shift() != 0;
 	for (UnitType index = UNIT_FIRST; index < UNIT_COUNT; index++) {
 		char fullname[_MAX_FNAME+_MAX_EXT];
@@ -1896,6 +1917,9 @@ void UnitTypeClass::One_Time(void)
 
 void UnitTypeClass::Init(TheaterType theater)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitTypeClass::Init(TheaterType theater)");
+#endif
 	//if (theater != LastTheater){
 	if (Get_Resolution_Shift()){
 		char buffer[_MAX_FNAME];
@@ -1955,6 +1979,9 @@ void UnitTypeClass::Init(TheaterType theater)
  *=============================================================================================*/
 bool UnitTypeClass::Create_And_Place(CELL cell, HousesType house) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool UnitTypeClass::Create_And_Place(CELL cell, HousesType house) const");
+#endif
 	UnitClass * unit = new UnitClass(Type, house);
 	if (unit) {
 		return(unit->Unlimbo(Cell_Coord(cell), Random_Pick(DIR_N, DIR_MAX)));
@@ -1982,6 +2009,9 @@ bool UnitTypeClass::Create_And_Place(CELL cell, HousesType house) const
  *=============================================================================================*/
 ObjectClass * UnitTypeClass::Create_One_Of(HouseClass * house) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ObjectClass * UnitTypeClass::Create_One_Of(HouseClass * house) const");
+#endif
 	return(new UnitClass(Type, house->Class->House));
 }
 
@@ -2012,6 +2042,9 @@ ObjectClass * UnitTypeClass::Create_One_Of(HouseClass * house) const
  *=============================================================================================*/
 BuildingClass * UnitTypeClass::Who_Can_Build_Me(bool intheory, bool legal, HousesType house) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BuildingClass * UnitTypeClass::Who_Can_Build_Me(bool intheory, bool legal, HousesType house) const");
+#endif
 	BuildingClass * anybuilding = NULL;
 
 	for (int index = 0; index < Buildings.Count(); index++) {
@@ -2051,6 +2084,9 @@ BuildingClass * UnitTypeClass::Who_Can_Build_Me(bool intheory, bool legal, House
  *=============================================================================================*/
 UnitTypeClass const & UnitTypeClass::As_Reference(UnitType type)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("UnitTypeClass const & UnitTypeClass::As_Reference(UnitType type)");
+#endif
 	return(*Pointers[type]);
 }
 
@@ -2074,6 +2110,9 @@ UnitTypeClass const & UnitTypeClass::As_Reference(UnitType type)
  *=============================================================================================*/
 UnitTypeClass const * UnitTypeClass::As_Pointer(UnitType type)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("UnitTypeClass const * UnitTypeClass::As_Pointer(UnitType type)");
+#endif
 	if ((unsigned)type >= UNIT_COUNT)
 		return (NULL);
 	return(Pointers[type]);
@@ -2100,6 +2139,9 @@ UnitTypeClass const * UnitTypeClass::As_Pointer(UnitType type)
  *=============================================================================================*/
 void UnitTypeClass::Dimensions(int &width, int &height) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitTypeClass::Dimensions(int &width, int &height) const");
+#endif
 	if (Type == UNIT_GUNBOAT) {
 		width = 46;
 		height = 18;
@@ -2127,6 +2169,9 @@ void UnitTypeClass::Dimensions(int &width, int &height) const
  *=============================================================================================*/
 int UnitTypeClass::Repair_Cost(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int UnitTypeClass::Repair_Cost(void) const");
+#endif
 	return(Fixed_To_Cardinal(Cost/(MaxStrength/REPAIR_STEP), REPAIR_PERCENT));
 }
 
@@ -2148,6 +2193,9 @@ int UnitTypeClass::Repair_Cost(void) const
  *=============================================================================================*/
 int UnitTypeClass::Repair_Step(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int UnitTypeClass::Repair_Step(void) const");
+#endif
 	return(REPAIR_STEP);
 }
 
@@ -2170,6 +2218,9 @@ int UnitTypeClass::Repair_Step(void) const
  *=============================================================================================*/
 int UnitTypeClass::Max_Pips(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int UnitTypeClass::Max_Pips(void) const");
+#endif
 	if (Type == UNIT_HARVESTER) {
 		return(FULL_LOAD_CREDITS/100);
 	}
@@ -2199,6 +2250,9 @@ int UnitTypeClass::Max_Pips(void) const
  *=============================================================================================*/
 int UnitTypeClass::Enemy_Name(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int UnitTypeClass::Enemy_Name(void) const");
+#endif
 	return(TXT_ENEMY_VEHICLE);
 }
 
@@ -2219,5 +2273,8 @@ int UnitTypeClass::Enemy_Name(void) const
  *=============================================================================================*/
 void const * UnitTypeClass::Remap_Table(HouseClass * house, bool blushing) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void const * UnitTypeClass::Remap_Table(HouseClass * house, bool blushing) const");
+#endif
 	return(house->Remap_Table(blushing, IsBuildingColor));
 }

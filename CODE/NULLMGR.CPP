@@ -112,6 +112,9 @@ char ModemRXString[80];
 NullModemClass::NullModemClass (int numsend, int numreceive, int maxlen,
 	unsigned short magicnum) : ConnManClass()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("NullModemClass::NullModemClass (int numsend, int numreceive, int maxlen, unsigned short magicnum)");
+#endif
 	/*------------------------------------------------------------------------
 	Init Port to NULL; we haven't opened Greenleaf yet.
 	------------------------------------------------------------------------*/
@@ -173,6 +176,9 @@ NullModemClass::NullModemClass (int numsend, int numreceive, int maxlen,
  *=========================================================================*/
 NullModemClass::~NullModemClass ()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("NullModemClass::~NullModemClass ()");
+#endif
 	Delete_Connection();
 }	/* end of ~NullModemClass */
 
@@ -202,6 +208,9 @@ NullModemClass::~NullModemClass ()
 #pragma off (unreferenced)
 int NullModemClass::Init (int port, int ,char *dev_name, int baud, char parity, int wordlen, int stopbits, int flowcontrol)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NullModemClass::Init (int port, int ,char *dev_name, int baud, char parity, int wordlen, int stopbits, int flowcontrol)");
+#endif
 	int com;
 	//int irqnum;
 	//int address;
@@ -381,6 +390,9 @@ int NullModemClass::Init (int port, int ,char *dev_name, int baud, char parity, 
  *=============================================================================================*/
 int NullModemClass::Num_Connections( void )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NullModemClass::Num_Connections( void )");
+#endif
 	return(NumConnections);
 }
 
@@ -402,6 +414,9 @@ int NullModemClass::Num_Connections( void )
  *=============================================================================================*/
 int NullModemClass::Delete_Connection( void )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NullModemClass::Delete_Connection( void )");
+#endif
 	if (Connection) {
 		delete Connection;
 		Connection = NULL;
@@ -444,7 +459,9 @@ int NullModemClass::Delete_Connection( void )
  *=============================================================================================*/
 int NullModemClass::Init_Send_Queue( void )
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NullModemClass::Init_Send_Queue( void )");
+#endif
 	/*---------------------------------------------------------------
 	Init the send queue
 	-----------------------------------------------------------------*/
@@ -471,7 +488,9 @@ int NullModemClass::Init_Send_Queue( void )
  *=============================================================================================*/
 DetectPortType NullModemClass::Detect_Port( SerialSettingsType *settings)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("DetectPortType NullModemClass::Detect_Port( SerialSettingsType *settings)");
+#endif
 	static char com_ids[9][5]={
 		"COM1",
 		"COM2",
@@ -593,6 +612,9 @@ DetectPortType NullModemClass::Detect_Port( SerialSettingsType *settings)
  *=============================================================================================*/
 void NullModemClass::Shutdown ( void )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void NullModemClass::Shutdown ( void )");
+#endif
 	if (PortHandle && SerialPort) {
 		SerialPort->Serial_Port_Close();
 		delete SerialPort;
@@ -633,6 +655,9 @@ void NullModemClass::Shutdown ( void )
 void NullModemClass::Set_Timing (unsigned long retrydelta,
 	unsigned long maxretries, unsigned long timeout)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void NullModemClass::Set_Timing (unsigned long retrydelta, unsigned long maxretries, unsigned long timeout)");
+#endif
 	RetryDelta = retrydelta;
 	MaxRetries = maxretries;
 	Timeout = timeout;
@@ -678,6 +703,9 @@ void NullModemClass::Set_Timing (unsigned long retrydelta,
  *=========================================================================*/
 int NullModemClass::Send_Message (void *buf, int buflen, int ack_req)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NullModemClass::Send_Message (void *buf, int buflen, int ack_req)");
+#endif
 	int rc;
 
 	if (NumConnections == 0) {
@@ -711,6 +739,9 @@ int NullModemClass::Send_Message (void *buf, int buflen, int ack_req)
  *=========================================================================*/
 int NullModemClass::Get_Message (void *buf, int *buflen)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NullModemClass::Get_Message (void *buf, int *buflen)");
+#endif
 	if (NumConnections == 0) {
 		return( false );
 	}
@@ -735,6 +766,9 @@ int NullModemClass::Get_Message (void *buf, int *buflen)
  *=========================================================================*/
 int NullModemClass::Service (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NullModemClass::Service (void)");
+#endif
 	int pos;				// current position in RXBuf
 	int i;				// loop counter
 	//int status;
@@ -956,6 +990,9 @@ Debug_Smart_Print = FALSE;
  *=========================================================================*/
 int NullModemClass::Num_Send(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NullModemClass::Num_Send(void)");
+#endif
 	if (Connection)
 		return( Connection->Queue->Num_Send() );
 	else
@@ -978,6 +1015,9 @@ int NullModemClass::Num_Send(void)
  *=========================================================================*/
 int NullModemClass::Num_Receive(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NullModemClass::Num_Receive(void)");
+#endif
 	if (Connection)
 		return( Connection->Queue->Num_Receive() );
 	else
@@ -1000,6 +1040,9 @@ int NullModemClass::Num_Receive(void)
  *=========================================================================*/
 unsigned long NullModemClass::Response_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned long NullModemClass::Response_Time(void)");
+#endif
 	if (Connection)
 		return( Connection->Queue->Avg_Response_Time() );
 	else
@@ -1022,6 +1065,9 @@ unsigned long NullModemClass::Response_Time(void)
  *=========================================================================*/
 void NullModemClass::Reset_Response_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void NullModemClass::Reset_Response_Time(void)");
+#endif
 	if (Connection)
 		Connection->Queue->Reset_Response_Time();
 
@@ -1042,6 +1088,9 @@ void NullModemClass::Reset_Response_Time(void)
  *=========================================================================*/
 void * NullModemClass::Oldest_Send(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void * NullModemClass::Oldest_Send(void)");
+#endif
 	int i;
 	SendQueueType *send_entry;				// ptr to send entry header
 	CommHeaderType *packet;
@@ -1091,6 +1140,9 @@ void * NullModemClass::Oldest_Send(void)
 void NullModemClass::Configure_Debug(int , int offset, int size,
 	char **names, int maxnames)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void NullModemClass::Configure_Debug(int , int offset, int size, char **names, int maxnames)");
+#endif
 	if (Connection)
 		Connection->Queue->Configure_Debug (offset, size, names, maxnames);
 }
@@ -1113,6 +1165,9 @@ void NullModemClass::Configure_Debug(int , int offset, int size,
  *=========================================================================*/
 void NullModemClass::Mono_Debug_Print(int, int refresh)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void NullModemClass::Mono_Debug_Print(int, int refresh)");
+#endif
 	if (!Connection)
 		return;
 
@@ -1158,7 +1213,9 @@ void NullModemClass::Mono_Debug_Print(int, int refresh)
 
 void Timer_Test (int line, char *file)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Timer_Test (int line, char *file)");
+#endif
 	char abuffer [128];
 
 	sprintf (abuffer, "Testing timer at line %d in file %s", line, file);
@@ -1197,6 +1254,9 @@ void Timer_Test (int line, char *file)
  *=========================================================================*/
 int NullModemClass::Detect_Modem( SerialSettingsType *settings, bool reconnect )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NullModemClass::Detect_Modem( SerialSettingsType *settings, bool reconnect )");
+#endif
 	/*........................................................................
 	Button Enumerations
 	........................................................................*/
@@ -1462,7 +1522,9 @@ int NullModemClass::Detect_Modem( SerialSettingsType *settings, bool reconnect )
  *=========================================================================*/
 DialStatusType NullModemClass::Dial_Modem( char *string, DialMethodType method, bool reconnect )
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("DialStatusType NullModemClass::Dial_Modem( char *string, DialMethodType method, bool reconnect )");
+#endif
 //Timer_Test(__LINE__, __FILE__);
 
 
@@ -1725,6 +1787,9 @@ DialStatusType NullModemClass::Dial_Modem( char *string, DialMethodType method, 
  *=========================================================================*/
 DialStatusType NullModemClass::Answer_Modem( bool reconnect )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("DialStatusType NullModemClass::Answer_Modem( bool reconnect )");
+#endif
 	int factor 		= Get_Resolution_Factor();
 
 	/*........................................................................
@@ -1973,6 +2038,9 @@ DialStatusType NullModemClass::Answer_Modem( bool reconnect )
  *=========================================================================*/
 bool NullModemClass::Hangup_Modem( void )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool NullModemClass::Hangup_Modem( void )");
+#endif
 	int status;
 	int delay;
 	char buffer[81];
@@ -2069,6 +2137,9 @@ bool NullModemClass::Hangup_Modem( void )
  *=============================================================================================*/
 void NullModemClass::Setup_Modem_Echo( void ( *func )( char c) )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void NullModemClass::Setup_Modem_Echo(void (*func)(char c))");
+#endif
 	SerialPort->Set_Echo_Function(func);
 	//HMSetUpEchoRoutine( func );
 
@@ -2091,6 +2162,9 @@ void NullModemClass::Setup_Modem_Echo( void ( *func )( char c) )
  *=============================================================================================*/
 void NullModemClass::Remove_Modem_Echo( void )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void NullModemClass::Remove_Modem_Echo( void )");
+#endif
 	SerialPort->Set_Echo_Function(NULL);
 	//HMSetUpEchoRoutine( NULL );
 
@@ -2113,6 +2187,9 @@ void NullModemClass::Remove_Modem_Echo( void )
  *=============================================================================================*/
 void NullModemClass::Print_EchoBuf( void )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void NullModemClass::Print_EchoBuf( void )");
+#endif
 	for (int i = 0; i < strlen(NullModem.EchoBuf); i++) {
 		if (NullModem.EchoBuf[i] == '\r') {
 			NullModem.EchoBuf[i] = 1;
@@ -2141,6 +2218,9 @@ void NullModemClass::Print_EchoBuf( void )
  *=============================================================================================*/
 void NullModemClass::Reset_EchoBuf( void )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void NullModemClass::Reset_EchoBuf( void )");
+#endif
 	*EchoBuf = 0;
 	EchoCount = 0;
 }
@@ -2163,6 +2243,9 @@ void NullModemClass::Reset_EchoBuf( void )
 int NullModemClass::Abort_Modem(void)
 //int NullModemClass::Abort_Modem( PORT * )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NullModemClass::Abort_Modem(void)");
+#endif
 	/*........................................................................
 	Button Enumerations
 	........................................................................*/
@@ -2207,6 +2290,9 @@ int NullModemClass::Abort_Modem(void)
  *=============================================================================================*/
 void NullModemClass::Setup_Abort_Modem( void )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void NullModemClass::Setup_Abort_Modem( void )");
+#endif
 	SerialPort->Set_Abort_Function((int(*)(void))Abort_Modem);
 }	/* end of Setup_Abort_Modem */
 
@@ -2227,6 +2313,9 @@ void NullModemClass::Setup_Abort_Modem( void )
  *=============================================================================================*/
 void NullModemClass::Remove_Abort_Modem( void )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void NullModemClass::Remove_Abort_Modem( void )");
+#endif
 	SerialPort->Set_Abort_Function(NULL);
 }	/* end of Remove_Abort_Modem */
 
@@ -2249,6 +2338,9 @@ void NullModemClass::Remove_Abort_Modem( void )
  *=============================================================================================*/
 int NullModemClass::Change_IRQ_Priority( int )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NullModemClass::Change_IRQ_Priority( int )");
+#endif
 	return (ASSUCCESS);
 }	/* end of Change_IRQ_Priority */
 
@@ -2269,6 +2361,9 @@ int NullModemClass::Change_IRQ_Priority( int )
  *=============================================================================================*/
 int NullModemClass::Get_Modem_Status( void )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NullModemClass::Get_Modem_Status( void )");
+#endif
 	int modemstatus;
 	int status;
 	char buffer[81];
@@ -2308,6 +2403,9 @@ int NullModemClass::Get_Modem_Status( void )
  *=============================================================================================*/
 int NullModemClass::Send_Modem_Command( char *command, char terminator, char *buffer, int buflen, int delay, int retries )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NullModemClass::Send_Modem_Command( char *command, char terminator, char *buffer, int buflen, int delay, int retries )");
+#endif
 	return (SerialPort->Send_Command_To_Modem(command, terminator, buffer, buflen, delay, retries));
 }
 
@@ -2328,6 +2426,9 @@ int NullModemClass::Send_Modem_Command( char *command, char terminator, char *bu
  *=============================================================================================*/
 int NullModemClass::Verify_And_Convert_To_Int( char *buffer )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NullModemClass::Verify_And_Convert_To_Int( char *buffer )");
+#endif
 	int value = 0;
 	int len = strlen(buffer);
 

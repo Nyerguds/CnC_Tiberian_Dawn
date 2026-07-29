@@ -68,6 +68,9 @@ CheckListClass::CheckListClass(int id, int x, int y, int w, int h, TextPrintType
 	void const * up, void const * down) :
 	ListClass (id, x, y, w, h, flags, up, down)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CheckListClass::CheckListClass(int id, int x, int y, int w, int h, TextPrintType flags, void const * up, void const * down)");
+#endif
 	IsReadOnly = false;
 }
 
@@ -90,6 +93,9 @@ CheckListClass::CheckListClass(int id, int x, int y, int w, int h, TextPrintType
  *=========================================================================*/
 void CheckListClass::Check_Item(int index, int checked)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CheckListClass::Check_Item(int index, int checked)");
+#endif
 	if (List[index]) {
 		((char &)List[index][0]) = checked ? CHECK_CHAR : UNCHECK_CHAR;
 	}
@@ -113,6 +119,9 @@ void CheckListClass::Check_Item(int index, int checked)
  *=========================================================================*/
 int CheckListClass::Is_Checked(int index) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CheckListClass::Is_Checked(int index) const");
+#endif
 	if (List[index]) {
 		return(List[index][0] == CHECK_CHAR);
 	}
@@ -138,6 +147,9 @@ int CheckListClass::Is_Checked(int index) const
  *=========================================================================*/
 int CheckListClass::Action(unsigned flags, KeyNumType &key)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CheckListClass::Action(unsigned flags, KeyNumType &key)");
+#endif
 	int rc;
 
 	/*

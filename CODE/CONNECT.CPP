@@ -86,6 +86,9 @@ static char *ConnectionClass::Commands[PACKET_COUNT] = {
 ConnectionClass::ConnectionClass (int maxlen, unsigned short magicnum, 
 	unsigned long retry_delta, unsigned long max_retries, unsigned long timeout)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ConnectionClass::ConnectionClass (int maxlen, unsigned short magicnum, unsigned long retry_delta, unsigned long max_retries, unsigned long timeout)");
+#endif
 	/*------------------------------------------------------------------------
 	Compute our maximum packet length
 	------------------------------------------------------------------------*/
@@ -137,6 +140,9 @@ ConnectionClass::ConnectionClass (int maxlen, unsigned short magicnum,
  *=========================================================================*/
 ConnectionClass::~ConnectionClass ()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ConnectionClass::~ConnectionClass ()");
+#endif
 	/*------------------------------------------------------------------------
 	Free memory.
 	------------------------------------------------------------------------*/
@@ -162,6 +168,9 @@ ConnectionClass::~ConnectionClass ()
  *=========================================================================*/
 int ConnectionClass::Service (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ConnectionClass::Service (void)");
+#endif
 	/*------------------------------------------------------------------------
 	Service the Send Queue.  This [re]sends packets in the Send Queue which
 	haven't been ACK'd yet, and if their retry timeout has expired, and 
@@ -206,6 +215,9 @@ int ConnectionClass::Service (void)
  *=========================================================================*/
 unsigned long ConnectionClass::Time (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned long ConnectionClass::Time (void)");
+#endif
 #ifdef WWLIB32_H
 	return(TickCount.Time());				// Westwood Library time
 #else
@@ -237,6 +249,9 @@ unsigned long ConnectionClass::Time (void)
  *=========================================================================*/
 char *ConnectionClass::Command_Name(int command)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char *ConnectionClass::Command_Name(int command)");
+#endif
 	if (command >= 0 && command < PACKET_COUNT) {
 		return(Commands[command]);
 	} else {

@@ -46,6 +46,9 @@
 
 void DOSSegmentClass::Swap(DOSSegmentClass &src, int soffset, DOSSegmentClass &dest, int doffset, int size)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DOSSegmentClass::Swap(DOSSegmentClass &src, int soffset, DOSSegmentClass &dest, int doffset, int size)");
+#endif
 	if (!size) return;
 
 	unsigned short ssel = src.Selector;
@@ -83,6 +86,9 @@ again:
 
 void DOSSegmentClass::Swap(DOSSegmentClass &src, int soffset, DOSSegmentClass &dest, int doffset, int size)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DOSSegmentClass::Swap(DOSSegmentClass &src, int soffset, DOSSegmentClass &dest, int doffset, int size)");
+#endif
 	extern void dss_swap(char *src, char *dest, int size);
 
 	#pragma aux dss_swap = 		\
@@ -102,6 +108,9 @@ void DOSSegmentClass::Swap(DOSSegmentClass &src, int soffset, DOSSegmentClass &d
 #ifdef OBSOLETE
 void DOSSegmentClass::Copy(DOSSegmentClass &src, int soffset, DOSSegmentClass &dest, int doffset, int size)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DOSSegmentClass::Copy(DOSSegmentClass &src, int soffset, DOSSegmentClass &dest, int doffset, int size)");
+#endif
 	extern void dss_copy(char *src, char *dest, int size);
 	#pragma aux dss_copy = 		\
 		"mov		ebx,ecx"			\
@@ -124,6 +133,9 @@ void DOSSegmentClass::Copy(DOSSegmentClass &src, int soffset, DOSSegmentClass &d
 #ifdef OBSOLETE
 void DOSSegmentClass::Copy_To(void *source, int dest, int size)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DOSSegmentClass::Copy_To(void *source, int dest, int size)");
+#endif
 	extern void dss_copy_to(void *src, (void *)dest, int size);
 
 	#pragma aux dss_copy_to =	\
@@ -148,6 +160,9 @@ void DOSSegmentClass::Copy_To(void *source, int dest, int size)
 #ifdef OBSOLETE
 void DOSSegmentClass::Copy_From(void *dest, int source, int size)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DOSSegmentClass::Copy_From(void *dest, int source, int size)");
+#endif
 	extern void dss_copy_from(void *dest, (void *)source, int size);
 
 	#pragma aux dss_copy_from =	\

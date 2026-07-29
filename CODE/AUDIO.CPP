@@ -230,6 +230,9 @@ static struct {
  *=============================================================================================*/
 bool Sound_Effect(VocType voc, COORDINATE coord, int variation)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Sound_Effect(VocType voc, COORDINATE coord, int variation)");
+#endif
 	unsigned			distance;
 	CELL				cell_pos;
 	int pan_value;
@@ -291,6 +294,9 @@ bool Sound_Effect(VocType voc, COORDINATE coord, int variation)
  *=============================================================================================*/
 int Sound_Effect(VocType voc, VolType volume, int variation, signed short pan_value)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Sound_Effect(VocType voc, VolType volume, int variation, signed short pan_value)");
+#endif
 	char name[_MAX_FNAME+_MAX_EXT];				// Working filename of sound effect.
 
 	if (!Options.Volume || voc == VOC_NONE || !SoundOn || SampleType == SAMPLE_NONE) {
@@ -452,6 +458,9 @@ static VoxType CurrentVoice = VOX_NONE;
  *=============================================================================================*/
 void Speak(VoxType voice)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Speak(VoxType voice)");
+#endif
 	if (Options.Volume && SampleType != 0 && voice != VOX_NONE && voice != SpeakQueue && voice != CurrentVoice && SpeakQueue == VOX_NONE) {
 		SpeakQueue = voice;
 	}
@@ -476,6 +485,9 @@ void Speak(VoxType voice)
  *=============================================================================================*/
 void Speak_AI(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Speak_AI(void)");
+#endif
 	static VoxType _last = VOX_NONE;
 	if (SampleType == 0) return;
 
@@ -516,6 +528,9 @@ void Speak_AI(void)
  *=============================================================================================*/
 void Stop_Speaking(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Stop_Speaking(void)");
+#endif
 	SpeakQueue = VOX_NONE;
 	if (SampleType != 0) {
 		Stop_Sample_Playing(SpeechBuffer);
@@ -541,6 +556,9 @@ void Stop_Speaking(void)
  *=============================================================================================*/
 bool Is_Speaking(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Is_Speaking(void)");
+#endif
 	Speak_AI();
 	if (SampleType != 0 && (SpeakQueue != VOX_NONE || Is_Sample_Playing(SpeechBuffer))) {
 		return(true);

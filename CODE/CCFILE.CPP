@@ -81,6 +81,9 @@
  *=============================================================================================*/
 void CCFileClass::Error(int , int , char const * )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CCFileClass::Error(int , int , char const * )");
+#endif
 #ifdef DEMO
 	if (strstr(File_Name(), "\\")) {
 		if (!Force_CD_Available(-1)) {
@@ -124,6 +127,9 @@ CCFileClass::CCFileClass(char const *filename) :
 	Length(0),
 	Start(0)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CCFileClass::CCFileClass(char const *filename)");
+#endif
 	Set_Name(filename);
 }
 
@@ -144,6 +150,9 @@ CCFileClass::CCFileClass(char const *filename) :
  *=============================================================================================*/
 CCFileClass::CCFileClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CCFileClass::CCFileClass(void)");
+#endif
 	FromDisk = false;
 	Pointer = 0;
 	Position = 0;
@@ -170,7 +179,9 @@ CCFileClass::CCFileClass(void)
  *=============================================================================================*/
 long CCFileClass::Write(void const *buffer, long size)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long CCFileClass::Write(void const *buffer, long size)");
+#endif
 	/*
 	**	If this is part of a mixfile, then writing is not allowed. Error out with a fatal
 	**	message.
@@ -203,6 +214,9 @@ long CCFileClass::Write(void const *buffer, long size)
  *=============================================================================================*/
 long CCFileClass::Read(void *buffer, long size)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long CCFileClass::Read(void *buffer, long size)");
+#endif
 	int opened = false;
 
 	if (!Is_Open()) {
@@ -272,6 +286,9 @@ long CCFileClass::Read(void *buffer, long size)
  *=============================================================================================*/
 long CCFileClass::Seek(long pos, int dir)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long CCFileClass::Seek(long pos, int dir)");
+#endif
 	if (Pointer || FromDisk) {
 		switch (dir) {
 			case SEEK_END:
@@ -313,6 +330,9 @@ long CCFileClass::Seek(long pos, int dir)
  *=============================================================================================*/
 long CCFileClass::Size(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long CCFileClass::Size(void)");
+#endif
 	if (Pointer || FromDisk) return(Length);
 
 	return(CDFileClass::Size());
@@ -336,6 +356,9 @@ long CCFileClass::Size(void)
  *=============================================================================================*/
 int CCFileClass::Is_Available(int )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CCFileClass::Is_Available(int )");
+#endif
 	if (MixFileClass::Offset(File_Name())) {
 		return(true);
 	}
@@ -360,7 +383,9 @@ int CCFileClass::Is_Available(int )
  *=============================================================================================*/
 int CCFileClass::Is_Open(void) const
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CCFileClass::Is_Open(void) const");
+#endif
 	/*
 	**	If the file is part of a cached file, then return that it is opened. A closed file
 	**	doesn't have a valid pointer.
@@ -386,6 +411,9 @@ int CCFileClass::Is_Open(void) const
  *=============================================================================================*/
 void CCFileClass::Close(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CCFileClass::Close(void)");
+#endif
 	FromDisk = false;
 	Pointer = 0;
 	Position = 0;				// Starts at beginning offset.
@@ -413,6 +441,9 @@ void CCFileClass::Close(void)
  *=============================================================================================*/
 int CCFileClass::Open(int rights)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CCFileClass::Open(int rights)");
+#endif
 	/*
 	**	Always close the file if it was open.
 	*/
@@ -482,6 +513,9 @@ static CCFileClass Handles[10];
 #ifdef NEVER
 bool __cdecl Set_Search_Drives(char const *)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool __cdecl Set_Search_Drives(char const *)");
+#endif
 	CCFileClass::Set_Search_Path(path);
 	return(true);
 }
@@ -489,6 +523,9 @@ bool __cdecl Set_Search_Drives(char const *)
 
 int __cdecl Open_File(char const *file_name, int mode)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int __cdecl Open_File(char const *file_name, int mode)");
+#endif
 	for (int index = 0; index < sizeof(Handles)/sizeof(Handles[0]); index++) {
 		if (!Handles[index].Is_Open()) {
 			Handles[index].Set_Name(file_name);
@@ -504,6 +541,9 @@ int __cdecl Open_File(char const *file_name, int mode)
 
 VOID __cdecl Close_File(int handle)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("VOID __cdecl Close_File(int handle)");
+#endif
 	if (handle != WW_ERROR && Handles[handle].Is_Open()) {
 		Handles[handle].Close();
 	}
@@ -511,6 +551,9 @@ VOID __cdecl Close_File(int handle)
 
 LONG __cdecl Read_File(int handle, VOID *buf, ULONG bytes)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LONG __cdecl Read_File(int handle, VOID *buf, ULONG bytes)");
+#endif
 	if (handle != WW_ERROR && Handles[handle].Is_Open()) {
 		return(Handles[handle].Read(buf, bytes));
 	}
@@ -519,6 +562,9 @@ LONG __cdecl Read_File(int handle, VOID *buf, ULONG bytes)
 
 LONG __cdecl Write_File(int handle, VOID const *buf, ULONG bytes)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LONG __cdecl Write_File(int handle, VOID const *buf, ULONG bytes)");
+#endif
 	if (handle != WW_ERROR && Handles[handle].Is_Open()) {
 		return(Handles[handle].Write(buf, bytes));
 	}
@@ -527,6 +573,9 @@ LONG __cdecl Write_File(int handle, VOID const *buf, ULONG bytes)
 
 int __cdecl Find_File(char const *file_name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int __cdecl Find_File(char const *file_name)");
+#endif
 	CCFileClass file(file_name);
 	return(file.Is_Available());
 }
@@ -534,22 +583,34 @@ int __cdecl Find_File(char const *file_name)
 #ifdef NEVER
 int __cdecl Delete_File(char const *file_name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int __cdecl Delete_File(char const *file_name)");
+#endif
 	return(CCFileClass(file_name).Delete());
 }
 
 int __cdecl Create_File(char const *file_name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int __cdecl Create_File(char const *file_name)");
+#endif
 	return(CCFileClass(file_name).Create());
 }
 
 ULONG __cdecl Load_Data(char const *name, VOID *ptr, ULONG size)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ULONG __cdecl Load_Data(char const *name, VOID *ptr, ULONG size)");
+#endif
 	return(CCFileClass(name).Read(ptr, size));
 }
 #endif
 
 VOID * __cdecl Load_Alloc_Data(char const *name, int )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("VOID * __cdecl Load_Alloc_Data(char const *name, int )");
+#endif
 	CCFileClass file(name);
 
 	return(Load_Alloc_Data(file));
@@ -557,6 +618,9 @@ VOID * __cdecl Load_Alloc_Data(char const *name, int )
 
 ULONG __cdecl File_Size(int handle)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ULONG __cdecl File_Size(int handle)");
+#endif
 	if (handle != WW_ERROR && Handles[handle].Is_Open()) {
 		return(Handles[handle].Size());
 	}
@@ -566,12 +630,18 @@ ULONG __cdecl File_Size(int handle)
 #ifdef NEVER
 ULONG __cdecl Write_Data(char const *name, VOID const *ptr, ULONG size)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ULONG __cdecl Write_Data(char const *name, VOID const *ptr, ULONG size)");
+#endif
 	return(CCFileClass(name).Write(ptr, size));
 }
 #endif
 
 ULONG __cdecl Seek_File(int handle, LONG offset, int starting)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ULONG __cdecl Seek_File(int handle, LONG offset, int starting)");
+#endif
 	if (handle != WW_ERROR && Handles[handle].Is_Open()) {
 		return(Handles[handle].Seek(offset, starting));
 	}
@@ -580,6 +650,9 @@ ULONG __cdecl Seek_File(int handle, LONG offset, int starting)
 
 void WWDOS_Shutdown(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void WWDOS_Shutdown(void)");
+#endif
 	for (int index = 0; index < 10; index++) {
 		Handles[index].Set_Name(NULL);
 	}
@@ -588,20 +661,32 @@ void WWDOS_Shutdown(void)
 #ifdef NEVER
 bool __cdecl Multi_Drive_Search(bool on)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool __cdecl Multi_Drive_Search(bool on)");
+#endif
 //	return(CCFileClass::Multi_Drive_Search(on));
 	return(on);
 }
 
 VOID __cdecl WWDOS_Init(VOID)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("VOID __cdecl WWDOS_Init(VOID)");
+#endif
 }
 
 VOID __cdecl WWDOS_Shutdown(VOID)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("VOID __cdecl WWDOS_Shutdown(VOID)");
+#endif
 }
 
 int __cdecl Find_Disk_Number(char const *)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int __cdecl Find_Disk_Number(char const *)");
+#endif
 	return(0);
 }
 #endif
@@ -622,5 +707,8 @@ int __cdecl Find_Disk_Number(char const *)
 
 void Unfragment_File_Cache(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Unfragment_File_Cache(void)");
+#endif
 }
 

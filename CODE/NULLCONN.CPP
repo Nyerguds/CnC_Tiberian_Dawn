@@ -70,6 +70,9 @@ NullModemConnClass::NullModemConnClass (int numsend, int numreceive,
 		-1, 			// Max Retries (-1 means ignore this timeout parameter)
 		1200)			// Timeout: 20 seconds
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("NullModemConnClass::NullModemConnClass (int numsend, int numreceive, int maxlen, unsigned short magicnum)");
+#endif
 	/*------------------------------------------------------------------------
 	Pre-set the port value to NULL, so Send won't send until we've been Init'd
 	------------------------------------------------------------------------*/
@@ -101,6 +104,9 @@ NullModemConnClass::NullModemConnClass (int numsend, int numreceive,
  *=========================================================================*/
 NullModemConnClass::~NullModemConnClass ()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("NullModemConnClass::~NullModemConnClass()");
+#endif
 	delete [] SendBuf;
 
 }	/* end of ~NullModemConnClass */
@@ -123,6 +129,9 @@ NullModemConnClass::~NullModemConnClass ()
  *=========================================================================*/
 void NullModemConnClass::Init (HANDLE port_handle)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void NullModemConnClass::Init (HANDLE port_handle)");
+#endif
 	NonSequencedConnClass::Init();
 	PortHandle = port_handle;
 
@@ -146,6 +155,9 @@ void NullModemConnClass::Init (HANDLE port_handle)
  *=========================================================================*/
 int NullModemConnClass::Send (char *buf, int buflen)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NullModemConnClass::Send (char *buf, int buflen)");
+#endif
 	//int status;
 	int *ibuf;
 	SerialHeaderType *header;
@@ -217,6 +229,9 @@ int NullModemConnClass::Send (char *buf, int buflen)
  *=========================================================================*/
 int NullModemConnClass::Compute_CRC (char *buf, int buflen)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NullModemConnClass::Compute_CRC (char *buf, int buflen)");
+#endif
 	unsigned int sum, hibit;
 
 	sum = 0;
@@ -252,6 +267,9 @@ int NullModemConnClass::Compute_CRC (char *buf, int buflen)
  *=========================================================================*/
 int NullModemConnClass::Packet_Overhead_Size ( void )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NullModemConnClass::Packet_Overhead_Size ( void )");
+#endif
 	//
 	// short for Null Modem Magic Number
 	// short for Null Modem length of packet

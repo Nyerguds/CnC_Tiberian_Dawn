@@ -74,6 +74,9 @@ NonSequencedConnClass::NonSequencedConnClass (int numsend, int numreceive,
 	unsigned long max_retries, unsigned long timeout) :
 	ConnectionClass (maxlen, magicnum, retry_delta, max_retries, timeout)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("NonSequencedConnClass::NonSequencedConnClass (int numsend, int numreceive, int maxlen, unsigned short magicnum, unsigned long retry_delta, unsigned long max_retries, unsigned long timeout)");
+#endif
 	/*------------------------------------------------------------------------
 	Allocate the packet Queue.  This will store incoming packets (which will
 	be placed there by the Connection Manager), and outgoing packets (which
@@ -100,6 +103,9 @@ NonSequencedConnClass::NonSequencedConnClass (int numsend, int numreceive,
  *=========================================================================*/
 NonSequencedConnClass::~NonSequencedConnClass ()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("NonSequencedConnClass::~NonSequencedConnClass ()");
+#endif
 	delete Queue;
 }
 
@@ -121,6 +127,9 @@ NonSequencedConnClass::~NonSequencedConnClass ()
  *=========================================================================*/
 void NonSequencedConnClass::Init (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void NonSequencedConnClass::Init (void)");
+#endif
 	NumRecNoAck = 0;
 	NumRecAck = 0;
 	NumSendNoAck = 0;
@@ -157,6 +166,9 @@ void NonSequencedConnClass::Init (void)
  *=========================================================================*/
 int NonSequencedConnClass::Send_Packet (void * buf, int buflen, int ack_req)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NonSequencedConnClass::Send_Packet (void * buf, int buflen, int ack_req)");
+#endif
 	/*........................................................................
 	Set the magic # for the packet
 	........................................................................*/
@@ -216,6 +228,9 @@ int NonSequencedConnClass::Send_Packet (void * buf, int buflen, int ack_req)
  *=========================================================================*/
 int NonSequencedConnClass::Receive_Packet (void * buf, int buflen)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NonSequencedConnClass::Receive_Packet (void * buf, int buflen)");
+#endif
 	CommHeaderType *packet;								// ptr to packet header
 	SendQueueType *send_entry;							// ptr to send entry header
 	ReceiveQueueType *rec_entry;						// ptr to recv entry header
@@ -433,6 +448,9 @@ int NonSequencedConnClass::Receive_Packet (void * buf, int buflen)
  *=========================================================================*/
 int NonSequencedConnClass::Get_Packet (void * buf, int *buflen)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NonSequencedConnClass::Get_Packet (void * buf, int *buflen)");
+#endif
 	ReceiveQueueType *rec_entry;					// ptr to receive entry header
 	int packetlen;										// size of received packet
 	CommHeaderType *entry_data;
@@ -508,6 +526,9 @@ int NonSequencedConnClass::Get_Packet (void * buf, int *buflen)
  *=========================================================================*/
 int NonSequencedConnClass::Service_Send_Queue (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NonSequencedConnClass::Service_Send_Queue (void)");
+#endif
 	int i;
 	int num_entries;
 	SendQueueType *send_entry;						// ptr to send queue entry
@@ -656,6 +677,9 @@ int NonSequencedConnClass::Service_Send_Queue (void)
  *=========================================================================*/
 int NonSequencedConnClass::Service_Receive_Queue (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int NonSequencedConnClass::Service_Receive_Queue (void)");
+#endif
 	ReceiveQueueType *rec_entry;					// ptr to receive entry header
 	CommHeaderType *packet_hdr;					// packet header
 	int i;

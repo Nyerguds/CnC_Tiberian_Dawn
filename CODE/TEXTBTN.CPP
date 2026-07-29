@@ -69,6 +69,9 @@ TextButtonClass::TextButtonClass(unsigned id, char const * text, TextPrintType s
 	ToggleClass(id, x, y, w, h),
 	String(text)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TextButtonClass::TextButtonClass(unsigned id, char const * text, TextPrintType style, int x, int y, int w, int h, int blackborder)");
+#endif
 	PrintFlags = style;
 	IsBlackBorder = blackborder;
 
@@ -100,6 +103,9 @@ TextButtonClass::TextButtonClass(unsigned id, char const * text, TextPrintType s
 TextButtonClass::TextButtonClass(void) :
 	ToggleClass(0, 0, 0, 0, 0)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TextButtonClass::TextButtonClass(void)");
+#endif
 	X = Y = 0;
 	Width = Height = 0;
 	IsBlackBorder = 0;
@@ -140,6 +146,9 @@ TextButtonClass::TextButtonClass (unsigned id, int text, TextPrintType style, in
 	ToggleClass (id, x, y, w, h),
 	String(0)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TextButtonClass::TextButtonClass (unsigned id, int text, TextPrintType style, int x, int y, int w, int h, int blackborder)");
+#endif
 	PrintFlags = style;
 	IsBlackBorder = blackborder;
 	Set_Text(text);
@@ -176,6 +185,9 @@ TextButtonClass::TextButtonClass (unsigned id, int text, TextPrintType style, in
  *=============================================================================================*/
 int TextButtonClass::Draw_Me(int forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int TextButtonClass::Draw_Me(int forced)");
+#endif
 	if (ControlClass::Draw_Me(forced)) {
 		/*
 		**	Hide the mouse.
@@ -223,6 +235,9 @@ int TextButtonClass::Draw_Me(int forced)
  *=============================================================================================*/
 void TextButtonClass::Set_Text(char const * text, bool resize)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TextButtonClass::Set_Text(char const * text, bool resize)");
+#endif
 	String = text;
 	Flag_To_Redraw();
 	if (resize && String) {
@@ -253,6 +268,9 @@ void TextButtonClass::Set_Text(char const * text, bool resize)
  *=============================================================================================*/
 void TextButtonClass::Set_Text(int text, bool resize)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TextButtonClass::Set_Text(int text, bool resize)");
+#endif
 	if (text != TXT_NONE) {
 		Set_Text(Text_String(text), resize);
 	}
@@ -277,6 +295,9 @@ void TextButtonClass::Set_Text(int text, bool resize)
  *=============================================================================================*/
 void TextButtonClass::Draw_Background(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TextButtonClass::Draw_Background(void)");
+#endif
 	/*
 	**	Draw a border if selected style.
 	*/
@@ -332,6 +353,9 @@ void TextButtonClass::Draw_Background(void)
  *=============================================================================================*/
 void TextButtonClass::Draw_Text(char const * text)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TextButtonClass::Draw_Text(char const * text)");
+#endif
 	/*
 	**	Display the text.
 	*/

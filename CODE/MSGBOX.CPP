@@ -77,6 +77,9 @@ CCMessageBox::CCMessageBox(int caption, bool pict) : Caption(caption), IsPicture
 #define	BUTTON_FLAG	0x8000
 int CCMessageBox::Process(const char *msg, const char *b1txt, const char *b2txt, const char *b3txt, bool preserve)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CCMessageBox::Process(const char *msg, const char *b1txt, const char *b2txt, const char *b3txt, bool preserve)");
+#endif
 #define BUFFSIZE (511)
 //#define BUFFSIZE (255)
 	char buffer[BUFFSIZE];
@@ -434,6 +437,9 @@ int CCMessageBox::Process(const char *msg, const char *b1txt, const char *b2txt,
  *=============================================================================================*/
 int CCMessageBox::Process(int msg, int b1txt, int b2txt, int b3txt, bool preserve)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CCMessageBox::Process(int msg, int b1txt, int b2txt, int b3txt, bool preserve)");
+#endif
 	return(Process(Text_String(msg), b1txt, b2txt, b3txt, preserve));
 }
 
@@ -460,5 +466,8 @@ int CCMessageBox::Process(int msg, int b1txt, int b2txt, int b3txt, bool preserv
  *=============================================================================================*/
 int CCMessageBox::Process(char const *msg, int b1txt, int b2txt, int b3txt, bool preserve)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CCMessageBox::Process(char const *msg, int b1txt, int b2txt, int b3txt, bool preserve)");
+#endif
 	return(Process(msg, Text_String(b1txt), Text_String(b2txt), Text_String(b3txt), preserve));
 }

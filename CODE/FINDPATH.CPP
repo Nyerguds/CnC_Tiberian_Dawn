@@ -206,6 +206,9 @@ static CELL StartLocation;
  *=========================================================================*/
 int Point_Relative_To_Line(int x, int z, int x1, int z1, int x2, int z2)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Point_Relative_To_Line(int x, int z, int x1, int z1, int x2, int z2)");
+#endif
 	return((((long)x - (long)x2) * ((long)z1 - (long)z2)) - (((long)z - (long)z2) * ((long)x1 - (long)x2)));
 }
 
@@ -239,6 +242,9 @@ int Point_Relative_To_Line(int x, int z, int x1, int z1, int x2, int z2)
  *=========================================================================*/
 bool FootClass::Unravel_Loop(PathType *path, CELL &cell, FacingType &dir, int sx, int sy, int dx, int dy, MoveType threshold)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FootClass::Unravel_Loop(PathType *path, CELL &cell, FacingType &dir, int sx, int sy, int dx, int dy, MoveType threshold)");
+#endif
 	/*
 	** Walk back to the actual cell before we advanced our position
 	*/
@@ -328,6 +334,9 @@ bool FootClass::Unravel_Loop(PathType *path, CELL &cell, FacingType &dir, int sx
  *=========================================================================*/
 bool FootClass::Register_Cell(PathType *path, CELL cell, FacingType dir, int cost, MoveType threshold)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FootClass::Register_Cell(PathType *path, CELL cell, FacingType dir, int cost, MoveType threshold)");
+#endif
 	FacingType  *list;
 	int 	pos  = cell >> 5;
 	int	bit  = (cell & 31) - 1;
@@ -423,6 +432,9 @@ bool FootClass::Register_Cell(PathType *path, CELL cell, FacingType dir, int cos
 #ifdef OBSOLETE
 bool FootClass::Register_Cell(PathType *path, CELL cell, FacingType dir, int cost, MoveType threshold)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FootClass::Register_Cell(PathType *path, CELL cell, FacingType dir, int cost, MoveType threshold)");
+#endif
 	FacingType  *list;
 	int 	pos  = cell >> 5;
 	int	bit  = (cell & 31) - 1;
@@ -528,6 +540,9 @@ bool FootClass::Register_Cell(PathType *path, CELL cell, FacingType dir, int cos
  *=============================================================================================*/
 PathType * FootClass::Find_Path(CELL dest, FacingType *final_moves, int maxlen, MoveType threshold)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("PathType * FootClass::Find_Path(CELL dest, FacingType *final_moves, int maxlen, MoveType threshold)");
+#endif
 	CELL					source = Coord_Cell(Coord);		// Source expressed as cell
 	static PathType	path;										// Main path control.
 	CELL					next;										// Next cell to enter
@@ -922,6 +937,9 @@ end_of_list:
  *=============================================================================================*/
 bool FootClass::Follow_Edge(CELL start, CELL target, PathType *path, FacingType search, FacingType olddir, int threat, int threat_stage, int max_cells, MoveType threshold)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FootClass::Follow_Edge(CELL start, CELL target, PathType *path, FacingType search, FacingType olddir, int threat, int threat_stage, int max_cells, MoveType threshold)");
+#endif
 	FacingType	newdir;			// Direction of facing before surrounding cell check.
 	CELL			oldcell,		// Current cell.
 					newcell;		// Tentative new cell.
@@ -1370,6 +1388,9 @@ int FootClass::Optimize_Moves(PathType *path, MoveType threshold)
 
 CELL FootClass::Safety_Point(CELL src, CELL dst, int start, int max)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CELL FootClass::Safety_Point(CELL src, CELL dst, int start, int max)");
+#endif
 	FacingType dir;
 	CELL		  next;
 	int 		  lp;
@@ -1430,6 +1451,9 @@ CELL FootClass::Safety_Point(CELL src, CELL dst, int start, int max)
 
 int FootClass::Passable_Cell(CELL cell, FacingType face, int threat, MoveType threshold)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FootClass::Passable_Cell(CELL cell, FacingType face, int threat, MoveType threshold)");
+#endif
 	MoveType move = Can_Enter_Cell(cell, face);
 
 	if (move < MOVE_MOVING_BLOCK && Distance(cell) > 1) threshold = MOVE_MOVING_BLOCK;
@@ -1493,6 +1517,9 @@ int FootClass::Passable_Cell(CELL cell, FacingType face, int threat, MoveType th
 
 void FootClass::Debug_Draw_Map(char *txt, CELL start, CELL dest, bool pause)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FootClass::Debug_Draw_Map(char *txt, CELL start, CELL dest, bool pause)");
+#endif
 	if ((!Debug_Find_Path) || (!DrawPath)) return;
 
 	if (pause) Get_Key_Num();
@@ -1534,6 +1561,9 @@ void FootClass::Debug_Draw_Map(char *txt, CELL start, CELL dest, bool pause)
 
 void FootClass::Debug_Draw_Path(PathType *path)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FootClass::Debug_Draw_Path(PathType *path)");
+#endif
 	if (!path) return;
 
 	FacingType	*list	= path->Command;

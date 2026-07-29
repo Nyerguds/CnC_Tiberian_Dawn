@@ -70,6 +70,9 @@
  *=============================================================================================*/
 SuperClass::SuperClass(int recharge, VoxType ready, VoxType charging, VoxType impatient, VoxType suspend)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("SuperClass::SuperClass(int recharge, VoxType ready, VoxType charging, VoxType impatient, VoxType suspend)");
+#endif
 	IsPresent = false;
 	IsOneTime = false;
 	IsPermanentPending = false;
@@ -103,6 +106,9 @@ SuperClass::SuperClass(int recharge, VoxType ready, VoxType charging, VoxType im
  *=============================================================================================*/
 bool SuperClass::Suspend(bool on)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SuperClass::Suspend(bool on)");
+#endif
 	if (IsPresent && !IsReady && !IsOneTime) {
 		if (on != IsSuspended) {
 			if (on) {
@@ -141,6 +147,9 @@ bool SuperClass::Suspend(bool on)
  *=============================================================================================*/
 bool SuperClass::Enable(bool onetime, bool player, bool quiet)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SuperClass::Enable(bool onetime, bool player, bool quiet)");
+#endif
 	// Nyerguds's C&C Patch Project v1.04: Separation of One-Time and Permanent supers.
 	// If a permanent ability is present, and a one-time one is added,
 	// temporarily replace the permanent one, but remember the replacement.
@@ -181,6 +190,9 @@ bool SuperClass::Enable(bool onetime, bool player, bool quiet)
  *=============================================================================================*/
 bool SuperClass::Remove(bool forced) 
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SuperClass::Remove(bool forced)");
+#endif
 	if (IsPresent && IsOneTime && IsPermanentPending) {
 		// Request to remove superweapon does not affect the one-time one,
 		// but does remove the suspended permanent one.
@@ -213,6 +225,9 @@ bool SuperClass::Remove(bool forced)
  *=============================================================================================*/
 bool SuperClass::Recharge(bool player)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SuperClass::Recharge(bool player)");
+#endif
 	if (IsPresent && !IsReady) {
 		IsSuspended = false;
 		OldStage = -1;
@@ -253,6 +268,9 @@ bool SuperClass::Recharge(bool player)
  *=============================================================================================*/
 bool SuperClass::Discharged(bool player)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SuperClass::Discharged(bool player)");
+#endif
 	if (!IsSuspended && IsPresent && IsReady) {
 		IsReady = false;
 		// Nyerguds's C&C Patch Project v1.04: One-time supers can exist alongside Permanent ones.
@@ -293,6 +311,9 @@ bool SuperClass::Discharged(bool player)
  *=============================================================================================*/
 bool SuperClass::AI(bool player)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SuperClass::AI(bool player)");
+#endif
 	if (IsPresent && !IsReady) {
 		if (IsSuspended) {
 			if (OldStage != -1) {
@@ -336,6 +357,9 @@ bool SuperClass::AI(bool player)
  *=============================================================================================*/
 int SuperClass::Anim_Stage(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int SuperClass::Anim_Stage(void) const");
+#endif
 	if (IsPresent) {
 		if (IsReady) {
 			return(ANIMATION_STAGES);
@@ -369,6 +393,9 @@ int SuperClass::Anim_Stage(void) const
  *=============================================================================================*/
 void SuperClass::Impatient_Click(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SuperClass::Impatient_Click(void) const");
+#endif
 	if (IsSuspended) {
 		if (VoxSuspend != VOX_NONE) {
 			Speak(VoxSuspend);
@@ -400,6 +427,9 @@ void SuperClass::Impatient_Click(void) const
  *=============================================================================================*/
 void SuperClass::Forced_Charge(bool player)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SuperClass::Forced_Charge(bool player)");
+#endif
 	if (IsPresent) {
 		IsReady = true;
 		IsSuspended = false;

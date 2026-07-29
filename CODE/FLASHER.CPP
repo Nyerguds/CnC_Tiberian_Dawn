@@ -58,6 +58,9 @@
  *=============================================================================================*/
 void FlasherClass::Debug_Dump(MonoClass *mono) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FlasherClass::Debug_Dump(MonoClass *mono) const");
+#endif
 	mono->Set_Cursor(50, 7);
 	mono->Printf("%2d", FlashCount);
 }
@@ -82,6 +85,9 @@ void FlasherClass::Debug_Dump(MonoClass *mono) const
  *=============================================================================================*/
 bool FlasherClass::Process(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FlasherClass::Process(void)");
+#endif
 	if (FlashCount) {
 		FlashCount--;
 		IsBlushing = false;

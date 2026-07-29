@@ -96,6 +96,9 @@ CellClass *BlubCell;
  *=============================================================================================*/
 void MapClass::One_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapClass::One_Time(void)");
+#endif
 	GScreenClass::One_Time();
 
 	XSize = MAP_CELL_W;
@@ -130,6 +133,9 @@ void MapClass::One_Time(void)
  *   07/12/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
 void MapClass::After_Init(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapClass::After_Init(void)");
+#endif
 	GScreenClass::After_Init();
 }
 
@@ -151,6 +157,9 @@ void MapClass::After_Init(void) {
  *=============================================================================================*/
 void MapClass::Init_Clear(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapClass::Init_Clear(void)");
+#endif
 	GScreenClass::Init_Clear();
 	Init_Cells();
 	TiberiumScan = 0;
@@ -180,6 +189,9 @@ void MapClass::Init_Clear(void)
  *=============================================================================================*/
 void MapClass::Alloc_Cells(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapClass::Alloc_Cells(void)");
+#endif
 	/*
 	**	Assume that whatever the contents of the VectorClass are is garbage
 	**	(it may have been loaded from a save-game file), so zero it out first.
@@ -212,6 +224,9 @@ void MapClass::Alloc_Cells(void)
  *=============================================================================================*/
 void MapClass::Free_Cells(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapClass::Free_Cells(void)");
+#endif
 	Clear();
 }
 
@@ -237,6 +252,9 @@ void MapClass::Free_Cells(void)
  *=============================================================================================*/
 void MapClass::Init_Cells(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapClass::Init_Cells(void)");
+#endif
 	TotalValue = 0;
 #ifdef NEVER
 	Free_Cells();
@@ -276,6 +294,9 @@ void MapClass::Init_Cells(void)
  *=============================================================================================*/
 void MapClass::Set_Map_Dimensions(int x, int y, int w, int h)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapClass::Set_Map_Dimensions(int x, int y, int w, int h)");
+#endif
 	MapCellX = x;
 	MapCellY = y;
 	MapCellWidth = w;
@@ -311,6 +332,9 @@ void MapClass::Set_Map_Dimensions(int x, int y, int w, int h)
  *=============================================================================================*/
 void MapClass::Sight_From(CELL cell, int sightrange, bool incremental)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapClass::Sight_From(CELL cell, int sightrange, bool incremental)");
+#endif
 	int xx;				// Center cell X coordinate (bounds checking).
 	int const *ptr;	// Offset pointer.
 	int count;			// Counter for number of offsets to process.
@@ -392,6 +416,9 @@ void MapClass::Sight_From(CELL cell, int sightrange, bool incremental)
  *=============================================================================================*/
 int MapClass::Cell_Distance(CELL cell1, CELL cell2)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MapClass::Cell_Distance(CELL cell1, CELL cell2)");
+#endif
 	register int	x,y;		// Difference on X and Y axis.
 
 	x = Cell_X(cell1) - Cell_X(cell2);
@@ -428,6 +455,9 @@ int MapClass::Cell_Distance(CELL cell1, CELL cell2)
  *=============================================================================================*/
 bool MapClass::In_Radar(CELL cell) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool MapClass::In_Radar(CELL cell) const");
+#endif
 	if ((unsigned)cell >= MAP_CELL_TOTAL) return(false);
 	return((unsigned)(Cell_X(cell) - MapCellX) < (unsigned)MapCellWidth && (unsigned)(Cell_Y(cell) - MapCellY) < (unsigned)MapCellHeight);
 }
@@ -454,6 +484,9 @@ bool MapClass::In_Radar(CELL cell) const
  *=============================================================================================*/
 void MapClass::Place_Down(CELL cell, ObjectClass * object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapClass::Place_Down(CELL cell, ObjectClass * object)");
+#endif
 	if (!object) return;
 
 	short const *list = object->Occupy_List();
@@ -497,6 +530,9 @@ void MapClass::Place_Down(CELL cell, ObjectClass * object)
  *=============================================================================================*/
 void MapClass::Pick_Up(CELL cell, ObjectClass * object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapClass::Pick_Up(CELL cell, ObjectClass * object)");
+#endif
 	if (!object) return;
 
 	short const *list = object->Occupy_List();
@@ -543,6 +579,9 @@ void MapClass::Pick_Up(CELL cell, ObjectClass * object)
  *=============================================================================================*/
 void MapClass::Overlap_Down(CELL cell, ObjectClass * object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapClass::Overlap_Down(CELL cell, ObjectClass * object)");
+#endif
 	if (!object) return;
 
 	short const *list = object->Overlap_List();
@@ -579,6 +618,9 @@ void MapClass::Overlap_Down(CELL cell, ObjectClass * object)
  *=============================================================================================*/
 void MapClass::Overlap_Up(CELL cell, ObjectClass * object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapClass::Overlap_Up(CELL cell, ObjectClass * object)");
+#endif
 	if (!object) return;
 
 	short const *list = object->Overlap_List();
@@ -611,6 +653,9 @@ void MapClass::Overlap_Up(CELL cell, ObjectClass * object)
  *=============================================================================================*/
 long MapClass::Overpass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long MapClass::Overpass(void)");
+#endif
 	long value = 0;
 
 	/*
@@ -747,6 +792,9 @@ bool MapClass::Read_Binary(char const * root, unsigned long *crc)
  *=============================================================================================*/
 bool MapClass::Write_Binary(char const * root)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool MapClass::Write_Binary(char const * root)");
+#endif
 	CCFileClass *file;
 	char fname[_MAX_FNAME+_MAX_EXT];
 	int i;
@@ -813,6 +861,9 @@ bool MapClass::Write_Binary(char const * root)
  *=============================================================================================*/
 void MapClass::Logic(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapClass::Logic(void)");
+#endif
 	/*
 	**	Bail early if there is no allowed growth or spread of Tiberium.
 	*/
@@ -940,6 +991,9 @@ void MapClass::Logic(void)
  *=============================================================================================*/
 int MapClass::Cell_Region(CELL cell)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MapClass::Cell_Region(CELL cell)");
+#endif
 	return((Cell_X(cell) / REGION_WIDTH) + 1) +	(((Cell_Y(cell) / REGION_HEIGHT) + 1) * MAP_REGION_WIDTH);
 }
 
@@ -959,6 +1013,9 @@ int MapClass::Cell_Region(CELL cell)
  *=========================================================================*/
 int MapClass::Cell_Threat(CELL cell, HousesType house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MapClass::Cell_Threat(CELL cell, HousesType house)");
+#endif
 	int threat = HouseClass::As_Pointer(house)->Regions[Map.Cell_Region(Map[cell].Cell_Number())].Threat_Value();
 	if (!threat && Map[cell].IsVisible) {
 		threat = 1;
@@ -984,6 +1041,9 @@ int MapClass::Cell_Threat(CELL cell, HousesType house)
  *=============================================================================================*/
 bool MapClass::Place_Random_Crate(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool MapClass::Place_Random_Crate(void)");
+#endif
 	int old = ScenarioInit;
 	ScenarioInit = 0;
 	for (int index = 0; index < 100; index++) {
@@ -1025,6 +1085,9 @@ bool MapClass::Place_Random_Crate(void)
  *=========================================================================*/
 int MapClass::Validate(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MapClass::Validate(void)");
+#endif
 	CELL cell;
 	TemplateType ttype;
 	unsigned char ticon;
@@ -1152,6 +1215,9 @@ if (BlubCell->Overlapper[1]) {
  *=============================================================================================*/
 ObjectClass * MapClass::Close_Object(COORDINATE coord) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ObjectClass * MapClass::Close_Object(COORDINATE coord) const");
+#endif
 	ObjectClass * object = 0;
 	int distance = 0;
 	CELL cell = Coord_Cell(coord);

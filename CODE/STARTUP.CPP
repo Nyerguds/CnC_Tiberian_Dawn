@@ -69,6 +69,9 @@ char				WibbleBuffer[1024*1024];
 
 void CD_Test(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CD_Test(void)");
+#endif
 	HANDLE		handle;
 	DWORD			size;
 
@@ -119,6 +122,9 @@ void Check_Use_Compressed_Shapes (void);
 
 int PASCAL WinMain ( HINSTANCE instance , HINSTANCE , char * command_line , int command_show )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int PASCAL WinMain ( HINSTANCE instance , HINSTANCE , char * command_line , int command_show )");
+#endif
 // Heap_Dump_Check( "first thing in main" );
 //	malloc(1);
 	//Special.IsLogging = true;
@@ -632,6 +638,9 @@ int PASCAL WinMain ( HINSTANCE instance , HINSTANCE , char * command_line , int 
  *=============================================================================================*/
 void __cdecl Prog_End(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void __cdecl Prog_End(void)");
+#endif
 #ifndef DEMO
 	if (GameToPlay == GAME_MODEM || GameToPlay == GAME_NULL_MODEM) {
 		NullModem.Change_IRQ_Priority(0);
@@ -678,6 +687,9 @@ void __cdecl Prog_End(void)
  *=============================================================================================*/
 void Delete_Swap_Files(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Delete_Swap_Files(void)");
+#endif
 	struct find_t ff;		// for _dos_findfirst
 
 	if (!_dos_findfirst("*.SWP", _A_NORMAL, &ff)) {
@@ -690,6 +702,9 @@ void Delete_Swap_Files(void)
 
 void Print_Error_End_Exit(char *string)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Print_Error_End_Exit(char *string)");
+#endif
 	printf( "%s\n", string );
 	Get_Key();
 	Prog_End();
@@ -700,6 +715,9 @@ void Print_Error_End_Exit(char *string)
 
 void Print_Error_Exit(char *string)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Print_Error_Exit(char *string)");
+#endif
 	printf( "%s\n", string );
 	exit(1);
 }
@@ -727,6 +745,9 @@ void Print_Error_Exit(char *string)
  *=============================================================================================*/
 void Read_Setup_Options(RawFileClass *config_file, bool ignore_res)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Read_Setup_Options(RawFileClass *config_file, bool ignore_res)");
+#endif
 	char *buffer = new char [config_file->Size()];
 
 	if (config_file->Is_Available()){

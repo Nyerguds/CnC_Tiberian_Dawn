@@ -124,6 +124,9 @@ ListClass::ListClass (int id, int x, int y, int w, int h, TextPrintType flags, v
  *=============================================================================================*/
 ListClass::~ListClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ListClass::~ListClass(void)");
+#endif
 	Remove_Scroll_Bar();
 }
 
@@ -141,6 +144,9 @@ ListClass::~ListClass(void)
  *=============================================================================================*/
 int ListClass::Add_Item(char const * text)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ListClass::Add_Item(char const * text)");
+#endif
 	if (text) {
 		List.Add(text);
 		Flag_To_Redraw();
@@ -179,6 +185,9 @@ int ListClass::Add_Item(char const * text)
  *=============================================================================================*/
 int ListClass::Add_Item(int text)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ListClass::Add_Item(int text)");
+#endif
 	if (text != TXT_NONE) {
 		Add_Item(Text_String(text));
 	}
@@ -200,6 +209,9 @@ int ListClass::Add_Item(int text)
  *=============================================================================================*/
 void ListClass::Remove_Item(char const * text)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ListClass::Remove_Item(char const * text)");
+#endif
 	if (text) {
 		List.Delete(text);
 
@@ -255,6 +267,9 @@ void ListClass::Remove_Item(char const * text)
  *=========================================================================*/
 int ListClass::Action(unsigned flags, KeyNumType & key)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ListClass::Action(unsigned flags, KeyNumType & key)");
+#endif
 	if (flags & LEFTRELEASE) {
 		key = KN_NONE;
 		flags &= (~LEFTRELEASE);
@@ -337,6 +352,9 @@ int ListClass::Action(unsigned flags, KeyNumType & key)
  *=============================================================================================*/
 int ListClass::Draw_Me(int forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ListClass::Draw_Me(int forced)");
+#endif
 	if (GadgetClass::Draw_Me(forced)) {
 
 		/*
@@ -394,6 +412,9 @@ int ListClass::Draw_Me(int forced)
  *=============================================================================================*/
 void ListClass::Bump(int up)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ListClass::Bump(int up)");
+#endif
 	if (IsScrollActive) {
 		if (ScrollGadget.Step(up)) {
 			CurrentTopIndex = ScrollGadget.Get_Value();
@@ -419,6 +440,9 @@ void ListClass::Bump(int up)
  *=============================================================================================*/
 void ListClass::Step(int up)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ListClass::Step(int up)");
+#endif
 	if (IsScrollActive) {
 		if (ScrollGadget.Step(up)) {
 			CurrentTopIndex = ScrollGadget.Get_Value();
@@ -445,6 +469,9 @@ void ListClass::Step(int up)
  *=============================================================================================*/
 void ListClass::StepBy(int amount)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ListClass::StepBy(int amount)");
+#endif
 	if (IsScrollActive) {
 		if (ScrollGadget.StepBy(amount)) {
 			CurrentTopIndex = ScrollGadget.Get_Value();
@@ -471,6 +498,9 @@ void ListClass::StepBy(int amount)
  *=============================================================================================*/
 char const * ListClass::Get_Item(int index) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char const * ListClass::Get_Item(int index) const");
+#endif
 	if (List.Count() == 0) return (NULL);
 
 	index = MIN(index, List.Count()-1 );
@@ -494,6 +524,9 @@ char const * ListClass::Get_Item(int index) const
  *=============================================================================================*/
 char const * ListClass::Current_Item(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char const * ListClass::Current_Item(void)");
+#endif
 	return(List[SelectedIndex]);
 }
 
@@ -515,6 +548,9 @@ char const * ListClass::Current_Item(void)
  *=============================================================================================*/
 int ListClass::Current_Index(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ListClass::Current_Index(void)");
+#endif
 	return(SelectedIndex);
 }
 
@@ -541,6 +577,9 @@ int ListClass::Current_Index(void)
  *=============================================================================================*/
 void ListClass::Peer_To_Peer(unsigned flags, KeyNumType &, ControlClass & whom)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ListClass::Peer_To_Peer(unsigned flags, KeyNumType &, ControlClass & whom)");
+#endif
 	if (flags & LEFTRELEASE) {
 		if (&whom == &UpGadget) {
 			Step(true);
@@ -578,6 +617,9 @@ void ListClass::Peer_To_Peer(unsigned flags, KeyNumType &, ControlClass & whom)
  *=============================================================================================*/
 int ListClass::Set_View_Index(int index)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ListClass::Set_View_Index(int index)");
+#endif
 	index = Bound(index, 0, List.Count() - LineCount);
 	if (index != CurrentTopIndex) {
 		CurrentTopIndex = index;
@@ -608,6 +650,9 @@ int ListClass::Set_View_Index(int index)
  *=============================================================================================*/
 int ListClass::Add_Scroll_Bar(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ListClass::Add_Scroll_Bar(void)");
+#endif
 	if (!IsScrollActive) {
 		IsScrollActive = true;
 
@@ -676,6 +721,9 @@ int ListClass::Add_Scroll_Bar(void)
  *=============================================================================================*/
 int ListClass::Remove_Scroll_Bar(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ListClass::Remove_Scroll_Bar(void)");
+#endif
 	if (IsScrollActive) {
 		IsScrollActive = false;
 		Width += ScrollGadget.Width;
@@ -708,6 +756,9 @@ int ListClass::Remove_Scroll_Bar(void)
  *=============================================================================================*/
 void ListClass::Set_Tabs(int const * tabs)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ListClass::Set_Tabs(int const * tabs)");
+#endif
 	Tabs = tabs;
 }
 
@@ -735,6 +786,9 @@ void ListClass::Set_Tabs(int const * tabs)
  *=============================================================================================*/
 void ListClass::Draw_Entry(int index, int x, int y, int width, int selected)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ListClass::Draw_Entry(int index, int x, int y, int width, int selected)");
+#endif
 	if (TextFlags & TPF_6PT_GRAD) {
 		TextPrintType flags = TextFlags;
 
@@ -775,6 +829,9 @@ void ListClass::Draw_Entry(int index, int x, int y, int width, int selected)
  *=============================================================================================*/
 LinkClass & ListClass::Add(LinkClass & list)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LinkClass & ListClass::Add(LinkClass & list)");
+#endif
 	/*
 	**	Add the scroll bar gadgets if they're active.
 	*/
@@ -806,6 +863,9 @@ LinkClass & ListClass::Add(LinkClass & list)
  *=============================================================================================*/
 LinkClass & ListClass::Add_Head(LinkClass & list) 
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LinkClass & ListClass::Add_Head(LinkClass & list)");
+#endif
 	/*
 	**	Add the scroll bar gadgets if they're active.
 	*/
@@ -843,6 +903,9 @@ LinkClass & ListClass::Add_Head(LinkClass & list)
  *=============================================================================================*/
 LinkClass & ListClass::Add_Tail(LinkClass & list) 
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LinkClass & ListClass::Add_Tail(LinkClass & list)");
+#endif
 	/*
 	**	Add myself to the list.
 	*/
@@ -880,6 +943,9 @@ LinkClass & ListClass::Add_Tail(LinkClass & list)
  *=============================================================================================*/
 GadgetClass * ListClass::Remove(void) 
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("GadgetClass * ListClass::Remove(void)");
+#endif
 	/*
 	**	Remove the scroll bar if it's active
 	*/
@@ -911,7 +977,11 @@ GadgetClass * ListClass::Remove(void)
  *   06/25/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
 void ListClass::Set_Selected_Index(int index)
-{ 
+{
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ListClass::Set_Selected_Index(int index)");
+#endif
+ 
 	SelectedIndex = Bound(index, 0, List.Count() -1);; 
 	Flag_To_Redraw();
 	if (SelectedIndex < CurrentTopIndex) {
@@ -940,6 +1010,9 @@ void ListClass::Set_Selected_Index(int index)
  *=============================================================================================*/
 int ListClass::Step_Selected_Index(int step)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ListClass::Step_Selected_Index(int step)");
+#endif
 	int old = SelectedIndex;
 
 	Set_Selected_Index(old + step);

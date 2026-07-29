@@ -212,6 +212,9 @@ struct nodstats {
  *=============================================================================================*/
 void Map_Selection(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Map_Selection(void)");
+#endif
 	if (ScenPlayer != SCEN_PLAYER_GDI && ScenPlayer != SCEN_PLAYER_NOD) {
 		return;
 	}
@@ -924,6 +927,9 @@ void Map_Selection(void)
  *=========================================================================*/
 void Print_Statistics(int country, int xpos, int ypos)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Print_Statistics(int country, int xpos, int ypos)");
+#endif
 	int index,newx;
 	void *oldfont;
 	static int const _gdistatnames[]={
@@ -1185,6 +1191,9 @@ void Print_Statistics(int country, int xpos, int ypos)
  *=========================================================================*/
 void Fading_Byte_Blit(int srcx, int srcy, int destx, int desty, int w, int h, GraphicBufferClass *src, GraphicBufferClass *dest)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Fading_Byte_Blit(int srcx, int srcy, int destx, int desty, int w, int h, GraphicBufferClass *src, GraphicBufferClass *dest)");
+#endif
 	unsigned int	xindex,			// Working array index var.
 						yindex;			// Working y index var.
 	unsigned int	x,y;				// Extraction position indexes.
@@ -1253,6 +1262,9 @@ void Fading_Byte_Blit(int srcx, int srcy, int destx, int desty, int w, int h, Gr
 
 void Cycle_Call_Back_Delay(int time, unsigned char *pal)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Cycle_Call_Back_Delay(int time, unsigned char *pal)");
+#endif
 	static int _counter;
 	unsigned char r,g,b;
 	int i;
@@ -1282,6 +1294,9 @@ void Cycle_Call_Back_Delay(int time, unsigned char *pal)
 
 int LowMedHiStr(int percentage)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int LowMedHiStr(int percentage)");
+#endif
 	if (percentage < 30) return(TXT_MAP_LMH0);
 	if (percentage < 70) return(TXT_MAP_LMH1);
 	return(TXT_MAP_LMH2);
@@ -1321,6 +1336,9 @@ int LowMedHiStr(int percentage)
 
 void Bit_It_In_Scale(int x, int y, int w, int h, GraphicBufferClass *src, GraphicBufferClass *dest, GraphicViewPortClass * /*seen*/ , int delay, int dagger)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Bit_It_In_Scale(int x, int y, int w, int h, GraphicBufferClass *src, GraphicBufferClass *dest, GraphicViewPortClass * /*seen*/ , int delay, int dagger)");
+#endif
 	short int	 *xindex,*yindex;
 	int			 n;
 	unsigned int i,j,k,m,j1;
@@ -1386,6 +1404,9 @@ void Bit_It_In_Scale(int x, int y, int w, int h, GraphicBufferClass *src, Graphi
 
 void Bit_It_In(int x, int y, int w, int h, GraphicBufferClass *src, GraphicBufferClass *dest, int delay, int dagger)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Bit_It_In(int x, int y, int w, int h, GraphicBufferClass *src, GraphicBufferClass *dest, int delay, int dagger)");
+#endif
 	Bit_It_In_Scale (x, y, w, h,  src, dest, NULL , delay,  dagger);
 }
 

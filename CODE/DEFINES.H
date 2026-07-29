@@ -237,6 +237,8 @@
 #define FIX_CONCRETE_SQUARE
 // Repair the logic to complete single triangles to full 2-cell iso squares.
 #define FIX_CONCRETE_ADD
+// Include a debug string for a function name in all functions, for easier disassembly.
+#define INCLUDE_FUNCTION_NAMES
 
 
 /**********************************************************************

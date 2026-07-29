@@ -115,7 +115,9 @@ static SerialSettingsType *DialSettings;
  *=========================================================================*/
 int Init_Null_Modem( SerialSettingsType *settings )
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Init_Null_Modem( SerialSettingsType *settings )");
+#endif
 	if ( NullModem.Init( settings->Port, settings->IRQ,
 								settings->ModemName,
 								settings->Baud, 0,  8, 1,
@@ -146,6 +148,9 @@ int Init_Null_Modem( SerialSettingsType *settings )
  *=========================================================================*/
 void Shutdown_Modem( void )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Shutdown_Modem( void )");
+#endif
 	if (!PlaybackGame) {
 		if (GameToPlay == GAME_MODEM) {
 			NullModem.Hangup_Modem();
@@ -176,6 +181,9 @@ void Shutdown_Modem( void )
  *=========================================================================*/
 void Modem_Signoff( void )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Modem_Signoff( void )");
+#endif
 	unsigned long starttime;
 	EventClass event;
 
@@ -212,6 +220,9 @@ void Modem_Signoff( void )
  *=========================================================================*/
 int Test_Null_Modem( void )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Test_Null_Modem( void )");
+#endif
 	int factor			= Get_Resolution_Factor();
 	/*........................................................................
 	Button Enumerations
@@ -507,6 +518,9 @@ int Test_Null_Modem( void )
  *=========================================================================*/
 int Reconnect_Modem( void )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Reconnect_Modem( void )");
+#endif
 	int status;
 	int modemstatus;
 
@@ -559,6 +573,9 @@ int Reconnect_Modem( void )
  *=========================================================================*/
 static int Reconnect_Null_Modem( void )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static int Reconnect_Null_Modem( void )");
+#endif
 	/*........................................................................
 	Button Enumerations
 	........................................................................*/
@@ -756,6 +773,9 @@ static int Reconnect_Null_Modem( void )
  *=============================================================================================*/
 void Destroy_Null_Connection(int id, int error)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Destroy_Null_Connection(int id, int error)");
+#endif
 	int i,j,idx;
 	HousesType house;
 	HouseClass *housep;
@@ -857,6 +877,9 @@ void Destroy_Null_Connection(int id, int error)
  *=========================================================================*/
 GameType Select_Serial_Dialog( void )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("GameType Select_Serial_Dialog( void )");
+#endif
 	int rc;
 //	int value, i;
 	int com = -1, baud = -1;
@@ -1362,7 +1385,9 @@ Debug_Smart_Print = false;
  *=============================================================================================*/
 Advanced_Modem_Settings (SerialSettingsType *settings)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("Advanced_Modem_Settings (SerialSettingsType *settings)");
+#endif
 	int factor			= Get_Resolution_Factor();
 	/*........................................................................
 	Dialog & button dimensions
@@ -1645,6 +1670,9 @@ Advanced_Modem_Settings (SerialSettingsType *settings)
  *=========================================================================*/
 static int Com_Settings_Dialog( SerialSettingsType *settings )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static int Com_Settings_Dialog( SerialSettingsType *settings )");
+#endif
 /* ###Change collision detected! C:\PROJECTS\CODE\NULLDLG.CPP... */
 	int factor			= Get_Resolution_Factor();
 	/*........................................................................
@@ -2971,6 +2999,9 @@ static int Com_Settings_Dialog( SerialSettingsType *settings )
  *=========================================================================*/
 static void Build_Init_String_Listbox (ListClass *list, EditClass *edit, char *buf, int *index)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static void Build_Init_String_Listbox (ListClass *list, EditClass *edit, char *buf, int *index)");
+#endif
 	int i, curidx;
 	char *item;
 
@@ -3042,6 +3073,9 @@ static void Build_Init_String_Listbox (ListClass *list, EditClass *edit, char *b
  *=========================================================================*/
 static int Init_String_Compare (const void *p1, const void *p2)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static int Init_String_Compare (const void *p1, const void *p2)");
+#endif
 	return( strcmp( *((char **)p1), *((char **)p2) ) );
 }
 
@@ -3092,6 +3126,9 @@ static int Init_String_Compare (const void *p1, const void *p2)
 #define TXT_JOIN_INTERNET_GAME 4567+2
 int Com_Scenario_Dialog(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Com_Scenario_Dialog(void)");
+#endif
 	int factor			= Get_Resolution_Factor();
 	/*........................................................................
 	Dialog & button dimensions
@@ -4555,6 +4592,9 @@ CCDebugString (flip);
  *=============================================================================================*/
 int Com_Show_Scenario_Dialog(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Com_Show_Scenario_Dialog(void)");
+#endif
 	int factor			= Get_Resolution_Factor();
 	/*........................................................................
 	Dialog & button dimensions
@@ -5699,6 +5739,9 @@ CCDebugString (flip);
  *=========================================================================*/
 static int Phone_Dialog (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static int Phone_Dialog (void)");
+#endif
 	int factor			= Get_Resolution_Factor();
 	/*........................................................................
 	Dialog & button dimensions
@@ -6187,6 +6230,9 @@ static int Phone_Dialog (void)
  *=========================================================================*/
 static void Build_Phone_Listbox (ListClass *list, EditClass *edit, char *buf)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static void Build_Phone_Listbox (ListClass *list, EditClass *edit, char *buf)");
+#endif
 	int i;
 	char *item;
 	char phonename[21];
@@ -6280,6 +6326,9 @@ static void Build_Phone_Listbox (ListClass *list, EditClass *edit, char *buf)
  *=========================================================================*/
 static int Phone_Compare (const void *p1, const void *p2)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static int Phone_Compare (const void *p1, const void *p2)");
+#endif
 	class PhoneEntryClass *pe1,*pe2;
 	int result;
 
@@ -6315,6 +6364,9 @@ static int Phone_Compare (const void *p1, const void *p2)
  *=========================================================================*/
 static int Edit_Phone_Dialog (PhoneEntryClass *phone)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static int Edit_Phone_Dialog (PhoneEntryClass *phone)");
+#endif
 	int factor			= Get_Resolution_Factor();
 	/*........................................................................
 	Dialog & button dimensions
@@ -6644,6 +6696,9 @@ static int Edit_Phone_Dialog (PhoneEntryClass *phone)
 
 static bool Dial_Modem( SerialSettingsType *settings, bool reconnect )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static bool Dial_Modem( SerialSettingsType *settings, bool reconnect )");
+#endif
 	bool connected = false;
 	DialStatusType dialstatus;
 	int modemstatus;
@@ -6820,6 +6875,9 @@ static bool Dial_Modem( SerialSettingsType *settings, bool reconnect )
 
 static bool Answer_Modem( SerialSettingsType *settings, bool reconnect )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static bool Answer_Modem( SerialSettingsType *settings, bool reconnect )");
+#endif
 	bool connected = false;
 	DialStatusType dialstatus;
 	int modemstatus;
@@ -6985,6 +7043,9 @@ static bool Answer_Modem( SerialSettingsType *settings, bool reconnect )
 
 static void Modem_Echo( char c )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static void Modem_Echo( char c )");
+#endif
 	if (NullModem.EchoCount < (NullModem.EchoSize - 1) ) {
 		*(NullModem.EchoBuf + NullModem.EchoCount) = c;
 		*(NullModem.EchoBuf + NullModem.EchoCount + 1) = 0;
@@ -6998,6 +7059,9 @@ static void Modem_Echo( char c )
 
 void Smart_Printf( char *format, ... )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Smart_Printf( char *format, ... )");
+#endif
 	va_list arglist;
 	char buf[501];
 
@@ -7024,6 +7088,9 @@ void Smart_Printf( char *format, ... )
 
 void Hex_Dump_Data( char *buffer, int length )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Hex_Dump_Data( char *buffer, int length )");
+#endif
 	int i;
 	int offset = 0;
 	char buff[10];
@@ -7108,7 +7175,9 @@ void Hex_Dump_Data( char *buffer, int length )
 
 void itoh( int i, char *s)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void itoh( int i, char *s)");
+#endif
 	int nibble, loop;
 
 //	*s++ = '0';
@@ -7164,6 +7233,9 @@ void itoh( int i, char *s)
 
 int Com_Fake_Scenario_Dialog(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Com_Fake_Scenario_Dialog(void)");
+#endif
 	bool display = true;		// redraw level
 	bool process = true;						// process while true
 
@@ -7677,6 +7749,9 @@ int Com_Fake_Scenario_Dialog(void)
 
 int Com_Show_Fake_Scenario_Dialog(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Com_Show_Fake_Scenario_Dialog(void)");
+#endif
 	/*........................................................................
 	Dialog variables
 	........................................................................*/

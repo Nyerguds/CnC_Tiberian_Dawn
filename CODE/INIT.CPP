@@ -68,6 +68,9 @@ extern int SimRandIndex;
 
 long FAR PASCAL _export Start_Game_Proc(HWND hwnd, UINT message, UINT wParam, LONG lParam)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long FAR PASCAL _export Start_Game_Proc(HWND hwnd, UINT message, UINT wParam, LONG lParam)");
+#endif
 	switch (message) {
 		case WM_CREATE:
 			break;
@@ -109,6 +112,9 @@ extern bool SpawnedFromWChat;
  *=============================================================================================*/
 bool Init_Game(int , char *[])
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Init_Game(int , char *[])");
+#endif
 	void const *temp_mouse_shapes;
 
 	CCDebugString ("C&C95 - About to load reslib.dll\n");
@@ -687,6 +693,9 @@ bool Init_Game(int , char *[])
 #ifndef NOMEMCHECK
 void Uninit_Game(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Uninit_Game(void)");
+#endif
 	delete Map.ShadowPage;
 	Map.ShadowPage = NULL;
 	Map.Free_Cells();
@@ -750,6 +759,9 @@ void Check_From_WChat(char *wchat_name);
 
 bool Select_Game(bool fade)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Select_Game(bool fade)");
+#endif
 	// Nyerguds's TUC Quick Fix Patch v1.00: menu
 	enum {
 		SEL_TIMEOUT = -1,			// main menu timeout--go into attract mode
@@ -1748,6 +1760,9 @@ bool Select_Game(bool fade)
  *=============================================================================================*/
 static void Play_Intro(bool for_real)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static void Play_Intro(bool for_real)");
+#endif
 	bool playright = !Key_Down(KN_LCTRL) || !Key_Down(KN_RCTRL);
 	static int _counter = -1;
 	static char * _names[] = {
@@ -1904,6 +1919,9 @@ extern LPDIRECTSOUND			SoundObject;
 extern	LPDIRECTSOUNDBUFFER  PrimaryBufferPtr;
 void Anim_Init(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Anim_Init(void)");
+#endif
 	/* Configure player with INI file */
 	VQA_DefaultConfig(&AnimControl);
 //	void const * font = Load_Font(FONT8);
@@ -1976,6 +1994,9 @@ void Anim_Init(void)
  *=============================================================================================*/
 bool Parse_Command_Line(int argc, char *argv[], bool &isres)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Parse_Command_Line(int argc, char *argv[], bool &isres)");
+#endif
 	CCDebugString(" In Parse_Command_Line.\n");
 	/*
 	**	Parse the command line and set globals to reflect the parameters
@@ -2543,6 +2564,9 @@ bool Parse_Command_Line(int argc, char *argv[], bool &isres)
  *=============================================================================================*/
 void Parse_INI_File(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Parse_INI_File(void)");
+#endif
 	char *buffer;							// INI staging buffer pointer.
 	char buf[128];
 	static char section[40];
@@ -2632,6 +2656,9 @@ void Parse_INI_File(void)
  *=============================================================================================*/
 int Version_Number(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Version_Number(void)");
+#endif
 #ifdef OBSOLETE
 	static bool initialized = false;
 	static int version;
@@ -2752,6 +2779,9 @@ int Version_Number(void)
  *=========================================================================*/
 void Save_Recording_Values(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Save_Recording_Values(void)");
+#endif
 	RecordFile.Write(&GameToPlay, sizeof(GameToPlay));
 	RecordFile.Write(&ModemGameToPlay, sizeof(ModemGameToPlay));
 	RecordFile.Write(&BuildLevel, sizeof(BuildLevel));
@@ -2802,6 +2832,9 @@ void Save_Recording_Values(void)
  *=========================================================================*/
 void Load_Recording_Values(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Load_Recording_Values(void)");
+#endif
 	Read_MultiPlayer_Settings();
 
 	RecordFile.Read(&GameToPlay, sizeof(GameToPlay));
@@ -2862,6 +2895,9 @@ void Load_Recording_Values(void)
  *=============================================================================================*/
 long Obfuscate(char const * string)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("long Obfuscate(char const * string)");
+#endif
 	char buffer[128];
 
 	if (!string) return(0);

@@ -73,6 +73,9 @@
  *=============================================================================================*/
 short const * Coord_Spillage_List(COORDINATE coord, int maxsize)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const * Coord_Spillage_List(COORDINATE coord, int maxsize)");
+#endif
 	static short const _MoveSpillage[(int)FACING_COUNT+1][5] = {
 		{0, -MAP_CELL_W, REFRESH_EOL, 0, 0},						// N
 		{0, -MAP_CELL_W, 1, -(MAP_CELL_W-1), REFRESH_EOL},		// NE
@@ -173,6 +176,9 @@ short const * Coord_Spillage_List(COORDINATE coord, int maxsize)
  *=============================================================================================*/
 COORDINATE Coord_Move(COORDINATE start, register DirType dir, unsigned short distance)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE Coord_Move(COORDINATE start, register DirType dir, unsigned short distance)");
+#endif
 	short x = Coord_X(start);
 	short y = Coord_Y(start);
 
@@ -315,6 +321,9 @@ COORDINATE Coord_Move(COORDINATE start, register DirType dir, unsigned short dis
  *=============================================================================================*/
 unsigned Cardinal_To_Fixed(unsigned base, unsigned cardinal)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned Cardinal_To_Fixed(unsigned base, unsigned cardinal)");
+#endif
 	long	temp = 0;
 
 	if (base) {
@@ -348,6 +357,9 @@ unsigned Cardinal_To_Fixed(unsigned base, unsigned cardinal)
  *=============================================================================================*/
 unsigned Fixed_To_Cardinal(unsigned base, unsigned fixed)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned Fixed_To_Cardinal(unsigned base, unsigned fixed)");
+#endif
 	unsigned long temp;
 
 	_AX = base;
@@ -388,6 +400,9 @@ unsigned Fixed_To_Cardinal(unsigned base, unsigned fixed)
  *=============================================================================================*/
 COORDINATE Coord_Scatter(COORDINATE coord, unsigned distance, bool lock)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE Coord_Scatter(COORDINATE coord, unsigned distance, bool lock)");
+#endif
 	COORDINATE	newcoord;
 
 	newcoord = Coord_Move(coord, Random_Pick(DIR_N, DIR_MAX), distance);
@@ -428,6 +443,9 @@ extern int calcy(signed short, short distance);
 
 void Move_Point(short &x, short &y, register DirType dir, unsigned short distance)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Move_Point(short &x, short &y, register DirType dir, unsigned short distance)");
+#endif
 //	static char const CosTable[256] = {
 	static char const CosTable[256] = {
 		0x00,0x03,0x06,0x09,0x0c,0x0f,0x12,0x15,

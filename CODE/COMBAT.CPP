@@ -71,6 +71,9 @@ void Explosion_Damage(COORDINATE coord, unsigned strength, TechnoClass *source, 
  *=============================================================================================*/
 int Modify_Damage(int damage, WarheadType warhead, ArmorType armor, int distance)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Modify_Damage(int damage, WarheadType warhead, ArmorType armor, int distance)");
+#endif
 	/*
 	**	If there is no raw damage value to start with, then
 	**	there can be no modified damage either.
@@ -126,6 +129,9 @@ int Modify_Damage(int damage, WarheadType warhead, ArmorType armor, int distance
  *=============================================================================================*/
 void Explosion_Damage(COORDINATE coord, unsigned strength, TechnoClass * source, HousesType house, WarheadType warhead)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Explosion_Damage(COORDINATE coord, unsigned strength, TechnoClass * source, HousesType house, WarheadType warhead)");
+#endif
 	CELL				cell;			// Cell number under explosion.
 	ObjectClass *	object;			// Working object pointer.
 	ObjectClass *	objects[32];	// Maximum number of objects that can be damaged.

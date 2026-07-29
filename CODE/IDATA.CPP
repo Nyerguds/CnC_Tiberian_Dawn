@@ -1684,6 +1684,9 @@ InfantryTypeClass::InfantryTypeClass	(
 							primary, secondary, weapoffs, 0, 0,
 							ARMOR_NONE)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("InfantryTypeClass::InfantryTypeClass(...)");
+#endif
 	IsFemale = is_female;
 	IsCrawling = is_crawling;
 	IsCapture = is_capture;
@@ -1862,6 +1865,9 @@ InfantryTypeClass::InfantryTypeClass	(
  *=============================================================================================*/
 ObjectClass * InfantryTypeClass::Create_One_Of(HouseClass * house) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ObjectClass * InfantryTypeClass::Create_One_Of(HouseClass * house) const");
+#endif
 	return(new InfantryClass(Type, house->Class->House));
 }
 
@@ -1886,6 +1892,9 @@ ObjectClass * InfantryTypeClass::Create_One_Of(HouseClass * house) const
  *=============================================================================================*/
 bool InfantryTypeClass::Create_And_Place(CELL cell, HousesType house) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool InfantryTypeClass::Create_And_Place(CELL cell, HousesType house) const");
+#endif
 	InfantryClass * i = new InfantryClass(Type, house);
 	if (i) {
 		COORDINATE coord = Map[cell].Closest_Free_Spot(Cell_Coord(cell));
@@ -1919,6 +1928,9 @@ bool InfantryTypeClass::Create_And_Place(CELL cell, HousesType house) const
  *=============================================================================================*/
 short const * InfantryTypeClass::Occupy_List(bool) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const * InfantryTypeClass::Occupy_List(bool) const");
+#endif
 	static short const _list[] = {0, REFRESH_EOL};
 
 	return(&_list[0]);
@@ -1943,6 +1955,9 @@ short const * InfantryTypeClass::Occupy_List(bool) const
  *=============================================================================================*/
 int InfantryTypeClass::Showcase_Frame() const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int InfantryTypeClass::Showcase_Frame() const");
+#endif
 	return(2);
 }
 
@@ -1964,6 +1979,9 @@ int InfantryTypeClass::Showcase_Frame() const
  *=============================================================================================*/
 void InfantryTypeClass::Prep_For_Add(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryTypeClass::Prep_For_Add(void)");
+#endif
 	for (InfantryType index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
 		Map.Add_To_List(As_Pointer(index));
 	}
@@ -1990,6 +2008,9 @@ void InfantryTypeClass::Prep_For_Add(void)
  *=============================================================================================*/
 InfantryType InfantryTypeClass::From_Name(char const *name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("InfantryType InfantryTypeClass::From_Name(char const *name)");
+#endif
 	if (name) {
 		for (InfantryType classid = INFANTRY_FIRST; classid < INFANTRY_COUNT; classid++) {
 			if (stricmp(Pointers[classid]->IniName, name) == 0) {
@@ -2018,6 +2039,9 @@ InfantryType InfantryTypeClass::From_Name(char const *name)
  *=============================================================================================*/
 void InfantryTypeClass::One_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryTypeClass::One_Time(void)");
+#endif
 	bool hires = Get_Resolution_Shift() > 0;
 	for (InfantryType index = INFANTRY_FIRST; index < INFANTRY_COUNT; index++) {
 		char fullname[_MAX_FNAME+_MAX_EXT];
@@ -2067,6 +2091,9 @@ void InfantryTypeClass::One_Time(void)
  *=============================================================================================*/
 InfantryTypeClass const * InfantryTypeClass::As_Pointer(InfantryType type)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("InfantryTypeClass const * InfantryTypeClass::As_Pointer(InfantryType type)");
+#endif
 	if ((unsigned)type >= INFANTRY_COUNT)
 		return (NULL);
 	return(Pointers[type]);
@@ -2090,6 +2117,9 @@ InfantryTypeClass const * InfantryTypeClass::As_Pointer(InfantryType type)
 
 void InfantryTypeClass::Init(TheaterType theater)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryTypeClass::Init(TheaterType theater)");
+#endif
 	//if (theater != LastTheater){
 	if (Get_Resolution_Shift() > 0) {
 		char buffer[_MAX_FNAME];
@@ -2165,6 +2195,9 @@ void InfantryTypeClass::Init(TheaterType theater)
  *=============================================================================================*/
 BuildingClass * InfantryTypeClass::Who_Can_Build_Me(bool intheory, bool legal, HousesType house) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BuildingClass * InfantryTypeClass::Who_Can_Build_Me(bool intheory, bool legal, HousesType house) const");
+#endif
 	BuildingClass * anybuilding = NULL;
 
 	for (int index = 0; index < Buildings.Count(); index++) {
@@ -2206,6 +2239,9 @@ BuildingClass * InfantryTypeClass::Who_Can_Build_Me(bool intheory, bool legal, H
  *=============================================================================================*/
 int InfantryTypeClass::Full_Name(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int InfantryTypeClass::Full_Name(void) const");
+#endif
 	// Nyerguds's C&C Patch Project v1.04: Fixed IsNominal on infantry.
 	if (IsCivilian && !Debug_Map && !IsNominal && !Special.IsNamed) {
 		return(TXT_CIVILIAN);
@@ -2232,6 +2268,9 @@ int InfantryTypeClass::Full_Name(void) const
  *=============================================================================================*/
 int InfantryTypeClass::Enemy_Name(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int InfantryTypeClass::Enemy_Name(void) const");
+#endif
 	return(TXT_ENEMY_SOLDIER);
 }
 
@@ -2253,6 +2292,9 @@ int InfantryTypeClass::Enemy_Name(void) const
  *=============================================================================================*/
 void const * InfantryTypeClass::Cameo_Remap_Table(HouseClass * /*house*/, bool blushing) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void const * InfantryTypeClass::Cameo_Remap_Table(HouseClass * /*house*/, bool blushing) const");
+#endif
 	return(blushing ? &Map.FadingLight[0] : NULL);
 }
 
@@ -2274,5 +2316,8 @@ void const * InfantryTypeClass::Cameo_Remap_Table(HouseClass * /*house*/, bool b
  *=============================================================================================*/
 void const * InfantryTypeClass::Spy_Cameo_Remap_Table(HouseClass * /*house*/) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void const * InfantryTypeClass::Spy_Cameo_Remap_Table(HouseClass * /*house*/) const");
+#endif
 	return NULL;
 }

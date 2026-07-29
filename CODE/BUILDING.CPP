@@ -154,6 +154,9 @@ void * BuildingClass::VTable;
 #ifdef CHEAT_KEYS
 int BuildingClass::Validate(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingClass::Validate(void) const");
+#endif
 	int num;
 
 	num = Buildings.ID(this);
@@ -195,6 +198,9 @@ int BuildingClass::Validate(void) const
  *=============================================================================================*/
 RadioMessageType BuildingClass::Receive_Message(RadioClass * from, RadioMessageType message, long & param)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("RadioMessageType BuildingClass::Receive_Message(RadioClass * from, RadioMessageType message, long & param)");
+#endif
 	Validate();
 	switch (message) {
 
@@ -400,6 +406,9 @@ RadioMessageType BuildingClass::Receive_Message(RadioClass * from, RadioMessageT
  *=============================================================================================*/
 void BuildingClass::Debug_Dump(MonoClass *mono) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Debug_Dump(MonoClass *mono) const");
+#endif
 	Validate();
 	mono->Set_Cursor(0, 0);
 	mono->Print(
@@ -465,6 +474,9 @@ void BuildingClass::Debug_Dump(MonoClass *mono) const
  *=============================================================================================*/
 void BuildingClass::Draw_It(int x, int y, WindowNumberType window)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Draw_It(int x, int y, WindowNumberType window)");
+#endif
 	Validate();
 
 
@@ -678,6 +690,9 @@ void BuildingClass::Draw_It(int x, int y, WindowNumberType window)
  *   06/14/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
 void BuildingClass::Draw_Production(int x, int y, WindowNumberType window) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Draw_Production(int x, int y, WindowNumberType window)");
+#endif
 	FactoryClass * fact = Get_Producing_Factory();
 
 	/*
@@ -742,6 +757,9 @@ void BuildingClass::Draw_Production(int x, int y, WindowNumberType window) {
  *   06/14/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
 FactoryClass * BuildingClass::Get_Producing_Factory() {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FactoryClass * BuildingClass::Get_Producing_Factory()");
+#endif
 	/*
 	**	Get the factory. For computer players this is trivial,
 	**	for humans it needs to be looked up.
@@ -813,6 +831,9 @@ FactoryClass * BuildingClass::Get_Producing_Factory() {
  *=============================================================================================*/
 bool BuildingClass::Mark(MarkType mark)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool BuildingClass::Mark(MarkType mark)");
+#endif
 	Validate();
 	if (TechnoClass::Mark(mark)) {
 		short const *offset = Overlap_List();
@@ -906,6 +927,9 @@ bool BuildingClass::Mark(MarkType mark)
  *=============================================================================================*/
 BulletClass * BuildingClass::Fire_At(TARGET target, int which)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BulletClass * BuildingClass::Fire_At(TARGET target, int which)");
+#endif
 	Validate();
 	BulletClass * bullet;		// Projectile.
 	WeaponTypeClass const * weapon = (which == 0) ? &Weapons[Class->Primary] : &Weapons[Class->Secondary];
@@ -977,6 +1001,9 @@ BulletClass * BuildingClass::Fire_At(TARGET target, int which)
  *=============================================================================================*/
 void BuildingClass::AI(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::AI(void)");
+#endif
 	Validate();
 
 	/*
@@ -1406,6 +1433,9 @@ void BuildingClass::AI(void)
  *=============================================================================================*/
 bool BuildingClass::Unlimbo(COORDINATE coord, DirType dir)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool BuildingClass::Unlimbo(COORDINATE coord, DirType dir)");
+#endif
 	Validate();
 #ifdef OBSOLETE
 	if (*this == STRUCT_ROAD) {
@@ -1540,6 +1570,9 @@ bool BuildingClass::Unlimbo(COORDINATE coord, DirType dir)
  *=============================================================================================*/
 ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)");
+#endif
 	Validate();
 	ResultType res = RESULT_NONE;
 	int shakes;
@@ -1761,6 +1794,9 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
  *=============================================================================================*/
 void BuildingClass::Look(bool)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Look(bool)");
+#endif
 	Validate();
 	if (IsOwnedByPlayer || IsDiscoveredByPlayer) {
 		Map.Sight_From(Coord_Cell(Center_Coord()), Class->SightRange, false);
@@ -1789,6 +1825,9 @@ void BuildingClass::Look(bool)
  *=============================================================================================*/
 void * BuildingClass::operator new(size_t )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void * BuildingClass::operator new(size_t )");
+#endif
 	void * ptr = Buildings.Allocate();
 	if (ptr) {
 		((BuildingClass *)ptr)->IsActive = true;
@@ -1815,6 +1854,9 @@ void * BuildingClass::operator new(size_t )
  *=============================================================================================*/
 void BuildingClass::operator delete(void *ptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::operator delete(void *ptr)");
+#endif
 	if (ptr) {
 		((BuildingClass *)ptr)->IsActive = false;
 	}
@@ -1849,6 +1891,9 @@ BuildingClass::BuildingClass(StructType type, HousesType house) :
 	Class(&BuildingTypeClass::As_Reference(type)),
 	TechnoClass(house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BuildingClass::BuildingClass(StructType type, HousesType house)");
+#endif
 	PlacementDelay = 0;
 	LastStrength = 0;
 	ActLike = House->ActLike;
@@ -1911,6 +1956,9 @@ BuildingClass::BuildingClass(StructType type, HousesType house) :
  *=============================================================================================*/
 BuildingClass::~BuildingClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BuildingClass::~BuildingClass(void)");
+#endif
 	if (GameActive && Class) {
 		if (House) {
 			House->CurBuildings--;
@@ -1939,6 +1987,9 @@ BuildingClass::~BuildingClass(void)
  *=============================================================================================*/
 void BuildingClass::Drop_Debris(TARGET source)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Drop_Debris(TARGET source)");
+#endif
 	Validate();
 	CELL	const *offset;
 	CELL	cell;
@@ -2054,6 +2105,9 @@ void BuildingClass::Drop_Debris(TARGET source)
  *=============================================================================================*/
 void BuildingClass::Active_Click_With(ActionType action, ObjectClass * object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Active_Click_With(ActionType action, ObjectClass * object)");
+#endif
 	Validate();
 	if ((action == ACTION_ATTACK || action == ACTION_ATTACK_NOW)) {
 		Player_Assign_Mission(MISSION_ATTACK, object->As_Target());
@@ -2084,6 +2138,9 @@ void BuildingClass::Active_Click_With(ActionType action, ObjectClass * object)
  *=============================================================================================*/
 void BuildingClass::Active_Click_With(ActionType action, CELL cell)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Active_Click_With(ActionType action, CELL cell)");
+#endif
 	Validate();
 	if ((action == ACTION_ATTACK || action == ACTION_ATTACK_NOW)) {
 		Player_Assign_Mission(MISSION_ATTACK, ::As_Target(cell));
@@ -2109,6 +2166,9 @@ void BuildingClass::Active_Click_With(ActionType action, CELL cell)
  *=============================================================================================*/
 void BuildingClass::Assign_Target(TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Assign_Target(TARGET target)");
+#endif
 	Validate();
 	if (*this != STRUCT_SAM && !In_Range(target, 0)) {
 		target = TARGET_NONE;
@@ -2134,6 +2194,9 @@ void BuildingClass::Assign_Target(TARGET target)
  *=============================================================================================*/
 void BuildingClass::Init(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Init(void)");
+#endif
 	BuildingClass *ptr;
 
 	Buildings.Free_All();
@@ -2171,6 +2234,9 @@ void BuildingClass::Init(void)
  *=============================================================================================*/
 int BuildingClass::Exit_Object(TechnoClass * base)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingClass::Exit_Object(TechnoClass * base)");
+#endif
 	Validate();
 	if (!base) return(0);
 
@@ -2383,6 +2449,9 @@ int BuildingClass::Exit_Object(TechnoClass * base)
  *=============================================================================================*/
 void BuildingClass::Update_Buildables(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Update_Buildables(void)");
+#endif
 	Validate();
 	if (House == PlayerPtr && !IsInLimbo && IsDiscoveredByPlayer) {
 		switch (Class->ToBuild) {
@@ -2453,6 +2522,9 @@ void BuildingClass::Update_Buildables(void)
  *=============================================================================================*/
 void BuildingClass::Fire_Out()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Fire_Out()");
+#endif
 	Validate();
 //	SAM = SAM_READY;
 //	IsFiring = false;
@@ -2477,6 +2549,9 @@ void BuildingClass::Fire_Out()
  *=============================================================================================*/
 bool BuildingClass::Limbo(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool BuildingClass::Limbo(void)");
+#endif
 	Validate();
 //	HouseClass *housep;
 //	RTTIType bld_type;
@@ -2626,6 +2701,9 @@ bool BuildingClass::Limbo(void)
  *=============================================================================================*/
 COORDINATE BuildingClass::Fire_Coord(int which, bool forrange, COORDINATE coords) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE BuildingClass::Fire_Coord(int which, bool forrange, COORDINATE coords) const");
+#endif
 	Validate();
 	// Nyerguds's C&C Patch Project v1.04: Fire_Coord for range checks now ignores facing.
 	// Allow getting the fire coords for any given target to correctly calculate range.
@@ -2680,6 +2758,9 @@ COORDINATE BuildingClass::Fire_Coord(int which, bool forrange, COORDINATE coords
  *=============================================================================================*/
 TARGET BuildingClass::Greatest_Threat(ThreatType threat) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TARGET BuildingClass::Greatest_Threat(ThreatType threat) const");
+#endif
 	Validate();
 	if (*this != STRUCT_SAM) {
 		threat = threat | (THREAT_INFANTRY|THREAT_BOATS|THREAT_VEHICLES|THREAT_RANGE);
@@ -2717,6 +2798,9 @@ TARGET BuildingClass::Greatest_Threat(ThreatType threat) const
  *=============================================================================================*/
 void BuildingClass::Grand_Opening(bool captured)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Grand_Opening(bool captured)");
+#endif
 	Validate();
 
 	/*
@@ -2808,6 +2892,9 @@ void BuildingClass::Grand_Opening(bool captured)
  *=============================================================================================*/
 void BuildingClass::Repair(int control)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Repair(int control)");
+#endif
 	Validate();
 	switch (control) {
 		case -1:
@@ -2876,6 +2963,9 @@ void BuildingClass::Repair(int control)
  *=============================================================================================*/
 void BuildingClass::Sell_Back(int control)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Sell_Back(int control)");
+#endif
 	Validate();
 	if (Class->Get_Buildup_Data()) {
 		bool decon = false;
@@ -2934,6 +3024,9 @@ void BuildingClass::Sell_Back(int control)
  *=============================================================================================*/
 ActionType BuildingClass::What_Action(ObjectClass * object) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ActionType BuildingClass::What_Action(ObjectClass * object) const");
+#endif
 	Validate();
 	ActionType action = TechnoClass::What_Action(object);
 
@@ -3018,6 +3111,9 @@ ActionType BuildingClass::What_Action(ObjectClass * object) const
  *=============================================================================================*/
 ActionType BuildingClass::What_Action(CELL cell) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ActionType BuildingClass::What_Action(CELL cell) const");
+#endif
 	Validate();
 	ActionType action = TechnoClass::What_Action(cell);
 
@@ -3056,6 +3152,9 @@ ActionType BuildingClass::What_Action(CELL cell) const
  *=============================================================================================*/
 void BuildingClass::Begin_Mode(BStateType bstate)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Begin_Mode(BStateType bstate)");
+#endif
 	Validate();
 	QueueBState = bstate;
 	if (BState == BSTATE_NONE || bstate == BSTATE_CONSTRUCTION || ScenarioInit) {
@@ -3094,6 +3193,9 @@ void BuildingClass::Begin_Mode(BStateType bstate)
  *=============================================================================================*/
 void BuildingClass::Read_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Read_INI(char *buffer)");
+#endif
 	BuildingClass			*b;			// Working unit pointer.
 	char						*tbuffer;	// Accumulation buffer of unit IDs.
 	HousesType				bhouse;		// Building house.
@@ -3204,6 +3306,9 @@ void BuildingClass::Read_INI(char *buffer)
 #ifdef SCENARIO_EDITOR
 void BuildingClass::Write_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Write_INI(char *buffer)");
+#endif
 	int			index;
 	char			uname[10];
 	char			buf[127];
@@ -3260,6 +3365,9 @@ void BuildingClass::Write_INI(char *buffer)
  *=============================================================================================*/
 TARGET BuildingClass::As_Target(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TARGET BuildingClass::As_Target(void) const");
+#endif
 	Validate();
 	return(Build_Target(KIND_BUILDING, Buildings.ID(this)));
 }
@@ -3281,6 +3389,9 @@ TARGET BuildingClass::As_Target(void) const
  *=============================================================================================*/
 COORDINATE BuildingClass::Center_Coord(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE BuildingClass::Center_Coord(void) const");
+#endif
 	Validate();
 	return(Coord_Add(Coord, Class->Center));
 }
@@ -3288,6 +3399,9 @@ COORDINATE BuildingClass::Center_Coord(void) const
 
 COORDINATE BuildingClass::Docking_Coord(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE BuildingClass::Docking_Coord(void) const");
+#endif
 	Validate();
 	if (*this == STRUCT_HELIPAD) {
 		return(Coord_Add(Coord, XYP_COORD(24, 18)));
@@ -3318,6 +3432,9 @@ COORDINATE BuildingClass::Docking_Coord(void) const
  *=============================================================================================*/
 COORDINATE BuildingClass::Target_Coord() const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE BuildingClass::Target_Coord() const");
+#endif
 	return(Coord_Add(Coord, Class->TargetCenter));
 }
 
@@ -3343,6 +3460,9 @@ COORDINATE BuildingClass::Target_Coord() const
  *=============================================================================================*/
 FireErrorType BuildingClass::Can_Fire(TARGET target, int which) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FireErrorType BuildingClass::Can_Fire(TARGET target, int which) const");
+#endif
 	Validate();
 	FireErrorType canfire = TechnoClass::Can_Fire(target, which);
 
@@ -3405,6 +3525,9 @@ FireErrorType BuildingClass::Can_Fire(TARGET target, int which) const
  *=============================================================================================*/
 bool BuildingClass::Toggle_Primary(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool BuildingClass::Toggle_Primary(void)");
+#endif
 	Validate();
 	if (IsLeader) {
 		IsLeader = false;
@@ -3446,6 +3569,9 @@ bool BuildingClass::Toggle_Primary(void)
  *=============================================================================================*/
 bool BuildingClass::Captured(HouseClass * newowner)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool BuildingClass::Captured(HouseClass * newowner)");
+#endif
 	Validate();
 	if (Can_Capture() && newowner != House) {
 		// Only announce in singleplayer if the player has seen it, or if the player is involved.
@@ -3630,6 +3756,9 @@ bool BuildingClass::Captured(HouseClass * newowner)
  *=============================================================================================*/
 COORDINATE BuildingClass::Sort_Y(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE BuildingClass::Sort_Y(void) const");
+#endif
 	Validate();
 	if (*this == STRUCT_REPAIR) {
 		return(Coord);
@@ -3663,6 +3792,9 @@ COORDINATE BuildingClass::Sort_Y(void) const
  *=============================================================================================*/
 MoveType BuildingClass::Can_Enter_Cell(CELL cell, FacingType) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MoveType BuildingClass::Can_Enter_Cell(CELL cell, FacingType) const");
+#endif
 	Validate();
 	return(Class->Legal_Placement(cell) ? MOVE_OK : MOVE_NO);
 }
@@ -3684,6 +3816,9 @@ MoveType BuildingClass::Can_Enter_Cell(CELL cell, FacingType) const
  *=============================================================================================*/
 void BuildingClass::Flame_Spout(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Flame_Spout(void)");
+#endif
 	Validate();
 	if (*this == STRUCT_PUMP && !Has_Attached_Anim(this, ANIM_OILFIELD_BURN, true)) {
 		AnimClass *anim = new AnimClass(ANIM_OILFIELD_BURN, Coord_Add(Coord, 0x00400130L), 1);
@@ -3710,6 +3845,9 @@ void BuildingClass::Flame_Spout(void)
  *=============================================================================================*/
 void BuildingClass::Flame_Out(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Flame_Out(void)");
+#endif
 	Validate();
 	if (*this == STRUCT_PUMP) {
 		// This instantly kills the animation. There's no point in letting the loop
@@ -3737,6 +3875,9 @@ void BuildingClass::Flame_Out(void)
  *=============================================================================================*/
 bool BuildingClass::Can_Demolish(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool BuildingClass::Can_Demolish(void) const");
+#endif
 	Validate();
 	if (Class->IsUnsellable) return(false);
 	if (Class->Get_Buildup_Data() && BState != BSTATE_CONSTRUCTION && !Mission != MISSION_DECONSTRUCTION && Mission != MISSION_CONSTRUCTION) {
@@ -3764,6 +3905,9 @@ bool BuildingClass::Can_Demolish(void) const
  *=============================================================================================*/
 bool BuildingClass::Can_Capture(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool BuildingClass::Can_Capture(void) const");
+#endif
 	bool can_capture = Class->IsCaptureable && Mission != MISSION_DECONSTRUCTION;
 
 	// Nyerguds's C&C Patch Project v1.04: Triggers override capturability.
@@ -3797,6 +3941,9 @@ bool BuildingClass::Can_Capture(void) const
  *=============================================================================================*/
 int BuildingClass::Mission_Guard(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingClass::Mission_Guard(void)");
+#endif
 	Validate();
 	/*
 	**	If this building has a weapon, then search for a target to attack. When
@@ -3883,6 +4030,9 @@ int BuildingClass::Mission_Guard(void)
  *=============================================================================================*/
 int BuildingClass::Mission_Construction(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingClass::Mission_Construction(void)");
+#endif
 	Validate();
 	enum {
 		INITIAL,
@@ -3938,6 +4088,9 @@ int BuildingClass::Mission_Construction(void)
  *=============================================================================================*/
 int BuildingClass::Mission_Deconstruction(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingClass::Mission_Deconstruction(void)");
+#endif
 	Validate();
 	/*
 	**	Always force repair off.
@@ -4140,6 +4293,9 @@ int BuildingClass::Mission_Deconstruction(void)
  *=============================================================================================*/
 int BuildingClass::Mission_Attack(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingClass::Mission_Attack(void)");
+#endif
 	Validate();
 	if (*this == STRUCT_SAM) {
 		switch (Status) {
@@ -4348,6 +4504,9 @@ int BuildingClass::Mission_Attack(void)
  *=============================================================================================*/
 int BuildingClass::Mission_Harvest(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingClass::Mission_Harvest(void)");
+#endif
 	Validate();
 	enum {
 		INITIAL,					// Dock the Tiberium canister.
@@ -4433,6 +4592,9 @@ int BuildingClass::Mission_Harvest(void)
  *=============================================================================================*/
 int BuildingClass::Mission_Repair(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingClass::Mission_Repair(void)");
+#endif
 	Validate();
 	if (*this == STRUCT_CONST) {
 		enum {
@@ -4600,6 +4762,9 @@ int BuildingClass::Mission_Repair(void)
  *=============================================================================================*/
 int BuildingClass::Mission_Missile(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingClass::Mission_Missile(void)");
+#endif
 	Validate();
 	enum {
 		INITIAL,
@@ -4727,6 +4892,9 @@ int BuildingClass::Mission_Missile(void)
  *=============================================================================================*/
 bool BuildingClass::Revealed(HouseClass * house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool BuildingClass::Revealed(HouseClass * house)");
+#endif
 	Validate();
 	if (TechnoClass::Revealed(house)) {
 
@@ -4767,6 +4935,9 @@ bool BuildingClass::Revealed(HouseClass * house)
  *=============================================================================================*/
 void BuildingClass::Enter_Idle_Mode(bool initial)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Enter_Idle_Mode(bool initial)");
+#endif
 	Validate();
 	/*
 	**	Assign an appropriate mission for the building. If the ScenarioInit flag is true, then
@@ -4802,6 +4973,9 @@ void BuildingClass::Enter_Idle_Mode(bool initial)
  *=========================================================================*/
 void BuildingClass::Update_Specials(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Update_Specials(void)");
+#endif
 	Validate();
 }
 
@@ -4823,6 +4997,9 @@ void BuildingClass::Update_Specials(void)
  *=============================================================================================*/
 int BuildingClass::Pip_Count(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingClass::Pip_Count(void) const");
+#endif
 	Validate();
 	return(Fixed_To_Cardinal(Class->Max_Pips(), House->Tiberium_Fraction()));
 }
@@ -4846,6 +5023,9 @@ int BuildingClass::Pip_Count(void) const
  *=============================================================================================*/
 void BuildingClass::Death_Announcement(TechnoClass const * ) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Death_Announcement(TechnoClass const * ) const");
+#endif
 	Validate();
 	if (!IsDiscoveredByPlayer && !IsOwnedByPlayer) {
 		return;
@@ -4897,6 +5077,9 @@ void BuildingClass::Death_Announcement(TechnoClass const * ) const
  *=============================================================================================*/
 DirType BuildingClass::Fire_Direction(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("DirType BuildingClass::Fire_Direction(void) const");
+#endif
 	Validate();
 	if (Class->IsTurretEquipped) {
 		return(PrimaryFacing.Current());
@@ -4923,6 +5106,9 @@ DirType BuildingClass::Fire_Direction(void) const
  *=============================================================================================*/
 void const * BuildingClass::Remap_Table(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void const * BuildingClass::Remap_Table(void)");
+#endif
 	Validate();
 	return(Class->IsWall ? NULL : House->Remap_Table(IsBlushing, true));
 }
@@ -4947,6 +5133,9 @@ void const * BuildingClass::Remap_Table(void)
  *=============================================================================================*/
 int BuildingClass::Mission_Unload(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingClass::Mission_Unload(void)");
+#endif
 	Validate();
 	if (*this == STRUCT_WEAP) {
 		enum {
@@ -5019,6 +5208,9 @@ int BuildingClass::Mission_Unload(void)
  *=============================================================================================*/
 int BuildingClass::Power_Output(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingClass::Power_Output(void) const");
+#endif
 	Validate();
 	if (Class->Power) {
 		return(Fixed_To_Cardinal(Class->Power, Cardinal_To_Fixed(Class->MaxStrength, LastStrength)));
@@ -5046,6 +5238,9 @@ int BuildingClass::Power_Output(void) const
  *=============================================================================================*/
 void BuildingClass::Detach(TARGET target, bool all)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Detach(TARGET target, bool all)");
+#endif
 	Validate();
 	TechnoClass::Detach(target, all);
 	if (target == WhomToRepay) {
@@ -5074,6 +5269,9 @@ void BuildingClass::Detach(TARGET target, bool all)
  *=============================================================================================*/
 int BuildingClass::Refund_Amount(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingClass::Refund_Amount(void) const");
+#endif
 	Validate();
 	int cost = TechnoClass::Refund_Amount();
 
@@ -5105,6 +5303,9 @@ int BuildingClass::Refund_Amount(void) const
  *=============================================================================================*/
 InfantryType BuildingClass::Crew_Type(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("InfantryType BuildingClass::Crew_Type(void) const");
+#endif
 	Validate();
 	switch (Class->Type) {
 		case STRUCT_STORAGE:
@@ -5144,6 +5345,9 @@ InfantryType BuildingClass::Crew_Type(void) const
  *=============================================================================================*/
 void BuildingClass::Detach_All(bool all)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Detach_All(bool all)");
+#endif
 	Validate();
 	/*
 	**	If it is producing something, then it must be abandoned.
@@ -5245,7 +5449,9 @@ void BuildingClass::Detach_All(bool all)
  *=============================================================================================*/
 OccupiedState BuildingClass::Flush_For_Placement(StructType btype, CELL cell, HousesType house, BuildingClass * placer, bool doscatter)
 {
-	
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("OccupiedState BuildingClass::Flush_For_Placement(StructType btype, CELL cell, HousesType house, BuildingClass * placer, bool doscatter)");
+#endif
 	if (btype == STRUCT_NONE || cell <= 0) {
 		return(OCCUPIED_BLOCKED);
 	}
@@ -5335,6 +5541,9 @@ OccupiedState BuildingClass::Flush_For_Placement(StructType btype, CELL cell, Ho
 
 void BuildingClass::Hidden(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Hidden(void)");
+#endif
 //	if (IsDiscoveredByPlayer && House->IsHuman) {
 //		House->Adjust_Drain(-Class->Drain);
 //	}
@@ -5344,6 +5553,9 @@ void BuildingClass::Hidden(void)
 
 CELL BuildingClass::Find_Exit_Cell(TechnoClass const * techno) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CELL BuildingClass::Find_Exit_Cell(TechnoClass const * techno) const");
+#endif
 	CELL const *ptr;
 	CELL origin = Coord_Cell(Coord);
 	bool found = false;
@@ -5383,6 +5595,9 @@ CELL BuildingClass::Find_Exit_Cell(TechnoClass const * techno) const
  *=============================================================================================*/
 bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool BuildingClass::Passes_Proximity_Check(CELL homecell)");
+#endif
 	/*
 	** In editor mode, the proximity check always passes.
 	*/
@@ -5437,6 +5652,9 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 
 
 void BuildingClass::Spawn_Mission_Target(TechnoClass * source, HousesType attacker, bool fromcapture, HousesType oldowner) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Spawn_Mission_Target(TechnoClass * source, HousesType attacker, bool fromcapture, HousesType oldowner)");
+#endif
 	// Nyerguds's C&C Patch Project v1.04: Made tech center spawn configurable.
 
 	// Do not spawn the unit if this building was captured before,

@@ -93,6 +93,9 @@ IPXManagerClass::IPXManagerClass (int glb_maxlen, int pvt_maxlen,
 	int glb_num_packets, int pvt_num_packets, unsigned short socket,
 	unsigned short product_id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("IPXManagerClass::IPXManagerClass (int glb_maxlen, int pvt_maxlen, int glb_num_packets, int pvt_num_packets, unsigned short socket, unsigned short product_id)");
+#endif
 	int i;
 
 	/*------------------------------------------------------------------------
@@ -185,6 +188,9 @@ IPXManagerClass::IPXManagerClass (int glb_maxlen, int pvt_maxlen,
  *=========================================================================*/
 IPXManagerClass::~IPXManagerClass()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("IPXManagerClass::~IPXManagerClass()");
+#endif
 	int i;
 
 	/*------------------------------------------------------------------------
@@ -238,6 +244,9 @@ IPXManagerClass::~IPXManagerClass()
  *=========================================================================*/
 int IPXManagerClass::Init()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXManagerClass::Init()");
+#endif
 	int i;
 
 	if (!(GameToPlay == GAME_INTERNET)){
@@ -340,6 +349,9 @@ int IPXManagerClass::Init()
  *=========================================================================*/
 int IPXManagerClass::Is_IPX(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXManagerClass::Is_IPX(void)");
+#endif
 	return(IPXStatus);
 
 }	/* end of Is_IPX */
@@ -369,6 +381,9 @@ int IPXManagerClass::Is_IPX(void)
 void IPXManagerClass::Set_Timing (unsigned long retrydelta,
 	unsigned long maxretries, unsigned long timeout)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void IPXManagerClass::Set_Timing (unsigned long retrydelta, unsigned long maxretries, unsigned long timeout)");
+#endif
 	int i;
 
 	RetryDelta = retrydelta;
@@ -409,6 +424,9 @@ void IPXManagerClass::Set_Timing (unsigned long retrydelta,
  *=========================================================================*/
 bool IPXManagerClass::Create_Connection(int id, char *name, IPXAddressClass *address)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool IPXManagerClass::Create_Connection(int id, char *name, IPXAddressClass *address)");
+#endif
 #if (0)
 	char temp[80];
 
@@ -481,6 +499,9 @@ bool IPXManagerClass::Create_Connection(int id, char *name, IPXAddressClass *add
  *=========================================================================*/
 bool IPXManagerClass::Delete_Connection(int id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool IPXManagerClass::Delete_Connection(int id)");
+#endif
 	int i,j;
 
 	/*
@@ -545,6 +566,9 @@ bool IPXManagerClass::Delete_Connection(int id)
  *=========================================================================*/
 int IPXManagerClass::Num_Connections(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXManagerClass::Num_Connections(void)");
+#endif
 #ifdef VIRTUAL_SUBNET_SERVER
 	/*
 	** If we are connected to the VSS then dont coumt that in the number of connections.
@@ -580,6 +604,9 @@ int IPXManagerClass::Num_Connections(void)
  *=========================================================================*/
 int IPXManagerClass::Connection_ID(int index)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXManagerClass::Connection_ID(int index)");
+#endif
 	if (index >= 0 && index < NumConnections) {
 		return(Connection[index]->ID);
 	} else {
@@ -605,6 +632,9 @@ int IPXManagerClass::Connection_ID(int index)
  *=========================================================================*/
 char *IPXManagerClass::Connection_Name(int id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char *IPXManagerClass::Connection_Name(int id)");
+#endif
 	int i;
 
 	for (i = 0; i < NumConnections; i++) {
@@ -635,6 +665,9 @@ char *IPXManagerClass::Connection_Name(int id)
  *=========================================================================*/
 IPXAddressClass * IPXManagerClass::Connection_Address(int id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("IPXAddressClass * IPXManagerClass::Connection_Address(int id)");
+#endif
 	int i;
 
 	for (i = 0; i < NumConnections; i++) {
@@ -665,6 +698,9 @@ IPXAddressClass * IPXManagerClass::Connection_Address(int id)
  *=========================================================================*/
 int IPXManagerClass::Connection_Index(int id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXManagerClass::Connection_Index(int id)");
+#endif
 	int i;
 
 	for (i = 0; i < NumConnections; i++) {
@@ -698,6 +734,9 @@ int IPXManagerClass::Connection_Index(int id)
 int IPXManagerClass::Send_Global_Message(void *buf, int buflen,
 	int ack_req, IPXAddressClass *address)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXManagerClass::Send_Global_Message(void *buf, int buflen, int ack_req, IPXAddressClass *address)");
+#endif
 	int rc;
 
 	/*
@@ -734,6 +773,9 @@ int IPXManagerClass::Send_Global_Message(void *buf, int buflen,
 int IPXManagerClass::Get_Global_Message(void *buf, int *buflen,
 	IPXAddressClass *address, unsigned short *product_id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXManagerClass::Get_Global_Message(void *buf, int *buflen, IPXAddressClass *address, unsigned short *product_id)");
+#endif
 	/*
 	------------ Error if IPX not installed or not Listening -----------------
 	*/
@@ -764,6 +806,9 @@ int IPXManagerClass::Get_Global_Message(void *buf, int *buflen,
 int IPXManagerClass::Send_Private_Message(void *buf, int buflen, int ack_req,
 	int conn_id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXManagerClass::Send_Private_Message(void *buf, int buflen, int ack_req, int conn_id)");
+#endif
 	int i;						// loop counter
 	int connect_idx;			// index of channel to send to, if specified
 
@@ -879,6 +924,9 @@ int IPXManagerClass::Send_Private_Message(void *buf, int buflen, int ack_req,
  *=========================================================================*/
 int IPXManagerClass::Get_Private_Message(void *buf, int *buflen, int *conn_id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXManagerClass::Get_Private_Message(void *buf, int *buflen, int *conn_id)");
+#endif
 	int i;
 	int rc;
 	int c_id;
@@ -962,7 +1010,9 @@ int IPXManagerClass::Get_Private_Message(void *buf, int *buflen, int *conn_id)
  *=========================================================================*/
 int IPXManagerClass::Service(void)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXManagerClass::Service(void)");
+#endif
 	int rc = 1;
 	int i;
 	CommHeaderType *packet;
@@ -1240,6 +1290,9 @@ CCDebugString (tempbuf);
  *=========================================================================*/
 int IPXManagerClass::Get_Bad_Connection(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXManagerClass::Get_Bad_Connection(void)");
+#endif
 	return(BadConnection);
 
 }	/* end of Get_Bad_Connection */
@@ -1262,6 +1315,9 @@ int IPXManagerClass::Get_Bad_Connection(void)
  *=========================================================================*/
 int IPXManagerClass::Global_Num_Send(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXManagerClass::Global_Num_Send(void)");
+#endif
 	/*
 	------------ Error if IPX not installed or not Listening -----------------
 	*/
@@ -1290,6 +1346,9 @@ int IPXManagerClass::Global_Num_Send(void)
  *=========================================================================*/
 int IPXManagerClass::Global_Num_Receive(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXManagerClass::Global_Num_Receive(void)");
+#endif
 	/*
 	------------ Error if IPX not installed or not Listening -----------------
 	*/
@@ -1318,6 +1377,9 @@ int IPXManagerClass::Global_Num_Receive(void)
  *=========================================================================*/
 int IPXManagerClass::Private_Num_Send(int id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXManagerClass::Private_Num_Send(int id)");
+#endif
 	int i;
 	int maxnum;
 
@@ -1369,6 +1431,9 @@ int IPXManagerClass::Private_Num_Send(int id)
  *=========================================================================*/
 int IPXManagerClass::Private_Num_Receive(int id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXManagerClass::Private_Num_Receive(int id)");
+#endif
 	int i;
 	int maxnum;
 
@@ -1423,6 +1488,9 @@ int IPXManagerClass::Private_Num_Receive(int id)
  *=========================================================================*/
 void IPXManagerClass::Set_Socket(unsigned short socket)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void IPXManagerClass::Set_Socket(unsigned short socket)");
+#endif
 	Socket = (unsigned short)( (((unsigned long)socket & 0x00ff) << 8) |
 		(((unsigned long)socket & 0xff00) >> 8));
 
@@ -1446,6 +1514,9 @@ void IPXManagerClass::Set_Socket(unsigned short socket)
  *=========================================================================*/
 unsigned long IPXManagerClass::Response_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned long IPXManagerClass::Response_Time(void)");
+#endif
 	unsigned long resp;
 	unsigned long maxresp = 0;
 	int i;
@@ -1486,6 +1557,9 @@ unsigned long IPXManagerClass::Response_Time(void)
  *=========================================================================*/
 unsigned long IPXManagerClass::Global_Response_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned long IPXManagerClass::Global_Response_Time(void)");
+#endif
 	if (GlobalChannel) {
 		return (GlobalChannel->Queue->Avg_Response_Time());
 	} else {
@@ -1511,6 +1585,9 @@ unsigned long IPXManagerClass::Global_Response_Time(void)
  *=========================================================================*/
 void IPXManagerClass::Reset_Response_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void IPXManagerClass::Reset_Response_Time(void)");
+#endif
 	int i;
 
 	for (i = 0; i < NumConnections; i++) {
@@ -1540,6 +1617,9 @@ void IPXManagerClass::Reset_Response_Time(void)
  *=========================================================================*/
 void * IPXManagerClass::Oldest_Send(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void * IPXManagerClass::Oldest_Send(void)");
+#endif
 	int i,j;
 	unsigned long time;
 	unsigned long mintime = 0xffffffff;
@@ -1600,6 +1680,9 @@ void * IPXManagerClass::Oldest_Send(void)
  *=========================================================================*/
 void IPXManagerClass::Set_Bridge(NetNumType bridge)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void IPXManagerClass::Set_Bridge(NetNumType bridge)");
+#endif
 	if (GlobalChannel) {
 		GlobalChannel->Set_Bridge(bridge);
 	}
@@ -1634,6 +1717,9 @@ void IPXManagerClass::Set_Bridge(NetNumType bridge)
 void IPXManagerClass::Configure_Debug(int index, int offset, int size,
 	char **names, int maxnames)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void IPXManagerClass::Configure_Debug(int index, int offset, int size, char **names, int maxnames)");
+#endif
 	if (index == -1) {
 		GlobalChannel->Queue->Configure_Debug (offset, size, names, maxnames);
 	} else {
@@ -1662,6 +1748,9 @@ void IPXManagerClass::Configure_Debug(int index, int offset, int size,
  *=========================================================================*/
 void IPXManagerClass::Mono_Debug_Print(int index, int refresh)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void IPXManagerClass::Mono_Debug_Print(int index, int refresh)");
+#endif
 #ifdef WWLIB32_H
 	char txt[80];
 	int i;
@@ -1737,6 +1826,9 @@ void IPXManagerClass::Mono_Debug_Print(int index, int refresh)
  *=========================================================================*/
 int IPXManagerClass::Alloc_RealMode_Mem(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXManagerClass::Alloc_RealMode_Mem(void)");
+#endif
 #ifdef NOT_FOR_WIN95
 	union REGS regs;
 	struct SREGS sregs;
@@ -1928,6 +2020,9 @@ int IPXManagerClass::Alloc_RealMode_Mem(void)
  *=========================================================================*/
 int IPXManagerClass::Free_RealMode_Mem(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXManagerClass::Free_RealMode_Mem(void)");
+#endif
 #ifdef NOT_FOR_WIN95
 	union REGS regs;
 	struct SREGS sregs;

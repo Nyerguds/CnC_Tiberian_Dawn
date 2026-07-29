@@ -61,6 +61,9 @@
  *=============================================================================================*/
 bool LayerClass::Submit(ObjectClass const * object, bool sort)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool LayerClass::Submit(ObjectClass const * object, bool sort)");
+#endif
 	/*
 	**	Add the object to the layer. Either at the end (if "sort" is false) or at the
 	**	appropriately sorted position.
@@ -91,6 +94,9 @@ bool LayerClass::Submit(ObjectClass const * object, bool sort)
  *=============================================================================================*/
 void LayerClass::Sort(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void LayerClass::Sort(void)");
+#endif
 	for (int index = 0; index < Count()-1; index++) {
 		if (*(*this)[index+1] < *(*this)[index]) {
 			ObjectClass * temp;
@@ -120,6 +126,9 @@ void LayerClass::Sort(void)
  *=============================================================================================*/
 int LayerClass::Sorted_Add(ObjectClass const * const object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int LayerClass::Sorted_Add(ObjectClass const * const object)");
+#endif
 	if (ActiveCount >= Length()) {
 		if ((IsAllocated || !VectorMax) && GrowthStep > 0) {
 			if (!Resize(Length() + GrowthStep)) {

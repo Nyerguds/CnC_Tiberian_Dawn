@@ -74,6 +74,9 @@ HousesType SmudgeClass::ToOwn = HOUSE_NONE;
 #ifdef CHEAT_KEYS
 int SmudgeClass::Validate(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int SmudgeClass::Validate(void) const");
+#endif
 	int num;
 
 	num = Smudges.ID(this);
@@ -106,6 +109,9 @@ int SmudgeClass::Validate(void) const
  *=============================================================================================*/
 void * SmudgeClass::operator new(size_t )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void * SmudgeClass::operator new(size_t )");
+#endif
 	void * ptr = Smudges.Allocate();
 	if (ptr) {
 		((SmudgeClass *)ptr)->IsActive = true;
@@ -130,6 +136,9 @@ void * SmudgeClass::operator new(size_t )
  *=============================================================================================*/
 void SmudgeClass::operator delete(void *ptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SmudgeClass::operator delete(void *ptr)");
+#endif
 	if (ptr) {
 		((SmudgeClass *)ptr)->IsActive = false;
 	}
@@ -160,6 +169,9 @@ void SmudgeClass::operator delete(void *ptr)
 SmudgeClass::SmudgeClass(SmudgeType type, COORDINATE pos, HousesType house) :
 	Class(&SmudgeTypeClass::As_Reference(type))
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("SmudgeClass::SmudgeClass(SmudgeType type, COORDINATE pos, HousesType house)");
+#endif
 	if (pos != -1) {
 		ToOwn = house;
 		if (!Unlimbo(pos)) {
@@ -187,6 +199,9 @@ SmudgeClass::SmudgeClass(SmudgeType type, COORDINATE pos, HousesType house) :
  *=============================================================================================*/
 void SmudgeClass::Init(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SmudgeClass::Init(void)");
+#endif
 	SmudgeClass *ptr;
 
 	Smudges.Free_All();
@@ -215,6 +230,9 @@ void SmudgeClass::Init(void)
  *=============================================================================================*/
 bool SmudgeClass::Mark(MarkType mark)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SmudgeClass::Mark(MarkType mark)");
+#endif
 	Validate();
 	if (ObjectClass::Mark(mark)) {
 		if (mark == MARK_DOWN) {
@@ -298,6 +316,9 @@ bool SmudgeClass::Mark(MarkType mark)
  *=============================================================================================*/
 void SmudgeClass::Read_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SmudgeClass::Read_INI(char *buffer)");
+#endif
 	char	buf[128];	// Working string staging buffer.
 
 	int len = strlen(buffer) + 2;
@@ -345,6 +366,9 @@ void SmudgeClass::Read_INI(char *buffer)
 #ifdef SCENARIO_EDITOR
 void SmudgeClass::Write_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SmudgeClass::Write_INI(char *buffer)");
+#endif
 	char	uname[10];
 	char	buf[127];
 	char	*tbuffer;		// Accumulation buffer of unit IDs.
@@ -397,6 +421,9 @@ void SmudgeClass::Write_INI(char *buffer)
  *=============================================================================================*/
 void SmudgeClass::Disown(CELL cell)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SmudgeClass::Disown(CELL cell)");
+#endif
 	Validate();
 	if (Class->IsBib) {
 		for (int w = 0; w < Class->Width; w++) {

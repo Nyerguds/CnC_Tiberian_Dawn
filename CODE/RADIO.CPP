@@ -99,6 +99,9 @@ char const * RadioClass::RadioMessages[RADIO_COUNT] = {
  *=============================================================================================*/
 void RadioClass::Debug_Dump(MonoClass *mono) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadioClass::Debug_Dump(MonoClass *mono) const");
+#endif
 	mono->Set_Cursor(34, 5);mono->Printf(RadioMessages[LastMessage]);
 	if (Radio) {
 		mono->Set_Cursor(50, 1);mono->Printf("%04X", Radio->As_Target());
@@ -134,6 +137,9 @@ void RadioClass::Debug_Dump(MonoClass *mono) const
  *=============================================================================================*/
 RadioMessageType RadioClass::Receive_Message(RadioClass * from, RadioMessageType message, long & param)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("RadioMessageType RadioClass::Receive_Message(RadioClass * from, RadioMessageType message, long & param)");
+#endif
 	/*
 	**	Keep a record of the last message received by this radio.
 	*/
@@ -190,6 +196,9 @@ RadioMessageType RadioClass::Receive_Message(RadioClass * from, RadioMessageType
  *=============================================================================================*/
 RadioMessageType RadioClass::Transmit_Message(RadioMessageType message, long & param, RadioClass * to)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("RadioMessageType RadioClass::Transmit_Message(RadioMessageType message, long & param, RadioClass * to)");
+#endif
 	if (!to) {
 		to = Contact_With_Whom();
 	}
@@ -242,6 +251,9 @@ RadioMessageType RadioClass::Transmit_Message(RadioMessageType message, long & p
  *=============================================================================================*/
 bool RadioClass::Limbo(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool RadioClass::Limbo(void)");
+#endif
 	if (!IsInLimbo) {
 		Transmit_Message(RADIO_OVER_OUT);
 	}
@@ -249,4 +261,8 @@ bool RadioClass::Limbo(void)
 }
 
 
-RadioMessageType RadioClass::Transmit_Message(RadioMessageType message, RadioClass * to) {return(Transmit_Message(message, LParam, to));};
+RadioMessageType RadioClass::Transmit_Message(RadioMessageType message, RadioClass * to) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("RadioMessageType RadioClass::Transmit_Message(RadioMessageType message, RadioClass * to)");
+#endif
+return(Transmit_Message(message, LParam, to));};

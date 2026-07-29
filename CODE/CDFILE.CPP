@@ -56,6 +56,9 @@ char CDFileClass::RawPath[512];
 
 int __cdecl Is_Disk_Inserted(int disk)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int __cdecl Is_Disk_Inserted(int disk)");
+#endif
 	struct find_t fb;
 	char	scan[] = "?:\\*.*";
 
@@ -67,6 +70,9 @@ int __cdecl Is_Disk_Inserted(int disk)
 CDFileClass::CDFileClass(char const *filename) :
 	IsDisabled(false)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CDFileClass::CDFileClass(char const *filename)");
+#endif
 	Set_Name(filename);
 	memset (RawPath, 0, sizeof(RawPath));
 }
@@ -75,6 +81,9 @@ CDFileClass::CDFileClass(char const *filename) :
 CDFileClass::CDFileClass(void) :
 	IsDisabled(false)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CDFileClass::CDFileClass(void)");
+#endif
 }
 
 
@@ -96,6 +105,9 @@ CDFileClass::CDFileClass(void) :
  *=============================================================================================*/
 int CDFileClass::Open(int rights)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CDFileClass::Open(int rights)");
+#endif
 	return(RawFileClass::Open(rights));
 }
 
@@ -116,6 +128,9 @@ int CDFileClass::Open(int rights)
  *=============================================================================================*/
 void CDFileClass::Refresh_Search_Drives (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CDFileClass::Refresh_Search_Drives (void)");
+#endif
 	Clear_Search_Drives();
 	Set_Search_Drives(RawPath);
 }
@@ -163,6 +178,9 @@ void CDFileClass::Refresh_Search_Drives (void)
  *=============================================================================================*/
 int CDFileClass::Set_Search_Drives(char * pathlist)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CDFileClass::Set_Search_Drives(char * pathlist)");
+#endif
 	int found = FALSE;
 	int empty = FALSE;
 	/*
@@ -258,6 +276,9 @@ int CDFileClass::Set_Search_Drives(char * pathlist)
 
 void CDFileClass::Set_CD_Drive (int drive)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CDFileClass::Set_CD_Drive (int drive)");
+#endif
 	LastCDDrive = CurrentCDDrive;
 	CurrentCDDrive = drive;
 }
@@ -281,6 +302,9 @@ void CDFileClass::Set_CD_Drive (int drive)
 
 void CDFileClass::Add_Search_Drive(char *path)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CDFileClass::Add_Search_Drive(char *path)");
+#endif
 	SearchDriveType *srch;					// Working pointer to path object.
 	/*
 	**	Allocate a record structure.
@@ -328,6 +352,9 @@ void CDFileClass::Add_Search_Drive(char *path)
  *=============================================================================================*/
 void CDFileClass::Clear_Search_Drives(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CDFileClass::Clear_Search_Drives(void)");
+#endif
 	SearchDriveType	* chain;			// Working pointer to path chain.
 
 	chain = First;
@@ -369,6 +396,9 @@ void CDFileClass::Clear_Search_Drives(void)
  *=============================================================================================*/
 char const * CDFileClass::Set_Name(char const *filename)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char const * CDFileClass::Set_Name(char const *filename)");
+#endif
 	/*
 	**	Try to find the file in the current directory first. If it can be found, then
 	**	just return with the normal file name setting process. Do the same if there is
@@ -445,6 +475,9 @@ char const * CDFileClass::Set_Name(char const *filename)
  *=============================================================================================*/
 int CDFileClass::Open(char const *filename, int rights)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CDFileClass::Open(char const *filename, int rights)");
+#endif
 	Close();
 
 	/*
@@ -475,6 +508,9 @@ int CDFileClass::Open(char const *filename, int rights)
 /* Get the drive letters if the CD's online */
 WORD __cdecl GetCDDrive(VOID)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("WORD __cdecl GetCDDrive(VOID)");
+#endif
 	_ES = FP_SEG(&cdDrive[0]);
 	_BX = FP_OFF(&cdDrive[0]);
 	_AX = 0x150d;
@@ -485,6 +521,9 @@ WORD __cdecl GetCDDrive(VOID)
 
 int Get_CD_Drive(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Get_CD_Drive(void)");
+#endif
 #ifdef NEVER
 	for (int index = 0; index < 26; index++) {
 		union REGS regs;

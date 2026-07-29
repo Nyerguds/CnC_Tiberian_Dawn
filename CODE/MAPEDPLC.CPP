@@ -100,6 +100,9 @@
  *=========================================================================*/
 int MapEditClass::Placement_Dialog(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MapEditClass::Placement_Dialog(void)");
+#endif
 	HousesType house;
 
 	/*........................................................................
@@ -848,6 +851,9 @@ int MapEditClass::Placement_Dialog(void)
  *=========================================================================*/
 void MapEditClass::Start_Placement(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Start_Placement(void)");
+#endif
 	int i;
 
 	/*------------------------------------------------------------------------
@@ -959,6 +965,9 @@ void MapEditClass::Start_Placement(void)
  *=========================================================================*/
 int MapEditClass::Place_Object(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MapEditClass::Place_Object(void)");
+#endif
 	CELL template_cell;						// cell being checked for template
 	COORDINATE obj_coord;							// coord of occupier object
 	int okflag;									// OK to place a template?
@@ -1188,6 +1197,9 @@ int MapEditClass::Place_Object(void)
  *=========================================================================*/
 void MapEditClass::Cancel_Placement(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Cancel_Placement(void)");
+#endif
 	/*
 	---------------------- Delete the placement object -----------------------
 	*/
@@ -1232,6 +1244,9 @@ void MapEditClass::Cancel_Placement(void)
  *=========================================================================*/
 void MapEditClass::Place_Next(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Place_Next(void)");
+#endif
 	delete PendingObjectPtr;
 	PendingObjectPtr = NULL;
 	PendingObject = NULL;
@@ -1322,6 +1337,9 @@ void MapEditClass::Place_Next(void)
  *=========================================================================*/
 void MapEditClass::Place_Prev(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Place_Prev(void)");
+#endif
 	delete PendingObjectPtr;
 	PendingObjectPtr = NULL;
 	PendingObject = NULL;
@@ -1408,6 +1426,9 @@ void MapEditClass::Place_Prev(void)
  *=========================================================================*/
 void MapEditClass::Place_Next_Category(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Place_Next_Category(void)");
+#endif
 	int i;
 
 	/*
@@ -1498,6 +1519,9 @@ void MapEditClass::Place_Next_Category(void)
  *=========================================================================*/
 void MapEditClass::Place_Prev_Category(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Place_Prev_Category(void)");
+#endif
 	int i;
 
 	/*
@@ -1600,6 +1624,9 @@ void MapEditClass::Place_Prev_Category(void)
  *=========================================================================*/
 void MapEditClass::Place_Home(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Place_Home(void)");
+#endif
 	delete PendingObjectPtr;
 	PendingObjectPtr = NULL;
 	PendingObject = NULL;
@@ -1673,6 +1700,9 @@ void MapEditClass::Place_Home(void)
  *=========================================================================*/
 void MapEditClass::Toggle_House(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Toggle_House(void)");
+#endif
 	TechnoClass *tp;
 
 	/*
@@ -1731,6 +1761,9 @@ void MapEditClass::Toggle_House(void)
  *=========================================================================*/
 void MapEditClass::Set_House_Buttons(HousesType house, GadgetClass *btnlist, int base_id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Set_House_Buttons(HousesType house, GadgetClass *btnlist, int base_id)");
+#endif
 	HousesType h;
 	int id;
 	TextButtonClass *btn;
@@ -1775,6 +1808,9 @@ void MapEditClass::Set_House_Buttons(HousesType house, GadgetClass *btnlist, int
  *=========================================================================*/
 void MapEditClass::Start_Trigger_Placement(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Start_Trigger_Placement(void)");
+#endif
 	Set_Default_Mouse(MOUSE_CAN_MOVE);
 	Override_Mouse_Shape(MOUSE_CAN_MOVE);
 }
@@ -1797,6 +1833,9 @@ void MapEditClass::Start_Trigger_Placement(void)
  *=========================================================================*/
 void MapEditClass::Stop_Trigger_Placement(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Stop_Trigger_Placement(void)");
+#endif
 	CurTrigger = NULL;
 	Set_Default_Mouse(MOUSE_NORMAL);
 	Override_Mouse_Shape(MOUSE_NORMAL);
@@ -1820,6 +1859,9 @@ void MapEditClass::Stop_Trigger_Placement(void)
  *=========================================================================*/
 void MapEditClass::Place_Trigger(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Place_Trigger(void)");
+#endif
 	ObjectClass * object=NULL;		// Generic object clicked on.
 	int x,y;
 	CELL cell;									// Cell that was selected.
@@ -1887,6 +1929,9 @@ void MapEditClass::Place_Trigger(void)
  *=========================================================================*/
 void MapEditClass::Start_Base_Building(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Start_Base_Building(void)");
+#endif
 	/*
 	** Fully build the base so the user can edit it
 	*/
@@ -1923,6 +1968,9 @@ void MapEditClass::Start_Base_Building(void)
  *=========================================================================*/
 void MapEditClass::Cancel_Base_Building(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Cancel_Base_Building(void)");
+#endif
 	/*
 	** Build the base to the proper amount
 	*/
@@ -1959,6 +2007,9 @@ void MapEditClass::Cancel_Base_Building(void)
  *=========================================================================*/
 void MapEditClass::Build_Base_To(int percent)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Build_Base_To(int percent)");
+#endif
 	int i;
 	int num_buildings;
 	BuildingTypeClass const *objtype;

@@ -60,6 +60,9 @@
  *=============================================================================================*/
 FacingClass::FacingClass(void) 
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FacingClass::FacingClass(void)");
+#endif
 	CurrentFacing = DIR_N;
 	DesiredFacing = DIR_N;
 }
@@ -85,6 +88,9 @@ FacingClass::FacingClass(void)
  *=============================================================================================*/
 int FacingClass::Set_Desired(DirType facing) 
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FacingClass::Set_Desired(DirType facing)");
+#endif
 	if (DesiredFacing != facing) {
 		DesiredFacing = facing;
 		return(true);
@@ -111,6 +117,9 @@ int FacingClass::Set_Desired(DirType facing)
  *=============================================================================================*/
 int FacingClass::Set_Current(DirType facing) 
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FacingClass::Set_Current(DirType facing)");
+#endif
 	if (CurrentFacing != facing) {
 		CurrentFacing = facing;
 		return(true);
@@ -141,6 +150,9 @@ int FacingClass::Set_Current(DirType facing)
  *=============================================================================================*/
 int FacingClass::Rotation_Adjust(int rate)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FacingClass::Rotation_Adjust(int rate)");
+#endif
 	/*
 	**	Only perform the rotation adjustment if the desired facing is not the
 	**	same as the current facing.

@@ -150,6 +150,9 @@
  *=============================================================================================*/
 bool TeamTypeClass::Load(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TeamTypeClass::Load(FileClass & file)");
+#endif
 	return(Read_Object(this, sizeof(AbstractTypeClass), sizeof(*this), file, VTable));
 }
 
@@ -168,6 +171,9 @@ bool TeamTypeClass::Load(FileClass & file)
  *=============================================================================================*/
 bool TeamTypeClass::Save(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TeamTypeClass::Save(FileClass & file)");
+#endif
 	return(Write_Object(this, sizeof(*this), file));
 }
 
@@ -194,6 +200,9 @@ bool TeamTypeClass::Save(FileClass & file)
  *=============================================================================================*/
 void TeamTypeClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamTypeClass::Code_Pointers(void)");
+#endif
 	/*
 	-------------------------- Code the Class array --------------------------
 	*/
@@ -223,6 +232,9 @@ void TeamTypeClass::Code_Pointers(void)
  *=============================================================================================*/
 void TeamTypeClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamTypeClass::Decode_Pointers(void)");
+#endif
 	/*
 	------------------------- Decode the Class array -------------------------
 	*/
@@ -247,6 +259,9 @@ void TeamTypeClass::Decode_Pointers(void)
  *=============================================================================================*/
 bool TeamClass::Load(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TeamClass::Load(FileClass & file)");
+#endif
 	return(Read_Object(this, sizeof(AbstractClass), sizeof(*this), file, VTable));
 }
 
@@ -265,6 +280,9 @@ bool TeamClass::Load(FileClass & file)
  *=============================================================================================*/
 bool TeamClass::Save(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TeamClass::Save(FileClass & file)");
+#endif
 	return(Write_Object(this, sizeof(*this), file));
 }
 
@@ -291,6 +309,9 @@ bool TeamClass::Save(FileClass & file)
  *=============================================================================================*/
 void TeamClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamClass::Code_Pointers(void)");
+#endif
 	TeamTypeClass const * cls;
 
 	/*
@@ -329,6 +350,9 @@ void TeamClass::Code_Pointers(void)
  *=============================================================================================*/
 void TeamClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TeamClass::Decode_Pointers(void)");
+#endif
 	/*
 	------------------- Decode Class & House for this team -------------------
 	*/
@@ -378,6 +402,9 @@ void TeamClass::Decode_Pointers(void)
  *=============================================================================================*/
 bool TriggerClass::Load(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TriggerClass::Load(FileClass & file)");
+#endif
 	int rc = Read_Object(this, sizeof(*this), sizeof(*this), file, 0);
 
 	/*
@@ -407,6 +434,9 @@ bool TriggerClass::Load(FileClass & file)
  *=============================================================================================*/
 bool TriggerClass::Save(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TriggerClass::Save(FileClass & file)");
+#endif
 	return(Write_Object(this, sizeof(*this), file));
 }
 
@@ -433,6 +463,9 @@ bool TriggerClass::Save(FileClass & file)
  *=============================================================================================*/
 void TriggerClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TriggerClass::Code_Pointers(void)");
+#endif
 	if (Team) {
 		Team = (TeamTypeClass *)Team->As_Target();
 	}
@@ -459,6 +492,9 @@ void TriggerClass::Code_Pointers(void)
  *=============================================================================================*/
 void TriggerClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TriggerClass::Decode_Pointers(void)");
+#endif
 	if (Team) {
 		Team = As_TeamType((TARGET)Team);
 		Check_Ptr((void *)Team,__FILE__,__LINE__);
@@ -480,6 +516,9 @@ void TriggerClass::Decode_Pointers(void)
  *=============================================================================================*/
 bool AircraftClass::Load(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool AircraftClass::Load(FileClass & file)");
+#endif
 	return(Read_Object(this, sizeof(AbstractClass), sizeof(*this), file, VTable));
 }
 
@@ -498,6 +537,9 @@ bool AircraftClass::Load(FileClass & file)
  *=============================================================================================*/
 bool AircraftClass::Save(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool AircraftClass::Save(FileClass & file)");
+#endif
 	return(Write_Object(this, sizeof(*this), file));
 }
 
@@ -524,6 +566,9 @@ bool AircraftClass::Save(FileClass & file)
  *=============================================================================================*/
 void AircraftClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftClass::Code_Pointers(void)");
+#endif
 	/*
 	------------------------------ Code 'Class' ------------------------------
 	*/
@@ -557,6 +602,9 @@ void AircraftClass::Code_Pointers(void)
  *=============================================================================================*/
 void AircraftClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftClass::Decode_Pointers(void)");
+#endif
 	/*
 	----------------------------- Decode 'Class' -----------------------------
 	*/
@@ -585,6 +633,9 @@ void AircraftClass::Decode_Pointers(void)
  *=============================================================================================*/
 bool AnimClass::Load(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool AnimClass::Load(FileClass & file)");
+#endif
 	return(Read_Object(this, sizeof(AbstractClass), sizeof(*this), file, VTable));
 }
 
@@ -603,6 +654,9 @@ bool AnimClass::Load(FileClass & file)
  *=============================================================================================*/
 bool AnimClass::Save(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool AnimClass::Save(FileClass & file)");
+#endif
 	return(Write_Object(this, sizeof(*this), file));
 }
 
@@ -629,6 +683,9 @@ bool AnimClass::Save(FileClass & file)
  *=============================================================================================*/
 void AnimClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AnimClass::Code_Pointers(void)");
+#endif
 	/*
 	------------------------------ Code 'Class' ------------------------------
 	*/
@@ -669,6 +726,9 @@ void AnimClass::Code_Pointers(void)
  *=============================================================================================*/
 void AnimClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AnimClass::Decode_Pointers(void)");
+#endif
 	/*
 	----------------------------- Decode 'Class' -----------------------------
 	*/
@@ -705,6 +765,9 @@ void AnimClass::Decode_Pointers(void)
  *=============================================================================================*/
 bool BuildingClass::Load(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool BuildingClass::Load(FileClass & file)");
+#endif
 	return(Read_Object(this, sizeof(AbstractClass), sizeof(*this), file, VTable));
 }
 
@@ -723,6 +786,9 @@ bool BuildingClass::Load(FileClass & file)
  *=============================================================================================*/
 bool BuildingClass::Save(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool BuildingClass::Save(FileClass & file)");
+#endif
 	return(Write_Object(this, sizeof(*this), file));
 }
 
@@ -749,6 +815,9 @@ bool BuildingClass::Save(FileClass & file)
  *=============================================================================================*/
 void BuildingClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Code_Pointers(void)");
+#endif
 	/*
 	------------------------------ Code 'Class' ------------------------------
 	*/
@@ -790,6 +859,9 @@ void BuildingClass::Code_Pointers(void)
  *=============================================================================================*/
 void BuildingClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingClass::Decode_Pointers(void)");
+#endif
 	/*
 	----------------------------- Decode 'Class' -----------------------------
 	*/
@@ -825,6 +897,9 @@ void BuildingClass::Decode_Pointers(void)
  *=============================================================================================*/
 bool BulletClass::Load(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool BulletClass::Load(FileClass & file)");
+#endif
 	return(Read_Object(this, sizeof(AbstractClass), sizeof(*this), file, VTable));
 }
 
@@ -843,6 +918,9 @@ bool BulletClass::Load(FileClass & file)
  *=============================================================================================*/
 bool BulletClass::Save(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool BulletClass::Save(FileClass & file)");
+#endif
 	return(Write_Object(this, sizeof(*this), file));
 }
 
@@ -869,6 +947,9 @@ bool BulletClass::Save(FileClass & file)
  *=============================================================================================*/
 void BulletClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BulletClass::Code_Pointers(void)");
+#endif
 	/*
 	------------------------------ Code 'Class' ------------------------------
 	*/
@@ -913,6 +994,9 @@ void BulletClass::Code_Pointers(void)
  *=============================================================================================*/
 void BulletClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BulletClass::Decode_Pointers(void)");
+#endif
 	/*
 	----------------------------- Decode 'Class' -----------------------------
 	*/
@@ -954,6 +1038,9 @@ void BulletClass::Decode_Pointers(void)
  *=============================================================================================*/
 bool InfantryClass::Load(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool InfantryClass::Load(FileClass & file)");
+#endif
 	return(Read_Object(this, sizeof(AbstractClass), sizeof(*this), file, VTable));
 }
 
@@ -972,6 +1059,9 @@ bool InfantryClass::Load(FileClass & file)
  *=============================================================================================*/
 bool InfantryClass::Save(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool InfantryClass::Save(FileClass & file)");
+#endif
 	return(Write_Object(this, sizeof(*this), file));
 }
 
@@ -998,6 +1088,9 @@ bool InfantryClass::Save(FileClass & file)
  *=============================================================================================*/
 void InfantryClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Code_Pointers(void)");
+#endif
 	/*
 	------------------------------ Code 'Class' ------------------------------
 	*/
@@ -1030,6 +1123,9 @@ void InfantryClass::Code_Pointers(void)
  *=============================================================================================*/
 void InfantryClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Decode_Pointers(void)");
+#endif
 	/*
 	----------------------------- Decode 'Class' -----------------------------
 	*/
@@ -1057,6 +1153,9 @@ void InfantryClass::Decode_Pointers(void)
  *=============================================================================================*/
 bool OverlayClass::Load(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool OverlayClass::Load(FileClass & file)");
+#endif
 	return(Read_Object(this, sizeof(AbstractClass), sizeof(*this), file, VTable));
 }
 
@@ -1075,6 +1174,9 @@ bool OverlayClass::Load(FileClass & file)
  *=============================================================================================*/
 bool OverlayClass::Save(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool OverlayClass::Save(FileClass & file)");
+#endif
 	return(Write_Object(this, sizeof(*this), file));
 }
 
@@ -1101,6 +1203,9 @@ bool OverlayClass::Save(FileClass & file)
  *=============================================================================================*/
 void OverlayClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OverlayClass::Code_Pointers(void)");
+#endif
 	/*
 	------------------------------ Code 'Class' ------------------------------
 	*/
@@ -1133,6 +1238,9 @@ void OverlayClass::Code_Pointers(void)
  *=============================================================================================*/
 void OverlayClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void OverlayClass::Decode_Pointers(void)");
+#endif
 	/*
 	----------------------------- Decode 'Class' -----------------------------
 	*/
@@ -1160,6 +1268,9 @@ void OverlayClass::Decode_Pointers(void)
  *=============================================================================================*/
 bool SmudgeClass::Load(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SmudgeClass::Load(FileClass & file)");
+#endif
 	return(Read_Object(this, sizeof(AbstractClass), sizeof(*this), file, VTable));
 }
 
@@ -1178,6 +1289,9 @@ bool SmudgeClass::Load(FileClass & file)
  *=============================================================================================*/
 bool SmudgeClass::Save(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SmudgeClass::Save(FileClass & file)");
+#endif
 	return(Write_Object(this, sizeof(*this), file));
 }
 
@@ -1204,6 +1318,9 @@ bool SmudgeClass::Save(FileClass & file)
  *=============================================================================================*/
 void SmudgeClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SmudgeClass::Code_Pointers(void)");
+#endif
 	/*
 	------------------------------ Code 'Class' ------------------------------
 	*/
@@ -1236,6 +1353,9 @@ void SmudgeClass::Code_Pointers(void)
  *=============================================================================================*/
 void SmudgeClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SmudgeClass::Decode_Pointers(void)");
+#endif
 	/*
 	----------------------------- Decode 'Class' -----------------------------
 	*/
@@ -1263,6 +1383,9 @@ void SmudgeClass::Decode_Pointers(void)
  *=============================================================================================*/
 bool TemplateClass::Load(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TemplateClass::Load(FileClass & file)");
+#endif
 	return(Read_Object(this, sizeof(AbstractClass), sizeof(*this), file, VTable));
 }
 
@@ -1281,6 +1404,9 @@ bool TemplateClass::Load(FileClass & file)
  *=============================================================================================*/
 bool TemplateClass::Save(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TemplateClass::Save(FileClass & file)");
+#endif
 	return(Write_Object(this, sizeof(*this), file));
 }
 
@@ -1307,6 +1433,9 @@ bool TemplateClass::Save(FileClass & file)
  *=============================================================================================*/
 void TemplateClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TemplateClass::Code_Pointers(void)");
+#endif
 	/*
 	------------------------------ Code 'Class' ------------------------------
 	*/
@@ -1339,6 +1468,9 @@ void TemplateClass::Code_Pointers(void)
  *=============================================================================================*/
 void TemplateClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TemplateClass::Decode_Pointers(void)");
+#endif
 	/*
 	----------------------------- Decode 'Class' -----------------------------
 	*/
@@ -1366,6 +1498,9 @@ void TemplateClass::Decode_Pointers(void)
  *=============================================================================================*/
 bool TerrainClass::Load(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TerrainClass::Load(FileClass & file)");
+#endif
 	return(Read_Object(this, sizeof(AbstractClass), sizeof(*this), file, VTable));
 }
 
@@ -1384,6 +1519,9 @@ bool TerrainClass::Load(FileClass & file)
  *=============================================================================================*/
 bool TerrainClass::Save(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TerrainClass::Save(FileClass & file)");
+#endif
 	return(Write_Object(this, sizeof(*this), file));
 }
 
@@ -1410,6 +1548,9 @@ bool TerrainClass::Save(FileClass & file)
  *=============================================================================================*/
 void TerrainClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TerrainClass::Code_Pointers(void)");
+#endif
 	/*
 	------------------------------ Code 'Class' ------------------------------
 	*/
@@ -1443,6 +1584,9 @@ void TerrainClass::Code_Pointers(void)
  *=============================================================================================*/
 void TerrainClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TerrainClass::Decode_Pointers(void)");
+#endif
 	/*
 	----------------------------- Decode 'Class' -----------------------------
 	*/
@@ -1471,6 +1615,9 @@ void TerrainClass::Decode_Pointers(void)
  *=============================================================================================*/
 bool UnitClass::Load(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool UnitClass::Load(FileClass & file)");
+#endif
 	return(Read_Object(this, sizeof(AbstractClass), sizeof(*this), file, VTable));
 }
 
@@ -1489,6 +1636,9 @@ bool UnitClass::Load(FileClass & file)
  *=============================================================================================*/
 bool UnitClass::Save(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool UnitClass::Save(FileClass & file)");
+#endif
 	return(Write_Object(this, sizeof(*this), file));
 }
 
@@ -1515,6 +1665,9 @@ bool UnitClass::Save(FileClass & file)
  *=============================================================================================*/
 void UnitClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::Code_Pointers(void)");
+#endif
 	TarComClass::Code_Pointers();
 }
 
@@ -1539,6 +1692,9 @@ void UnitClass::Code_Pointers(void)
  *=============================================================================================*/
 void UnitClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::Decode_Pointers(void)");
+#endif
 	TarComClass::Decode_Pointers();
 }
 
@@ -1557,6 +1713,9 @@ void UnitClass::Decode_Pointers(void)
  *=============================================================================================*/
 bool FactoryClass::Load(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FactoryClass::Load(FileClass & file)");
+#endif
 	return(Read_Object(this, sizeof(StageClass), sizeof(*this), file, 0));
 }
 
@@ -1575,6 +1734,9 @@ bool FactoryClass::Load(FileClass & file)
  *=============================================================================================*/
 bool FactoryClass::Save(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FactoryClass::Save(FileClass & file)");
+#endif
 	return(Write_Object(this, sizeof(*this), file));
 }
 
@@ -1601,6 +1763,9 @@ bool FactoryClass::Save(FileClass & file)
  *=============================================================================================*/
 void FactoryClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FactoryClass::Code_Pointers(void)");
+#endif
 	if (Object) {
 		Object = (TechnoClass *)Object->As_Target();
 	}
@@ -1631,6 +1796,9 @@ void FactoryClass::Code_Pointers(void)
  *=============================================================================================*/
 void FactoryClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FactoryClass::Decode_Pointers(void)");
+#endif
 	if (Object) {
 		Object = As_Techno((TARGET)Object);
 		Check_Ptr((void *)Object,__FILE__,__LINE__);
@@ -1657,6 +1825,9 @@ void FactoryClass::Decode_Pointers(void)
  *=============================================================================================*/
 bool LayerClass::Load(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool LayerClass::Load(FileClass & file)");
+#endif
 	int count;
 	int i;
 	ObjectClass * ptr;
@@ -1701,6 +1872,9 @@ bool LayerClass::Load(FileClass & file)
  *=============================================================================================*/
 bool LayerClass::Save(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool LayerClass::Save(FileClass & file)");
+#endif
 	int count;
 	int i;
 	ObjectClass * ptr;
@@ -1747,6 +1921,9 @@ bool LayerClass::Save(FileClass & file)
  *=============================================================================================*/
 void LayerClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void LayerClass::Code_Pointers(void)");
+#endif
 	ObjectClass *obj;
 
 	for (int i = 0; i < Count(); i++) {
@@ -1776,6 +1953,9 @@ void LayerClass::Code_Pointers(void)
  *=============================================================================================*/
 void LayerClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void LayerClass::Decode_Pointers(void)");
+#endif
 	TARGET target;
 
 	for (int i = 0; i < Count(); i++) {
@@ -1800,6 +1980,9 @@ void LayerClass::Decode_Pointers(void)
  *=============================================================================================*/
 bool HouseClass::Load(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HouseClass::Load(FileClass & file)");
+#endif
 	return(Read_Object(this, sizeof(*this), sizeof(*this), file, 0));
 }
 
@@ -1818,6 +2001,9 @@ bool HouseClass::Load(FileClass & file)
  *=============================================================================================*/
 bool HouseClass::Save(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool HouseClass::Save(FileClass & file)");
+#endif
 	return(Write_Object(this, sizeof(*this), file));
 }
 
@@ -1844,6 +2030,9 @@ bool HouseClass::Save(FileClass & file)
  *=============================================================================================*/
 void HouseClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Code_Pointers(void)");
+#endif
 	/*
 	------------------------------ Code 'Class' ------------------------------
 	*/
@@ -1871,6 +2060,9 @@ void HouseClass::Code_Pointers(void)
  *=============================================================================================*/
 void HouseClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void HouseClass::Decode_Pointers(void)");
+#endif
 	/*
 	----------------------------- Decode 'Class' -----------------------------
 	*/
@@ -1893,6 +2085,9 @@ void HouseClass::Decode_Pointers(void)
  *=============================================================================================*/
 bool ScoreClass::Load(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ScoreClass::Load(FileClass & file)");
+#endif
 	return(Read_Object(this, sizeof(*this), sizeof(*this), file, 0));
 }
 
@@ -1911,6 +2106,9 @@ bool ScoreClass::Load(FileClass & file)
  *=============================================================================================*/
 bool ScoreClass::Save(FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ScoreClass::Save(FileClass & file)");
+#endif
 	return(Write_Object(this, sizeof(*this), file));
 }
 
@@ -1932,6 +2130,9 @@ bool ScoreClass::Save(FileClass & file)
  *=============================================================================================*/
 void ScoreClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ScoreClass::Code_Pointers(void)");
+#endif
 }
 
 
@@ -1952,6 +2153,9 @@ void ScoreClass::Code_Pointers(void)
  *=============================================================================================*/
 void ScoreClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ScoreClass::Decode_Pointers(void)");
+#endif
 }
 
 
@@ -1977,6 +2181,9 @@ void ScoreClass::Decode_Pointers(void)
  *=============================================================================================*/
 void FlyClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FlyClass::Code_Pointers(void)");
+#endif
 }
 
 
@@ -2000,6 +2207,9 @@ void FlyClass::Code_Pointers(void)
  *=============================================================================================*/
 void FlyClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FlyClass::Decode_Pointers(void)");
+#endif
 }
 
 
@@ -2025,6 +2235,9 @@ void FlyClass::Decode_Pointers(void)
  *=============================================================================================*/
 void FuseClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FuseClass::Code_Pointers(void)");
+#endif
 }
 
 
@@ -2048,6 +2261,9 @@ void FuseClass::Code_Pointers(void)
  *=============================================================================================*/
 void FuseClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FuseClass::Decode_Pointers(void)");
+#endif
 }
 
 
@@ -2073,6 +2289,9 @@ void FuseClass::Decode_Pointers(void)
  *=============================================================================================*/
 void TarComClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TarComClass::Code_Pointers(void)");
+#endif
 	TurretClass::Code_Pointers();
 }
 
@@ -2097,6 +2316,9 @@ void TarComClass::Code_Pointers(void)
  *=============================================================================================*/
 void TarComClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TarComClass::Decode_Pointers(void)");
+#endif
 	TurretClass::Decode_Pointers();
 }
 
@@ -2123,6 +2345,9 @@ void TarComClass::Decode_Pointers(void)
  *=============================================================================================*/
 void TurretClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TurretClass::Code_Pointers(void)");
+#endif
 	DriveClass::Code_Pointers();
 }
 
@@ -2147,6 +2372,9 @@ void TurretClass::Code_Pointers(void)
  *=============================================================================================*/
 void TurretClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TurretClass::Decode_Pointers(void)");
+#endif
 	DriveClass::Decode_Pointers();
 }
 
@@ -2173,6 +2401,9 @@ void TurretClass::Decode_Pointers(void)
  *=============================================================================================*/
 void DriveClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DriveClass::Code_Pointers(void)");
+#endif
 	/*
 	------------------------------ Code 'Class' ------------------------------
 	*/
@@ -2205,6 +2436,9 @@ void DriveClass::Code_Pointers(void)
  *=============================================================================================*/
 void DriveClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DriveClass::Decode_Pointers(void)");
+#endif
 	/*
 	----------------------------- Decode 'Class' -----------------------------
 	*/
@@ -2240,6 +2474,9 @@ void DriveClass::Decode_Pointers(void)
  *=============================================================================================*/
 void FootClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FootClass::Code_Pointers(void)");
+#endif
 	if (Team)
 		Team = (TeamClass *)Team->As_Target();
 
@@ -2271,6 +2508,9 @@ void FootClass::Code_Pointers(void)
  *=============================================================================================*/
 void FootClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FootClass::Decode_Pointers(void)");
+#endif
 	if (Team) {
 		Team = As_Team((TARGET)Team);
 		Check_Ptr((void *)Team,__FILE__,__LINE__);
@@ -2307,6 +2547,9 @@ void FootClass::Decode_Pointers(void)
  *=============================================================================================*/
 void RadioClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadioClass::Code_Pointers(void)");
+#endif
 	/*
 	------------------------------ Code 'Radio' ------------------------------
 	*/
@@ -2338,6 +2581,9 @@ void RadioClass::Code_Pointers(void)
  *=============================================================================================*/
 void RadioClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void RadioClass::Decode_Pointers(void)");
+#endif
 	/*
 	----------------------------- Decode 'Radio' -----------------------------
 	*/
@@ -2372,6 +2618,9 @@ void RadioClass::Decode_Pointers(void)
  *=============================================================================================*/
 void TechnoClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Code_Pointers(void)");
+#endif
 	/*
 	------------------------------ Code 'House' ------------------------------
 	*/
@@ -2406,6 +2655,9 @@ void TechnoClass::Code_Pointers(void)
  *=============================================================================================*/
 void TechnoClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Decode_Pointers(void)");
+#endif
 	/*
 	----------------------------- Decode 'House' -----------------------------
 	*/
@@ -2443,6 +2695,9 @@ void TechnoClass::Decode_Pointers(void)
  *=============================================================================================*/
 void FlasherClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FlasherClass::Code_Pointers(void)");
+#endif
 }
 
 
@@ -2466,6 +2721,9 @@ void FlasherClass::Code_Pointers(void)
  *=============================================================================================*/
 void FlasherClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FlasherClass::Decode_Pointers(void)");
+#endif
 }
 
 
@@ -2491,6 +2749,9 @@ void FlasherClass::Decode_Pointers(void)
  *=============================================================================================*/
 void CargoClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CargoClass::Code_Pointers(void)");
+#endif
 	/*
 	---------------------------- Code 'CargoHold' ----------------------------
 	*/
@@ -2520,6 +2781,9 @@ void CargoClass::Code_Pointers(void)
  *=============================================================================================*/
 void CargoClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CargoClass::Decode_Pointers(void)");
+#endif
 	/*
 	--------------------------- Decode 'CargoHold' ---------------------------
 	*/
@@ -2552,6 +2816,9 @@ void CargoClass::Decode_Pointers(void)
  *=============================================================================================*/
 void MissionClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MissionClass::Code_Pointers(void)");
+#endif
 	ObjectClass::Code_Pointers();
 }
 
@@ -2576,6 +2843,9 @@ void MissionClass::Code_Pointers(void)
  *=============================================================================================*/
 void MissionClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MissionClass::Decode_Pointers(void)");
+#endif
 	ObjectClass::Decode_Pointers();
 }
 
@@ -2602,6 +2872,9 @@ void MissionClass::Decode_Pointers(void)
  *=============================================================================================*/
 void ObjectClass::Code_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ObjectClass::Code_Pointers(void)");
+#endif
 	if (Next) {
 		Next = (ObjectClass *)Next->As_Target();
 	}
@@ -2632,6 +2905,9 @@ void ObjectClass::Code_Pointers(void)
  *=============================================================================================*/
 void ObjectClass::Decode_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ObjectClass::Decode_Pointers(void)");
+#endif
 	if (Next) {
 		Next = As_Object((TARGET)Next);
 		Check_Ptr((void *)Next,__FILE__,__LINE__);

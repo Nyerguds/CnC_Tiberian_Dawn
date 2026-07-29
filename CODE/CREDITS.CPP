@@ -58,6 +58,9 @@
  *=============================================================================================*/
 CreditClass::CreditClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CreditClass::CreditClass(void)");
+#endif
 	IsToRedraw = false;
 	IsUp = false;
 	IsAudible = false;
@@ -89,6 +92,9 @@ CreditClass::CreditClass(void)
 #define	WW	50
 void CreditClass::Graphic_Logic(bool forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CreditClass::Graphic_Logic(bool forced)");
+#endif
 	int factor = Get_Resolution_Shift();
 	int xx = SeenBuff.Get_Width() - (120 << factor);
 	if (forced || IsToRedraw) {
@@ -138,6 +144,9 @@ void CreditClass::Graphic_Logic(bool forced)
  *=============================================================================================*/
 void CreditClass::AI(bool forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CreditClass::AI(bool forced)");
+#endif
 	Credits = PlayerPtr->Available_Money();
 
 	/*

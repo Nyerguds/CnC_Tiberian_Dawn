@@ -56,6 +56,9 @@
  *=============================================================================================*/
 int CheckBoxClass::Draw_Me(int forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CheckBoxClass::Draw_Me(int forced)");
+#endif
 	if (ToggleClass::Draw_Me(forced)) {
 
 		Hide_Mouse();

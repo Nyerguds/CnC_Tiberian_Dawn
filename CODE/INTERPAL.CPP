@@ -89,6 +89,9 @@ extern "C"{
 
 void Read_Interpolation_Palette (char const *palette_file_name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Read_Interpolation_Palette (char const *palette_file_name)");
+#endif
 	CCFileClass palette_file(palette_file_name);
 
 	if (palette_file.Is_Available()){
@@ -117,6 +120,9 @@ void Read_Interpolation_Palette (char const *palette_file_name)
 
 void Write_Interpolation_Palette (char const *palette_file_name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Write_Interpolation_Palette (char const *palette_file_name)");
+#endif
 	CCFileClass palette_file(palette_file_name);
 
 	if (!palette_file.Is_Available()){
@@ -144,7 +150,9 @@ void Write_Interpolation_Palette (char const *palette_file_name)
  *=========================================================================*/
 void Create_Palette_Interpolation_Table( void )
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Create_Palette_Interpolation_Table( void )");
+#endif
 	Asm_Create_Palette_Interpolation_Table();
 
 	#if (0)
@@ -268,7 +276,9 @@ void Create_Palette_Interpolation_Table( void )
 
 void Increase_Palette_Luminance (unsigned char *palette , int red_percentage , int green_percentage , int blue_percentage ,int cap)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Increase_Palette_Luminance (unsigned char *palette , int red_percentage , int green_percentage , int blue_percentage ,int cap)");
+#endif
 	unsigned	int	red;
 	unsigned	int	green;
 	unsigned	int	blue;
@@ -322,6 +332,9 @@ int	CopyType	=0;
  *=========================================================================*/
 void Interpolate_2X_Scale( GraphicBufferClass *source, GraphicViewPortClass *dest ,char const *palette_file_name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Interpolate_2X_Scale( GraphicBufferClass *source, GraphicViewPortClass *dest ,char const *palette_file_name)");
+#endif
 	unsigned char	*src_ptr;
 	unsigned char	*dest_ptr;
 	unsigned char	*last_dest_ptr;

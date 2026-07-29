@@ -37,6 +37,9 @@
 
 FieldClass::FieldClass(char *id, char data)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FieldClass::FieldClass(char *id, char data)");
+#endif
 	strncpy(ID, id, sizeof(ID));
 	DataType = TYPE_CHAR;
 	Size		= sizeof(data);
@@ -47,6 +50,9 @@ FieldClass::FieldClass(char *id, char data)
 
 FieldClass::FieldClass(char *id, unsigned char data)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FieldClass::FieldClass(char *id, unsigned char data)");
+#endif
 	strncpy(ID, id, sizeof(ID));
 	DataType = TYPE_UNSIGNED_CHAR;
 	Size		= sizeof(data);
@@ -57,6 +63,9 @@ FieldClass::FieldClass(char *id, unsigned char data)
 
 FieldClass::FieldClass(char *id, short data)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FieldClass::FieldClass(char *id, short data)");
+#endif
 	strncpy(ID, id, sizeof(ID));
 	DataType = TYPE_SHORT;
 	Size		= sizeof(data);
@@ -67,6 +76,9 @@ FieldClass::FieldClass(char *id, short data)
 
 FieldClass::FieldClass(char *id, unsigned short data)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FieldClass::FieldClass(char *id, unsigned short data)");
+#endif
 	strncpy(ID, id, sizeof(ID));
 	DataType = TYPE_UNSIGNED_SHORT;
 	Size		= sizeof(data);
@@ -77,6 +89,9 @@ FieldClass::FieldClass(char *id, unsigned short data)
 
 FieldClass::FieldClass(char *id, long data)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FieldClass::FieldClass(char *id, long data)");
+#endif
 	strncpy(ID, id, sizeof(ID));
 	DataType = TYPE_LONG;
 	Size		= sizeof(data);
@@ -87,6 +102,9 @@ FieldClass::FieldClass(char *id, long data)
 
 FieldClass::FieldClass(char *id, unsigned long data)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FieldClass::FieldClass(char *id, unsigned long data)");
+#endif
 	strncpy(ID, id, sizeof(ID));
 	DataType = TYPE_UNSIGNED_LONG;
 	Size		= sizeof(data);
@@ -97,6 +115,9 @@ FieldClass::FieldClass(char *id, unsigned long data)
 
 FieldClass::FieldClass(char *id, char *data)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FieldClass::FieldClass(char *id, char *data)");
+#endif
 	strncpy(ID, id, sizeof(ID));
 	DataType = TYPE_STRING;
 	Size		= (unsigned short)(strlen(data)+1);
@@ -107,6 +128,9 @@ FieldClass::FieldClass(char *id, char *data)
 
 FieldClass::FieldClass(char *id, void *data, int length)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FieldClass::FieldClass(char *id, void *data, int length)");
+#endif
 	strncpy(ID, id, sizeof(ID));
 	DataType = TYPE_CHUNK;
 	Size		= (unsigned short)length;
@@ -128,6 +152,9 @@ FieldClass::FieldClass(char *id, void *data, int length)
  *========================================================================*/
 void FieldClass::Host_To_Net(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FieldClass::Host_To_Net(void)");
+#endif
 	//
 	// Before we convert the data type, we should convert the actual data
 	//  sent.
@@ -174,6 +201,9 @@ void FieldClass::Host_To_Net(void)
  *========================================================================*/
 void FieldClass::Net_To_Host(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FieldClass::Net_To_Host(void)");
+#endif
 	//
 	// Convert the variables to host order.  This needs to be converted so
 	// the switch statement does compares on the data that follows.

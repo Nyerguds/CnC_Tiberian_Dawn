@@ -71,6 +71,9 @@
  *=========================================================================*/
 CommBufferClass::CommBufferClass(int numsend, int numreceive, int maxlen)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CommBufferClass::CommBufferClass(int numsend, int numreceive, int maxlen)");
+#endif
 	int i;
 
 	/*
@@ -122,6 +125,9 @@ CommBufferClass::CommBufferClass(int numsend, int numreceive, int maxlen)
  *=========================================================================*/
 CommBufferClass::~CommBufferClass()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CommBufferClass::~CommBufferClass()");
+#endif
 	int i;
 
 	/*
@@ -161,6 +167,9 @@ CommBufferClass::~CommBufferClass()
  *=========================================================================*/
 void CommBufferClass::Init(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CommBufferClass::Init(void)");
+#endif
 	int i;
 
 	/*------------------------------------------------------------------------
@@ -214,6 +223,9 @@ void CommBufferClass::Init(void)
 
 void CommBufferClass::Init_Send_Queue(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CommBufferClass::Init_Send_Queue(void)");
+#endif
 	int i;
 
 	/*------------------------------------------------------------------------
@@ -255,6 +267,9 @@ void CommBufferClass::Init_Send_Queue(void)
  *=========================================================================*/
 int CommBufferClass::Queue_Send(void *buf, int buflen)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CommBufferClass::Queue_Send(void *buf, int buflen)");
+#endif
 	int i;
 	int index;
 
@@ -329,6 +344,9 @@ int CommBufferClass::Queue_Send(void *buf, int buflen)
  *=========================================================================*/
 int CommBufferClass::UnQueue_Send(void *buf, int *buflen, int index)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CommBufferClass::UnQueue_Send(void *buf, int *buflen, int index)");
+#endif
 	int i;
 
 	/*
@@ -391,6 +409,9 @@ int CommBufferClass::UnQueue_Send(void *buf, int *buflen, int index)
  *=========================================================================*/
 SendQueueType * CommBufferClass::Get_Send(int index)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("SendQueueType * CommBufferClass::Get_Send(int index)");
+#endif
 	if (SendQueue[SendIndex[index]].IsActive==0) {
 		return(NULL);
 	} else {
@@ -418,6 +439,9 @@ SendQueueType * CommBufferClass::Get_Send(int index)
  *=========================================================================*/
 int CommBufferClass::Queue_Receive(void *buf, int buflen)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CommBufferClass::Queue_Receive(void *buf, int buflen)");
+#endif
 	int i;
 	int index;
 
@@ -499,6 +523,9 @@ CCDebugString ("C&C95 - Error - Receive queue full too!\n");
  *=========================================================================*/
 int CommBufferClass::UnQueue_Receive(void *buf, int *buflen, int index)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int CommBufferClass::UnQueue_Receive(void *buf, int *buflen, int index)");
+#endif
 	int i;
 
 	/*
@@ -560,6 +587,9 @@ int CommBufferClass::UnQueue_Receive(void *buf, int *buflen, int index)
  *=========================================================================*/
 ReceiveQueueType * CommBufferClass::Get_Receive(int index)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ReceiveQueueType * CommBufferClass::Get_Receive(int index)");
+#endif
 	if (ReceiveQueue[ReceiveIndex[index]].IsActive==0) {
 		return(NULL);
 	} else {
@@ -596,6 +626,9 @@ ReceiveQueueType * CommBufferClass::Get_Receive(int index)
  *=========================================================================*/
 void CommBufferClass::Add_Delay(unsigned long delay)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CommBufferClass::Add_Delay(unsigned long delay)");
+#endif
 	int roundoff = 0;
 
 	if (NumDelay==256) {
@@ -633,6 +666,9 @@ void CommBufferClass::Add_Delay(unsigned long delay)
  *=========================================================================*/
 unsigned long CommBufferClass::Avg_Response_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned long CommBufferClass::Avg_Response_Time(void)");
+#endif
 	return(MeanDelay);
 
 }	/* end of Avg_Response_Time */
@@ -655,6 +691,9 @@ unsigned long CommBufferClass::Avg_Response_Time(void)
  *=========================================================================*/
 unsigned long CommBufferClass::Max_Response_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned long CommBufferClass::Max_Response_Time(void)");
+#endif
 	return(MaxDelay);
 
 }	/* end of Max_Response_Time */
@@ -677,6 +716,9 @@ unsigned long CommBufferClass::Max_Response_Time(void)
  *=========================================================================*/
 void CommBufferClass::Reset_Response_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CommBufferClass::Reset_Response_Time(void)");
+#endif
 	DelaySum = 0L;
 	NumDelay = 0L;
 	MeanDelay = 0L;
@@ -712,6 +754,9 @@ void CommBufferClass::Reset_Response_Time(void)
 void CommBufferClass::Configure_Debug(int offset, int size, char **names,
 	int maxnames)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CommBufferClass::Configure_Debug(int offset, int size, char **names, int maxnames)");
+#endif
 	DebugOffset = offset;
 	DebugSize = size;
 	DebugNames = names;
@@ -739,6 +784,9 @@ void CommBufferClass::Configure_Debug(int offset, int size, char **names,
  *=========================================================================*/
 void CommBufferClass::Mono_Debug_Print(int refresh)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CommBufferClass::Mono_Debug_Print(int refresh)");
+#endif
 #ifdef WWLIB32_H
 	int i;												// loop counter
 	static int send_col[] = {1,14,28};			// coords of send queue columns
@@ -875,6 +923,9 @@ void CommBufferClass::Mono_Debug_Print(int refresh)
  *=========================================================================*/
 void CommBufferClass::Mono_Debug_Print2(int refresh)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CommBufferClass::Mono_Debug_Print2(int refresh)");
+#endif
 #ifdef WWLIB32_H
 	int i;												// loop counter
 	char txt[80];

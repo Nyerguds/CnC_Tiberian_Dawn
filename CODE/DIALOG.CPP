@@ -66,6 +66,9 @@
  *=============================================================================================*/
 void Dialog_Box(int x, int y, int w, int h)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Dialog_Box(int x, int y, int w, int h)");
+#endif
 	Draw_Box( x, y, w, h, BOXSTYLE_GREEN_BORDER, true);
 }
 
@@ -98,6 +101,9 @@ extern void CC_Texture_Fill (void const *shapefile, int shapenum, int xpos, int 
 
 void Draw_Box(int x, int y, int w, int h, BoxStyleEnum up, bool filled)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Draw_Box(int x, int y, int w, int h, BoxStyleEnum up, bool filled)");
+#endif
 	static BoxStyleType const ButtonColors[BOXSTYLE_COUNT] = {
 
 		//Filler, Shadow, Hilite, Corner colors
@@ -175,6 +181,9 @@ void Draw_Box(int x, int y, int w, int h, BoxStyleEnum up, bool filled)
  *=============================================================================================*/
 int Format_Window_String(char * string, int maxlinelen, int & width, int & height)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Format_Window_String(char * string, int maxlinelen, int & width, int & height)");
+#endif
 	int	linelen;
 	int	lines = 0;
 	width	= 0;
@@ -246,6 +255,9 @@ int Format_Window_String(char * string, int maxlinelen, int & width, int & heigh
  *=============================================================================================*/
 void Window_Box(WindowNumberType window, BoxStyleEnum style)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Window_Box(WindowNumberType window, BoxStyleEnum style)");
+#endif
 	int	x,y,w,h;			// Window dimensions.
 	int	border;			// Width of border.
 
@@ -317,6 +329,9 @@ void Window_Box(WindowNumberType window, BoxStyleEnum style)
  *=============================================================================================*/
 void Simple_Text_Print(char const *text, unsigned x, unsigned y, unsigned fore, unsigned back, TextPrintType flag)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Simple_Text_Print(char const *text, unsigned x, unsigned y, unsigned fore, unsigned back, TextPrintType flag)");
+#endif
 	static int		yspace=0;			// Y spacing adjustment for font.
 	static int		xspace=0;			// Spacing adjustment for font.
 	void const *	font=0;		// Font to use.
@@ -610,6 +625,9 @@ void Simple_Text_Print(char const *text, unsigned x, unsigned y, unsigned fore, 
  *=============================================================================================*/
 void Fancy_Text_Print(int text, unsigned x, unsigned y, unsigned fore, unsigned back, TextPrintType flag, ...)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Fancy_Text_Print(int text, unsigned x, unsigned y, unsigned fore, unsigned back, TextPrintType flag, ...)");
+#endif
 	char		buffer[512];		// Working staging buffer.
 	va_list	arg;					// Argument list var.
 
@@ -667,6 +685,9 @@ void Fancy_Text_Print(int text, unsigned x, unsigned y, unsigned fore, unsigned 
  *=============================================================================================*/
 void Fancy_Text_Print(char const *text, unsigned x, unsigned y, unsigned fore, unsigned back, TextPrintType flag, ...)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Fancy_Text_Print(char const *text, unsigned x, unsigned y, unsigned fore, unsigned back, TextPrintType flag, ...)");
+#endif
 	char		buffer[512];		// Working staging buffer.
 	va_list	arg;					// Argument list var.
 
@@ -727,6 +748,9 @@ void Fancy_Text_Print(char const *text, unsigned x, unsigned y, unsigned fore, u
  *=============================================================================================*/
 void Conquer_Clip_Text_Print(char const *text, unsigned x, unsigned y, unsigned fore, unsigned back, TextPrintType flag, unsigned width, int const * tabs)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Conquer_Clip_Text_Print(char const *text, unsigned x, unsigned y, unsigned fore, unsigned back, TextPrintType flag, unsigned width, int const * tabs)");
+#endif
 	char buffer[512];
 
 	if (text) {
@@ -821,6 +845,9 @@ void Conquer_Clip_Text_Print(char const *text, unsigned x, unsigned y, unsigned 
  *=============================================================================================*/
 unsigned char Get_Font_Height(void const *dataptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned char Get_Font_Height(void const *dataptr)");
+#endif
 	if (dataptr) {
 		return(((const char *)dataptr)[0x12]);
 	}
@@ -846,6 +873,9 @@ unsigned char Get_Font_Height(void const *dataptr)
  *=============================================================================================*/
 unsigned char Get_Font_Width(void const *dataptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned char Get_Font_Width(void const *dataptr)");
+#endif
 	if (dataptr) {
 		return(((const char *)dataptr)[0x13]);
 	}

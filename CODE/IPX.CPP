@@ -80,7 +80,9 @@
  *=========================================================================*/
 int IPX_SPX_Installed(void)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPX_SPX_Installed(void)");
+#endif
 #ifndef NOT_FOR_WIN95
 
 	return (IPX_Initialise());
@@ -188,6 +190,9 @@ int IPX_SPX_Installed(void)
 #ifdef NOT_FOR_WIN95
 int IPX_Open_Socket(unsigned short socket)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPX_Open_Socket(unsigned short socket)");
+#endif
 	union REGS regs;
 	struct SREGS sregs;
 	RMIType rmi;
@@ -244,6 +249,9 @@ int IPX_Open_Socket(unsigned short socket)
 #ifdef NOT_FOR_WIN95
 int IPX_Close_Socket(unsigned short socket)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPX_Close_Socket(unsigned short socket)");
+#endif
 	union REGS regs;
 	struct SREGS sregs;
 	RMIType rmi;
@@ -300,6 +308,9 @@ int IPX_Close_Socket(unsigned short socket)
 #ifdef NOT_FOR_WIN95
 int IPX_Get_Connection_Number(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPX_Get_Connection_Number(void)");
+#endif
 	union REGS regs;
 	struct SREGS sregs;
 	RMIType rmi;
@@ -357,6 +368,9 @@ int IPX_Get_Connection_Number(void)
 #ifdef NOT_FOR_WIN95
 int IPX_Get_1st_Connection_Num (char *username)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPX_Get_1st_Connection_Num (char *username)");
+#endif
 	struct request_buffer {
 		unsigned short len;							// username length + 5
 		unsigned char buffer_type;					// ConnectionNum = 0x15
@@ -502,6 +516,9 @@ int IPX_Get_1st_Connection_Num (char *username)
 int IPX_Get_Internet_Address(int connection_number,
 	unsigned char *network_number, unsigned char *physical_node)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPX_Get_Internet_Address(int connection_number, unsigned char *network_number, unsigned char *physical_node)");
+#endif
 	struct request_buffer {
 		unsigned short  len;
 		unsigned char   buffer_type;				// Internet = 0x13
@@ -629,6 +646,9 @@ int IPX_Get_Internet_Address(int connection_number,
 #ifdef NOT_FOR_WIN95
 int IPX_Get_User_ID(int connection_number, char *user_id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPX_Get_User_ID(int connection_number, char *user_id)");
+#endif
 	struct request_buffer {
 		unsigned short  len;
 		unsigned char   buffer_type;			// 0x16 = UserID buffer type
@@ -776,6 +796,9 @@ int IPX_Get_User_ID(int connection_number, char *user_id)
 #ifdef NOT_FOR_WIN95
 int IPX_Listen_For_Packet(struct ECB *ecb_ptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPX_Listen_For_Packet(struct ECB *ecb_ptr)");
+#endif
 	union REGS      regs;
 	struct SREGS    sregs;
 	RMIType rmi;
@@ -853,6 +876,9 @@ int IPX_Listen_For_Packet(struct ECB *ecb_ptr)
 #ifdef NOT_FOR_WIN95
 void IPX_Send_Packet(struct ECB *ecb_ptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void IPX_Send_Packet(struct ECB *ecb_ptr)");
+#endif
 	union REGS      regs;
 	struct SREGS    sregs;
 	RMIType rmi;
@@ -913,6 +939,9 @@ void IPX_Send_Packet(struct ECB *ecb_ptr)
 int IPX_Get_Local_Target(unsigned char *dest_network, unsigned char *dest_node,
 	unsigned short dest_socket, unsigned char *bridge_address)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPX_Get_Local_Target(unsigned char *dest_network, unsigned char *dest_node, unsigned short dest_socket, unsigned char *bridge_address)");
+#endif
 	struct request_buffer {
 		unsigned char   network_number [4];
 		unsigned char   physical_node  [6];
@@ -1027,6 +1056,9 @@ int IPX_Get_Local_Target(unsigned char *dest_network, unsigned char *dest_node,
 #ifdef NOT_FOR_WIN95
 int IPX_Cancel_Event(struct ECB *ecb_ptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPX_Cancel_Event(struct ECB *ecb_ptr)");
+#endif
 	union REGS      regs;
 	struct SREGS    sregs;
 	RMIType rmi;
@@ -1084,6 +1116,9 @@ int IPX_Cancel_Event(struct ECB *ecb_ptr)
 #ifdef NOT_FOR_WIN95
 void Let_IPX_Breath(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Let_IPX_Breath(void)");
+#endif
 	union REGS      regs;
 	struct SREGS    sregs;
 	RMIType rmi;

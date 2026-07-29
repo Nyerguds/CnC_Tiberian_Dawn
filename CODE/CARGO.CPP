@@ -59,6 +59,9 @@
  *=============================================================================================*/
 void CargoClass::Debug_Dump(MonoClass * mono) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CargoClass::Debug_Dump(MonoClass * mono) const");
+#endif
 	if (How_Many()) {
 		mono->Set_Cursor(63, 3);
 		mono->Printf("(%d)%04X", How_Many(), Attached_Object());
@@ -86,6 +89,9 @@ void CargoClass::Debug_Dump(MonoClass * mono) const
  *=============================================================================================*/
 void CargoClass::Attach(FootClass * object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void CargoClass::Attach(FootClass * object)");
+#endif
 	/*
 	**	If there is no object, then no action is necessary.
 	*/
@@ -143,6 +149,9 @@ void CargoClass::Attach(FootClass * object)
  *=============================================================================================*/
 FootClass * CargoClass::Detach_Object(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FootClass * CargoClass::Detach_Object(void)");
+#endif
 	FootClass * unit = Attached_Object();
 
 	if (unit) {
@@ -174,6 +183,9 @@ FootClass * CargoClass::Detach_Object(void)
  *=============================================================================================*/
 FootClass * CargoClass::Attached_Object(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FootClass * CargoClass::Attached_Object(void) const");
+#endif
 	if (Is_Something_Attached()) {
 		return(CargoHold);
 	}

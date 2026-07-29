@@ -4463,6 +4463,9 @@ BuildingTypeClass::BuildingTypeClass(
  *=============================================================================================*/
 void BuildingTypeClass::Max_Dimensions(short const *occupylist, short const *overlapList, int *width, int *height)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingTypeClass::Max_Dimensions(short const *occupylist, short const *overlapList, int *width, int *height)");
+#endif
 	int w = 0;
 	int h = 0;
 	const short *occupyloop;
@@ -4508,6 +4511,9 @@ void BuildingTypeClass::Max_Dimensions(short const *occupylist, short const *ove
  *=============================================================================================*/
 COORDINATE BuildingTypeClass::Valid_Target_Center(COORDINATE center, short const *occupylist)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE BuildingTypeClass::Valid_Target_Center(COORDINATE center, short const *occupylist)");
+#endif
 	// Edge values for cells facing a specific direction away from the center
 	static const struct {
 		unsigned char Y;
@@ -4583,6 +4589,9 @@ COORDINATE BuildingTypeClass::Valid_Target_Center(COORDINATE center, short const
  *=============================================================================================*/
 void BuildingTypeClass::One_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingTypeClass::One_Time(void)");
+#endif
 	static const struct {
 		StructType	Class;			// Building class number.
 		BStateType	Stage;			// Animation sequence to assign animation range to.
@@ -4704,6 +4713,9 @@ void BuildingTypeClass::One_Time(void)
  *=============================================================================================*/
 StructType BuildingTypeClass::From_Name(char const *name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("StructType BuildingTypeClass::From_Name(char const *name)");
+#endif
 	if (name) {
 		for (StructType classid = STRUCT_FIRST; classid < STRUCT_COUNT; classid++) {
 			if (stricmp(As_Reference(classid).IniName, name) == 0) {
@@ -4733,6 +4745,9 @@ StructType BuildingTypeClass::From_Name(char const *name)
  *=============================================================================================*/
 int BuildingTypeClass::Showcase_Frame() const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingTypeClass::Showcase_Frame() const");
+#endif
 	return(0);
 }
 
@@ -4755,6 +4770,9 @@ int BuildingTypeClass::Showcase_Frame() const
  *=============================================================================================*/
 void BuildingTypeClass::Prep_For_Add(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingTypeClass::Prep_For_Add(void)");
+#endif
 	for (StructType index = STRUCT_FIRST; index < STRUCT_COUNT; index++) {
 		if (As_Reference(index).Get_Image_Data()) {
 			Map.Add_To_List(As_Pointer(index));
@@ -4782,6 +4800,9 @@ void BuildingTypeClass::Prep_For_Add(void)
  *=============================================================================================*/
 bool BuildingTypeClass::Create_And_Place(CELL cell, HousesType house) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool BuildingTypeClass::Create_And_Place(CELL cell, HousesType house) const");
+#endif
 	BuildingClass * ptr;
 
 	ptr = new BuildingClass(Type, house);
@@ -4812,6 +4833,9 @@ bool BuildingTypeClass::Create_And_Place(CELL cell, HousesType house) const
  *=============================================================================================*/
 ObjectClass * BuildingTypeClass::Create_One_Of(HouseClass * house) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ObjectClass * BuildingTypeClass::Create_One_Of(HouseClass * house) const");
+#endif
 	HousesType htype = HOUSE_NEUTRAL;
 	if (house) {
 		htype = house->Class->House;
@@ -4844,6 +4868,9 @@ ObjectClass * BuildingTypeClass::Create_One_Of(HouseClass * house) const
  *=============================================================================================*/
 void BuildingTypeClass::Init_Anim(BStateType state, int start, int count, int rate) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingTypeClass::Init_Anim(BStateType state, int start, int count, int rate) const");
+#endif
 	((int &)Anims[state].Start) = start;
 	((int &)Anims[state].Count) = count;
 	((int &)Anims[state].Rate) = rate;
@@ -4873,6 +4900,9 @@ void BuildingTypeClass::Init_Anim(BStateType state, int start, int count, int ra
  *=============================================================================================*/
 int BuildingTypeClass::Legal_Placement(CELL pos) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingTypeClass::Legal_Placement(CELL pos) const");
+#endif
 	short const	*offset;		// Pointer to cell offset list.
 
 	if (pos == -1) return(false);
@@ -4946,6 +4976,9 @@ int BuildingTypeClass::Legal_Placement(CELL pos) const
  *=============================================================================================*/
 BuildingClass * BuildingTypeClass::Who_Can_Build_Me(bool intheory, bool legal, HousesType house) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BuildingClass * BuildingTypeClass::Who_Can_Build_Me(bool intheory, bool legal, HousesType house) const");
+#endif
 	BuildingClass * found = NULL;
 	for (int index = Buildings.Count()-1; index >= 0; index--) {
 		BuildingClass * building = Buildings.Ptr(index);
@@ -4986,6 +5019,9 @@ BuildingClass * BuildingTypeClass::Who_Can_Build_Me(bool intheory, bool legal, H
  *=============================================================================================*/
 void BuildingTypeClass::Init(TheaterType theater)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingTypeClass::Init(TheaterType theater)");
+#endif
 	//if (theater != LastTheater){
 	char fullname[_MAX_FNAME+_MAX_EXT];
 	char buffer[_MAX_FNAME];
@@ -5070,6 +5106,9 @@ void BuildingTypeClass::Init(TheaterType theater)
  *=============================================================================================*/
 void BuildingTypeClass::Dimensions(int &width, int &height) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BuildingTypeClass::Dimensions(int &width, int &height) const");
+#endif
 	width = Width() * ICON_PIXEL_W;
 	width -= (width/5);
 	height = Height() * ICON_PIXEL_H;
@@ -5095,6 +5134,9 @@ void BuildingTypeClass::Dimensions(int &width, int &height) const
  *=============================================================================================*/
 BuildingTypeClass const & BuildingTypeClass::As_Reference(StructType type)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BuildingTypeClass const & BuildingTypeClass::As_Reference(StructType type)");
+#endif
 	return(* Pointers[type]);
 }
 
@@ -5118,6 +5160,9 @@ BuildingTypeClass const & BuildingTypeClass::As_Reference(StructType type)
  *=============================================================================================*/
 BuildingTypeClass const * BuildingTypeClass::As_Pointer(StructType type)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BuildingTypeClass const * BuildingTypeClass::As_Pointer(StructType type)");
+#endif
 	if ((unsigned)type >= STRUCT_COUNT)
 		return (NULL);
 	return(Pointers[type]);
@@ -5144,6 +5189,9 @@ BuildingTypeClass const * BuildingTypeClass::As_Pointer(StructType type)
  *=============================================================================================*/
 short const * BuildingTypeClass::Occupy_List(bool placement) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const * BuildingTypeClass::Occupy_List(bool placement) const");
+#endif
 	SmudgeType bib = SMUDGE_NONE;
 	CELL cell=0;
 
@@ -5262,6 +5310,9 @@ short const * BuildingTypeClass::Occupy_List(bool placement) const
  *=============================================================================================*/
 short const * BuildingTypeClass::Overlap_List(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const * BuildingTypeClass::Overlap_List(void) const");
+#endif
 	if (OverlapList) {
 		return(OverlapList);
 	}
@@ -5287,6 +5338,9 @@ short const * BuildingTypeClass::Overlap_List(void) const
  *=============================================================================================*/
 int BuildingTypeClass::Width(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingTypeClass::Width(void) const");
+#endif
 	return(SizeX);
 }
 
@@ -5307,6 +5361,9 @@ int BuildingTypeClass::Width(void) const
  *=============================================================================================*/
 int BuildingTypeClass::Height(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingTypeClass::Height(void) const");
+#endif
 	return(SizeY);
 }
 
@@ -5329,6 +5386,9 @@ int BuildingTypeClass::Height(void) const
  *=============================================================================================*/
 int BuildingTypeClass::Repair_Cost(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingTypeClass::Repair_Cost(void) const");
+#endif
 	int cost = (Raw_Cost()*REPAIR_STEP) / MaxStrength;
 	cost /= 2;
 	cost = MAX(cost, 1);
@@ -5354,6 +5414,9 @@ int BuildingTypeClass::Repair_Cost(void) const
  *=============================================================================================*/
 int BuildingTypeClass::Repair_Step(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingTypeClass::Repair_Step(void) const");
+#endif
 	return(REPAIR_STEP);
 }
 
@@ -5379,6 +5442,9 @@ int BuildingTypeClass::Repair_Step(void) const
  *=============================================================================================*/
 bool BuildingTypeClass::Bib_And_Offset(SmudgeType & bib, CELL & cell) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool BuildingTypeClass::Bib_And_Offset(SmudgeType & bib, CELL & cell) const");
+#endif
 	bib = SMUDGE_NONE;
 
 	if (IsBibbed && !Special.IsRoad) {
@@ -5425,6 +5491,9 @@ bool BuildingTypeClass::Bib_And_Offset(SmudgeType & bib, CELL & cell) const
  *=============================================================================================*/
 int BuildingTypeClass::Max_Pips(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingTypeClass::Max_Pips(void) const");
+#endif
 	return(Bound(Capacity/100, 0, 10));
 }
 
@@ -5449,6 +5518,9 @@ int BuildingTypeClass::Max_Pips(void) const
  *=============================================================================================*/
 int BuildingTypeClass::Full_Name(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingTypeClass::Full_Name(void) const");
+#endif
 	if (GameToPlay == GAME_NORMAL && ScenPlayer == SCEN_PLAYER_NOD && ::Scenario == 3 && Type == STRUCT_MISSION) {
 		return(TXT_PRISON);
 	}
@@ -5478,6 +5550,9 @@ int BuildingTypeClass::Full_Name(void) const
  *=============================================================================================*/
 int BuildingTypeClass::Enemy_Name(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingTypeClass::Enemy_Name(void) const");
+#endif
 	return(TXT_ENEMY_STRUCTURE);
 }
 
@@ -5498,6 +5573,9 @@ int BuildingTypeClass::Enemy_Name(void) const
  *=============================================================================================*/
 void const * BuildingTypeClass::Remap_Table(HouseClass * house, bool blushing) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void const * BuildingTypeClass::Remap_Table(HouseClass * house, bool blushing) const");
+#endif
 	return(IsWall && !blushing ? NULL : house->Remap_Table(false, true));
 }
 
@@ -5521,6 +5599,9 @@ void const * BuildingTypeClass::Remap_Table(HouseClass * house, bool blushing) c
  *=============================================================================================*/
 int BuildingTypeClass::Raw_Cost(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingTypeClass::Raw_Cost(void) const");
+#endif
 #ifdef PATCH
 	/*
 	**	Forces the turret cost down to original 250 for old
@@ -5559,6 +5640,9 @@ int BuildingTypeClass::Raw_Cost(void) const
  *=============================================================================================*/
 int BuildingTypeClass::Cost_Of(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BuildingTypeClass::Cost_Of(void) const");
+#endif
 	if (Special.IsSeparate && Type == STRUCT_HELIPAD) {
 		return(Raw_Cost());
 	}

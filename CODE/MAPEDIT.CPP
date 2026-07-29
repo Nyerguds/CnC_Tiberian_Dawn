@@ -107,6 +107,9 @@ char MapEditClass::HealthBuf[20];
  *=========================================================================*/
 MapEditClass::MapEditClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MapEditClass::MapEditClass(void)");
+#endif
 	/*
 	**	Init data members.
 	*/
@@ -146,6 +149,9 @@ MapEditClass::MapEditClass(void)
  *=========================================================================*/
 void MapEditClass::One_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::One_Time(void)");
+#endif
 	MouseClass::One_Time();
 
 	/*------------------------------------------------------------------------
@@ -256,6 +262,9 @@ void MapEditClass::One_Time(void)
  *   07/12/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
 void MapEditClass::After_Init(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::After_Init(void)");
+#endif
 	MouseClass::After_Init();
 };
 
@@ -274,6 +283,9 @@ void MapEditClass::After_Init(void) {
  *=============================================================================================*/
 void MapEditClass::Init_IO(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Init_IO(void)");
+#endif
 	/*------------------------------------------------------------------------
 	For normal game mode, jump to the parent's Init routine.
 	------------------------------------------------------------------------*/
@@ -314,6 +326,9 @@ void MapEditClass::Init_IO(void)
  *=========================================================================*/
 void MapEditClass::Read_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Read_INI(char *buffer)");
+#endif
 	/*
 	------------------------ Invoke parent's Read_INI ------------------------
 	*/
@@ -341,6 +356,9 @@ void MapEditClass::Read_INI(char *buffer)
  *=========================================================================*/
 void MapEditClass::Write_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Write_INI(char *buffer)");
+#endif
 	/*
 	----------------------- Invoke parent's Write_INI ------------------------
 	*/
@@ -372,6 +390,9 @@ void MapEditClass::Write_INI(char *buffer)
  *=========================================================================*/
 void MapEditClass::Clear_List(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Clear_List(void)");
+#endif
 	/*------------------------------------------------------------------------
 	Set # object type ptrs to 0, set NumType for each type to 0
 	------------------------------------------------------------------------*/
@@ -406,6 +427,9 @@ void MapEditClass::Clear_List(void)
  *=========================================================================*/
 bool MapEditClass::Add_To_List(ObjectTypeClass const *object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool MapEditClass::Add_To_List(ObjectTypeClass const *object)");
+#endif
 	/*
 	**	Add the object if there's room.
 	*/
@@ -524,6 +548,9 @@ bool MapEditClass::Add_To_List(ObjectTypeClass const *object)
  *=========================================================================*/
 void MapEditClass::AI(KeyNumType &input, int x, int y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::AI(KeyNumType &input, int x, int y)");
+#endif
 	int rc;
 	MissionType mission;
 	int strength;
@@ -1379,6 +1406,9 @@ void MapEditClass::AI(KeyNumType &input, int x, int y)
  *=========================================================================*/
 void MapEditClass::Draw_It(bool forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Draw_It(bool forced)");
+#endif
 	char const *label;
 	char buf[40];
 	char const *tptr;
@@ -1459,6 +1489,9 @@ void MapEditClass::Draw_It(bool forced)
  *=========================================================================*/
 bool MapEditClass::Mouse_Moved(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool MapEditClass::Mouse_Moved(void)");
+#endif
 	static int old_mx = 0;
 	static int old_my = 0;
 	static CELL old_zonecell = 0;
@@ -1531,6 +1564,9 @@ bool MapEditClass::Mouse_Moved(void)
  *=========================================================================*/
 void MapEditClass::Main_Menu(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Main_Menu(void)");
+#endif
 	char const *_menus[MAX_MAIN_MENU_NUM + 1];
 	int selection;						// option the user picks
 	bool process;						// menu stays up while true
@@ -1721,6 +1757,9 @@ void MapEditClass::Main_Menu(void)
  *=========================================================================*/
 void MapEditClass::AI_Menu(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::AI_Menu(void)");
+#endif
 	int selection;						// option the user picks
 	bool process;						// menu stays up while true
 	char const *_menus[MAX_AI_MENU_NUM + 1];
@@ -1829,6 +1868,9 @@ void MapEditClass::AI_Menu(void)
  *=========================================================================*/
 bool MapEditClass::Verify_House(HousesType house, ObjectTypeClass const *objtype)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool MapEditClass::Verify_House(HousesType house, ObjectTypeClass const *objtype)");
+#endif
 	/*
 	--------------- Verify that new house can own this object ----------------
 	*/
@@ -1911,6 +1953,9 @@ HousesType MapEditClass::Cycle_House(HousesType curhouse,
  *=========================================================================*/
 void MapEditClass::Fatal(int txt)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Fatal(int txt)");
+#endif
 	Prog_End();
 	printf("%s\n",txt);
 	exit(EXIT_FAILURE);
@@ -1919,6 +1964,9 @@ void MapEditClass::Fatal(int txt)
 
 bool MapEditClass::Scroll_Map(DirType facing, int & distance, bool really)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool MapEditClass::Scroll_Map(DirType facing, int & distance, bool really)");
+#endif
 	if (Debug_Map) {
 		/*
 		** The popup gadgets require the entire map to be redrawn if we scroll.
@@ -1933,6 +1981,9 @@ bool MapEditClass::Scroll_Map(DirType facing, int & distance, bool really)
 
 void MapEditClass::Detach(ObjectClass * object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MapEditClass::Detach(ObjectClass * object)");
+#endif
 	if (GrabbedObject == object) {
 		GrabbedObject = 0;
 	}

@@ -56,6 +56,9 @@
  *=============================================================================================*/
 void GameControlsClass::Process(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GameControlsClass::Process(void)");
+#endif
 	int factor = Get_Resolution_Factor();
 
 	/*

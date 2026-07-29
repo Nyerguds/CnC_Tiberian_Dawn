@@ -77,6 +77,9 @@ IPXGlobalConnClass::IPXGlobalConnClass (int numsend, int numreceive, int maxlen,
 		0, 						// Connection ID
 		"")						// Connection Name
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("IPXGlobalConnClass::IPXGlobalConnClass (int numsend, int numreceive, int maxlen, unsigned short product_id)");
+#endif
 	ProductID = product_id;
 	IsBridge = 0;
 
@@ -109,6 +112,9 @@ IPXGlobalConnClass::IPXGlobalConnClass (int numsend, int numreceive, int maxlen,
 int IPXGlobalConnClass::Send_Packet (void * buf, int buflen,
 	IPXAddressClass *address, int ack_req)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXGlobalConnClass::Send_Packet (void * buf, int buflen, IPXAddressClass *address, int ack_req)");
+#endif
 	/*------------------------------------------------------------------------
 	Store the packet's Magic Number
 	------------------------------------------------------------------------*/
@@ -180,6 +186,9 @@ int IPXGlobalConnClass::Send_Packet (void * buf, int buflen,
 int IPXGlobalConnClass::Receive_Packet (void * buf, int buflen,
 	IPXAddressClass *address)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXGlobalConnClass::Receive_Packet (void * buf, int buflen, IPXAddressClass *address)");
+#endif
 	GlobalHeaderType *packet;				// ptr to this packet
 	SendQueueType *send_entry;				// ptr to send entry header
 	GlobalHeaderType *entry_data;			// ptr to queue entry data
@@ -271,6 +280,9 @@ int IPXGlobalConnClass::Receive_Packet (void * buf, int buflen,
 int IPXGlobalConnClass::Get_Packet (void * buf, int *buflen,
 	IPXAddressClass *address, unsigned short *product_id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXGlobalConnClass::Get_Packet (void * buf, int *buflen, IPXAddressClass *address, unsigned short *product_id)");
+#endif
 	ReceiveQueueType *rec_entry;					// ptr to receive entry header
 	GlobalHeaderType *packet;
 	int packetlen;										// size of received packet
@@ -336,6 +348,9 @@ int IPXGlobalConnClass::Get_Packet (void * buf, int *buflen,
  *=========================================================================*/
 int IPXGlobalConnClass::Send(char *buf, int buflen)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXGlobalConnClass::Send(char *buf, int buflen)");
+#endif
 	IPXAddressClass *addr;
 	int rc;
 
@@ -388,6 +403,9 @@ int IPXGlobalConnClass::Send(char *buf, int buflen)
  *=========================================================================*/
 int IPXGlobalConnClass::Service_Receive_Queue (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int IPXGlobalConnClass::Service_Receive_Queue (void)");
+#endif
 	GlobalHeaderType ackpacket;					// ACK packet to send
 	ReceiveQueueType *rec_entry;					// ptr to receive entry header
 	GlobalHeaderType *packet_hdr;					// packet header
@@ -459,6 +477,9 @@ int IPXGlobalConnClass::Service_Receive_Queue (void)
  *=========================================================================*/
 void IPXGlobalConnClass::Set_Bridge(NetNumType bridge)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void IPXGlobalConnClass::Set_Bridge(NetNumType bridge)");
+#endif
 	if (Configured) {
 		memcpy (BridgeNet, bridge, 4);
 		memset (BridgeNode, 0xff, 6);

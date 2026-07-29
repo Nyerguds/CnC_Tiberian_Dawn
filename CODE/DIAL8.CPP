@@ -64,6 +64,9 @@
 Dial8Class::Dial8Class(int id, int x, int y, int w, int h, DirType dir) :
 	ControlClass(id, x, y, w, h, LEFTPRESS | LEFTHELD | LEFTRELEASE, true)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("Dial8Class::Dial8Class(int id, int x, int y, int w, int h, DirType dir)");
+#endif
 	/*
 	**	Center coordinates.
 	*/
@@ -151,6 +154,9 @@ Dial8Class::Dial8Class(int id, int x, int y, int w, int h, DirType dir) :
  *=========================================================================*/
 int Dial8Class::Action(unsigned flags, KeyNumType &key)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Dial8Class::Action(unsigned flags, KeyNumType &key)");
+#endif
 	static int is_sel = 0;
 
 	/*
@@ -232,6 +238,9 @@ int Dial8Class::Action(unsigned flags, KeyNumType &key)
  *=========================================================================*/
 int Dial8Class::Draw_Me(int forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Dial8Class::Draw_Me(int forced)");
+#endif
 	/*
 	**	Redraw if parent indicates a redraw is needed
 	*/
@@ -289,6 +298,9 @@ int Dial8Class::Draw_Me(int forced)
  *=========================================================================*/
 DirType Dial8Class::Get_Direction(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("DirType Dial8Class::Get_Direction(void) const");
+#endif
 	return(Direction);
 }
 
@@ -310,6 +322,9 @@ DirType Dial8Class::Get_Direction(void) const
  *=========================================================================*/
 void Dial8Class::Set_Direction(DirType dir)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Dial8Class::Set_Direction(DirType dir)");
+#endif
 	Direction = dir;
 	Facing = Dir_Facing(Direction);
 	OldFacing = Facing;

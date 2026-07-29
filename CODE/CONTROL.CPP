@@ -73,6 +73,9 @@
 ControlClass::ControlClass(unsigned id, int x, int y, int w, int h, unsigned flags, int sticky)
 	: GadgetClass(x, y, w, h, flags, sticky)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ControlClass::ControlClass(unsigned id, int x, int y, int w, int h, unsigned flags, int sticky)");
+#endif
 	ID = id;
 	Peer = 0;
 }
@@ -101,6 +104,9 @@ ControlClass::ControlClass(unsigned id, int x, int y, int w, int h, unsigned fla
  *=============================================================================================*/
 int ControlClass::Action(unsigned flags, KeyNumType & key)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ControlClass::Action(unsigned flags, KeyNumType & key)");
+#endif
 	/*
 	**	If there is a peer link established, inform that gadget of this
 	**	action call.
@@ -144,6 +150,9 @@ int ControlClass::Action(unsigned flags, KeyNumType & key)
  *=============================================================================================*/
 void ControlClass::Make_Peer(GadgetClass & gadget)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ControlClass::Make_Peer(GadgetClass & gadget)");
+#endif
 	Peer = &gadget;
 }
 
@@ -167,6 +176,9 @@ void ControlClass::Make_Peer(GadgetClass & gadget)
  *=============================================================================================*/
 unsigned ControlClass::Get_ID(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned ControlClass::Get_ID(void) const");
+#endif
 	return(ID);
 }
 
@@ -195,6 +207,9 @@ unsigned ControlClass::Get_ID(void) const
  *=============================================================================================*/
 int ControlClass::Draw_Me(int forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int ControlClass::Draw_Me(int forced)");
+#endif
 	if (Peer) {
 		Peer->Draw_Me();
 	}

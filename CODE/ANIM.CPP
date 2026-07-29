@@ -80,6 +80,9 @@ void * AnimClass::VTable;
 #ifdef CHEAT_KEYS
 int AnimClass::Validate(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int AnimClass::Validate(void) const");
+#endif
 	int num;
 
 	num = Anims.ID(this);
@@ -118,6 +121,9 @@ int AnimClass::Validate(void) const
  *=============================================================================================*/
 bool Has_Attached_Anim(ObjectClass * obj, AnimType animtype, bool notdying)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Has_Attached_Anim(ObjectClass * obj, AnimType animtype, bool notdying)");
+#endif
 	if (obj && animtype != ANIM_NONE) {
 		for (int index = 0; index < Anims.Count(); index++) {
 			AnimClass & anim = *Anims.Ptr(index);
@@ -156,6 +162,9 @@ bool Has_Attached_Anim(ObjectClass * obj, AnimType animtype, bool notdying)
  *=============================================================================================*/
 void Shorten_Attached_Anims(ObjectClass * obj, AnimType animtype)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Shorten_Attached_Anims(ObjectClass * obj, AnimType animtype)");
+#endif
 	if (obj) {
 		for (int index = 0; index < Anims.Count(); index++) {
 			AnimClass & anim = *Anims.Ptr(index);
@@ -186,6 +195,9 @@ void Shorten_Attached_Anims(ObjectClass * obj, AnimType animtype)
  *=============================================================================================*/
 COORDINATE AnimClass::Sort_Y(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE AnimClass::Sort_Y(void) const");
+#endif
 	Validate();
 	if (Object) {
 		// Nyerguds's C&C Patch Project v1.04: Fixed overlap on oil derrick flame.
@@ -223,6 +235,9 @@ COORDINATE AnimClass::Sort_Y(void) const
  *=============================================================================================*/
 COORDINATE AnimClass::Center_Coord(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE AnimClass::Center_Coord(void) const");
+#endif
 	Validate();
 	if (Object) {
 		return(Coord_Add(Coord, Object->Center_Coord()));
@@ -248,6 +263,9 @@ COORDINATE AnimClass::Center_Coord(void) const
  *=============================================================================================*/
 bool AnimClass::Render(bool forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool AnimClass::Render(bool forced)");
+#endif
 	Validate();
 	if (Delay) return(false);
 	IsToDisplay = true;
@@ -276,6 +294,9 @@ bool AnimClass::Render(bool forced)
 #pragma off (unreferenced)
 void AnimClass::Draw_It(int x, int y, WindowNumberType window)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AnimClass::Draw_It(int x, int y, WindowNumberType window)");
+#endif
 	Validate();
 	if (!IsInvisible) {
 		void const * shapefile = Class->Get_Image_Data();
@@ -364,6 +385,9 @@ void AnimClass::Draw_It(int x, int y, WindowNumberType window)
  *=============================================================================================*/
 bool AnimClass::Mark(MarkType mark)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool AnimClass::Mark(MarkType mark)");
+#endif
 	Validate();
 	if (ObjectClass::Mark(mark)) {
 		Map.Refresh_Cells(Coord_Cell(Center_Coord()), Overlap_List());
@@ -392,6 +416,9 @@ bool AnimClass::Mark(MarkType mark)
  *=============================================================================================*/
 short const * AnimClass::Overlap_List(bool /*redraw*/) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const * AnimClass::Overlap_List(bool /*redraw*/) const");
+#endif
 	Validate();
 	static short const OverlapN[] = {0, -MAP_CELL_W, -(MAP_CELL_W+1), -(MAP_CELL_W-1), -(2*MAP_CELL_W), -(2*MAP_CELL_W-1), -(2*MAP_CELL_W+1), REFRESH_EOL};
 	static short const OverlapNW[] = {0, -1, -MAP_CELL_W, -(MAP_CELL_W+1), -(MAP_CELL_W+2), -(MAP_CELL_W*2+2), -(MAP_CELL_W*2+1), REFRESH_EOL};
@@ -485,6 +512,9 @@ short const * AnimClass::Overlap_List(bool /*redraw*/) const
  *=============================================================================================*/
 short const * AnimClass::Occupy_List(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const * AnimClass::Occupy_List(void) const");
+#endif
 	Validate();
 	static short _simple[] = {REFRESH_EOL};
 
@@ -509,6 +539,9 @@ short const * AnimClass::Occupy_List(void) const
  *=============================================================================================*/
 void AnimClass::Init(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AnimClass::Init(void)");
+#endif
 	AnimClass *ptr;
 
 	Anims.Free_All();
@@ -536,6 +569,9 @@ void AnimClass::Init(void)
  *=============================================================================================*/
 void *AnimClass::operator new(size_t)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void *AnimClass::operator new(size_t)");
+#endif
 	void * ptr = Anims.Allocate();
 	if (ptr) {
 		((AnimClass *)ptr)->IsActive = true;
@@ -561,6 +597,9 @@ void *AnimClass::operator new(size_t)
  *=============================================================================================*/
 void AnimClass::operator delete(void *ptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AnimClass::operator delete(void *ptr)");
+#endif
 	if (ptr) {
 		((AnimClass *)ptr)->IsActive = false;
 	}
@@ -593,6 +632,9 @@ void AnimClass::operator delete(void *ptr)
 AnimClass::AnimClass(AnimType animnum, COORDINATE coord, unsigned char timedelay, unsigned char loop /*, bool alt*/):
 	Class(&AnimTypeClass::As_Reference(animnum))
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("AnimClass::AnimClass(AnimType animnum, COORDINATE coord, unsigned char timedelay, unsigned char loop /*, bool alt*/)");
+#endif
 	Object = 0;
 	Owner = HOUSE_NONE;
 	Payback = TARGET_NONE;
@@ -664,6 +706,9 @@ AnimClass::AnimClass(AnimType animnum, COORDINATE coord, unsigned char timedelay
  *=============================================================================================*/
 AnimClass::~AnimClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("AnimClass::~AnimClass(void)");
+#endif
 	Validate();
 	if (GameActive) {
 
@@ -730,6 +775,9 @@ AnimClass::~AnimClass(void)
  *=============================================================================================*/
 void AnimClass::AI(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AnimClass::AI(void)");
+#endif
 	Validate();
 	/*
 	**	For ground level based animations (ones that can run slowly as well as
@@ -887,6 +935,9 @@ void AnimClass::AI(void)
  *=============================================================================================*/
 void AnimClass::Attach_To(ObjectClass * obj)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AnimClass::Attach_To(ObjectClass * obj)");
+#endif
 	Validate();
 	if (!obj) return;
 
@@ -918,6 +969,9 @@ void AnimClass::Attach_To(ObjectClass * obj)
  *=============================================================================================*/
 LayerType AnimClass::In_Which_Layer(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LayerType AnimClass::In_Which_Layer(void) const");
+#endif
 	Validate();
 	if (Object || Class->IsGroundLayer) {
 		return(LAYER_GROUND);
@@ -945,6 +999,9 @@ LayerType AnimClass::In_Which_Layer(void) const
  *=============================================================================================*/
 void AnimClass::Start(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AnimClass::Start(void)");
+#endif
 	Validate();
 	CELL cell = Coord_Cell(Coord);
 
@@ -997,6 +1054,9 @@ void AnimClass::Start(void)
  *=============================================================================================*/
 void AnimClass::Middle(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AnimClass::Middle(void)");
+#endif
 	Validate();
 	CELL cell = Coord_Cell(Center_Coord());
 	CellClass * cellptr = &Map[cell];
@@ -1212,6 +1272,9 @@ void AnimClass::Middle(void)
  *=============================================================================================*/
 void AnimClass::Set_Payback(TechnoClass * payback, HousesType house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AnimClass::Set_Payback(TechnoClass * payback, HousesType house)");
+#endif
 	TARGET source = TARGET_NONE;
 	HousesType owner = HOUSE_NONE;
 	if (payback) {
@@ -1230,6 +1293,9 @@ void AnimClass::Set_Payback(TechnoClass * payback, HousesType house)
 
 void AnimClass::Set_Payback(TARGET payback, HousesType house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AnimClass::Set_Payback(TARGET payback, HousesType house)");
+#endif
 	Set_Payback(As_Techno(payback), house);
 }
 
@@ -1251,6 +1317,9 @@ void AnimClass::Set_Payback(TARGET payback, HousesType house)
  *=============================================================================================*/
 TARGET AnimClass::As_Target(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TARGET AnimClass::As_Target(void) const");
+#endif
 	Validate();
 	return(Build_Target(KIND_ANIMATION, Anims.ID(this)));
 }
@@ -1268,6 +1337,9 @@ TARGET AnimClass::As_Target(void) const
  *=========================================================================*/
 COORDINATE AnimClass::Adjust_Coord(COORDINATE coord)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE AnimClass::Adjust_Coord(COORDINATE coord)");
+#endif
 	Validate();
 	int x,y;
 
@@ -1309,6 +1381,9 @@ COORDINATE AnimClass::Adjust_Coord(COORDINATE coord)
  *=============================================================================================*/
 void AnimClass::Detach(TARGET target, bool all)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AnimClass::Detach(TARGET target, bool all)");
+#endif
 	Validate();
 
 	if (target == Payback) {
@@ -1352,6 +1427,9 @@ void AnimClass::Detach(TARGET target, bool all)
  *=============================================================================================*/
 bool AnimClass::Object_Has_Other_Anims(ObjectClass * object, bool damaging)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool AnimClass::Object_Has_Other_Anims(ObjectClass * object, bool damaging)");
+#endif
 	if (!object) {
 		return(false);
 	}

@@ -57,6 +57,9 @@ typedef int bool;
  *========================================================================*/
 PacketClass::~PacketClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("PacketClass::~PacketClass(void)");
+#endif
 	FieldClass *current;
 	FieldClass *next;
 	//
@@ -81,6 +84,9 @@ PacketClass::~PacketClass(void)
  *========================================================================*/
 void PacketClass::Add_Field(FieldClass *field)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void PacketClass::Add_Field(FieldClass *field)");
+#endif
 	field->Next = Head;
 	Head = field;
 }
@@ -99,6 +105,9 @@ void PacketClass::Add_Field(FieldClass *field)
  *========================================================================*/
 PacketClass::PacketClass(char *curbuf)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("PacketClass::PacketClass(char *curbuf)");
+#endif
 	int remaining_size;
 	//
 	// Pull the size and packet ID out of the linear packet stream.
@@ -175,6 +184,9 @@ PacketClass::PacketClass(char *curbuf)
  *========================================================================*/
 char *PacketClass::Create_Comms_Packet(int &size)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char *PacketClass::Create_Comms_Packet(int &size)");
+#endif
 	FieldClass *current;
 
 	//
@@ -262,6 +274,9 @@ char *PacketClass::Create_Comms_Packet(int &size)
  *========================================================================*/
 FieldClass *PacketClass::Find_Field(char *id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FieldClass *PacketClass::Find_Field(char *id)");
+#endif
 	for (FieldClass *current = Head; current; current = current->Next) {
 		if ( strncmp(id, current->ID, 4) == 0)
 			return current;
@@ -286,6 +301,9 @@ FieldClass *PacketClass::Find_Field(char *id)
  *========================================================================*/
 bool PacketClass::Get_Field(char *id, char &data)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool PacketClass::Get_Field(char *id, char &data)");
+#endif
 	FieldClass *field = Find_Field(id);
 	if (field) {
 		data = *((char *)field->Data);
@@ -310,6 +328,9 @@ bool PacketClass::Get_Field(char *id, char &data)
  *========================================================================*/
 bool PacketClass::Get_Field(char *id, unsigned char &data)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool PacketClass::Get_Field(char *id, unsigned char &data)");
+#endif
 	FieldClass *field = Find_Field(id);
 	if (field) {
 		data = *((unsigned char *)field->Data);
@@ -334,6 +355,9 @@ bool PacketClass::Get_Field(char *id, unsigned char &data)
  *========================================================================*/
 bool PacketClass::Get_Field(char *id, short &data)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool PacketClass::Get_Field(char *id, short &data)");
+#endif
 	FieldClass *field = Find_Field(id);
 	if (field) {
 		data = *((short *)field->Data);
@@ -358,6 +382,9 @@ bool PacketClass::Get_Field(char *id, short &data)
  *========================================================================*/
 bool PacketClass::Get_Field(char *id, unsigned short &data)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool PacketClass::Get_Field(char *id, unsigned short &data)");
+#endif
 	FieldClass *field = Find_Field(id);
 	if (field) {
 		data = *((unsigned short *)field->Data);
@@ -382,6 +409,9 @@ bool PacketClass::Get_Field(char *id, unsigned short &data)
  *========================================================================*/
 bool PacketClass::Get_Field(char *id, long &data)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool PacketClass::Get_Field(char *id, long &data)");
+#endif
 	FieldClass *field = Find_Field(id);
 	if (field) {
 		data = *((long *)field->Data);
@@ -406,6 +436,9 @@ bool PacketClass::Get_Field(char *id, long &data)
  *========================================================================*/
 bool PacketClass::Get_Field(char *id, char *data)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool PacketClass::Get_Field(char *id, char *data)");
+#endif
 	FieldClass *field = Find_Field(id);
 	if (field) {
 		strcpy(data, (char *)field->Data);
@@ -429,6 +462,9 @@ bool PacketClass::Get_Field(char *id, char *data)
  *========================================================================*/
 bool PacketClass::Get_Field(char *id, unsigned long &data)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool PacketClass::Get_Field(char *id, unsigned long &data)");
+#endif
 	FieldClass *field = Find_Field(id);
 	if (field) {
 		data = *((unsigned long *)field->Data);
@@ -454,6 +490,9 @@ bool PacketClass::Get_Field(char *id, unsigned long &data)
  *========================================================================*/
 bool PacketClass::Get_Field(char *id, void *data, int &length)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool PacketClass::Get_Field(char *id, void *data, int &length)");
+#endif
 	FieldClass *field = Find_Field(id);
 	if (field) {
 		memcpy (data, field->Data, min(field->Size, length));

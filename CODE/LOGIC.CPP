@@ -65,6 +65,9 @@ static unsigned AverageFramesPerSecond;
  *=============================================================================================*/
 void LogicClass::Debug_Dump(MonoClass *mono) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void LogicClass::Debug_Dump(MonoClass *mono) const");
+#endif
 	#define RECORDCOUNT	40
 	#define RECORDHEIGHT 21
 	static struct {
@@ -167,6 +170,9 @@ void LogicClass::Debug_Dump(MonoClass *mono) const
  *=============================================================================================*/
 void LogicClass::AI(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void LogicClass::AI(void)");
+#endif
 	int index;
 
 	FramesPerSecond++;

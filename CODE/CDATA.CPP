@@ -2725,6 +2725,9 @@ TemplateTypeClass::TemplateTypeClass(TemplateType iconset, int theater,
 	int width, int height, char const * landtypes):
 		ObjectTypeClass(false, false, false, true, false, false, true, true, fullname, ininame, ARMOR_NONE, 0)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TemplateTypeClass::TemplateTypeClass(...)");
+#endif
 	Theater = theater;
 	LandTypes = landtypes;
 	Type = iconset;
@@ -2753,6 +2756,9 @@ TemplateTypeClass::TemplateTypeClass(TemplateType iconset, int theater,
  *   01/10/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
 LandType TemplateTypeClass::Land_Type(int icon) const {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("LandType TemplateTypeClass::Land_Type(int icon) const");
+#endif
 	if (!LandTypes) {
 		return Land;
 	}
@@ -2798,6 +2804,9 @@ LandType TemplateTypeClass::Land_Type(int icon) const {
  *=============================================================================================*/
 TemplateType TemplateTypeClass::From_Name(char const *name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TemplateType TemplateTypeClass::From_Name(char const *name)");
+#endif
 	if (name) {
 		for (TemplateType index = TEMPLATE_FIRST; index < TEMPLATE_COUNT; index++) {
 			if (stricmp(As_Reference(index).IniName, name) == 0) {
@@ -2829,6 +2838,9 @@ TemplateType TemplateTypeClass::From_Name(char const *name)
  *=============================================================================================*/
 short const * TemplateTypeClass::Occupy_List(bool) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const * TemplateTypeClass::Occupy_List(bool) const");
+#endif
 	static short _occupy[TEMPLATE_MAX_SIZE+5];
 	unsigned char	map[TEMPLATE_MAX_SIZE];
 	short	*ptr;
@@ -2868,6 +2880,9 @@ short const * TemplateTypeClass::Occupy_List(bool) const
  *=============================================================================================*/
 void TemplateTypeClass::Init(TheaterType theater)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TemplateTypeClass::Init(TheaterType theater)");
+#endif
 	//if (theater != LastTheater){
 	char fullname[_MAX_FNAME+_MAX_EXT];	// Fully constructed iconset name.
 	void const * ptr;		// Working loaded iconset pointer.
@@ -2911,6 +2926,9 @@ void TemplateTypeClass::Init(TheaterType theater)
  *=============================================================================================*/
 void TemplateTypeClass::Display(int x, int y, WindowNumberType window, HousesType /*house*/) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TemplateTypeClass::Display(int x, int y, WindowNumberType window, HousesType /*house*/) const");
+#endif
 	int	w,h;
 	int	index;
 	unsigned char map[TEMPLATE_MAX_SIZE];
@@ -2972,6 +2990,9 @@ void TemplateTypeClass::Display(int x, int y, WindowNumberType window, HousesTyp
  *=============================================================================================*/
 void TemplateTypeClass::Prep_For_Add(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TemplateTypeClass::Prep_For_Add(void)");
+#endif
 	for (TemplateType index = TEMPLATE_CLEAR1; index < TEMPLATE_COUNT; index++) {
 		if (As_Reference(index).Get_Image_Data()) {
 			Map.Add_To_List(&As_Reference(index));
@@ -2998,6 +3019,9 @@ void TemplateTypeClass::Prep_For_Add(void)
  *=============================================================================================*/
 bool TemplateTypeClass::Create_And_Place(CELL cell, HousesType ) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool TemplateTypeClass::Create_And_Place(CELL cell, HousesType ) const");
+#endif
 	if (new TemplateClass(Type, cell)) {
 		return(true);
 	}
@@ -3023,6 +3047,9 @@ bool TemplateTypeClass::Create_And_Place(CELL cell, HousesType ) const
  *=============================================================================================*/
 ObjectClass * TemplateTypeClass::Create_One_Of(HouseClass *) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ObjectClass * TemplateTypeClass::Create_One_Of(HouseClass *) const");
+#endif
 	return(new TemplateClass(Type, -1));
 }
 
@@ -3044,6 +3071,9 @@ ObjectClass * TemplateTypeClass::Create_One_Of(HouseClass *) const
  *=============================================================================================*/
 void TemplateTypeClass::One_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TemplateTypeClass::One_Time(void)");
+#endif
 	// Initialize Lands_Lookup array. Always default to Clear terrain.
 	memset(Lands_Lookup, (unsigned char)LAND_CLEAR, sizeof(Lands_Lookup));
 	// "X" indicates cells that normally don't have icons. Always default to clear.

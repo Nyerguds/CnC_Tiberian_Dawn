@@ -143,6 +143,9 @@
  *=========================================================================*/
 bool Save_Game(int id, char *descr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Save_Game(int id, char *descr)");
+#endif
 	RawFileClass file;
 	char name[_MAX_FNAME+_MAX_EXT];
 	int i;
@@ -340,6 +343,9 @@ bool Save_Game(int id, char *descr)
  *=========================================================================*/
 bool Load_Game(int id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Load_Game(int id)");
+#endif
 	RawFileClass file;
 	char name[_MAX_FNAME+_MAX_EXT];
 	int i;
@@ -554,6 +560,9 @@ bool Load_Game(int id)
  *=========================================================================*/
 bool Save_Misc_Values(FileClass &file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Save_Misc_Values(FileClass &file)");
+#endif
 	int i;
 	int count;								// # ptrs in 'CurrentObject'
 	ObjectClass * ptr;					// for saving 'CurrentObject' ptrs
@@ -668,6 +677,9 @@ bool Save_Misc_Values(FileClass &file)
  *=============================================================================================*/
 bool Load_Misc_Values(FileClass &file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Load_Misc_Values(FileClass &file)");
+#endif
 	int i;
 	int count;								// # ptrs in 'CurrentObject'
 	ObjectClass * ptr;					// for loading 'CurrentObject' ptrs
@@ -779,6 +791,9 @@ bool Load_Misc_Values(FileClass &file)
  *=============================================================================================*/
 void Code_All_Pointers(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Code_All_Pointers(void)");
+#endif
 	int i;
 
 	/*
@@ -858,6 +873,9 @@ void Code_All_Pointers(void)
  *=============================================================================================*/
 void Decode_All_Pointers(ScenarioPlayerType campaign)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Decode_All_Pointers(ScenarioPlayerType campaign)");
+#endif
 	int i;
 
 	/*
@@ -1025,6 +1043,9 @@ void Decode_All_Pointers(ScenarioPlayerType campaign)
  *=============================================================================================*/
 bool Read_Object(void *ptr, int base_size, int class_size, FileClass & file, void * vtable)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Read_Object(void *ptr, int base_size, int class_size, FileClass & file, void * vtable)");
+#endif
 	int size;					// object size in bytes
 
 	/*
@@ -1085,6 +1106,9 @@ bool Read_Object(void *ptr, int base_size, int class_size, FileClass & file, voi
  *=============================================================================================*/
 bool Write_Object(void *ptr, int class_size, FileClass & file)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Write_Object(void *ptr, int class_size, FileClass & file)");
+#endif
 	/*
 	**	Save size of this chunk.
 	*/
@@ -1123,6 +1147,9 @@ bool Write_Object(void *ptr, int class_size, FileClass & file)
  *=========================================================================*/
 bool Get_Savefile_Info(int id, char *buf, unsigned *scenp, HousesType *housep)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Get_Savefile_Info(int id, char *buf, unsigned *scenp, HousesType *housep)");
+#endif
 	RawFileClass file;
 	char name[_MAX_FNAME+_MAX_EXT];
 	unsigned long version;
@@ -1199,6 +1226,9 @@ bool Get_Savefile_Info(int id, char *buf, unsigned *scenp, HousesType *housep)
  *=========================================================================*/
 TARGET TechnoType_To_Target(TechnoTypeClass const * ptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TARGET TechnoType_To_Target(TechnoTypeClass const * ptr)");
+#endif
 	TARGET target;
 
 	switch (ptr->What_Am_I()) {
@@ -1246,6 +1276,9 @@ TARGET TechnoType_To_Target(TechnoTypeClass const * ptr)
  *=========================================================================*/
 TechnoTypeClass const * Target_To_TechnoType(TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TechnoTypeClass const * Target_To_TechnoType(TARGET target)");
+#endif
 	switch (Target_Kind(target)) {
 		case KIND_INFANTRY:
 			return(&InfantryTypeClass::As_Reference((InfantryType)Target_Value(target)));
@@ -1280,6 +1313,9 @@ TechnoTypeClass const * Target_To_TechnoType(TARGET target)
  *=========================================================================*/
 void * Get_VTable(void *ptr, int base_size)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void * Get_VTable(void *ptr, int base_size)");
+#endif
 	return(((void **)(((char *)ptr) + base_size - 4))[0]);
 }
 
@@ -1303,6 +1339,9 @@ void * Get_VTable(void *ptr, int base_size)
  *=========================================================================*/
 void Set_VTable(void *ptr, int base_size, void *vtable)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Set_VTable(void *ptr, int base_size, void *vtable)");
+#endif
 	((void **)(((char *)ptr) + base_size - 4))[0] = vtable;
 }
 
@@ -1314,6 +1353,9 @@ process (OK, not exactly everything, but lots of stuff)
 ****************************************************************************/
 void Dump(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Dump(void)");
+#endif
 	int i,j;
 	FILE *fp;
 	char *layername[] = {

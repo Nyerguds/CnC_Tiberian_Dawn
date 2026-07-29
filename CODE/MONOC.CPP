@@ -102,6 +102,9 @@ MonoClass::BoxDataType const MonoClass::CharData[MonoClass::COUNT] = {
  *=============================================================================================*/
 MonoClass::MonoClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MonoClass::MonoClass(void)");
+#endif
 	int	index;
 
 	Attrib = DEFAULT_ATTRIBUTE;		// Normal text color.
@@ -136,6 +139,9 @@ MonoClass::MonoClass(void)
  *=============================================================================================*/
 MonoClass::~MonoClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MonoClass::~MonoClass(void)");
+#endif
 	PageUsage[Page] = 0;
 }
 
@@ -165,6 +171,9 @@ MonoClass::~MonoClass(void)
  *=============================================================================================*/
 void MonoClass::Draw_Box(int x, int y, int w, int h, char attrib, BoxStyleType thick)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MonoClass::Draw_Box(int x, int y, int w, int h, char attrib, BoxStyleType thick)");
+#endif
 	CellType	cell;
 	char	oldattrib = Attrib;
 
@@ -237,6 +246,9 @@ void MonoClass::Draw_Box(int x, int y, int w, int h, char attrib, BoxStyleType t
  *=============================================================================================*/
 void MonoClass::Set_Cursor(int x, int y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MonoClass::Set_Cursor(int x, int y)");
+#endif
 	#ifdef FIX_ME_LATER
 	int	pos = (y*COLUMNS)+x;
 
@@ -293,6 +305,9 @@ y=x;
  *=============================================================================================*/
 void MonoClass::Clear(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MonoClass::Clear(void)");
+#endif
 	CellType	cell;
 //	int	offset;
 
@@ -331,6 +346,9 @@ void MonoClass::Clear(void)
  *=============================================================================================*/
 void MonoClass::Scroll(int lines)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MonoClass::Scroll(int lines)");
+#endif
 	CellType	cell;
 
 	if (!Enabled || lines <= 0) return;
@@ -373,6 +391,9 @@ void MonoClass::Scroll(int lines)
  *=============================================================================================*/
 void MonoClass::Printf(char const *text, ...)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MonoClass::Printf(char const *text, ...)");
+#endif
 	va_list	va;
 	/*
 	**	The buffer object is placed at the end of the local variable list
@@ -396,6 +417,9 @@ void MonoClass::Printf(char const *text, ...)
 #ifdef NEVER
 void MonoClass::Printf(int text, ...)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MonoClass::Printf(int text, ...)");
+#endif
 	va_list	va;
 	/*
 	**	The buffer object is placed at the end of the local variable list
@@ -434,6 +458,9 @@ void MonoClass::Printf(int text, ...)
  *=============================================================================================*/
 void MonoClass::Print(char const *ptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MonoClass::Print(char const *ptr)");
+#endif
 //	int optr;
 	char startcol = X;
 	char const * text;
@@ -530,6 +557,9 @@ void MonoClass::Print(char const *ptr)
  *=============================================================================================*/
 void MonoClass::Text_Print(char const *text, int x, int y, char attrib)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MonoClass::Text_Print(char const *text, int x, int y, char attrib)");
+#endif
 	char	oldx = X;
 	char	oldy = Y;
 	char	oldattrib = Attrib;
@@ -545,6 +575,9 @@ void MonoClass::Text_Print(char const *text, int x, int y, char attrib)
 #ifdef NEVER
 void MonoClass::Text_Print(int text, int x, int y, char attrib)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MonoClass::Text_Print(int text, int x, int y, char attrib)");
+#endif
 	char	oldx = X;
 	char	oldy = Y;
 	char	oldattrib = Attrib;
@@ -561,6 +594,9 @@ void MonoClass::Text_Print(int text, int x, int y, char attrib)
 
 void MonoClass::Print(int text)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MonoClass::Print(int text)");
+#endif
 	Print(Text_String(text));
 }
 #endif
@@ -583,6 +619,9 @@ void MonoClass::Print(int text)
  *=============================================================================================*/
 MonoClass & MonoClass::operator = (MonoClass const & src)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MonoClass & MonoClass::operator = (MonoClass const & src)");
+#endif
 	memcpy((void*)((long)MonoSegment + src.Offset(0, 0)), (void*)((long)MonoSegment + Offset(0, 0)), SIZE_OF_PAGE);
 //	DOSSegmentClass::Copy(MonoSegment, src.Offset(0, 0), MonoSegment, Offset(0,0), SIZE_OF_PAGE);
 	Set_Cursor(src.X, src.Y);
@@ -611,6 +650,9 @@ MonoClass & MonoClass::operator = (MonoClass const & src)
  *=============================================================================================*/
 void MonoClass::View(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MonoClass::View(void)");
+#endif
 	MonoClass *displace;		// The page that is being displaced.
 
 	if (Get_Current() == this) return;
@@ -658,6 +700,9 @@ void MonoClass::View(void)
 */
 void Mono_Set_Cursor(int x, int y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Mono_Set_Cursor(int x, int y)");
+#endif
 	if (MonoClass::Is_Enabled()) {
 		MonoClass *mono = MonoClass::Get_Current();
 		if (!mono) {
@@ -670,6 +715,9 @@ void Mono_Set_Cursor(int x, int y)
 
 int Mono_Printf(char const *string, ...)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Mono_Printf(char const *string, ...)");
+#endif
 	va_list	va;
 	char buffer[256];
 
@@ -694,6 +742,9 @@ int Mono_Printf(char const *string, ...)
 
 void Mono_Clear_Screen(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Mono_Clear_Screen(void)");
+#endif
 	if (MonoClass::Is_Enabled()) {
 		MonoClass *mono = MonoClass::Get_Current();
 		if (!mono) {
@@ -706,6 +757,9 @@ void Mono_Clear_Screen(void)
 
 void Mono_Text_Print(void const *text, int x, int y, int attrib)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Mono_Text_Print(void const *text, int x, int y, int attrib)");
+#endif
 	if (MonoClass::Is_Enabled()) {
 		MonoClass *mono = MonoClass::Get_Current();
 		if (!mono) {
@@ -718,6 +772,9 @@ void Mono_Text_Print(void const *text, int x, int y, int attrib)
 
 void Mono_Draw_Rect(int x, int y, int w, int h, int attrib, int thick)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Mono_Draw_Rect(int x, int y, int w, int h, int attrib, int thick)");
+#endif
 	if (MonoClass::Is_Enabled()) {
 		MonoClass *mono = MonoClass::Get_Current();
 		if (!mono) {
@@ -730,6 +787,9 @@ void Mono_Draw_Rect(int x, int y, int w, int h, int attrib, int thick)
 
 void Mono_Print(void const *text)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Mono_Print(void const *text)");
+#endif
 	if (MonoClass::Is_Enabled()) {
 		MonoClass *mono = MonoClass::Get_Current();
 		if (!mono) {
@@ -742,6 +802,9 @@ void Mono_Print(void const *text)
 
 int Mono_X(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Mono_X(void)");
+#endif
 	if (MonoClass::Is_Enabled()) {
 		MonoClass *mono = MonoClass::Get_Current();
 		if (!mono) {
@@ -755,6 +818,9 @@ int Mono_X(void)
 
 int Mono_Y(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Mono_Y(void)");
+#endif
 	if (MonoClass::Is_Enabled()) {
 		MonoClass *mono = MonoClass::Get_Current();
 		if (!mono) {
@@ -769,20 +835,32 @@ int Mono_Y(void)
 
 void Mono_Put_Char(char , int )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Mono_Put_Char(char , int )");
+#endif
 }
 
 void Mono_Scroll(int )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Mono_Scroll(int )");
+#endif
 }
 
 void Mono_View_Page(int )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Mono_View_Page(int )");
+#endif
 }
 
 
 #ifdef NEVER
 int Mono_Printf(int string, ...)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Mono_Printf(int string, ...)");
+#endif
 	va_list	va;
 	char buffer[256];
 

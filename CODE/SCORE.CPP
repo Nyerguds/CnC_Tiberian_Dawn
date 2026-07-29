@@ -208,6 +208,9 @@ ScoreAnimClass *ScoreObjs[MAXSCOREOBJS];
 
 ScoreAnimClass::ScoreAnimClass(int x, int y, void const * data)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ScoreAnimClass::ScoreAnimClass(int x, int y, void const * data)");
+#endif
 	BlitList.Add (x*2, y*2, x*2, y*2, 2* String_Pixel_Width ( (char*)data ) , 16);
 	XPos = x;
 	YPos = y;
@@ -220,6 +223,9 @@ ScoreAnimClass::ScoreAnimClass(int x, int y, void const * data)
 ScoreTimeClass::ScoreTimeClass(int xpos, int ypos, void const * data, int max, int timer) :
 	ScoreAnimClass(xpos, ypos, data)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ScoreTimeClass::ScoreTimeClass(int xpos, int ypos, void const * data, int max, int timer)");
+#endif
 	Stage = 0;
 	MaxStage = max;
 	TimerReset = timer;
@@ -227,6 +233,9 @@ ScoreTimeClass::ScoreTimeClass(int xpos, int ypos, void const * data, int max, i
 
 void ScoreTimeClass::Update(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ScoreTimeClass::Update(void)");
+#endif
 	GraphicViewPortClass *oldpage;
 	// this is an animated loop; it does not skip to end.
 	if (!Timer.Time()) {
@@ -239,12 +248,23 @@ void ScoreTimeClass::Update(void)
 	}
 }
 
-void ScoreTimeClass::SkipToEnd(void) {}; // this does not end.
-bool ScoreTimeClass::IsSkipping(void) { return(false); } ;
+void ScoreTimeClass::SkipToEnd(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ScoreTimeClass::SkipToEnd(void)");
+#endif
+}; // this does not end.
+bool ScoreTimeClass::IsSkipping(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ScoreTimeClass::IsSkipping(void)");
+#endif
+ return(false); } ;
 
 ScoreCredsClass::ScoreCredsClass(int xpos, int ypos, void const * data, int max, int timer) :
 	ScoreAnimClass(xpos, ypos, data)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ScoreCredsClass::ScoreCredsClass(int xpos, int ypos, void const * data, int max, int timer)");
+#endif
 	Stage = 0;
 	MaxStage = max;
 	TimerReset = timer;
@@ -255,6 +275,9 @@ ScoreCredsClass::ScoreCredsClass(int xpos, int ypos, void const * data, int max,
 
 void ScoreCredsClass::Update(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ScoreCredsClass::Update(void)");
+#endif
 	GraphicViewPortClass *oldpage;
 	if (!Timer.Time()) {
 		Timer.Set(TimerReset);
@@ -268,13 +291,24 @@ void ScoreCredsClass::Update(void)
 	}
 }
 
-void ScoreCredsClass::SkipToEnd(void) { } ;// this is stopped from the UI.
-bool ScoreCredsClass::IsSkipping(void) { return(false); } ;
+void ScoreCredsClass::SkipToEnd(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ScoreCredsClass::SkipToEnd(void)");
+#endif
+ } ;// this is stopped from the UI.
+bool ScoreCredsClass::IsSkipping(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool ScoreCredsClass::IsSkipping(void)");
+#endif
+ return(false); } ;
 
 
 ScorePrintClass::ScorePrintClass(int string, int xpos, int ypos, void const * palette, int background) :
 	ScoreAnimClass(xpos, ypos, Text_String(string))
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ScorePrintClass::ScorePrintClass(int string, int xpos, int ypos, void const * palette, int background)");
+#endif
 	Background = background;
 	PrimaryPalette = palette;
 	Stage = 0;
@@ -284,6 +318,9 @@ ScorePrintClass::ScorePrintClass(int string, int xpos, int ypos, void const * pa
 ScorePrintClass::ScorePrintClass(void const * string, int xpos, int ypos, void const * palette, int background) :
 	ScoreAnimClass(xpos, ypos, string)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ScorePrintClass::ScorePrintClass(void const * string, int xpos, int ypos, void const * palette, int background)");
+#endif
 	Background = background;
 	PrimaryPalette = palette;
 	Stage = 0;
@@ -292,6 +329,9 @@ ScorePrintClass::ScorePrintClass(void const * string, int xpos, int ypos, void c
 
 void ScorePrintClass::Update(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ScorePrintClass::Update(void)");
+#endif
 	static char localstr[2]={0,0};
 	static char _whitepal[]={0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F};
 
@@ -352,6 +392,9 @@ void ScorePrintClass::Update(void)
 MultiStagePrintClass::MultiStagePrintClass(int string, int xpos, int ypos, void const * palette, int background) :
 	ScoreAnimClass(xpos, ypos, Text_String(string))
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MultiStagePrintClass::MultiStagePrintClass(int string, int xpos, int ypos, void const * palette, int background)");
+#endif
 	Background = background;
 	PrimaryPalette = palette;
 	Stage = 0;
@@ -361,6 +404,9 @@ MultiStagePrintClass::MultiStagePrintClass(int string, int xpos, int ypos, void 
 MultiStagePrintClass::MultiStagePrintClass(void const * string, int xpos, int ypos, void const * palette, int background) :
 	ScoreAnimClass(xpos, ypos, string)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MultiStagePrintClass::MultiStagePrintClass(void const * string, int xpos, int ypos, void const * palette, int background)");
+#endif
 	Background = background;
 	PrimaryPalette = palette;
 	Stage = 0;
@@ -369,6 +415,9 @@ MultiStagePrintClass::MultiStagePrintClass(void const * string, int xpos, int yp
 
 void MultiStagePrintClass::Update(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MultiStagePrintClass::Update(void)");
+#endif
 	static char localstr[2]={0,0};
 	static char _whitepal[]={0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F,0x0F};
 
@@ -432,6 +481,9 @@ void MultiStagePrintClass::Update(void)
 ScoreScaleClass::ScoreScaleClass(void const * string, int xpos, int ypos, char const palette[]) :
 	ScoreAnimClass(xpos, ypos, string)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ScoreScaleClass::ScoreScaleClass(void const * string, int xpos, int ypos, char const palette[])");
+#endif
 	Palette = &palette[0];
 	Stage = 5;
 }
@@ -439,6 +491,9 @@ ScoreScaleClass::ScoreScaleClass(void const * string, int xpos, int ypos, char c
 
 void ScoreScaleClass::Update(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ScoreScaleClass::Update(void)");
+#endif
 	static int _destx[]={0,80,107,134,180,228};
 	static int _destw[]={6,20, 30, 40, 60, 80};
 
@@ -480,6 +535,9 @@ void ScoreScaleClass::Update(void)
 
 int Alloc_Object(ScoreAnimClass *obj)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Alloc_Object(ScoreAnimClass *obj)");
+#endif
 	int i,ret;
 
 	for (i = ret = 0; i < MAXSCOREOBJS; i++) {
@@ -498,6 +556,9 @@ int Alloc_Object(ScoreAnimClass *obj)
 
 TextBlitClass::TextBlitClass (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TextBlitClass::TextBlitClass (void)");
+#endif
 	Clear();
 }
 
@@ -505,6 +566,9 @@ TextBlitClass::TextBlitClass (void)
 
 void TextBlitClass::Add (int x, int y, int dx, int dy, int w, int h)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TextBlitClass::Add (int x, int y, int dx, int dy, int w, int h)");
+#endif
 	if ( Count < MAX_ENTRIES ){
 
 		BlitListo [Count].SourceX	= x;
@@ -521,6 +585,9 @@ void TextBlitClass::Add (int x, int y, int dx, int dy, int w, int h)
 
 void TextBlitClass::Clear(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TextBlitClass::Clear(void)");
+#endif
 	Count = 0;
 }
 
@@ -529,6 +596,9 @@ void TextBlitClass::Clear(void)
 
 void TextBlitClass::Update(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TextBlitClass::Update(void)");
+#endif
 	if (TextPrintBuffer){
 
 		if (HidPage.Lock()){
@@ -572,6 +642,9 @@ void Enable_Uncompressed_Shapes (void);
  *=============================================================================================*/
 void ScoreClass::Presentation(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ScoreClass::Presentation(void)");
+#endif
 	//static char const _redpal[]={0x20,0x21,0x22,0x23,0x24,0x25,0x26,0x27,0x28,0x29,0x2A,0x2B,0x2C,0x2D,0x21,0x2F};
 	static char const _redpal[]={0x20,0x22,0x24,0x26,0x28,0x28,0x28,0x28,0x28,0x29,0x2A,0x2B,0x2C,0x2D,0x21,0x2F};
 	static char const _greenpal[]={0x10,0x12,0x14,0x16,0x18,0x18,0x18,0x18,0x18,0x19,0x1A,0x1B,0x1C,0x1D,0x10,0x1F};
@@ -1043,6 +1116,9 @@ void ScoreClass::Presentation(void)
 
 void Cycle_Wait_Click(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Cycle_Wait_Click(void)");
+#endif
 	int counter;
 	int minclicks = 20;
 	unsigned long timingtime = TickCount.Time();
@@ -1110,6 +1186,9 @@ void Cycle_Wait_Click(void)
 
 void ScoreClass::Do_Nod_Buildings_Graph(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ScoreClass::Do_Nod_Buildings_Graph(void)");
+#endif
 	int shapenum;
 	InfantryTypeClass const *ramboclass;
 
@@ -1244,6 +1323,9 @@ void ScoreClass::Do_Nod_Buildings_Graph(void)
 
 void ScoreClass::Do_GDI_Graph(void const * yellowptr, void const * redptr, int gkilled, int nkilled, int ypos)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ScoreClass::Do_GDI_Graph(void const * yellowptr, void const * redptr, int gkilled, int nkilled, int ypos)");
+#endif
 	int i, max;
 	int gdikilled = gkilled, nodkilled=nkilled;
 
@@ -1325,6 +1407,9 @@ void ScoreClass::Do_GDI_Graph(void const * yellowptr, void const * redptr, int g
 
 void ScoreClass::Do_Nod_Casualties_Graph(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ScoreClass::Do_Nod_Casualties_Graph(void)");
+#endif
 	int i, gdikilled, nodkilled, civkilled, max;
 
 	void const * e1ptr = MixFileClass::Retrieve("E1.SHP");
@@ -1449,6 +1534,9 @@ void ScoreClass::Do_Nod_Casualties_Graph(void)
 
 void ScoreClass::Show_Credits(int house, char const pal[])
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ScoreClass::Show_Credits(int house, char const pal[])");
+#endif
 	static int _credsx[2]={276,276};
 	static int _credsy[2]={173,58};
 	static int _credpx[2]={228,236};
@@ -1527,6 +1615,9 @@ void ScoreClass::Show_Credits(int house, char const pal[])
  *=========================================================================*/
 void ScoreClass::Print_Minutes(int minutes)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ScoreClass::Print_Minutes(int minutes)");
+#endif
 	char str[20];
 	if (minutes >= 60) {
 		if ((minutes/60) > 9) minutes = (9*60 + 59);
@@ -1560,6 +1651,9 @@ void ScoreClass::Print_Minutes(int minutes)
  *=============================================================================================*/
 void ScoreClass::Count_Up_Print(char *str, int percent, int max, int xpos, int ypos)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ScoreClass::Count_Up_Print(char *str, int percent, int max, int xpos, int ypos)");
+#endif
 	char destbuf[64];
 	int width;
 
@@ -1607,6 +1701,9 @@ void ScoreClass::Count_Up_Print(char *str, int percent, int max, int xpos, int y
  *=============================================================================================*/
 void ScoreClass::Input_Name(char str[], int xpos, int ypos, char const pal[])
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void ScoreClass::Input_Name(char str[], int xpos, int ypos, char const pal[])");
+#endif
 	int key, ascii, index=0;
 
 	void const * keystrok = MixFileClass::Retrieve("KEYSTROK.AUD");
@@ -1680,6 +1777,9 @@ if ( (ascii >= '!' && ascii <= KA_TILDA) || ascii == ' ') {
 
 void Animate_Cursor(int pos, int ypos)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Animate_Cursor(int pos, int ypos)");
+#endif
 	static int _lastpos, _state;
 	static CountDownTimerClass _timer;
 
@@ -1722,6 +1822,9 @@ void Animate_Cursor(int pos, int ypos)
  *=========================================================================*/
 void Draw_InfantryMen()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Draw_InfantryMen()");
+#endif
 	int k;
 
 // Only draw the infantrymen if we're playing Nod... GDI wouldn't execute
@@ -1758,6 +1861,9 @@ void Draw_InfantryMen()
  *=========================================================================*/
 void Draw_InfantryMan(int index)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Draw_InfantryMan(int index)");
+#endif
 	int stage;
 
 	/* If the infantryman's dead, just abort this function */
@@ -1809,6 +1915,9 @@ void Draw_InfantryMan(int index)
  *=========================================================================*/
 void New_Infantry_Anim(int index, int anim)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void New_Infantry_Anim(int index, int anim)");
+#endif
 	InfantryMan[index].anim = anim;
 	InfantryMan[index].stage = 0;
 	if (anim >= DO_GUN_DEATH) {
@@ -1837,6 +1946,9 @@ void New_Infantry_Anim(int index, int anim)
  *=========================================================================*/
 void Draw_Bar_Graphs(int i, int gkilled, int nkilled, int ckilled)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Draw_Bar_Graphs(int i, int gkilled, int nkilled, int ckilled)");
+#endif
 	if (gkilled) {
 		LogicPage->Fill_Rect(0,   0+4, 0+MIN(i,gkilled),   0+5, LTCYAN);
 		LogicPage->Draw_Line(0+1, 0+6, 0+MIN(i,gkilled)+1, 0+6, TBLACK);
@@ -1907,6 +2019,9 @@ void Draw_Bar_Graphs(int i, int gkilled, int nkilled, int ckilled)
  *=========================================================================*/
 void Call_Back_Delay(int time, bool clickskip)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Call_Back_Delay(int time, bool clickskip)");
+#endif
 	CountDownTimerClass cd;
 
 	KeyNumType keypress = (Keyboard::Check() & (~KN_SHIFT_BIT));
@@ -1952,6 +2067,9 @@ void Call_Back_Delay(int time, bool clickskip)
 
 void Animate_Score_Objs()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Animate_Score_Objs()");
+#endif
 	StillUpdating = false;
 	for (int i = 0; i < MAXSCOREOBJS; i++) {
 		if (ScoreObjs[i]) {
@@ -1970,6 +2088,9 @@ void Animate_Score_Objs()
 
 char *Int_Print(int a)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("char *Int_Print(int a)");
+#endif
 	static char str[10];
 
 	sprintf(str,"%d",a);
@@ -1992,6 +2113,9 @@ char *Int_Print(int a)
  *=============================================================================================*/
 void Multi_Score_Presentation(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Multi_Score_Presentation(void)");
+#endif
 	static char const _cycleyellowpal[]={0x0,0xec,0xEb,0xea,0xE9,0xe9,0xE9,0x0,0xE9,0x0,0x0,0x0,0x0,0x0,0xED,0x0};
 
 	static char const _greenpal[]= {0x0,0x12,0x14,0x16,0x18,0x18,0x18,0x0,0x18,0x0,0x0,0x0,0x0,0x0,0x10,0x0};
@@ -2175,6 +2299,9 @@ static long CCWrite_Row(CCFileClass &lbmhandle, unsigned char *buffer);
  *=========================================================================*/
 bool CCWrite_LBM_File(CCFileClass &lbmhandle, BufferClass& buff, short bitplanes, unsigned char *palette)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool CCWrite_LBM_File(CCFileClass &lbmhandle, BufferClass& buff, short bitplanes, unsigned char *palette)");
+#endif
 	long filesize;
 
 
@@ -2221,6 +2348,9 @@ bool CCWrite_LBM_File(CCFileClass &lbmhandle, BufferClass& buff, short bitplanes
  *=========================================================================*/
 static long CCWrite_BMHD(CCFileClass &lbmhandle, short bitplanes)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static long CCWrite_BMHD(CCFileClass &lbmhandle, short bitplanes)");
+#endif
 	long size;
 
 	lbmhandle.Write("BMHD", 4L);					// write out chunk title
@@ -2253,6 +2383,9 @@ static long CCWrite_BMHD(CCFileClass &lbmhandle, short bitplanes)
  *=========================================================================*/
 static long CCWrite_CMAP(CCFileClass &lbmhandle, unsigned char * palette, short bitplanes)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static long CCWrite_CMAP(CCFileClass &lbmhandle, unsigned char * palette, short bitplanes)");
+#endif
 	short color, r, g, b, colors;
 	long size;
 	unsigned char *pal_ptr;
@@ -2301,6 +2434,9 @@ static long CCWrite_CMAP(CCFileClass &lbmhandle, unsigned char * palette, short 
  *=========================================================================*/
 static long CCWrite_BODY(CCFileClass &lbmhandle, BufferClass& buff, short bitplanes)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static long CCWrite_BODY(CCFileClass &lbmhandle, BufferClass& buff, short bitplanes)");
+#endif
 	long bodysize = 0;
 	long actualsize;
 	long size;
@@ -2355,6 +2491,9 @@ static long CCWrite_BODY(CCFileClass &lbmhandle, BufferClass& buff, short bitpla
  *=========================================================================*/
 static long CCWrite_Row(CCFileClass &lbmhandle, unsigned char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static long CCWrite_Row(CCFileClass &lbmhandle, unsigned char *buffer)");
+#endif
 	short i;
 	short chunksize = 0;
 	short dataLength = 40;	  					// 320 rows / 8 ( 1 plane per row)

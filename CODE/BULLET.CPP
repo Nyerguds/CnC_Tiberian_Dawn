@@ -76,6 +76,9 @@ void * BulletClass::VTable;
 #ifdef CHEAT_KEYS
 int BulletClass::Validate(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int BulletClass::Validate(void) const");
+#endif
 	int num;
 
 	num = Bullets.ID(this);
@@ -110,6 +113,9 @@ int BulletClass::Validate(void) const
 BulletClass::BulletClass(void) :
 	Class(0)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BulletClass::BulletClass(void)");
+#endif
 	Payback = TARGET_NONE;
 	IsToAnimate = false;
 	Altitude = 0;
@@ -138,6 +144,9 @@ BulletClass::BulletClass(void) :
  *=============================================================================================*/
 void * BulletClass::operator new(size_t )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void * BulletClass::operator new(size_t )");
+#endif
 	void * ptr = Bullets.Allocate();
 	if (ptr) {
 		((BulletClass *)ptr)->IsActive = true;
@@ -163,6 +172,9 @@ void * BulletClass::operator new(size_t )
  *=============================================================================================*/
 void BulletClass::operator delete(void *ptr)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BulletClass::operator delete(void *ptr)");
+#endif
 	if (ptr) {
 		((BulletClass *)ptr)->IsActive = false;
 	}
@@ -194,6 +206,9 @@ void BulletClass::operator delete(void *ptr)
 BulletClass::BulletClass(BulletType id) :
 	Class(&BulletTypeClass::As_Reference(id))
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BulletClass::BulletClass(BulletType id)");
+#endif
 	Altitude = 0;
 	IsInaccurate = false;
 	IsLocked = true;
@@ -226,6 +241,9 @@ BulletClass::BulletClass(BulletType id) :
  *=============================================================================================*/
 short const *BulletClass::Occupy_List(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const *BulletClass::Occupy_List(void) const");
+#endif
 	Validate();
 	switch (*this) {
 		case BULLET_FLAME:
@@ -280,6 +298,9 @@ short const *BulletClass::Occupy_List(void) const
  *=============================================================================================*/
 bool BulletClass::Mark(MarkType mark)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool BulletClass::Mark(MarkType mark)");
+#endif
 	Validate();
 	if (ObjectClass::Mark(mark)) {
 		if (!Class->IsInvisible) {
@@ -309,6 +330,9 @@ bool BulletClass::Mark(MarkType mark)
  *=============================================================================================*/
 void BulletClass::AI(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BulletClass::AI(void)");
+#endif
 	Validate();
 	COORDINATE	coord;
 
@@ -503,6 +527,9 @@ void BulletClass::AI(void)
  *=============================================================================================*/
 void BulletClass::Draw_It(int x, int y, WindowNumberType window)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BulletClass::Draw_It(int x, int y, WindowNumberType window)");
+#endif
 	Validate();
 	int	facing = Facing_To_32(PrimaryFacing);
 
@@ -577,6 +604,9 @@ void BulletClass::Draw_It(int x, int y, WindowNumberType window)
  *=============================================================================================*/
 void BulletClass::Init(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BulletClass::Init(void)");
+#endif
 	BulletClass *ptr;
 
 	Bullets.Free_All();
@@ -608,6 +638,9 @@ void BulletClass::Init(void)
  *=============================================================================================*/
 void BulletClass::Detach(TARGET target, bool all)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BulletClass::Detach(TARGET target, bool all)");
+#endif
 	Validate();
 
 	if (target == Payback) {
@@ -640,6 +673,9 @@ void BulletClass::Detach(TARGET target, bool all)
  *=============================================================================================*/
 bool BulletClass::Unlimbo(COORDINATE coord, DirType dir)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool BulletClass::Unlimbo(COORDINATE coord, DirType dir)");
+#endif
 	Validate();
 	/*
 	**	Try to unlimbo the bullet as far as the base class is concerned. Use the already
@@ -792,6 +828,9 @@ bool BulletClass::Unlimbo(COORDINATE coord, DirType dir)
  *   11/26/2025 MM  : Created.                                                                 *
  *=============================================================================================*/
 void BulletClass::Set_Payback(TechnoClass * payback, HousesType house) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BulletClass::Set_Payback(TechnoClass * payback, HousesType house)");
+#endif
 	TARGET source = TARGET_NONE;
 	HousesType owner = HOUSE_NONE;
 	if (payback) {
@@ -807,6 +846,9 @@ void BulletClass::Set_Payback(TechnoClass * payback, HousesType house) {
 
 
 void BulletClass::Set_Payback(TARGET payback, HousesType house) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void BulletClass::Set_Payback(TARGET payback, HousesType house)");
+#endif
 	Set_Payback(As_Techno(payback), house);
 }
 
@@ -828,6 +870,9 @@ void BulletClass::Set_Payback(TARGET payback, HousesType house) {
  *=============================================================================================*/
 TARGET BulletClass::As_Target(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TARGET BulletClass::As_Target(void) const");
+#endif
 	Validate();
 	return(Build_Target(KIND_BULLET, Bullets.ID(this)));
 }

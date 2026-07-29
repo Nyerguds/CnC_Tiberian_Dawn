@@ -98,6 +98,9 @@ extern bool SpawnedFromWChat;
  *=============================================================================================*/
 void Check_From_WChat(char *wchat_name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Check_From_WChat(char *wchat_name)");
+#endif
 #ifndef DEMO
 
 	char	default_string[] = {"Error"};
@@ -238,6 +241,9 @@ void Check_From_WChat(char *wchat_name)
  *=========================================================================*/
 int Read_Game_Options(char *name)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Read_Game_Options(char *name)");
+#endif
 	char *buffer;
 
 	char filename[256] = {"INVALID.123"};
@@ -339,6 +345,9 @@ extern HKEY Get_Registry_Sub_Key (HKEY base_key, char *search_key, BOOL close);
 
 void Just_Path(char *path, char *destpath)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Just_Path(char *path, char *destpath)");
+#endif
 	char *terminator = NULL;		//He'll be back.
 
 	strcpy  (destpath, path);
@@ -368,6 +377,9 @@ void Just_Path(char *path, char *destpath)
  *=============================================================================================*/
 bool Is_User_WChat_Registered(char *buffer, int buffer_len)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Is_User_WChat_Registered(char *buffer, int buffer_len)");
+#endif
 	HKEY	key;
 	char	user_handle[256];
 	DWORD	user_handle_size = sizeof (user_handle);
@@ -462,6 +474,9 @@ bool Is_User_WChat_Registered(char *buffer, int buffer_len)
 bool Poke_WChat(void);
 bool Spawn_WChat(bool can_launch)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Spawn_WChat(bool can_launch)");
+#endif
 	CCDebugString ("C&C95 - In Spawn_WChat.\n");
 	char packet[10] = {"Hello"};
 	HWND chat_window = NULL;
@@ -601,7 +616,9 @@ bool Spawn_WChat(bool can_launch)
  *=============================================================================================*/
 bool Spawn_Registration_App(void)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Spawn_Registration_App(void)");
+#endif
 	/*
 	** Find where inetreg was installed to
 	*/
@@ -663,6 +680,9 @@ bool Spawn_Registration_App(void)
  *=============================================================================================*/
 bool Do_The_Internet_Menu_Thang(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Do_The_Internet_Menu_Thang(void)");
+#endif
 #ifndef DEMO
 
 	int factor			= Get_Resolution_Factor();

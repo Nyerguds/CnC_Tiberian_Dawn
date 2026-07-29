@@ -78,6 +78,9 @@ void * MouseClass::VTable;
  *=============================================================================================*/
 void MouseClass::Set_Default_Mouse(MouseType mouse, bool size)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MouseClass::Set_Default_Mouse(MouseType mouse, bool size)");
+#endif
 	NormalMouseShape = mouse;
 	Override_Mouse_Shape(mouse, size);
 }
@@ -100,12 +103,18 @@ void MouseClass::Set_Default_Mouse(MouseType mouse, bool size)
  *=============================================================================================*/
 void MouseClass::Revert_Mouse_Shape(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MouseClass::Revert_Mouse_Shape(void)");
+#endif
 	Override_Mouse_Shape(NormalMouseShape, false);
 }
 
 
 void MouseClass::Mouse_Small(bool wwsmall)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MouseClass::Mouse_Small(bool wwsmall)");
+#endif
 	MouseStruct const * control = &MouseControl[CurrentMouseShape];
 
 	if (IsSmall == wwsmall) {
@@ -131,6 +140,9 @@ void MouseClass::Mouse_Small(bool wwsmall)
 // Gets the maximum amount of frames used in the defined mouse cursors.
 int MouseClass::Get_Mouse_Range()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int MouseClass::Get_Mouse_Range()");
+#endif
 	int maxFrames = 0;
 	for (int mouse = 0; mouse < MOUSE_COUNT; ++mouse) {
 		MouseStruct const * control = &MouseControl[mouse];
@@ -165,6 +177,9 @@ int MouseClass::Get_Mouse_Range()
  *=============================================================================================*/
 bool MouseClass::Override_Mouse_Shape(MouseType mouse, bool wwsmall)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool MouseClass::Override_Mouse_Shape(MouseType mouse, bool wwsmall)");
+#endif
 	MouseStruct const * control = &MouseControl[mouse];
 	static bool startup = false;
 	int baseshp;
@@ -226,6 +241,9 @@ bool MouseClass::Override_Mouse_Shape(MouseType mouse, bool wwsmall)
  *=============================================================================================*/
 void MouseClass::AI(KeyNumType &input, int x, int y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MouseClass::AI(KeyNumType &input, int x, int y)");
+#endif
 //	bool doit = false;
 	void *mouse_shape_ptr;
 	MouseStruct const * control = &MouseControl[CurrentMouseShape];
@@ -270,6 +288,9 @@ void MouseClass::AI(KeyNumType &input, int x, int y)
  *=============================================================================================*/
 MouseClass::MouseClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MouseClass::MouseClass(void)");
+#endif
 	CurrentMouseShape = MOUSE_NORMAL;
 	NormalMouseShape = MOUSE_NORMAL;
 	Timer.Start();
@@ -293,6 +314,9 @@ MouseClass::MouseClass(void)
  *=============================================================================================*/
 void MouseClass::One_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MouseClass::One_Time(void)");
+#endif
 	ScrollClass::One_Time();
 
 	/*
@@ -333,6 +357,9 @@ void MouseClass::One_Time(void)
  *   07/12/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
 void MouseClass::After_Init(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MouseClass::After_Init(void)");
+#endif
 	ScrollClass::After_Init();
 };
 
@@ -354,6 +381,9 @@ void MouseClass::After_Init(void) {
  *=============================================================================================*/
 void MouseClass::Init_Clear(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void MouseClass::Init_Clear(void)");
+#endif
 	ScrollClass::Init_Clear();
 	IsSmall = false;
 	NormalMouseShape = MOUSE_NORMAL;

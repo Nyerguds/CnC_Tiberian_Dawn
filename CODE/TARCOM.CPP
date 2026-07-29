@@ -57,6 +57,9 @@
  *=============================================================================================*/
 TarComClass::~TarComClass(void) 
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TarComClass::~TarComClass(void)");
+#endif
 }
 
 
@@ -77,6 +80,9 @@ TarComClass::~TarComClass(void)
  *=============================================================================================*/
 void TarComClass::Debug_Dump(MonoClass *mono) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TarComClass::Debug_Dump(MonoClass *mono) const");
+#endif
 	TurretClass::Debug_Dump(mono);
 }
 #endif
@@ -98,6 +104,9 @@ void TarComClass::Debug_Dump(MonoClass *mono) const
  *=============================================================================================*/
 void TarComClass::AI(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TarComClass::AI(void)");
+#endif
 	TurretClass::AI();
 
 	if (Class->Primary != WEAPON_NONE) {

@@ -40,6 +40,9 @@
 
 void GDI_Ending(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void GDI_Ending(void)");
+#endif
 #ifdef DEMO
 	Fade_Palette_To(BlackPalette, FADE_PALETTE_MEDIUM, Call_Back);
 	Load_Title_Screen("DEMOPIC.PCX", &HidPage, Palette);
@@ -113,6 +116,9 @@ void GDI_Ending(void)
  *=============================================================================================*/
 void Nod_Ending(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Nod_Ending(void)");
+#endif
 	static char const _tanpal[]={0x0,0xED,0xED,0x2C,0x2C,0xFB,0xFB,0xFD,0xFD,0x0,0x0,0x0,0x0,0x0,0x52,0x0};
 
 	char fname[12];

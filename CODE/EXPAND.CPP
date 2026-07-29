@@ -41,6 +41,9 @@
 
 bool Expansion_Present(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Expansion_Present(void)");
+#endif
 	CCFileClass file("EXPAND.DAT");
 
 	return(file.Is_Available());
@@ -62,6 +65,9 @@ class EListClass : public ListClass
 
 void EListClass::Draw_Entry(int index, int x, int y, int width, int selected)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void EListClass::Draw_Entry(int index, int x, int y, int width, int selected)");
+#endif
 	if (TextFlags & TPF_6PT_GRAD) {
 		TextPrintType flags = TextFlags;
 
@@ -82,6 +88,9 @@ void EListClass::Draw_Entry(int index, int x, int y, int width, int selected)
 }
 
 void Add_List_Items(EListClass * list, ScenarioPlayerEnum player, int start, int end, int skipstart, int skipend) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Add_List_Items(EListClass * list, ScenarioPlayerEnum player, int start, int end, int skipstart, int skipend)");
+#endif
 	/*
 	**	Add in all the expansion scenarios.
 	*/
@@ -134,6 +143,9 @@ void Add_List_Items(EListClass * list, ScenarioPlayerEnum player, int start, int
 
 bool Expansion_Dialog(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Expansion_Dialog(void)");
+#endif
 	int factor			= Get_Resolution_Factor();
 	int	option_width 	= 236 * factor;
 	int	option_height	= 162 * factor;
@@ -273,6 +285,9 @@ bool Expansion_Dialog(void)
  *=============================================================================================*/
 bool Bonus_Dialog(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool Bonus_Dialog(void)");
+#endif
 	int factor			= Get_Resolution_Factor();
 
 	int	option_width 	= 236 * factor;

@@ -96,6 +96,9 @@
  *=============================================================================================*/
 FootClass::FootClass(void) : Speed(0)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FootClass::FootClass(void)");
+#endif
 	ArchiveTarget = TARGET_NONE;
 	IsDriving = false;
 	IsInitiated = false;
@@ -137,6 +140,9 @@ FootClass::FootClass(void) : Speed(0)
  *=============================================================================================*/
 FootClass::~FootClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FootClass::~FootClass(void)");
+#endif
 	if (GameActive && House) {
 		House->CurUnits--;
 	}
@@ -161,6 +167,9 @@ FootClass::FootClass(HousesType house) :
 			TechnoClass(house),
 			Speed(0)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("FootClass::FootClass(HousesType house)");
+#endif
 	ArchiveTarget = TARGET_NONE;
 	Member = 0;
 	Team = 0;
@@ -202,6 +211,9 @@ FootClass::FootClass(HousesType house) :
  *=============================================================================================*/
 void FootClass::Debug_Dump(MonoClass *mono) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FootClass::Debug_Dump(MonoClass *mono) const");
+#endif
 	static char	const * _p2c[9] = {"-","0","1","2","3","4","5","6","7"};
 #define	Path_To_String(a)	_p2c[((ABS((int)a+1))%9)]
 
@@ -275,6 +287,9 @@ void FootClass::Debug_Dump(MonoClass *mono) const
  *=============================================================================================*/
 void FootClass::Set_Speed(int speed)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FootClass::Set_Speed(int speed)");
+#endif
 	speed &= 0xFF;
 	((unsigned char &)Speed) = speed;
 }
@@ -304,6 +319,9 @@ void FootClass::Set_Speed(int speed)
  *=============================================================================================*/
 bool FootClass::Mark(MarkType mark)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FootClass::Mark(MarkType mark)");
+#endif
 	if (TechnoClass::Mark(mark)) {
 		CELL cell = Coord_Cell(Coord);
 
@@ -361,6 +379,9 @@ bool FootClass::Mark(MarkType mark)
  *=============================================================================================*/
 bool FootClass::Basic_Path(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FootClass::Basic_Path(void)");
+#endif
 	PathType		*path;			// Pointer to path control structure.
 	CELL			cell;
 	int 			skip_path = false;
@@ -565,6 +586,9 @@ bool FootClass::Basic_Path(void)
  *=============================================================================================*/
 int FootClass::Mission_Move(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FootClass::Mission_Move(void)");
+#endif
 	if (!Target_Legal(NavCom) && !IsDriving && MissionQueue == MISSION_NONE) {
 		Enter_Idle_Mode();
 	}
@@ -594,6 +618,9 @@ int FootClass::Mission_Move(void)
  *=============================================================================================*/
 int FootClass::Mission_Capture(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FootClass::Mission_Capture(void)");
+#endif
 	if (!Target_Legal(NavCom) && !In_Radio_Contact()) {
 		Enter_Idle_Mode();
 		if (Map[Coord_Cell(Center_Coord())].Cell_Building()) {
@@ -622,6 +649,9 @@ int FootClass::Mission_Capture(void)
  *=============================================================================================*/
 int FootClass::Mission_Attack(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FootClass::Mission_Attack(void)");
+#endif
 	if (Target_Legal(TarCom)) {
 		Approach_Target();
 	} else {
@@ -648,6 +678,9 @@ int FootClass::Mission_Attack(void)
  *=============================================================================================*/
 int FootClass::Mission_Guard(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FootClass::Mission_Guard(void)");
+#endif
 	if (!Target_Something_Nearby(THREAT_RANGE)) {
 		Random_Animate();
 	}
@@ -673,6 +706,9 @@ int FootClass::Mission_Guard(void)
  *=============================================================================================*/
 int FootClass::Mission_Hunt(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FootClass::Mission_Hunt(void)");
+#endif
 	if (!Target_Something_Nearby(THREAT_NORMAL)) {
 		Random_Animate();
 	} else {
@@ -710,6 +746,9 @@ int FootClass::Mission_Hunt(void)
  *=============================================================================================*/
 int FootClass::Mission_Timed_Hunt(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FootClass::Mission_Timed_Hunt(void)");
+#endif
 	int rndmax;
 	int changed = 0;					// has the unit changed into Hunt mode?
 
@@ -774,6 +813,9 @@ int FootClass::Mission_Timed_Hunt(void)
  *=============================================================================================*/
 bool FootClass::Stop_Driver(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FootClass::Stop_Driver(void)");
+#endif
 	if (HeadToCoord) {
 		HeadToCoord = NULL;
 		Set_Speed(0);
@@ -803,6 +845,9 @@ bool FootClass::Stop_Driver(void)
  *=============================================================================================*/
 bool FootClass::Start_Driver(COORDINATE &headto)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FootClass::Start_Driver(COORDINATE &headto)");
+#endif
 	Stop_Driver();
 	if (headto) {
 		HeadToCoord = headto;
@@ -842,6 +887,9 @@ bool FootClass::Start_Driver(COORDINATE &headto)
  *=============================================================================================*/
 COORDINATE FootClass::Sort_Y(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE FootClass::Sort_Y(void) const");
+#endif
 	if (IsUnloading) {
 		return(Coord_Add(Coord, 0x01000000L));
 	}
@@ -871,6 +919,9 @@ COORDINATE FootClass::Sort_Y(void) const
  *=============================================================================================*/
 void FootClass::Stun(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FootClass::Stun(void)");
+#endif
 	Assign_Destination(TARGET_NONE);
 	Path[0] = FACING_NONE;
 	Stop_Driver();
@@ -899,6 +950,9 @@ void FootClass::Stun(void)
  *=============================================================================================*/
 void FootClass::Approach_Target(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FootClass::Approach_Target(void)");
+#endif
 	/*
 	**	Determine that if there is an existing target it is still legal
 	**	and within range.
@@ -1005,6 +1059,9 @@ void FootClass::Approach_Target(void)
  *=============================================================================================*/
 int FootClass::Mission_Guard_Area(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FootClass::Mission_Guard_Area(void)");
+#endif
 	if (What_Am_I() == RTTI_UNIT && ((UnitClass *)this)->Class->IsToHarvest) {
 		Assign_Mission(MISSION_HARVEST);
 		return(1+Random_Pick(1, 10));
@@ -1063,6 +1120,9 @@ int FootClass::Mission_Guard_Area(void)
  *=============================================================================================*/
 bool FootClass::Unlimbo(COORDINATE coord, DirType dir)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FootClass::Unlimbo(COORDINATE coord, DirType dir)");
+#endif
 	/*
 	**	Try to unlimbo the unit.
 	*/
@@ -1100,6 +1160,9 @@ bool FootClass::Unlimbo(COORDINATE coord, DirType dir)
  *=============================================================================================*/
 void FootClass::Assign_Mission(MissionType order)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FootClass::Assign_Mission(MissionType order)");
+#endif
 	if (What_Am_I() != RTTI_UNIT || *(UnitClass*)this != UNIT_GUNBOAT) {
 		Path[0] = FACING_NONE;
 	}
@@ -1124,6 +1187,9 @@ void FootClass::Assign_Mission(MissionType order)
  *=============================================================================================*/
 bool FootClass::Limbo(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FootClass::Limbo(void)");
+#endif
 	if (!IsInLimbo) {
 		if (Team) {
 			Team->Remove(this);
@@ -1162,6 +1228,9 @@ bool FootClass::Limbo(void)
  *=============================================================================================*/
 ResultType FootClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ResultType FootClass::Take_Damage(int & damage, int distance, WarheadType warhead, TechnoClass * source, HousesType house, bool fromburn)");
+#endif
 	ResultType result = TechnoClass::Take_Damage(damage, distance, warhead, source, house, fromburn);
 
 	if (result != RESULT_NONE && Team) {
@@ -1281,6 +1350,9 @@ ResultType FootClass::Take_Damage(int & damage, int distance, WarheadType warhea
  *=============================================================================================*/
 void FootClass::Active_Click_With(ActionType action, ObjectClass * object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FootClass::Active_Click_With(ActionType action, ObjectClass * object)");
+#endif
 	switch (action) {
 		case ACTION_GUARD_AREA:
 			if (Can_Player_Fire() && Can_Player_Move()) {
@@ -1355,6 +1427,9 @@ void FootClass::Active_Click_With(ActionType action, ObjectClass * object)
  *=============================================================================================*/
 void FootClass::Active_Click_With(ActionType action, CELL cell)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FootClass::Active_Click_With(ActionType action, CELL cell)");
+#endif
 	// Nyerguds's C&C Patch Project v1.04: Added movement flash for more actions.
 	// These actions can give a movement flash.
 	switch (action) {
@@ -1427,6 +1502,9 @@ void FootClass::Active_Click_With(ActionType action, CELL cell)
  *=============================================================================================*/
 void FootClass::Per_Cell_Process(bool center)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FootClass::Per_Cell_Process(bool center)");
+#endif
 //	if (center) {
 
 		/*
@@ -1502,6 +1580,9 @@ void FootClass::Per_Cell_Process(bool center)
  *=========================================================================*/
 void FootClass::Override_Mission(MissionType mission, TARGET tarcom, TARGET navcom)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FootClass::Override_Mission(MissionType mission, TARGET tarcom, TARGET navcom)");
+#endif
 	SuspendedNavCom = NavCom;
 	TechnoClass::Override_Mission(mission, tarcom, navcom);
 
@@ -1523,6 +1604,9 @@ void FootClass::Override_Mission(MissionType mission, TARGET tarcom, TARGET navc
  *=========================================================================*/
 bool FootClass::Restore_Mission(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FootClass::Restore_Mission(void)");
+#endif
 	if (TechnoClass::Restore_Mission()) {
 		Assign_Destination(SuspendedNavCom);
 		return(true);
@@ -1553,6 +1637,9 @@ bool FootClass::Restore_Mission(void)
  *=============================================================================================*/
 RadioMessageType FootClass::Receive_Message(RadioClass * from, RadioMessageType message, long & param)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("RadioMessageType FootClass::Receive_Message(RadioClass * from, RadioMessageType message, long & param)");
+#endif
 	switch (message) {
 
 		/*
@@ -1636,6 +1723,9 @@ RadioMessageType FootClass::Receive_Message(RadioClass * from, RadioMessageType 
  *=============================================================================================*/
 int FootClass::Mission_Enter(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FootClass::Mission_Enter(void)");
+#endif
 	// Nyerguds's C&C Patch Project v1.04: Ported the remaster's transport multi-load logic.
 	/*
 	**	Find out who to coordinate with. If in radio contact, then this the transporter is
@@ -1706,6 +1796,9 @@ z * FootClass::Assign_Destination -- Assigns specified destination to NavCom.   
  *=============================================================================================*/
 void FootClass::Assign_Destination(TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FootClass::Assign_Destination(TARGET target)");
+#endif
 	NavCom = target;
 }
 
@@ -1728,6 +1821,9 @@ void FootClass::Assign_Destination(TARGET target)
  *=============================================================================================*/
 void FootClass::Detach_All(bool all)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FootClass::Detach_All(bool all)");
+#endif
 	if (Team) Team->Remove(this);
 	Team = NULL;
 
@@ -1756,6 +1852,9 @@ void FootClass::Detach_All(bool all)
  *=============================================================================================*/
 int FootClass::Rescue_Mission(TARGET tarcom)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FootClass::Rescue_Mission(TARGET tarcom)");
+#endif
 	/*
 	**	If the target specified is not legal, then it cannot be attacked. Always return
 	**	zero in this case.
@@ -1833,6 +1932,9 @@ int FootClass::Rescue_Mission(TARGET tarcom)
  *=============================================================================================*/
 void FootClass::Death_Announcement(TechnoClass const * source) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FootClass::Death_Announcement(TechnoClass const * source) const");
+#endif
 	if (!IsDiscoveredByPlayer && !IsOwnedByPlayer) {
 		return;
 	}
@@ -1893,6 +1995,9 @@ void FootClass::Death_Announcement(TechnoClass const * source) const
  *=============================================================================================*/
 TARGET FootClass::Greatest_Threat(ThreatType method) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("TARGET FootClass::Greatest_Threat(ThreatType method) const");
+#endif
 	/*
 	**	If this object can cloak, then it won't select a target automatically.
 	*/
@@ -1931,6 +2036,9 @@ TARGET FootClass::Greatest_Threat(ThreatType method) const
  *=============================================================================================*/
 void FootClass::Detach(TARGET target, bool all)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FootClass::Detach(TARGET target, bool all)");
+#endif
 	TechnoClass::Detach(target, all);
 
 	if (!SpecialFlag) {
@@ -1983,6 +2091,9 @@ void FootClass::Detach(TARGET target, bool all)
  *=============================================================================================*/
 int FootClass::Offload_Tiberium_Bail(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int FootClass::Offload_Tiberium_Bail(void)");
+#endif
 	return(0);
 }
 
@@ -2011,6 +2122,9 @@ int FootClass::Offload_Tiberium_Bail(void)
  *=============================================================================================*/
 MoveType FootClass::Can_Enter_Cell(CELL , FacingType) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("MoveType FootClass::Can_Enter_Cell(CELL , FacingType) const");
+#endif
 	return MOVE_OK;
 }
 
@@ -2032,6 +2146,9 @@ MoveType FootClass::Can_Enter_Cell(CELL , FacingType) const
  *=============================================================================================*/
 bool FootClass::Can_Demolish(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool FootClass::Can_Demolish(void) const");
+#endif
 	switch (What_Am_I()) {
 		case RTTI_UNIT:
 		case RTTI_AIRCRAFT:
@@ -2069,6 +2186,9 @@ bool FootClass::Can_Demolish(void) const
  *=============================================================================================*/
 void FootClass::Sell_Back(int control)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void FootClass::Sell_Back(int control)");
+#endif
 	if (control != 0) {
 		if (House == PlayerPtr) {
 			Sound_Effect(VOC_CASHTURN);
@@ -2113,6 +2233,9 @@ void FootClass::Sell_Back(int control)
  *=============================================================================================*/
 COORDINATE FootClass::Likely_Coord(void) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE FootClass::Likely_Coord(void) const");
+#endif
 	if (Head_To_Coord()) {
 		return(Head_To_Coord());
 	}

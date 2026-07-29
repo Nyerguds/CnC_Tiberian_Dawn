@@ -128,6 +128,9 @@ char * EventClass::EventNames[EventClass::LAST_EVENT] = {
  *=============================================================================================*/
 EventClass::EventClass(SpecialClass data)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("EventClass::EventClass(SpecialClass data)");
+#endif
 	ID = Houses.ID(PlayerPtr);
 	Type = SPECIAL;
 	Frame = ::Frame;
@@ -154,6 +157,9 @@ EventClass::EventClass(SpecialClass data)
  *=============================================================================================*/
 EventClass::EventClass(EventType type, TARGET target)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("EventClass::EventClass(EventType type, TARGET target)");
+#endif
 	ID = Houses.ID(PlayerPtr);
 	Type = type;
 	Frame = ::Frame;
@@ -178,6 +184,9 @@ EventClass::EventClass(EventType type, TARGET target)
  *=============================================================================================*/
 EventClass::EventClass(EventType type)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("EventClass::EventClass(EventType type)");
+#endif
 	ID = Houses.ID(PlayerPtr);
 	Type = type;
 	Frame = ::Frame;
@@ -199,6 +208,9 @@ EventClass::EventClass(EventType type)
  *=============================================================================================*/
 EventClass::EventClass(EventType type, int val)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("EventClass::EventClass(EventType type, int val)");
+#endif
 	ID = Houses.ID(PlayerPtr);
 	Type = type;
 	Data.General.Value = val;
@@ -227,6 +239,9 @@ EventClass::EventClass(EventType type, int val)
  *=============================================================================================*/
 EventClass::EventClass(EventType type, TARGET src, TARGET dest)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("EventClass::EventClass(EventType type, TARGET src, TARGET dest)");
+#endif
 	ID = Houses.ID(PlayerPtr);
 	Type = type;
 	Frame = ::Frame;
@@ -253,6 +268,9 @@ EventClass::EventClass(EventType type, TARGET src, TARGET dest)
  *=============================================================================================*/
 EventClass::EventClass(AnimType anim, HousesType owner, COORDINATE coord)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("EventClass::EventClass(AnimType anim, HousesType owner, COORDINATE coord)");
+#endif
 	ID = Houses.ID(PlayerPtr);
 	Type = ANIMATION;
 	Frame = ::Frame;
@@ -285,6 +303,9 @@ EventClass::EventClass(AnimType anim, HousesType owner, COORDINATE coord)
  *=============================================================================================*/
 EventClass::EventClass(TARGET src, MissionType mission, TARGET target, TARGET destination)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("EventClass::EventClass(TARGET src, MissionType mission, TARGET target, TARGET destination)");
+#endif
 	ID = Houses.ID(PlayerPtr);
 	Type = MEGAMISSION;
 	Frame = ::Frame;
@@ -316,6 +337,9 @@ EventClass::EventClass(TARGET src, MissionType mission, TARGET target, TARGET de
  *=============================================================================================*/
 EventClass::EventClass(EventType type, RTTIType object, int id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("EventClass::EventClass(EventType type, RTTIType object, int id)");
+#endif
 	ID = Houses.ID(PlayerPtr);
 	Type = type;
 	Frame = ::Frame;
@@ -346,6 +370,9 @@ EventClass::EventClass(EventType type, RTTIType object, int id)
  *=============================================================================================*/
 EventClass::EventClass(EventType type, RTTIType object, CELL cell)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("EventClass::EventClass(EventType type, RTTIType object, CELL cell)");
+#endif
 	ID = Houses.ID(PlayerPtr);
 	Type = type;
 	Frame = ::Frame;
@@ -374,6 +401,9 @@ EventClass::EventClass(EventType type, RTTIType object, CELL cell)
  *=============================================================================================*/
 EventClass::EventClass(EventType type, SpecialWeaponType id, CELL cell)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("EventClass::EventClass(EventType type, SpecialWeaponType id, CELL cell)");
+#endif
 	ID = Houses.ID(PlayerPtr);
 	Type = type;
 	Frame = ::Frame;
@@ -399,6 +429,9 @@ EventClass::EventClass(EventType type, SpecialWeaponType id, CELL cell)
  *=============================================================================================*/
 void EventClass::Execute(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void EventClass::Execute(void)");
+#endif
 	TechnoClass * techno;
 	AnimClass * anim = 0;
 	HouseClass * house = 0;

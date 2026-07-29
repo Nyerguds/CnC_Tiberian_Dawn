@@ -77,10 +77,11 @@ static BOOL CALLBACK	(*Instance_Class::callback) (
  * HISTORY:                                                                *
  *   6/1/1996 SW : Created.                                                *
  *=========================================================================*/
-
 Instance_Class::Instance_Class( LPSTR name1, LPSTR name2 )
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("Instance_Class::Instance_Class(LPSTR name1, LPSTR name2)");
+#endif
 	dde_error = FALSE;		// no errors
 	process_pokes = FALSE;	// disable pokes in callback
 
@@ -140,9 +141,11 @@ Instance_Class::Instance_Class( LPSTR name1, LPSTR name2 )
  * HISTORY:                                                                *
  *   6/1/1996 SW : Created.                                                *
  *=========================================================================*/
-
 Instance_Class::~Instance_Class()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("Instance_Class::~Instance_Class()");
+#endif
 	DdeUninitialize( id_inst );
 }
 
@@ -162,11 +165,12 @@ Instance_Class::~Instance_Class()
  * HISTORY:                                                                *
  *   6/1/1996 SW : Created.                                                *
  *=========================================================================*/
-
 BOOL	Instance_Class::Enable_Callback( BOOL flag )		// enable or disable callback
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BOOL	Instance_Class::Enable_Callback( BOOL flag )		// enable or disable callback");
+#endif
 	return (process_pokes = flag);
-
 }
 
 /***************************************************************************
@@ -185,10 +189,11 @@ BOOL	Instance_Class::Enable_Callback( BOOL flag )		// enable or disable callback
  * HISTORY:                                                                *
  *   6/1/1996 SW : Created.                                                *
  *=========================================================================*/
-
-BOOL	Instance_Class::Register_Server( BOOL CALLBACK ( *callback_fnc) (LPBYTE, long) )
+BOOL Instance_Class::Register_Server(BOOL CALLBACK (*callback_fnc) (LPBYTE, long))
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BOOL Instance_Class::Register_Server(BOOL CALLBACK (*callback_fnc) (LPBYTE, long))");
+#endif
 	if (DdeNameService( id_inst, local_name,	0L, DNS_REGISTER ) != 0L) {
 		callback = callback_fnc;
 		return ( TRUE );
@@ -215,10 +220,11 @@ BOOL	Instance_Class::Register_Server( BOOL CALLBACK ( *callback_fnc) (LPBYTE, lo
  * HISTORY:                                                                *
  *   6/1/1996 SW : Created.                                                *
  *=========================================================================*/
-
 BOOL	Instance_Class::Test_Server_Running( HSZ name )
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BOOL	Instance_Class::Test_Server_Running( HSZ name )");
+#endif
 	if( Open_Poke_Connection( name ) == TRUE) {
 		Close_Poke_Connection();
 		return( TRUE );
@@ -244,9 +250,11 @@ BOOL	Instance_Class::Test_Server_Running( HSZ name )
  * HISTORY:                                                                *
  *   6/1/1996 SW : Created.                                                *
  *=========================================================================*/
-
 BOOL	Instance_Class::Open_Poke_Connection( HSZ name )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BOOL	Instance_Class::Open_Poke_Connection( HSZ name )");
+#endif
 	conv_handle = DdeConnect(
 		id_inst,           	// instance identifier
 		name,         			// service name string handle
@@ -276,9 +284,11 @@ BOOL	Instance_Class::Open_Poke_Connection( HSZ name )
  * HISTORY:                                                                *
  *   6/1/1996 SW : Created.                                                *
  *=========================================================================*/
-
 BOOL	Instance_Class::Close_Poke_Connection( void )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BOOL	Instance_Class::Close_Poke_Connection( void )");
+#endif
 	if( conv_handle ) {
 		HCONV	temp_handle = conv_handle;
 		conv_handle = NULL;
@@ -305,12 +315,12 @@ BOOL	Instance_Class::Close_Poke_Connection( void )
  * HISTORY:                                                                *
  *   6/1/1996 SW : Created.                                                *
  *=========================================================================*/
-
 #define	POKE_TIMEOUT	60*1000	      // 60 sec timeout
-
 BOOL	Instance_Class::Poke_Server( LPBYTE poke_data, DWORD poke_length )
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("BOOL	Instance_Class::Poke_Server( LPBYTE poke_data, DWORD poke_length )");
+#endif
 	if( DdeClientTransaction(
 
 		poke_data,					// address of data to pass to server
@@ -364,8 +374,9 @@ HDDEDATA CALLBACK Instance_Class::dde_callback(
 	DWORD  			 	// transaction-specific data
 	)
 {
-
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("HDDEDATA CALLBACK Instance_Class::dde_callback(UINT dde_event, UINT uFmt, HCONV, HSZ hsz1, HSZ hsz2, HDDEDATA hdata, DWORD, DWORD)");
+#endif
 	if (!Instance_Class::callback){
 		return (HDDEDATA) NULL;
 	}

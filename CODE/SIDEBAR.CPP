@@ -141,6 +141,9 @@ void const * SidebarClass::SidebarShapeFill;
  *=============================================================================================*/
 SidebarClass::SidebarClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("SidebarClass::SidebarClass(void)");
+#endif
 	IsSidebarActive = false;
 	IsRepairActive = false;
 	IsUpgradeActive = false;
@@ -166,6 +169,9 @@ SidebarClass::SidebarClass(void)
  *=============================================================================================*/
 void SidebarClass::One_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::One_Time(void)");
+#endif
 	PowerClass::One_Time();
 
 	Reset_Screen_Calculations();
@@ -195,6 +201,9 @@ void SidebarClass::One_Time(void)
  *   07/12/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
 void SidebarClass::After_Init(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::After_Init(void)");
+#endif
 	PowerClass::After_Init();
 	Reset_Screen_Calculations();
 }
@@ -202,6 +211,9 @@ void SidebarClass::After_Init(void) {
 
 void SidebarClass::Reset_Screen_Calculations(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::Reset_Screen_Calculations(void)");
+#endif
 	/*
 	** Set up the pixel offsets and widths and heights used to render the
 	** sidebar.  They are now variables because we need to change them for
@@ -259,6 +271,9 @@ void SidebarClass::Reset_Screen_Calculations(void)
  *=============================================================================================*/
 void SidebarClass::Init_Clear(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::Init_Clear(void)");
+#endif
 	PowerClass::Init_Clear();
 
 	IsToRedraw = true;
@@ -287,6 +302,9 @@ void SidebarClass::Init_Clear(void)
  *=============================================================================================*/
 void SidebarClass::Init_IO(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::Init_IO(void)");
+#endif
 	void *oldfont;
 	int oldx;
 	PowerClass::Init_IO();
@@ -412,6 +430,9 @@ void SidebarClass::Init_IO(void)
  *=============================================================================================*/
 void SidebarClass::Init_Theater(TheaterType theater)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::Init_Theater(TheaterType theater)");
+#endif
 	PowerClass::Init_Theater(theater);
 
 	Column[0].Init_Theater(theater);
@@ -436,6 +457,9 @@ void SidebarClass::Init_Theater(TheaterType theater)
  *=============================================================================================*/
 int SidebarClass::Which_Column(RTTIType type)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int SidebarClass::Which_Column(RTTIType type)");
+#endif
 	if (type == RTTI_BUILDINGTYPE || type == RTTI_BUILDING) {
 		return(0);
 	}
@@ -465,6 +489,9 @@ int SidebarClass::Which_Column(RTTIType type)
  *=============================================================================================*/
 bool SidebarClass::Factory_Link(int factory, RTTIType type, int id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SidebarClass::Factory_Link(int factory, RTTIType type, int id)");
+#endif
 	return(Column[Which_Column(type)].Factory_Link(factory, type, id));
 }
 
@@ -490,6 +517,9 @@ bool SidebarClass::Factory_Link(int factory, RTTIType type, int id)
  *=============================================================================================*/
 void SidebarClass::Refresh_Cells(CELL cell, short const *list)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::Refresh_Cells(CELL cell, short const *list)");
+#endif
 	if (*list == REFRESH_SIDEBAR) {
 		IsToRedraw = true;
 		Column[0].IsToRedraw = true;
@@ -520,6 +550,9 @@ void SidebarClass::Refresh_Cells(CELL cell, short const *list)
  *=============================================================================================*/
 bool SidebarClass::Activate_Repair(int control)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SidebarClass::Activate_Repair(int control)");
+#endif
 	bool old = IsRepairActive;
 
 	if (control == -1) {
@@ -568,6 +601,9 @@ bool SidebarClass::Activate_Repair(int control)
  *=============================================================================================*/
 bool SidebarClass::Activate_Upgrade(int control)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SidebarClass::Activate_Upgrade(int control)");
+#endif
 	bool old = IsUpgradeActive;
 	if (control == -1) {
 		control = IsUpgradeActive ? 0 : 1;
@@ -613,6 +649,9 @@ bool SidebarClass::Activate_Upgrade(int control)
  *=============================================================================================*/
 bool SidebarClass::Activate_Demolish(int control)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SidebarClass::Activate_Demolish(int control)");
+#endif
 	bool old = IsDemolishActive;
 
 	if (control == -1) {
@@ -657,6 +696,9 @@ bool SidebarClass::Activate_Demolish(int control)
  *=============================================================================================*/
 bool SidebarClass::Add(RTTIType type, int id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SidebarClass::Add(RTTIType type, int id)");
+#endif
 	int column;
 
 	/*
@@ -698,6 +740,9 @@ bool SidebarClass::Add(RTTIType type, int id)
  *=============================================================================================*/
 bool SidebarClass::Scroll(bool up, int column)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SidebarClass::Scroll(bool up, int column)");
+#endif
 	if (Column[column].Scroll(up)) {
 		IsToRedraw = true;
 		Flag_To_Redraw(false);
@@ -725,6 +770,9 @@ extern void CC_Texture_Fill (void const *shapefile, int shapenum, int xpos, int 
  *=============================================================================================*/
 void SidebarClass::Draw_It(bool complete)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::Draw_It(bool complete)");
+#endif
 	bool drewBottom = false;
 	if (IsSidebarActive && (IsToRedraw || complete) && !Debug_Map) {
 		IsToRedraw = false;
@@ -782,6 +830,9 @@ void SidebarClass::Draw_It(bool complete)
 }
 
 void SidebarClass::Fill_Bottom() {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::Fill_Bottom()");
+#endif
 	int y = PowerClass::PowY + PowerClass::PowHeight; // 158+118+124;
 	int height = SeenBuff.Get_Height() - y;
 	int width = SeenBuff.Get_Width() - SideX;
@@ -819,6 +870,9 @@ void SidebarClass::Fill_Bottom() {
  *=============================================================================================*/
 void SidebarClass::AI(KeyNumType & input, int x, int y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::AI(KeyNumType & input, int x, int y)");
+#endif
 	bool redraw = false;
 
 	/*
@@ -957,6 +1011,9 @@ void SidebarClass::AI(KeyNumType & input, int x, int y)
  *=============================================================================================*/
 void SidebarClass::Recalc(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::Recalc(void)");
+#endif
 	bool redraw = false;
 
 	redraw |= Column[0].Recalc();
@@ -989,6 +1046,9 @@ void SidebarClass::Recalc(void)
  *=============================================================================================*/
 bool SidebarClass::Activate(int control)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SidebarClass::Activate(int control)");
+#endif
 	bool old = IsSidebarActive;
 
 		int sidex 		= SeenBuff.Get_Width() - SideBarWidth;
@@ -1086,6 +1146,9 @@ bool SidebarClass::Activate(int control)
  *=============================================================================================*/
 SidebarClass::StripClass::StripClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("SidebarClass::StripClass::StripClass(void)");
+#endif
 	IsScrollingDown = false;
 	IsScrolling = false;
 	IsBuilding = false;	TopIndex = 0;
@@ -1117,6 +1180,9 @@ SidebarClass::StripClass::StripClass(void)
  *=============================================================================================*/
 void SidebarClass::StripClass::One_Time(int )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::StripClass::One_Time(int )");
+#endif
 	static char *_file[SPC_COUNT] = {
 		"ION",
 		"ATOM",
@@ -1166,6 +1232,9 @@ void SidebarClass::StripClass::One_Time(int )
  *=============================================================================================*/
 void const * SidebarClass::StripClass::Get_Special_Cameo(SpecialWeaponType type)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void const * SidebarClass::StripClass::Get_Special_Cameo(SpecialWeaponType type)");
+#endif
 	if ((unsigned)type >= SPC_COUNT) {
 		return NULL;
 	}
@@ -1193,6 +1262,9 @@ void const * SidebarClass::StripClass::Get_Special_Cameo(SpecialWeaponType type)
  *=============================================================================================*/
 bool SidebarClass::StripClass::Special_Cameo_Is_Theater_Shape(SpecialWeaponType type)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SidebarClass::StripClass::Special_Cameo_Is_Theater_Shape(SpecialWeaponType type)");
+#endif
 	if ((unsigned)type >= SPC_COUNT) {
 		return false;
 	}
@@ -1214,6 +1286,9 @@ bool SidebarClass::StripClass::Special_Cameo_Is_Theater_Shape(SpecialWeaponType 
  *=============================================================================================*/
 void SidebarClass::StripClass::Init_Clear(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::StripClass::Init_Clear(void)");
+#endif
 	IsScrollingDown = false;
 	IsScrolling = false;
 	IsBuilding = false;
@@ -1249,6 +1324,9 @@ void SidebarClass::StripClass::Init_Clear(void)
  *=============================================================================================*/
 void SidebarClass::StripClass::Init_IO(int id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::StripClass::Init_IO(int id)");
+#endif
 	ID = id;
 
 	UpButton[ID].IsSticky = true;
@@ -1292,6 +1370,9 @@ void SidebarClass::StripClass::Init_IO(int id)
  *=============================================================================================*/
 void SidebarClass::StripClass::Init_Theater(TheaterType theater)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::StripClass::Init_Theater(TheaterType theater)");
+#endif
 	//if (theater != LastTheater) {
 
 
@@ -1390,6 +1471,9 @@ void SidebarClass::StripClass::Init_Theater(TheaterType theater)
  *=============================================================================================*/
 void SidebarClass::StripClass::Activate(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::StripClass::Activate(void)");
+#endif
 	UpButton[ID].Zap();
 	Map.Add_A_Button(UpButton[ID]);
 
@@ -1420,6 +1504,9 @@ void SidebarClass::StripClass::Activate(void)
  *=============================================================================================*/
 void SidebarClass::StripClass::Deactivate(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::StripClass::Deactivate(void)");
+#endif
 	Map.Remove_A_Button(UpButton[ID]);
 	Map.Remove_A_Button(DownButton[ID]);
 	for (int index = 0; index < MAX_VISIBLE; index++) {
@@ -1451,6 +1538,9 @@ void SidebarClass::StripClass::Deactivate(void)
  *=============================================================================================*/
 static int sortfunc(void const * ptr1, void const * ptr2)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static int sortfunc(void const * ptr1, void const * ptr2)");
+#endif
 	SidebarClass::StripClass::BuildType * b1 = (SidebarClass::StripClass::BuildType *)ptr1;
 	SidebarClass::StripClass::BuildType * b2 = (SidebarClass::StripClass::BuildType *)ptr2;
 
@@ -1515,6 +1605,9 @@ static int sortfunc(void const * ptr1, void const * ptr2)
  *=============================================================================================*/
 bool SidebarClass::StripClass::Add(RTTIType type, int id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SidebarClass::StripClass::Add(RTTIType type, int id)");
+#endif
 	if (BuildableCount <= MAX_BUILDABLES) {
 		for (int index = 0; index < BuildableCount; index++) {
 			if (Buildables[index].BuildableType == type && Buildables[index].BuildableID == id) {
@@ -1559,6 +1652,9 @@ bool SidebarClass::StripClass::Add(RTTIType type, int id)
  *=============================================================================================*/
 bool SidebarClass::StripClass::Scroll(bool up)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SidebarClass::StripClass::Scroll(bool up)");
+#endif
 	if (up) {
 		Scroller--;
 	} else {
@@ -1606,6 +1702,9 @@ bool SidebarClass::StripClass::Scroll(bool up)
  *=============================================================================================*/
 void SidebarClass::StripClass::Flag_To_Redraw(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::StripClass::Flag_To_Redraw(void)");
+#endif
 	IsToRedraw = true;
 	//Map.SidebarClass::IsToRedraw = true;
 	Map.Flag_To_Redraw(false);
@@ -1635,6 +1734,9 @@ void SidebarClass::StripClass::Flag_To_Redraw(void)
  *=============================================================================================*/
 bool SidebarClass::StripClass::AI(KeyNumType & input, int , int )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SidebarClass::StripClass::AI(KeyNumType & input, int , int )");
+#endif
 	bool redraw = false;
 
 	/*
@@ -1799,6 +1901,9 @@ bool SidebarClass::StripClass::AI(KeyNumType & input, int , int )
  *=============================================================================================*/
 void SidebarClass::StripClass::Draw_It(bool complete)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::StripClass::Draw_It(bool complete)");
+#endif
 	if (IsToRedraw || complete) {
 		IsToRedraw = false;
 
@@ -2047,6 +2152,9 @@ void SidebarClass::StripClass::Draw_It(bool complete)
  *=============================================================================================*/
 bool SidebarClass::StripClass::Recalc(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SidebarClass::StripClass::Recalc(void)");
+#endif
 	int ok;
 
 	if (Debug_Map || !BuildableCount) {
@@ -2176,6 +2284,9 @@ bool SidebarClass::StripClass::Recalc(void)
 SidebarClass::StripClass::SelectClass::SelectClass(void) :
 	ControlClass(0, 0, 0, 0, 0, LEFTPRESS|RIGHTPRESS|LEFTUP|MOUSEWHEELUP|MOUSEWHEELDN)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("SidebarClass::StripClass::SelectClass::SelectClass(void)");
+#endif
 	int factor = Get_Resolution_Shift();
 
 	Strip = 0;
@@ -2206,6 +2317,9 @@ SidebarClass::StripClass::SelectClass::SelectClass(void) :
  *=============================================================================================*/
 void SidebarClass::StripClass::SelectClass::Set_Owner(StripClass & strip, int index)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void SidebarClass::StripClass::SelectClass::Set_Owner(StripClass & strip, int index)");
+#endif
 	int factor = Get_Resolution_Shift();
 	Strip = &strip;
 	Index = index;
@@ -2233,6 +2347,9 @@ void SidebarClass::StripClass::SelectClass::Set_Owner(StripClass & strip, int in
  *=============================================================================================*/
 int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & key)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & key)");
+#endif
 	int index = Strip->TopIndex + Index;
 	SidebarClass::StripClass::BuildType bt = Strip->Buildables[index];
 	RTTIType otype = bt.BuildableType;
@@ -2547,6 +2664,9 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
  *=============================================================================================*/
 int SidebarClass::SBGadgetClass::Action(unsigned , KeyNumType & )
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int SidebarClass::SBGadgetClass::Action(unsigned , KeyNumType & )");
+#endif
 	Map.Help_Text(TXT_NONE);
 	Map.Override_Mouse_Shape(MOUSE_NORMAL, false);
 	return(true);
@@ -2577,6 +2697,9 @@ int SidebarClass::SBGadgetClass::Action(unsigned , KeyNumType & )
  *=============================================================================================*/
 bool SidebarClass::StripClass::Factory_Link(int factory, RTTIType type, int id)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SidebarClass::StripClass::Factory_Link(int factory, RTTIType type, int id)");
+#endif
 	for (int index = 0; index < BuildableCount; index++) {
 		if (Buildables[index].BuildableType == type && Buildables[index].BuildableID == id) {
 			Buildables[index].Factory = factory;
@@ -2614,6 +2737,9 @@ bool SidebarClass::StripClass::Factory_Link(int factory, RTTIType type, int id)
  *=============================================================================================*/
 bool SidebarClass::Abandon_Production(RTTIType type, int factory)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SidebarClass::Abandon_Production(RTTIType type, int factory)");
+#endif
 	return(Column[Which_Column(type)].Abandon_Production(factory));
 }
 
@@ -2636,6 +2762,9 @@ bool SidebarClass::Abandon_Production(RTTIType type, int factory)
  *=============================================================================================*/
 bool SidebarClass::StripClass::Abandon_Production(int factory)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool SidebarClass::StripClass::Abandon_Production(int factory)");
+#endif
 	bool noprod = true;
 	bool abandon = false;
 	for (int index = 0; index < BuildableCount; index++) {

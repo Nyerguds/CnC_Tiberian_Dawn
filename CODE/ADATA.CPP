@@ -2459,6 +2459,9 @@ AnimTypeClass::AnimTypeClass(AnimType anim, char const *name, int size, int bigg
 		VocType sound, AnimType chainto) :
 	ObjectTypeClass(true, false, false, true, false, false, true, true, TXT_NONE, name, ARMOR_NONE, 0)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("AnimTypeClass::AnimTypeClass(...)");
+#endif
 	Biggest = biggest;
 	ChainTo = chainto;
 	Damage = damage;
@@ -2499,6 +2502,9 @@ AnimTypeClass::AnimTypeClass(AnimType anim, char const *name, int size, int bigg
  *=============================================================================================*/
 void AnimTypeClass::One_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AnimTypeClass::One_Time(void)");
+#endif
 	AnimType index;
 
 	for (index = ANIM_FIRST; index < ANIM_COUNT; index++) {

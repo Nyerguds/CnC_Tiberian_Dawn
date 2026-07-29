@@ -70,7 +70,9 @@ void Show_Internet_Connection_Progress(void);
  *=============================================================================================*/
 GameType Select_MPlayer_Game (void)
 {
-
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("GameType Select_MPlayer_Game (void)");
+#endif
 	int factor			= Get_Resolution_Factor();
 	bool	ipx_avail = FALSE;
 	int number_of_buttons;
@@ -490,6 +492,9 @@ GameType Select_MPlayer_Game (void)
  *=============================================================================================*/
 void Read_MultiPlayer_Settings (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Read_MultiPlayer_Settings (void)");
+#endif
 	char *buffer;							// INI staging buffer pointer.
 	char *tbuffer;							// Accumulation buffer of trigger IDs.
 	int len;									// Length of data in buffer.
@@ -854,6 +859,9 @@ void Read_MultiPlayer_Settings (void)
  *=============================================================================================*/
 void Write_MultiPlayer_Settings (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Write_MultiPlayer_Settings (void)");
+#endif
 	char * buffer;			// INI staging buffer pointer.
 	CCFileClass file;
 	int i;
@@ -978,6 +986,9 @@ void Write_MultiPlayer_Settings (void)
  *=============================================================================================*/
 void Read_Scenario_Descriptions (void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Read_Scenario_Descriptions (void)");
+#endif
 	char *buffer;							// INI staging buffer pointer.
 	CCFileClass file;
 	int i;
@@ -1053,6 +1064,9 @@ void Read_Scenario_Descriptions (void)
  *=============================================================================================*/
 void Free_Scenario_Descriptions(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Free_Scenario_Descriptions(void)");
+#endif
 	int i;
 
 	/*------------------------------------------------------------------------
@@ -1096,6 +1110,9 @@ void Free_Scenario_Descriptions(void)
  *=========================================================================*/
 void Computer_Message(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Computer_Message(void)");
+#endif
 	int color;
 	char txt[160];
 	HousesType house;
@@ -1165,6 +1182,9 @@ void Computer_Message(void)
  *=========================================================================*/
 static void Garble_Message(char *buf)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("static void Garble_Message(char *buf)");
+#endif
 	char txt[80];
 	char punct[20];		// for punctuation
 	char *p;					// working ptr
@@ -1250,6 +1270,9 @@ static void Garble_Message(char *buf)
  *=========================================================================*/
 int Surrender_Dialog(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int Surrender_Dialog(void)");
+#endif
 	int factor			= Get_Resolution_Factor();
 	/*........................................................................
 	Dialog & button dimensions

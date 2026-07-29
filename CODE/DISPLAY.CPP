@@ -153,6 +153,9 @@ extern MixFileClass *TheaterIcons;
  *=============================================================================================*/
 DisplayClass::DisplayClass(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("DisplayClass::DisplayClass(void)");
+#endif
 	TacticalCoord = 0;
 	ShadowShapes = 0;
 	TransIconset = 0;
@@ -197,6 +200,9 @@ DisplayClass::DisplayClass(void)
  *=============================================================================================*/
 void DisplayClass::One_Time(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::One_Time(void)");
+#endif
 	Set_View_Dimensions(0, Map.Get_Tab_Height());
 
 	MapClass::One_Time();
@@ -273,6 +279,9 @@ void DisplayClass::One_Time(void)
  *   07/12/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
 void DisplayClass::After_Init(void) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::After_Init(void)");
+#endif
 	MapClass::After_Init();
 	Set_View_Dimensions(TacPixelX, TacPixelY);
 }
@@ -295,6 +304,9 @@ void DisplayClass::After_Init(void) {
  *=============================================================================================*/
 void DisplayClass::Init_Clear(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Init_Clear(void)");
+#endif
 	MapClass::Init_Clear();
 
 	/*
@@ -340,6 +352,9 @@ void DisplayClass::Init_Clear(void)
  *=============================================================================================*/
 void DisplayClass::Init_IO(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Init_IO(void)");
+#endif
 	MapClass::Init_IO();
 
 	/*
@@ -369,6 +384,9 @@ void DisplayClass::Init_IO(void)
  *=============================================================================================*/
 void DisplayClass::Init_Theater(TheaterType theater)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Init_Theater(TheaterType theater)");
+#endif
 	char			fullname[16];
 	char			iconname[16];
 	unsigned char colorpal[768];
@@ -669,6 +687,9 @@ void DisplayClass::Init_Theater(TheaterType theater)
  *=============================================================================================*/
 short const * DisplayClass::Text_Overlap_List(char const * text, int x, int y, int lines)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("short const * DisplayClass::Text_Overlap_List(char const * text, int x, int y, int lines)");
+#endif
 	static short _list[30];
 
 	if (text) {
@@ -740,6 +761,9 @@ short const * DisplayClass::Text_Overlap_List(char const * text, int x, int y, i
  *=============================================================================================*/
 void DisplayClass::Set_View_Dimensions(int x, int y, int width, int height)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Set_View_Dimensions(int x, int y, int width, int height)");
+#endif
 	if (width == -1) {
 		width = SeenBuff.Get_Width() - x;
 	}
@@ -801,6 +825,9 @@ void DisplayClass::Set_View_Dimensions(int x, int y, int width, int height)
  *=============================================================================================*/
 void DisplayClass::Set_Cursor_Shape(short const * list)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Set_Cursor_Shape(short const * list)");
+#endif
 	if (CursorSize) {
 		Cursor_Mark(ZoneCell+ZoneOffset, false);
 	}
@@ -824,6 +851,9 @@ void DisplayClass::Set_Cursor_Shape(short const * list)
 
 void DisplayClass::Recheck_Placement(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Recheck_Placement(void)");
+#endif
 	if (PendingObject) {
 		ProximityCheck = Passes_Proximity_Check(PendingObject);
 		ProximityStealth = Stealth_Proximity_Check(PendingObject);
@@ -854,6 +884,9 @@ void DisplayClass::Recheck_Placement(void)
  *=============================================================================================*/
 bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object)");
+#endif
 	short const *ptr;
 
 	/*
@@ -930,6 +963,9 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object)
  *   07/12/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
 bool DisplayClass::Stealth_Proximity_Check(ObjectTypeClass const *object) {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool DisplayClass::Stealth_Proximity_Check(ObjectTypeClass const *object)");
+#endif
 	
 	short const *ptr;
 
@@ -999,6 +1035,9 @@ bool DisplayClass::Stealth_Proximity_Check(ObjectTypeClass const *object) {
  *=============================================================================================*/
 CELL DisplayClass::Set_Cursor_Pos(CELL pos)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CELL DisplayClass::Set_Cursor_Pos(CELL pos)");
+#endif
 	CELL	prevpos;			// Last position of cursor (for jump-back reasons).
 
 	/*
@@ -1100,6 +1139,9 @@ CELL DisplayClass::Set_Cursor_Pos(CELL pos)
  *=============================================================================================*/
 void DisplayClass::Get_Occupy_Dimensions(int & w, int & h, short const *list)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Get_Occupy_Dimensions(int & w, int & h, short const *list)");
+#endif
 	w = 0;
 	h = 0;
 	if (!list) {
@@ -1169,6 +1211,9 @@ void DisplayClass::Get_Occupy_Dimensions(int & w, int & h, short const *list)
  *=============================================================================================*/
 void DisplayClass::Cursor_Mark(CELL pos, bool on)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Cursor_Mark(CELL pos, bool on)");
+#endif
 	CELL const *ptr;
 	CellClass *cellptr;
 
@@ -1234,6 +1279,9 @@ void DisplayClass::Cursor_Mark(CELL pos, bool on)
  *=============================================================================================*/
 void DisplayClass::AI(KeyNumType & input, int x, int y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::AI(KeyNumType & input, int x, int y)");
+#endif
 	if (
 		// Nyerguds's C&C Patch Project v1.04: Abort panning when touching top or side bar.
 		// This solution isn't really ideal, but it'll do to prevent obvious problems.
@@ -1279,6 +1327,9 @@ void DisplayClass::AI(KeyNumType & input, int x, int y)
  *=============================================================================================*/
 void DisplayClass::Submit(ObjectClass const * object, LayerType layer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Submit(ObjectClass const * object, LayerType layer)");
+#endif
 	if (object) {
 		Layer[layer].Submit(object, (layer == LAYER_GROUND));
 	}
@@ -1305,6 +1356,9 @@ void DisplayClass::Submit(ObjectClass const * object, LayerType layer)
  *=============================================================================================*/
 void DisplayClass::Remove(ObjectClass const * object, LayerType layer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Remove(ObjectClass const * object, LayerType layer)");
+#endif
 	if (object) {
 		Layer[layer].Delete((ObjectClass *)object);
 	}
@@ -1331,6 +1385,9 @@ void DisplayClass::Remove(ObjectClass const * object, LayerType layer)
  *=============================================================================================*/
 CELL DisplayClass::Click_Cell_Calc(int x, int y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CELL DisplayClass::Click_Cell_Calc(int x, int y)");
+#endif
 	x -= TacPixelX;
 	x = Pixel_To_Lepton(x);
 	y -= TacPixelY;
@@ -1369,6 +1426,9 @@ CELL DisplayClass::Click_Cell_Calc(int x, int y)
  *=============================================================================================*/
 void DisplayClass::Read_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Read_INI(char *buffer)");
+#endif
 	char	name[16];
 	int len;						// Length of data in buffer.
 	char *tbuffer;				// Accumulation buffer of Trigger names.
@@ -1524,6 +1584,9 @@ void DisplayClass::Read_INI(char *buffer)
 #ifdef SCENARIO_EDITOR
 void DisplayClass::Write_INI(char *buffer)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Write_INI(char *buffer)");
+#endif
 	char entry[20];
 
 	/*
@@ -1600,6 +1663,9 @@ void DisplayClass::Write_INI(char *buffer)
  *=============================================================================================*/
 bool DisplayClass::Scroll_Map(DirType facing, int & distance, bool really)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool DisplayClass::Scroll_Map(DirType facing, int & distance, bool really)");
+#endif
 	/*
 	**	If the distance is invalid then no further checking is required. Bail
 	**	with a no-can-do flag.
@@ -1694,6 +1760,9 @@ bool DisplayClass::Scroll_Map(DirType facing, int & distance, bool really)
  *=============================================================================================*/
 void DisplayClass::Refresh_Cells(CELL cell, short const *list)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Refresh_Cells(CELL cell, short const *list)");
+#endif
 	if (*list == REFRESH_SIDEBAR) {
 		list++;
 	}
@@ -1726,6 +1795,9 @@ void DisplayClass::Refresh_Cells(CELL cell, short const *list)
  *=============================================================================================*/
 int DisplayClass::Cell_Shadow(CELL cell)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int DisplayClass::Cell_Shadow(CELL cell)");
+#endif
 	int	index;
 	int	value = -1;
 	CellClass	*cellptr;
@@ -1805,6 +1877,9 @@ int DisplayClass::Cell_Shadow(CELL cell)
  *=============================================================================================*/
 bool DisplayClass::Map_Cell(CELL cell, HouseClass * house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool DisplayClass::Map_Cell(CELL cell, HouseClass * house)");
+#endif
 	if (house != PlayerPtr || cell >= (CELL)Size) return(false);
 
 	/*
@@ -1897,6 +1972,9 @@ bool DisplayClass::Map_Cell(CELL cell, HouseClass * house)
 #define	EDGE_ZONE	(CELL_LEPTON_W*2)
 bool DisplayClass::Coord_To_Pixel(COORDINATE coord, int &x, int &y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool DisplayClass::Coord_To_Pixel(COORDINATE coord, int &x, int &y)");
+#endif
 	if (coord) {
 		int xtac = Pixel_To_Lepton(Lepton_To_Pixel(Coord_X(TacticalCoord)));
 		int xoff = Pixel_To_Lepton(Lepton_To_Pixel(Coord_X(coord)));
@@ -1937,6 +2015,9 @@ bool DisplayClass::Coord_To_Pixel(COORDINATE coord, int &x, int &y)
  *=============================================================================================*/
 bool DisplayClass::Push_Onto_TacMap(COORDINATE &source, COORDINATE &dest)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool DisplayClass::Push_Onto_TacMap(COORDINATE &source, COORDINATE &dest)");
+#endif
 	if (!source || !dest) return(false);
 
 	int x1 = Coord_X(source);
@@ -1986,6 +2067,9 @@ bool DisplayClass::Push_Onto_TacMap(COORDINATE &source, COORDINATE &dest)
  *=============================================================================================*/
 ObjectClass * DisplayClass::Cell_Object(CELL cell, int x, int y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ObjectClass * DisplayClass::Cell_Object(CELL cell, int x, int y)");
+#endif
 	return(*this)[cell].Cell_Object(x, y);
 }
 
@@ -2026,8 +2110,11 @@ ObjectClass * DisplayClass::Cell_Object(CELL cell, int x, int y)
  *   12/24/1994 JLB : Combined with old Refresh_Map() function.                                *
  *   01/10/1995 JLB : Rubber band drawing.                                                     *
  *=============================================================================================*/
- void DisplayClass::Draw_It(bool forced)
+void DisplayClass::Draw_It(bool forced)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Draw_It(bool forced)");
+#endif
 	int	x,y;			// Working cell index values.
 
 	MapClass::Draw_It(forced);
@@ -2374,6 +2461,9 @@ ObjectClass * DisplayClass::Cell_Object(CELL cell, int x, int y)
  *=============================================================================================*/
 void DisplayClass::Redraw_Icons(int draw_flags)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Redraw_Icons(int draw_flags)");
+#endif
 	IsShadowPresent = false;
 	for (int y = -Coord_YLepton(TacticalCoord); y <= TacLeptonHeight; y += CELL_LEPTON_H) {
 		for (int x = -Coord_XLepton(TacticalCoord); x <= TacLeptonWidth; x += CELL_LEPTON_W) {
@@ -2431,6 +2521,9 @@ void DisplayClass::Redraw_Icons(int draw_flags)
  *=============================================================================================*/
 void DisplayClass::Redraw_Shadow(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Redraw_Shadow(void)");
+#endif
 	if (IsShadowPresent) {
 		for (int y = -Coord_YLepton(TacticalCoord); y <= TacLeptonHeight; y += CELL_LEPTON_H) {
 			for (int x = -Coord_XLepton(TacticalCoord); x <= TacLeptonWidth; x += CELL_LEPTON_W) {
@@ -2481,6 +2574,9 @@ void DisplayClass::Redraw_Shadow(void)
  *=============================================================================================*/
 void DisplayClass::Redraw_Shadow_Rects(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Redraw_Shadow_Rects(void)");
+#endif
 	if (IsShadowPresent) {
 		for (int y = -Coord_YLepton(TacticalCoord); y <= TacLeptonHeight; y += CELL_LEPTON_H) {
 			for (int x = -Coord_XLepton(TacticalCoord); x <= TacLeptonWidth; x += CELL_LEPTON_W) {
@@ -2533,6 +2629,9 @@ void DisplayClass::Redraw_Shadow_Rects(void)
  *=============================================================================================*/
 ObjectClass * DisplayClass::Next_Object(ObjectClass * object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ObjectClass * DisplayClass::Next_Object(ObjectClass * object)");
+#endif
 	ObjectClass * firstobj = 0;
 	bool foundmatch = false;
 
@@ -2573,6 +2672,9 @@ ObjectClass * DisplayClass::Next_Object(ObjectClass * object)
  *=============================================================================================*/
 ObjectClass * DisplayClass::Prev_Object(ObjectClass * object)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("ObjectClass * DisplayClass::Prev_Object(ObjectClass * object)");
+#endif
 	ObjectClass * firstobj = 0;
 	bool foundmatch = false;
 
@@ -2614,6 +2716,9 @@ ObjectClass * DisplayClass::Prev_Object(ObjectClass * object)
  *=============================================================================================*/
 COORDINATE DisplayClass::Pixel_To_Coord(int x, int y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE DisplayClass::Pixel_To_Coord(int x, int y)");
+#endif
 	/*
 	**	Normalize the pixel coordinates to be relative to the upper left corner
 	**	of the tactical map. The coordinates are expressed in leptons.
@@ -2656,6 +2761,9 @@ COORDINATE DisplayClass::Pixel_To_Coord(int x, int y)
  *=============================================================================================*/
 CELL DisplayClass::Calculated_Cell(SourceType dir, HousesType house)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("CELL DisplayClass::Calculated_Cell(SourceType dir, HousesType house)");
+#endif
 	CELL	cell = 0;	// Working cell number.
 
 	while (cell == 0) {
@@ -2887,6 +2995,9 @@ CELL DisplayClass::Calculated_Cell(SourceType dir, HousesType house)
  *=============================================================================================*/
 bool DisplayClass::Select_These(COORDINATE coord1, COORDINATE coord2, bool allowvoice, bool additive, RTTIType rttifilter, int typefilter)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool DisplayClass::Select_These(COORDINATE coord1, COORDINATE coord2, bool allowvoice, bool additive, RTTIType rttifilter, int typefilter)");
+#endif
 	// only allow filtering if both an id and an object type are given.
 	if (typefilter == -1) {
 		rttifilter = RTTI_NONE;
@@ -3024,6 +3135,9 @@ bool DisplayClass::Select_These(COORDINATE coord1, COORDINATE coord2, bool allow
  *=============================================================================================*/
 void DisplayClass::Refresh_Band(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Refresh_Band(void)");
+#endif
 	if (IsRubberBand) {
 
 		/*
@@ -3080,6 +3194,9 @@ void DisplayClass::Refresh_Band(void)
 #ifdef MIDDLE_MOUSE_PANNING
 void DisplayClass::Refresh_Pan(bool force)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Refresh_Pan(bool force)");
+#endif
 	if (Options.ShowPanScrollLine && (IsPanDrag || force)) {
 
 		/*
@@ -3135,6 +3252,9 @@ void DisplayClass::Refresh_Pan(bool force)
  *=============================================================================================*/
 int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)");
+#endif
 	int		x,y;					// Sub cell pixel coordinates.
 	bool		shadow;
 	ObjectClass *object = 0;
@@ -3427,6 +3547,9 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
  *=============================================================================================*/
 void DisplayClass::Mouse_Right_Press(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Mouse_Right_Press(void)");
+#endif
 	if (PendingObjectPtr && PendingObjectPtr->Is_Techno()) {
 		//PendingObjectPtr->Transmit_Message(RADIO_OVER_OUT);
 		PendingObjectPtr = 0;
@@ -3473,6 +3596,9 @@ void DisplayClass::Mouse_Right_Press(void)
  *=============================================================================================*/
 void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType action, bool held, bool wwsmall)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType action, bool held, bool wwsmall)");
+#endif
 	if (!held) {
 		IsTentative = false;
 	}
@@ -3710,6 +3836,9 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
  *=============================================================================================*/
 void DisplayClass::Mouse_Left_Release(CELL cell, int x, int y, ObjectClass * object, ActionType action, bool wwsmall)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Mouse_Left_Release(CELL cell, int x, int y, ObjectClass * object, ActionType action, bool wwsmall)");
+#endif
 	// Nyerguds's C&C Patch Project v1.04: Fix ghost clicks that sometimes occur after rubberband.
 	int tick = TickCount.Time();
 	bool ghostclick = LastClickTick == tick && LastClickX == x && LastClickY == y;
@@ -3896,6 +4025,9 @@ void DisplayClass::Mouse_Left_Release(CELL cell, int x, int y, ObjectClass * obj
  *=============================================================================================*/
 void DisplayClass::Mouse_Left_Press(int x, int y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Mouse_Left_Press(int x, int y)");
+#endif
 	if (!IsRepairMode && !IsSellMode && TargetingMode == SPC_NONE && !PendingObject) {
 		IsTentative = true;
 		BandX = x;
@@ -3922,6 +4054,9 @@ void DisplayClass::Mouse_Left_Press(int x, int y)
  *=============================================================================================*/
 void DisplayClass::Mouse_Left_Held(int x, int y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Mouse_Left_Held(int x, int y)");
+#endif
 	if (IsRubberBand) {
 		Set_Default_Mouse(MOUSE_NORMAL, false);
 		Help_Text(TXT_NONE);
@@ -3981,6 +4116,9 @@ void DisplayClass::Mouse_Left_Held(int x, int y)
  *=============================================================================================*/
 void DisplayClass::Mouse_Middle_Press(int x, int y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Mouse_Middle_Press(int x, int y)");
+#endif
 	if (Options.PanScrollRate) {
 		IsRubberBand = false;
 		IsTentative = false;
@@ -4010,6 +4148,9 @@ void DisplayClass::Mouse_Middle_Press(int x, int y)
  *=============================================================================================*/
 void DisplayClass::Mouse_Middle_Held(int x, int y)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Mouse_Middle_Held(int x, int y)");
+#endif
 	if (IsPanDrag) {
 		Set_Default_Mouse(MOUSE_NORMAL, false);
 		Help_Text(TXT_NONE);
@@ -4043,6 +4184,9 @@ void DisplayClass::Mouse_Middle_Held(int x, int y)
  *=============================================================================================*/
 void DisplayClass::Mouse_Middle_Release()
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Mouse_Middle_Release()");
+#endif
 	if (Options.PanScrollRate) {
 		IsPanDrag = false;
 		Refresh_Pan(true);
@@ -4068,6 +4212,9 @@ void DisplayClass::Mouse_Middle_Release()
  *=============================================================================================*/
 void DisplayClass::Set_Tactical_Position(COORDINATE coord)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Set_Tactical_Position(COORDINATE coord)");
+#endif
 	/*
 	**	Bound the desired location to fit the legal map edges.
 	*/
@@ -4103,6 +4250,9 @@ void DisplayClass::Set_Tactical_Position(COORDINATE coord)
  *=============================================================================================*/
 void DisplayClass::Compute_Start_Pos(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Compute_Start_Pos(void)");
+#endif
 	/*
 	**	Find the summation cell-x & cell-y for all the player's units, infantry,
 	**	and buildings.  Buildings are weighted so that they count 16 times more
@@ -4207,6 +4357,9 @@ void DisplayClass::Compute_Start_Pos(void)
  *=============================================================================================*/
 void DisplayClass::Sell_Mode_Control(int control)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Sell_Mode_Control(int control)");
+#endif
 	bool mode = IsSellMode;
 	switch (control) {
 		case 0:
@@ -4255,6 +4408,9 @@ void DisplayClass::Sell_Mode_Control(int control)
  *=============================================================================================*/
 void DisplayClass::Repair_Mode_Control(int control)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Repair_Mode_Control(int control)");
+#endif
 	bool mode = IsRepairMode;
 	switch (control) {
 		case 0:
@@ -4303,6 +4459,9 @@ void DisplayClass::Repair_Mode_Control(int control)
  *=============================================================================================*/
 bool DisplayClass::In_View(register CELL cell)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool DisplayClass::In_View(register CELL cell)");
+#endif
 	COORDINATE coord = Cell_Coord(cell) & 0xFF00FF00L;
 	COORDINATE tcoord = TacticalCoord & 0xFF00FF00L;
 
@@ -4330,6 +4489,9 @@ bool DisplayClass::In_View(register CELL cell)
 
 COORDINATE DisplayClass::Closest_Free_Spot(COORDINATE coord, bool any) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("COORDINATE DisplayClass::Closest_Free_Spot(COORDINATE coord, bool any) const");
+#endif
 	if (coord & MAP_COORDS_TEST) {
 		return(0x00800080);
 	}
@@ -4339,6 +4501,9 @@ COORDINATE DisplayClass::Closest_Free_Spot(COORDINATE coord, bool any) const
 
 bool DisplayClass::Is_Spot_Free(COORDINATE coord) const
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("bool DisplayClass::Is_Spot_Free(COORDINATE coord) const");
+#endif
 	if (coord & MAP_COORDS_TEST) {
 		return(0x00800080);
 	}
@@ -4363,6 +4528,9 @@ bool DisplayClass::Is_Spot_Free(COORDINATE coord) const
  *=============================================================================================*/
 void DisplayClass::Center_Map(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void DisplayClass::Center_Map(void)");
+#endif
 	if (CurrentObject.Count()) {
 		unsigned x = 0;
 		unsigned y = 0;

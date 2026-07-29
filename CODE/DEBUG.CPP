@@ -62,6 +62,9 @@ extern bool ScreenRecording;
  *=============================================================================================*/
 void Debug_Key(unsigned input)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Debug_Key(unsigned input)");
+#endif
 	static int map_x = -1;
 	static int map_y = -1;
 	static int map_width = -1;
@@ -656,6 +659,9 @@ void Debug_Key(unsigned input)
 #define	UPDATE_INTERVAL	TIMER_SECOND
 void Self_Regulate(void)
 {
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void Self_Regulate(void)");
+#endif
 	static CountDownTimerClass DebugTimer(BT_SYSTEM);
 	static ObjectClass * _lastobject = 0;
 
