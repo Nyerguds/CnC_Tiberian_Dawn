@@ -2340,7 +2340,7 @@ ProdFailType HouseClass::Suspend_Production(RTTIType type)
 	/*
 	**	Nothing to change; production ias already suspended.
 	 */
-	if (!fptr->Is_Suspended()) return(PROD_NOCHANGE);
+	if (fptr->Is_Suspended()) return(PROD_NOCHANGE);
 
 	/*
 	**	Actually suspend the production.

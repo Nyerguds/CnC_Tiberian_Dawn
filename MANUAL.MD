@@ -28,11 +28,12 @@ These hotkeys have been added or changed:
 * **\[S\]**: This hotkey (Stop) already existed, but now works for stopping defense buildings, as it was in early DOS versions. This can be useful if they were ordered to force-fire on something.
 * **\[X\]**: This hotkey (Scatter) already existed, but will now work on units docked to a repair pad. Note that this will make helicopters go home to their helipad.
 * **\[T\]**: Select all units on the current screen of the type(s) you already have selected. This can be combined with the \[Shift\] key to add these to the selection. If no units of the selected types were found on the screen, the old selection is retained.
+* **\[B\]**: Rebuild last constructed building / place completed building. When you start constructing a building, the game will remember which one you selected. From that moment on, whenever you are not constructing any building, this key will repeat the construction for that remembered type. An indicator will be shown on the sidebar to highlight the type that is affected by this.
 * **\[Ctrl\]+\[Alt\]**: This modifier key combination for mouse clicks already existed to target objects, but can now be targeted at the ground, as targeted version of the Area Guard command. As with the hotkey, this also works for harvesters. Note that some units, such as Commandos and Helicopters, do not support Area Guard orders at all.
 * **\[Alt\]+\[Shift\]+\[0-9\]**: Adds the numbered team to the selection and then centers on the selection.
 * **\[Ctrl\]+\[S\]**: Saves a screenshot to the game folder, in PCX format. A "click" sound will indicate that a screenshot was taken, and a message will show what filename it was saved to.
 
-General upgrades to selection and giving orders:
+General upgrades to selection and battlefield control:
 
 * Drag-selection now supports holding down the \[Shift\] key to add units to the current selection.
 * Drag-selection can now be used to select aircraft in mid-air.
@@ -41,6 +42,7 @@ General upgrades to selection and giving orders:
 * If an APC is busy firing at an enemy, this will no longer obstruct the loading of infantry.
 * When targeting a wall, you will always get an Attack cursor if any of the selected units can attack the wall.
 * Harvesting and Area Guard orders now work on the minimap.
+* A wall can now be placed down on top of an existing wall to repair it. This will act as if you sold the old wall and replaced it, refunding 50% of the cost. This only works if the existing wall is damaged, owned by you, and the same type you're trying to place.
 
 Other control upgrades:
 
@@ -48,6 +50,7 @@ Other control upgrades:
 * You can now press \[Escape\] to fast-forward the animations on the map selection screen and the score screen.
 * You can use the mouse scroll wheel to go through the sidebar items. This will scroll the specific strip you're hovering the mouse over.
 * Item lists such as the New Missions menu and the music list now support PageUp, PageDown, Home, End, and the mouse scroll wheel.
+* Clicking on the sidebar isons to place down a finished building, or to suspend or abort a construction, no longer requires you to find and click the exact icon of the object that's being constructed. Clicking any icon of the same type will affect the current construction.
 
 ## New `CONQUER.INI` options
 
@@ -66,6 +69,7 @@ This patch adds a number of extra features into the game. These options can be t
 | | When middle mouse scrolling, a line can be drawn from the point where you originally clicked to the place you moved your mouse to, to give some indication of the scroll direction and speed. | ShowPanScrollLine=\[true/false\]<br/>This defaults to "false". |
 | Smarter airstrikes | With the added fixing to unit target priority, airstrikes now also look for targets more intelligently. However, this was quite a divisive ugrade in the remaster, so I provided an off-switch for it. | NoSmartAirstrikes=\[true/false\]<br/>This defaults to "false". |
 | Weapon range indication | The game now shows whether a target under the Attack cursor is in range of the selected units' weapons. | NoRangeIndicator=\[true/false\]<br/>This defaults to "false". |
+| Repeat last building construction | The game now has a hotkey 'B' to re-build the last built building, and to activate placement mode if it is ready. In the sidebar, a glowing frame will indicate which building is the one currently affected by this. | NoLastBuiltIndicator=\[true/false\]<br/>This option disables the indicator frame. It defaults to "false". |
 | Debug logging | Writes logged debug messages to "debug.txt". This is purely an internal testing feature. Can also be enabled by launching the game with "-LOG". | LogDebug=\[true/false\]<br/>This defaults to "false". |
 
 ## Extra usage notes

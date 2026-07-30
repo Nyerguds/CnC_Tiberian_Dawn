@@ -974,14 +974,14 @@ void Decode_All_Pointers(ScenarioPlayerType campaign)
 	**	Last-Minute Fixups; to resolve these pointers properly requires all other
 	**	pointers to be loaded & decoded.
 	*/
+	// Nyerguds's C&C Patch Project v1.04: Fix placement cursor corruption.
+	Map.CursorSize = NULL;
 	if (Map.PendingObjectPtr) {
 		Map.PendingObject = &Map.PendingObjectPtr->Class_Of();
 		Check_Ptr((void *)Map.PendingObject, __FILE__, __LINE__);
-		Map.CursorSize = NULL;
 		Map.Set_Cursor_Shape(Map.PendingObject->Occupy_List(true));
 	} else {
 		Map.PendingObject = 0;
-		Map.CursorSize = NULL;
 		Map.Set_Cursor_Shape(0);
 	}
 }

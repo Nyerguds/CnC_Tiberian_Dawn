@@ -833,47 +833,29 @@ void Keyboard_Process(KeyNumType &input)
 				bool done_structs[STRUCT_COUNT];
 				memset(done_structs, 0, sizeof(done_structs));
 				for (index = 0; index < CurrentObject.Count(); index++) {
-					selectedTypes.Add(CurrentObject[index]);
+					if (CurrentObject[index]->Is_Techno()) {
+						selectedTypes.Add(CurrentObject[index]);
+					}
 				}
 				Unselect_All();
 				for (index = 0; index < selectedTypes.Count(); ++index) {
-					ObjectClass const * sel = selectedTypes[index];
+					TechnoClass const * sel = (TechnoClass*)selectedTypes[index];
+					bool * donelistptr = NULL;
 					RTTIType whattype = sel->What_Am_I();
-					int id = -1;
 					switch (whattype) {
-						case RTTI_INFANTRY:
-							id = (int)((InfantryClass*)sel)->Class->Type;
-							if (done_infantry[id]) {
-								id = -1;
-							} else {
-								done_infantry[id] = true;
-							}
-							break;
-						case RTTI_UNIT:
-							id = (int)((UnitClass*)sel)->Class->Type;
-							if (done_units[id]) {
-								id = -1;
-							} else {
-								done_units[id] = true;
-							}
-							break;
-						case RTTI_AIRCRAFT:
-							id = (int)((AircraftClass*)sel)->Class->Type;
-							if (done_aircraft[id]) {
-								id = -1;
-							} else {
-								done_aircraft[id] = true;
-							}
-							break;
-						case RTTI_BUILDING:
-							id = (int)((BuildingClass*)sel)->Class->Type;
-							if (done_structs[id]) {
-								id = -1;
-							} else {
-								done_structs[id] = true;
-							}
-							break;
+						case RTTI_INFANTRY:	donelistptr = done_infantry; break;
+						case RTTI_UNIT:			donelistptr = done_units; break;
+						case RTTI_AIRCRAFT:	donelistptr = done_aircraft; break;
+						case RTTI_BUILDING:	donelistptr = done_structs; break;
+						default: continue;
 					}
+					int id = sel->Techno_Type_Class()->Type;
+					if (donelistptr[id]) {
+						id = -1;
+					} else {
+						donelistptr[id] = true;
+					}
+					// ID was not cleared: type is not yet processed.
 					if (id != -1) {
 						// args: coord1, coord2, allowVoice, additive, rttifilter, typefilter
 						// Only disable "voice" if something new was actually selected for this type.
@@ -917,7 +899,8 @@ void Keyboard_Process(KeyNumType &input)
 			break;
 
 		/*
-		**	Re-build last construction.
+		**	Nyerguds's C&C Patch Project v1.04: "Build last" key support.
+		**	Re-build last construction, or place finished construction.
 		*/
 		case VK_B:
 			if (LastConstruction != STRUCT_NONE) {
@@ -937,18 +920,15 @@ void Keyboard_Process(KeyNumType &input)
 								PlayerPtr->Manual_Place(builder, (BuildingClass *)pending);
 							}
 						}
-					} else { // factory->IsSuspended
+					} else if (factory->Is_Suspended() && pending) {
 						Speak(VOX_BUILDING);
-						if (pending) {
-							// The type should always match LastConstruction, but better to take it out of the object.
-							OutList.Add(EventClass(EventClass::PRODUCE, RTTI_BUILDINGTYPE, pending->Techno_Type_Class()->Type));
-						}
+						// The type should always match LastConstruction, but better to take it out of the object.
+						OutList.Add(EventClass(EventClass::PRODUCE, RTTI_BUILDINGTYPE, pending->Techno_Type_Class()->Type));
 					}
 				} else {
 					Speak(VOX_BUILDING);
 					OutList.Add(EventClass(EventClass::PRODUCE, RTTI_BUILDINGTYPE, LastConstruction));
 				}
-			} else {
 			}
 
 		default:

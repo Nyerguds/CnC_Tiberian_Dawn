@@ -5078,7 +5078,9 @@ void BuildingTypeClass::Init(TheaterType theater)
 				if (mixptr && mixptr->Filename) {
 					// double-check that it came from the theater mix file.
 					// This prevents messups when icons are added from sc*.mix files.
-					classptr->CameoIsTheaterShape = strcmpi(mixptr->Filename, cameomixname) == 0 || strcmpi(mixptr->Filename, theatermixname) == 0;
+					classptr->CameoIsTheaterShape =
+						strcmpi(mixptr->Filename, cameomixname) == 0 ||
+						strcmpi(mixptr->Filename, theatermixname) == 0;
 				}
 			} else {
 				_makepath (fullname, NULL, NULL, buffer, ".SHP");
@@ -5583,7 +5585,7 @@ void const * BuildingTypeClass::Remap_Table(HouseClass * house, bool blushing) c
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("void const * BuildingTypeClass::Remap_Table(HouseClass * house, bool blushing) const");
 #endif
-	return(IsWall && !blushing ? NULL : house->Remap_Table(false, true));
+	return(IsWall && !blushing ? NULL : house->Remap_Table(blushing, true));
 }
 
 

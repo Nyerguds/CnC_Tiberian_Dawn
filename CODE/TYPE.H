@@ -524,8 +524,8 @@ class TechnoTypeClass : public ObjectTypeClass
 		unsigned char Scenario;
 
 		/*
-		**	Generally accessible type ID. Combine this with the RTTI and you can
-		**	look up this object.
+		**	Generally accessible type ID. Combine this with the RTTI from
+		**	What_Am_I() and you can look up this object.
 		*/
 		int Type;
 

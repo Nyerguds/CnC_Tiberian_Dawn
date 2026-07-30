@@ -3108,23 +3108,9 @@ bool DisplayClass::Select_These(COORDINATE coord1, COORDINATE coord2, bool allow
 					continue;
 				}
 				// Now skip all except those with the specified id
-				int id;
-				switch (rttifilter) {
-					case RTTI_INFANTRY:
-						id = (int)((InfantryClass*)obj)->Class->Type;
-						break;
-					case RTTI_UNIT:
-						id = (int)((UnitClass*)obj)->Class->Type;
-						break;
-					case RTTI_AIRCRAFT:
-						id = (int)((AircraftClass*)obj)->Class->Type;
-						break;
-					case RTTI_BUILDING:
-						id = (int)((BuildingClass*)obj)->Class->Type;
-						break;
-					default:
-						id = -1;
-						break;
+				int id = -1;
+				if (obj->Is_Techno()) {
+					id = ((TechnoClass*)obj)->Techno_Type_Class()->Type;
 				}
 				if (id != typefilter) {
 					continue;
@@ -3700,6 +3686,7 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
 			case ACTION_HARVEST:
 				Set_Default_Mouse(MOUSE_CAN_ATTACK, wwsmall);
 				break;
+
 			case ACTION_ATTACK:
 				att = !Options.NoRangeIndicator && MouseExpanded ? MOUSE_OUT_OF_RANGE : MOUSE_CAN_ATTACK;
 				Set_Default_Mouse(att, wwsmall);
@@ -3877,7 +3864,7 @@ void DisplayClass::Mouse_Left_Release(CELL cell, int x, int y, ObjectClass * obj
 		/*
 		**	Try to place the pending object onto the map.
 		*/
-		if (ProximityCheck && Passes_Proximity_Check(PendingObject, *PlayerPtr)) {			
+		if (ProximityCheck && Passes_Proximity_Check(PendingObject, *PlayerPtr)) {
 			OutList.Add(EventClass(EventClass::PLACE, PendingObjectPtr->What_Am_I(), cell + ZoneOffset));
 		} else {
 			Speak(VOX_DEPLOY);
@@ -4399,10 +4386,14 @@ void DisplayClass::Sell_Mode_Control(int control)
 			break;
 	}
 
-	if (mode != IsSellMode && !PendingObject) {
-		IsRepairMode = false;
-		TargetingMode = SPC_NONE;
+	if (mode != IsSellMode) {
 		if (mode && PlayerPtr->BScan) {
+			IsRepairMode = false;
+			TargetingMode = SPC_NONE;
+			PendingObjectPtr = 0;
+			PendingObject = 0;
+			PendingHouse = HOUSE_NONE;
+			Set_Cursor_Shape(0);
 			IsSellMode = true;
 			Unselect_All();
 		} else {
@@ -4450,10 +4441,14 @@ void DisplayClass::Repair_Mode_Control(int control)
 			break;
 	}
 
-	if (mode != IsRepairMode && !PendingObject) {
-		IsSellMode = false;
-		TargetingMode = SPC_NONE;
+	if (mode != IsRepairMode) {
 		if (mode && PlayerPtr->BScan) {
+			IsSellMode = false;
+			TargetingMode = SPC_NONE;
+			PendingObjectPtr = 0;
+			PendingObject = 0;
+			PendingHouse = HOUSE_NONE;
+			Set_Cursor_Shape(0);
 			IsRepairMode = true;
 			Unselect_All();
 		} else {

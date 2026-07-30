@@ -960,6 +960,10 @@ void DisplayClass::Code_Pointers(void)
 	if (PendingObjectPtr) {
 		PendingObjectPtr = (ObjectClass *)PendingObjectPtr->As_Target();
 	}
+	// Nyerguds's C&C Patch Project v1.04: Fix placement cursor corruption.
+	// This is a pointer; it should never end up in a savegame. Clear it so
+	// it can be restored properly when doing the fixup of Decode_Pointers.
+	CursorSize = NULL;
 
 	/*
 	**	Chain to parent.
