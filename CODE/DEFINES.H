@@ -603,6 +603,8 @@ typedef enum ActionType {
 	ACTION_AIR_STRIKE,	// That target object should be blasted.
 	ACTION_GUARD_AREA,	// Guard the area/object clicked on.
 	ACTION_ATTACK_NOW,	// Can attack or fire upon it, and is in range to do so. // Nyerguds's C&C Patch Project v1.04
+//	ACTION_PLACE,				// Place down a building
+//	ACTION_PLACE_REPAIR,// Place down a wall to repair it
 
 	ACTION_COUNT
 } ActionType;

@@ -4946,7 +4946,7 @@ int BuildingTypeClass::Legal_Placement(CELL pos, HousesType house) const
 	while (*offset != REFRESH_EOL) {
 		CELL cell = pos + *offset++;
 		if (!Map.In_Radar(cell)) return(false);
-		if (!Map[cell].Is_Generally_Clear(false, false, ovl, house)) {
+		if (!Map[cell].Is_Generally_Clear(false, false, HOUSE_NONE, ovl, house)) {
 			return(false);
 		}
 	}

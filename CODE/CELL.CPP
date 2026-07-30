@@ -485,13 +485,15 @@ void CellClass::Redraw_Objects(bool forced)
  *    This determines if the cell can become a proper foundation for                           *
  *    building placement.                                                                      *
  *                                                                                             *
- * INPUT:   ignoremobile    -- ignore temporary occupiers that can move off the cell.          *
+ * INPUT:   ignoremobile     -- ignore temporary occupiers that can move off the cell.         *
  *                                                                                             *
- *          ignorecloak     -- ignore cloaked occupiers.                                       *
+ *          ignorecloak      -- ignore cloaked occupiers.                                      *
  *                                                                                             *
- *          ignoredmgwall   -- If given, damaged walls of this type are ignored.               *
+ *          ignorecloakhouse -- Only cloaked occupiers hostile to this House will be ignored.  *
  *                                                                                             *
- *          ignorewallhouse -- Specific House to ignore the specified wall type for.           *
+ *          ignoredmgwall    -- If given, damaged walls of this type are ignored.              *
+ *                                                                                             *
+ *          ignorewallhouse  -- Specific House to ignore the specified wall type for.          *
  *                                                                                             *
  * OUTPUT:  bool; Can the cell be built upon?                                                  *
  *                                                                                             *
@@ -500,7 +502,7 @@ void CellClass::Redraw_Objects(bool forced)
  * HISTORY:                                                                                    *
  *   05/18/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-bool CellClass::Is_Generally_Clear(bool ignoremobile, bool ignorecloak, OverlayType ignoredmgwall, HousesType ignorewallhouse) const
+bool CellClass::Is_Generally_Clear(bool ignoremobile, bool ignorecloak, HousesType ignorecloakhouse, OverlayType ignoredmgwall, HousesType ignorewallhouse) const
 {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("bool CellClass::Is_Generally_Clear(bool ignoremobile, bool ignorecloak) const");
@@ -521,10 +523,26 @@ bool CellClass::Is_Generally_Clear(bool ignoremobile, bool ignorecloak, OverlayT
 			return(false);
 		}
 		ObjectClass * occ = Cell_Techno();
+		HouseClass const * ht = HouseClass::As_Pointer(ignorecloakhouse);
 		while (occ && occ->Is_Techno()) {
 			TechnoClass * techno = (TechnoClass *)occ;
 			if (techno->Cloak != CLOAKED && (!ignoremobile || occ->Can_Player_Move())) {
 				return(false);
+			}
+			// If mobile are not ignored, or it's immobile, this object is processed.
+			bool notignoredmobile = !ignoremobile || techno->Techno_Type_Class()->MaxSpeed == MPH_IMMOBILE;
+			// If not cloaked, and not mobile to be ignored, return false.
+			if (techno->Cloak != CLOAKED) {
+				if (notignoredmobile) {
+					return(false);
+				}
+			} else {
+				// If not an ignored mobile, and cloaked, not hostile to the house we are evaluating against, return false.
+				// If no house is given, treat all cloaked as hostile / undetectable.
+				if (notignoredmobile && ht != NULL && ht->Is_Ally(techno)) {
+					return(false);
+				}
+
 			}
 			occ = techno->Next;
 		}
@@ -1168,9 +1186,9 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 						ovl = OverlayTypeClass::From_Name(Map.PendingObject->IniName);
 						ovlhouse = PlayerPtr->Class->House;
 					}
-					if (Is_Generally_Clear(false, false, ovl, ovlhouse)) {
+					if (Is_Generally_Clear(false, false, HOUSE_NONE, ovl, ovlhouse)) {
 						icon = Map.ProximityStealth ? 1 : 0;
-					} else if (Map.ProximityStealth && Is_Generally_Clear(false, true, ovl, ovlhouse)) {
+					} else if (Map.ProximityStealth && Is_Generally_Clear(false, true, *PlayerPtr, ovl, ovlhouse)) {
 						icon = 1;
 					}
 				}

@@ -1117,7 +1117,7 @@ void TeamClass::Calc_Center(CELL &center, CELL &obj_center) const
  * HISTORY:                                                                                    *
  *   12/29/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-void TeamClass::Took_Damage(FootClass * , ResultType result, TechnoClass * source)
+void TeamClass::Took_Damage(FootClass * foot, ResultType result, TechnoClass * source)
 {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("void TeamClass::Took_Damage(FootClass * , ResultType result, TechnoClass * source)");
@@ -1127,7 +1127,10 @@ void TeamClass::Took_Damage(FootClass * , ResultType result, TechnoClass * sourc
 		if (!IsMoving) {
 			// Should run to a better hiding place or disband into a group of hunting units.
 		} else {
-
+			if (foot->Mission == MISSION_SABOTAGE && result != RESULT_DESTROYED) {
+				// Commando on the way to bombing a target, and he's not dead yet. Ignore any attacks.
+				return;
+			}
 			if (source && !Is_A_Member(source) && Member && Member->What_Am_I() != RTTI_AIRCRAFT) {
 				if (Target != source->As_Target()) {
 
