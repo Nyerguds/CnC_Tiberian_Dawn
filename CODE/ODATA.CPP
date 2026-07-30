@@ -953,7 +953,7 @@ OverlayTypeClass const * OverlayTypeClass::As_Pointer(OverlayType type)
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("OverlayTypeClass const * OverlayTypeClass::As_Pointer(OverlayType type)");
 #endif
-	if (type <= OVERLAY_NONE || type >= OVERLAY_COUNT)
+	if ((unsigned)type >= OVERLAY_COUNT)
 		return (NULL);
 	return(Pointers[type]);
 }

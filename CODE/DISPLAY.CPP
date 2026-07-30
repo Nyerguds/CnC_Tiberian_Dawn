@@ -3771,7 +3771,7 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
 				break;
 
 			case ACTION_PLACE_REPAIR:
-				Set_Default_Mouse(MOUSE_REPAIR, wwsmall);
+				Set_Default_Mouse(MOUSE_SELL_BACK, wwsmall);
 				break;
 
 			default:

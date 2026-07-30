@@ -2806,70 +2806,76 @@ bool HouseClass::Place_Object(RTTIType type, CELL cell)
 	*/
 	if (factory && factory->Has_Completed()) {
 		tech = factory->Get_Object();
-
+		if (!tech) {
+			// Play a bad sound here?
+			return(false);
+		}
+		TechnoClass * builder = tech->Who_Can_Build_Me(false, false);
+		if (!builder) {
+			return(false);
+		}
 		if (cell == -1) {
-			TechnoClass * pending = factory->Get_Object();
-			if (pending) {
-				TechnoClass * builder = pending->Who_Can_Build_Me(false, false);
+			if (builder->Exit_Object(tech)) {
 
-				if (builder && builder->Exit_Object(pending)) {
+				/*
+				**	Since the object has left the factory under its own power, delete
+				**	the production manager tied to this slot in the sidebar. Its job
+				**	has been completed.
+				*/
+				factory->Completed();
+				Abandon_Production(type);
+			} else {
 
-					/*
-					**	Since the object has left the factory under its own power, delete
-					**	the production manager tied to this slot in the sidebar. Its job
-					**	has been completed.
-					*/
-					factory->Completed();
-					Abandon_Production(type);
-				} else {
-
-					/*
-					**	The object could not leave under it's own power. Just wait
-					**	until the player tries to place the object again.
-					*/
-					return(false);
-				}
+				/*
+				**	The object could not leave under its own power. Just wait
+				**	until the player tries to place the object again.
+				*/
+				return(false);
 			}
 
 		} else {
 
-			if (tech) {
-				TechnoClass * builder = tech->Who_Can_Build_Me(false, false);
-				if (builder) {
-
-					/*
-					**	Ensures that the proximity check is performed even when the building is
-					**	placed by way of a remote event.
-					*/
-					if (tech->What_Am_I() != RTTI_BUILDING || ((BuildingClass *)tech)->Passes_Proximity_Check(cell)) {
-						builder->Transmit_Message(RADIO_HELLO, tech);
-						if (tech->Unlimbo(Cell_Coord(cell))) {
-							factory->Completed();
-							Abandon_Production(type);
-
-							if (PlayerPtr == this) {
-								Sound_Effect(VOC_SLAM);
-								Map.Set_Cursor_Shape(0);
-								Map.PendingObjectPtr = 0;
-								Map.PendingObject = 0;
-								Map.PendingHouse = HOUSE_NONE;
-							}
-							return(true);
-						} else {
-							if (this == PlayerPtr) {
-								Speak(VOX_DEPLOY);
-							}
+			/*
+			**	Ensures that the proximity check is performed even when the building is
+			**	placed by way of a remote event.
+			*/
+			RTTIType techtype = tech->What_Am_I();
+			if (techtype != RTTI_BUILDING || ((BuildingClass *)tech)->Passes_Proximity_Check(cell)) {
+				builder->Transmit_Message(RADIO_HELLO, tech);
+/*
+				// Nyerguds's C&C Patch Project v1.04: allow wall repair-replacement.
+				bool isWallRepair = false;
+				if (PlayerPtr == this) {
+					if (techtype == RTTI_BUILDING && ((BuildingClass *)tech)->Class->IsWall) {
+						CellClass * c = &Map[cell];
+						OverlayTypeClass const * curOvl = OverlayTypeClass::As_Pointer(c->Overlay);
+						if (curOvl != NULL && curOvl->IsWall) {
+							OverlayType ovl = OverlayTypeClass::From_Name(tech->Techno_Type_Class()->IniName);
+							isWallRepair = c->Overlay == ovl && c->Owner == tech->Owner() && (c->OverlayData >> 4) > 0;
 						}
-						builder->Transmit_Message(RADIO_OVER_OUT);
 					}
 				}
-				return(false);
-
-			} else {
-
-				// Play a bad sound here?
-				return(false);
+*/
+				if (tech->Unlimbo(Cell_Coord(cell))) {
+					factory->Completed();
+					Abandon_Production(type);
+					if (PlayerPtr == this) {
+						CCDebugString("HouseClass::Place_Object - Placing %s.\n", tech->Techno_Type_Class()->IniName);
+						Sound_Effect(/*isWallRepair ? VOC_MOTOR : */ VOC_SLAM);
+						Map.Set_Cursor_Shape(0);
+						Map.PendingObjectPtr = 0;
+						Map.PendingObject = 0;
+						Map.PendingHouse = HOUSE_NONE;
+					}
+					return(true);
+				} else {
+					if (this == PlayerPtr) {
+						Speak(VOX_DEPLOY);
+					}
+				}
+				builder->Transmit_Message(RADIO_OVER_OUT);
 			}
+			return(false);
 		}
 	}
 
