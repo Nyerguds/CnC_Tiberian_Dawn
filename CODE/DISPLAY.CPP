@@ -855,8 +855,8 @@ void DisplayClass::Recheck_Placement(void)
 	CCDebugFunc("void DisplayClass::Recheck_Placement(void)");
 #endif
 	if (PendingObject) {
-		ProximityCheck = Passes_Proximity_Check(PendingObject, *PlayerPtr);
-		ProximityStealth = Stealth_Proximity_Check(PendingObject, *PlayerPtr);
+		ProximityCheck = Passes_Proximity_Check(PendingObject);
+		ProximityStealth = Stealth_Proximity_Check(PendingObject);
 		Cursor_Mark(ZoneCell + ZoneOffset, true);
 	}
 }
@@ -882,7 +882,7 @@ void DisplayClass::Recheck_Placement(void)
  *   06/06/1994 JLB : Created.                                                                 *
  *   06/07/1994 JLB : Handles concrete check.                                                  *
  *=============================================================================================*/
-bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object, HousesType house)
+bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object)
 {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object)");
@@ -901,15 +901,10 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object, HousesT
 	}
 
 	// Nyerguds's C&C Patch Project v1.04: allow wall repair-replacement.
-	CELL	homecell = ZoneCell + ZoneOffset;
-	BuildingTypeClass * btc = (BuildingTypeClass * )object;
-	if (btc->IsWall && Map.In_Radar(homecell))
+	FacingType startf = FACING_N;
+	if (((BuildingTypeClass * )object)->IsWall)
 	{
-		OverlayType ovl = OverlayTypeClass::From_Name(btc->IniName);
-		CellClass * hcell = &Map[homecell];
-		if (ovl != OVERLAY_NONE && hcell->Overlay == ovl && hcell->Owner == house && !hcell->Cell_Techno()) {
-			return(true);
-		}
+		startf = FACING_NONE;
 	}
 
 	/*
@@ -919,12 +914,12 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object, HousesT
 	*/
 	ptr = CursorSize;
 	while (*ptr != REFRESH_EOL) {
-		CELL	cell = homecell + *ptr++;
+		CELL	cell = ZoneCell + ZoneOffset + *ptr++;
 
 		if (!In_Radar(cell)) return(false);
 		CellClass * mapcell = &Map[cell];
 
-		for (FacingType facing = FACING_N; facing < FACING_COUNT; facing++) {
+		for (FacingType facing = startf; facing < FACING_COUNT; facing++) {
 			// Nyerguds's C&C Patch Project v1.04: upgrade boundary checks on proximity checks.
 			if (!mapcell->Adjacent_Is_Valid(facing)) {
 				continue;
@@ -974,7 +969,7 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object, HousesT
  * HISTORY:                                                                                    *
  *   07/12/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
-bool DisplayClass::Stealth_Proximity_Check(ObjectTypeClass const *object, HousesType house) {
+bool DisplayClass::Stealth_Proximity_Check(ObjectTypeClass const *object) {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("bool DisplayClass::Stealth_Proximity_Check(ObjectTypeClass const *object)");
 #endif
@@ -999,7 +994,7 @@ bool DisplayClass::Stealth_Proximity_Check(ObjectTypeClass const *object, Houses
 	{
 		OverlayType ovl = OverlayTypeClass::From_Name(btc->IniName);
 		CellClass * hcell = &Map[homecell];
-		if (ovl != OVERLAY_NONE && hcell->Overlay == ovl && hcell->Owner == house && !hcell->Cell_Techno()) {
+		if (ovl != OVERLAY_NONE && hcell->Overlay == ovl && hcell->Owner == PendingHouse && !hcell->Cell_Techno()) {
 			return(false);
 		}
 	}
@@ -1012,14 +1007,14 @@ bool DisplayClass::Stealth_Proximity_Check(ObjectTypeClass const *object, Houses
 	while (*ptr != REFRESH_EOL) {
 		CELL	cell = ZoneCell + ZoneOffset + *ptr++;
 		CellClass * cellptr = &Map[cell];
-		if (!cellptr->Is_Generally_Clear(false, true)) {
+		if (!In_Radar(cell)) {
 			continue;
 		}
 		ObjectClass * occ = (*this)[cell].Cell_Techno();
 		bool celluncloaked = false;
 		bool cellcloaked = false;
 		while (occ && occ->Is_Techno()) {
-			TechnoClass * techno = (*this)[cell].Cell_Techno();
+			TechnoClass * techno = (TechnoClass *) occ;
 		 	if (techno->House->Class->House != PendingHouse) {
 				if (techno->Cloak != CLOAKED) {
 					celluncloaked = true;
@@ -1028,7 +1023,9 @@ bool DisplayClass::Stealth_Proximity_Check(ObjectTypeClass const *object, Houses
 				cellcloaked = true;
 			}
 			// Only mark as stealth if no uncloaked objects were on this cell.
-			anyStealth = !celluncloaked && cellcloaked;
+			if (!anyStealth) {
+				anyStealth = !celluncloaked && cellcloaked;
+			}
 			occ = techno->Next;
 		}
 	}
@@ -1139,8 +1136,8 @@ CELL DisplayClass::Set_Cursor_Pos(CELL pos)
 		}
 	}
 	ZoneCell = pos;
-	ProximityCheck = Passes_Proximity_Check(PendingObject, *PlayerPtr);
-	ProximityStealth = Stealth_Proximity_Check(PendingObject, *PlayerPtr);
+	ProximityCheck = Passes_Proximity_Check(PendingObject);
+	ProximityStealth = Stealth_Proximity_Check(PendingObject);
 	return(prevpos);
 }
 
@@ -3061,19 +3058,19 @@ bool DisplayClass::Select_These(COORDINATE coord1, COORDINATE coord2, bool allow
 
 	// If this routine is called from a loop, allow suppressing the voice response.
 	AllowVoice = allowvoice;
-
+	HousesType plh = PlayerPtr->Class->House;
 	// Nyerguds's TUC Quick Fix Patch v1.03: select-box-aircraft
 	// Select air units in the air. Compensate for the fact they are shown higher up than their real coordinates.
 	bool filterair = rttifilter == RTTI_AIRCRAFT;
-	if (rttifilter == RTTI_NONE || filterair){
+	if (rttifilter == RTTI_NONE || filterair) {
 		for (int air_index = 0; air_index < Aircraft.Count(); air_index++) {
 			AircraftClass * aircraft = Aircraft.Ptr(air_index);
 			COORDINATE acoord = aircraft->Center_Coord();
 			int x = Coord_X(acoord);
 			int y = Coord_Y(acoord) - Pixel_To_Lepton(aircraft->Altitude);
-			if (aircraft->Owner() == PlayerPtr->Class->House && aircraft->Class_Of().IsSelectable
+			if (aircraft->Owner() == plh && aircraft->Class_Of().IsSelectable
 					&& x >= x1 && x <= x2 && y >= y1 && y <= y2
-					&& (!filterair || aircraft->Class->Type == (AircraftType)typefilter)) {
+					&& (!filterair || aircraft->Techno_Type_Class()->Type == typefilter)) {
 				if (aircraft->Select()) {
 					selected = true;
 					AllowVoice = false;
@@ -3098,8 +3095,7 @@ bool DisplayClass::Select_These(COORDINATE coord1, COORDINATE coord2, bool allow
 		**  the type to filter is specifically set to a building type.
 		*/
 		RTTIType objtype = obj->What_Am_I();
-		if (obj->Owner() == PlayerPtr->Class->House &&
-				obj->Class_Of().IsSelectable &&
+		if (obj->Owner() == plh && obj->Class_Of().IsSelectable &&
 				(objtype != RTTI_BUILDING || rttifilter == RTTI_BUILDING) &&
 				x >= x1 && x <= x2 && y >= y1 && y <= y2) {
 			if (rttifilter != RTTI_NONE) {
@@ -3318,7 +3314,17 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 		// Fixed priority on this, and made all cases mutually exclusive.
 		int amount = CurrentObject.Count();
 		if (Map.PendingObject) {
-			action = ACTION_NONE;
+			action = ACTION_PLACE;
+			if (Map.PendingObjectPtr->What_Am_I() == RTTI_BUILDING && ((BuildingClass*)Map.PendingObjectPtr)->Class->IsWall) {
+				if (Map.In_Radar(cell)) {
+					CellClass * cellobj = &Map[cell];
+					OverlayType ovl = OverlayTypeClass::From_Name(Map.PendingObject->IniName);
+					if (ovl != OVERLAY_NONE && cellobj->Overlay == ovl && cellobj->Owner == Map.PendingHouse
+						&& (cellobj->OverlayData >> 4) > 0) {
+						action = ACTION_PLACE_REPAIR;
+					}
+				}
+			}
 		} else if (Map.TargetingMode == SPC_ION_CANNON) {
 			action = ACTION_ION;
 		} else if (Map.TargetingMode == SPC_NUCLEAR_BOMB) {
@@ -3650,6 +3656,11 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
 				Set_Default_Mouse(MOUSE_AIR_STRIKE, wwsmall);
 				break;
 
+			case ACTION_PLACE:
+			case ACTION_PLACE_REPAIR:
+				Set_Default_Mouse(MOUSE_NORMAL, wwsmall);
+				break;
+
 			case ACTION_NOMOVE:
 				if (CurrentObject.Count() && CurrentObject[0]->What_Am_I() == RTTI_AIRCRAFT) {
 					Set_Default_Mouse(MOUSE_NO_MOVE, wwsmall);
@@ -3753,6 +3764,14 @@ void DisplayClass::Mouse_Left_Up(bool shadow, ObjectClass * object, ActionType a
 
 			case ACTION_AIR_STRIKE:
 				Set_Default_Mouse(MOUSE_AIR_STRIKE, wwsmall);
+				break;
+
+			case ACTION_PLACE:
+				Set_Default_Mouse(MOUSE_NORMAL, wwsmall);
+				break;
+
+			case ACTION_PLACE_REPAIR:
+				Set_Default_Mouse(MOUSE_REPAIR, wwsmall);
 				break;
 
 			default:
@@ -3864,7 +3883,7 @@ void DisplayClass::Mouse_Left_Release(CELL cell, int x, int y, ObjectClass * obj
 		/*
 		**	Try to place the pending object onto the map.
 		*/
-		if (ProximityCheck && Passes_Proximity_Check(PendingObject, *PlayerPtr)) {
+		if (ProximityCheck && Passes_Proximity_Check(PendingObject)) {
 			OutList.Add(EventClass(EventClass::PLACE, PendingObjectPtr->What_Am_I(), cell + ZoneOffset));
 		} else {
 			Speak(VOX_DEPLOY);

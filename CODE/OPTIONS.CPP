@@ -624,6 +624,7 @@ void OptionsClass::Load_Settings (void)
 	NoRangeIndicator = WWGetPrivateProfileBool("Patch", "NoRangeIndicator", false, buffer);
 	PanScrollRate = MIN(64, MAX(0, WWGetPrivateProfileInt("Patch", "PanScrollRate", 4, buffer)));
 	ShowPanScrollLine = WWGetPrivateProfileBool("Patch", "ShowPanScrollLine", false, buffer);
+	NoLastBuiltIndicator = WWGetPrivateProfileBool("Patch", "NoLastBuiltIndicator", false, buffer);
 
 	char workbuf[128];
 

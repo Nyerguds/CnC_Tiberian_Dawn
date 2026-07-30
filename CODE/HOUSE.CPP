@@ -182,6 +182,8 @@ HouseClass::operator HousesType(void) const
  *=============================================================================================*/
 HouseClass * HouseClass::As_Pointer(HousesType house)
 {
+	if ((unsigned)house >= HOUSE_MAX)
+	 return NULL;
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("HouseClass * HouseClass::As_Pointer(HousesType house)");
 #endif
@@ -2263,12 +2265,16 @@ ProdFailType HouseClass::Begin_Production(RTTIType type, int id)
 
 	/*
 	**	If the house is already busy producing the requested object, then
-	**	return with this failure code, unless we are restarting production.
+	**	return with this failure code, unless we are resuming halted production.
 	*/
+	int currenttype = -1;
 	if (*factory != -1) {
 		fptr = Factories.Raw_Ptr(*factory);
 		if (fptr->Is_Building())
 			return(PROD_CANT);
+		if (fptr->Get_Object()) {
+			currenttype = fptr->Get_Object()->Techno_Type_Class()->Type;
+		}
 	} else {
 		fptr = new FactoryClass();
 		if (!fptr) return(PROD_CANT);
@@ -2285,7 +2291,8 @@ ProdFailType HouseClass::Begin_Production(RTTIType type, int id)
 		**	Link this factory to the sidebar so that proper graphic feedback
 		**	can take place.
 		*/
-		if (PlayerPtr == this) {
+		// Nyerguds's C&C Patch Project v1.04: Don't link factory if object does not match.
+		if (PlayerPtr == this && (currenttype == -1 || currenttype == id)) {
 			Map.Factory_Link(*factory, type, id);
 		}
 
@@ -2352,8 +2359,7 @@ ProdFailType HouseClass::Suspend_Production(RTTIType type)
 	*/
 	if (PlayerPtr == this) {
 		Map.SidebarClass::IsToRedraw = true;
-		Map.SidebarClass::Column[0].IsToRedraw = true;
-		Map.SidebarClass::Column[1].IsToRedraw = true;
+		Map.SidebarClass::Column[Map.Which_Column(type)].IsToRedraw = true;
 		Map.Flag_To_Redraw(false);
 	}
 

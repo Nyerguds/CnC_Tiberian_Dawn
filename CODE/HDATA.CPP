@@ -295,3 +295,31 @@ HouseTypeClass const & HouseTypeClass::As_Reference(HousesType house)
 #endif
 	return(*Pointers[house]);
 }
+
+
+/***********************************************************************************************
+ * HouseTypeClass::As_Pointer -- Fetches a pointer to the house specified.                     *
+ *                                                                                             *
+ *    This routine will fetch a pointer to the HouseTypeClass as indicated by the              *
+ *    house type number specified.                                                             *
+ *    HouseTypeClass::As_Pointer - Created for Nyerguds's C&C Patch Project v1.04.             *
+ *                                                                                             *
+ * INPUT:   type  -- The house type number to convert into a AircraftTypeClass object          *
+ *                   pointer.                                                                  *
+ *                                                                                             *
+ * OUTPUT:  Returns with a pointer to the house type class object specified.                   *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/14/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+HouseTypeClass const * HouseTypeClass::As_Pointer(HousesType type)
+{
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("HouseTypeClass const * HouseTypeClass::As_Pointer(HousesType type)");
+#endif
+	if ((unsigned)type >= HOUSE_COUNT)
+		return (NULL);
+	return(Pointers[type]);
+}

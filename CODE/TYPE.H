@@ -227,6 +227,7 @@ class HouseTypeClass {
 
 		static HousesType  From_Name(char const *name);
 		static HouseTypeClass const &  As_Reference(HousesType house);
+		static HouseTypeClass const *  As_Pointer(HousesType a);
 		static void One_Time(void);
 
 	private:

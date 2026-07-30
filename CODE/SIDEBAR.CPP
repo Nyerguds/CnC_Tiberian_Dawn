@@ -1938,6 +1938,8 @@ void SidebarClass::StripClass::Draw_It(bool complete)
 			bool isdummycameo = false;
 			void const * remapper = 0;
 			FactoryClass * factory = 0;
+			// Mark the item as the default constructed when pressing "B".
+			bool markdef = false;
 			int index = i+TopIndex;
 			int x = X;
 			int y = Y + i*ObjectHeight;
@@ -1957,19 +1959,20 @@ void SidebarClass::StripClass::Draw_It(bool complete)
 			if ((unsigned)index < BuildableCount) {
 				TechnoTypeClass const * obj = NULL;
 				SpecialWeaponType spc  = SPC_NONE;
-
-				if (Buildables[index].BuildableType != RTTI_SPECIAL) {
-
-					obj = Fetch_Techno_Type(Buildables[index].BuildableType, Buildables[index].BuildableID);
+				RTTIType btype = Buildables[index].BuildableType;
+				int bid = Buildables[index].BuildableID;
+				if (btype != RTTI_SPECIAL) {
+					obj = Fetch_Techno_Type(btype, bid);
 					if (obj) {
 						bool isbusy = false;
-						switch (Buildables[index].BuildableType) {
+						switch (btype) {
 							case RTTI_INFANTRYTYPE:
 								isbusy = (PlayerPtr->InfantryFactory != -1);
 								break;
 
 							case RTTI_BUILDINGTYPE:
 								isbusy = (PlayerPtr->BuildingFactory != -1);
+								markdef = LastConstruction != STRUCT_NONE && bid == LastConstruction;
 								break;
 
 							case RTTI_UNITTYPE:
@@ -2125,6 +2128,18 @@ void SidebarClass::StripClass::Draw_It(bool complete)
 //						Fancy_Text_Print(TXT_HOLDING, x+TEXT_X_OFFSET, y+TEXT_Y_OFFSET, TEXT_COLOR, TBLACK, TPF_6POINT|TPF_CENTER|TPF_NOSHADOW);
 					}
 				}
+			} else if (!darken && markdef && !Options.NoLastBuiltIndicator) {
+				// Nyerguds's C&C Patch Project v1.04: "Build last" key support
+				// Mark default construction option with animating white border.
+				// This is drawn inside the icon's own outer border.
+				int w = drawx + Get_Build_Frame_Width(ClockShapes) - 2;
+				int h = drawy + Get_Build_Frame_Height(ClockShapes) - 2;
+				GraphicViewPortClass draw_window(LogicPage->Get_Graphic_Buffer(),
+															WindowList[WINDOW_SIDEBAR][WINDOWX] << 3 + LogicPage->Get_XPos(),
+															WindowList[WINDOW_SIDEBAR][WINDOWY] + LogicPage->Get_YPos(),
+															WindowList[WINDOW_SIDEBAR][WINDOWWIDTH] << 3,
+															WindowList[WINDOW_SIDEBAR][WINDOWHEIGHT]);
+				draw_window.Draw_Rect(drawx + 1, drawy + 1, w, h, 255);
 			}
 		}
 	}
@@ -2240,6 +2255,7 @@ bool SidebarClass::StripClass::Recalc(void)
 			//}
 //			Buildables[index].Factory = -1;
 
+			// Nyerguds's C&C Patch Project v1.04: "Build last" key support
 			// If the entry was the remembered last construction, clear it.
 			if (btype == RTTI_BUILDINGTYPE && LastConstruction != STRUCT_NONE && id == LastConstruction) {
 				LastConstruction = STRUCT_NONE;
@@ -2373,28 +2389,7 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 	**	kind of factory is specified by the "genfactory" value. This can be used to see
 	**	if the factory type is currently busy or not.
 	*/
-	int genfactory = -1;
-	switch (otype) {
-		case RTTI_INFANTRYTYPE:
-			genfactory = PlayerPtr->InfantryFactory;
-			break;
-
-		case RTTI_UNITTYPE:
-			genfactory = PlayerPtr->UnitFactory;
-			break;
-
-		case RTTI_AIRCRAFTTYPE:
-			genfactory = PlayerPtr->AircraftFactory;
-			break;
-
-		case RTTI_BUILDINGTYPE:
-			genfactory = PlayerPtr->BuildingFactory;
-			break;
-
-		default:
-			genfactory = -1;
-			break;
-	}
+	FactoryClass * genfactory = PlayerPtr->Get_Factory(otype);
 
 	Map.Override_Mouse_Shape(MOUSE_NORMAL);
 
@@ -2526,11 +2521,11 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 				**	manager deleted, and the object under construction is returned to
 				**	the free pool.
 				*/
-				if (!factory) {
+				if (fnumber == -1 && genfactory != NULL) {
 					// Nyerguds's C&C Patch Project v1.04: no scroll needed to hold / cancel.
-					// If an item was clicked that was not in production but which is
-					// busy, allow it to execute on hold and cancel orders for its type.
-					factory = PlayerPtr->Get_Factory(otype);
+					// If an item was clicked that was not in production but of a type that
+					// is busy, allow it to execute suspend and cancel orders for its type.
+					factory = genfactory;
 				}
 				if (factory) {
 
@@ -2563,16 +2558,15 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 				**	ignore the click.
 				*/
 			
-				if (fnumber == -1 && genfactory != -1) {
+				if (fnumber == -1 && genfactory != NULL) {
 					// Nyerguds's C&C Patch Project v1.04: no scroll needed to resume / place.
 					// If an item was clicked that was not in production but which is
 					// busy, allow it to execute resume or place orders for its type.
-					FactoryClass * fact2 = PlayerPtr->Get_Factory(otype);
-					if (fact2 && fact2->Is_Suspended() && fact2->Get_Object()) {
-						// Either On Hold or ready. Treat as a click on the actual build icon.
-						factory = fact2;
+					if (genfactory->Is_Suspended() && genfactory->Get_Object()) {
+						// Either On Hold or Ready. Treat as a click on the actual build icon.
+						factory = genfactory;
 						// To allow production to resume on the correct type.
-						oid = fact2->Get_Object()->Techno_Type_Class()->Type;
+						oid = genfactory->Get_Object()->Techno_Type_Class()->Type;
 					}
 					if (!factory) {
 						Speak(VOX_NO_FACTORY);
@@ -2605,14 +2599,12 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 						if (factory->Has_Completed()) {
 
 							TechnoClass * pending = factory->Get_Object();
-							if (!pending && factory->Get_Special_Item()) {
-								// Never handled here, but whatev.
-								Map.TargetingMode = factory->Get_Special_Item();
-							} else {
+							if (pending) {
 								BuildingClass * builder = pending->Who_Can_Build_Me(false, false);
 								if (!builder) {
-									OutList.Add(EventClass(EventClass::ABANDON, otype, oid));
-									Speak(VOX_NO_FACTORY);
+									// Should never happen; construction would have aborted already.
+									OutList.Add(EventClass(EventClass::ABANDON, otype, -1));
+									Speak(VOX_DEPLOY);
 								} else {
 
 									/*

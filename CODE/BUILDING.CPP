@@ -5618,13 +5618,9 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 	}
 
 	// Nyerguds's C&C Patch Project v1.04: allow wall repair-replacement.
-	if (Class->IsWall && Map.In_Radar(homecell))
-	{
-		OverlayType ovl = OverlayTypeClass::From_Name(Class->IniName);
-		CellClass * hcell = &Map[homecell];
-		if (ovl != OVERLAY_NONE && hcell->Overlay == ovl && hcell->Owner == *House) {
-			return(true);
-		}
+	FacingType startf = FACING_N;
+	if (Class->IsWall) {
+		startf = FACING_NONE;
 	}
 	/*
 	**	Scan through all cells that the building foundation would cover. If any adjacent
@@ -5638,7 +5634,7 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 		if (!Map.In_Radar(cell)) return(false);
 		CellClass * mapcell = &Map[cell];
 
-		for (FacingType facing = FACING_N; facing < FACING_COUNT; facing++) {
+		for (FacingType facing = startf; facing < FACING_COUNT; facing++) {
 			// Nyerguds's C&C Patch Project v1.04: upgrade boundary checks on proximity checks.
 			if (!mapcell->Adjacent_Is_Valid(facing)) {
 				continue;

@@ -190,8 +190,8 @@ class DisplayClass: public MapClass
 		void  Submit(ObjectClass const *object, LayerType layer);
 		CELL  Calculated_Cell(SourceType dir, HousesType house);
 		bool  In_View(register CELL cell);
-		bool  Passes_Proximity_Check(ObjectTypeClass const *object, HousesType house = HOUSE_NONE);
-		bool  Stealth_Proximity_Check(ObjectTypeClass const *object, HousesType house = HOUSE_NONE);
+		bool  Passes_Proximity_Check(ObjectTypeClass const *object);
+		bool  Stealth_Proximity_Check(ObjectTypeClass const *object);
 		ObjectClass *  Cell_Object(CELL cell, int x=0, int y=0);
 		ObjectClass *  Next_Object(ObjectClass * object);
 		ObjectClass *  Prev_Object(ObjectClass * object);
