@@ -3091,11 +3091,11 @@ bool DisplayClass::Select_These(COORDINATE coord1, COORDINATE coord2, bool allow
 
 		/*
 		**	Only try to select objects that are owned by the player, are allowed to be
-		**	selected, and are within the bounding box. Do not select buildings unless
-		**  the type to filter is specifically set to a building type.
+		**	selected, are alive, and are within the bounding box. Do not select buildings
+		**	unless the type to filter is specifically set to a building type.
 		*/
 		RTTIType objtype = obj->What_Am_I();
-		if (obj->Owner() == plh && obj->Class_Of().IsSelectable &&
+		if (obj->Owner() == plh && obj->Class_Of().IsSelectable && obj->Strength > 0 &&
 				(objtype != RTTI_BUILDING || rttifilter == RTTI_BUILDING) &&
 				x >= x1 && x <= x2 && y >= y1 && y <= y2) {
 			if (rttifilter != RTTI_NONE) {

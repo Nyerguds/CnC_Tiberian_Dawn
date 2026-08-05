@@ -216,7 +216,7 @@
 #define VERSION_MAJOR   	1	// Major version will never change between languages.
 #define VERSION_MINOR    	7	// Win95 minor version number
 
-#define VERSION_PATCH_EXTRA	"CCPP v1.04 pre6"
+#define VERSION_PATCH_EXTRA	"CCPP v1.04 pre7"
 
 // Enable this to load the English map screen strings from the strings file
 // instead of using hardcoded English strings.
@@ -1653,9 +1653,9 @@ typedef enum DoType {
 	DO_KICK_DEATH,
 	DO_READY_WEAPON,
 	DO_GUN_DEATH,
-	DO_EXPLOSION_DEATH,
-	DO_EXPLOSION2_DEATH,
-	DO_GRENADE_DEATH,
+	DO_EXPLOSION_DEATH, // Messy death from high-explosives
+	DO_EXPLOSION2_DEATH, // Less messy death from high-explosives
+	DO_GRENADE_DEATH, // death from anti-armor.
 	DO_FIRE_DEATH,
 	DO_GESTURE1,
 	DO_SALUTE1,
@@ -1671,6 +1671,29 @@ typedef enum DoType {
 } DoType;
 
 inline DoType operator++(DoType &, int);
+
+
+/**********************************************************************
+**	Dumb ways to die... so many dumb ways to die.
+**	DeathType - Added by Nyerguds's C&C Patch Project v1.04.
+*/
+typedef enum DeathType{
+	DEATH_NONE=-1, // "I'm not dead! I feel fine!"
+	DEATH_GUN,     // Gunned down
+	DEATH_FRAG,    // Splattered all over the place
+	DEATH_BOOM,    // Blown away
+	DEATH_FIRE,    // Burned
+	DEATH_PUNCH,   // Punched to death
+	DEATH_KICK,    // Kicked to death
+	DEATH_PLEAD,   // Executed
+	DEATH_GORED,   // Gored
+	DEATH_EATEN,   // Eaten
+
+	DEATH_COUNT,
+	DEATH_FIRST=0
+} DeathType;
+
+inline DeathType operator++(DeathType &, int);
 
 /*
 **	This structure is associated with each maneuver type. It tells whether the

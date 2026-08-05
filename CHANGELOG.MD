@@ -328,3 +328,8 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * Clicks on greyed out sidebar items will now count as if you clicked on the currently building item of that type, allowing easier cancelling and placement.
 * Fixed Gunboats remaining passive when reinforced.
 * Being in placement mode will no longer block the Sell and Repair buttons from working. Pressing these buttons will now abort the placement mode.
+* Infantry in the process of dying will no longer be selected as a result of drag-select and select hotkeys.
+* Infantry in the process of dying will no longer give responses when selected and ordered to do things.
+* When a unit is finished being serviced on a Service Depot or Helipad (repairing or reloading), a beep sound will alert the player that they are ready again. If the unit is selected at that moment, it will simply tell the player it is ready and awaiting orders.
+* \[Internal\] Death animations for infantry are now configured in the warheads information.
+* Infantry gored or eaten by dinosaurs will now show a previously-unused messy death animation.

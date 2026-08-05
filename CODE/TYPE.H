@@ -151,7 +151,13 @@ class WarheadTypeClass
 		*/
 		// Nyerguds's TUC Quick Fix Patch v1.03: warheads
 		// Allow 100% values in warheads.
-		unsigned Modifier[ARMOR_COUNT];
+		unsigned short Modifier[ARMOR_COUNT];
+
+		/*
+		**	Nyerguds's C&C Patch Project v1.04: Infantry death anims.
+		**	Which infantry death animation should this use?
+		*/
+		DeathType InfantryDeath;
 };
 
 

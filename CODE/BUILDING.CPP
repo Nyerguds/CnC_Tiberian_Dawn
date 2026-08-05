@@ -3743,6 +3743,12 @@ bool BuildingClass::Captured(HouseClass * newowner)
 		if (!capturedbefore) {
 			Spawn_Mission_Target(NULL, House->Class->House, true, oldowner);
 		}
+		/*
+		**	Something was captured. Re-check if placement needs to be updated.
+		**	This is already done in TechnoClass, but needs to be repeated here
+		**	to account for the bib changing ownership.
+		*/
+		Map.Recheck_Placement();
 
 		return(true);
 	}
@@ -5676,8 +5682,8 @@ void BuildingClass::Spawn_Mission_Target(TechnoClass * source, HousesType attack
 
 	// Do not spawn the unit if this building was captured before,
 	// unless this call comes from the capture handling function.
-	if ((IsCaptured && !fromcapture) || GameToPlay != GAME_NORMAL ||
-		 *this != STRUCT_MISSION || MissionTargetSpawn == INFANTRY_NONE) {
+	if (*this != STRUCT_MISSION || GameToPlay != GAME_NORMAL ||
+			(IsCaptured && !fromcapture) || MissionTargetSpawn == INFANTRY_NONE) {
 		return;
 	}
 	HousesType house = MissionTargetHouse;
@@ -5687,8 +5693,11 @@ void BuildingClass::Spawn_Mission_Target(TechnoClass * source, HousesType attack
 		house = fromcapture && oldowner != HOUSE_NONE ? oldowner : House->Class->House;
 	}
 
+	COORDINATE exitpoint = Center_Coord();
 	// Exit point on MISS is configured for this purpose. After all, it has a door.
-	COORDINATE exitpoint = fromcapture ? Coord_Add(Coord, Class->ExitPoint) : Center_Coord();
+	if (Class->ExitPoint != 0 && fromcapture) {
+		exitpoint = Coord_Add(Coord, Class->ExitPoint);
+	}
 
 	InfantryClass * i = new InfantryClass(MissionTargetSpawn, house);
 	if (!i) {
@@ -5718,15 +5727,19 @@ void BuildingClass::Spawn_Mission_Target(TechnoClass * source, HousesType attack
 		i->Scatter(Center_Coord(), true);
 		ScenarioInit++;
 		bool isHuman = HouseClass::As_Pointer(house)->IsHuman;
-		if (isHuman) {
+		if (HouseClass::As_Pointer(house) == PlayerPtr) {
 				// The new unit announces that it appeared.
 			if (MissionTargetSpawn == INFANTRY_RAMBO) {
 				Sound_Effect(VOC_RAMBO_ROCK);
 			} else if (MissionTargetSpawn == INFANTRY_MOEBIUS) {
 				Sound_Effect(VOC_COMMANDER);
 			} else {
-				AllowVoice=true;
+				// This is a single event, independent from anything else voice
+				// related that might be going on. So backup and restore.
+				bool wasvoice = AllowVoice;
+				AllowVoice = true;
 				i->Response_Select();
+				AllowVoice = wasvoice;
 			}
 		}
 		i->Assign_Mission(isHuman ? MISSION_GUARD : MISSION_GUARD_AREA);

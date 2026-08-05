@@ -3913,6 +3913,8 @@ void AircraftClass::Response_Attack(void)
 	CCDebugFunc("void AircraftClass::Response_Attack(void)");
 #endif
 	Validate();
+	if (Strength == 0) return;
+
 	static VocType _response[] = {
 		VOC_AFFIRM,
 		VOC_ACKNOWL,
@@ -3947,6 +3949,8 @@ void AircraftClass::Response_Move(void)
 	CCDebugFunc("void AircraftClass::Response_Move(void)");
 #endif
 	Validate();
+	if (Strength == 0) return;
+
 	static VocType _response[] = {
 		VOC_MOVEOUT,
 		VOC_MOVEOUT,
@@ -3982,6 +3986,8 @@ void AircraftClass::Response_Select(void)
 	CCDebugFunc("void AircraftClass::Response_Select(void)");
 #endif
 	Validate();
+	if (Strength == 0) return;
+
 	static VocType _response[] = {
 		VOC_VEHIC,
 		VOC_UNIT,
@@ -3989,6 +3995,42 @@ void AircraftClass::Response_Select(void)
 		VOC_YESSIR,
 		VOC_YESSIR,
 		VOC_AWAIT
+	};
+	VocType response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
+	if (AllowVoice) {
+		Sound_Effect(response, 0, -(Aircraft.ID(this)+1));
+	}
+}
+
+
+/***********************************************************************************************
+ * AircraftClass::Response_Ready -- Handles the voice response when announcing readiness.      *
+ *                                                                                             *
+ *    This routine is called when the aircraft has finished rearming or repairing.             *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   This routine can generate an audio response.                                    *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   31/07/2026 MM : Created.                                                                  *
+ *=============================================================================================*/
+void AircraftClass::Response_Ready(void)
+{
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void AircraftClass::Response_Ready(void)");
+#endif
+	Validate();
+	if (Strength == 0) return;
+
+	// This excludes the "Yes sir?" voices since the response is unprompted by the player.
+	static VocType _response[] = {
+		VOC_VEHIC,
+		VOC_UNIT,
+		VOC_AWAIT,
+		VOC_AWAIT,
 	};
 	VocType response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
 	if (AllowVoice) {

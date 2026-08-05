@@ -1006,6 +1006,15 @@ RadioMessageType TechnoClass::Receive_Message(RadioClass * from, RadioMessageTyp
 		case RADIO_RELOAD:
 			if (Ammo == Techno_Type_Class()->MaxAmmo) return(RADIO_NEGATIVE);
 			Ammo++;
+			if (Ammo == Techno_Type_Class()->MaxAmmo) {
+				if (IsOwnedByPlayer) {
+					if (IsSelected && AllowVoice && !Options.NoServiceDoneVoice) {
+						Response_Ready();
+					} else  if (!Options.NoServiceDoneBeep) {
+						Sound_Effect(VOC_TARGET, 0, 0);
+					}
+				}
+			}
 			return(RADIO_ROGER);
 
 		/*
@@ -1028,7 +1037,14 @@ RadioMessageType TechnoClass::Receive_Message(RadioClass * from, RadioMessageTyp
 					}
 #endif
 					House->Spend_Money(cost);
-					Strength += step;
+					Strength = MIN(Class_Of().MaxStrength, Strength + step);
+					if (Health_Ratio() == 0x0100 && IsOwnedByPlayer) {
+						if (IsSelected && AllowVoice && !Options.NoServiceDoneVoice) {
+							Response_Ready();
+						} else if (!Options.NoServiceDoneBeep) {
+							Sound_Effect(VOC_TARGET, 0, 0);
+						}
+					}
 					return(RADIO_ROGER);
 				}
 			}
@@ -4579,6 +4595,31 @@ void TechnoClass::Response_Sabotage(void)
 #endif
 }
 
+
+/***********************************************************************************************
+ * TechnoClass::Response_Ready -- Handles the voice response when announcing readiness.        *
+ *                                                                                             *
+ *    This routine is called when the object announces that it is no longer in a state of      *
+ *    maintenance, and can now be returned to the battlefield. This is used to announce        *
+ *    the end of repair or rearm operations.                                                   *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   This routine can generate an audio response.                                    *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   31/07/2026 MM : Created.                                                                  *
+ *=============================================================================================*/
+void TechnoClass::Response_Ready(void)
+{
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void TechnoClass::Response_Ready(void)");
+#endif
+}
+
+
 /***********************************************************************************************
  * TechnoClass::Target_Something_Nearby -- Handles finding and assigning a nearby target.      *
  *                                                                                             *
@@ -4863,22 +4904,35 @@ void TechnoClass::Draw_Pips(int x, int y, WindowNumberType window)
 		int frmh = WindowList[window][WINDOWHEIGHT];
 
 		/*
-		**	End takes font size and drop shadow into account.
+		**	Transform the group number to the correct ASCII character.
+		**	Input numbers differ from internal indices, so add one and wrap around.
 		*/
-		int xend = group_x + 1 + Get_Font_Width(SmallScoreFontPtr);
-		int yend = group_y + 1 + Get_Font_Height(SmallScoreFontPtr);
+		int group = (((FootClass *)this)->Group + 1) % 10;
+		int groupchar = '0' + group;
 
-		if (group_x >= 0 && group_y >= 0 && xend < frmw && yend < frmh) {
+		/*
+		**	Get font symbol sizes. If the character has a Y offset, the
+		**	space above that is blank, so allow it above the symbol.
+		*/
+		int char_w = Get_Char_Width(SmallScoreFontPtr, groupchar);
+		int char_y = Get_Char_Y(SmallScoreFontPtr, groupchar);
+		int char_h = Get_Char_Height(SmallScoreFontPtr, groupchar, false) + char_y;
+
+		/*
+		**	Calculate ends, accounting for extra shadow drawing pixels.
+		*/
+		int group_x_end = group_x + char_w + 1;
+		int group_y_end = group_y + char_h + 1;
+		
+		/*
+		**	Only draw the number if it guaranteed not to overlap any edges.
+		*/
+		if (char_w > 0 && char_h > 0 && group_x >= 0 && group_y + char_y >= 0 && group_x_end <= frmw && group_y_end <= frmh) {
 			group_x += frmx;
 			group_y += frmy;
 
-			/*
-			**	Transform the group number to the correct ASCII character.
-			**	Input numbers differ from internal indices, so add one and wrap around.
-			*/
-			int group = (((FootClass *)this)->Group + 1) % 10;
 			char textBuffer[2];
-			textBuffer[0] = '0' + group;
+			textBuffer[0] = groupchar;
 			textBuffer[1] = 0;
 
 			/*

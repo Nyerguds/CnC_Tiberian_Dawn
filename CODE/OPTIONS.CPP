@@ -625,6 +625,8 @@ void OptionsClass::Load_Settings (void)
 	PanScrollRate = MIN(64, MAX(0, WWGetPrivateProfileInt("Patch", "PanScrollRate", 4, buffer)));
 	ShowPanScrollLine = WWGetPrivateProfileBool("Patch", "ShowPanScrollLine", false, buffer);
 	NoLastBuiltIndicator = WWGetPrivateProfileBool("Patch", "NoLastBuiltIndicator", false, buffer);
+	NoServiceDoneVoice = WWGetPrivateProfileBool("Patch", "NoServiceDoneVoice", false, buffer);
+	NoServiceDoneBeep = WWGetPrivateProfileBool("Patch", "NoServiceDoneBeep", false, buffer);
 
 	char workbuf[128];
 

@@ -1523,14 +1523,19 @@ void HouseClass::Attacked(void)
 	CCDebugFunc("void HouseClass::Attacked(void)");
 #endif
 	Validate();
-	if (SpeakAttackDelay.Expired() && PlayerPtr->Class->House == Class->House) {
-		Speak(VOX_BASE_UNDER_ATTACK);
-		SpeakAttackDelay.Set(Options.Normalize_Delay(SPEAK_DELAY));
+	if (PlayerPtr->Class->House == Class->House) {
+		// Nyerguds's C&C Patch Project v1.04: Don't gate trigger execution behind SpeakAttackDelay.
+		if (SpeakAttackDelay.Expired()) {
+			Speak(VOX_BASE_UNDER_ATTACK);
+			SpeakAttackDelay.Set(Options.Normalize_Delay(SPEAK_DELAY));
+		}
 
 		/*
 		**	If there is a trigger event associated with being attacked, process it
 		**	now.
 		*/
+		// This is still awful since it only works for the player pointer but whatever;
+		// fixing that would change the scripting behaviour.
 		for (int index = 0; index < HouseTriggers[Class->House].Count(); index++) {
 			HouseTriggers[Class->House][index]->Spring(EVENT_ATTACKED, Class->House);
 		}

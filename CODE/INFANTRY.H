@@ -158,6 +158,7 @@ class InfantryClass : public FootClass
 		virtual void Response_Attack(void);
 		// Nyerguds's TUC Quick Fix Patch v1.02: commando-voice
 		virtual void Response_Sabotage(void);
+		virtual void Response_Ready(void);
 		virtual void Active_Click_With(ActionType action, ObjectClass * object);
 
 		/*

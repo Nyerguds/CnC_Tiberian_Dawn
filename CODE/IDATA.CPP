@@ -89,7 +89,7 @@ int MiniGunnerDos [DO_COUNT][3]={
 	325,	5,	0,					// DO_KICK_DEATH
 	330,	5,	0,					// DO_READY_WEAPON
 	382,	8,	0,					// DO_GUN_DEATH
-	398,	8,	0,					// DO_EXPLOSION_DEATH
+	390,	8,	0,					// DO_EXPLOSION_DEATH
 	398,	8,	0,					// DO_EXPLOSION2_DEATH
 	406,	12,0,					// DO_GRENADE_DEATH
 	418,	18,0,					// DO_FIRE_DEATH
@@ -167,7 +167,7 @@ int GrenadierDos [DO_COUNT][3]={
 	453,	5,	0,					// DO_KICK_DEATH
 	458,	5,	0,					// DO_READY_WEAPON
 	510,	8,	0,					// DO_GUN_DEATH
-	526,	8,	0,					// DO_EXPLOSION_DEATH
+	518,	8,	0,					// DO_EXPLOSION_DEATH
 	526,	8,	0,					// DO_EXPLOSION2_DEATH
 	534,	12,0,					// DO_GRENADE_DEATH
 	546,	18,0,					// DO_FIRE_DEATH
@@ -243,7 +243,7 @@ int BazookaDos [DO_COUNT][3]={
 	341,	5,	0,					// DO_KICK_DEATH
 	346,	5,	0,					// DO_READY_WEAPON
 	398,	8,	0,					// DO_GUN_DEATH
-	414,	8,	0,					// DO_EXPLOSION_DEATH
+	406,	8,	0,					// DO_EXPLOSION_DEATH
 	414,	8,	0,					// DO_EXPLOSION2_DEATH
 	422,	12,0,					// DO_GRENADE_DEATH
 	434,	18,0,					// DO_FIRE_DEATH
@@ -322,7 +322,7 @@ int FlamethrowerDos [DO_COUNT][3]={
 	453,	5,	0,					// DO_KICK_DEATH
 	458,	5,	0,					// DO_READY_WEAPON
 	510,	8,	0,					// DO_GUN_DEATH
-	526,	8,	0,					// DO_EXPLOSION_DEATH
+	518,	8,	0,					// DO_EXPLOSION_DEATH
 	526,	8,	0,					// DO_EXPLOSION2_DEATH
 	534,	12,0,					// DO_GRENADE_DEATH
 	546,	18,0,					// DO_FIRE_DEATH
@@ -400,7 +400,7 @@ int ChemwarriorDos [DO_COUNT][3]={
 	453,	5,	0,					// DO_KICK_DEATH
 	458,	5,	0,					// DO_READY_WEAPON
 	510,	8,	0,					// DO_GUN_DEATH
-	526,	8,	0,					// DO_EXPLOSION_DEATH
+	518,	8,	0,					// DO_EXPLOSION_DEATH
 	526,	8,	0,					// DO_EXPLOSION2_DEATH
 	534,	12,0,					// DO_GRENADE_DEATH
 	546,	18,0,					// DO_FIRE_DEATH
@@ -555,7 +555,7 @@ int CommandoDos[DO_COUNT][3]={
 	261,	5,	0,					// DO_KICK_DEATH
 	266,	5,	0,					// DO_READY_WEAPON
 	318,	8,	0,					// DO_GUN_DEATH
-	334,	8,	0,					// DO_EXPLOSION_DEATH
+	326,	8,	0,					// DO_EXPLOSION_DEATH
 	334,	8,	0,					// DO_EXPLOSION2_DEATH
 	342,	12,0,					// DO_GRENADE_DEATH
 	354,	18,0,					// DO_FIRE_DEATH
@@ -1407,7 +1407,7 @@ int MoebiusDos[DO_COUNT][3]={
 	0,			0,	0,				// DO_READY_WEAPON
 	212,		8,	0,				// DO_GUN_DEATH
 	220,		8,	0,				// DO_EXPLOSION_DEATH
-	228,		12,0,				// DO_EXPLOSION2_DEATH
+	220,		12,0,				// DO_EXPLOSION2_DEATH
 	228,		12,0,				// DO_GRENADE_DEATH
 	240,		18,0,				// DO_FIRE_DEATH
 	0, 		0,	0,				// DO_GESTURE1			// N/A
@@ -1560,7 +1560,7 @@ int DrChanDos[DO_COUNT][3]={
 	0,			0,	0,				// DO_READY_WEAPON
 	212,		8,	0,				// DO_GUN_DEATH
 	220,		8,	0,				// DO_EXPLOSION_DEATH
-	228,		12,0,				// DO_EXPLOSION2_DEATH
+	220,		12,0,				// DO_EXPLOSION2_DEATH
 	228,		12,0,				// DO_GRENADE_DEATH
 	240,		18,0,				// DO_FIRE_DEATH
 	0, 		0,	0,				// DO_GESTURE1			// N/A

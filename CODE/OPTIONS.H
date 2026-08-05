@@ -105,6 +105,8 @@ class OptionsClass {
 		unsigned ShowPanScrollLine:1;	// Show a green line from the clicked origin when middle mouse click scrolling?
 		unsigned int PanScrollRate;	// Multiplier for middle mouse click scrolling.
 		unsigned NoLastBuiltIndicator:1; // Don't draw an indicator frame on the build cameo of the current default construction option.
+		unsigned NoServiceDoneVoice:1; // Don't play a signal when a helicopter finished reloading.
+		unsigned NoServiceDoneBeep:1; // Don't play a signal when a helicopter finished reloading.
 
 	protected:
 

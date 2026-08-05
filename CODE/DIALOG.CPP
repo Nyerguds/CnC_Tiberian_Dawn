@@ -828,34 +828,6 @@ void Conquer_Clip_Text_Print(char const *text, unsigned x, unsigned y, unsigned 
 
 
 /***********************************************************************************************
- * Get_Font_Height -- Looks inside the font data to retrieve the height in the header data.    *
- *                                                                                             *
- *    This routine can be used to make accurate measurements of how much things need to be     *
- *    spaced out on the UI.                                                                    *
- *    Get_Font_Height - Created for Nyerguds's C&C Patch Project v1.04.                        *
- *                                                                                             *
- * INPUT:   dataptr  -- Pointer to the loaded font data.                                       *
- *                                                                                             *
- * OUTPUT:  The height of the loaded font, or 0 if nothing was loaded.                         *
- *                                                                                             *
- * WARNINGS:   none                                                                            *
- *                                                                                             *
- * HISTORY:                                                                                    *
- *   06/22/2026 MM  : Created.                                                                 *
- *=============================================================================================*/
-unsigned char Get_Font_Height(void const *dataptr)
-{
-#ifdef INCLUDE_FUNCTION_NAMES
-	CCDebugFunc("unsigned char Get_Font_Height(void const *dataptr)");
-#endif
-	if (dataptr) {
-		return(((const char *)dataptr)[0x12]);
-	}
-	return(0);
-}
-
-
-/***********************************************************************************************
  * Get_Font_Width -- Looks inside the font data to retrieve the width in the header data.      *
  *                                                                                             *
  *    This routine can be used to make accurate measurements of how much things need to be     *
@@ -871,14 +843,157 @@ unsigned char Get_Font_Height(void const *dataptr)
  * HISTORY:                                                                                    *
  *   06/22/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
-unsigned char Get_Font_Width(void const *dataptr)
+unsigned char Get_Font_Width(void const *fontptr)
 {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("unsigned char Get_Font_Width(void const *dataptr)");
 #endif
-	if (dataptr) {
-		return(((const char *)dataptr)[0x13]);
+	if (fontptr) {
+		return(((const char *)fontptr)[0x13]);
 	}
 	return(0);
 }
 
+
+/***********************************************************************************************
+ * Get_Font_Height -- Looks inside the font data to retrieve the height in the header data.    *
+ *                                                                                             *
+ *    This routine can be used to make accurate measurements of how much things need to be     *
+ *    spaced out on the UI.                                                                    *
+ *    Get_Font_Height - Created for Nyerguds's C&C Patch Project v1.04.                        *
+ *                                                                                             *
+ * INPUT:   dataptr  -- Pointer to the loaded font data.                                       *
+ *                                                                                             *
+ * OUTPUT:  The height of the loaded font, or 0 if nothing was loaded.                         *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   06/22/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+unsigned char Get_Font_Height(void const *fontptr)
+{
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned char Get_Font_Height(void const *dataptr)");
+#endif
+	if (fontptr) {
+		return(((const char *)fontptr)[0x12]);
+	}
+	return(0);
+}
+
+
+/***********************************************************************************************
+ * Get_Char_Width -- Looks inside the font data to retrieve the width of a symbol.             *
+ *                                                                                             *
+ *    This routine can be used to make accurate measurements of how much things need to be     *
+ *    spaced out on the UI.                                                                    *
+ *    Get_Char_Width - Created for Nyerguds's C&C Patch Project v1.04.                         *
+ *                                                                                             *
+ * INPUT:   dataptr  -- Pointer to the loaded font data.                                       *
+ *                                                                                             *
+ *          index    -- The symbol to get the width for.                                       *
+ *                                                                                             *
+ * OUTPUT:  The width of the font symbol, or 0 if nothing was found.                           *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   08/03/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+unsigned char Get_Char_Width(void const *fontptr, int index)
+{
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned char Get_Char_Width(void const *dataptr, int index)");
+#endif
+	if (fontptr) {
+		unsigned char chars = ((const unsigned char *)fontptr)[0x11];
+		if (index > chars)
+			return(0);
+		short widths = *(const unsigned short *)((const char *)fontptr + 0X08);
+		const unsigned char *widthsArr = ((const unsigned char *)fontptr + widths);
+		return(widthsArr[index]);
+	}
+	return(0);
+}
+
+
+/***********************************************************************************************
+ * Get_Char_Y -- Looks inside the font data to retrieve the Y-offset of a symbol.              *
+ *                                                                                             *
+ *    This routine can be used to make accurate measurements of how much things need to be     *
+ *    spaced out on the UI.                                                                    *
+ *    Get_Char_Y - Created for Nyerguds's C&C Patch Project v1.04.                             *
+ *                                                                                             *
+ * INPUT:   dataptr  -- Pointer to the loaded font data.                                       *
+ *                                                                                             *
+ *          index    -- The symbol to get the width for.                                       *
+ *                                                                                             *
+ * OUTPUT:  The Y-offset of the font symbol, or 0 if nothing was found.                        *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   08/04/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+unsigned char Get_Char_Y(void const *fontptr, int index)
+{
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned char Get_Char_Y(void const *dataptr, int index)");
+#endif
+	if (fontptr) {
+		unsigned char chars = ((const unsigned char *)fontptr)[0x11];
+		if (index > chars)
+			return(0);
+		unsigned short heights = *(const unsigned short *)((const char *)fontptr + 0x0C);
+		// The array items are each two bytes; the Y-offset, and the amount of lines in the data.
+		const unsigned char *yoffsetArr = ((const unsigned char *)fontptr + heights);
+		return(yoffsetArr[index << 1]);
+	}
+	return(0);
+}
+
+
+/***********************************************************************************************
+ * Get_Char_Height -- Looks inside the font data to retrieve the height of a symbol.           *
+ *                                                                                             *
+ *    This routine can be used to make accurate measurements of how much things need to be     *
+ *    spaced out on the UI.                                                                    *
+ *    Get_Char_Height - Created for Nyerguds's C&C Patch Project v1.04.                        *
+ *                                                                                             *
+ * INPUT:   dataptr  -- Pointer to the loaded font data.                                       *
+ *                                                                                             *
+ *          index    -- The symbol to get the width for.                                       *
+ *                                                                                             *
+ *          plusy    -- Add the Y-offset to get the full maximum height taken.                 *
+ *                                                                                             *
+ * OUTPUT:  The height of the font symbol, or 0 if nothing was found.                          *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   08/03/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+unsigned char Get_Char_Height(void const *fontptr, int index, bool plusy)
+{
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("unsigned char Get_Char_Height(void const *dataptr, int index)");
+#endif
+	if (fontptr) {
+		unsigned char chars = ((const unsigned char *)fontptr)[0x11];
+		if (index > chars)
+			return(0);
+		unsigned short heights = *(const unsigned short *)((const char *)fontptr + 0x0C);
+			// The array items are each two bytes; the Y-offset, and the amount of lines in the data.
+		const unsigned char *heightsArr = ((const unsigned char *)fontptr + heights + 1);
+		index = index << 1;
+		int height = heightsArr[index];
+		if (plusy) {
+			const unsigned char *yoffsetArr = ((const unsigned char *)fontptr + heights);
+			// Full drawing height is Y-offset plus height.
+			height += yoffsetArr[index];
+		}
+		return(height);
+	}
+	return(0);
+}

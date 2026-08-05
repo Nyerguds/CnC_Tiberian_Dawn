@@ -128,6 +128,7 @@ class UnitClass :	public TarComClass
 		virtual void Response_Select(void);
 		virtual void Response_Move(void);
 		virtual void Response_Attack(void);
+		virtual void Response_Ready(void);
 
 		/*
 		**	Combat related.

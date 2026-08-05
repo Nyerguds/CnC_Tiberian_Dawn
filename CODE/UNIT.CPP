@@ -3674,6 +3674,8 @@ void UnitClass::Response_Select(void)
 	CCDebugFunc("void UnitClass::Response_Select(void)");
 #endif
 	Validate();
+	if (Strength == 0) return;
+
 	static VocType _response[] = {
 		VOC_VEHIC,
 		VOC_UNIT,
@@ -3718,6 +3720,8 @@ void UnitClass::Response_Move(void)
 	CCDebugFunc("void UnitClass::Response_Move(void)");
 #endif
 	Validate();
+	if (Strength == 0) return;
+
 	static VocType _response[] = {
 		VOC_MOVEOUT,
 		VOC_MOVEOUT,
@@ -3762,6 +3766,8 @@ void UnitClass::Response_Attack(void)
 	CCDebugFunc("void UnitClass::Response_Attack(void)");
 #endif
 	Validate();
+	if (Strength == 0) return;
+
 	static VocType _response[] = {
 		VOC_AFFIRM,
 		VOC_ACKNOWL,
@@ -3777,6 +3783,51 @@ void UnitClass::Response_Attack(void)
 		response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
 	} else {
 		response = VOC_DINOMOUT;
+	}
+
+	if (AllowVoice) {
+		Sound_Effect(response, 0, -(Units.ID(this)+1));
+	}
+}
+
+
+/***********************************************************************************************
+ * AircraftClass::Response_Ready -- Handles the voice response when announcing readiness.      *
+ *                                                                                             *
+ *    This routine is called when the aircraft has finished rearming or repairing.             *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   This routine can generate an audio response.                                    *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   31/07/2026 MM : Created.                                                                  *
+ *=============================================================================================*/
+void UnitClass::Response_Ready(void)
+{
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void UnitClass::Response_Ready(void)");
+#endif
+	Validate();
+	if (Strength == 0) return;
+
+	// This excludes the "Yes sir?" voices since the response is unprompted by the player.
+	static VocType _response[] = {
+		VOC_VEHIC,
+		VOC_UNIT,
+		VOC_AWAIT,
+		VOC_AWAIT,
+	};
+	VocType response ;
+	// Nyerguds's C&C Patch Project v1.04: IsTalker determines if units get "monster" voice.
+	// Originally just for dinos, but the Visceroid is now added to this,
+	// so it never responds with a human voice.
+	if (Class->IsTalker) {
+		response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
+	} else {
+		response = VOC_DINOYES;
 	}
 
 	if (AllowVoice) {

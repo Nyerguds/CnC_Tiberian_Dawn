@@ -109,21 +109,21 @@ WeaponTypeClass const Weapons[WEAPON_COUNT] = {
 **           -vs- {none, wood, aluminum, steel, concrete}
 */
 WarheadTypeClass const Warheads[WARHEAD_COUNT] = {
-// Nyerguds's TUC Quick Fix Patch v1.03: warheads
-// Allow 100% values in warheads.
+// Nyerguds's TUC Quick Fix Patch v1.03: warheads - Allow 100% values in warheads.
+// Nyerguds's C&C Patch Project v1.04: Configure death animations on warheads.
 //{sprd, wall, wood,  tib,   {  vs0,   vs1,   vs2,   vs3,   vs4}}
-	{  2, false, false, false, {0x100,  0x80,  0x90,  0x40,  0x40}},	//	WARHEAD_SA		Small arms -- good against infantry.
-	{  6, true,  true,  true,  { 0xE0,  0xC0,  0x90,  0x40, 0x100}},	//	WARHEAD_HE		High explosive -- good against buildings & infantry.
-	{  6, true,  true,  false, { 0x40,  0xC0,  0xC0, 0x100,  0x80}},	//	WARHEAD_AP		Armor piercing -- good against armor.
-	{  8, false, true,  true,  { 0xE0, 0x100,  0xB0,  0x40,  0x80}},	//	WARHEAD_FIRE		Incendiary -- Good against flammables.
-	{  4, false, false, false, {0x100, 0x100, 0x100, 0x100, 0x100}},	//	WARHEAD_LASER		Light Amplification of Stimulated Emission by Radiation.
-	{  7, true,  true,  true,  {0x100, 0x100,  0xC0,  0xC0,  0xC0}},	//	WARHEAD_PB		Particle beam (neutron beam).
-	{  4, false, false, false, {0x100,  0x20,  0x20,  0x10,  0x10}},	//	WARHEAD_FIST		Punching in hand-to-hand combat.
-	{  4, false, false, false, {0x100,  0x20,  0x20,  0x10,  0x10}},	//	WARHEAD_FOOT		Kicking in hand-to-hand combat.
-	{  4, false, false, false, {0x100,  0x08,  0x08,  0x08,  0x08}},	//	WARHEAD_HOLLOW_POINT	Sniper bullet type.
-	{255, false, false, false, {0x100,  0x01,  0x01,  0x01,  0x01}},	//	WARHEAD_SPORE
-	{  1, true,  true,  false, {0x100,  0xC0,  0x80,  0x20,  0x08}},	//	WARHEAD_HEADBUTT
-	{  1, true,  true,  false, {0x100,  0xC0,  0x80,  0x20,  0x08}},	//	WARHEAD_FEEDME
+	{  2, false, false, false, {0x100,  0x80,  0x90,  0x40,  0x40}, DEATH_GUN},   //	WARHEAD_SA		Small arms -- good against infantry.
+	{  6, true,  true,  true,  { 0xE0,  0xC0,  0x90,  0x40, 0x100}, DEATH_FRAG},  //	WARHEAD_HE		High explosive -- good against buildings & infantry.
+	{  6, true,  true,  false, { 0x40,  0xC0,  0xC0, 0x100,  0x80}, DEATH_BOOM},  //	WARHEAD_AP		Armor piercing -- good against armor.
+	{  8, false, true,  true,  { 0xE0, 0x100,  0xB0,  0x40,  0x80}, DEATH_FIRE},  //	WARHEAD_FIRE		Incendiary -- Good against flammables.
+	{  4, false, false, false, {0x100, 0x100, 0x100, 0x100, 0x100}, DEATH_FIRE},  //	WARHEAD_LASER		Light Amplification of Stimulated Emission by Radiation.
+	{  7, true,  true,  true,  {0x100, 0x100,  0xC0,  0xC0,  0xC0}, DEATH_FIRE},  //	WARHEAD_PB		Particle beam (neutron beam).
+	{  4, false, false, false, {0x100,  0x20,  0x20,  0x10,  0x10}, DEATH_PUNCH}, //	WARHEAD_FIST		Punching in hand-to-hand combat.
+	{  4, false, false, false, {0x100,  0x20,  0x20,  0x10,  0x10}, DEATH_KICK},  //	WARHEAD_FOOT		Kicking in hand-to-hand combat.
+	{  4, false, false, false, {0x100,  0x08,  0x08,  0x08,  0x08}, DEATH_GUN},   //	WARHEAD_HOLLOW_POINT	Sniper bullet type.
+	{255, false, false, false, {0x100,  0x01,  0x01,  0x01,  0x01}, DEATH_GUN},   //	WARHEAD_SPORE
+	{  1, true,  true,  false, {0x100,  0xC0,  0x80,  0x20,  0x08}, DEATH_GORED}, //	WARHEAD_HEADBUTT
+	{  1, true,  true,  false, {0x100,  0xC0,  0x80,  0x20,  0x08}, DEATH_EATEN}, //	WARHEAD_FEEDME
 };
 
 

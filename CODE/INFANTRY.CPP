@@ -486,57 +486,83 @@ ResultType InfantryClass::Take_Damage(int & damage, int distance, WarheadType wa
 		}
 
 		/*
-		**	The type of warhead determines the animation the infantry
-		**	will perform when killed.
+		**	The warhead determines the animation the infantry will perform
+		**	when killed.
 		*/
-		switch (warhead) {
-			case WARHEAD_FEEDME:
+		WarheadTypeClass wh = Warheads[warhead];
+		// Nyerguds's C&C Patch Project v1.04: Always have a default death anim.
+		DoType death = DO_GUN_DEATH;
+		// Nyerguds's C&C Patch Project v1.04: Configure death animations on warheads.
+		switch (wh.InfantryDeath) {
+			case DEATH_EATEN:
 				if (source) {
 					source->Strength += 30;
 					if (source->Strength > source->Class_Of().MaxStrength) {
 						source->Strength = source->Class_Of().MaxStrength;
 					}
 				}
-				// Fall thru to WARHEAD_SA:
+				// Dinos make a mess. Extra gory splatter.
+				death = DO_EXPLOSION_DEATH;
+				break;
 
-			case WARHEAD_HEADBUTT:
-			case WARHEAD_SPORE:
-			case WARHEAD_HOLLOW_POINT:
-			case WARHEAD_SA:
-			// Nyerguds's C&C Patch Project v1.04: Always have a default death anim.
+			case DEATH_GORED:
+				// Dinos make a mess. Extra gory splatter.
+				death = DO_EXPLOSION_DEATH;
+				break;
+
+			case DEATH_GUN:
 			default:
-				Sound_Effect(sound, Coord);
-				Do_Action(DO_GUN_DEATH, true);
+				death = DO_GUN_DEATH;
 				break;
 
-			case WARHEAD_HE:
-				Sound_Effect(sound, Coord);
-				Do_Action(DO_EXPLOSION_DEATH, true);
+			case DEATH_FRAG:
+				/*
+				**	Nyerguds's C&C Patch Project v1.04: Fix for explosion death sequencing.
+				**	This code originally executed DO_EXPLOSION_DEATH, but the frame sequencing
+				**	on the soldiers had that configured to the tamer non-splatter frag death.
+				**	The sequences have now been fixed to correctly match the order in the
+				**	sprites, so now they need to use the other one here.
+				*/
+				death = DO_EXPLOSION2_DEATH;
+				/*
+				**	Nyerguds's C&C Patch Project v1.04: Fix for explosion death sequencing.
+				**	Engineers are more squishy - they splatter harder. This extra code was
+				**	needed after fixing up the sequence issues on the other soldier types,
+				**	since the Engineer was the only one using its more gory animation here.
+				**
+				**	Note that civilians aren't really affected by this code; they only have
+				**	one explosion death in their sprite set, namely the gory splatter, so
+				**	both explosion deaths are configured to that. This code is only here to
+				**	show the logical distinction of less armored units splattering more.
+				*/
+				if (Class->Primary == WEAPON_NONE || Class->IsCivilian) {
+					death = DO_EXPLOSION_DEATH;
+				}
 				break;
 
-			case WARHEAD_AP:
-				Sound_Effect(sound, Coord);
-				Do_Action(DO_GRENADE_DEATH, true);
+			case DEATH_BOOM:
+				death = DO_GRENADE_DEATH;
 				break;
 
-			case WARHEAD_PB:
-			case WARHEAD_LASER:
-			case WARHEAD_FIRE:
-				Sound_Effect(altsound, Coord);
-				Do_Action(DO_FIRE_DEATH, true);
+			case DEATH_FIRE:
+				sound = altsound;
+				death = DO_FIRE_DEATH;
 				break;
 
-			case WARHEAD_FIST:
-				Sound_Effect(sound, Coord);
-				Do_Action(DO_PUNCH_DEATH,true);
+			case DEATH_PUNCH:
+				death = DO_PUNCH_DEATH;
 				break;
 
-			case WARHEAD_FOOT:
-				Sound_Effect(sound, Coord);
-				Do_Action(DO_KICK_DEATH,true);
+			case DEATH_KICK:
+				death = DO_KICK_DEATH;
+				break;
+
+			case DEATH_PLEAD:
+				death = DO_PLEAD_DEATH;
 				break;
 		}
-
+		Sound_Effect(sound, Coord);
+		Do_Action(death, true);
 		return(res);
 	}
 
@@ -1272,8 +1298,8 @@ void InfantryClass::AI(void)
 			case DO_PLEAD_DEATH:
 				delete this;
 
-				// Nyerguds's C&C Patch Project v1.04: recheck placement check on capture.
-				// Reset building placement proximity check since something has changed ownership.
+				// Nyerguds's C&C Patch Project v1.04: recheck placement check.
+				// Reset building placement proximity check since something has died.
 				Map.Recheck_Placement();
 				return;
 		}
@@ -2577,6 +2603,8 @@ void InfantryClass::Response_Select(void)
 	CCDebugFunc("void InfantryClass::Response_Select(void)");
 #endif
 	Validate();
+	if (Strength == 0) return;
+
 	VocType response;
 	if (*this == INFANTRY_RAMBO) {
 		static VocType _response[] = {
@@ -2585,35 +2613,31 @@ void InfantryClass::Response_Select(void)
 			VOC_RAMBO_YO
 		};
 		response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
-	} else {
-		if (Class->IsCivilian) {
-			if (*this == INFANTRY_MOEBIUS) {
-				static VocType _response[] = {
-					VOC_YES,
-					VOC_COMMANDER,
-					VOC_HELLO,
-					VOC_HMMM
-				};
-				response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
+	} else if (*this == INFANTRY_MOEBIUS) {
+		static VocType _response[] = {
+			VOC_YES,
+			VOC_COMMANDER,
+			VOC_HELLO,
+			VOC_HMMM
+		};
+		response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
+	} else if (Class->IsCivilian) {
+			if (Class->IsFemale) {
+				response = VOC_GIRL_YEAH;
 			} else {
-				if (Class->IsFemale) {
-					response = VOC_GIRL_YEAH;
-				} else {
-					response = VOC_GUY_YEAH;
-				}
+				response = VOC_GUY_YEAH;
 			}
-		} else {
-			static VocType _response[] = {
-				VOC_ACKNOWL,
-				VOC_REPORT,
-				VOC_REPORT,
-				VOC_YESSIR,
-				VOC_YESSIR,
-				VOC_READY,
-				VOC_AWAIT
-			};
-			response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
-		}
+	} else {
+		static VocType _response[] = {
+			VOC_ACKNOWL,
+			VOC_REPORT,
+			VOC_REPORT,
+			VOC_YESSIR,
+			VOC_YESSIR,
+			VOC_READY,
+			VOC_AWAIT
+		};
+		response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
 	}
 	if (AllowVoice) {
 		Sound_Effect(response, 0, Infantry.ID(this)+1);
@@ -2643,6 +2667,8 @@ void InfantryClass::Response_Move(void)
 	CCDebugFunc("void InfantryClass::Response_Move(void)");
 #endif
 	Validate();
+	if (Strength == 0) return;
+
 	VocType response;
 	if (*this == INFANTRY_RAMBO) {
 		static VocType _response[] = {
@@ -2651,36 +2677,32 @@ void InfantryClass::Response_Move(void)
 			VOC_RAMBO_NOPROB
 		};
 		response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
-	} else {
-		if (Class->IsCivilian) {
-			if (*this == INFANTRY_MOEBIUS) {
-				static VocType _response[] = {
-					VOC_OF_COURSE,
-					VOC_YESYES
-				};
-				response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
-			} else {
-				if (Class->IsFemale) {
-					response = VOC_GIRL_OKAY;
-				} else {
-					response = VOC_GUY_OKAY;
-				}
-			}
+	} else if (*this == INFANTRY_MOEBIUS) {
+		static VocType _response[] = {
+			VOC_OF_COURSE,
+			VOC_YESYES
+		};
+		response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
+	} else if (Class->IsCivilian) {
+		if (Class->IsFemale) {
+			response = VOC_GIRL_OKAY;
 		} else {
-			static VocType _response[] = {
-				VOC_MOVEOUT,
-				VOC_MOVEOUT,
-				VOC_MOVEOUT,
-				VOC_ROGER,
-				VOC_RIGHT_AWAY,
-				VOC_UGOTIT,
-				// Nyerguds's C&C Patch Project v1.04: Reactivated unused sound "Over and out".
-				VOC_OVEROUT,
-				VOC_AFFIRM,
-				VOC_AFFIRM
-			};
-			response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
+			response = VOC_GUY_OKAY;
 		}
+	} else {
+		static VocType _response[] = {
+			VOC_MOVEOUT,
+			VOC_MOVEOUT,
+			VOC_MOVEOUT,
+			VOC_ROGER,
+			VOC_RIGHT_AWAY,
+			VOC_UGOTIT,
+			// Nyerguds's C&C Patch Project v1.04: Reactivated unused sound "Over and out".
+			VOC_OVEROUT,
+			VOC_AFFIRM,
+			VOC_AFFIRM
+		};
+		response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
 	}
 	if (AllowVoice) {
 		Sound_Effect(response, 0, Infantry.ID(this)+1);
@@ -2710,6 +2732,8 @@ void InfantryClass::Response_Attack(void)
 	CCDebugFunc("void InfantryClass::Response_Attack(void)");
 #endif
 	Validate();
+	if (Strength == 0) return;
+
 	VocType response;
 	if (*this == INFANTRY_RAMBO) {
 		static VocType _response[] = {
@@ -2719,33 +2743,38 @@ void InfantryClass::Response_Attack(void)
 			VOC_RAMBO_ONIT
 		};
 		response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
-	} else {
-		if (Class->IsCivilian) {
-			if (Class->IsFemale) {
-				response = VOC_GIRL_OKAY;
-			} else {
-				response = VOC_GUY_OKAY;
-			}
+	} else if (*this == INFANTRY_MOEBIUS) {
+		static VocType _response[] = {
+			VOC_OF_COURSE,
+			VOC_YESYES
+		};
+		response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
+	} else if (Class->IsCivilian) {
+		if (Class->IsFemale) {
+			response = VOC_GIRL_OKAY;
 		} else {
-			static VocType _response[] = {
-				VOC_YESSIR,
-				VOC_YESSIR,
-				VOC_YESSIR,
-				VOC_NO_PROB,
-				VOC_RIGHT_AWAY,
-				VOC_UGOTIT,
-				// Nyerguds's C&C Patch Project v1.04: Reactivated unused sound "Over and out".
-				VOC_OVEROUT,
-				VOC_AFFIRM,
-				VOC_AFFIRM
-			};
-			response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
+			response = VOC_GUY_OKAY;
 		}
+	} else {
+		static VocType _response[] = {
+			VOC_YESSIR,
+			VOC_YESSIR,
+			VOC_YESSIR,
+			VOC_NO_PROB,
+			VOC_RIGHT_AWAY,
+			VOC_UGOTIT,
+			// Nyerguds's C&C Patch Project v1.04: Reactivated unused sound "Over and out".
+			VOC_OVEROUT,
+			VOC_AFFIRM,
+			VOC_AFFIRM
+		};
+		response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
 	}
 	if (AllowVoice) {
 		Sound_Effect(response, 0, Infantry.ID(this)+1);
 	}
 }
+
 
 /***********************************************************************************************
  * InfantryClass::Response_Sabotage -- Plays infantry audio response to sabotage order.        *
@@ -2768,11 +2797,76 @@ void InfantryClass::Response_Sabotage(void)
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("void InfantryClass::Response_Sabotage(void)");
 #endif
-    Validate();
-    if (*this == INFANTRY_RAMBO && AllowVoice) {
-        Sound_Effect(VOC_RAMBO_PRESENT, 0, 0);
-    }
+	Validate();
+	// Hey, you never know when someone besides the Commando really wants to blow something up.
+	VocType response = VOC_NONE;
+	if (*this == INFANTRY_RAMBO) {
+		response = VOC_RAMBO_PRESENT;
+	} else if (*this == INFANTRY_MOEBIUS) {
+		response = VOC_EXCELLENT3;
+	} else if (Class->IsCivilian) {
+		if (Class->IsFemale) {
+			response = VOC_GIRL_OKAY;
+		} else {
+			response = VOC_GUY_OKAY;
+		}
+	} else {
+		response =VOC_UGOTIT;
+	}
+	if (response != VOC_NONE && AllowVoice) {
+		Sound_Effect(response, 0, Infantry.ID(this)+1);
+	}
 }
+
+
+/***********************************************************************************************
+ * InfantryClass::Response_Ready -- Handles the voice response when announcing readiness.      *
+ *                                                                                             *
+ *    This routine is called when the infantry is ready after being incapacitated.             *
+ *                                                                                             *
+ * INPUT:   none                                                                               *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   04/08/2026 MM : Created.                                                                  *
+ *=============================================================================================*/
+void InfantryClass::Response_Ready(void)
+{
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("void InfantryClass::Response_Ready(void)");
+#endif
+	// Not actually used for now; nothing calls this on infantry.
+	Validate();
+	if (Strength == 0) return;
+
+	VocType response;
+	if (*this == INFANTRY_RAMBO) {
+		response = VOC_RAMBO_ROCK;
+	} else if (*this == INFANTRY_MOEBIUS) {
+		response = VOC_COMMANDER;
+	} else if (Class->IsCivilian) {
+		if (Class->IsFemale) {
+			response = VOC_GIRL_YEAH;
+		} else {
+			response = VOC_GUY_YEAH;
+		}
+	} else {
+		static VocType _response[] = {
+			VOC_REPORT,
+			VOC_REPORT,
+			VOC_READY,
+			VOC_AWAIT
+		};
+		response = _response[Sim_Random_Pick(0, (int)(sizeof(_response) / sizeof(_response[0]))-1)];
+	}
+	if (AllowVoice) {
+		Sound_Effect(response, 0, Infantry.ID(this)+1);
+	}
+}
+
 
 /***********************************************************************************************
  * InfantryClass::Fire_Coord -- Calculates the origin point for projectiles fired.             *
