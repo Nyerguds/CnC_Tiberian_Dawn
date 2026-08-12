@@ -812,7 +812,7 @@ inline ScenarioDirType operator++(ScenarioDirType &, int);
 
 
 /**********************************************************************
-** These are the random variations of a scenario.
+** These are the different variations of a scenario.
 */
 typedef enum ScenarioVarEnum
 {

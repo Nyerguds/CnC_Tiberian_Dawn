@@ -477,8 +477,8 @@ void Do_Win(void)
 			return;
 		}
 		bool bonusmission = Scenario >= 20;
-		// If it is not a Funpark scenario, or if it is a scenario loaded from the New Missions list, show score screen.
-		if (ScenPlayer != SCEN_PLAYER_JP || bonusmission) {
+		// There is a new generic score screen, so allow it on the Funpark campaign.
+		if (!NoEgoScreen) {
 			Keyboard::Clear();
 			InterpolationPaletteChanged = TRUE;
 			InterpolationPalette = Palette;
@@ -503,6 +503,7 @@ void Do_Win(void)
 				char fname[_MAX_FNAME+_MAX_EXT];
 				sprintf(fname, "%s.INI", ScenarioName);
 				if (!CCFileClass(fname).Is_Available()) {
+					// If no file is found, set it up to fail the next check.
 					nextdir = SCEN_DIR_COUNT;
 				}
 			}

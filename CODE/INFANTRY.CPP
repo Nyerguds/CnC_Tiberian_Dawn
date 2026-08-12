@@ -2126,7 +2126,10 @@ bool InfantryClass::Scatter(COORDINATE threat, bool forced)
 			newface = toface + face;
 			newcell = Adjacent_Cell(Coord_Cell(Coord), newface);
 
-			if (Map.In_Radar(newcell) && Can_Enter_Cell(newcell) == MOVE_OK) {
+			// Nyerguds's C&C Patch Project v1.04: Fix civilians wandering into tiberium in GDI 8B.
+			if (Map.In_Radar(newcell) && Can_Enter_Cell(newcell) == MOVE_OK &&
+				(!Class->IsFraidyCat || !NoTiberiumWandering || Map[newcell].Overlay == OVERLAY_NONE ||
+					!OverlayTypeClass::As_Pointer(Map[newcell].Overlay)->IsTiberium)) {
 				Assign_Mission(MISSION_MOVE);
 				Assign_Destination(::As_Target(newcell));
 				break;

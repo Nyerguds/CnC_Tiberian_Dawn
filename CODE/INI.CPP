@@ -313,10 +313,14 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 	memset(CustomRadarExt, 0, sizeof(CustomRadarExt));
 	Patsux = false;
 	PassiveHelis = false;
+	NoEgoScreen = false;
+	RequiredNukePieces = 3;
 	RemoveBuildExceptions = false;
+	AllowDetachedAISupers = false;
 	MissionTargetSpawn = INFANTRY_NONE;
 	MissionTargetHouse = HOUSE_NONE;
 	memset (MissionTargetTrigger, 0, sizeof(MissionTargetTrigger));
+	NoTiberiumWandering = false;
 
 	/*
 	**	For single-player scenarios, 'BuildLevel' is the scenario number.
@@ -392,6 +396,9 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 		// Make AI helis passive in this scenario.
 		bool isPassive = ScenPlayer == SCEN_PLAYER_NOD && Scenario == 7 && ScenVar == SCEN_VAR_C;
 		PassiveHelis = WWGetPrivateProfileBool("Basic", "PassiveHelis", isPassive, buffer);
+		// Make civilians avoid wandering into tiberium
+		bool isAvoidTib = ScenPlayer == SCEN_PLAYER_GDI && Scenario == 8 && ScenVar == SCEN_VAR_B;
+		NoTiberiumWandering = WWGetPrivateProfileBool("Basic", "NoTiberiumWandering", isAvoidTib, buffer);
 		// Ini keys for controlling nuke pieces.
 		int neededpieces = WWGetPrivateProfileInt("Basic", "RequiredNukePieces", 3, buffer);
 		RequiredNukePieces = MAX(0, neededpieces);
@@ -400,6 +407,8 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 		// PATSUX laser orca. This setting is applied in the Map.Read_INI() call below,
 		// when it calls AircraftTypeClass::After_Init().
 		Patsux = WWGetPrivateProfileBool("Basic", "Patsux", 0, buffer);
+		// If true, this mission does not show a score screen.
+		NoEgoScreen = WWGetPrivateProfileBool("Basic", "NoEgoScreen", 0, buffer);
 		// Remove capmpaign specific tech tree blocks.
 		RemoveBuildExceptions = WWGetPrivateProfileBool("Basic", "RemoveBuildExceptions", 0, buffer);
 		// Custom radar extension
@@ -418,6 +427,7 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 			MissionTargetHouse = HouseTypeClass::From_Name(buf);
 			WWGetPrivateProfileString("Basic", "MissionTargetTrigger", ischanmission ? "WIN" : NULL, MissionTargetTrigger, sizeof(MissionTargetTrigger), buffer);
 		}
+		// The global Collect-a-Thon setting overrides all scenario-specific options.
 		if (Options.NodCollectathon && ScenPlayer == SCEN_PLAYER_NOD && Scenario < 20) {
 			nukeInherit = true;
 			RequiredNukePieces = 3;
@@ -428,11 +438,9 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 		PlayerPtr->NukePieces = MAX(-1, nukeInherit ? nukepieces : newpieces);
 		PlayerPtr->NukePiecesStart = PlayerPtr->NukePieces;
 
-		int carryover;
+		int carryover = Fixed_To_Cardinal(CarryOverMoney, CarryOverPercent);
 		if (CarryOverCap != -1) {
-			carryover = MIN(Fixed_To_Cardinal(CarryOverMoney, CarryOverPercent), CarryOverCap);
-		} else {
-			carryover = Fixed_To_Cardinal(CarryOverMoney, CarryOverPercent);
+			carryover = MIN(carryover, CarryOverCap);
 		}
 		PlayerPtr->Credits += carryover;
 		PlayerPtr->InitialCredits += carryover;

@@ -355,6 +355,8 @@ int ScenarioInit;
 bool SpecialFlag = false;
 bool AllowDetachedAISupers;			// Allow the AI to use superweapons without owning the required building.
 bool PassiveHelis;							// Helicopters are passive in this scenario.
+bool NoTiberiumWandering;				// Civilians will not wander into tiberium in this scenario.
+bool NoEgoScreen;								// Do not show a score screen after the mission.
 StructType LastConstruction = STRUCT_NONE; // To allow hotkey to rebuild last construction.
 
 

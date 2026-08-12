@@ -712,7 +712,7 @@ void ScoreClass::Presentation(void)
 	FontXSpacing = 0;
 	Map.Override_Mouse_Shape(MOUSE_NORMAL);
 	
-	ThemeType music = house == HOUSE_GOOD || Options.NoNodSceneMusic ? THEME_WIN1 : THEME_NOD_WIN1;
+	ThemeType music = house != HOUSE_BAD || Options.NoNodSceneMusic ? THEME_WIN1 : THEME_NOD_WIN1;
 	Theme.Queue_Song(music);
 
 	VisiblePage.Clear();
@@ -793,15 +793,28 @@ void ScoreClass::Presentation(void)
 	efficiency = Fixed_To_Cardinal(100, efficiency);
 
 	if (efficiency > 100) efficiency = 100;
+
 	/*
 	** Calculate total score
 	*/
 	long total = ((leadership * 40) + (4600) + (efficiency * 14))/100;
 	if (!total) total++;
-	// Buildlevel 98 will be usable without giving ridiculous scores. Cap score at 2000.
-	total *= (MIN(BuildLevel, 19) + 1);
 
-// Load up the shapes for the Nod score screen
+	int level = BuildLevel;
+	/*
+	**	The secret levels are only scored based on scenario number,
+	**	but the score is spread out so the 5 missions get scored
+	**	equivalent to the 15-mission GDI campaign.
+	*/
+	if (ScenPlayer == SCEN_PLAYER_JP && Scenario < 20) {
+		level = Scenario * 3;
+	}
+	/*
+	**	Buildlevel 98 will be usable without giving ridiculous scores. Cap score at 2000.
+	*/
+	total *= (MIN(level, 19) + 1);
+
+	// Load up the shapes for the Nod score screen
 	if (house == HOUSE_GOOD || youvsthem) {
 		yellowptr = MixFileClass::Retrieve("BAR3YLW.SHP");
 		redptr = MixFileClass::Retrieve("BAR3RED.SHP");

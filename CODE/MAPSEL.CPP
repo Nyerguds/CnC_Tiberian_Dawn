@@ -88,37 +88,40 @@ struct countrylist {
 	ScenarioDirType CountryDir[2][3];
 	ScenarioVarType CountryVariant[2][3];
 } const CountryArray[27] = {
+// Nyerguds's C&C Patch Project v1.04: Map selection screen fixes.
+// * Fixed choice after GDI 4 to have {SVA,SVB,SVN} for both E and W.
+// * Fixed choice after GDI 12 to not give a B choice at all.
 // GDI SCENARIO CHOICES
-/*  0 */	{0},	  /*E  W*/ /* cont */	/* East colors */ /* West color*/	/* E frame   W frame */
-/*  1 */	{{1,1}, { 0, 0}, {  3,  3},{{0x95,   0,   0},{0x95,   0,   0}}, {{17, 0, 0},{17, 0, 0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}}},
-/*  2 */	{{1,1}, {16,16}, { 19, 19},{{0x80,   0,   0},{0x80,   0,   0}}, {{ 0, 0, 0},{ 0, 0, 0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}}},
-/*  3 */	{{3,3}, {32,32}, { 35, 35},{{0x81,0x82,0x83},{0x81,0x82,0x83}}, {{ 3, 3, 1},{ 3, 3, 1}}, {{SDW,SDW,SDE},{SDN,SDN,SDN}},{{SVA,SVB,SVA},{SVN,SVN,SVN}}},
-/*  4 */	{{2,2}, {48,64}, { 51, 67},{{0x84,0x85,   0},{0x86,0x87,   0}}, {{ 4, 4, 0},{ 2, 2, 0}}, {{SDE,SDE,SDN},{SDW,SDW,SDN}},{{SVA,SVB,SVN},{SVA,SVB,SVN}}},
-/*  5 */	{{2,2}, {99,99}, {102,102},{{0x88,0x89,   0},{0x88,0x89,   0}}, {{ 7, 7, 0},{ 7, 7, 0}}, {{SDE,SDE,SDN},{SDE,SDE,SDN}},{{SVA,SVA,SVN},{SVA,SVA,SVN}}},
-/*  6 */	{{2,2}, {80,83}, { 86, 86},{{0x88,0x89,   0},{0x88,0x89,   0}}, {{ 7, 7, 0},{ 7, 7, 0}}, {{SDE,SDE,SDN},{SDE,SDE,SDN}},{{SVA,SVA,SVN},{SVA,SVA,SVN}}},
-/*  7 */	{{2,2}, {115,0}, {118,  0},{{0x8B,0x8A,   0},{0x8B,0x8A,   0}}, {{ 6, 8, 0},{ 6, 8, 0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVB,SVN},{SVN,SVN,SVN}}},
-/*  8 */	{{1,1}, {131,0}, {134,  0},{{0x8C,   0,   0},{0x8C,   0,   0}}, {{ 9, 0, 0},{ 9, 0, 0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}}},
-/*  9 */	{{2,1}, {147,0}, {150,  0},{{0x8D,0x8E,   0},{   0,   0,   0}}, {{10,13, 0},{ 0, 0, 0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVB,SVN},{SVN,SVN,SVN}}},
-/* 10 */	{{1,1}, {163,0}, {166,  0},{{0x8F,   0,   0},{   0,   0,   0}}, {{16, 0, 0},{ 0, 0, 0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}}},
-/* 11 */	{{2,1}, {179,0}, {182,  0},{{0x90,0x91,   0},{   0,   0,   0}}, {{14,15, 0},{ 0, 0, 0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVB,SVN},{SVN,SVN,SVN}}},
-/* 12 */	{{2,1}, {195,0}, {198,  0},{{0x92,0x93,   0},{   0,   0,   0}}, {{12,12, 0},{ 0, 0, 0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVA,SVN},{SVN,SVN,SVN}}},
-/* 13 */	{{1,1}, {211,0}, {214,  0},{{0x93,   0,   0},{   0,   0,   0}}, {{12, 0, 0},{ 0, 0, 0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}}},
-/* 14 */	{{3,1}, {  0,0}, {  3,  0},{{0x81,0x82,0x83},{   0,   0,   0}}, {{ 0, 0, 0},{ 0, 0, 0}}, {{SDE,SDE,SDE},{SDN,SDN,SDN}},{{SVA,SVB,SVC},{SVN,SVN,SVN}}},
+/*  0 */	{0}, // E/W start continue   East colors       West colors        E shape    W shape      direction                     variant
+/*  1 */	{{1,1}, { 0, 0}, {  3,  3}, {{0x95,   0,   0},{0x95,   0,   0}}, {{17, 0, 0},{17, 0, 0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}}},
+/*  2 */	{{1,1}, {16,16}, { 19, 19}, {{0x80,   0,   0},{0x80,   0,   0}}, {{ 0, 0, 0},{ 0, 0, 0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}}},
+/*  3 */	{{3,3}, {32,32}, { 35, 35}, {{0x81,0x82,0x83},{0x81,0x82,0x83}}, {{ 3, 3, 1},{ 3, 3, 1}}, {{SDW,SDW,SDE},{SDN,SDN,SDN}},{{SVA,SVB,SVA},{SVN,SVN,SVN}}},
+/*  4 */	{{2,2}, {48,64}, { 51, 67}, {{0x84,0x85,   0},{0x86,0x87,   0}}, {{ 4, 4, 0},{ 2, 2, 0}}, {{SDE,SDE,SDN},{SDW,SDW,SDN}},{{SVA,SVB,SVN},{SVA,SVB,SVN}}},
+/*  5 */	{{2,2}, {99,99}, {102,102}, {{0x88,0x89,   0},{0x88,0x89,   0}}, {{ 7, 7, 0},{ 7, 7, 0}}, {{SDE,SDE,SDN},{SDE,SDE,SDN}},{{SVA,SVA,SVN},{SVA,SVA,SVN}}},
+/*  6 */	{{2,2}, {80,83}, { 86, 86}, {{0x88,0x89,   0},{0x88,0x89,   0}}, {{ 7, 7, 0},{ 7, 7, 0}}, {{SDE,SDE,SDN},{SDE,SDE,SDN}},{{SVA,SVA,SVN},{SVA,SVA,SVN}}},
+/*  7 */	{{2,2}, {115,0}, {118,  0}, {{0x8B,0x8A,   0},{0x8B,0x8A,   0}}, {{ 6, 8, 0},{ 6, 8, 0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVB,SVN},{SVN,SVN,SVN}}},
+/*  8 */	{{1,1}, {131,0}, {134,  0}, {{0x8C,   0,   0},{0x8C,   0,   0}}, {{ 9, 0, 0},{ 9, 0, 0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}}},
+/*  9 */	{{2,1}, {147,0}, {150,  0}, {{0x8D,0x8E,   0},{   0,   0,   0}}, {{10,13, 0},{ 0, 0, 0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVB,SVN},{SVN,SVN,SVN}}},
+/* 10 */	{{1,1}, {163,0}, {166,  0}, {{0x8F,   0,   0},{   0,   0,   0}}, {{16, 0, 0},{ 0, 0, 0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}}},
+/* 11 */	{{2,1}, {179,0}, {182,  0}, {{0x90,0x91,   0},{   0,   0,   0}}, {{14,15, 0},{ 0, 0, 0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVB,SVN},{SVN,SVN,SVN}}},
+/* 12 */	{{1,1}, {195,0}, {198,  0}, {{0x92,   0,   0},{   0,   0,   0}}, {{12, 0, 0},{ 0, 0, 0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}}},
+/* 13 */	{{1,1}, {211,0}, {214,  0}, {{0x93,   0,   0},{   0,   0,   0}}, {{12, 0, 0},{ 0, 0, 0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}}},
+/* 14 */	{{3,1}, {  0,0}, {  3,  0}, {{0x81,0x82,0x83},{   0,   0,   0}}, {{ 0, 0, 0},{ 0, 0, 0}}, {{SDE,SDE,SDE},{SDN,SDN,SDN}},{{SVA,SVB,SVC},{SVN,SVN,SVN}}},
 
 // NOD SCENARIO CHOICES
-//	  		choices   E/W start continue   East colors    West colors  E shape    W shape	  direction								variant
-/*  1 */	{ {2,1}, {  0,0},   {  3,  0},{{0x80,0x81,0x00},{0,0,0}}, {{ 4, 4, 0},{0,0,0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVB,SVN},{SVN,SVN,SVN}} },
-/*  2 */	{ {2,1}, { 16,0},   { 19,  0},{{0x82,0x83,0x00},{0,0,0}}, {{ 6, 6, 0},{0,0,0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVB,SVN},{SVN,SVN,SVN}} },
-/*  3 */	{ {2,1}, { 32,0},   { 35,  0},{{0x84,0x85,0x00},{0,0,0}}, {{ 5, 5, 0},{0,0,0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVB,SVN},{SVN,SVN,SVN}} },
-/*  4 */	{ {1,1}, { 48,0},   { 51,  0},{{0x86,0x00,0x00},{0,0,0}}, {{ 0, 0, 0},{0,0,0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}} },
-/*  5 */	{ {3,1}, { 64,0},   { 67,  0},{{0x87,0x88,0x89},{0,0,0}}, {{ 1, 2, 3},{0,0,0}}, {{SDE,SDE,SDE},{SDN,SDN,SDN}},{{SVA,SVB,SVC},{SVN,SVN,SVN}} },
-/*  6 */	{ {3,1}, { 80,0},   { 83,  0},{{0x8A,0x8B,0x8C},{0,0,0}}, {{ 9, 7, 8},{0,0,0}}, {{SDE,SDE,SDE},{SDN,SDN,SDN}},{{SVA,SVB,SVC},{SVN,SVN,SVN}} },
-/*  7 */	{ {2,1}, { 96,0},   { 99,  0},{{0x8D,0x8E,0x00},{0,0,0}}, {{10,10, 0},{0,0,0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVB,SVN},{SVN,SVN,SVN}} },
-/*  8 */	{ {1,1}, {112,0},   {115,  0},{{0xA0,0x00,0x00},{0,0,0}}, {{ 4, 4, 0},{0,0,0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}} },
-/*  9 */	{ {2,1}, {128,0},   {131,  0},{{0x8F,0x90,0x00},{0,0,0}}, {{11,15, 0},{0,0,0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVB,SVN},{SVN,SVN,SVN}} },
-/* 10 */	{ {2,1}, {144,0},   {147,  0},{{0x91,0x92,0x00},{0,0,0}}, {{12,16, 0},{0,0,0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVB,SVN},{SVN,SVN,SVN}} },
-/* 11 */	{ {1,1}, {160,0},   {163,  0},{{0x93,0x00,0x00},{0,0,0}}, {{13, 0, 0},{0,0,0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}} },
-/* 12 */	{ {3,1}, {  0,0},   {  3,  0},{{0x81,0x82,0x83},{0,0,0}}, {{14, 0, 0},{0,0,0}}, {{SDE,SDE,SDE},{SDN,SDN,SDN}},{{SVA,SVB,SVC},{SVN,SVN,SVN}} }
+//      	choices E/W start continue   East colors       West colors        E shape    W shape      direction                     variant
+/*  1 */	{{2,1}, {  0,0}, {  3,  0}, {{0x80,0x81,   0},{   0,   0,   0}}, {{ 4, 4, 0},{ 0, 0, 0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVB,SVN},{SVN,SVN,SVN}}},
+/*  2 */	{{2,1}, { 16,0}, { 19,  0}, {{0x82,0x83,   0},{   0,   0,   0}}, {{ 6, 6, 0},{ 0, 0, 0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVB,SVN},{SVN,SVN,SVN}}},
+/*  3 */	{{2,1}, { 32,0}, { 35,  0}, {{0x84,0x85,   0},{   0,   0,   0}}, {{ 5, 5, 0},{ 0, 0, 0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVB,SVN},{SVN,SVN,SVN}}},
+/*  4 */	{{1,1}, { 48,0}, { 51,  0}, {{0x86,   0,   0},{   0,   0,   0}}, {{ 0, 0, 0},{ 0, 0, 0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}}},
+/*  5 */	{{3,1}, { 64,0}, { 67,  0}, {{0x87,0x88,0x89},{   0,   0,   0}}, {{ 1, 2, 3},{ 0, 0, 0}}, {{SDE,SDE,SDE},{SDN,SDN,SDN}},{{SVA,SVB,SVC},{SVN,SVN,SVN}}},
+/*  6 */	{{3,1}, { 80,0}, { 83,  0}, {{0x8A,0x8B,0x8C},{   0,   0,   0}}, {{ 9, 7, 8},{ 0, 0, 0}}, {{SDE,SDE,SDE},{SDN,SDN,SDN}},{{SVA,SVB,SVC},{SVN,SVN,SVN}}},
+/*  7 */	{{2,1}, { 96,0}, { 99,  0}, {{0x8D,0x8E,   0},{   0,   0,   0}}, {{10,10, 0},{ 0, 0, 0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVB,SVN},{SVN,SVN,SVN}}},
+/*  8 */	{{1,1}, {112,0}, {115,  0}, {{0xA0,   0,   0},{   0,   0,   0}}, {{ 4, 4, 0},{ 0, 0, 0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}}},
+/*  9 */	{{2,1}, {128,0}, {131,  0}, {{0x8F,0x90,   0},{   0,   0,   0}}, {{11,15, 0},{ 0, 0, 0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVB,SVN},{SVN,SVN,SVN}}},
+/* 10 */	{{2,1}, {144,0}, {147,  0}, {{0x91,0x92,   0},{   0,   0,   0}}, {{12,16, 0},{ 0, 0, 0}}, {{SDE,SDE,SDN},{SDN,SDN,SDN}},{{SVA,SVB,SVN},{SVN,SVN,SVN}}},
+/* 11 */	{{1,1}, {160,0}, {163,  0}, {{0x93,   0,   0},{   0,   0,   0}}, {{13, 0, 0},{ 0, 0, 0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}}},
+/* 12 */	{{3,1}, {  0,0}, {  3,  0}, {{0x81,0x82,0x83},{   0,   0,   0}}, {{14, 0, 0},{ 0, 0, 0}}, {{SDE,SDE,SDE},{SDN,SDN,SDN}},{{SVA,SVB,SVC},{SVN,SVN,SVN}}}
 };
 
 struct gdistats {
@@ -131,30 +134,30 @@ struct gdistats {
 	int conflict;
 	int  military;
 } const GDIStats[]={
-// Name   Pop        Area  	  Capital	Government     GDP	    Conflict   Military
-	{ 0,TXT_MAP_P01, TXT_MAP_A00,TXT_MAP_C00, 0,       TXT_MAP_GDP00, TXT_MAP_PC00,	0},
-	{ 1,TXT_MAP_P02, TXT_MAP_A01,TXT_MAP_C01, 1,			TXT_MAP_GDP01, TXT_MAP_PC01,	3},
-	{ 1,TXT_MAP_P02, TXT_MAP_A01,TXT_MAP_C01, 1,			TXT_MAP_GDP01, TXT_MAP_PC02,	3},
-	{ 2,TXT_MAP_P03, TXT_MAP_A02,TXT_MAP_C02, 0,       TXT_MAP_GDP00, TXT_MAP_PC03,	1},
-	{ 3,TXT_MAP_P04, TXT_MAP_A03,TXT_MAP_C03, 3,			TXT_MAP_GDP02, TXT_MAP_PC04,	1},
-	{ 3,TXT_MAP_P04, TXT_MAP_A03,TXT_MAP_C03, 3,			TXT_MAP_GDP02, TXT_MAP_PC04,	1},
-	{ 4,TXT_MAP_P05, TXT_MAP_A04,TXT_MAP_C04, 2,			TXT_MAP_GDP03, TXT_MAP_PC05,	5},
-	{ 4,TXT_MAP_P05, TXT_MAP_A04,TXT_MAP_C04, 2,			TXT_MAP_GDP03, TXT_MAP_PC06,	5},
-	{ 5,TXT_MAP_P06, TXT_MAP_A05,TXT_MAP_C05, 0,			TXT_MAP_GDP04, TXT_MAP_PC07,	2},
-	{ 5,TXT_MAP_P06, TXT_MAP_A05,TXT_MAP_C05, 0,			TXT_MAP_GDP04, TXT_MAP_PC07,	2},
-	{ 6,TXT_MAP_P07, TXT_MAP_A06,TXT_MAP_C06, 0,			TXT_MAP_GDP00, TXT_MAP_PC08,	0},
-	{ 7,TXT_MAP_P08, TXT_MAP_A07,TXT_MAP_C07, 4,			TXT_MAP_GDP05, TXT_MAP_PC00,	2},
-	{ 8,TXT_MAP_P09, TXT_MAP_A08,TXT_MAP_C08, 4,			TXT_MAP_GDP06, TXT_MAP_PC10,	2},
-	{ 9,TXT_MAP_P10, TXT_MAP_A09,TXT_MAP_C09, 0,			TXT_MAP_GDP07, TXT_MAP_PC11,	1},
-	{10,TXT_MAP_P11, TXT_MAP_A10,TXT_MAP_C10, 0,			TXT_MAP_GDP08, TXT_MAP_PC12,	2},
-	{11,TXT_MAP_P12, TXT_MAP_A11,TXT_MAP_C11, 5,			TXT_MAP_GDP09, TXT_MAP_PC13,	3},
-	{12,TXT_MAP_P13, TXT_MAP_A12,TXT_MAP_C12, 6,			TXT_MAP_GDP10, TXT_MAP_PC14,	2},
-	{13,TXT_MAP_P14, TXT_MAP_A13,TXT_MAP_C13, 0,			TXT_MAP_GDP11, TXT_MAP_PC15,	2},
-	{14,TXT_MAP_P15, TXT_MAP_A14,TXT_MAP_C14, 0,			TXT_MAP_GDP12, TXT_MAP_PC16,	3},
-	{14,TXT_MAP_P15, TXT_MAP_A14,TXT_MAP_C14, 0,			TXT_MAP_GDP12, TXT_MAP_PC17,	3},
-	{15,TXT_MAP_P16, TXT_MAP_A15,TXT_MAP_C15, 7,			TXT_MAP_GDP13, TXT_MAP_PC18,	4},
+// Name    Pop          Area       Capital  Government    GDP         Conflict    Military
+	{ 0, TXT_MAP_P01, TXT_MAP_A00, TXT_MAP_C00,   0,    TXT_MAP_GDP00, TXT_MAP_PC00,   0},
+	{ 1, TXT_MAP_P02, TXT_MAP_A01, TXT_MAP_C01,   1,    TXT_MAP_GDP01, TXT_MAP_PC01,   3},
+	{ 1, TXT_MAP_P02, TXT_MAP_A01, TXT_MAP_C01,   1,    TXT_MAP_GDP01, TXT_MAP_PC02,   3},
+	{ 2, TXT_MAP_P03, TXT_MAP_A02, TXT_MAP_C02,   0,    TXT_MAP_GDP00, TXT_MAP_PC03,   1},
+	{ 3, TXT_MAP_P04, TXT_MAP_A03, TXT_MAP_C03,   3,    TXT_MAP_GDP02, TXT_MAP_PC04,   1},
+	{ 3, TXT_MAP_P04, TXT_MAP_A03, TXT_MAP_C03,   3,    TXT_MAP_GDP02, TXT_MAP_PC04,   1},
+	{ 4, TXT_MAP_P05, TXT_MAP_A04, TXT_MAP_C04,   2,    TXT_MAP_GDP03, TXT_MAP_PC05,   5},
+	{ 4, TXT_MAP_P05, TXT_MAP_A04, TXT_MAP_C04,   2,    TXT_MAP_GDP03, TXT_MAP_PC06,   5},
+	{ 5, TXT_MAP_P06, TXT_MAP_A05, TXT_MAP_C05,   0,    TXT_MAP_GDP04, TXT_MAP_PC07,   2},
+	{ 5, TXT_MAP_P06, TXT_MAP_A05, TXT_MAP_C05,   0,    TXT_MAP_GDP04, TXT_MAP_PC07,   2},
+	{ 6, TXT_MAP_P07, TXT_MAP_A06, TXT_MAP_C06,   0,    TXT_MAP_GDP00, TXT_MAP_PC08,   0},
+	{ 7, TXT_MAP_P08, TXT_MAP_A07, TXT_MAP_C07,   4,    TXT_MAP_GDP05, TXT_MAP_PC09,   2},
+	{ 8, TXT_MAP_P09, TXT_MAP_A08, TXT_MAP_C08,   4,    TXT_MAP_GDP06, TXT_MAP_PC10,   2},
+	{ 9, TXT_MAP_P10, TXT_MAP_A09, TXT_MAP_C09,   0,    TXT_MAP_GDP07, TXT_MAP_PC11,   1},
+	{10, TXT_MAP_P11, TXT_MAP_A10, TXT_MAP_C10,   0,    TXT_MAP_GDP08, TXT_MAP_PC12,   2},
+	{11, TXT_MAP_P12, TXT_MAP_A11, TXT_MAP_C11,   5,    TXT_MAP_GDP09, TXT_MAP_PC13,   3},
+	{12, TXT_MAP_P13, TXT_MAP_A12, TXT_MAP_C12,   6,    TXT_MAP_GDP10, TXT_MAP_PC14,   2},
+	{13, TXT_MAP_P14, TXT_MAP_A13, TXT_MAP_C13,   0,    TXT_MAP_GDP11, TXT_MAP_PC15,   2},
+	{14, TXT_MAP_P15, TXT_MAP_A14, TXT_MAP_C14,   0,    TXT_MAP_GDP12, TXT_MAP_PC16,   3},
+	{14, TXT_MAP_P15, TXT_MAP_A14, TXT_MAP_C14,   0,    TXT_MAP_GDP12, TXT_MAP_PC17,   3},
+	{15, TXT_MAP_P16, TXT_MAP_A15, TXT_MAP_C15,   7,    TXT_MAP_GDP13, TXT_MAP_PC18,   4},
 // Hack in a slot for Estonia
-	{34,TXT_MAP_P17, TXT_MAP_A16,TXT_MAP_C16, 0,			TXT_MAP_GDP00, TXT_MAP_PC19,	0}
+	{34,TXT_MAP_P17, TXT_MAP_A16,TXT_MAP_C16,     0,    TXT_MAP_GDP00, TXT_MAP_PC19,   0}
 };
 
 struct nodstats {
@@ -169,30 +172,30 @@ struct nodstats {
 	int military;
 	int probability;
 } const NodStats[]={
-// Name   Pop     Expendable   Capital	Government Corruptible   Worth	    Conflict   Military  Probability
-	{16, TXT_MAP_P18,  38,     TXT_MAP_C17,   8,     86,        TXT_MAP_GDP14, TXT_MAP_PC20, 0,       23},
-	{17, TXT_MAP_P19,	 75,		TXT_MAP_C18,   0,		 18,			TXT_MAP_GDP15, TXT_MAP_PC21, 1,			82},
-	{17, TXT_MAP_P19,	 75,		TXT_MAP_C18,   0,		 18,			TXT_MAP_GDP15, TXT_MAP_PC22, 1,			82},
-	{18, TXT_MAP_P20,	 50,		TXT_MAP_C19,   9,		 52,			TXT_MAP_GDP16, TXT_MAP_PC23, 0,			72},
-	{18, TXT_MAP_P20,	 50,		TXT_MAP_C19,   9,		 52,			TXT_MAP_GDP16, TXT_MAP_PC24, 0,			72},
-	{19, TXT_MAP_P21,	 80,		TXT_MAP_C20,   0,		 85,			TXT_MAP_GDP17, TXT_MAP_PC25, 2,			35},
-	{19, TXT_MAP_P21,	 80,		TXT_MAP_C20,   0,		 85,			TXT_MAP_GDP17, TXT_MAP_PC26, 2,			35},
-	{20, TXT_MAP_P22,	 50,		TXT_MAP_C21,  10,		 48,			TXT_MAP_GDP17, TXT_MAP_PC27, 2,			24},
-	{21, TXT_MAP_P23,	 33,		TXT_MAP_C22,   0,		 28,			TXT_MAP_GDP18, TXT_MAP_PC28, 3,			67},
-	{22, TXT_MAP_P24,	 75,		TXT_MAP_C23,   6,		 17,			TXT_MAP_GDP19, TXT_MAP_PC29, 2,			80},
-	{23, TXT_MAP_P25,	 60,		TXT_MAP_C24,   7,		 93,			TXT_MAP_GDP20, TXT_MAP_PC30, 3,			50},
-	{24, TXT_MAP_P26,	  5,		TXT_MAP_C25,   0,		 84,			TXT_MAP_GDP21, TXT_MAP_PC31, 2,			22},
-	{25, TXT_MAP_P27,	 55,		TXT_MAP_C26,   0,		 48,			TXT_MAP_GDP22, TXT_MAP_PC32, 3,			62},
-	{26, TXT_MAP_P28,	 65,		TXT_MAP_C27,   0,		 41,			TXT_MAP_GDP23, TXT_MAP_PC33, 2,			49},
-	{27, TXT_MAP_P29,	 72,		TXT_MAP_C28,   0,		 74,			TXT_MAP_GDP24, TXT_MAP_PC34, 3,			54},
-	{27, TXT_MAP_P29,	 72,		TXT_MAP_C28,   0,		 74,			TXT_MAP_GDP24, TXT_MAP_PC35, 3,			54},
-	{17, TXT_MAP_P30,	 45,		TXT_MAP_C29,   6,		  3,			TXT_MAP_GDP15, TXT_MAP_PC36, 3,		  100},
-	{28, TXT_MAP_P31,	 45,		TXT_MAP_C30,   0,		 63,			TXT_MAP_GDP25, TXT_MAP_PC37, 2,			66},
-	{29, TXT_MAP_P32,	 55,		TXT_MAP_C31,   0,		 27,			TXT_MAP_GDP26, TXT_MAP_PC38, 2,			68},
-	{30, TXT_MAP_P33,	  5,		TXT_MAP_C32,   0,		 65,			TXT_MAP_GDP27, TXT_MAP_PC39, 4,			74},
-	{31, TXT_MAP_P34,	 65,		TXT_MAP_C33,   0,		 52,			TXT_MAP_GDP19, TXT_MAP_PC40, 2,			84},
-	{32, TXT_MAP_P35,	  2,		TXT_MAP_C34,  11,		 12,			TXT_MAP_GDP28, TXT_MAP_PC41, 2,			92},
-	{33, TXT_MAP_P36,	 10,		TXT_MAP_C35,   0,		  8,			TXT_MAP_GDP29, TXT_MAP_PC42, 1,		  100}
+// Name   Pop     Expendable   Capital  Government Corruptible   Worth      Conflict   Military  Probability
+	{16, TXT_MAP_P18,  38,     TXT_MAP_C17,   8,         86,   TXT_MAP_GDP14, TXT_MAP_PC20,  0,       23},
+	{17, TXT_MAP_P19,  75,     TXT_MAP_C18,   0,         18,   TXT_MAP_GDP15, TXT_MAP_PC21,  1,       82},
+	{17, TXT_MAP_P19,  75,     TXT_MAP_C18,   0,         18,   TXT_MAP_GDP15, TXT_MAP_PC22,  1,       82},
+	{18, TXT_MAP_P20,  50,     TXT_MAP_C19,   9,         52,   TXT_MAP_GDP16, TXT_MAP_PC23,  0,       72},
+	{18, TXT_MAP_P20,  50,     TXT_MAP_C19,   9,         52,   TXT_MAP_GDP16, TXT_MAP_PC24,  0,       72},
+	{19, TXT_MAP_P21,  80,     TXT_MAP_C20,   0,         85,   TXT_MAP_GDP17, TXT_MAP_PC25,  2,       35},
+	{19, TXT_MAP_P21,  80,     TXT_MAP_C20,   0,         85,   TXT_MAP_GDP17, TXT_MAP_PC26,  2,       35},
+	{20, TXT_MAP_P22,  50,     TXT_MAP_C21,  10,         48,   TXT_MAP_GDP17, TXT_MAP_PC27,  2,       24},
+	{21, TXT_MAP_P23,  33,     TXT_MAP_C22,   0,         28,   TXT_MAP_GDP18, TXT_MAP_PC28,  3,       67},
+	{22, TXT_MAP_P24,  75,     TXT_MAP_C23,   6,         17,   TXT_MAP_GDP19, TXT_MAP_PC29,  2,       80},
+	{23, TXT_MAP_P25,  60,     TXT_MAP_C24,   7,         93,   TXT_MAP_GDP20, TXT_MAP_PC30,  3,       50},
+	{24, TXT_MAP_P26,   5,     TXT_MAP_C25,   0,         84,   TXT_MAP_GDP21, TXT_MAP_PC31,  2,       22},
+	{25, TXT_MAP_P27,  55,     TXT_MAP_C26,   0,         48,   TXT_MAP_GDP22, TXT_MAP_PC32,  3,       62},
+	{26, TXT_MAP_P28,  65,     TXT_MAP_C27,   0,         41,   TXT_MAP_GDP23, TXT_MAP_PC33,  2,       49},
+	{27, TXT_MAP_P29,  72,     TXT_MAP_C28,   0,         74,   TXT_MAP_GDP24, TXT_MAP_PC34,  3,       54},
+	{27, TXT_MAP_P29,  72,     TXT_MAP_C28,   0,         74,   TXT_MAP_GDP24, TXT_MAP_PC35,  3,       54},
+	{17, TXT_MAP_P30,  45,     TXT_MAP_C29,   6,          3,   TXT_MAP_GDP15, TXT_MAP_PC36,  3,      100},
+	{28, TXT_MAP_P31,  45,     TXT_MAP_C30,   0,         63,   TXT_MAP_GDP25, TXT_MAP_PC37,  2,       66},
+	{29, TXT_MAP_P32,  55,     TXT_MAP_C31,   0,         27,   TXT_MAP_GDP26, TXT_MAP_PC38,  2,       68},
+	{30, TXT_MAP_P33,   5,     TXT_MAP_C32,   0,         65,   TXT_MAP_GDP27, TXT_MAP_PC39,  4,       74},
+	{31, TXT_MAP_P34,  65,     TXT_MAP_C33,   0,         52,   TXT_MAP_GDP19, TXT_MAP_PC40,  2,       84},
+	{32, TXT_MAP_P35,   2,     TXT_MAP_C34,  11,         12,   TXT_MAP_GDP28, TXT_MAP_PC41,  2,       92},
+	{33, TXT_MAP_P36,  10,     TXT_MAP_C35,   0,          8,   TXT_MAP_GDP29, TXT_MAP_PC42,  1,      100}
 };
 
 

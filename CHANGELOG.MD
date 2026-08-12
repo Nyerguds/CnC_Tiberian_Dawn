@@ -333,3 +333,7 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * When a unit is finished being serviced on a Service Depot or Helipad (repairing or reloading), a beep sound will alert the player that they are ready again. If the unit is selected at that moment, it will simply tell the player it is ready and awaiting orders.
 * \[Internal\] Death animations for infantry are now configured in the warheads information.
 * Infantry gored or eaten by dinosaurs will now show a previously-unused messy death animation.
+* \[v1.06\] Added "NoEgoScreen" option that can be used in missions to make it skip the score screen.
+* Dinosaur missions will now get a score screen, with the score level based on the scenario number times three.
+* Mission 8A (Vienna) will now correctly show its Point of Conflict as "Salzburg" instead of "Jelgava".
+* \[Remaster\] Civilians in GDI mission 8B will now always avoid tiberium. This option can be used in missions by adding the "NoTiberiumWandering" option into a mission.

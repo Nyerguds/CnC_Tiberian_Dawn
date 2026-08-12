@@ -1801,6 +1801,11 @@ void HouseClass::Read_INI(char *buffer)
 		if (p->Edge == SOURCE_NONE) {
 			p->Edge = SOURCE_NORTH;
 		}
+
+		// This is normally managed by the scenario, so reset it here too.
+		p->NukePieces = 3;
+		p->NukePiecesStart = p->NukePieces;
+
 		
 		WWGetPrivateProfileString(hname, "ColorScheme", "", buf, sizeof(buf)-1, buffer);
 		PlayerColorType remap = PlayerColor_From_Name(buf);

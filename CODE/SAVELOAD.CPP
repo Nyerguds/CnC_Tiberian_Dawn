@@ -101,7 +101,9 @@
 										sizeof(MissionTargetSpawn) + \
 										sizeof(MissionTargetHouse) + \
 										sizeof(MissionTargetTrigger) + \
-										sizeof(LastConstruction)))
+										sizeof(LastConstruction) + \
+										sizeof(NoEgoScreen) + \
+										sizeof(NoTiberiumWandering)))
 
 
 /***************************************************************************
@@ -656,11 +658,16 @@ bool Save_Misc_Values(FileClass &file)
 	file.Write(&AllowDetachedAISupers, sizeof(AllowDetachedAISupers));
 	// Added option to make AI helis not default to Area Guard mode.
 	file.Write(&PassiveHelis, sizeof(PassiveHelis));
+	// Added option to skip score screen.
+	file.Write(&NoEgoScreen, sizeof(NoEgoScreen));
 	// Added options to customize spawn from tech center destruction.
 	file.Write(&MissionTargetSpawn, sizeof(MissionTargetSpawn));
 	file.Write(&MissionTargetHouse, sizeof(MissionTargetHouse));
 	file.Write(MissionTargetTrigger, sizeof(MissionTargetTrigger));
+	// Remember last built structure.
 	file.Write(&LastConstruction, sizeof(LastConstruction));
+	// Added options to make civs avoid tiberium.
+	file.Write(&NoTiberiumWandering, sizeof(NoTiberiumWandering));
 	return(true);
 }
 
@@ -771,11 +778,16 @@ bool Load_Misc_Values(FileClass &file)
 	file.Read(&AllowDetachedAISupers, sizeof(AllowDetachedAISupers));
 	// Added option to make AI helis not default to Area Guard mode.
 	file.Read(&PassiveHelis, sizeof(PassiveHelis));
+	// Added option to skip score screen.
+	file.Read(&NoEgoScreen, sizeof(NoEgoScreen));
 	// Added options to customize spawn from tech center destruction.
 	file.Read(&MissionTargetSpawn, sizeof(MissionTargetSpawn));
 	file.Read(&MissionTargetHouse, sizeof(MissionTargetHouse));
 	file.Read(MissionTargetTrigger, sizeof(MissionTargetTrigger));
+	// Remember last built structure.
 	file.Read(&LastConstruction, sizeof(LastConstruction));
+	// Added options to make civs avoid tiberium.
+	file.Read(&NoTiberiumWandering, sizeof(NoTiberiumWandering));
 	return(true);
 }
 

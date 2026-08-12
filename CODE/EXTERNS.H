@@ -213,6 +213,8 @@ extern int						CarryOverPercent;
 extern int						RequiredNukePieces;
 extern bool						AllowDetachedAISupers;
 extern bool						PassiveHelis;
+extern bool						NoTiberiumWandering;
+extern bool						NoEgoScreen;
 extern StructType				LastConstruction;
 extern char 					ScenarioName[_MAX_FNAME+_MAX_EXT];
 extern unsigned					BuildLevel;
