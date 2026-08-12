@@ -92,7 +92,8 @@ struct countrylist {
 // * Fixed choice after GDI 4 to have {SVA,SVB,SVN} for both E and W.
 // * Fixed choice after GDI 12 to not give a B choice at all.
 // GDI SCENARIO CHOICES
-/*  0 */	{0}, // E/W start continue   East colors       West colors        E shape    W shape      direction                     variant
+//      	choices E/W start continue   East colors       West colors        E shape    W shape      direction                     variant
+/*  0 */	{0},
 /*  1 */	{{1,1}, { 0, 0}, {  3,  3}, {{0x95,   0,   0},{0x95,   0,   0}}, {{17, 0, 0},{17, 0, 0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}}},
 /*  2 */	{{1,1}, {16,16}, { 19, 19}, {{0x80,   0,   0},{0x80,   0,   0}}, {{ 0, 0, 0},{ 0, 0, 0}}, {{SDE,SDN,SDN},{SDN,SDN,SDN}},{{SVA,SVN,SVN},{SVN,SVN,SVN}}},
 /*  3 */	{{3,3}, {32,32}, { 35, 35}, {{0x81,0x82,0x83},{0x81,0x82,0x83}}, {{ 3, 3, 1},{ 3, 3, 1}}, {{SDW,SDW,SDE},{SDN,SDN,SDN}},{{SVA,SVB,SVA},{SVN,SVN,SVN}}},
@@ -134,6 +135,8 @@ struct gdistats {
 	int conflict;
 	int  military;
 } const GDIStats[]={
+// Nyerguds's C&C Patch Project v1.04: Map selection screen fixes.
+// * Fixed #7 to show "Salzburg" as Point of Conflict instead of "Jelgava".
 // Name    Pop          Area       Capital  Government    GDP         Conflict    Military
 	{ 0, TXT_MAP_P01, TXT_MAP_A00, TXT_MAP_C00,   0,    TXT_MAP_GDP00, TXT_MAP_PC00,   0},
 	{ 1, TXT_MAP_P02, TXT_MAP_A01, TXT_MAP_C01,   1,    TXT_MAP_GDP01, TXT_MAP_PC01,   3},
