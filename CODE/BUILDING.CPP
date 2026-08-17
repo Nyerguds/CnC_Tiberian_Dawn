@@ -5701,7 +5701,7 @@ void BuildingClass::Spawn_Mission_Target(TechnoClass * source, HousesType attack
 
 	InfantryClass * i = new InfantryClass(MissionTargetSpawn, house);
 	if (!i) {
-		// Creation failed;  can't do much. Can't even spring triggers.
+		// Creation failed; can't do much. Can't even spring triggers.
 		return;
 	}
 
@@ -5719,30 +5719,31 @@ void BuildingClass::Spawn_Mission_Target(TechnoClass * source, HousesType attack
 	if (i->Unlimbo(exitpoint, fromcapture ? DIR_S : DIR_N)) {
 		if (!fromcapture) {
 			// If the building blew up, apply damage. If not, the target escapes unscathed.
-			int minStr = MAX(1, i->Class->MaxStrength * 2 / 5);
-			i->Strength = Random_Pick(minStr, (int)i->Class->MaxStrength);
+			int maxstr = i->Class->MaxStrength;
+			int minstr = MAX(1, maxstr * 2 / 5);
+			i->Strength = Random_Pick(minstr, maxstr);
 		}
 		i->Look(false);
 		ScenarioInit--;
 		i->Scatter(Center_Coord(), true);
 		ScenarioInit++;
-		bool isHuman = HouseClass::As_Pointer(house)->IsHuman;
-		if (HouseClass::As_Pointer(house) == PlayerPtr) {
-				// The new unit announces that it appeared.
+		HouseClass * hobj = HouseClass::As_Pointer(house);
+		if (hobj == PlayerPtr) {
+			// If player-owned, the new unit announces that it appeared.
 			if (MissionTargetSpawn == INFANTRY_RAMBO) {
 				Sound_Effect(VOC_RAMBO_ROCK);
 			} else if (MissionTargetSpawn == INFANTRY_MOEBIUS) {
 				Sound_Effect(VOC_COMMANDER);
 			} else {
 				// This is a single event, independent from anything else voice
-				// related that might be going on. So backup and restore.
+				// related that might be going on. So back up and restore.
 				bool wasvoice = AllowVoice;
 				AllowVoice = true;
 				i->Response_Select();
 				AllowVoice = wasvoice;
 			}
 		}
-		i->Assign_Mission(isHuman ? MISSION_GUARD : MISSION_GUARD_AREA);
+		i->Assign_Mission(hobj->IsHuman ? MISSION_GUARD : MISSION_GUARD_AREA);
 	} else {
 		// Ensure that if spawn somehow fails, triggers get executed.
 		i->Record_The_Kill(source, attacker);

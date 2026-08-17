@@ -745,7 +745,6 @@ bool Restate_Mission(char const * name, int button1, int button2)
 	CCDebugFunc("bool Restate_Mission(char const * name, int button1, int button2)");
 #endif
 	bool hidden = Get_Mouse_State();
-	bool image_shown = false;
 	if (name) {
 		/*
 		**	Make sure that if there is no briefing movie, that the briefing text is
@@ -773,7 +772,6 @@ bool Restate_Mission(char const * name, int button1, int button2)
 
 		if (CCFileClass(fname).Is_Available()) {
 			CCDebugString("CPS briefing found for \"%s\"\n", name);
-			image_shown = true;
 			if (hidden) Show_Mouse();
 			if (CCMessageBox(TXT_OBJECTIVE, true).Process(fname, button1, button2)) {
 				if (hidden) Hide_Mouse();

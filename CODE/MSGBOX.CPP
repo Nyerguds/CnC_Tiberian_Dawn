@@ -294,7 +294,12 @@ int CCMessageBox::Process(const char *msg, const char *b1txt, const char *b2txt,
 					break;
 
 				case (KN_ESC):
-					if (numbuttons > 2) {
+					// Nyerguds's C&C Patch Project v1.04: Allow Esc on single button dialogs.
+					// If there is only one button, allow Escape to close the dialog.
+					if (numbuttons == 1) {
+						selection = realval[0];
+						pressed = true;
+					} else if (numbuttons > 2) {
 						selection = realval[1];
 						pressed = true;
 					} else {
