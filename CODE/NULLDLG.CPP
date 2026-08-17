@@ -1094,7 +1094,7 @@ Debug_Smart_Print = true;
 				/*
 				....................... Draw the labels .........................
 				*/
-				Draw_Caption (TXT_SELECT_SERIAL_GAME, d_dialog_x, d_dialog_y, d_dialog_w);
+				Draw_Caption (TXT_SELECT_SERIAL_GAME, d_dialog_x, d_dialog_y, d_dialog_w, OPTION_SERIAL);
 			}
 			Show_Mouse();
 			display = REDRAW_NONE;
@@ -2374,7 +2374,7 @@ static int Com_Settings_Dialog( SerialSettingsType *settings )
 				/*...............................................................
 				Dialog & Field labels
 				...............................................................*/
-				Draw_Caption (TXT_SETTINGS, d_dialog_x, d_dialog_y, d_dialog_w);
+				Draw_Caption (TXT_SETTINGS, d_dialog_x, d_dialog_y, d_dialog_w, OPTION_PHONE);
 
 				Fancy_Text_Print( TXT_PORT_COLON,
 					d_port_x - 3, d_port_y + 1 *factor,
@@ -3593,10 +3593,10 @@ int Com_Scenario_Dialog(void)
 				if (Winsock.Get_Connected()){
 					Draw_Caption (TXT_HOST_INTERNET_GAME, d_dialog_x, d_dialog_y, d_dialog_w);
 				}else{
-					Draw_Caption (TXT_HOST_SERIAL_GAME, d_dialog_x, d_dialog_y, d_dialog_w);
+					Draw_Caption (TXT_HOST_SERIAL_GAME, d_dialog_x, d_dialog_y, d_dialog_w, OPTION_SERIAL);
 				}
 #else
-				Draw_Caption (TXT_HOST_SERIAL_GAME, d_dialog_x, d_dialog_y, d_dialog_w);
+				Draw_Caption (TXT_HOST_SERIAL_GAME, d_dialog_x, d_dialog_y, d_dialog_w, OPTION_SERIAL);
 #endif	//FORCE_WINSOCK
 
 				Fancy_Text_Print(TXT_YOUR_NAME,
@@ -4857,10 +4857,10 @@ int Com_Show_Scenario_Dialog(void)
 				if (Winsock.Get_Connected()){
 					Draw_Caption (TXT_JOIN_INTERNET_GAME, d_dialog_x, d_dialog_y, d_dialog_w);
 				}else{
-					Draw_Caption (TXT_JOIN_SERIAL_GAME, d_dialog_x, d_dialog_y, d_dialog_w);
+					Draw_Caption (TXT_JOIN_SERIAL_GAME, d_dialog_x, d_dialog_y, d_dialog_w, OPTION_SERIAL);
 				}
 #else
-				Draw_Caption (TXT_JOIN_SERIAL_GAME, d_dialog_x, d_dialog_y, d_dialog_w);
+				Draw_Caption (TXT_JOIN_SERIAL_GAME, d_dialog_x, d_dialog_y, d_dialog_w, OPTION_SERIAL);
 #endif	//FORCE_WINSOCK
 
 				Fancy_Text_Print(TXT_YOUR_NAME,
@@ -5957,7 +5957,7 @@ static int Phone_Dialog (void)
 				/*...............................................................
 				Dialog & Field labels
 				...............................................................*/
-				Draw_Caption (TXT_PHONE_LIST, d_dialog_x, d_dialog_y, d_dialog_w);
+				Draw_Caption (TXT_PHONE_LIST, d_dialog_x, d_dialog_y, d_dialog_w, OPTION_PHONE);
 			}
 			/*
 			.......................... Redraw buttons ..........................
@@ -6571,7 +6571,7 @@ static int Edit_Phone_Dialog (PhoneEntryClass *phone)
 				/*...............................................................
 				Dialog & Field labels
 				...............................................................*/
-				Draw_Caption (TXT_PHONE_LISTING, d_dialog_x, d_dialog_y, d_dialog_w);
+				Draw_Caption (TXT_PHONE_LISTING, d_dialog_x, d_dialog_y, d_dialog_w, OPTION_PHONE);
 
 				Fancy_Text_Print (TXT_NAME_COLON,
 					d_name_x - 5, d_name_y + 1,

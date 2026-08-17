@@ -2965,7 +2965,7 @@ typedef enum OptionControlType {
 	OPTION_NONE=-1,			// No fancy shmancy shape.
 	OPTION_DIALOG=0,			// Small dialog boxes.
 	OPTION_CONTROLS=2,		// Large dialog boxes, game controls.
-	OPTION_DELETE=4,			// Delete,Load,Save game.
+	OPTION_SAVEGAME=4,			// Delete,Load,Save game.
 	OPTION_SERIAL=6,			// Serial dialog.
 	OPTION_PHONE=8,			// Phone dialog.
 	OPTION_VISUAL=10,			// Visual dialog.

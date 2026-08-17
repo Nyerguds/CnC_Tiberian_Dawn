@@ -224,7 +224,7 @@ void VisualControlsClass::Process(void)
 		if (display) {
 			Hide_Mouse();
 			Dialog_Box(Option_X, Option_Y, Option_Width, Option_Height);
-			Draw_Caption(TXT_VISUAL_CONTROLS, Option_X, Option_Y, Option_Width);
+			Draw_Caption(TXT_VISUAL_CONTROLS, Option_X, Option_Y, Option_Width, OPTION_VISUAL);
 			Show_Mouse();
 			display = false;
 			partial = true;

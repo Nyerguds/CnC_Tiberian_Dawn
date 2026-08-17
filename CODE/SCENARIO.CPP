@@ -771,10 +771,11 @@ bool Restate_Mission(char const * name, int button1, int button2)
 		strcpy(fname, name);
 		strcat(fname,".CPS");
 
-		if(CCFileClass(fname).Is_Available()) {
+		if (CCFileClass(fname).Is_Available()) {
+			CCDebugString("CPS briefing found for \"%s\"\n", name);
 			image_shown = true;
 			if (hidden) Show_Mouse();
-			if (CCMessageBox(TXT_NONE, true).Process(fname, button1, button2)) {
+			if (CCMessageBox(TXT_OBJECTIVE, true).Process(fname, button1, button2)) {
 				if (hidden) Hide_Mouse();
 				return(true);
 			}
@@ -786,6 +787,7 @@ bool Restate_Mission(char const * name, int button1, int button2)
 		**	If mission object text was found, then display it.
 		*/
 		if (strlen(BriefingText)) {
+			CCDebugString("Text briefing found for \"%s\"\n", name);
 			static char _buff[512];
 
 			strcpy(_buff, BriefingText);
@@ -800,6 +802,8 @@ bool Restate_Mission(char const * name, int button1, int button2)
 			if (hidden) Hide_Mouse();
 			if (!brief) return(true);
 			return(false);
+		} else {
+			CCDebugString("No text briefing found for \"%s\"\n", name);
 		}
 	}
 	return(false);

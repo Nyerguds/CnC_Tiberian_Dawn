@@ -221,7 +221,7 @@ void GameControlsClass::Process(void)
 		if (display) {
 			Hide_Mouse();
 			Dialog_Box(d_dialog_x, d_dialog_y, d_dialog_w, d_dialog_h);
-			Draw_Caption(TXT_GAME_CONTROLS, d_dialog_x, d_dialog_y, d_dialog_w);
+			Draw_Caption(TXT_GAME_CONTROLS, d_dialog_x, d_dialog_y, d_dialog_w, OPTION_CONTROLS);
 			Show_Mouse();
 			display = false;
 			refresh = true;

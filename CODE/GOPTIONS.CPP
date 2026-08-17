@@ -247,7 +247,7 @@ void GameOptionsClass::Process(void)
 			/*
 			**	Draw the arrows border if requested.
 			*/
-			Draw_Caption(TXT_OPTIONS, OptionX, OptionY, OptionWidth);
+			Draw_Caption(TXT_OPTIONS, OptionX, OptionY, OptionWidth, OPTION_CONTROLS);
 
 			/*
 			**	Display the version number at the bottom of the dialog box.
@@ -511,11 +511,13 @@ void GameOptionsClass::Process(void)
  *                                                                                             *
  *    This routine draws the caption text and any fancy filigree that the dialog may require.  *
  *                                                                                             *
- * INPUT:   text  -- The text of the caption. This is the text number.                         *
+ * INPUT:   text   -- The text of the caption. This is the text number.                        *
  *                                                                                             *
- *          x,y   -- The dialog box X and Y pixel coordinate of the upper left corner.         *
+ *          x,y    -- The dialog box X and Y pixel coordinate of the upper left corner.        *
  *                                                                                             *
- *          w     -- The width of the dialog box (in pixels).                                  *
+ *          w      -- The width of the dialog box (in pixels).                                 *
+ *                                                                                             *
+ *          option -- The specific corner decorations to draw on the dialog.                   *
  *                                                                                             *
  * OUTPUT:  none                                                                               *
  *                                                                                             *
@@ -524,15 +526,15 @@ void GameOptionsClass::Process(void)
  * HISTORY:                                                                                    *
  *   06/23/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-void Draw_Caption(int text, int x, int y, int w)
+void Draw_Caption(int text, int x, int y, int w, OptionControlType option)
 {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("void Draw_Caption(int text, int x, int y, int w)");
 #endif
-	OptionControlType option = OPTION_NONE;
-	int factor			= Get_Resolution_Factor();
+	//OptionControlType option = OPTION_NONE;
+	int factor = Get_Resolution_Factor();
 
-
+#ifdef OBSOLETE
 	/*
 	**	Determine the filigree to use depending on the text of the caption.
 	*/
@@ -545,7 +547,7 @@ void Draw_Caption(int text, int x, int y, int w)
 		case TXT_LOAD_MISSION:
 		case TXT_SAVE_MISSION:
 		case TXT_DELETE_MISSION:
-			option = OPTION_DELETE;
+			option = OPTION_SAVEGAME;
 			break;
 
 		case TXT_NONE:
@@ -586,6 +588,7 @@ void Draw_Caption(int text, int x, int y, int w)
 			option = OPTION_DIALOG;
 			break;
 	}
+#endif
 
 	/*
 	**	Draw the filigree at the corners of the dialog.

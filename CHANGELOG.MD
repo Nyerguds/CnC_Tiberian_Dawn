@@ -337,3 +337,4 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * Dinosaur missions will now get a score screen, with the score level based on the scenario number times three.
 * Mission 8A (Vienna) will now correctly show its Point of Conflict as "Salzburg" instead of "Jelgava".
 * \[Remaster\] Civilians in GDI mission 8B will now always avoid tiberium. This option can be used in missions by adding the "NoTiberiumWandering" option into a mission.
+* Japanese briefings now also show the "Briefing" text at the top.

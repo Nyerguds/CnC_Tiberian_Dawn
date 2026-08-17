@@ -1059,7 +1059,7 @@ static int Net_Join_Dialog(void)
 				/*...............................................................
 				Dialog & Field labels
 				...............................................................*/
-				Draw_Caption (TXT_JOIN_NETWORK_GAME, d_dialog_x, d_dialog_y, d_dialog_w);
+				Draw_Caption (TXT_JOIN_NETWORK_GAME, d_dialog_x, d_dialog_y, d_dialog_w, OPTION_JOIN_NETWORK);
 
 				Fancy_Text_Print(TXT_YOUR_NAME,
 					d_name_x - 5, d_name_y + 1, CC_GREEN, TBLACK,
@@ -3143,7 +3143,7 @@ static int Net_New_Dialog(void)
 				/*...............................................................
 				Dialog & Field labels
 				...............................................................*/
-				Draw_Caption (TXT_NETGAME_SETUP, d_dialog_x, d_dialog_y, d_dialog_w);
+				Draw_Caption (TXT_NETGAME_SETUP, d_dialog_x, d_dialog_y, d_dialog_w, OPTION_NETWORK);
 
 				Fancy_Text_Print(TXT_PLAYERS,
 					d_playerlist_x + (d_playerlist_w / 2), d_playerlist_y - d_txt6_h,

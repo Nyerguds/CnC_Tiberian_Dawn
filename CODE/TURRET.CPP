@@ -459,8 +459,11 @@ COORDINATE TurretClass::Fire_Coord(int which, bool forrange, COORDINATE coords) 
 		}
 		int xval2 = Coord_X(coord);
 		int yval2 = Coord_Y(coord);
-		// Rough adjustment to perspective, by dividing the vertical difference by 2.
-		int yvalpersp = yval1 + (yval2 - yval1) / 2;
+		// Adjustment to perspective, by multiplying with the cosine of 45 degrees.
+		// These values are never more than an entire cell, so the cosine is 16 bit.
+		// This value is adjusted to the 5/6 height flattening caused by Tall Pixels.
+		// The real value is 0.7071, resulting in 0xB505. The flattened one is 0.5892.
+		int yvalpersp = yval1 + ((((yval2 - yval1) * 0x96D9) + 0x8000) >> 16);
 		coord = XY_Coord(xval2, yvalpersp);
 	}
 

@@ -310,7 +310,7 @@ void SoundControlsClass::Process(void)
 			*/
 			Dialog_Box(Option_X, Option_Y, Option_Width, Option_Height);
 
-			Draw_Caption(TXT_SOUND_CONTROLS, Option_X, Option_Y, Option_Width);
+			Draw_Caption(TXT_SOUND_CONTROLS, Option_X, Option_Y, Option_Width, OPTION_SOUND);
 
 			/*
 			** Draw the Music, Speech & Sound titles.

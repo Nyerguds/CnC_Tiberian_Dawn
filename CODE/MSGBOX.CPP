@@ -143,16 +143,18 @@ int CCMessageBox::Process(const char *msg, const char *b1txt, const char *b2txt,
 	int width;
 	int height;
 
-	if(IsPicture) {
-		width = 90;
-		height = 140 - 60;
-	} else
-	Format_Window_String(buffer, 255 * factor, width, height);
-
-	width = MAX(width, 50 * factor);
-	width += 40 * factor;
-	height += (numbuttons == 0) ? (30 * factor) : (60 * factor);
-
+	int heightOffs = 0;
+	if (IsPicture) {
+		width = 320;
+		height = 200;
+		heightOffs = 172;
+	} else {
+		Format_Window_String(buffer, 255 * factor, width, height);
+		width = MAX(width, 50 * factor);
+		width += 40 * factor;
+		height += (numbuttons == 0) ? (30 * factor) : (60 * factor);
+		heightOffs =  height - (bheight + (5*factor));
+	}
 	int x = (SeenBuff.Get_Width() - width) / 2;
 	int y = (SeenBuff.Get_Height() - height) / 2;
 
@@ -167,12 +169,12 @@ int CCMessageBox::Process(const char *msg, const char *b1txt, const char *b2txt,
 	**	actually be added to the button list.
 	*/
 	TextButtonClass button1(BUTTON_1, b1txt, TPF_6PT_GRAD|TPF_USE_GRAD_PAL|TPF_NOSHADOW,
-		x + ((numbuttons == 1) ? ((width - bwidth) >> 1) : (10*factor)), y + height - (bheight + (5*factor)), bwidth);
+		x + ((numbuttons == 1) ? ((width - bwidth) >> 1) : (10*factor)), y + heightOffs, bwidth);
 
 	TextButtonClass button2(BUTTON_2, b2txt, TPF_6PT_GRAD|TPF_USE_GRAD_PAL|TPF_NOSHADOW,
-		x + width - (bwidth + (10*factor)), y + height - (bheight + (5*factor)), bwidth);
+		x + width - (bwidth + (10*factor)), y + heightOffs, bwidth);
 
-	TextButtonClass button3(BUTTON_3, b3txt, TPF_6PT_GRAD|TPF_USE_GRAD_PAL|TPF_NOSHADOW, 0, y + height - (bheight + (5*factor)));
+	TextButtonClass button3(BUTTON_3, b3txt, TPF_6PT_GRAD|TPF_USE_GRAD_PAL|TPF_NOSHADOW, 0, y + heightOffs);
 	button3.X = x + ((width - button3.Width) >> 1);
 
 	TextButtonClass * buttonlist = 0;
@@ -210,9 +212,10 @@ int CCMessageBox::Process(const char *msg, const char *b1txt, const char *b2txt,
 		SeenBuff.To_Buffer(x, y, width, height, back, width * height);
 	}
 	//display = TRUE;
-	if(IsPicture) {
+	if (IsPicture) {
 		Load_Uncompress(CCFileClass(msg), SysMemPage, SysMemPage);
-		SysMemPage.Blit(SeenBuff, 160, 100);
+		SysMemPage.Blit(SeenBuff, x, y);
+		Draw_Caption(Caption, x, y, width, OPTION_NONE);
 	} else {
 		Dialog_Box(x, y, width, height);
 		Draw_Caption(Caption, x, y, width);
@@ -248,14 +251,15 @@ int CCMessageBox::Process(const char *msg, const char *b1txt, const char *b2txt,
 				display = TRUE;
 			}
 
-			if (display){
+			if (display) {
 				display = FALSE;
 
 				Hide_Mouse();
 
-				if(IsPicture) {
+				if (IsPicture) {
 					Load_Uncompress(CCFileClass(msg), SysMemPage, SysMemPage);
-					SysMemPage.Blit(SeenBuff, 160, 100);
+					SysMemPage.Blit(SeenBuff, x, y);
+					Draw_Caption(Caption, x, y, width, OPTION_NONE);
 				} else {
 					Dialog_Box(x, y, width, height);
 					Draw_Caption(Caption, x, y, width);

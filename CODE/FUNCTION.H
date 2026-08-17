@@ -473,7 +473,7 @@ int Optimize_Moves(PathType *path, int (*callback)(CELL, FacingType), int thresh
 /*
 **	GOPTIONS.CPP
 */
-void Draw_Caption(int text, int x, int y, int w);
+void Draw_Caption(int text, int x, int y, int w, OptionControlType option = OPTION_DIALOG);
 
 /*
 **	INI.CPP

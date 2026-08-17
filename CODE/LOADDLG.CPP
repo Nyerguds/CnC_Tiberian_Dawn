@@ -364,7 +364,7 @@ int LoadOptionsClass::Process(void)
 			*/
 			if (display) {
 				Dialog_Box(d_dialog_x, d_dialog_y, d_dialog_w, d_dialog_h);
-				Draw_Caption(caption, d_dialog_x, d_dialog_y, d_dialog_w);
+				Draw_Caption(caption, d_dialog_x, d_dialog_y, d_dialog_w, OPTION_SAVEGAME);
 
 				if (Style == SAVE) {
 					Fancy_Text_Print(TXT_MISSION_DESCRIPTION, d_dialog_cx,
