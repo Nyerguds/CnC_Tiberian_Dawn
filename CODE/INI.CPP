@@ -321,6 +321,7 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 	MissionTargetHouse = HOUSE_NONE;
 	memset (MissionTargetTrigger, 0, sizeof(MissionTargetTrigger));
 	NoTiberiumWandering = false;
+	ForceBriefScreen = false;
 
 	/*
 	**	For single-player scenarios, 'BuildLevel' is the scenario number.
@@ -437,6 +438,7 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 		}
 		PlayerPtr->NukePieces = MAX(-1, nukeInherit ? nukepieces : newpieces);
 		PlayerPtr->NukePiecesStart = PlayerPtr->NukePieces;
+		ForceBriefScreen = WWGetPrivateProfileBool("Basic", "ForceBriefScreen", 0, buffer);
 
 		int carryover = Fixed_To_Cardinal(CarryOverMoney, CarryOverPercent);
 		if (CarryOverCap != -1) {

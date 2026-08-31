@@ -127,9 +127,18 @@ These are mostly features that were originally implemented in the 1.06 patch.
 
 ### General mission options
 
-These options are available under \[Basic\]:
+These options are available under \[Basic\]: They all default to "not activated" state, except for those that are enabled for specific campaign mission behavior.
 
+* **Prefix**: Custom side identifier to show if this mission is shown in the "New Missions" list. Maximum 3 characters.
 * **RadarLogo**: Custom radar logo graphics to load. This is the extension of an HRADAR.??? file, where ??? is typically the House identifier. The game contains one for "GDI", "NOD" and "JP", but custom campaigns could add their own.
+* **ForceBriefScreen**: If true, always show the briefing text screen, even if the mission has a "Briefing" video set.
+* **NoEgoScreen**: If true, this mission will not show a score screen at the end.
+* **PassiveHelis**: If true, computer-owned helicopters in this mission will not guard the area around their helipad. This does not mean they are unresponsive; they will still retaliate when attacked.
+* **Patsux**: If true, Orcas in this mission will get the Obelisk LASER weapon.
+* **RemoveBuildExceptions**: If true, the normal restrictions on what the player can build inside the campaign are removed, unlocking the full tech tree. This also applies to which captured tech can be built.
+* **MissionTargetSpawn**: If an infantry type is set on this, this infantry will spawn as extra unit whenever a Technology Center in this mission is destroyed or captured.
+* **MissionTargetHouse**: The House of the infantry spawned from the Technology Center. If not set or left to None, this defaults to the house owning the building.
+* **MissionTargetTrigger**: If set, attaches a trigger to the infantry spawned from the Technology Center.
 * **RequiredNukePieces**: Amount of nuke pieces (steel crates) required to fire a single nuclear missile in this mission. This defaults to three.
 * **PlayerNukePieces**: Amount of nuke pieces (steel crates) the player is considered to have collected at the mission start. The Temple of Nod will grant you one nuclear missile superweapon for each batch of collected nuke pieces, as specified in **RequiredNukePieces**. This defaults to three, to give the normal logic of one nuke per mission.
 * **PlayerNukeInherit**: If true, the amount of nuke pieces is inherited from the previous scenario. This means the **PlayerNukePieces** value is not used.
@@ -142,7 +151,7 @@ New options are available in the house sections in missions (\[Goodguy\], \[Badg
 The following keys are available. Each more specific one will override parts of the more general ones:
 
 * **ColorScheme**: Makes this house use a different color scheme (see list below). Each color scheme is a complete set of unit color, building color, unit radar color and building radar color. All the following keys will add exceptions to that basic profile.
-* **SecondaryScheme**: Takes the primary color of a different scheme and uses it for its buildings, like Nod does. You can use 'None' to disable Nod's secondary color, but do note that the (blue/grey) Nod will still have red radar colors then. It's probably better to just put the normal ColorScheme to Blue or Red.
+* **SecondaryScheme**: Takes the primary color of a different scheme and uses it for its buildings, like Nod does. You can use 'None' to disable Nod's secondary color, but do note that the (blue/grey) Nod will still have red radar colors then. Disabling Nod's dual colours can be done more easily by putting their normal ColorScheme to Blue or Red.
 * **RadarScheme**: Makes this house use the radar colors from a different color scheme.
 * **UnitRadarColor**: Specify a specific palette index to use as unit radar color.
 * **BuildingRadarColor**: Specify a specific palette index to use as building radar color.

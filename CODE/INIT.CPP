@@ -300,8 +300,17 @@ bool Init_Game(int , char *[])
 	**	but only the non terrain specific colors matter.
 	*/
 	//Mem_Copy((void *)MixFileClass::Retrieve("TEMPERAT.PAL"), GamePalette, 768L);
-	CCFileClass palfile ("TEMPERAT.PAL");
-	palfile.Read (GamePalette, 768L);
+	CCFileClass palfile ("CCMENU.PAL");
+	if (palfile.Is_Available()) {
+		palfile.Read(GamePalette, 768L);
+	} else {
+		// Fall back on temperat.pal. This has the slight issue that it makes
+		// the file unmoddable, since it needs to be inside cclocal.mix.
+		CCFileClass palfile2 ("TEMPERAT.PAL");
+		if (palfile2.Is_Available()) {
+			palfile2.Read(GamePalette, 768L);
+		}
+	}
 
 	if (!MouseInstalled) {
 		char buffer[255];

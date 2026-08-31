@@ -125,7 +125,7 @@ bool Start_Scenario(char *root, int nukepieces, bool briefing)
 		sprintf(buffer, "%s.VQA", BriefMovie);
 		CCFileClass file(buffer);
 		
-		if (!file.Is_Available()) {
+		if (ForceBriefScreen || !file.Is_Available()) {
 			VisiblePage.Clear();
 			Set_Palette(GamePalette);
 //			Show_Mouse();

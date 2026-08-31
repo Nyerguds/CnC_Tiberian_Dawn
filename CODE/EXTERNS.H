@@ -216,6 +216,7 @@ extern bool						PassiveHelis;
 extern bool						NoTiberiumWandering;
 extern bool						NoEgoScreen;
 extern StructType				LastConstruction;
+extern bool						ForceBriefScreen;
 extern char 					ScenarioName[_MAX_FNAME+_MAX_EXT];
 extern unsigned					BuildLevel;
 extern unsigned long			ScenarioCRC;

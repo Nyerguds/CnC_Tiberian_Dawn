@@ -358,6 +358,7 @@ bool PassiveHelis;							// Helicopters are passive in this scenario.
 bool NoTiberiumWandering;				// Civilians will not wander into tiberium in this scenario.
 bool NoEgoScreen;								// Do not show a score screen after the mission.
 StructType LastConstruction = STRUCT_NONE; // To allow hotkey to rebuild last construction.
+bool ForceBriefScreen;					// Always show the briefing screen, even if there is a brief video.
 
 
 /***************************************************************************

@@ -334,8 +334,10 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * \[Internal\] Death animations for infantry are now configured in the warheads information.
 * Infantry gored or eaten by dinosaurs will now show a previously-unused messy death animation.
 * \[v1.06\] Added "NoEgoScreen" option that can be used in missions to make it skip the score screen.
+* \[v1.06\] Added "ForceBriefScreen" option to force a mission to always show the text briefing, even if a briefing video was shown.
 * Dinosaur missions will now get a score screen, with the score level based on the scenario number times three.
 * Mission 8A (Vienna) will now correctly show its Point of Conflict as "Salzburg" instead of "Jelgava".
 * \[Remaster\] Civilians in GDI mission 8B will now always avoid tiberium. This option can be used in missions by adding the "NoTiberiumWandering" option into a mission.
 * Japanese briefings now also show the "Briefing" text at the top.
 * Dialogs that only have one button can now be closed using the Escape key.
+* \[Internal\] For showing startup error message messages, the game will now read CCMENU.PAL as alternative to TEMPERAT.PAL, allowing the Temperate palette to be modded normally.
