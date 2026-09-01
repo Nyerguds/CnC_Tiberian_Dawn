@@ -305,7 +305,8 @@ void DriveClass::Overrun_Square(CELL cell, bool threaten)
 					object->Mark(MARK_UP);
 					object->Limbo();
 					delete object;
-#ifdef OBSOLETE
+					// Nyerguds's C&C Patch Project v1.04: Squish check change (obsolete)
+#ifdef NYERPATCH_DEV_OBSOLETE
 					if (object->What_Am_I() == RTTI_INFANTRY) {
 						// Nyerguds's TUC Quick Fix Patch v1.02: squish
 						// Check on IsGross here, and only place once.

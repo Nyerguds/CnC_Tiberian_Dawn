@@ -201,7 +201,7 @@ inline CELL Coord_XCell(COORDINATE coord) {return (CELL)(*(((unsigned char*)&coo
 inline CELL Coord_YCell(COORDINATE coord) {return (CELL)(*(((unsigned char*)&coord)+3));}
 CELL Coord_Cell(COORDINATE coord){return (CELL)(((*(((unsigned short *)&coord)+1) & 0xFF00) >> (8 - MAP_CELL_MAX_X_BITS)) | *(((unsigned char *)&coord)+1));}
 
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 // Replaced, because it does not use the MAP_CELL_MAX_X_BITS value.
 CELL Coord_Cell(COORDINATE coord);
 #pragma aux Coord_Cell parm [eax] \
@@ -855,6 +855,7 @@ extern int Load_Interpolated_Palettes(char const *filename, BOOL add=FALSE);
  *=============================================================================================*/
 inline int Distance(int x1, int y1, int x2, int y2)
 {
+	// Nyerguds's C&C Patch Project v1.04: migrated RA version of Distance function.
 	int diff1 = y1 - y2;
 	if (diff1 < 0) diff1 = -diff1;
 	int diff2 = x1 - x2;
@@ -882,7 +883,8 @@ inline int Distance(int x1, int y1, int x2, int y2)
  * HISTORY:                                                                                    *
  *   05/27/1994 JLB : Created.                                                                 *
  *=============================================================================================*/
-#ifdef NEVER
+#ifdef NYERPATCH_OBSOLETE
+// Replaced, because it uses inline assembly instead of C++.
 int Distance_Coord(COORDINATE coord1, COORDINATE coord2);
 #pragma aux Distance_Coord parm [eax] [ebx] \
 	modify [edx ebx] \

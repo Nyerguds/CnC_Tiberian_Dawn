@@ -1075,7 +1075,7 @@ void HouseClass::AI(void)
 	}
 
 	// Nyerguds's C&C Patch Project v1.04: removed because this also prevents selling walls.
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 	/*
 	**	If there are no more buildings to sell, then automatically cancel the
 	**	sell mode.
@@ -3391,7 +3391,7 @@ void HouseClass::Add_Nuke_Piece()
 		NukePieces++;
 	}
 
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 	if (piece == -1) {
 		piece = 1;
 		if (!(NukePieces & 0x01)) {
@@ -4707,7 +4707,7 @@ bool HouseClass::Has_Nuke_Device(void)
 	// Treat nuke pieces as int, without limit. Treat -1 as infinite.
 	return(NukePieces < 0 || NukePieces >= RequiredNukePieces);
 
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 	return((NukePieces & 0x07) == 0x07);
 #endif
 }

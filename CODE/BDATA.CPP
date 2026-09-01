@@ -5204,7 +5204,7 @@ short const * BuildingTypeClass::Occupy_List(bool placement) const
 	SmudgeType bib = SMUDGE_NONE;
 	CELL cell=0;
 
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 	if ((placement && Bib_And_Offset(bib, cell)) || (Special.IsRoad && (*this == STRUCT_BARRACKS || (placement && *this == STRUCT_REFINERY)))) {
 
 		/*

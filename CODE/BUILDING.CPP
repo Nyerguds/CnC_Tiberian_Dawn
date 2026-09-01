@@ -113,7 +113,9 @@ enum SAMState {
 };
 
 
-#ifdef OBSOLETE
+// Nyerguds's C&C Patch Project v1.04: replaced dimension-based center with calculation.
+// This is replaced by the BuildingTypeClass::Valid_Target_Center function.
+#ifdef NYERPATCH_OBSOLETE
 /***************************************************************************
 **	Center of building offset table.
 */
@@ -1373,7 +1375,7 @@ void BuildingClass::AI(void)
 
 	// Nyerguds's C&C Patch Project v1.04: Migrated all recoil handling to TechnoClass.
 	// Recoil state handling is now 100% migrated to TechnoClass, where it belongs.
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 	/*
 	**	If the building was in a recoil state (as it would be just as it fires), then
 	**	restore the building.
@@ -1751,7 +1753,8 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 			*/
 			House->Attacked();
 
-#ifdef OBSOLETE
+			// Nyerguds's C&C Patch Project v1.04: this is now saved in the burn animation.
+#ifdef NYERPATCH_OBSOLETE
 			/*
 			** Save the type of the house that's doing the damage, so if the building burns
 			** to death credit can still be given for the kill
@@ -1925,7 +1928,7 @@ BuildingClass::BuildingClass(StructType type, HousesType house) :
 	IsWrenchVisible = false;
 	QueueBState = BSTATE_NONE;
 	Strength = Class->MaxStrength;
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 	WhoLastHurtMe = house;
 #endif
 	LastRepaired = TARGET_NONE;
@@ -4268,7 +4271,7 @@ int BuildingClass::Mission_Deconstruction(void)
 					**	A sold building still counts as a kill, but it just isn't directly
 					**	attributed to the enemy. This ensures that triggers fire correctly.
 					*/
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 					WhoLastHurtMe = HOUSE_NONE;
 #endif
 					Record_The_Kill(NULL, HOUSE_NONE, true);
@@ -5105,7 +5108,9 @@ DirType BuildingClass::Fire_Direction(void) const
 	return(Direction(TarCom));
 }
 
-#ifdef OBSOLETE
+
+// Nyerguds's C&C Patch Project v1.04: Remap is now handled at type level.
+#ifdef NYERPATCH_OBSOLETE
 /***********************************************************************************************
  * BuildingClass::Remap_Table -- Fetches the remap table to use for this building.             *
  *                                                                                             *

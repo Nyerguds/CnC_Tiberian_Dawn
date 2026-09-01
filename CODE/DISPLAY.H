@@ -112,7 +112,7 @@ class DisplayClass: public MapClass
 		static unsigned char FadingShade[256];
 		static unsigned char FadingLight[256];
 		
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 		static unsigned char RemapTables[HOUSE_COUNT][3][256];
 #endif
 		static unsigned char FadingGreen[256];

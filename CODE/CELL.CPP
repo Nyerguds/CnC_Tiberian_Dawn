@@ -631,7 +631,7 @@ void CellClass::Recalc_Attributes(void)
 			return;
 		}
 
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 		/*
 		**	If there is an exception type list for the icons of this template, then
 		**	find out if the current icon is one of them. If so, apply the exception
@@ -648,11 +648,11 @@ void CellClass::Recalc_Attributes(void)
 				}
 			}
 		}
+#endif
 
 		/*
 		**	No exception found, so just return the default ground type for this template.
 		*/
-#endif
 		Land = ttype->Land;
 		return;
 	}

@@ -81,8 +81,9 @@ bool Do_Reinforcements(TeamTypeClass *teamtype)
 	TeamClass * team = NULL;
 	if (teamtype->MissionCount) {
 		team = new TeamClass(teamtype, HouseClass::As_Pointer(teamtype->House));
-#ifdef OBSOLETE
+		// Nyerguds's C&C Patch Project v1.04: hotfix for unformed teams overflow (obsolete)
 		// Original hotfix. Normally the fixes in TriggerClass should now fix this.
+#ifdef NYERPATCH_DEV_OBSOLETE
 		if (!team) {
 			// Attempt cleanup of unformed teams.
 			for (int tindex = 0; tindex < TeamTypes.Count(); tindex++) {

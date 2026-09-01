@@ -134,7 +134,7 @@ class BuildingClass : public TechnoClass
 		BStateType BState;
 		BStateType QueueBState;
 
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 		/*
 		** For multiplayer games, this keeps track of the last house to damage
 		** this building, so if it burns to death or otherwise gradually dies,
@@ -309,7 +309,7 @@ class BuildingClass : public TechnoClass
 
 		TARGET LastRepaired;
 
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 		static COORDINATE const CenterOffset[BSIZE_COUNT];
 #endif
 

@@ -92,7 +92,7 @@ LayerClass DisplayClass::Layer[LAYER_COUNT];
 unsigned char DisplayClass::FadingBrighten[256]; // Radar brightening
 unsigned char DisplayClass::FadingShade[256]; // Aircraft shadow + stealth effect
 unsigned char DisplayClass::FadingLight[256]; // 'blushing' color for targeted objects flashing
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 unsigned char DisplayClass::RemapTables[HOUSE_COUNT][3][256];
 #endif
 unsigned char DisplayClass::FadingGreen[256]; // Map editor passable + radar tiberium graphics modifier
@@ -226,7 +226,7 @@ void DisplayClass::One_Time(void)
 
 	Set_View_Dimensions(0, Map.Get_Tab_Height());
 
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 	// MM 20250701: Disabled; this is not used anywhere at all, except in
 	// the "IsAlternate" code for animations, which just always uses the same
 	// HOUSE_GOOD, table 0, which is a table that does nothing. And nothing
@@ -645,7 +645,7 @@ void DisplayClass::Init_Theater(TheaterType theater)
 	/*
 	**	Restore the palette since it was mangled while building the fading tables.
 	*/
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 	// Re-reading the file while the original is still in OriginalPalette? Doesn't seem very useful. -Nyer
 	sprintf(fullname, "%s.PAL", Theaters[theater].Root);
 	ptr = MixFileClass::Retrieve(fullname);
@@ -1092,7 +1092,7 @@ CELL DisplayClass::Set_Cursor_Pos(CELL pos)
 	// adding coords and dimensions together, but it also restricts the placement
 	// grid to the visible screen, which is extremely annoying for placing large
 	// buildings. This would have been even worse in DOS resolution.
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 	int x = Cell_X(pos + ZoneOffset);
 	int y = Cell_Y(pos + ZoneOffset);
 

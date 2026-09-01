@@ -259,8 +259,8 @@ void HouseTypeClass::One_Time(void)
 #endif
 	// Nyerguds's C&C Patch Project v1.04: Remove House Special init code for Funpark.
 	// Make funpark campaign independent from Jurassic mode.
-	// Now handled in the scenario read.
-#ifdef OBSOLETE
+	// Now handled in the scenario read by setting the ColorScheme for HouseJP.
+#ifdef NYERPATCH_OBSOLETE
 	/*
 	** Change the radar color for special units; otherwise, they'll be the same
 	** color as the player!

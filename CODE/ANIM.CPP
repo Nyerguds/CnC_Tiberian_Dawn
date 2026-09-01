@@ -315,7 +315,7 @@ void AnimClass::Draw_It(int x, int y, WindowNumberType window)
 
 			// Nyerguds's C&C Patch Project v1.04: Un-hardcoded translucency.
 			// transtable exceptions were migrated to the data, as the "Translucency" setting.
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 			switch (Class->Type) {
 				case ANIM_ION_CANNON:
 					y -= Get_Build_Frame_Height(shapefile) >> 1;
@@ -351,7 +351,7 @@ void AnimClass::Draw_It(int x, int y, WindowNumberType window)
 			ShapeFlags_Type flags = SHAPE_CENTER|SHAPE_WIN_REL;
 
 		// MM 20250701: Disabled; this does nothing, and is not used anywhere at all
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 			if (IsAlternate) {
 				flags = flags | SHAPE_FADING;
 				remap = Map.RemapTables[HOUSE_GOOD][0];
@@ -674,7 +674,7 @@ AnimClass::AnimClass(AnimType animnum, COORDINATE coord, unsigned char timedelay
 
 	IsToDelete = false;
 	IsBrandNew = true;
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 	// MM 20250701: Disabled; this is not used anywhere at all
 	IsAlternate = alt;
 #endif
@@ -1066,7 +1066,7 @@ void AnimClass::Middle(void)
 
 		// Nyerguds's C&C Patch Project v1.04: Remove obsolete nuke payback scan.
 		// Now fully handled by Payback + Owner.
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 		/*
 		**	Find someone to blame the explosion on. This is necessary in
 		**	order to properly enact retribution and record the kill for
@@ -1200,7 +1200,7 @@ void AnimClass::Middle(void)
 		case ANIM_ION_CANNON: {
 				// Nyerguds's C&C Patch Project v1.04: Remove obsolete ion payback scan.
 				// Now fully handled by Payback + Owner.
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 				BuildingClass * building = NULL;
 				TechnoClass * backup = NULL;
 				if (Owner != HOUSE_NONE) {

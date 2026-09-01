@@ -955,7 +955,7 @@ void Decode_All_Pointers(ScenarioPlayerType campaign)
 	// The original code could cause a GDI mission inserted in the Nod campaign to make the player switch campaigns.
 	// Note that the Funpark check was wrong anyway; the player in these missions is Multi4, not JP.
 	ScenPlayer = campaign;
-#ifdef OBSOLETE	
+#ifdef NYERPATCH_OBSOLETE
 	switch (PlayerPtr->Class->House) {
 		case HOUSE_GOOD:
 			ScenPlayer = SCEN_PLAYER_GDI;

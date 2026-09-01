@@ -248,7 +248,8 @@ void Debug_Key(unsigned input)
 				break;
 
 			case KN_M:
-#ifdef OBSOLETE
+// Nyerguds's C&C Patch Project v1.04: MonoClass crashes, so disable 'M' debug key.
+#ifdef NYERPATCH_OBSOLETE
 				if (Debug_Flag) {
 					if (MonoClass::Is_Enabled()) {
 						MonoClass::Disable();

@@ -1140,7 +1140,7 @@ bool Select_Game(bool fade)
 					// Nyerguds's C&C Patch Project v1.04: Init logic migrated to intro screen.
 					// Make funpark campaign independent from Jurassic mode.
 					// This is now handled in the intro screen.
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 					/*
 					** If user is playing special mode, do NOT change Whom; leave it set to
 					** GDI or NOD.  Ini.cpp will set the player's ActLike to mirror the

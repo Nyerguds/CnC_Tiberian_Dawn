@@ -957,7 +957,7 @@ void BulletClass::Code_Pointers(void)
 
 	// Nyerguds's C&C Patch Project v1.04: Payback is TARGET now, so no pointer coding.
 	// This is now stored as TARGET, so no need to code/decode.
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 	/*
 	----------------------------- Code 'Payback' -----------------------------
 	*/
@@ -1005,7 +1005,7 @@ void BulletClass::Decode_Pointers(void)
 
 	// Nyerguds's C&C Patch Project v1.04: Payback is TARGET now, so no pointer decoding.
 	// This is now stored as TARGET, so no need to code/decode.
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 	/*
 	---------------------------- Decode 'Payback' ----------------------------
 	*/

@@ -318,6 +318,7 @@ void UnitClass::Attach(FootClass * object)
 	CCDebugFunc("void UnitClass::Attach(FootClass * object)");
 #endif
 	CargoClass::Attach(object);
+	// Nyerguds's C&C Patch Project v1.04: close door when passenger hold is full.
 	if (How_Many() == Class->Max_Passengers()) {
 		APC_Close_Door();
 	}
@@ -538,7 +539,7 @@ void UnitClass::AI(void)
 
 	// Nyerguds's C&C Patch Project v1.04: Migrated all recoil handling to TechnoClass.
 	// Recoil state handling is now 100% migrated to TechnoClass, where it belongs.
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 	/*
 	**	Handle recoil recovery here.
 	*/
@@ -700,9 +701,10 @@ RadioMessageType UnitClass::Receive_Message(RadioClass * from, RadioMessageType 
 		**	entered the transport.
 		*/
 		case RADIO_IM_IN:
+		// Nyerguds's C&C Patch Project v1.04: close door when passenger hold is full.
 		// This does not work: passengers radio in just before they actually attach.
 		// Code was instead migrated to an overridden UnitClass::Attach() function.
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 			if (How_Many() == Class->Max_Passengers()) {
 				APC_Close_Door();
 			}
@@ -997,7 +999,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 
 			// Nyerguds's C&C Patch Project v1.04: Migrated dino deaths to death animations.
 			// This is now simply linked to the death animations directly.
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 			if (*this == UNIT_TRIC || *this == UNIT_TREX || *this == UNIT_RAPT || *this == UNIT_STEG) {
 				Sound_Effect(VOC_DINODIE1, Coord);
 			}
@@ -1055,7 +1057,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 			}
 		} else {
 			if (*this != UNIT_HOVER) {
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 				while (Is_Something_Attached()) {
 					FootClass * object = Detach_Object();
 
@@ -2302,7 +2304,7 @@ void UnitClass::Draw_It(int x, int y, WindowNumberType window)
 				// If IsActiveTargeter, there are 2 states for each ammo set.
 				shapenum += 32 * (Class->MaxAmmo - Ammo) * (Class->IsActiveTargeter ? 2 : 1);
 			}
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 			if (*this == UNIT_MSAM) {
 				if (Ammo == 0) shapenum += 64;
 				if (Ammo == 1) shapenum += 32;
@@ -3374,7 +3376,7 @@ MoveType UnitClass::Can_Enter_Cell(CELL cell, FacingType ) const
 	if (retval == MOVE_OK && crushable && !No_Other_Crushers(cell)) {
 		return(MOVE_MOVING_BLOCK);
 	}
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 	/*
 	** If its ok to move into the cell because we can crush whats in the cell, then
 	** make sure no one else is already moving into the cell to crush something.
@@ -3939,7 +3941,7 @@ ActionType UnitClass::What_Action(ObjectClass * object) const
 		action = ACTION_ENTER;
 	}
 
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 	// This never worked; the repair logic apparently always used the refinery logic above.
 	// This can easily be seen from the fact docking uses the Enter cursor, not Move.
 	/*
@@ -4415,7 +4417,7 @@ DirType UnitClass::Desired_Load_Dir(ObjectClass * passenger, CELL & moveto) cons
 		// Removed this heightening of priority because it had too much impact,
 		// and made loading from diagonal north cells malfunction completely
 		// unless the corresponding diagonal south cell was blocked.
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 		if (face == FACING_SW || face == FACING_SE) value += 64;
 #endif
 		/*
@@ -4434,13 +4436,13 @@ DirType UnitClass::Desired_Load_Dir(ObjectClass * passenger, CELL & moveto) cons
 	moveto = 0;
 	if (bestval > 0) {
 		// Nyerguds's C&C Patch Project v1.04: Never fully exclude door-lacking directions.
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 		//                                                     N      NE      E       SE      S       SW      W       NW
 		static DirType _desired_to_actual[FACING_COUNT] = {DIR_S, DIR_SW, DIR_NW, DIR_NW, DIR_NE, DIR_NE, DIR_NE, DIR_SE};
 #endif
 
 		moveto = Adjacent_Cell(Coord_Cell(Coord), bestdir);
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 		return(_desired_to_actual[bestdir]);
 #endif
 		// Simply invert by adding South
@@ -4732,7 +4734,8 @@ bool UnitClass::No_Other_Crushers(CELL cell) const
 }
 
 
-#ifdef OBSOLETE
+// Nyerguds's C&C Patch Project v1.04: Remap is now handled at type level.
+#ifdef NYERPATCH_OBSOLETE
 /***********************************************************************************************
  * UnitClass::Remap_Table -- Fetches the remap table to use for this object.                   *
  *                                                                                             *

@@ -158,7 +158,7 @@ void BaseClass::Read_INI(char *buffer)
 	// Nyerguds's C&C Patch Project v1.04: Read base player from [Base] secion.
 	WWGetPrivateProfileString(INI_Name(), "Player", "None", buf, 20, buffer);
 	House = HouseTypeClass::From_Name(buf);
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 	WWGetPrivateProfileString("BASIC", "Player", "GoodGuy", buf, 20, buffer);
 	if (HouseTypeClass::From_Name(buf) == HOUSE_GOOD) {
 		House = HOUSE_BAD;

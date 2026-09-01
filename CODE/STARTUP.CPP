@@ -455,7 +455,7 @@ int PASCAL WinMain ( HINSTANCE instance , HINSTANCE , char * command_line , int 
 					}
 				}
 			}
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 			ScreenHeight = 400;
 
 			if (VisiblePage.Get_Height() == 480){

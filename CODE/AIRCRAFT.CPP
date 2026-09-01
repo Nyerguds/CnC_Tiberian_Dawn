@@ -181,6 +181,7 @@ void AircraftClass::Attach(FootClass * object)
 	CCDebugFunc("void AircraftClass::Attach(FootClass * object)");
 #endif
 	CargoClass::Attach(object);
+	// Nyerguds's C&C Patch Project v1.04: close door when passenger hold is full.
 	if (How_Many() == Class->Max_Passengers()) {
 		Close_Door(5, 3);
 	}
@@ -2186,7 +2187,7 @@ void AircraftClass::Active_Click_With(ActionType action, ObjectClass * object)
 	// Nyerguds's TUC Quick Fix Patch v1.03: Aircraft-dock-unload
 	// Nothing here is any different from the default FootClass behaviour, and, in fact
 	// the default behaviour always overrode the specific code here in the retail game.
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 	switch (action) {
 		case ACTION_ENTER:
 			Player_Assign_Mission(MISSION_ENTER, TARGET_NONE, object->As_Target());
@@ -2880,9 +2881,10 @@ RadioMessageType AircraftClass::Receive_Message(RadioClass * from, RadioMessageT
 		**	entered the transport.
 		*/
 		case RADIO_IM_IN:
+		// Nyerguds's C&C Patch Project v1.04: close door when passenger hold is full.
 		// This does not work: passengers radio in just before they actually attach.
 		// Code was instead migrated to an overridden AircraftClass::Attach() function.
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 			if (How_Many() == Class->Max_Passengers()) {
 				Close_Door(5, 3);
 			}
@@ -3432,7 +3434,7 @@ int AircraftClass::Mission_Enter(void)
 					// Don't land on the helipad facing the direction of the last target.
 					// No idea why this was ever a thing. It only happens as weird edge case
 					// when they run out of ammo, but the target is irreleant then anyway.
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 					if (Target_Legal(TarCom)) {
 						SecondaryFacing.Set_Desired(Direction(TarCom));
 					} else {

@@ -56,15 +56,15 @@ PRIVATE int MenuSkip;
 
 
 /*=========================================================================*/
-/*	SELECT_TO_ENTRY:																			*/
-/*																									*/
-/*		This routine converts a selection to the correct string entry. It	   */
-/*	does this by search through a long bitfield starting at position index	*/
-/*	until it finds the correct conversion to entries.								*/
-/*																									*/
-/*	INPUTS:	int selection from menu, long the bit field to search, int 	   */
-/*				the starting index within the bit field.								*/
-/*	RETURNS:	int the index into the table of entries								*/
+/* SELECT_TO_ENTRY:                                                        */
+/*                                                                         */
+/*   This routine converts a selection to the correct string entry. It     */
+/* does this by search through a long bitfield starting at position index  */
+/* until it finds the correct conversion to entries.                       */
+/*                                                                         */
+/* INPUTS:  int selection from menu, long the bit field to search, int     */
+/*          the starting index within the bit field.                       */
+/* RETURNS: int the index into the table of entries                        */
 /*=========================================================================*/
 PRIVATE int Select_To_Entry(int select, unsigned long bitfield, int index)
 {
@@ -88,15 +88,15 @@ PRIVATE int Select_To_Entry(int select, unsigned long bitfield, int index)
 
 
 /*=========================================================================*/
-/*	FLASH_LINE:																					*/
-/*																									*/
-/*		This routine will flash the line at the desired location for the		*/
-/*	menu routine. It is way cool awesome!												*/
-/*																									*/
-/*	INPUTS:	char *text, int x position on line, int y position, char		   */
-/*				normal foreground color, char hilight foreground color, char 	*/
-/*				background color																*/
-/*	RETURNS:	none																				*/
+/* FLASH_LINE:                                                             */
+/*                                                                         */
+/*   This routine will flash the line at the desired location for the      */
+/* menu routine. It is way cool awesome!                                   */
+/*                                                                         */
+/* INPUTS:  char *text, int x position on line, int y position, char       */
+/*          normal foreground color, char hilight foreground color, char   */
+/*          background color                                               */
+/* RETURNS: none                                                           */
 /*=========================================================================*/
 PRIVATE void Flash_Line(char const *text,int xpix,int ypix,unsigned nfgc,unsigned hfgc,unsigned bgc)
 {
@@ -113,14 +113,14 @@ PRIVATE void Flash_Line(char const *text,int xpix,int ypix,unsigned nfgc,unsigne
 }
 
 /*=========================================================================*/
-/*	COORDINATES_IN_REGION:																	*/
-/*																									*/
-/*		Test to see if a given pair of coordinates are within the given 		*/
-/*	rectangular region.																		*/
-/*																									*/
-/*	INPUTS:	int x to be tested, int y to be tested, int left x pos,			*/
-/*				int top y pos, int right x pos, int bottom y pos					*/
-/*	RETURNS:	none																				*/
+/* COORDINATES_IN_REGION:                                                  */
+/*                                                                         */
+/*   Test to see if a given pair of coordinates are within the given       */
+/* rectangular region.                                                     */
+/*                                                                         */
+/* INPUTS:  int x to be tested, int y to be tested, int left x pos,        */
+/*          int top y pos, int right x pos, int bottom y pos               */
+/* RETURNS: none                                                           */
 /*=========================================================================*/
 PRIVATE int Coordinates_In_Region(int x,int y,int inx1,int iny1,int inx2,int iny2)
 {
@@ -129,17 +129,17 @@ PRIVATE int Coordinates_In_Region(int x,int y,int inx1,int iny1,int inx2,int iny
 
 #ifdef NEVER
 /*=========================================================================*/
-/*	FIND_MENU_ITEMS:																			*/
-/*																									*/
-/*		This routine finds the real total items in a menu when certain items	*/
-/*	may be disabled by bit fields and the like. This is done by looping		*/
-/*	through the fields, starting at the position passed in index and 			*/
-/*	counting the number of bits that are set.											*/
-/*																									*/
-/*	INPUTS:	int the maximum number of items possible on the menu, long 		*/
-/*				the bit field of enabled and disabled items, char the index		*/
-/*				point to start at within the list.										*/
-/*	RETURNS:	int the total number of items in the menu							*/
+/* FIND_MENU_ITEMS:                                                        */
+/*                                                                         */
+/*   This routine finds the real total items in a menu when certain items  */
+/* may be disabled by bit fields and the like. This is done by looping     */
+/* through the fields, starting at the position passed in index and        */
+/* counting the number of bits that are set.                               */
+/*                                                                         */
+/* INPUTS:  int the maximum number of items possible on the menu, long     */
+/*          the bit field of enabled and disabled items, char the index    */
+/*          point to start at within the list.                             */
+/* RETURNS: int the total number of items in the menu                      */
 /*=========================================================================*/
  int Find_Menu_Items(int maxitems, unsigned long field, char index)
  {
@@ -159,14 +159,14 @@ PRIVATE int Coordinates_In_Region(int x,int y,int inx1,int iny1,int inx2,int iny
 
 
 /*=========================================================================*/
-/*	SETUP_EOB_MONITOR_MENU:																	*/
-/*																									*/
-/*		This routine sets up the eye of the beholder monitor menu.				*/
-/*																									*/
-/*	INPUTS:	int the menu we are using, char *[] the array of text which		*/
-/*				makes up the menu commands, long the info field, int the			*/
-/*				index into the field, int the number of lines to skip.			*/
-/*	RETURNS:	none																				*/
+/* SETUP_EOB_MONITOR_MENU:                                                 */
+/*                                                                         */
+/*   This routine sets up the eye of the beholder monitor menu.            */
+/*                                                                         */
+/* INPUTS:  int the menu we are using, char *[] the array of text which    */
+/*          makes up the menu commands, long the info field, int the       */
+/*          index into the field, int the number of lines to skip.         */
+/* RETURNS: none                                                           */
 /*=========================================================================*/
 void Setup_Menu(int menu,char const *text[], unsigned long field, int index, int skip)
 {
@@ -198,12 +198,12 @@ void Setup_Menu(int menu,char const *text[], unsigned long field, int index, int
 
 
 /*=========================================================================*/
-/*	CHECK_MENU:																					*/
-/*																									*/
-/*																									*/
-/*																									*/
-/*	INPUTS:																						*/
-/*	RETURNS:																						*/
+/* CHECK_MENU:                                                             */
+/*                                                                         */
+/*                                                                         */
+/*                                                                         */
+/* INPUTS:                                                                 */
+/* RETURNS:                                                                */
 /*=========================================================================*/
 int Check_Menu(int menu,char const *text[],char *,long field,int index)
 {

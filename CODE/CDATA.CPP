@@ -47,7 +47,7 @@
 #include	"function.h"
 
 // Nyerguds's C&C Patch Project v1.04: Replaced with string-based land type definitions.
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 static char const _slope00000001[] = {7,-1};
 static char const _slope000000101[] = {6,8,-1};
 static char const _slope00000011[] = {6,7,-1};

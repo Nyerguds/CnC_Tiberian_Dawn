@@ -1903,7 +1903,7 @@ TARGET TechnoClass::Greatest_Threat(ThreatType method) const
 
 			// Nyerguds's C&C Patch Project v1.04: Removed early bailout on target scan.
 			// Removed this, because it invalidates the distance modifier in Evaluate_Object.
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 			/*
 			**	Bail early if a target has already been found and the range is at
 			**	one of the breaking points (i.e., normal range or range * 2).
@@ -3211,7 +3211,7 @@ bool TechnoClass::Captured(HouseClass * newowner)
 		// Record_The_Kill can now handle Houses without actual source.
 		Record_The_Kill(NULL, *newowner);
 
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 		/*
 		**	Special kill record logic for capture process.
 		*/
@@ -3425,7 +3425,7 @@ void TechnoClass::Record_The_Kill(TechnoClass * source, HousesType house, bool s
 			// Nyerguds's C&C Patch Project v1.04: Fix loss registration for sold objects.
 			// Changed the losses suppression system for sales to be usable for all types.
 			if (!sold) House->BuildingsLost++;
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 			if ( ((BuildingClass *)this)->WhoLastHurtMe != HOUSE_NONE) {
 				House->BuildingsLost++;
 			}

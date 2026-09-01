@@ -3455,7 +3455,7 @@ void Handle_Team(int team, int action)
 				*/
 				Unselect_All();
 			}
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 			/*
 			**	If a non team member is currently selected, then deselect all objects
 			**	before selecting this team.

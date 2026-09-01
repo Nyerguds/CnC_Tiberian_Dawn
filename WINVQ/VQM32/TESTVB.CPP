@@ -72,7 +72,7 @@
 long TestVBIBit(void)
 {
 	return (1);
-#ifdef  OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 	// Ancient CRT stuff?
 	
 	static struct timeb mytime;

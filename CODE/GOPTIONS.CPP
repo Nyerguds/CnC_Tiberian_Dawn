@@ -534,7 +534,8 @@ void Draw_Caption(int text, int x, int y, int w, OptionControlType option)
 	//OptionControlType option = OPTION_NONE;
 	int factor = Get_Resolution_Factor();
 
-#ifdef OBSOLETE
+	// This is given as function argument now, to give more control.
+#ifdef NYERPATCH_OBSOLETE
 	/*
 	**	Determine the filigree to use depending on the text of the caption.
 	*/

@@ -581,7 +581,7 @@ void TerrainClass::Fire_Out()
 
 		// Since this function can now be called from Detach(), Detach_All()
 		// should never be called from here since that can cause a stack overflow.
-		#ifdef OBSOLETE
+		#ifdef NYERPATCH_OBSOLETE
 		if (!IsCrumbling && !Strength) {
 			Detach_All();
 			Mark();

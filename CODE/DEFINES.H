@@ -2142,7 +2142,9 @@ typedef struct {
 } TheaterDataType;
 
 
-#ifdef OBSOLETE
+// Nyerguds's C&C Patch Project v1.04: Building dimensions are looked up based on occupy and overlap list.
+// This is now handled by BuildingTypeClass::Max_Dimensions.
+#ifdef NYERPATCH_OBSOLETE
 /**********************************************************************
 **	Each building has a predetermined size. These are the size numbers.
 **	The trailing number is this define is the width and height (respectively)

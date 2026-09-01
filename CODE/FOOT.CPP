@@ -968,7 +968,7 @@ void FootClass::Approach_Target(void)
 //		if (!Target_Legal(NavCom) && (Distance(TarCom) > maxrange || !IsLocked)) {
 
 			// Nyerguds's C&C Patch Project v1.04: Extra range on buildings is now in Weapon_Range().
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 			/*
 			** If the object that we are attacking is a building adjust the units
 			** max range so that people can stand far away from the buildings and
@@ -1257,7 +1257,7 @@ ResultType FootClass::Take_Damage(int & damage, int distance, WarheadType warhea
 			// Sticky mode is supposed to keep units on their assigned place no matter what.
 			// Treat it as equal to human controlled Guard mode in the code below.
 			// Note that Scatter is blocked for Sticky units anyway, so it doesn't affect them.
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 			/*
 			**	This ensures that if a unit is in sticky mode, then it will snap out of
 			**	it when it takes damage.

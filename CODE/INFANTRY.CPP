@@ -1022,7 +1022,7 @@ void InfantryClass::Assign_Target(TARGET target)
 	Path[0] = FACING_NONE;
 	FootClass::Assign_Target(target);
 
-#ifdef OBSOLETE
+#ifdef NYERPATCH_OBSOLETE
 	// Pointless; Capture missions only assign a Destination anyway.
 	/*
 	**	If this is an infantry that can only capture, then also assign its destination to the
