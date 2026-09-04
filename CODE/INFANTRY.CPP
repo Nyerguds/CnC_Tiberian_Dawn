@@ -496,10 +496,7 @@ ResultType InfantryClass::Take_Damage(int & damage, int distance, WarheadType wa
 		switch (wh.InfantryDeath) {
 			case DEATH_EATEN:
 				if (source) {
-					source->Strength += 30;
-					if (source->Strength > source->Class_Of().MaxStrength) {
-						source->Strength = source->Class_Of().MaxStrength;
-					}
+					source->Strength = MIN(source->Strength + 30, source->Class_Of().MaxStrength);
 				}
 				// Dinos make a mess. Extra gory splatter.
 				death = DO_EXPLOSION_DEATH;
@@ -3197,7 +3194,10 @@ void InfantryClass::Read_INI(char *buffer)
 					}
 
 					if (infantry->Unlimbo(coord, dir)) {
-						infantry->Strength = Fixed_To_Cardinal(infantry->Class_Of().MaxStrength, strength);
+						strength = MAX(0, MIN(strength, 0x100));
+						int max = infantry->Class->MaxStrength;
+						int actual = Fixed_To_Cardinal(max, strength);
+						infantry->Strength = MAX(1, MIN(actual, max));
 						if (GameToPlay == GAME_NORMAL || infantry->House->IsHuman) {
 							infantry->Assign_Mission(mission);
 							infantry->Commence();

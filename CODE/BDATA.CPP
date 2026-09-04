@@ -222,6 +222,7 @@ static BuildingTypeClass const ClassTemple(
 		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	2000,									// STRNTH:		Full strength of building.
 	4,										// SIGHTRANGE:	Range of sighting.
 	3000,									// COST:		Cost to purchase.
@@ -282,6 +283,7 @@ static BuildingTypeClass const ClassEye(
 		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	(DirType)160,							// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	1000,									// STRNTH:		Full strength of building.
 	10,										// SIGHTRANGE:	Range of sighting.
 	2800,									// COST:		Cost to purchase.
@@ -342,6 +344,7 @@ static BuildingTypeClass const ClassWeapon(
 		false,		// Is this a civilian building?
 	RTTI_UNITTYPE,							// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 #ifdef ADVANCED
 	1000,									// STRNTH:		Full strength of building.
 #else
@@ -406,6 +409,7 @@ static BuildingTypeClass const ClassGTower(
 		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	3,										// SIGHTRANGE:	Range of sighting.
 	500,									// COST:		Cost to purchase.
@@ -467,6 +471,7 @@ static BuildingTypeClass const ClassATower(
 		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	600,									// STRNTH:		Full strength of building.
 	4,										// SIGHTRANGE:	Range of sighting.
 	1000,									// COST:		Cost to purchase.
@@ -528,6 +533,7 @@ static BuildingTypeClass const ClassObelisk(
 		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	5,										// SIGHTRANGE:	Range of sighting.
 	1500,									// COST:		Cost to purchase.
@@ -588,6 +594,7 @@ static BuildingTypeClass const ClassTurret(
 		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	(DirType)208,							// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	5,										// SIGHTRANGE:	Range of sighting.
 #ifdef ADVANCED
@@ -656,6 +663,7 @@ static BuildingTypeClass const ClassConst(
 		false,		// Is this a civilian building?
 	RTTI_BUILDINGTYPE,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	800,									// STRNTH:		Full strength of building.
 	3,										// SIGHTRANGE:	Range of sighting.
 	5000,									// COST:		Cost to purchase.
@@ -717,6 +725,7 @@ static BuildingTypeClass const ClassRefinery(
 		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	900,									// STRNTH:		Full strength of building.
 	4,										// SIGHTRANGE:	Range of sighting.
 	2000,									// COST:		Cost to purchase.
@@ -778,6 +787,7 @@ static BuildingTypeClass const ClassStorage(
 		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	300,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	150,									// COST:		Cost to purchase.
@@ -840,6 +850,7 @@ static BuildingTypeClass const ClassHelipad(
 		false,		// Is this a civilian building?
 	RTTI_AIRCRAFTTYPE,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	800,									// STRNTH:		Full strength of building.
 	3,										// SIGHTRANGE:	Range of sighting.
 	1500,									// COST:		Cost to purchase.
@@ -901,6 +912,7 @@ static BuildingTypeClass const ClassCommand(
 		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	(DirType)160,							// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	1000,									// STRNTH:		Full strength of building.
 	10,										// SIGHTRANGE:	Range of sighting.
 	1000,									// COST:		Cost to purchase.
@@ -962,6 +974,7 @@ static BuildingTypeClass const ClassSAM(
 		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	2,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	3,										// SIGHTRANGE:	Range of sighting.
 	750,									// COST:		Cost to purchase.
@@ -1022,6 +1035,7 @@ static BuildingTypeClass const ClassAirStrip(
 		false,		// Is this a civilian building?
 	RTTI_UNITTYPE,							// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	1000,									// STRNTH:		Full strength of building.
 	5,										// SIGHTRANGE:	Range of sighting.
 	2000,									// COST:		Cost to purchase.
@@ -1082,6 +1096,7 @@ static BuildingTypeClass const ClassPower(
 		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	300,									// COST:		Cost to purchase.
@@ -1143,6 +1158,7 @@ static BuildingTypeClass const ClassAdvancedPower(
 		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	600,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	700,									// COST:		Cost to purchase.
@@ -1204,6 +1220,7 @@ static BuildingTypeClass const ClassHospital(
 		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	500,									// COST:		Cost to purchase.
@@ -1265,6 +1282,7 @@ static BuildingTypeClass const ClassBioLab(
 		false,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	600,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	500,									// COST:		Cost to purchase.
@@ -1325,6 +1343,7 @@ static BuildingTypeClass const ClassBarracks(
 		false,		// Is this a civilian building?
 	RTTI_INFANTRYTYPE,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	800,									// STRNTH:		Full strength of building.
 	3,										// SIGHTRANGE:	Range of sighting.
 	300,									// COST:		Cost to purchase.
@@ -1385,6 +1404,7 @@ static BuildingTypeClass const ClassHand(
 		false,		// Is this a civilian building?
 	RTTI_INFANTRYTYPE,					// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	800,									// STRNTH:		Full strength of building.
 	3,										// SIGHTRANGE:	Range of sighting.
 	300,									// COST:		Cost to purchase.
@@ -1445,6 +1465,7 @@ static BuildingTypeClass const ClassTanker(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	200,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -1505,6 +1526,7 @@ static BuildingTypeClass const ClassRepair(
 		false,		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	800,									// STRNTH:		Full strength of building.
 	3,										// SIGHTRANGE:	Range of sighting.
 	1200,									// COST:		Cost to purchase.
@@ -1568,6 +1590,7 @@ static BuildingTypeClass const ClassRoad(
 		false,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	1,										// STRNTH:		Full strength of building.
 	0,										// SIGHTRANGE:	Range of sighting.
 	50,										// COST:		Cost to purchase.
@@ -1630,6 +1653,7 @@ static BuildingTypeClass const ClassV01(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	1,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -1690,6 +1714,7 @@ static BuildingTypeClass const ClassV02(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	1,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -1750,6 +1775,7 @@ static BuildingTypeClass const ClassV03(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	1,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -1810,6 +1836,7 @@ static BuildingTypeClass const ClassV04(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	1,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -1870,6 +1897,7 @@ static BuildingTypeClass const ClassV05(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	1,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -1930,6 +1958,7 @@ static BuildingTypeClass const ClassV06(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	1,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -1990,6 +2019,7 @@ static BuildingTypeClass const ClassV07(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	1,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -2050,6 +2080,7 @@ static BuildingTypeClass const ClassV08(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	1,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -2110,6 +2141,7 @@ static BuildingTypeClass const ClassV09(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	1,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -2170,6 +2202,7 @@ static BuildingTypeClass const ClassV10(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	1,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -2230,6 +2263,7 @@ static BuildingTypeClass const ClassV11(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	1,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -2290,6 +2324,7 @@ static BuildingTypeClass const ClassV12(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	1,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -2350,6 +2385,7 @@ static BuildingTypeClass const ClassV13(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	1,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -2410,6 +2446,7 @@ static BuildingTypeClass const ClassV14(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	1,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -2470,6 +2507,7 @@ static BuildingTypeClass const ClassV15(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	1,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -2530,6 +2568,7 @@ static BuildingTypeClass const ClassV16(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	1,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -2590,6 +2629,7 @@ static BuildingTypeClass const ClassV17(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	1,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -2650,6 +2690,7 @@ static BuildingTypeClass const ClassV18(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	1,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -2710,6 +2751,7 @@ static BuildingTypeClass const ClassV19(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -2771,6 +2813,7 @@ static BuildingTypeClass const ClassV20(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -2832,6 +2875,7 @@ static BuildingTypeClass const ClassV21(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -2893,6 +2937,7 @@ static BuildingTypeClass const ClassV22(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -2954,6 +2999,7 @@ static BuildingTypeClass const ClassV23(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -3015,6 +3061,7 @@ static BuildingTypeClass const ClassV24(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -3076,6 +3123,7 @@ static BuildingTypeClass const ClassV25(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -3137,6 +3185,7 @@ static BuildingTypeClass const ClassV26(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -3198,6 +3247,7 @@ static BuildingTypeClass const ClassV27(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -3259,6 +3309,7 @@ static BuildingTypeClass const ClassV28(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -3320,6 +3371,7 @@ static BuildingTypeClass const ClassV29(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -3381,6 +3433,7 @@ static BuildingTypeClass const ClassV30(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -3442,6 +3495,7 @@ static BuildingTypeClass const ClassV31(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -3503,6 +3557,7 @@ static BuildingTypeClass const ClassV32(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -3564,6 +3619,7 @@ static BuildingTypeClass const ClassV33(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -3625,6 +3681,7 @@ static BuildingTypeClass const ClassV34(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -3686,6 +3743,7 @@ static BuildingTypeClass const ClassV35(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -3747,6 +3805,7 @@ static BuildingTypeClass const ClassV36(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -3808,6 +3867,7 @@ static BuildingTypeClass const ClassV37(
 		true, 		// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	600,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	0,										// COST:		Cost to purchase.
@@ -3869,6 +3929,7 @@ static BuildingTypeClass const ClassMission(
 		false,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	400,									// STRNTH:		Full strength of building.
 	2,										// SIGHTRANGE:	Range of sighting.
 	1000,									// COST:		Cost to purchase.
@@ -3932,6 +3993,7 @@ static BuildingTypeClass const Sandbag(
 		false,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	1,										// STRNTH:		Full strength of building.
 	0,										// SIGHTRANGE:	Range of sighting.
 	50,										// COST:		Cost to purchase.
@@ -3994,6 +4056,7 @@ static BuildingTypeClass const Cyclone(
 		false,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	1,										// STRNTH:		Full strength of building.
 	0,										// SIGHTRANGE:	Range of sighting.
 	75,										// COST:		Cost to purchase.
@@ -4056,6 +4119,7 @@ static BuildingTypeClass const Brick(
 		false,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	1,										// STRNTH:		Full strength of building.
 	0,										// SIGHTRANGE:	Range of sighting.
 	100,									// COST:		Cost to purchase.
@@ -4118,6 +4182,7 @@ static BuildingTypeClass const Barbwire(
 		false,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	1,										// STRNTH:		Full strength of building.
 	0,										// SIGHTRANGE:	Range of sighting.
 	25,										// COST:		Cost to purchase.
@@ -4181,6 +4246,7 @@ static BuildingTypeClass const Wood(
 		false,			// Is this a civilian building?
 	RTTI_NONE,								// The object type produced at this factory.
 	DIR_N,									// Starting idle frame to match construction.
+	-1,										// AMMO:			Number of shots it has (default).
 	1,										// STRNTH:		Full strength of building.
 	0,										// SIGHTRANGE:	Range of sighting.
 	25,										// COST:		Cost to purchase.
@@ -4332,6 +4398,7 @@ BuildingTypeClass::BuildingTypeClass(
 						bool is_civilian,
 						RTTIType tobuild,
 						DirType sframe,
+						int ammo,
 						unsigned short strength,
 						int sightrange,
 						int cost,
@@ -4377,7 +4444,7 @@ BuildingTypeClass::BuildingTypeClass(
 													false,
 													false,
 													is_civilian,
-													-1,
+													ammo,
 													strength,
 													MPH_IMMOBILE,
 													sightrange,

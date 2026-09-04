@@ -901,6 +901,7 @@ class BuildingTypeClass : public TechnoTypeClass {
 						bool is_civilian,
 						RTTIType tobuild,
 						DirType sframe,
+						int ammo,
 						unsigned short strength,
 						int sightrange,
 						int cost,

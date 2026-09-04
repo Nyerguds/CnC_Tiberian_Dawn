@@ -2604,6 +2604,7 @@ BulletClass * TechnoClass::Fire_At(TARGET target, int which)
 		// Nyerguds's C&C Patch Project v1.04: Always reset "IsSecondShot" if ammo ran out.
 		if (!Ammo && tclass.IsTwoShooter) {
 			IsSecondShot = false;
+			Arm = Rearm_Delay(false);
 		}
 
 		// Nyerguds's C&C Patch Project v1.04: Draw the laser beam in TechnoClass.

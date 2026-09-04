@@ -106,10 +106,13 @@ enum SAMState {
 	SAM_RISING,					// Doors open and launcher rises to normal locked down position.
 	SAM_READY,					// Launcher can be facing any direction tracking targets.
 	SAM_FIRING,					// Stationary while missile is being fired.
+#ifdef NYERPATCH_OBSOLETE
 	SAM_READY2,					// Launcher can be facing any direction tracking targets.
 	SAM_FIRING2,				// Stationary while missile is being fired.
+#endif
 	SAM_LOCKING,				// Rotating to locked position in preparation for lowering.
 	SAM_LOWERING,				// Launcher is lowering into the ground.
+	SAM_SEEKING,				// Special state in which the SAM Site looks for a new target.
 };
 
 
@@ -3272,14 +3275,15 @@ void BuildingClass::Read_INI(char *buffer)
 			b = new BuildingClass(classid, bhouse);
 			if (b) {
 				if (b->Unlimbo(Cell_Coord(cell), facing)) {
-					strength = MIN(strength, 0x100);
+					strength = MAX(0, MIN(strength, 0x100));
 					// Nyerguds's C&C Patch Project v1.04: Pre-placed oil derricks can have flame spout.
 					// Oil Derricks placed down as damaged will have their flame spout animation.
 					if (strength < 0x80 && classid == STRUCT_PUMP) {
 						b->Flame_Spout();
 					}
-					strength = Fixed_To_Cardinal(b->Class->MaxStrength, strength);
-					b->Strength = MAX(1, strength);
+					int max = b->Class->MaxStrength;
+					int actual = Fixed_To_Cardinal(max, strength);
+					b->Strength = MAX(1, MIN(actual, max));
 					b->IsALemon = false;
 					b->Trigger = TriggerClass::As_Pointer(trigname);
 					if (b->Trigger) {
@@ -4330,6 +4334,9 @@ int BuildingClass::Mission_Attack(void)
 				if (Target_Legal(TarCom)) {
 					Set_Rate(2);
 					Set_Stage(0);
+					// Nyerguds's C&C Patch Project v1.04: SAMs use Ammo to manage their reload.
+					// Should already be set, but just to be sure.
+					Ammo = Class->MaxAmmo;
 					Status = SAM_RISING;
 					return(1);
 				} else {
@@ -4345,8 +4352,8 @@ int BuildingClass::Mission_Attack(void)
 				if (Fetch_Stage() == 15) {
 					Set_Rate(0);
 					PrimaryFacing = DIR_N;
-					if (!Target_Legal(TarCom)) {
-						Status = SAM_LOWERING;
+					if (!Target_Legal(TarCom) || !Is_Target_Aircraft(TarCom) || As_Aircraft(TarCom)->Altitude == 0 || !In_Range(TarCom, 0)) {
+						Status = SAM_SEEKING;
 					} else {
 						Status = SAM_READY;
 					}
@@ -4358,10 +4365,12 @@ int BuildingClass::Mission_Attack(void)
 			**	to face the current TarCom of the launcher.
 			*/
 			case SAM_READY:
-				if (!Target_Legal(TarCom) || !Is_Target_Aircraft(TarCom) || As_Aircraft(TarCom)->Altitude == 0) {
+				if (Ammo == 0) {
 					Assign_Target(TARGET_NONE);
 					Status = SAM_LOCKING;
 					return(TICKS_PER_SECOND);
+				} else if (!Target_Legal(TarCom) || !Is_Target_Aircraft(TarCom) || As_Aircraft(TarCom)->Altitude == 0 || !In_Range(TarCom, 0)) {
+					Status = SAM_SEEKING;
 				} else {
 					if (!PrimaryFacing.Is_Rotating()) {
 						DirType facing = Direction(TarCom);
@@ -4378,28 +4387,29 @@ int BuildingClass::Mission_Attack(void)
 			**	The launcher is in the process of firing.
 			*/
 			case SAM_FIRING:
-				if (!Target_Legal(TarCom) || !Is_Target_Aircraft(TarCom) || As_Aircraft(TarCom)->Altitude == 0) {
+				if (Ammo == 0) {
 					Assign_Target(TARGET_NONE);
 					Status = SAM_LOCKING;
+				} else if (!Target_Legal(TarCom) || !Is_Target_Aircraft(TarCom) || As_Aircraft(TarCom)->Altitude == 0 || !In_Range(TarCom, 0)) {
+					Status = SAM_SEEKING;
 				} else {
 					FireErrorType error = Can_Fire(TarCom, 0);
 					if (error == FIRE_ILLEGAL || error == FIRE_CANT || error == FIRE_RANGE) {
-						Assign_Target(TARGET_NONE);
-						Status = SAM_LOCKING;
+						Status = SAM_SEEKING;
 					} else {
 						if (error == FIRE_FACING) {
 							Status = SAM_READY;
 						} else {
 							if (error == FIRE_OK) {
 								Fire_At(TarCom, 0);
-								Status = SAM_READY2;
-								return(1);
+								Status = Ammo == 0 ? SAM_LOCKING : SAM_READY;
 							}
 						}
 					}
 				}
 				return(1);
 
+#ifdef NYERPATCH_OBSOLETE
 			case SAM_READY2:
 				if (!Target_Legal(TarCom) || !Is_Target_Aircraft(TarCom) || As_Aircraft(TarCom)->Altitude == 0) {
 					Assign_Target(TARGET_NONE);
@@ -4439,6 +4449,7 @@ int BuildingClass::Mission_Attack(void)
 					}
 				}
 				return(1);
+#endif
 
 			/*
 			**	Rotating to face north in preparation for lowering to reload.
@@ -4463,6 +4474,7 @@ int BuildingClass::Mission_Attack(void)
 					Set_Rate(0);
 					Set_Stage(0);
 					Status = SAM_UNDERGROUND;
+					Ammo = Class->MaxAmmo;
 					return(TICKS_PER_SECOND);
 				} else {
 					if (Fetch_Rate() == 0) {
@@ -4470,6 +4482,26 @@ int BuildingClass::Mission_Attack(void)
 					}
 				}
 				return(1);
+
+			// Nyerguds's C&C Patch Project v1.04: SAMs seek new target before popping down.
+			/*
+			**	Looking for new target
+			*/
+			case SAM_SEEKING:
+				if (Ammo == 0) {
+					Assign_Target(TARGET_NONE);
+					Status = SAM_LOCKING;
+				} else {
+					Assign_Target(Greatest_Threat(THREAT_RANGE));
+					if (Target_Legal(TarCom) && Is_Target_Aircraft(TarCom) && As_Aircraft(TarCom)->Altitude > 0 && In_Range(TarCom, 0)) {
+						Status = SAM_READY;
+						return(1);
+					} else {
+						Status = SAM_LOCKING;
+						return(TICKS_PER_SECOND);
+					}
+				}
+				break;
 
 			default:
 				break;

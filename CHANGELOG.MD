@@ -341,3 +341,6 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * Japanese briefings now also show the "Briefing" text at the top.
 * Dialogs that only have one button can now be closed using the Escape key.
 * \[Internal\] For showing startup error message messages, the game will now read CCMENU.PAL as alternative to TEMPERAT.PAL, allowing the Temperate palette to be modded normally.
+* Added boundary checking on the strength values in all mission ini reading.
+* \[Internal\] SAM Sites now have an Ammo setting that determines how many shots they will foe before they pop down to reload.
+* When a SAM Site loses its target before it managed to get all its shots off, but other targets are in range, it will immediately pick a new target instead of going down into its bunker.

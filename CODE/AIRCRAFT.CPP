@@ -543,8 +543,10 @@ void AircraftClass::Read_INI(char *buffer)
 					if (!Map.In_Radar(Coord_Cell(coord))) {
 						delete air;
 					} else {
-
-						air->Strength = Fixed_To_Cardinal(air->Class->MaxStrength, strength);
+						strength = MAX(0, MIN(strength, 0x100));
+						int max = air->Class->MaxStrength;
+						int actual = Fixed_To_Cardinal(max, strength);
+						air->Strength = MAX(1, MIN(actual, max));
 						// Nyerguds's C&C Patch Project v1.04: Do not spawn helicopters in the air.
 						air->Altitude = air->Class->IsFixedWing ? FLIGHT_LEVEL : 0;
 						if (air->Unlimbo(coord, dir)) {
@@ -3225,7 +3227,7 @@ TARGET AircraftClass::Good_Fire_Location(TARGET target) const
 						edgetouched = true;
 						continue;
 					}
-					bool hasSpace = Map.In_Radar(newcell) && (GameToPlay != GAME_NORMAL || Map[newcell].IsVisible)	;
+					bool hasSpace = Map.In_Radar(newcell) && (GameToPlay != GAME_NORMAL || Map[newcell].IsVisible);
 					if (!hasSpace) {
 						edgetouched = true;
 					} else if (Cell_Seems_Ok(newcell, noshuffle == 0)) {

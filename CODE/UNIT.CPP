@@ -4058,7 +4058,10 @@ void UnitClass::Read_INI(char *buffer)
 					}
 
 					if (unit->Unlimbo(coord, dir)) {
-						unit->Strength = Fixed_To_Cardinal(unit->Class->MaxStrength, strength);
+						strength = MAX(0, MIN(strength, 0x100));
+						int max = unit->Class->MaxStrength;
+						int actual = Fixed_To_Cardinal(max, strength);
+						unit->Strength = MAX(1, MIN(actual, max));
 						if (GameToPlay == GAME_NORMAL || unit->House->IsHuman) {
 							unit->Assign_Mission(mission);
 							unit->Commence();
