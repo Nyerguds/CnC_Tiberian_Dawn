@@ -342,5 +342,7 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * Dialogs that only have one button can now be closed using the Escape key.
 * \[Internal\] For showing startup error message messages, the game will now read CCMENU.PAL as alternative to TEMPERAT.PAL, allowing the Temperate palette to be modded normally.
 * Added boundary checking on the strength values in all mission ini reading.
-* \[Internal\] SAM Sites now have an Ammo setting that determines how many shots they will foe before they pop down to reload.
-* When a SAM Site loses its target before it managed to get all its shots off, but other targets are in range, it will immediately pick a new target instead of going down into its bunker.
+* Fixed bug where SAM Sites pop up and look around again after a target moves out of its range. The target validity is now checked at every step of the popup / popdown process.
+* \[Internal\] The SAM Site now uses the game's general "remaining ammo" system rather than having an cloned firing stage in its popup logic for the second shot.
+* Removing the mentioned cloned firing stage fixed a bug where the SAM Site aims straight north while aiming its second shot.
+* When a SAM Site loses its target before it manages to get all its shots off, but other targets are in range, it will immediately pick a new target instead of going down into its bunker.

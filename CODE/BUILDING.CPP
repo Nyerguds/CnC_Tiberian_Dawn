@@ -106,13 +106,13 @@ enum SAMState {
 	SAM_RISING,					// Doors open and launcher rises to normal locked down position.
 	SAM_READY,					// Launcher can be facing any direction tracking targets.
 	SAM_FIRING,					// Stationary while missile is being fired.
+	SAM_SEEKING,				// Special state in which the SAM Site looks for a new target.
 #ifdef NYERPATCH_OBSOLETE
 	SAM_READY2,					// Launcher can be facing any direction tracking targets.
 	SAM_FIRING2,				// Stationary while missile is being fired.
 #endif
 	SAM_LOCKING,				// Rotating to locked position in preparation for lowering.
 	SAM_LOWERING,				// Launcher is lowering into the ground.
-	SAM_SEEKING,				// Special state in which the SAM Site looks for a new target.
 };
 
 
@@ -544,7 +544,7 @@ void BuildingClass::Draw_It(int x, int y, WindowNumberType window)
 				**	from the building's turret facing. All other animation stages
 				**	fetch their frame from the embedded animation sequencer.
 				*/
-				if (Status == SAM_READY || Status == SAM_FIRING || Status == SAM_LOCKING) {
+				if (Status == SAM_READY || Status == SAM_FIRING || Status == SAM_SEEKING || Status == SAM_LOCKING) {
 					shapenum += 16;
 				} else {
 					shapenum = Fetch_Stage();
@@ -4331,6 +4331,10 @@ int BuildingClass::Mission_Attack(void)
 			*/
 			case SAM_UNDERGROUND:
 				IsReadyToCommence = true;
+				// Check if target can be cleared. This prevents unnecessary extra popup animations.
+				if (Target_Legal(TarCom) && (!Is_Target_Aircraft(TarCom) || As_Aircraft(TarCom)->Altitude == 0 || !In_Range(TarCom, 0))) {
+					Assign_Target(TARGET_NONE);
+				}
 				if (Target_Legal(TarCom)) {
 					Set_Rate(2);
 					Set_Stage(0);
@@ -4374,9 +4378,12 @@ int BuildingClass::Mission_Attack(void)
 				} else {
 					if (!PrimaryFacing.Is_Rotating()) {
 						DirType facing = Direction(TarCom);
-						if (PrimaryFacing.Difference(facing)) {
+						int diff = ABS(PrimaryFacing.Difference(facing));
+						if (diff) {
 							PrimaryFacing.Set_Desired(facing);
-						} else {
+						}
+						// Close enough to try to fire. Same leeway as is given by Can_Fire.
+						if (diff <= 8) {
 							Status = SAM_FIRING;
 						}
 					}
@@ -4394,23 +4401,35 @@ int BuildingClass::Mission_Attack(void)
 					Status = SAM_SEEKING;
 				} else {
 					FireErrorType error = Can_Fire(TarCom, 0);
-					if (error == FIRE_ILLEGAL || error == FIRE_CANT || error == FIRE_RANGE) {
-						Status = SAM_SEEKING;
-					} else {
-						if (error == FIRE_FACING) {
-							Status = SAM_READY;
-						} else {
-							if (error == FIRE_OK) {
-								Fire_At(TarCom, 0);
-								Status = Ammo == 0 ? SAM_LOCKING : SAM_READY;
+					// Typical case between shots will be that the error is REARM, which will
+					// keep repeating this code every tick until it becomes FACING, which will
+					// switch it back to status READY, where it will correct its aim and switch
+					// back to this. This loop will continue until the rearm delay is over.
+					switch (error) {
+						case FIRE_OK:
+							Fire_At(TarCom, 0);
+							// If no ammo remains, prepare to pop down.
+							if (Ammo == 0) {
+								Status = SAM_LOCKING;
 							}
-						}
+							break;
+						case FIRE_FACING:
+							// Target moved. Adjust aim.
+							Status = SAM_READY;
+							break;
+						case FIRE_ILLEGAL:
+						case FIRE_CANT:
+						case FIRE_RANGE:
+							// Target lost. Find new target.
+							Status = SAM_SEEKING;
+							break;
 					}
 				}
 				return(1);
 
-#ifdef NYERPATCH_OBSOLETE
-			case SAM_READY2:
+// Old version of the logic to make it fire twice. Now it just loops READY and FIRING and checks its Ammo count.
+ #ifdef NYERPATCH_OBSOLETE
+ 			case SAM_READY2:
 				if (!Target_Legal(TarCom) || !Is_Target_Aircraft(TarCom) || As_Aircraft(TarCom)->Altitude == 0) {
 					Assign_Target(TARGET_NONE);
 					Status = SAM_LOCKING;
@@ -4455,13 +4474,27 @@ int BuildingClass::Mission_Attack(void)
 			**	Rotating to face north in preparation for lowering to reload.
 			*/
 			case SAM_LOCKING:
+				// Check if target can be cleared. This simplifies later checks.
+				if (Target_Legal(TarCom) && (!Is_Target_Aircraft(TarCom) || As_Aircraft(TarCom)->Altitude == 0 || !In_Range(TarCom, 0))) {
+					Assign_Target(TARGET_NONE);
+				}
 				if (!PrimaryFacing.Is_Rotating()) {
+					// Either at the beginning or end.
 					if (PrimaryFacing == DIR_N) {
 						Set_Rate(2);
 						Set_Stage(48);
 						Status = SAM_LOWERING;
 					} else {
 						PrimaryFacing.Set_Desired(DIR_N);
+					}
+				} else if (Ammo > 0 && !Target_Legal(TarCom)) {
+					// In the process of rotating back to the north, if it has no current target,
+					// Check if there is a possible new target around, and if so, assign it.
+					// This does not switch to SAM_SEEKING to avoid potential endless loops.
+					Assign_Target(Greatest_Threat(THREAT_RANGE));
+					if (Target_Legal(TarCom) && Is_Target_Aircraft(TarCom) && As_Aircraft(TarCom)->Altitude > 0 && In_Range(TarCom, 0)) {
+						Status = SAM_READY;
+						return(1);
 					}
 				}
 				return(1);
@@ -4470,6 +4503,10 @@ int BuildingClass::Mission_Attack(void)
 			**	Lowering into the ground in order to reload.
 			*/
 			case SAM_LOWERING:
+				// Check if target can be cleared. This prevents unnecessary extra popup animations.
+				if (Target_Legal(TarCom) && (!Is_Target_Aircraft(TarCom) || As_Aircraft(TarCom)->Altitude == 0 || !In_Range(TarCom, 0))) {
+					Assign_Target(TARGET_NONE);
+				}
 				if (Fetch_Stage() >= 63) {
 					Set_Rate(0);
 					Set_Stage(0);
