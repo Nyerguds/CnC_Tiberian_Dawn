@@ -1007,7 +1007,9 @@ bool DisplayClass::Stealth_Proximity_Check(ObjectTypeClass const *object) {
 	while (*ptr != REFRESH_EOL) {
 		CELL	cell = ZoneCell + ZoneOffset + *ptr++;
 		CellClass * cellptr = &Map[cell];
-		if (!In_Radar(cell)) {
+		// Do not evaluate cells that aren't buildable anyway.
+		if (!In_Radar(cell) || !Ground[cellptr->Land_Type()].Build ||
+			(cellptr->Smudge != SMUDGE_NONE && SmudgeTypeClass::As_Reference(cellptr->Smudge).IsBib && cellptr->Owner != HOUSE_NONE)) {
 			continue;
 		}
 		ObjectClass * occ = (*this)[cell].Cell_Techno();
