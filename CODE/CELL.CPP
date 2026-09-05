@@ -2463,8 +2463,8 @@ bool CellClass::Goodie_Check(FootClass * object)
 
 #endif
 
-
 	if (object && Overlay != OVERLAY_NONE && OverlayTypeClass::As_Reference(Overlay).IsCrate) {
+		HouseClass * house = object->House;
 		bool steel = (Overlay == OVERLAY_STEEL_CRATE);
 		COORDINATE coord;			// Temporary working coordinate value.
 
@@ -2479,12 +2479,18 @@ bool CellClass::Goodie_Check(FootClass * object)
 		if (steel) {
 			// Nyerguds's C&C Patch Project v1.04: Any house can pick up nuke pieces.
 			// Made nuke piece logic available for all, because why not?
+			bool addsNuke = false;
 			if (GameToPlay == GAME_NORMAL) {
-				object->House->Add_Nuke_Piece();
+				house->Add_Nuke_Piece();
+				addsNuke = NukeUnlockSignal && house->NukePieces > 0 && house->NukePieces % RequiredNukePieces == 0;
 			}
 			// Nyerguds's TUC Quick Fix Patch v1.02: steelcrate-anim
 			// Play animation regardless of House.
-			new AnimClass(ANIM_CRATE_EMPULSE, Cell_Coord());
+			// Nyerguds's C&C Patch Project v1.04: show special animation when unlocking the nuke.
+			new AnimClass(addsNuke ? ANIM_CRATE_RAPID : ANIM_CRATE_EMPULSE, Cell_Coord());
+			if (addsNuke) {
+				Sound_Effect(VOC_SONAR);
+			}
 
 		} else {
 
@@ -2493,15 +2499,15 @@ bool CellClass::Goodie_Check(FootClass * object)
 			unsigned damage = 0;
 			int what = MONEY;
 
-			if (GameToPlay != GAME_NORMAL && (Random_Pick(1, 2) == 1 || !object->House->BScan)) {
+			if (GameToPlay != GAME_NORMAL && (Random_Pick(1, 2) == 1 || !house->BScan)) {
 				what = -1;
 
 				/*
 				**	If the player has a construction yeard and practically no money and no legitmate means
 				**	to make any more money, then give money to build a refinery.
 				*/
-				if ((object->House->BScan & (STRUCTF_CONST|STRUCTF_REFINERY)) == STRUCTF_CONST &&
-					object->House->Available_Money() < BuildingTypeClass::As_Reference(STRUCT_REFINERY).Cost) {
+				if ((house->BScan & (STRUCTF_CONST|STRUCTF_REFINERY)) == STRUCTF_CONST &&
+					house->Available_Money() < BuildingTypeClass::As_Reference(STRUCT_REFINERY).Cost) {
 
 					what = MONEY;
 				}
@@ -2511,9 +2517,9 @@ bool CellClass::Goodie_Check(FootClass * object)
 				*/
 				if (Random_Pick(0, 1) == 0 &&
 					MPlayerBases &&
-					!(object->House->UScan & UNITF_MCV) &&
-					object->House->BScan == 0 &&
-					object->House->Available_Money() > (BuildingTypeClass::As_Reference(STRUCT_REFINERY).Cost + BuildingTypeClass::As_Reference(STRUCT_POWER).Cost)) {
+					!(house->UScan & UNITF_MCV) &&
+					house->BScan == 0 &&
+					house->Available_Money() > (BuildingTypeClass::As_Reference(STRUCT_REFINERY).Cost + BuildingTypeClass::As_Reference(STRUCT_POWER).Cost)) {
 
 					what = UNIT;
 				}
@@ -2521,10 +2527,10 @@ bool CellClass::Goodie_Check(FootClass * object)
 				while (what == -1) {
 					what = _what[Random_Pick((unsigned)0, sizeof(_what)/sizeof(_what[0])-1)];
 
-					if (what == REVEAL && object->House->IsVisionary) what = -1;
-					if (what == AIR_STRIKE && object->House->AirStrike.Is_Present()) what = -1;
-					if (what == NUKE_MISSILE && object->House->NukeStrike.Is_Present()) what = -1;
-					if (what == ION_BLAST && object->House->IonCannon.Is_Present()) what = -1;
+					if (what == REVEAL && house->IsVisionary) what = -1;
+					if (what == AIR_STRIKE && house->AirStrike.Is_Present()) what = -1;
+					if (what == NUKE_MISSILE && house->NukeStrike.Is_Present()) what = -1;
+					if (what == ION_BLAST && house->IonCannon.Is_Present()) what = -1;
 					if (what == CLOAK && object->IsCloakable) what = -1;
 				}
 			}
@@ -2533,7 +2539,7 @@ bool CellClass::Goodie_Check(FootClass * object)
 			** Keep track of the number of each type of crate found
 			*/
 			if (GameToPlay == GAME_INTERNET){
-				object->House->TotalCrates->Increment_Unit_Total(what);
+				house->TotalCrates->Increment_Unit_Total(what);
 			}
 
 			/*
@@ -2569,7 +2575,7 @@ bool CellClass::Goodie_Check(FootClass * object)
 				*/
 				case DARKNESS:
 					new AnimClass(ANIM_CRATE_EMPULSE, Cell_Coord());
-					if (object->House == PlayerPtr) {
+					if (house == PlayerPtr) {
 						for (CELL cell = 0; cell < MAP_CELL_TOTAL; cell++) {
 							CellClass * cellptr = &Map[cell];
 							if (cellptr->IsMapped || cellptr->IsVisible) {
@@ -2593,8 +2599,8 @@ bool CellClass::Goodie_Check(FootClass * object)
 				*/
 				case REVEAL:
 					new AnimClass(ANIM_CRATE_EMPULSE, Cell_Coord());
-					object->House->IsVisionary = true;
-					if (object->House == PlayerPtr) {
+					house->IsVisionary = true;
+					if (house == PlayerPtr) {
 						for (CELL cell = 0; cell < MAP_CELL_TOTAL; cell++) {
 							Map.Map_Cell(cell, PlayerPtr);
 						}
@@ -2613,9 +2619,9 @@ bool CellClass::Goodie_Check(FootClass * object)
 					**	give him another one.
 					*/
 					if (MPlayerBases &&
-						!(object->House->UScan & UNITF_MCV) &&
-						object->House->BScan == 0 &&
-						object->House->Available_Money() > (BuildingTypeClass::As_Reference(STRUCT_REFINERY).Cost + BuildingTypeClass::As_Reference(STRUCT_POWER).Cost)) {
+						!(house->UScan & UNITF_MCV) &&
+						house->BScan == 0 &&
+						house->Available_Money() > (BuildingTypeClass::As_Reference(STRUCT_REFINERY).Cost + BuildingTypeClass::As_Reference(STRUCT_POWER).Cost)) {
 
 						utp = &UnitTypeClass::As_Reference(UNIT_MCV);
 					}
@@ -2624,7 +2630,7 @@ bool CellClass::Goodie_Check(FootClass * object)
 					**	If the player has a base and a refinery, but no harvester, then give him
 					**	a free one.
 					*/
-					if (!utp && (object->House->BScan & STRUCTF_REFINERY) && !(object->House->UScan & UNITF_HARVESTER)) {
+					if (!utp && (house->BScan & STRUCTF_REFINERY) && !(house->UScan & UNITF_HARVESTER)) {
 						utp = &UnitTypeClass::As_Reference(UNIT_HARVESTER);
 					}
 
@@ -2637,7 +2643,7 @@ bool CellClass::Goodie_Check(FootClass * object)
 						}
 					}
 
-					UnitClass * unit = (UnitClass *)utp->Create_One_Of(object->House);
+					UnitClass * unit = (UnitClass *)utp->Create_One_Of(house);
 					if (unit) {
 						if (unit->Unlimbo(Cell_Coord())) {
 							return(false);
@@ -2684,7 +2690,7 @@ bool CellClass::Goodie_Check(FootClass * object)
 				*/
 				case NUKE_MISSILE:
 					new AnimClass(ANIM_CRATE_MISSILE, Cell_Coord());
-					if (object->House->NukeStrike.Enable(true)) {
+					if (house->NukeStrike.Enable(true)) {
 						if (object->IsOwnedByPlayer) {
 							Map.Add(RTTI_SPECIAL, SPC_NUCLEAR_BOMB);
 							Map.Column[1].Flag_To_Redraw();
@@ -2697,7 +2703,7 @@ bool CellClass::Goodie_Check(FootClass * object)
 				*/
 				case ION_BLAST:
 					new AnimClass(ANIM_CRATE_EARTH, Cell_Coord());
-					if (object->House->IonCannon.Enable(true)) {
+					if (house->IonCannon.Enable(true)) {
 						if (object->IsOwnedByPlayer) {
 							Map.Add(RTTI_SPECIAL, SPC_ION_CANNON);
 							Map.Column[1].Flag_To_Redraw();
@@ -2710,7 +2716,7 @@ bool CellClass::Goodie_Check(FootClass * object)
 				*/
 				case AIR_STRIKE:
 					new AnimClass(ANIM_CRATE_DEVIATOR, Cell_Coord());
-					if (object->House->AirStrike.Enable(true)) {
+					if (house->AirStrike.Enable(true)) {
 						if (object->IsOwnedByPlayer) {
 							Map.Add(RTTI_SPECIAL, SPC_AIR_STRIKE);
 							Map.Column[1].Flag_To_Redraw();
@@ -2777,7 +2783,7 @@ bool CellClass::Goodie_Check(FootClass * object)
 					for (index = 0; index < Logic.Count(); index++) {
 						ObjectClass * obj = Logic[index];
 
-						if (obj && object->Is_Techno() && object->House->Class->House == obj->Owner()) {
+						if (obj && object->Is_Techno() && house->Class->House == obj->Owner()) {
 							obj->Strength = obj->Class_Of().MaxStrength;
 						}
 					}

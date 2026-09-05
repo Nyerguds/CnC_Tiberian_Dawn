@@ -351,6 +351,7 @@ int CarryOverMoney;						// Carry over money from last scenario.
 int CarryOverPercent;					// Carry over money percentage control.
 int CarryOverCap;						// Maxmimum carry over money allowed.
 int RequiredNukePieces;					// Nuke pieces required for one nuclear missile.
+bool NukeUnlockSignal;					// Picking up a nuke crate that will unlock an actual nuke gives a special alert.
 int ScenarioInit;
 bool SpecialFlag = false;
 bool AllowDetachedAISupers;			// Allow the AI to use superweapons without owning the required building.

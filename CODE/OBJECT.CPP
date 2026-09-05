@@ -759,9 +759,9 @@ void ObjectClass::Hidden(void) {
 	CCDebugFunc("void ObjectClass::Hidden(void)");
 #endif
 };
-void ObjectClass::Look(bool ) {
+void ObjectClass::Look(bool /*incremental*/) {
 #ifdef INCLUDE_FUNCTION_NAMES
-	CCDebugFunc("void ObjectClass::Look(bool )");
+	CCDebugFunc("void ObjectClass::Look(bool incremental)");
 #endif
 };
 void ObjectClass::Active_Click_With(ActionType , ObjectClass *) {

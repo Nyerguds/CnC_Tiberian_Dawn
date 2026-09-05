@@ -211,6 +211,7 @@ extern int						CarryOverMoney;
 extern int						CarryOverCap;
 extern int						CarryOverPercent;
 extern int						RequiredNukePieces;
+extern int						NukeUnlockSignal;
 extern bool						AllowDetachedAISupers;
 extern bool						PassiveHelis;
 extern bool						NoTiberiumWandering;

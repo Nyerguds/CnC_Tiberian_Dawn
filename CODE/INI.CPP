@@ -405,6 +405,8 @@ bool Read_Scenario_Ini(char *root, int nukepieces, bool fresh)
 		RequiredNukePieces = MAX(0, neededpieces);
 		bool nukeInherit = WWGetPrivateProfileBool("Basic", "PlayerNukeInherit", false, buffer);
 		int newpieces = WWGetPrivateProfileInt("Basic", "PlayerNukePieces", 3, buffer);
+		bool alertnukecrate = Options.NodCollectathon || nukeInherit;
+		NukeUnlockSignal = WWGetPrivateProfileBool("Basic", "NukeUnlockSignal", alertnukecrate, buffer);
 		// PATSUX laser orca. This setting is applied in the Map.Read_INI() call below,
 		// when it calls AircraftTypeClass::After_Init().
 		Patsux = WWGetPrivateProfileBool("Basic", "Patsux", 0, buffer);

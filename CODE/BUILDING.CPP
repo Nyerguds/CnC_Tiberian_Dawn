@@ -1810,10 +1810,10 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
  *   08/05/1992 JLB : Created.                                                                 *
  *   04/15/1994 JLB : Converted to member function.                                            *
  *=============================================================================================*/
-void BuildingClass::Look(bool)
+void BuildingClass::Look(bool /*incremental*/)
 {
 #ifdef INCLUDE_FUNCTION_NAMES
-	CCDebugFunc("void BuildingClass::Look(bool)");
+	CCDebugFunc("void BuildingClass::Look(bool incremental)");
 #endif
 	Validate();
 	if (IsOwnedByPlayer || IsDiscoveredByPlayer) {

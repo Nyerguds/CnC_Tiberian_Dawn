@@ -142,6 +142,7 @@ These options are available under \[Basic\]: They all default to "not activated"
 * **RequiredNukePieces**: Amount of nuke pieces (steel crates) required to fire a single nuclear missile in this mission. This defaults to three.
 * **PlayerNukePieces**: Amount of nuke pieces (steel crates) the player is considered to have collected at the mission start. The Temple of Nod will grant you one nuclear missile superweapon for each batch of collected nuke pieces, as specified in **RequiredNukePieces**. This defaults to three, to give the normal logic of one nuke per mission.
 * **PlayerNukeInherit**: If true, the amount of nuke pieces is inherited from the previous scenario. This means the **PlayerNukePieces** value is not used.
+* **NukeUnlockSignal**: Play a special animation if the picked up crate is the one that allows you to fire an additional nuke. Defaults to false, unless the **PlayerNukeInherit** option is enabled, or <a href="#nod-campaign-steel-crate-collect-a-thon">the **NodCrateCollectNuke** option in conquer.ini is active</a>.
 * **AllowDetachedAISupers**: If true, AI superweapon strikes produced by triggers will be allowed even if the AI does not own the required superweapon building.
 
 ### House colors

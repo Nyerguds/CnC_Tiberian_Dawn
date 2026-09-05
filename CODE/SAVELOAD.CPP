@@ -96,6 +96,7 @@
 										sizeof(Patsux) + \
 										sizeof(RemoveBuildExceptions) + \
 										sizeof(RequiredNukePieces) + \
+										sizeof(NukeUnlockSignal) + \
 										sizeof(AllowDetachedAISupers) + \
 										sizeof(PassiveHelis) + \
 										sizeof(MissionTargetSpawn) + \
@@ -654,6 +655,8 @@ bool Save_Misc_Values(FileClass &file)
 	file.Write(&RemoveBuildExceptions, sizeof(RemoveBuildExceptions));
 	// Added amount of nuke pices required for one nuke
 	file.Write(&RequiredNukePieces, sizeof(RequiredNukePieces));
+	// Added whether picking up a crate will alert if it unlocks a nuke.
+	file.Write(&NukeUnlockSignal, sizeof(NukeUnlockSignal));
 	// Added option to allow AI superweapons if no building to launch from is present.
 	file.Write(&AllowDetachedAISupers, sizeof(AllowDetachedAISupers));
 	// Added option to make AI helis not default to Area Guard mode.
@@ -774,6 +777,8 @@ bool Load_Misc_Values(FileClass &file)
 	file.Read(&RemoveBuildExceptions, sizeof(RemoveBuildExceptions));
 	// Added amount of nuke pices required for one nuke
 	file.Read(&RequiredNukePieces, sizeof(RequiredNukePieces));
+	// Added whether picking up a crate will alert if it unlocks a nuke.
+	file.Read(&NukeUnlockSignal, sizeof(NukeUnlockSignal));
 	// Added option to allow AI superweapons if no building to launch from is present.
 	file.Read(&AllowDetachedAISupers, sizeof(AllowDetachedAISupers));
 	// Added option to make AI helis not default to Area Guard mode.
