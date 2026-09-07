@@ -124,6 +124,17 @@ BOOL						SoundThreadActive = FALSE;
 #define LARGEST_SONARC_BLOCK            2048
 
 
+/*
+**	These should be defined by including dsound.h but aren't accessible...
+*/
+#define DSBPAN_LEFT                 -10000
+#define DSBPAN_CENTER               0
+#define DSBPAN_RIGHT                10000
+
+#define DSBVOLUME_MIN               -10000
+#define DSBVOLUME_MAX               0
+
+
 //////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////// structs ///////////////////////////////////////
 
@@ -1035,7 +1046,7 @@ BOOL Audio_Init( HWND window , int bits_per_sample, BOOL stereo , int rate , int
 		*/
 		memset (&BufferDesc , 0 , sizeof(DSBUFFERDESC));
 		BufferDesc.dwSize=sizeof(DSBUFFERDESC);
-		BufferDesc.dwFlags=DSBCAPS_PRIMARYBUFFER | DSBCAPS_CTRLVOLUME;
+		BufferDesc.dwFlags=DSBCAPS_PRIMARYBUFFER | DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPAN;
 
 		/*
 		**	Set up the primary buffer format
@@ -1156,7 +1167,7 @@ BOOL Audio_Init( HWND window , int bits_per_sample, BOOL stereo , int rate , int
 		/*
 		**	Define the format for the secondary sound buffers
 		*/
-		BufferDesc.dwFlags=DSBCAPS_CTRLVOLUME;
+		BufferDesc.dwFlags=DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLPAN;
 		BufferDesc.dwBufferBytes=SECONDARY_BUFFER_SIZE;
 		BufferDesc.lpwfxFormat = (LPWAVEFORMATEX) &DsBuffFormat;
 
@@ -1592,16 +1603,31 @@ BOOL Attempt_Audio_Restore (LPDIRECTSOUNDBUFFER sound_buffer)
  * HISTORY:                                                                                    *
  *    9/18/96 11:36AM ST : Created                                                             *
  *=============================================================================================*/
-int Convert_HMI_To_Direct_Sound_Volume(int volume)
+#ifdef NYERPATCH_OBSOLETE
+ int Convert_HMI_To_Direct_Sound_Volume(int volume)
 {
-	if (volume == 0) return -10000;
-	if (volume == 255) return 0;
+	if (volume <= 0) return -10000;
+	if (volume >= 255) return 0;
 
 	float vol = (float)volume;
 	float retval = exp ( (255.0-vol)/27.68597374) -1;
 	return ((int)-retval);
 }
+#endif
+int Convert_HMI_To_Direct_Sound_Volume(int volume)
+{
+	// Nyerguds's C&C Patch Project v1.04: Fix volume to linear scale
+	// This code originally comes from the OpenTS project.
+	if (volume <= 0) return(DSBVOLUME_MIN);
+	if (volume >= 255) return(DSBVOLUME_MAX);
 
+	double retval = (log10((double)volume / 255.0) * ((-DSBVOLUME_MIN) / 300.0)) * 100;
+
+	if (retval < DSBVOLUME_MIN) {
+		retval = DSBVOLUME_MIN;
+	}
+	return((int)retval);
+}
 
 
 
@@ -1626,7 +1652,7 @@ int Convert_HMI_To_Direct_Sound_Volume(int volume)
  *   11/02/1995 ST  : Windows Direct Sound support                                             *
  *=============================================================================================*/
 extern BOOL Any_Locked(void);
-int Play_Sample_Handle(void const *sample, int priority, int volume, signed short , int id)
+int Play_Sample_Handle(void const *sample, int priority, int volume, signed short panloc, int id)
 {
 	AUDHeaderType                   RawHeader;
 	SampleTrackerType               *st=NULL;       // Working pointer to sample tracker structure.
@@ -1870,6 +1896,9 @@ int Play_Sample_Handle(void const *sample, int priority, int volume, signed shor
 		}
 	} while (return_code==DSERR_BUFFERLOST);
 
+	// Nyerguds's C&C Patch Project v1.04: added audio panning.
+	long ds_pan = ((long)panloc * DSBPAN_RIGHT) / 0x7FFF;
+	st->PlayBuffer->SetPan(ds_pan);
 
 	/*
 	** Make sure the primary sound buffer is playing

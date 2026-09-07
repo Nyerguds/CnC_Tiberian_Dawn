@@ -247,6 +247,40 @@ bool Sound_Effect(VocType voc, COORDINATE coord, int variation)
 	distance  = 0xFF;
 	pan_value = 0;
 	if (coord && !Map.In_View(cell_pos)) {
+		// Nyerguds's C&C Patch Project v1.04: fadeout now depends on distance outside viewport.
+		long lepx1 = MAX(0, Coord_X(Map.TacticalCoord));
+		long lepx2 = MIN((long)MAP_CELL_W * CELL_LEPTON_W, (long)lepx1 + Map.TacLeptonWidth);
+		long lepy1 = MAX(0, Coord_Y(Map.TacticalCoord));
+		long lepy2 = MIN((long)MAP_CELL_H * CELL_LEPTON_H, (long)lepy1 + Map.TacLeptonHeight);
+		long coordx = Coord_X(coord);
+		long coordy = Coord_Y(coord);
+
+		long dx = 0;
+		long dy = 0;
+
+		if (coordx < lepx1)
+			dx = lepx1 - coordx;
+		else if (coordx > lepx2)
+			dx = coordx - lepx2;
+
+		if (coordy < lepy1)
+			dy = lepy1 - coordy;
+		else if (coordy > lepy2)
+			dy = coordy - lepy2;
+
+		distance = Distance(0, 0, dx, dy) / CELL_LEPTON_W;
+
+		// Immediately outside the viewport, drop to offscreen volume.
+		// Then fade from that volume down to the 32/256 minimum over 32 cells.
+		const unsigned OFFSCREEN_VOLUME = 192; // 75%
+		const unsigned MIN_VOLUME = 25;
+		const unsigned FADE_DISTANCE = 32;
+		if (distance >= FADE_DISTANCE) {
+			distance = MIN_VOLUME;
+		} else {
+			distance = OFFSCREEN_VOLUME	- (distance * (OFFSCREEN_VOLUME - MIN_VOLUME) / FADE_DISTANCE);
+		}
+#ifdef OBSOLETE_NYERPATCH
 		distance = Map.Cell_Distance(cell_pos, Coord_Cell(Map.TacticalCoord));
 		distance = (unsigned int)MIN((int)distance, (int)MAP_CELL_W);
 		distance = Cardinal_To_Fixed(MAP_CELL_W, distance);
@@ -255,7 +289,7 @@ bool Sound_Effect(VocType voc, COORDINATE coord, int variation)
 
 		distance /= 2;
 		distance = MAX(distance, 25);
-
+#endif
 		pan_value  = Cell_X(cell_pos);
 		pan_value -= Coord_XCell(Map.TacticalCoord) + (Lepton_To_Cell(Map.TacLeptonWidth) >> 1);
 		if (ABS(pan_value) > Lepton_To_Cell(Map.TacLeptonWidth >> 1)) {

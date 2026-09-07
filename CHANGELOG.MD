@@ -346,3 +346,6 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * \[Internal\] The SAM Site now uses the game's general "remaining ammo" system rather than having an cloned firing stage in its popup logic for the second shot.
 * Removing the mentioned cloned firing stage fixed a bug where the SAM Site aims straight north while aiming its second shot.
 * When a SAM Site loses its target before it manages to get all its shots off, but other targets are in range, it will immediately pick a new target instead of going down into its bunker.
+* Fixed the volume setting scale being exponential rather than linear. It now uses the Tiberian Sun logic for this.
+* Reactivated the game's panning audio feature, which plays sound effects from the left or right speaker when they happen outside of the viewport.
+* Fixed the audio fade volume for sound effects that happen outside of the viewport; it was calculated as distance from the top left corner, making sounds that happen on the east or south side of the viewport much too faint.
