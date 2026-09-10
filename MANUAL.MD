@@ -97,9 +97,9 @@ Also note that these missions only have mission briefings in English.
 
 One of the interesting bits I noticed when digging into the code was the existence of options to use "translucent colors" on animations. This system turned out to be incredibly versatile, but in the retail game, it is only used for a very slight darkening effect around the tank barrel flash animation, and for a brightening filter on the circles shown when clicking to give a Move order. So I decided to expand that.
 
-This system works by taking certain reserved colours on the graphics, and instead of painting these, it applies a special effect, such as brightening, darkening, or recolouring, to whatever graphics are under these parts of the animation. This same system can already be seen in action in other parts of the game, such as the shadows under units, and the gradual darkening on the shroud edges. Although the amount of filters in the game is fairly limited, I managed to use the available ones to vastly upgrade all smoke animations in the game to become more transparent.
+This system works by taking certain reserved colours on the graphics, and instead of painting these, it applies a special effect, such as brightening, darkening, or recolouring, to whatever graphics are under these parts of the animation. This same system can already be seen in action in other parts of the game, such as the shadows under units, and the gradual darkening on the shroud edges. This system was expanded to vastly upgrade all smoke animations in the game to become more transparent.
 
-However, these changes won't activate just by tweaking the code; they need edits on the actual game sprites, to make them use these special reserved colours. In the "**extras**" folder, you can find a file called "**sc-smoky.mix**" Add that into your folder to replace the smoke effects with versions that use these translucent colors. These include rocket exhaust, the smoke shown on damaged vehicles, oil derricks on fire, and the Nod SAM Site's firing exhaust. Note that this will make the smoke coming from vehicles considerably darker than before.
+However, these changes won't activate just by tweaking the code; they need edits on the actual game sprites, to make them use these special reserved colours. In the "**extras**" folder, you can find a file called "**sc-smoky.mix**" Add that into your folder to replace the smoke effects with versions that use these translucent colors. These include rocket exhaust, the smoke shown on damaged vehicles, oil derricks on fire, and the Nod SAM Site's firing exhaust.
 
 ### Extra remix tracks
 
@@ -213,11 +213,11 @@ There are two trigger types in the game that can check for a building being capt
 
 ### Craters
 
-Craters (CR1-RC6) can be added to a mission in the \[Smudge\] section, and this system normally allows setting the size of the crater. However, due to a bug in the game, only CR1 worked correctly; all other craters would revert to the smallest size of CR1. With this bug fixed, all sizes of all six crater types are now available for use.
+Craters (CR1-CR6) can be added to a mission in the \[Smudge\] section, and this system normally allows setting the size of the crater. However, due to a bug in the game, only CR1 worked correctly; all other craters would revert to the smallest size of CR1. With this bug fixed, all sizes of all six crater types are now available for use.
 
 ### Crushed corpse
 
-There is a map decoration called SQUISH in the game, representing a crushed corpse. This is an item like tiberium and walls, which can be added under the \[Overlay\] section. Originally, access to this overlay was completely blocked unless a special option was enabled to show corpses when crushing infantry with tanks. This has now been unlinked, meaning the item is available to place on maps.
+There is a map decoration called SQUISH in the game, representing a crushed corpse. This is an item like tiberium and walls, which can be added under the \[Overlay\] section. Originally, access to this overlay was completely blocked unless a special option was enabled to show corpses when crushing infantry with tanks. This has now been unlinked, meaning the item is available to place on maps. The actual special option (**Overrun=pancake**) will now instead show the same graphics as animation, meaning it vanishes after a while, and is not limited to one corpse per cell.
 
 ## Full list of changes
 
