@@ -2838,7 +2838,8 @@ void BuildingClass::Grand_Opening(bool captured)
 //		if (!Map[cell].Cell_Unit()) {
 			UnitClass * unit = new UnitClass(UNIT_HARVESTER, House->Class->House);
 			if (unit) {
-
+				// A spawned harvester is never a lemon.
+				unit->IsALemon = false;
 				/*
 				**	Try to place down the harvesters. If it could not be placed, then try
 				**	to place it in a nearby location.
@@ -4243,6 +4244,8 @@ int BuildingClass::Mission_Deconstruction(void)
 					UnitClass * unit = new UnitClass(UNIT_MCV, House->Class->House);
 					ScenarioInit--;
 					if (unit) {
+						// An undeployed construction yard is never a lemon.
+						unit->IsALemon = false;
 
 						/*
 						**	Unlimbo the MCV onto the map. The MCV should start in the same

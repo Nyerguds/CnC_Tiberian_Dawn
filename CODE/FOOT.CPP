@@ -1430,29 +1430,29 @@ void FootClass::Active_Click_With(ActionType action, CELL cell)
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("void FootClass::Active_Click_With(ActionType action, CELL cell)");
 #endif
-	// Nyerguds's C&C Patch Project v1.04: Added movement flash for more actions.
-	// These actions can give a movement flash.
-	switch (action) {
-		case ACTION_HARVEST:
-		case ACTION_MOVE:
-		case ACTION_GUARD_AREA:
-			if (AllowVoice) {
-				COORDINATE coord;
-				int x = Get_Mouse_X();
-				int y = Get_Mouse_Y();
-				int inradar = Map.RadarClass::Click_In_Radar(x, y, false);
-				if (inradar == 1) {
-					coord = Cell_Coord(cell);
-					x = Coord_X(coord);
-					y = Coord_Y(coord);
-				} else {
-					coord = Map.Pixel_To_Coord(x, y);
-				}
-				if (inradar != -1) {
-					OutList.Add(EventClass(ANIM_MOVE_FLASH, PlayerPtr->Class->House, coord));
-				}
-			}
-			break;
+	if (AllowVoice) {
+		// Nyerguds's C&C Patch Project v1.04: Added movement flash for more actions.
+		// These actions can give a movement flash.
+		switch (action) {
+			case ACTION_HARVEST:
+			case ACTION_MOVE:
+			case ACTION_GUARD_AREA:
+					COORDINATE coord;
+					int x = Get_Mouse_X();
+					int y = Get_Mouse_Y();
+					// Nyerguds's C&C Patch Project v1.04: Minimap click gives movement flash.
+					// If the coordinates are on the minimap, revert to using the given cell.
+					int inradar = Map.RadarClass::Click_In_Radar(x, y, false);
+					if (inradar != -1) {
+						if (inradar == 1) {
+							coord = Cell_Coord(cell);
+						} else {
+							coord = Map.Pixel_To_Coord(x, y);
+						}
+						OutList.Add(EventClass(ANIM_MOVE_FLASH, PlayerPtr->Class->House, coord));
+					}
+				break;
+		}
 	}
 
 	switch (action) {

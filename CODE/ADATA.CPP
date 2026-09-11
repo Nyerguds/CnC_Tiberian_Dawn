@@ -52,7 +52,7 @@ static AnimTypeClass const TricDie(
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,										// Delay between frames.
 	176,									// Starting frame number.
@@ -61,7 +61,7 @@ static AnimTypeClass const TricDie(
 	20,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_DINODIE1,							// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const TRexDie(
@@ -76,7 +76,7 @@ static AnimTypeClass const TRexDie(
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,										// Delay between frames.
 	144,									// Starting frame number.
@@ -85,7 +85,7 @@ static AnimTypeClass const TRexDie(
 	40,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_DINODIE1,							// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const StegDie(
@@ -100,7 +100,7 @@ static AnimTypeClass const StegDie(
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,										// Delay between frames.
 	176,									// Starting frame number.
@@ -109,7 +109,7 @@ static AnimTypeClass const StegDie(
 	22,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_DINODIE1,							// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const RaptDie(
@@ -124,7 +124,7 @@ static AnimTypeClass const RaptDie(
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,										// Delay between frames.
 	144,									// Starting frame number.
@@ -133,7 +133,7 @@ static AnimTypeClass const RaptDie(
 	40,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_DINODIE1,							// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const SAMN(
@@ -148,7 +148,7 @@ static AnimTypeClass const SAMN(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	true, 									// Is this animation directional?
+	true, 									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	18*0,									// Starting frame number.
@@ -157,7 +157,7 @@ static AnimTypeClass const SAMN(
 	18,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const SAMNW(
@@ -172,7 +172,7 @@ static AnimTypeClass const SAMNW(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	18*1,									// Starting frame number.
@@ -181,7 +181,7 @@ static AnimTypeClass const SAMNW(
 	18,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const SAMW(
@@ -196,7 +196,7 @@ static AnimTypeClass const SAMW(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	18*2,									// Starting frame number.
@@ -205,7 +205,7 @@ static AnimTypeClass const SAMW(
 	18,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const SAMSW(
@@ -220,7 +220,7 @@ static AnimTypeClass const SAMSW(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	18*3,									// Starting frame number.
@@ -229,7 +229,7 @@ static AnimTypeClass const SAMSW(
 	18,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const SAMS(
@@ -244,7 +244,7 @@ static AnimTypeClass const SAMS(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	18*4,									// Starting frame number.
@@ -253,7 +253,7 @@ static AnimTypeClass const SAMS(
 	18,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const SAMSE(
@@ -268,7 +268,7 @@ static AnimTypeClass const SAMSE(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	18*5,									// Starting frame number.
@@ -277,7 +277,7 @@ static AnimTypeClass const SAMSE(
 	18,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const SAME(
@@ -292,7 +292,7 @@ static AnimTypeClass const SAME(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	18*6,									// Starting frame number.
@@ -301,7 +301,7 @@ static AnimTypeClass const SAME(
 	18,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const SAMNE(
@@ -316,7 +316,7 @@ static AnimTypeClass const SAMNE(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	18*7,									// Starting frame number.
@@ -325,7 +325,7 @@ static AnimTypeClass const SAMNE(
 	18,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const LZSmoke(
@@ -340,7 +340,7 @@ static AnimTypeClass const LZSmoke(
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -349,7 +349,7 @@ static AnimTypeClass const LZSmoke(
 	-1,										// Number of animation stages.
 	255,									// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 /*
@@ -367,7 +367,7 @@ static AnimTypeClass const BurnSmall(
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0008,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -376,7 +376,7 @@ static AnimTypeClass const BurnSmall(
 	-1,										// Number of animation stages.
 	4,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const BurnMed(
@@ -391,7 +391,7 @@ static AnimTypeClass const BurnMed(
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0010,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -400,7 +400,7 @@ static AnimTypeClass const BurnMed(
 	-1,										// Number of animation stages.
 	4,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const BurnBig(
@@ -415,7 +415,7 @@ static AnimTypeClass const BurnBig(
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0018,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -424,7 +424,7 @@ static AnimTypeClass const BurnBig(
 	-1,										// Number of animation stages.
 	4,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 /*
@@ -443,7 +443,7 @@ static AnimTypeClass const OnFireSmall(
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0008,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -467,7 +467,7 @@ static AnimTypeClass const OnFireMed(
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0010,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -491,7 +491,7 @@ static AnimTypeClass const OnFireBig(
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0018,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -518,7 +518,7 @@ static AnimTypeClass const FlameN(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	true, 									// Is this a flame thrower animation?
-	true, 									// Is this animation directional?
+	true, 									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -527,7 +527,7 @@ static AnimTypeClass const FlameN(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const FlameNW(
@@ -542,7 +542,7 @@ static AnimTypeClass const FlameNW(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	true, 									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -551,7 +551,7 @@ static AnimTypeClass const FlameNW(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const FlameW(
@@ -566,7 +566,7 @@ static AnimTypeClass const FlameW(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	true, 									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -575,7 +575,7 @@ static AnimTypeClass const FlameW(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const FlameSW(
@@ -590,7 +590,7 @@ static AnimTypeClass const FlameSW(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	true, 									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -599,7 +599,7 @@ static AnimTypeClass const FlameSW(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const FlameS(
@@ -614,7 +614,7 @@ static AnimTypeClass const FlameS(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	true, 									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -623,7 +623,7 @@ static AnimTypeClass const FlameS(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const FlameSE(
@@ -638,7 +638,7 @@ static AnimTypeClass const FlameSE(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	true, 									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -647,7 +647,7 @@ static AnimTypeClass const FlameSE(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const FlameE(
@@ -662,7 +662,7 @@ static AnimTypeClass const FlameE(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	true, 									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -671,7 +671,7 @@ static AnimTypeClass const FlameE(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const FlameNE(
@@ -686,7 +686,7 @@ static AnimTypeClass const FlameNE(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	true, 									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -695,7 +695,7 @@ static AnimTypeClass const FlameNE(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 /*
@@ -713,7 +713,7 @@ static AnimTypeClass const ChemN(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	true, 									// Is this animation directional?
+	true, 									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -722,7 +722,7 @@ static AnimTypeClass const ChemN(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const ChemNW(
@@ -737,7 +737,7 @@ static AnimTypeClass const ChemNW(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -746,7 +746,7 @@ static AnimTypeClass const ChemNW(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const ChemW(
@@ -761,7 +761,7 @@ static AnimTypeClass const ChemW(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -770,7 +770,7 @@ static AnimTypeClass const ChemW(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const ChemSW(
@@ -785,7 +785,7 @@ static AnimTypeClass const ChemSW(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -794,7 +794,7 @@ static AnimTypeClass const ChemSW(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const ChemS(
@@ -809,7 +809,7 @@ static AnimTypeClass const ChemS(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -818,7 +818,7 @@ static AnimTypeClass const ChemS(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const ChemSE(
@@ -833,7 +833,7 @@ static AnimTypeClass const ChemSE(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -842,7 +842,7 @@ static AnimTypeClass const ChemSE(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const ChemE(
@@ -857,7 +857,7 @@ static AnimTypeClass const ChemE(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -866,7 +866,7 @@ static AnimTypeClass const ChemE(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const ChemNE(
@@ -881,7 +881,7 @@ static AnimTypeClass const ChemNE(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -890,7 +890,7 @@ static AnimTypeClass const ChemNE(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const Grenade(
@@ -905,7 +905,7 @@ static AnimTypeClass const Grenade(
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -914,7 +914,7 @@ static AnimTypeClass const Grenade(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_GUN20,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const FBall1(
@@ -929,7 +929,7 @@ static AnimTypeClass const FBall1(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -938,7 +938,7 @@ static AnimTypeClass const FBall1(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_XPLOS,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const Frag1(
@@ -953,7 +953,7 @@ static AnimTypeClass const Frag1(
 	true, 									// Sticks to unit in square?
 	true, 									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -962,7 +962,7 @@ static AnimTypeClass const Frag1(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_XPLOBIG4,							// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const Frag3(
@@ -977,7 +977,7 @@ static AnimTypeClass const Frag3(
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -986,7 +986,7 @@ static AnimTypeClass const Frag3(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_XPLOBIG6,							// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const VehHit1(
@@ -1001,7 +1001,7 @@ static AnimTypeClass const VehHit1(
 	true, 									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -1010,7 +1010,7 @@ static AnimTypeClass const VehHit1(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_XPLOS,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const VehHit2(
@@ -1025,7 +1025,7 @@ static AnimTypeClass const VehHit2(
 	true, 									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -1034,7 +1034,7 @@ static AnimTypeClass const VehHit2(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_XPLOS,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const VehHit3(
@@ -1049,7 +1049,7 @@ static AnimTypeClass const VehHit3(
 	true, 									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -1058,7 +1058,7 @@ static AnimTypeClass const VehHit3(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_XPLOS,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const ArtExp1(
@@ -1073,7 +1073,7 @@ static AnimTypeClass const ArtExp1(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -1082,7 +1082,7 @@ static AnimTypeClass const ArtExp1(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_XPLOSML2,							// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const Napalm1(
@@ -1097,7 +1097,7 @@ static AnimTypeClass const Napalm1(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -1106,7 +1106,7 @@ static AnimTypeClass const Napalm1(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_FLAMER1,							// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const Napalm2(
@@ -1121,7 +1121,7 @@ static AnimTypeClass const Napalm2(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -1130,7 +1130,7 @@ static AnimTypeClass const Napalm2(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_FLAMER1,							// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const Napalm3(
@@ -1145,7 +1145,7 @@ static AnimTypeClass const Napalm3(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -1154,7 +1154,7 @@ static AnimTypeClass const Napalm3(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_FLAMER1,							// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const SmokePuff(
@@ -1169,7 +1169,7 @@ static AnimTypeClass const SmokePuff(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -1178,7 +1178,7 @@ static AnimTypeClass const SmokePuff(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const Piff(
@@ -1193,7 +1193,7 @@ static AnimTypeClass const Piff(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -1202,7 +1202,7 @@ static AnimTypeClass const Piff(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const PiffPiff(
@@ -1217,7 +1217,7 @@ static AnimTypeClass const PiffPiff(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -1226,7 +1226,7 @@ static AnimTypeClass const PiffPiff(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const Fire3(
@@ -1241,7 +1241,7 @@ static AnimTypeClass const Fire3(
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0008,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -1250,7 +1250,7 @@ static AnimTypeClass const Fire3(
 	-1,										// Number of animation stages.
 	2,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const Fire1(
@@ -1265,7 +1265,7 @@ static AnimTypeClass const Fire1(
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0010,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -1274,7 +1274,7 @@ static AnimTypeClass const Fire1(
 	-1,										// Number of animation stages.
 	3,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const Fire4(
@@ -1289,7 +1289,7 @@ static AnimTypeClass const Fire4(
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0008,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -1298,7 +1298,7 @@ static AnimTypeClass const Fire4(
 	-1,										// Number of animation stages.
 	3,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const Fire2(
@@ -1313,7 +1313,7 @@ static AnimTypeClass const Fire2(
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0010,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -1322,7 +1322,7 @@ static AnimTypeClass const Fire2(
 	-1,										// Number of animation stages.
 	3,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const OilFieldBurn(
@@ -1337,7 +1337,7 @@ static AnimTypeClass const OilFieldBurn(
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -1346,7 +1346,7 @@ static AnimTypeClass const OilFieldBurn(
 	66,										// Number of animation stages.
 	65535,									// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const Gunfire(
@@ -1361,7 +1361,7 @@ static AnimTypeClass const Gunfire(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -1370,7 +1370,7 @@ static AnimTypeClass const Gunfire(
 	1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 #ifdef NEVER
@@ -1386,7 +1386,7 @@ static AnimTypeClass const E1RotFire(
 	true, 									// Ground level animation?
 	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	30,										// Delay between frames.
 	28,										// Starting frame number.
@@ -1395,7 +1395,7 @@ static AnimTypeClass const E1RotFire(
 	4,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 static AnimTypeClass const E1RotGrenade(
 	ANIM_E1_ROT_GRENADE,					// Animation number.
@@ -1409,7 +1409,7 @@ static AnimTypeClass const E1RotGrenade(
 	true, 									// Ground level animation?
 	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	30,										// Delay between frames.
 	24,										// Starting frame number.
@@ -1418,7 +1418,7 @@ static AnimTypeClass const E1RotGrenade(
 	4,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 static AnimTypeClass const E1RotGun(
 	ANIM_E1_ROT_GUN,						// Animation number.
@@ -1432,7 +1432,7 @@ static AnimTypeClass const E1RotGun(
 	true, 									// Ground level animation?
 	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	30,										// Delay between frames.
 	16,										// Starting frame number.
@@ -1441,7 +1441,7 @@ static AnimTypeClass const E1RotGun(
 	4,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 static AnimTypeClass const E1RotExp(
 	ANIM_E1_ROT_EXP,						// Animation number.
@@ -1455,7 +1455,7 @@ static AnimTypeClass const E1RotExp(
 	true, 									// Ground level animation?
 	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	30,										// Delay between frames.
 	20,										// Starting frame number.
@@ -1464,7 +1464,7 @@ static AnimTypeClass const E1RotExp(
 	4,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const E2RotFire(
@@ -1479,7 +1479,7 @@ static AnimTypeClass const E2RotFire(
 	true, 									// Ground level animation?
 	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	30,										// Delay between frames.
 	28,										// Starting frame number.
@@ -1488,7 +1488,7 @@ static AnimTypeClass const E2RotFire(
 	4,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 static AnimTypeClass const E2RotGrenade(
 	ANIM_E2_ROT_GRENADE,					// Animation number.
@@ -1502,7 +1502,7 @@ static AnimTypeClass const E2RotGrenade(
 	true, 									// Ground level animation?
 	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	30,										// Delay between frames.
 	24,										// Starting frame number.
@@ -1511,7 +1511,7 @@ static AnimTypeClass const E2RotGrenade(
 	4,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 static AnimTypeClass const E2RotGun(
 	ANIM_E2_ROT_GUN,						// Animation number.
@@ -1525,7 +1525,7 @@ static AnimTypeClass const E2RotGun(
 	true, 									// Ground level animation?
 	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	30,										// Delay between frames.
 	16,										// Starting frame number.
@@ -1534,7 +1534,7 @@ static AnimTypeClass const E2RotGun(
 	4,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const E2RotExp(
@@ -1549,7 +1549,7 @@ static AnimTypeClass const E2RotExp(
 	true, 									// Ground level animation?
 	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	30,										// Delay between frames.
 	20,										// Starting frame number.
@@ -1558,7 +1558,7 @@ static AnimTypeClass const E2RotExp(
 	4,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const E3RotFire(
@@ -1573,7 +1573,7 @@ static AnimTypeClass const E3RotFire(
 	true, 									// Ground level animation?
 	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	30,										// Delay between frames.
 	28,										// Starting frame number.
@@ -1582,7 +1582,7 @@ static AnimTypeClass const E3RotFire(
 	4,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const E3RotGrenade(
@@ -1597,7 +1597,7 @@ static AnimTypeClass const E3RotGrenade(
 	true, 									// Ground level animation?
 	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	30,										// Delay between frames.
 	24,										// Starting frame number.
@@ -1606,7 +1606,7 @@ static AnimTypeClass const E3RotGrenade(
 	4,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const E3RotGun(
@@ -1621,7 +1621,7 @@ static AnimTypeClass const E3RotGun(
 	true, 									// Ground level animation?
 	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	30,										// Delay between frames.
 	16,										// Starting frame number.
@@ -1630,7 +1630,7 @@ static AnimTypeClass const E3RotGun(
 	4,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const E3RotExp(
@@ -1645,7 +1645,7 @@ static AnimTypeClass const E3RotExp(
 	true, 									// Ground level animation?
 	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	30,										// Delay between frames.
 	20,										// Starting frame number.
@@ -1654,7 +1654,7 @@ static AnimTypeClass const E3RotExp(
 	4,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const E4RotFire(
@@ -1669,7 +1669,7 @@ static AnimTypeClass const E4RotFire(
 	true, 									// Ground level animation?
 	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	30,										// Delay between frames.
 	28,										// Starting frame number.
@@ -1678,7 +1678,7 @@ static AnimTypeClass const E4RotFire(
 	4,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const E4RotGrenade(
@@ -1693,7 +1693,7 @@ static AnimTypeClass const E4RotGrenade(
 	true, 									// Ground level animation?
 	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	30,										// Delay between frames.
 	24,										// Starting frame number.
@@ -1702,7 +1702,7 @@ static AnimTypeClass const E4RotGrenade(
 	4,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const E4RotGun(
@@ -1717,7 +1717,7 @@ static AnimTypeClass const E4RotGun(
 	true, 									// Ground level animation?
 	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	30,										// Delay between frames.
 	16,										// Starting frame number.
@@ -1726,7 +1726,7 @@ static AnimTypeClass const E4RotGun(
 	4,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const E4RotExp(
@@ -1741,7 +1741,7 @@ static AnimTypeClass const E4RotExp(
 	true, 									// Ground level animation?
 	false,									// Translucent colors in this animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	30,										// Delay between frames.
 	20,										// Starting frame number.
@@ -1750,7 +1750,7 @@ static AnimTypeClass const E4RotExp(
 	4,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 #endif
 
@@ -1766,7 +1766,7 @@ static AnimTypeClass const SmokeM(
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -1775,7 +1775,7 @@ static AnimTypeClass const SmokeM(
 	-1,										// Number of animation stages.
 	6,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 /*
@@ -1793,7 +1793,7 @@ static AnimTypeClass const GUNN(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	true, 									// Is this animation directional?
+	true, 									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -1802,7 +1802,7 @@ static AnimTypeClass const GUNN(
 	6,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const GUNNW(
@@ -1817,7 +1817,7 @@ static AnimTypeClass const GUNNW(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	6,										// Starting frame number.
@@ -1826,7 +1826,7 @@ static AnimTypeClass const GUNNW(
 	6,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const GUNW(
@@ -1841,7 +1841,7 @@ static AnimTypeClass const GUNW(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	12,										// Starting frame number.
@@ -1850,7 +1850,7 @@ static AnimTypeClass const GUNW(
 	6,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const GUNSW(
@@ -1865,7 +1865,7 @@ static AnimTypeClass const GUNSW(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	18,										// Starting frame number.
@@ -1874,7 +1874,7 @@ static AnimTypeClass const GUNSW(
 	6,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const GUNS(
@@ -1889,7 +1889,7 @@ static AnimTypeClass const GUNS(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	24,										// Starting frame number.
@@ -1898,7 +1898,7 @@ static AnimTypeClass const GUNS(
 	6,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const GUNSE(
@@ -1913,7 +1913,7 @@ static AnimTypeClass const GUNSE(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	30,										// Starting frame number.
@@ -1922,7 +1922,7 @@ static AnimTypeClass const GUNSE(
 	6,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const GUNE(
@@ -1937,7 +1937,7 @@ static AnimTypeClass const GUNE(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	36,										// Starting frame number.
@@ -1946,7 +1946,7 @@ static AnimTypeClass const GUNE(
 	6,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const GUNNE(
@@ -1961,7 +1961,7 @@ static AnimTypeClass const GUNNE(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	42,										// Starting frame number.
@@ -1970,7 +1970,7 @@ static AnimTypeClass const GUNNE(
 	6,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const IonCannon(
@@ -1985,7 +1985,7 @@ static AnimTypeClass const IonCannon(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -1994,7 +1994,7 @@ static AnimTypeClass const IonCannon(
 	15,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_ION_CANNON,							// Sound effect to play.
-	ANIM_ART_EXP1
+	ANIM_ART_EXP1								// Follow up animation.
 );
 
 static AnimTypeClass const AtomBomb(
@@ -2009,7 +2009,7 @@ static AnimTypeClass const AtomBomb(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -2018,7 +2018,7 @@ static AnimTypeClass const AtomBomb(
 	-1,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_NUKE_EXPLODE,						// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const AtomDoor(
@@ -2033,7 +2033,7 @@ static AnimTypeClass const AtomDoor(
 	true, 									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -2042,7 +2042,7 @@ static AnimTypeClass const AtomDoor(
 	-1,										// Number of animation stages.
 	0,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 static AnimTypeClass const CDeviator(
@@ -2057,7 +2057,7 @@ static AnimTypeClass const CDeviator(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,										// Delay between frames.
 	0,										// Starting frame number.
@@ -2081,7 +2081,7 @@ static AnimTypeClass const CDollar(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,										// Delay between frames.
 	0,										// Starting frame number.
@@ -2105,7 +2105,7 @@ static AnimTypeClass const CEarth(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,										// Delay between frames.
 	0,										// Starting frame number.
@@ -2129,7 +2129,7 @@ static AnimTypeClass const CEmpulse(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,										// Delay between frames.
 	0,										// Starting frame number.
@@ -2153,7 +2153,7 @@ static AnimTypeClass const CInvun(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,										// Delay between frames.
 	0,										// Starting frame number.
@@ -2177,7 +2177,7 @@ static AnimTypeClass const CMine(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,										// Delay between frames.
 	0,										// Starting frame number.
@@ -2201,7 +2201,7 @@ static AnimTypeClass const CRapid(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,										// Delay between frames.
 	0,										// Starting frame number.
@@ -2225,7 +2225,7 @@ static AnimTypeClass const CStealth(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,										// Delay between frames.
 	0,										// Starting frame number.
@@ -2249,7 +2249,7 @@ static AnimTypeClass const CMissile(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	2,										// Delay between frames.
 	0,										// Starting frame number.
@@ -2273,7 +2273,7 @@ static AnimTypeClass const MoveFlash(
 	false,									// Sticks to unit in square?
 	true, 									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -2297,7 +2297,7 @@ static AnimTypeClass const ChemBall(
 	false,									// Sticks to unit in square?
 	false,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	1,										// Delay between frames.
 	0,										// Starting frame number.
@@ -2306,7 +2306,7 @@ static AnimTypeClass const ChemBall(
 	-1,										// Number of animation stages.
 	1,										// Number of times the animation loops.
 	VOC_FLAMER1,							// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 // Nyerguds's C&C Patch Project v1.04: squish mark made usable as animation.
@@ -2322,7 +2322,7 @@ static AnimTypeClass const Squishy(
 	false,									// Sticks to unit in square?
 	true,									// Ground level animation?
 	false,									// Is this a flame thrower animation?
-	false,									// Is this animation directional?
+	false,									// Is this the first of eight directional animations?
 	0x0000,									// Damage to apply per tick (fixed point).
 	0x40,									// Delay between frames.
 	0,										// Starting frame number.
@@ -2331,7 +2331,7 @@ static AnimTypeClass const Squishy(
 	-1,										// Number of animation stages.
 	8,										// Number of times the animation loops.
 	VOC_NONE,								// Sound effect to play.
-	ANIM_NONE
+	ANIM_NONE								// Follow up animation.
 );
 
 

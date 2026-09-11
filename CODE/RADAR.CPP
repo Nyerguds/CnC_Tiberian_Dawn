@@ -994,9 +994,9 @@ void RadarClass::Radar_Pixel(CELL cell)
  *                                                                                             *
  * OUTPUT:  Returns with success rating in addition, the X and Y values will now hold the      *
  *          cell coordinates of the cell the pixel offsets indicated.                          *
- *             Result 1 = click was in radar region                                            *
- *             Result 0 = click was outside radar region completly                             *
- *             Result-1 = click in radar area but not on clickable reagion of radar.           *
+ *             Result  1 = click was in radar region                                           *
+ *             Result  0 = click was outside radar region completly                            *
+ *             Result -1 = click in radar area but not on clickable region of radar.           *
  *                                                                                             *
  * WARNINGS:   none                                                                            *
  *                                                                                             *

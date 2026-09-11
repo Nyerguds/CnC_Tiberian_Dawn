@@ -1105,13 +1105,6 @@ TechnoClass::TechnoClass(HousesType house) :
 	SuspendedTarCom = TARGET_NONE;
 
 	PrimaryFacing.Set(DIR_N);
-
-	/*
-	**	There is a chance that a vehicle will be a "lemon".
-	*/
-	if (Random_Pick(0, 255) < House->Class->Lemon) {
-		IsALemon = true;
-	}
 }
 
 

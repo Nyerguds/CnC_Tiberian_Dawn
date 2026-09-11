@@ -171,6 +171,8 @@ bool Do_Reinforcements(TeamTypeClass *teamtype)
 			ScenarioInit--;
 
 			if (temp) {
+				// Reinforced units are never lemons.
+				temp->IsALemon = false;
 
 				/*
 				**	Add the object to the team. This is true even for the transports. The one

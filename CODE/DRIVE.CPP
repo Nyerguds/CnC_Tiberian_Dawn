@@ -368,6 +368,18 @@ DriveClass::DriveClass(UnitType classid, HousesType house) :
 	SpeedAccum = 0;
 	Tiberium = 0;
 	Strength = Class->MaxStrength;
+
+	/*
+	**	There is a chance that a vehicle will be a "lemon".
+	*/
+	// Nyerguds's C&C Patch Project v1.04: Reactivated lemon factor.
+	// By making this depend on ActLike, it will work correctly in multiplayer.
+	// Migrated from TechnoClass, since only vehicles should have this.
+	int lemon = HouseClass::As_Pointer(House->ActLike)->Class->Lemon;
+	// Units that do not smoke are implied to be creatures. These are never lemons.
+	if (Class->IsSmoker && lemon > 0 && Random_Pick(0, 255) < lemon) {
+		IsALemon = true;
+	}
 }
 
 
@@ -855,17 +867,23 @@ void DriveClass::Per_Cell_Process(bool center)
 		Path[0] = FACING_NONE;
 	}
 
-#ifdef NEVER
 	/*
 	**	A "lemon" vehicle will have a tendency to break down as
 	**	it moves about the terrain.
 	*/
-	if (Is_A_Lemon) {
+	// Nyerguds's C&C Patch Project v1.04: Reactivated lemon factor.
+	// This now shows a smoke puff, and only activates when not rotating.
+	// It might still activate when finishing a rotation, though.
+	if (IsALemon && center && !PrimaryFacing.Is_Rotating()) {
 		if (Random_Pick(1, 4) == 1) {
-			Take_Damage(1);
+			int lemondamage = 1;
+			Take_Damage(lemondamage, 0, WARHEAD_LASER);
+			// Sound effect? Might be too much on the nose.
+			//Sound_Effect(VOC_TURRET, Coord);
+			AnimClass * anim = new AnimClass(ANIM_SMOKE_PUFF, Coord);
+			if (anim) anim->Attach_To(this);
 		}
 	}
-#endif
 
 	Lay_Track();
 

@@ -1366,7 +1366,7 @@ UnitClass::UnitClass(UnitType classid, HousesType house) :
 	/*
 	** Keep count of the number of units created.
 	*/
-	if (GameToPlay == GAME_INTERNET){
+	if (GameToPlay == GAME_INTERNET) {
 		House->UnitTotals->Increment_Unit_Total((int)classid);
 	}
 }
@@ -4062,6 +4062,8 @@ void UnitClass::Read_INI(char *buffer)
 						int max = unit->Class->MaxStrength;
 						int actual = Fixed_To_Cardinal(max, strength);
 						unit->Strength = MAX(1, MIN(actual, max));
+						// Preplaced units are never lemons.
+						unit->IsALemon = false;
 						if (GameToPlay == GAME_NORMAL || unit->House->IsHuman) {
 							unit->Assign_Mission(mission);
 							unit->Commence();

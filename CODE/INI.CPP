@@ -1236,14 +1236,16 @@ static void Create_Units(void)
 			..................................................................*/
 			if (hptr->IsHuman) {
 				scaleval = 1;
-				obj = new UnitClass (UNIT_MCV, h);
-				if (!obj->Unlimbo(Cell_Coord(centroid),DIR_N)) {
+				obj = new UnitClass(UNIT_MCV, h);
+				if (obj && !obj->Unlimbo(Cell_Coord(centroid),DIR_N)) {
 					if (!Scan_Place_Object(obj, centroid)) {
 						delete obj;
 						obj = NULL;
 					}
 				}
 				if (obj) {
+					// Initial spawn MCV in multiplayer is never a lemon.
+					obj->IsALemon = false;
 					hptr->FlagHome = 0;
 					hptr->FlagLocation = 0;
 					if (Special.IsCaptureTheFlag) {
@@ -1263,12 +1265,16 @@ static void Create_Units(void)
 				}
 
 				if (Special.IsCaptureTheFlag) {
-					obj = new UnitClass (UNIT_MHQ, h);
-					if (!obj->Unlimbo(Cell_Coord(centroid),DIR_N)) {
+					obj = new UnitClass(UNIT_MHQ, h);
+					if (obj && !obj->Unlimbo(Cell_Coord(centroid),DIR_N)) {
 						if (!Scan_Place_Object(obj, centroid)) {
 							delete obj;
 							obj = NULL;
 						}
+					}
+					if (obj) {
+						// MHQ in multiplayer is never a lemon.
+						obj->IsALemon = false;
 					}
 					hptr->FlagHome = 0;					// turn house's flag off
 					hptr->FlagLocation = 0;
@@ -1282,8 +1288,17 @@ static void Create_Units(void)
 			---------------------------------------------------------------------*/
 			scaleval = 1;
 			if (Special.IsCaptureTheFlag) {
-				obj = new UnitClass (UNIT_MHQ, h);
-				obj->Unlimbo(Cell_Coord(centroid),DIR_N);
+				obj = new UnitClass(UNIT_MHQ, h);
+				if (obj && !obj->Unlimbo(Cell_Coord(centroid),DIR_N)) {
+					if (!Scan_Place_Object(obj, centroid)) {
+						delete obj;
+						obj = NULL;
+					}
+				}
+				if (obj) {
+					// MHQ in multiplayer is never a lemon.
+					obj->IsALemon = false;
+				}
 				hptr->FlagHome = 0;					// turn house's flag off
 				hptr->FlagLocation = 0;
 			}
@@ -1308,32 +1323,24 @@ static void Create_Units(void)
 			..................................................................*/
 			for (j = 0; j < num_units[i] * scaleval; j++) {
 				/*...............................................................
-				Create a GDI unit
+				Create a unit
 				...............................................................*/
+				int ucount;
+				UnitType utype;
 				if (hptr->ActLike == HOUSE_GOOD) {
-					for (k = 0; k < utable[i].GDICount; k++) {
-						obj = new UnitClass (utable[i].GDIType, h);
-						if (!Scan_Place_Object(obj, centerpt)) {
-							delete obj;
-						} else {
-							if (!hptr->IsHuman) {
-								obj->Set_Mission(MISSION_TIMED_HUNT);
-							}
-						}
-					}
-				} else {
-
-					/*...............................................................
-					Create a NOD unit
-					...............................................................*/
-					for (k = 0; k < utable[i].NODCount; k++) {
-						obj = new UnitClass (utable[i].NODType, h);
-						if (!Scan_Place_Object(obj, centerpt)) {
-							delete obj;
-						} else {
-							if (!hptr->IsHuman) {
-								obj->Set_Mission(MISSION_TIMED_HUNT);
-							}
+					ucount = utable[i].GDICount;
+					utype = utable[i].GDIType;
+				} else{
+					ucount = utable[i].NODCount;
+					utype = utable[i].NODType;
+				}
+				for (k = 0; k < ucount; k++) {
+					obj = new UnitClass (utype, h);
+					if (!Scan_Place_Object(obj, centerpt)) {
+						delete obj;
+					} else {
+						if (!hptr->IsHuman) {
+							obj->Set_Mission(MISSION_TIMED_HUNT);
 						}
 					}
 				}
@@ -1354,34 +1361,26 @@ static void Create_Units(void)
 			..................................................................*/
 			for (j = 0; j < num_infantry[i] * scaleval; j++) {
 				/*...............................................................
-				Create GDI infantry (Note: Unlimbo calls Enter_Idle_Mode(), which
-				assigns the infantry to HUNT; we must use Set_Mission() to override
-				this state.)
+				Create infantry (Note: Unlimbo calls Enter_Idle_Mode(), which
+				assigns computer-owned infantry to HUNT; we must use Set_Mission()
+				to override this state.)
 				...............................................................*/
+				int icount;
+				InfantryType itype;
 				if (hptr->ActLike == HOUSE_GOOD) {
-					for (k = 0; k < itable[i].GDICount; k++) {
-						obj = new InfantryClass (itable[i].GDIType, h);
-						if (!Scan_Place_Object(obj, centerpt)) {
-							delete obj;
-						} else {
-							if (!hptr->IsHuman) {
-								obj->Set_Mission(MISSION_TIMED_HUNT);
-							}
-						}
-					}
-				} else {
-
-					/*...............................................................
-					Create NOD infantry
-					...............................................................*/
-					for (k = 0; k < itable[i].NODCount; k++) {
-						obj = new InfantryClass (itable[i].NODType, h);
-						if (!Scan_Place_Object(obj, centerpt)) {
-							delete obj;
-						} else {
-							if (!hptr->IsHuman) {
-								obj->Set_Mission(MISSION_TIMED_HUNT);
-							}
+					icount = itable[i].GDICount;
+					itype = itable[i].GDIType;
+				} else{
+					icount = itable[i].NODCount;
+					itype = itable[i].NODType;
+				}
+				for (k = 0; k < icount; k++) {
+					obj = new InfantryClass (itype, h);
+					if (!Scan_Place_Object(obj, centerpt)) {
+						delete obj;
+					} else {
+						if (!hptr->IsHuman) {
+							obj->Set_Mission(MISSION_TIMED_HUNT);
 						}
 					}
 				}
