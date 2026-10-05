@@ -2652,6 +2652,7 @@ int UnitClass::Mission_Unload(void)
 										ScenarioInit++;
 										passenger->Unlimbo(Coord_Move(Coord, newface, 0x0080), newface);
 										ScenarioInit--;
+										// Nyerguds's C&C Patch Project v1.04: look around when exiting.
 										passenger->Look(false);
 										passenger->Assign_Mission(MISSION_MOVE);
 										passenger->Assign_Destination(::As_Target(newcell));

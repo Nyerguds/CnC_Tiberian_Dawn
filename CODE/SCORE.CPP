@@ -2020,6 +2020,7 @@ void Draw_Bar_Graphs(int i, int gkilled, int nkilled, int ckilled)
  *    This is just to cut down on code size and typing a little.           *
  *                                                                         *
  * INPUT:   time:      amount of time to delay.                            *
+ *                                                                         *
  *          clickskip: true if in addition to the ESC key, mouse clicks    *
  *                     also activate the skip logic.                       *
  *                                                                         *
@@ -2029,6 +2030,8 @@ void Draw_Bar_Graphs(int i, int gkilled, int nkilled, int ckilled)
  *                                                                         *
  * HISTORY:                                                                *
  *   04/13/1995 BWG : Created.                                             *
+ *   07/24/2025 MM  : Added skip functionality.                            *
+ *   09/18/2025 MM  : Added click skip functionality.                      *
  *=========================================================================*/
 void Call_Back_Delay(int time, bool clickskip)
 {
@@ -2037,6 +2040,7 @@ void Call_Back_Delay(int time, bool clickskip)
 #endif
 	CountDownTimerClass cd;
 
+	// Nyerguds's C&C Patch Project v1.04: Allow skipping score/map animations.
 	KeyNumType keypress = (Keyboard::Check() & (~KN_SHIFT_BIT));
 	if (keypress) {
 		if (!ControlQ && (keypress == KN_ESC || (clickskip && (keypress == KN_LMOUSE || keypress == KN_RMOUSE)))) {
@@ -2057,9 +2061,11 @@ void Call_Back_Delay(int time, bool clickskip)
 		//	Interpolate_2X_Scale(PseudoSeenBuff , &SeenBuff ,NULL);
 			//BlitList.Update();
 		//}else{
+
+		// Nyerguds's C&C Patch Project v1.04: Allow skipping score/map animations.
 		keypress = (Keyboard::Check() & (~KN_SHIFT_BIT));
 		if (keypress) {
-		if (!ControlQ && (keypress == KN_ESC || (clickskip && (keypress == KN_LMOUSE || keypress == KN_RMOUSE)))) {
+			if (!ControlQ && (keypress == KN_ESC || (clickskip && (keypress == KN_LMOUSE || keypress == KN_RMOUSE)))) {
 				ControlQ = 1;
 				cd.Set(0);
 			}

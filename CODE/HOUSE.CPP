@@ -1777,6 +1777,8 @@ void HouseClass::Read_INI(char *buffer)
 	char const	*hname;			//	Pointer to house name.
 	char			buf[128];
 
+	bool good_ok = false;
+	bool neutral_ok = false;
 	for (HousesType index = HOUSE_FIRST; index < HOUSE_COUNT; index++) {
 		HouseTypeClass housetype = HouseTypeClass::As_Reference(index);
 		hname = housetype.IniName;
@@ -1856,25 +1858,28 @@ void HouseClass::Read_INI(char *buffer)
 		if (GameToPlay == GAME_NORMAL) {
 			WWGetPrivateProfileString(hname, "Allies", "", buf, sizeof(buf)-1, buffer);
 			if (strlen(buf)) {
+				if (index == HOUSE_GOOD) {
+					good_ok = true;
+				} else if (index == HOUSE_NEUTRAL) {
+					neutral_ok = true;
+				}
 				char * tok = strtok(buf, ", \t");
 				while (tok) {
 					HousesType h = HouseTypeClass::From_Name(tok);
 					p->Make_Ally(h);
 					tok = strtok(NULL, ", \t");
 				}
-
-			} else {
-
-				/*
-				**	Special case for when no allies are specified in the INI file.
-				**	The GDI side defaults to considering the neutral side to be
-				**	friendly.
-				*/
-				if (p->Class->House == HOUSE_GOOD) {
-					p->Make_Ally(HOUSE_NEUTRAL);
-				}
 			}
 		}
+	}
+ 	if (!good_ok && !neutral_ok) {
+		/*
+		**	Special case for when no allies are specified in the INI file.
+		**	The GDI side defaults to considering the neutral side to be
+		**	friendly.
+		*/
+		As_Pointer(HOUSE_GOOD)->Make_Ally(HOUSE_NEUTRAL);
+		As_Pointer(HOUSE_NEUTRAL)->Make_Ally(HOUSE_GOOD);
 	}
 }
 

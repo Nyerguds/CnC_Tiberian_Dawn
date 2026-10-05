@@ -3947,6 +3947,8 @@ void TechnoClass::Dump_Cargo(int damage, bool select, TechnoClass * source, Hous
 						passenger->Strength = 1;
 						passenger->Take_Damage(hurt, 0, WARHEAD_AP, source);
 					} else {
+						// Nyerguds's C&C Patch Project v1.04: look around when exiting.
+						// This fix was taken from the C&C Remaster.
 						passenger->Look(false);
 						passenger->Assign_Mission(MISSION_MOVE);
 						passenger->Assign_Destination(::As_Target(newcell));

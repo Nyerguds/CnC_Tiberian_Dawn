@@ -890,7 +890,7 @@ void TerrainTypeClass::Init(TheaterType theater)
 			terrain->ImageData = image_ptr;
 			IsTheaterShape = terrain->ImageIsTheaterShape;
 			if (terrain->RadarIcon) delete[] (char *)terrain->RadarIcon;
-			terrain->RadarIcon = Get_Radar_Icon(terrain->Get_Image_Data(), 0, 1, 3);
+			terrain->RadarIcon = Get_Radar_Icon(image_ptr, 0, 1, 3);
 			IsTheaterShape = false;
 		}
 	}

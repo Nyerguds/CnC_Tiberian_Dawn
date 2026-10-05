@@ -2280,6 +2280,7 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 				air->Altitude = 0;
 				ScenarioInit++;
 				if (air->Unlimbo(Docking_Coord(), air->Pose_Dir())) {
+					// Nyerguds's C&C Patch Project v1.04: look around when exiting.
 					air->Look(false);
 					Transmit_Message(RADIO_HELLO, air);
 					Transmit_Message(RADIO_TETHER);
@@ -2297,6 +2298,7 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 				}
 				ScenarioInit++;
 				if (air->Unlimbo(Cell_Coord(cell), DIR_N)) {
+					// Nyerguds's C&C Patch Project v1.04: look around when exiting.
 					air->Look(false);
 					air->Assign_Destination(::As_Target(Nearby_Location(air)));
 					air->Assign_Mission(MISSION_MOVE);
@@ -2319,6 +2321,7 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 						ScenarioInit++;
 						if (unit->Unlimbo(Coord_Add(unit->Coord, 0x00550060L), DIR_SW_X2)) {
 							unit->PrimaryFacing = DIR_SW_X2;
+							// Nyerguds's C&C Patch Project v1.04: look around when exiting.
 							unit->Look(false);
 							Transmit_Message(RADIO_HELLO, unit);
 							Transmit_Message(RADIO_TETHER);
@@ -2345,9 +2348,10 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 //						base->Assign_Mission(MISSION_MOVE);
 //						base->Assign_Destination(::As_Target(As_Cell(Coord)+MAP_CELL_W*2));
 						base->Mark(MARK_UP);
-						base->Look(false);
 						base->Coord = Coord_Add(Coord, Class->ExitPoint);
 						base->Mark(MARK_DOWN);
+						// Nyerguds's C&C Patch Project v1.04: look around when exiting.
+						base->Look(false);
 						Transmit_Message(RADIO_HELLO, base);
 						Transmit_Message(RADIO_TETHER);
 						Assign_Mission(MISSION_UNLOAD);
@@ -2385,6 +2389,7 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 
 						ScenarioInit++;
 						if (base->Unlimbo(start, dir)) {
+							// Nyerguds's C&C Patch Project v1.04: look around when exiting.
 							base->Look(false);
 							base->Assign_Mission(MISSION_MOVE);
 							base->Assign_Destination(::As_Target(cell));

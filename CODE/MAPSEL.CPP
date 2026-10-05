@@ -807,8 +807,10 @@ void Map_Selection(void)
 		// Check for the mouse button
 		if (Keyboard::Check()) {
 			if ((Keyboard::Get() & 0x10FF) == KN_LMOUSE) {
-				for (selection = 0; selection < CountryArray[scenario].Choices[ScenDir]; selection++) {
-					color = SysMemPage.Get_Pixel(Get_Mouse_X()/2,Get_Mouse_Y()/2);
+				int clickcol = SysMemPage.Get_Pixel(Get_Mouse_X()/2,Get_Mouse_Y()/2);
+				int choices = CountryArray[scenario].Choices[ScenDir];
+				for (selection = 0; selection < choices; selection++) {
+					color = clickcol;
 
 					/*
 					** Special hack for Egypt the second time through

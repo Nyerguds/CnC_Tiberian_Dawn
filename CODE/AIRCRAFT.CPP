@@ -1627,6 +1627,8 @@ int AircraftClass::Exit_Object(TechnoClass * unit)
 		if (Transmit_Message(RADIO_HELLO, unit) == RADIO_ROGER) {
 			Transmit_Message(RADIO_UNLOAD);
 		}
+		// Nyerguds's C&C Patch Project v1.04: look around when exiting.
+		// This fix was taken from the C&C Remaster.
 		unit->Look(false);
 		return(1);
 	}
