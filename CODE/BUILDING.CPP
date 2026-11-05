@@ -1182,10 +1182,11 @@ void BuildingClass::AI(void)
 			Drop_Debris(WhomToRepay);
 
 			// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
-			bool was_overflow = Buildings.Count() == Buildings.Length();
+			// If heap is in overflow state, this removal will fix that.
+			bool was_overflow = TechnoTypeClass::Heap_Overflow(RTTI_BUILDING);
 			delete this;
 			if (was_overflow) {
-				Map.Column[0].Flag_To_Redraw();
+				Map.Column[Map.Which_Column(RTTI_BUILDING)].Flag_To_Redraw();
 			}
 
 			// Nyerguds's C&C Patch Project v1.04: recheck placement check on destruction.
@@ -1626,7 +1627,6 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 		**	Perform the low level damage assessment.
 		*/
 		res = TechnoClass::Take_Damage(damage, distance, warhead, source, house, fromburn);
-		bool has_overflow = false;
 
 		switch (res) {
 			case RESULT_DESTROYED:
@@ -1638,13 +1638,15 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 				while (Attached_Object()) {
 					FootClass * obj = Detach_Object();
 					Detach_All(true);
-					if (obj && !has_overflow) {
-						has_overflow = TechnoTypeClass::Heap_Overflow(obj->What_Am_I());
+					if (obj) {
+						// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+						// If heap is in overflow state, this removal will fix that.
+						RTTIType otype = obj->What_Am_I();
+						if (TechnoTypeClass::Heap_Overflow(otype)) {
+							Map.Column[Map.Which_Column(otype)].Flag_To_Redraw();
+						}
+						delete obj;
 					}
-					delete obj;
-				}
-				if (has_overflow) {
-					Map.Column[1].Flag_To_Redraw();
 				}
 
 				Sound_Effect(VOC_XPLOBIG4, Coord);
@@ -1671,6 +1673,13 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 					Shake_Screen(shakes);
 				}
 				Sound_Effect(VOC_CRUMBLE, Coord);
+
+				/*
+				**	A building's destruction will not immediately cause its
+				**	removal; it will remain on the map in its collapsed state for
+				**	a brief moment, while the explosions play out. The AI function
+				**	will handle the rest when the countdown finishes.
+				*/
 				if (Mission == MISSION_DECONSTRUCTION) {
 					CountDown = 0;
 					Set_Rate(0);
@@ -2059,6 +2068,11 @@ void BuildingClass::Drop_Debris(TARGET source)
 			if (Random_Pick(0, odds) == 1) {
 				i = new InfantryClass(Crew_Type(), House->Class->House);
 				if (i) {
+					// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+					// Spawning crew caused infantry overflow. Refresh sidebar.
+					if (TechnoTypeClass::Heap_Overflow(RTTI_INFANTRY)) {
+						Map.Column[Map.Which_Column(RTTI_INFANTRY)].Flag_To_Redraw();
+					}
 					if (Class->Get_Buildup_Data() != NULL && i->Class->IsCivilian) i->IsTechnician = true;
 					ScenarioInit++;
 					if (i->Unlimbo(Cell_Coord(newcell), DIR_N)) {
@@ -2428,6 +2442,7 @@ ObjExitResultType BuildingClass::Exit_Object(TechnoClass * base)
 					if (Class->ExitPoint != 0) {
 						start = Coord_Add(Coord, Class->ExitPoint);
 					} else {
+						// Start on center, go on until it has the most southern edge.
 						CELL startcell = Coord_Cell(Coord_Add(Coord, Class->Center));
 						int row = Cell_X(Coord_Cell(start));
 						int col = Cell_Y(Coord_Cell(start));
@@ -2450,7 +2465,9 @@ ObjExitResultType BuildingClass::Exit_Object(TechnoClass * base)
 								base->Assign_Mission(MISSION_MOVE);
 								base->Assign_Destination(::As_Target(cell));
 							} else {
+								ScenarioInit--;
 								base->Scatter(0, true);
+								ScenarioInit++;
 							}
 
 							/*
@@ -4244,6 +4261,11 @@ int BuildingClass::Mission_Deconstruction(void)
 
 						InfantryClass * infantry = new InfantryClass(typ, House->Class->House);
 						if (infantry) {
+							// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+							// Spawning crew caused infantry overflow. Refresh sidebar.
+							if (TechnoTypeClass::Heap_Overflow(RTTI_INFANTRY)) {
+								Map.Column[Map.Which_Column(RTTI_INFANTRY)].Flag_To_Redraw();
+							}
 							ScenarioInit++;
 							COORDINATE coord = Coord_Add(Center_Coord(), XYP_COORD(0, -12));
 							// Nyerguds's C&C Patch Project v1.04: Only spawn infantry from occupied cells.
@@ -4298,7 +4320,8 @@ int BuildingClass::Mission_Deconstruction(void)
 				int money = Refund_Amount();
 
 				// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
-				bool was_overflow = Buildings.Count() == Buildings.Length();
+				// If the building heap is currently in overflow state, the removal will change that.
+				bool was_overflow = TechnoTypeClass::Heap_Overflow(RTTI_BUILDING);
 
 				/*
 				**	Construction yards that deconstruct, really just revert back
@@ -4309,6 +4332,11 @@ int BuildingClass::Mission_Deconstruction(void)
 					UnitClass * unit = new UnitClass(UNIT_MCV, House->Class->House);
 					ScenarioInit--;
 					if (unit) {
+						// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+						// Check if creating this new unit sets the unit heap in overflow mode.
+						if (TechnoTypeClass::Heap_Overflow(RTTI_UNIT)) {
+							Map.Column[Map.Which_Column(RTTI_UNIT)].Flag_To_Redraw();
+						}
 						// An undeployed construction yard is never a lemon.
 						unit->IsALemon = false;
 
@@ -4362,7 +4390,7 @@ int BuildingClass::Mission_Deconstruction(void)
 				}
 				// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
 				if (was_overflow) {
-					Map.Column[0].Flag_To_Redraw();
+					Map.Column[Map.Which_Column(RTTI_BUILDING)].Flag_To_Redraw();
 				}
 				// Nyerguds's C&C Patch Project v1.04: recheck placement check on object removal.
 				Map.Recheck_Placement();
@@ -5571,7 +5599,7 @@ void BuildingClass::Detach_All(bool all)
 			TechnoClass * object = factory->Get_Object();
 			IsInLimbo = true;
 			if (object && !object->Techno_Type_Class()->Who_Can_Build_Me(true, false, House->Class->House)) {
-				House->Abandon_Production(Class->ToBuild, false);
+				House->Abandon_Production(Class->ToBuild);
 			}
 			IsInLimbo = false;
 		}

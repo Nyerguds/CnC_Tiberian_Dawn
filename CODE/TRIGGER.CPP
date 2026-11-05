@@ -456,7 +456,7 @@ bool TriggerClass::Spring(EventType event, ObjectClass *obj)
 				actor->NukeStrike.Forced_Charge(actor == PlayerPtr);
 				if (actor == PlayerPtr) {
 					Map.Add(RTTI_SPECIAL, SPC_NUCLEAR_BOMB);
-					Map.Column[1].Flag_To_Redraw();
+					Map.Column[Map.Which_Column(RTTI_SPECIAL)].Flag_To_Redraw();
 				}
 			}
 			break;
@@ -468,7 +468,7 @@ bool TriggerClass::Spring(EventType event, ObjectClass *obj)
 				actor->IonCannon.Forced_Charge(actor == PlayerPtr);
 				if (actor == PlayerPtr) {
 					Map.Add(RTTI_SPECIAL, SPC_ION_CANNON);
-					Map.Column[1].Flag_To_Redraw();
+					Map.Column[Map.Which_Column(RTTI_SPECIAL)].Flag_To_Redraw();
 				}
 			}
 			break;
@@ -696,7 +696,7 @@ bool TriggerClass::Spring(EventType event, CELL cell)
 				actor->NukeStrike.Forced_Charge(actor == PlayerPtr);
 				if (actor == PlayerPtr) {
 					Map.Add(RTTI_SPECIAL, SPC_NUCLEAR_BOMB);
-					Map.Column[1].Flag_To_Redraw();
+					Map.Column[Map.Which_Column(RTTI_SPECIAL)].Flag_To_Redraw();
 				}
 			}
 			break;
@@ -708,7 +708,7 @@ bool TriggerClass::Spring(EventType event, CELL cell)
 				actor->IonCannon.Forced_Charge(actor == PlayerPtr);
 				if (actor == PlayerPtr) {
 					Map.Add(RTTI_SPECIAL, SPC_ION_CANNON);
-					Map.Column[1].Flag_To_Redraw();
+					Map.Column[Map.Which_Column(RTTI_SPECIAL)].Flag_To_Redraw();
 				}
 			}
 			break;
@@ -772,7 +772,7 @@ bool TriggerClass::Spring(EventType event, CELL cell)
 			if (House == PlayerPtr->Class->House) {
 				PlayerPtr->AirStrike.Forced_Charge(true);
 				Map.Add(RTTI_SPECIAL, SPC_AIR_STRIKE);
-				Map.Column[1].Flag_To_Redraw();
+				Map.Column[Map.Which_Column(RTTI_SPECIAL)].Flag_To_Redraw();
 			}
 //			PlayerPtr->Make_Air_Strike_Available(true);
 			break;
@@ -935,7 +935,7 @@ bool TriggerClass::Spring(EventType event, HousesType house, long data)
 				actor->NukeStrike.Forced_Charge(actor == PlayerPtr);
 				if (actor == PlayerPtr) {
 					Map.Add(RTTI_SPECIAL, SPC_NUCLEAR_BOMB);
-					Map.Column[1].Flag_To_Redraw();
+					Map.Column[Map.Which_Column(RTTI_SPECIAL)].Flag_To_Redraw();
 				}
 			}
 			break;
@@ -947,7 +947,7 @@ bool TriggerClass::Spring(EventType event, HousesType house, long data)
 				actor->IonCannon.Forced_Charge(actor == PlayerPtr);
 				if (actor == PlayerPtr) {
 					Map.Add(RTTI_SPECIAL, SPC_ION_CANNON);
-					Map.Column[1].Flag_To_Redraw();
+					Map.Column[Map.Which_Column(RTTI_SPECIAL)].Flag_To_Redraw();
 				}
 			}
 			break;

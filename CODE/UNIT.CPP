@@ -1101,10 +1101,10 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 		**	Finally, delete the vehicle.
 		*/
 		// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
-		bool was_overflow = Units.Count() == Units.Length();
+		bool was_overflow = TechnoTypeClass::Heap_Overflow(RTTI_UNIT);
 		delete this;
 		if (was_overflow) {
-			Map.Column[1].Flag_To_Redraw();
+			Map.Column[Map.Which_Column(RTTI_UNIT)].Flag_To_Redraw();
 		}
 		// Nyerguds's C&C Patch Project v1.04: recheck placement check on object destruction.
 		// If the destroyed object was cloaked, ProximityStealth might need to be changed.
@@ -4485,14 +4485,16 @@ void UnitClass::Sell_Back(int control)
 	CCDebugFunc("int UnitClass::Mission_Attack(void)");
 #endif
 	FootClass::Sell_Back(control);
-	// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
-	bool was_overflow = Units.Count() == Units.Length();
-	delete this;
-	if (was_overflow) {
-		Map.Column[1].Flag_To_Redraw();
+	if (control != 0) {
+		// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+		bool was_overflow = TechnoTypeClass::Heap_Overflow(RTTI_UNIT);
+		delete this;
+		if (was_overflow) {
+			Map.Column[Map.Which_Column(RTTI_UNIT)].Flag_To_Redraw();
+		}
+		// Nyerguds's C&C Patch Project v1.04: recheck placement check on object removal.
+		Map.Recheck_Placement();
 	}
-	// Nyerguds's C&C Patch Project v1.04: recheck placement check on object removal.
-	Map.Recheck_Placement();
 }
 
 

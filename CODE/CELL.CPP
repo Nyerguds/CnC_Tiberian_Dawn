@@ -2704,7 +2704,7 @@ bool CellClass::Goodie_Check(FootClass * object)
 					if (house->NukeStrike.Enable(true)) {
 						if (object->IsOwnedByPlayer) {
 							Map.Add(RTTI_SPECIAL, SPC_NUCLEAR_BOMB);
-							Map.Column[1].Flag_To_Redraw();
+							Map.Column[Map.Which_Column(RTTI_SPECIAL)].Flag_To_Redraw();
 						}
 					}
 					break;
@@ -2717,7 +2717,7 @@ bool CellClass::Goodie_Check(FootClass * object)
 					if (house->IonCannon.Enable(true)) {
 						if (object->IsOwnedByPlayer) {
 							Map.Add(RTTI_SPECIAL, SPC_ION_CANNON);
-							Map.Column[1].Flag_To_Redraw();
+							Map.Column[Map.Which_Column(RTTI_SPECIAL)].Flag_To_Redraw();
 						}
 					}
 					break;
@@ -2730,7 +2730,7 @@ bool CellClass::Goodie_Check(FootClass * object)
 					if (house->AirStrike.Enable(true)) {
 						if (object->IsOwnedByPlayer) {
 							Map.Add(RTTI_SPECIAL, SPC_AIR_STRIKE);
-							Map.Column[1].Flag_To_Redraw();
+							Map.Column[Map.Which_Column(RTTI_SPECIAL)].Flag_To_Redraw();
 						}
 					}
 					break;

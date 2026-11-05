@@ -639,7 +639,9 @@ int TechnoTypeClass::Repair_Step(void) const
  * TechnoTypeClass::Heap_Overflow -- Checks if heap of specified technotype is overflowing.    *
  *                                                                                             *
  *    This static routine checks if the heap for a certain construction option is overflowing. *
- *    This can be used to gray out the construction options in the sidebar.           e        *
+ *    This can be used to gray out the construction options in the sidebar.                    *
+ *    This was created for Nyerguds's C&C Patch Project v1.04, to reactivate / repair the      *
+ *    "Unable to build more" logic.                                                            *
  *                                                                                             *
  * INPUT:   type  -- The type of object to check the heap for.                                 *
  *                                                                                             *
@@ -665,7 +667,6 @@ bool TechnoTypeClass::Heap_Overflow(RTTIType type) {
 		case RTTI_BUILDING:
 		case RTTI_BUILDINGTYPE:
 			return Buildings.Count() == Buildings.Length();
-
 	}
 	return false;
 }
@@ -3903,17 +3904,15 @@ void TechnoClass::Kill_Cargo(TechnoClass * source, HousesType house)
 	while (Is_Something_Attached()) {
 		FootClass * foot = Detach_Object();
 		if (foot) {
-			if (!had_overflow) {
-				had_overflow = TechnoTypeClass::Heap_Overflow(foot->What_Am_I());
+			RTTIType otype = foot->What_Am_I();
+			// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+			// If heap was in overflow state, this removal will reset the greyed out contruction options.
+			if (TechnoTypeClass::Heap_Overflow(otype)) {
+				Map.Column[Map.Which_Column(otype)].Flag_To_Redraw();
 			}
 			foot->Record_The_Kill(source, house);
 			delete foot;
 		}
-	}
-	// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
-	// Heap was in overflow state. This removal will unlock contruction options.
-	if (had_overflow) {
-		Map.Column[1].Flag_To_Redraw();
 	}
 }
 
@@ -3997,8 +3996,12 @@ void TechnoClass::Dump_Cargo(int damage, bool select, TechnoClass * source, Hous
 		ScenarioInit--;
 		if (!exited) {
 			foot->Record_The_Kill(source, house);
-			if (!had_overflow) {
-				had_overflow = TechnoTypeClass::Heap_Overflow(foot->What_Am_I());
+			RTTIType otype = foot->What_Am_I();
+			// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+			// Something failed to unload and was deleted while its heap was in overflow state.
+			// This removal will unlock contruction options.
+			if (TechnoTypeClass::Heap_Overflow(otype)) {
+				Map.Column[Map.Which_Column(otype)].Flag_To_Redraw();
 			}
 			delete foot;
 			continue;
@@ -4027,12 +4030,6 @@ void TechnoClass::Dump_Cargo(int damage, bool select, TechnoClass * source, Hous
 				}
 			}
 		}
-	}
-	// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
-	// Something failed to unload and was deleted while its heap was in overflow state.
-	// This removal will unlock contruction options.
-	if (had_overflow) {
-		Map.Column[1].Flag_To_Redraw();
 	}
 }
 

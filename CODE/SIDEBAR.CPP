@@ -2543,10 +2543,10 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 					}
 
 					if (!factory->Is_Building()) {
-						//Speak(VOX_CANCELED);
+						Speak(VOX_CANCELED);
 						OutList.Add(EventClass(EventClass::ABANDON, otype, -1));
 					} else {
-						//Speak(VOX_SUSPENDED);
+						Speak(VOX_SUSPENDED);
 						OutList.Add(EventClass(EventClass::SUSPEND, otype, -1));
 					}
 				}
@@ -2635,8 +2635,7 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 							**	normally.
 							*/
 							// This actually changes a state, so don't annoy the player with the "need more funds" message here.
-							// Build voices are now handled by the HouseClass function.
-							//Speak(VOX_BUILDING);
+							Speak(VOX_BUILDING);
 							OutList.Add(EventClass(EventClass::PRODUCE, otype, oid));
 						}
 					}
@@ -2650,14 +2649,18 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 //					if (Strip->IsBuilding) {
 //						Speak(VOX_NO_FACTORY);
 //					} else {
-					// Build voices are now handled by the HouseClass function.
-					//Speak(VOX_BUILDING);
-					OutList.Add(EventClass(EventClass::PRODUCE, otype, oid));
-					// Nyerguds's C&C Patch Project v1.04: "Build last" key support
-					// IF this is a building, set the "last building the player built" to this.
-					if (otype == RTTI_BUILDINGTYPE) {
-						LastConstruction = (StructType)oid;
-					}
+						// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+						if (TechnoTypeClass::Heap_Overflow(otype)) {
+							Speak(VOX_UNABLE_TO_BUILD);
+						} else {
+							Speak(VOX_BUILDING);
+							OutList.Add(EventClass(EventClass::PRODUCE, otype, oid));
+							// Nyerguds's C&C Patch Project v1.04: "Build last" key support
+							// If this is a building, set the "last building the player built" to this.
+							if (otype == RTTI_BUILDINGTYPE) {
+								LastConstruction = (StructType)oid;
+							}
+						}
 
 //					}
 				}

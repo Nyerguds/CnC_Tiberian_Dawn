@@ -926,8 +926,13 @@ void Keyboard_Process(KeyNumType &input)
 						OutList.Add(EventClass(EventClass::PRODUCE, RTTI_BUILDINGTYPE, pending->Techno_Type_Class()->Type));
 					}
 				} else {
-					Speak(VOX_BUILDING);
-					OutList.Add(EventClass(EventClass::PRODUCE, RTTI_BUILDINGTYPE, LastConstruction));
+					// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+					if (TechnoTypeClass::Heap_Overflow(RTTI_BUILDINGTYPE)) {
+						Speak(VOX_UNABLE_TO_BUILD);
+					} else {
+						Speak(VOX_BUILDING);
+						OutList.Add(EventClass(EventClass::PRODUCE, RTTI_BUILDINGTYPE, LastConstruction));
+					}
 				}
 			}
 
