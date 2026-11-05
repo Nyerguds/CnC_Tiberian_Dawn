@@ -441,6 +441,23 @@ extern int calcy(signed short, short distance);
 	"neg	eax";
 //	"and	eax,0FFFFh"				\
 
+/***********************************************************************************************
+ * Symmetric_Step -- One component of a Move_Point step, the same size in either direction.    *
+ *                                                                                             *
+ *    calcx/calcy floor t*distance/128. Floor rounds a negative component away from zero and  *
+ *    a positive one toward it, and the tables are not mirror images (+127 vs -126 at the     *
+ *    cardinals), so every north or east step came out one lepton shorter than the same step  *
+ *    south or west (~13% at infantry speed). Here the first half of the table is the truth,  *
+ *    the second half its negative, and the result rounds to nearest (ties away from zero),   *
+ *    so moving in dir and in dir+128 are exact opposites. The 127/128 scale is unchanged.    *
+ *=============================================================================================*/
+static int Symmetric_Step(char const * table, DirType dir, unsigned short distance)
+{
+	int t = ((unsigned char)dir < 128) ? table[(unsigned char)dir] : -table[(unsigned char)dir - 128];
+	long q = (long)t * (long)distance;
+	return (q >= 0) ? (int)((q + 64) / 128) : -(int)((-q + 64) / 128);
+}
+
 void Move_Point(short &x, short &y, register DirType dir, unsigned short distance)
 {
 #ifdef INCLUDE_FUNCTION_NAMES
@@ -538,7 +555,7 @@ void Move_Point(short &x, short &y, register DirType dir, unsigned short distanc
 	_DX = _AX;
 	x += _DX;
 #else
-	x += calcx(CosTable[dir], distance);
+	x += Symmetric_Step(CosTable, dir, distance);
 #endif
 //	asm add [word ptr start],ax
 
@@ -556,7 +573,7 @@ void Move_Point(short &x, short &y, register DirType dir, unsigned short distanc
 	_DX = _AX;
 	y += _DX;
 #else
-	y += calcy(SinTable[dir], distance);
+	y -= Symmetric_Step(SinTable, dir, distance);
 #endif
 //	asm add [word ptr start+2],ax
 
