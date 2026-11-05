@@ -723,7 +723,7 @@ void InfantryClass::Per_Cell_Process(bool center)
 		if (tech && tech->As_Target() == NavCom) {
 			tech->Captured(House);
 			// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
-			bool was_overflow = TechnoTypeClass::Heap_Overflow(RTTI_INFANTRY);
+			bool was_overflow = TechnoTypeClass::Is_Heap_Full(RTTI_INFANTRY);
 			delete this;
 			if (was_overflow) {
 				Map.Column[Map.Which_Column(RTTI_INFANTRY)].Flag_To_Redraw();
@@ -1080,7 +1080,7 @@ void InfantryClass::AI(void)
 	if (!Team && Mission == MISSION_GUARD && !Map.In_Radar(Coord_Cell(Coord))) {
 		Stun();
 		// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
-		bool was_overflow = TechnoTypeClass::Heap_Overflow(RTTI_INFANTRY);;
+		bool was_overflow = TechnoTypeClass::Is_Heap_Full(RTTI_INFANTRY);;
 		delete this;
 		if (was_overflow) {
 			Map.Column[Map.Which_Column(RTTI_INFANTRY)].Flag_To_Redraw();
@@ -1304,7 +1304,7 @@ void InfantryClass::AI(void)
 			case DO_FIRE_DEATH:
 			case DO_PLEAD_DEATH:
 				// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
-				bool was_overflow = TechnoTypeClass::Heap_Overflow(RTTI_INFANTRY);
+				bool was_overflow = TechnoTypeClass::Is_Heap_Full(RTTI_INFANTRY);
 				delete this;
 				if (was_overflow) {
 					Map.Column[Map.Which_Column(RTTI_INFANTRY)].Flag_To_Redraw();
@@ -3504,7 +3504,7 @@ void InfantryClass::Sell_Back(int control)
 	FootClass::Sell_Back(control);
 	if (control != 0) {
 		// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
-		bool was_overflow = TechnoTypeClass::Heap_Overflow(RTTI_INFANTRY);
+		bool was_overflow = TechnoTypeClass::Is_Heap_Full(RTTI_INFANTRY);
 		delete this;
 		if (was_overflow) {
 			Map.Column[Map.Which_Column(RTTI_INFANTRY)].Flag_To_Redraw();

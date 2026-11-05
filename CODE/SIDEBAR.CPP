@@ -1965,7 +1965,7 @@ void SidebarClass::StripClass::Draw_It(bool complete)
 					obj = Fetch_Techno_Type(btype, bid);
 					if (obj) {
 						bool isbusy = false;
-						bool overflow = TechnoTypeClass::Heap_Overflow(btype);
+						bool overflow = TechnoTypeClass::Is_Heap_Full(btype);
 						switch (btype) {
 							case RTTI_INFANTRYTYPE:
 								isbusy = (PlayerPtr->InfantryFactory != -1 || overflow);
@@ -2650,7 +2650,7 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 //						Speak(VOX_NO_FACTORY);
 //					} else {
 						// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
-						if (TechnoTypeClass::Heap_Overflow(otype)) {
+						if (TechnoTypeClass::Is_Heap_Full(otype)) {
 							Speak(VOX_UNABLE_TO_BUILD);
 						} else {
 							Speak(VOX_BUILDING);

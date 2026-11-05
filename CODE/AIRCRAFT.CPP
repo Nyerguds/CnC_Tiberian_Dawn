@@ -929,7 +929,7 @@ void AircraftClass::AI(void)
 				if (*this == AIRCRAFT_CARGO) {
 					House->Refund_Money(obj->Class_Of().Cost_Of());
 				}
-				bool obj_overflow = TechnoTypeClass::Heap_Overflow(att_type);
+				bool obj_overflow = TechnoTypeClass::Is_Heap_Full(att_type);
 				delete obj;
 				// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
 				if (obj_overflow) {
@@ -938,7 +938,7 @@ void AircraftClass::AI(void)
 			}
 			Stun();
 			// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
-			bool was_overflow = TechnoTypeClass::Heap_Overflow(RTTI_AIRCRAFT);
+			bool was_overflow = TechnoTypeClass::Is_Heap_Full(RTTI_AIRCRAFT);
 			delete this;
 			if (was_overflow) {
 				Map.Column[Map.Which_Column(RTTI_AIRCRAFT)].Flag_To_Redraw();
@@ -1758,7 +1758,7 @@ ResultType AircraftClass::Take_Damage(int & damage, int distance, WarheadType wa
 			Death_Announcement();
 			new AnimClass(ANIM_FBALL1, Target_Coord());
 			// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
-			was_overflow = TechnoTypeClass::Heap_Overflow(RTTI_AIRCRAFT);
+			was_overflow = TechnoTypeClass::Is_Heap_Full(RTTI_AIRCRAFT);
 			delete this;
 			if (was_overflow) {
 				Map.Column[Map.Which_Column(RTTI_AIRCRAFT)].Flag_To_Redraw();
@@ -3637,9 +3637,9 @@ AircraftClass::~AircraftClass(void)
 			FootClass * obj = Detach_Object();
 			if (obj) {
 				// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
-				RTTIType type = obj->What_Am_I();
-				if (TechnoTypeClass::Heap_Overflow(type)) {
-					Map.Column[Map.Which_Column(type)].Flag_To_Redraw();
+				RTTIType otype = obj->What_Am_I();
+				if (TechnoTypeClass::Is_Heap_Full(otype)) {
+					Map.Column[Map.Which_Column(otype)].Flag_To_Redraw();
 				}
 				delete obj;
 			}

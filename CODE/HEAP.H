@@ -57,6 +57,7 @@ class FixedHeapClass
 		int Count(void) {return ActiveCount;};
 		int Length(void) {return TotalCount;};
 		int Avail(void) {return TotalCount-ActiveCount;};
+		bool IsFull(void) {return ActiveCount==TotalCount;};
 
 		virtual int Set_Heap(int count, void * buffer=0);
 		virtual void * Allocate(void);
@@ -85,7 +86,7 @@ class FixedHeapClass
 
 		/*
 		**	This is the total blocks allocated out of the heap. This number
-		**	will never exceed Count.
+		**	will never exceed TotalCount.
 		*/
 		int ActiveCount;
 

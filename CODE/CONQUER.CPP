@@ -927,7 +927,7 @@ void Keyboard_Process(KeyNumType &input)
 					}
 				} else {
 					// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
-					if (TechnoTypeClass::Heap_Overflow(RTTI_BUILDINGTYPE)) {
+					if (TechnoTypeClass::Is_Heap_Full(RTTI_BUILDINGTYPE)) {
 						Speak(VOX_UNABLE_TO_BUILD);
 					} else {
 						Speak(VOX_BUILDING);

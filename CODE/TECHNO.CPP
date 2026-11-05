@@ -652,23 +652,23 @@ int TechnoTypeClass::Repair_Step(void) const
  * HISTORY:                                                                                    *
  *   11/04/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
-bool TechnoTypeClass::Heap_Overflow(RTTIType type) {
+bool TechnoTypeClass::Is_Heap_Full(RTTIType type) {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("bool TechnoTypeClass::Heap_Overflow(RTTIType type)");
 #endif
 	switch (type) {
 		case RTTI_INFANTRY:
 		case RTTI_INFANTRYTYPE:
-			return Infantry.Count() == Infantry.Length();
+			return Infantry.IsFull();
 		case RTTI_UNIT:
 		case RTTI_UNITTYPE:
-			return Units.Count() == Units.Length();
+			return Units.IsFull();
 		case RTTI_AIRCRAFT:
 		case RTTI_AIRCRAFTTYPE:
-			return Aircraft.Count() == Aircraft.Length();
+			return Aircraft.IsFull();
 		case RTTI_BUILDING:
 		case RTTI_BUILDINGTYPE:
-			return Buildings.Count() == Buildings.Length();
+			return Buildings.IsFull();
 	}
 	return false;
 }
@@ -3909,7 +3909,7 @@ void TechnoClass::Kill_Cargo(TechnoClass * source, HousesType house)
 			RTTIType otype = foot->What_Am_I();
 			// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
 			// If heap was in overflow state, this removal will reset the greyed out contruction options.
-			if (TechnoTypeClass::Heap_Overflow(otype)) {
+			if (TechnoTypeClass::Is_Heap_Full(otype)) {
 				Map.Column[Map.Which_Column(otype)].Flag_To_Redraw();
 			}
 			foot->Record_The_Kill(source, house);
@@ -4002,7 +4002,7 @@ void TechnoClass::Dump_Cargo(int damage, bool select, TechnoClass * source, Hous
 			// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
 			// Something failed to unload and was deleted while its heap was in overflow state.
 			// This removal will unlock contruction options.
-			if (TechnoTypeClass::Heap_Overflow(otype)) {
+			if (TechnoTypeClass::Is_Heap_Full(otype)) {
 				Map.Column[Map.Which_Column(otype)].Flag_To_Redraw();
 			}
 			delete foot;

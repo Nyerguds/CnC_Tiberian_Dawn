@@ -1101,7 +1101,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 		**	Finally, delete the vehicle.
 		*/
 		// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
-		bool was_overflow = TechnoTypeClass::Heap_Overflow(RTTI_UNIT);
+		bool was_overflow = TechnoTypeClass::Is_Heap_Full(RTTI_UNIT);
 		delete this;
 		if (was_overflow) {
 			Map.Column[Map.Which_Column(RTTI_UNIT)].Flag_To_Redraw();
@@ -4487,7 +4487,7 @@ void UnitClass::Sell_Back(int control)
 	FootClass::Sell_Back(control);
 	if (control != 0) {
 		// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
-		bool was_overflow = TechnoTypeClass::Heap_Overflow(RTTI_UNIT);
+		bool was_overflow = TechnoTypeClass::Is_Heap_Full(RTTI_UNIT);
 		delete this;
 		if (was_overflow) {
 			Map.Column[Map.Which_Column(RTTI_UNIT)].Flag_To_Redraw();

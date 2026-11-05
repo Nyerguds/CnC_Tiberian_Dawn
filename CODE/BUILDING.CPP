@@ -1183,7 +1183,7 @@ void BuildingClass::AI(void)
 
 			// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
 			// If heap is in overflow state, this removal will fix that.
-			bool was_overflow = TechnoTypeClass::Heap_Overflow(RTTI_BUILDING);
+			bool was_overflow = TechnoTypeClass::Is_Heap_Full(RTTI_BUILDING);
 			delete this;
 			if (was_overflow) {
 				Map.Column[Map.Which_Column(RTTI_BUILDING)].Flag_To_Redraw();
@@ -1642,7 +1642,7 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 						// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
 						// If heap is in overflow state, this removal will fix that.
 						RTTIType otype = obj->What_Am_I();
-						if (TechnoTypeClass::Heap_Overflow(otype)) {
+						if (TechnoTypeClass::Is_Heap_Full(otype)) {
 							Map.Column[Map.Which_Column(otype)].Flag_To_Redraw();
 						}
 						delete obj;
@@ -2070,7 +2070,7 @@ void BuildingClass::Drop_Debris(TARGET source)
 				if (i) {
 					// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
 					// Spawning crew caused infantry overflow. Refresh sidebar.
-					if (TechnoTypeClass::Heap_Overflow(RTTI_INFANTRY)) {
+					if (TechnoTypeClass::Is_Heap_Full(RTTI_INFANTRY)) {
 						Map.Column[Map.Which_Column(RTTI_INFANTRY)].Flag_To_Redraw();
 					}
 					if (Class->Get_Buildup_Data() != NULL && i->Class->IsCivilian) i->IsTechnician = true;
@@ -4265,7 +4265,7 @@ int BuildingClass::Mission_Deconstruction(void)
 						if (infantry) {
 							// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
 							// Spawning crew caused infantry overflow. Refresh sidebar.
-							if (TechnoTypeClass::Heap_Overflow(RTTI_INFANTRY)) {
+							if (TechnoTypeClass::Is_Heap_Full(RTTI_INFANTRY)) {
 								Map.Column[Map.Which_Column(RTTI_INFANTRY)].Flag_To_Redraw();
 							}
 							ScenarioInit++;
@@ -4323,7 +4323,7 @@ int BuildingClass::Mission_Deconstruction(void)
 
 				// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
 				// If the building heap is currently in overflow state, the removal will change that.
-				bool was_overflow = TechnoTypeClass::Heap_Overflow(RTTI_BUILDING);
+				bool was_overflow = TechnoTypeClass::Is_Heap_Full(RTTI_BUILDING);
 
 				/*
 				**	Construction yards that deconstruct, really just revert back
@@ -4336,7 +4336,7 @@ int BuildingClass::Mission_Deconstruction(void)
 					if (unit) {
 						// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
 						// Check if creating this new unit sets the unit heap in overflow mode.
-						if (TechnoTypeClass::Heap_Overflow(RTTI_UNIT)) {
+						if (TechnoTypeClass::Is_Heap_Full(RTTI_UNIT)) {
 							Map.Column[Map.Which_Column(RTTI_UNIT)].Flag_To_Redraw();
 						}
 						// An undeployed construction yard is never a lemon.

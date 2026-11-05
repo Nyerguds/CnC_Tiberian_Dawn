@@ -680,7 +680,7 @@ class TechnoTypeClass : public ObjectTypeClass
 		virtual unsigned short  Get_Ownable(void) const;
 		void Recalculate_Risk(void);
 
-		static bool Heap_Overflow(RTTIType type);
+		static bool Is_Heap_Full(RTTIType type);
 
 		#ifdef SCENARIO_EDITOR
 		virtual void  Display(int x, int y, WindowNumberType window, HousesType house) const;
