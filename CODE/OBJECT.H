@@ -183,7 +183,7 @@ class ObjectClass : public AbstractClass
 		**	object interacts with the map and thus indirectly controls rendering.
 		*/
 		virtual void Do_Shimmer(void);
-		virtual int Exit_Object(TechnoClass *);
+		virtual ObjExitResultType Exit_Object(TechnoClass *);
 		virtual bool Render(bool forced);
 		virtual short const * Occupy_List(bool placement=false) const;
 		virtual short const * Overlap_List(bool /*redraw*/ = false) const;

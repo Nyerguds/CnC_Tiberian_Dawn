@@ -404,9 +404,9 @@ class HouseClass {
 		/*---------------------------------------------------------------------
 		**	Member function prototypes.
 		*/
-		ProdFailType  Begin_Production(RTTIType type, int id);
-		ProdFailType  Suspend_Production(RTTIType type);
-		ProdFailType  Abandon_Production(RTTIType type);
+		ProdFailType  Begin_Production(RTTIType type, int id, bool announce);
+		ProdFailType  Suspend_Production(RTTIType type, bool announce);
+		ProdFailType  Abandon_Production(RTTIType type, bool announce);
 		FactoryClass * Get_Factory(RTTIType type);
 		bool  Place_Object(RTTIType type, CELL cell);
 		bool  Manual_Place(BuildingClass * builder, BuildingClass * object);

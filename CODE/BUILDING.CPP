@@ -1180,7 +1180,13 @@ void BuildingClass::AI(void)
 			// Seems the survivors only retaliate against a specific target if it was sabotaged
 			// by a Commando. Normal death origin does not get stored in WhomToRepay.
 			Drop_Debris(WhomToRepay);
+
+			// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+			bool was_overflow = Buildings.Count() == Buildings.Length();
 			delete this;
+			if (was_overflow) {
+				Map.Column[0].Flag_To_Redraw();
+			}
 
 			// Nyerguds's C&C Patch Project v1.04: recheck placement check on destruction.
 			// Reset building placement proximity check since something has vanished from the map.
@@ -1271,21 +1277,21 @@ void BuildingClass::AI(void)
 			**	a transport, place the (what must be a) building using another method, or
 			**	abort the production and refund money.
 			*/
-			case 0:
+			case OBJEXIT_FAILED:
 				Factory->Abandon();
 				delete Factory;
 				Factory = 0;
 				factoryfail = true;
 				break;
 
-			case 1:
-				PlacementDelay = TICKS_PER_SECOND*3;
-				break;
-
-			case 2:
+			case OBJEXIT_SUCCESS:
 				Factory->Completed();
 				delete Factory;
 				Factory = 0;
+				break;
+
+			case OBJEXIT_BLOCKED:
+				PlacementDelay = TICKS_PER_SECOND*3;
 				break;
 
 		}
@@ -1479,7 +1485,7 @@ bool BuildingClass::Unlimbo(COORDINATE coord, DirType dir)
 					return(true);
 				} else {
 					ObjectClass * o = otc.Create_One_Of(House);
-						if (o && o->Unlimbo(coord)) {
+					if (o && o->Unlimbo(coord)) {
 						c->Owner = House->Class->House;
 						Transmit_Message(RADIO_OVER_OUT);
 						delete this;
@@ -1620,6 +1626,7 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 		**	Perform the low level damage assessment.
 		*/
 		res = TechnoClass::Take_Damage(damage, distance, warhead, source, house, fromburn);
+		bool has_overflow = false;
 
 		switch (res) {
 			case RESULT_DESTROYED:
@@ -1630,9 +1637,14 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 				*/
 				while (Attached_Object()) {
 					FootClass * obj = Detach_Object();
-
 					Detach_All(true);
+					if (obj && !has_overflow) {
+						has_overflow = TechnoTypeClass::Heap_Overflow(obj->What_Am_I());
+					}
 					delete obj;
+				}
+				if (has_overflow) {
+					Map.Column[1].Flag_To_Redraw();
 				}
 
 				Sound_Effect(VOC_XPLOBIG4, Coord);
@@ -2250,13 +2262,13 @@ void BuildingClass::Init(void)
  *   04/10/1995 JLB : Handles building production by computer.                                 *
  *   06/17/1995 JLB : Handles refinery exit.                                                   *
  *=============================================================================================*/
-int BuildingClass::Exit_Object(TechnoClass * base)
+ObjExitResultType BuildingClass::Exit_Object(TechnoClass * base)
 {
 #ifdef INCLUDE_FUNCTION_NAMES
-	CCDebugFunc("int BuildingClass::Exit_Object(TechnoClass * base)");
+	CCDebugFunc("ObjExitResultType BuildingClass::Exit_Object(TechnoClass * base)");
 #endif
 	Validate();
-	if (!base) return(0);
+	if (!base) return(OBJEXIT_FAILED);
 
 	TechnoTypeClass const * ttype = (TechnoTypeClass const *)&base->Class_Of();
 
@@ -2270,8 +2282,10 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 	**	Find a good cell to unload the object to. The object, probably a vehicle
 	**	will drive/walk to the adjacent free cell.
 	*/
+	CELL cell;
+	COORDINATE start;
+	DirType	dir;
 	switch (base->What_Am_I()) {
-		CELL cell;
 
 		case RTTI_AIRCRAFT:
 			if (!In_Radio_Contact()) {
@@ -2285,7 +2299,7 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 					Transmit_Message(RADIO_HELLO, air);
 					Transmit_Message(RADIO_TETHER);
 					ScenarioInit--;
-					return(2);
+					return(OBJEXIT_SUCCESS);
 				}
 				ScenarioInit--;
 			} else {
@@ -2303,7 +2317,7 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 					air->Assign_Destination(::As_Target(Nearby_Location(air)));
 					air->Assign_Mission(MISSION_MOVE);
 					ScenarioInit--;
-					return(2);
+					return(OBJEXIT_SUCCESS);
 				}
 				ScenarioInit--;
 			}
@@ -2314,7 +2328,7 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 			switch (Class->Type) {
 				case STRUCT_REFINERY:
 					if (base->What_Am_I() == RTTI_UNIT) {
-						CELL cell = Coord_Cell(Center_Coord());
+						cell = Coord_Cell(Center_Coord());
 						UnitClass * unit = (UnitClass *)base;
 
 						cell = Adjacent_Cell(cell, FACING_SW);
@@ -2338,9 +2352,9 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 				case STRUCT_AIRSTRIP:
 					if (Create_Special_Reinforcement(House, AircraftTypeClass::As_Pointer(AIRCRAFT_CARGO), ttype, TMISSION_UNLOAD, As_Target())) {
 						delete base;
-						return(2);
+						return(OBJEXIT_SUCCESS);
 					}
-					return(0);
+					return(OBJEXIT_FAILED);
 
 				case STRUCT_WEAP:
 					ScenarioInit++;
@@ -2356,18 +2370,14 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 						Transmit_Message(RADIO_TETHER);
 						Assign_Mission(MISSION_UNLOAD);
 						ScenarioInit--;
-						return(2);
+						return(OBJEXIT_SUCCESS);
 					}
 					ScenarioInit--;
 					break;
 
 				case STRUCT_BARRACKS:
 				case STRUCT_HAND:
-					CELL cell;
-					bool found = false;
-
 					cell = Find_Exit_Cell(base);
-					if (cell) found = true;
 
 #ifdef OBSOLETE
 					CELL	const *ptr;
@@ -2383,9 +2393,9 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 					}
 #endif
 
-					if (found) {
-						DirType	dir = Direction(cell);
-						COORDINATE		start = Coord_Add(Coord, Class->ExitPoint);
+					if (cell) {
+						dir = Direction(cell);
+						start = Coord_Add(Coord, Class->ExitPoint);
 
 						ScenarioInit++;
 						if (base->Unlimbo(start, dir)) {
@@ -2402,11 +2412,58 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 								Transmit_Message(RADIO_UNLOAD);
 							}
 							ScenarioInit--;
-							return(2);
+							return(OBJEXIT_SUCCESS);
 						}
 						ScenarioInit--;
 					}
 					break;
+				default:
+					// Nyerguds's C&C Patch Project v1.04: Default case for exiting from a building.
+					cell = Find_Exit_Cell(base);
+					if (cell) {
+						dir = Direction(cell);
+					} else {
+						dir = DIR_S;
+					}
+					if (Class->ExitPoint != 0) {
+						start = Coord_Add(Coord, Class->ExitPoint);
+					} else {
+						CELL startcell = Coord_Cell(Coord_Add(Coord, Class->Center));
+						int row = Cell_X(Coord_Cell(start));
+						int col = Cell_Y(Coord_Cell(start));
+						CELL home = Coord_Cell(Coord);
+						short const *occupy = Occupy_List();
+
+						while (*occupy != REFRESH_EOL) {
+							CELL newcell = home + *occupy++;
+							if (Cell_Y(newcell) == col && Cell_X(newcell) > row) {
+								startcell = cell;
+							}
+						}
+						start = Cell_Coord(startcell);
+					}
+					ScenarioInit++;
+					if (base->Unlimbo(start, dir)) {
+							// Nyerguds's C&C Patch Project v1.04: look around when exiting.
+							base->Look(false);
+							if (cell) {
+								base->Assign_Mission(MISSION_MOVE);
+								base->Assign_Destination(::As_Target(cell));
+							} else {
+								base->Scatter(0, true);
+							}
+
+							/*
+							**	Establish radio contact so unload coordination can occur. This
+							**	radio contact should always succeed.
+							*/
+							if (Transmit_Message(RADIO_HELLO, base) == RADIO_ROGER) {
+								Transmit_Message(RADIO_UNLOAD);
+							}
+							ScenarioInit--;
+							return(OBJEXIT_SUCCESS);
+					}
+					ScenarioInit--;
 			}
 			break;
 
@@ -2428,14 +2485,14 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 					int blocked =  Flush_For_Placement(toBuild, cell, *House, this);
 					// Blocked by friendlies: try again after they scattered.
 					if (blocked == 1) {
-						return(1);
+						return(OBJEXIT_BLOCKED);
 					}
 					if (blocked == 0) {
 						// Should be unblocked; if this fails, something unknown (like a bib) is blocking it.
 						// Nyerguds's C&C Patch Project v1.04: Make computer-owned Construction Yards animate when placing.
 						Transmit_Message(RADIO_HELLO, base);
 						if (base->Unlimbo(node->Coord)) {
-							return(2);
+							return(OBJEXIT_SUCCESS);
 						}
 						// Unlimbo failed; abort radio contact.
 						Transmit_Message(RADIO_OVER_OUT);
@@ -2450,7 +2507,7 @@ int BuildingClass::Exit_Object(TechnoClass * base)
 	/*
 	**	Failure to exit the object results in a false return value.
 	*/
-	return(0);
+	return(OBJEXIT_FAILED);
 }
 
 
@@ -4240,6 +4297,9 @@ int BuildingClass::Mission_Deconstruction(void)
 			if (IsReadyToCommence) {
 				int money = Refund_Amount();
 
+				// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+				bool was_overflow = Buildings.Count() == Buildings.Length();
+
 				/*
 				**	Construction yards that deconstruct, really just revert back
 				**	to an MCV.
@@ -4274,6 +4334,7 @@ int BuildingClass::Mission_Deconstruction(void)
 					} else {
 						House->Refund_Money(money);
 						Limbo();
+						
 						delete this;
 					}
 
@@ -4298,6 +4359,10 @@ int BuildingClass::Mission_Deconstruction(void)
 					**	Finally, delete the building from the game.
 					*/
 					delete this;
+				}
+				// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+				if (was_overflow) {
+					Map.Column[0].Flag_To_Redraw();
 				}
 				// Nyerguds's C&C Patch Project v1.04: recheck placement check on object removal.
 				Map.Recheck_Placement();
@@ -5506,7 +5571,7 @@ void BuildingClass::Detach_All(bool all)
 			TechnoClass * object = factory->Get_Object();
 			IsInLimbo = true;
 			if (object && !object->Techno_Type_Class()->Who_Can_Build_Me(true, false, House->Class->House)) {
-				House->Abandon_Production(Class->ToBuild);
+				House->Abandon_Production(Class->ToBuild, false);
 			}
 			IsInLimbo = false;
 		}

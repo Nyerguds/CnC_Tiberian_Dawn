@@ -219,7 +219,16 @@ void HelpClass::AI(KeyNumType &key, int x, int y)
  *    Use this routine to change the help text that will pop up if the cursor isn't moved      *
  *    for the help delay duration. Call this routine as often as desired.                      *
  *                                                                                             *
- * INPUT:   text  -- The text number for the help text to use.                                 *
+ * INPUT:   text       -- The text number for the help text to use.                            *
+ *          x          -- The X coordinate to show the label at.                               *
+ *          y          -- The Y coordinate to show the label at.                               *
+ *          color      -- The color to show the label in.                                      *
+ *          quick      -- True to show the label without delay.                                *
+ *          cost       -- Cost to show on the label.                                           *
+ *          showcost   -- True to show a cost.                                                 *
+ *          drain      -- Power drain shown on this label.                                     *
+ *          power      -- Power production shown on this label.                                *
+ *          showpower  -- True to show the power balance on this label.                        *
  *                                                                                             *
  * OUTPUT:  none                                                                               *
  *                                                                                             *
@@ -227,6 +236,7 @@ void HelpClass::AI(KeyNumType &key, int x, int y)
  *                                                                                             *
  * HISTORY:                                                                                    *
  *   11/18/1994 JLB : Created.                                                                 *
+ *   07/12/2025 MM  : Added power label support.                                               *
  *=============================================================================================*/
 void HelpClass::Help_Text(int text, int x, int y, int color, bool quick, int cost, bool showcost, int drain, int power, bool showpower)
 {
@@ -262,9 +272,11 @@ void HelpClass::Help_Text(int text, int x, int y, int color, bool quick, int cos
 		Color = color;
 		Text = text;
 		Cost = cost;
+		// This extra arg makes sure a cost of $0 can also be shown.
 		ShowCost = showcost;
 		Drain = drain;
 		Power = power;
+		// This extra arg makes sure a power balance of 0/0 can also be shown.
 		ShowPower = showpower;
 		// Cache this so it gets taken into account correctly for the OverlapList
 		IsLowPower = showcost && showpower && drain > 0 && (PlayerPtr->Power + power) < (PlayerPtr->Drain + drain);

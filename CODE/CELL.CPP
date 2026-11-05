@@ -1124,7 +1124,7 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 			*/
 			if (Overlay != OVERLAY_NONE) {
 				OverlayTypeClass const & otype = OverlayTypeClass::As_Reference(Overlay);
-				IsTheaterShape = (bool)otype.IsTheater;
+				IsTheaterShape = (bool)(otype.IsTheater) && otype.Image_Is_Theater_Shape();
 				CC_Draw_Shape(otype.Get_Image_Data(), OverlayData, (x+(CELL_PIXEL_W>>1)), (y+(CELL_PIXEL_H>>1)), WINDOW_TACTICAL, SHAPE_CENTER|SHAPE_WIN_REL|SHAPE_GHOST, NULL, Map.UnitShadow);
 				IsTheaterShape = false;
 			}
@@ -1846,11 +1846,17 @@ void CellClass::Wall_Update(OverlayType overlay)
 	for (unsigned index = 0; index < (sizeof(_offsets)/sizeof(_offsets[0])); index++) {
 		FacingType facing  =_offsets[index];
 		CellClass * newcell = &Adjacent_Cell(facing);
+		/*
+		**	Nyerguds's C&C Patch Project v1.04: Check map bounds crossing on wall update.
+		**	This checks if the map boundary was crossed, reverting to the same cell.
+		*/
 		if (newcell == this && facing != FACING_NONE) {
 			continue;
 		}
 		/*
-		 *	Only update walls that can connect to this one.
+		**	Nyerguds's C&C Patch Project v1.04: Only update same-type walls.
+		**	Only update walls that can connect to this one. Any others won't
+		**	be affected by changes to this wall anyway.
 		*/
 		if (newcell->Overlay != overlay) {
 			continue;
@@ -1875,6 +1881,12 @@ void CellClass::Wall_Update(OverlayType overlay)
 		**	Handle special cases for the incomplete damaged wall sets. If a damage stage
 		**	is calculated, but there is no artwork for it, then consider the wall to be
 		**	completely destroyed.
+		*/
+
+		/*
+		**	Nyerguds's C&C Patch Project v1.04: use DamageLevels from overlay to determine wall death.
+		**	This used to be a big if-else case checking for different types and damage values,
+		**	even though this data was always available in the type class definitions.
 		*/
 		if ((newcell->OverlayData>>4) >= wall.DamageLevels) {
 			newcell->Owner = HOUSE_NONE;
@@ -1999,7 +2011,6 @@ int CellClass::Reduce_Wall(int damage)
 		if ((OverlayData>>4) >= wall.DamageLevels) {
 			// Detects the overflow, removes this wall, and updates the walls around it.
 			Wall_Update(Overlay);
-			Map.Radar_Pixel(Cell_Number());
 			return(true);
 		}
 		Map.Radar_Pixel(Cell_Number());

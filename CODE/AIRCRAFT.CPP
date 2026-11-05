@@ -916,12 +916,17 @@ void AircraftClass::AI(void)
 			**	Check to see if there are any civilians aboard. If so, then flag the house
 			**	that the civilian evacuation trigger event has been fulfilled.
 			*/
+			bool had_overflow = false;
 			while (Is_Something_Attached()) {
 				FootClass * obj = Detach_Object();
-				if (obj->What_Am_I() == RTTI_INFANTRY && obj->Techno_Type_Class()->IsCivilian && !((InfantryClass *)obj)->IsTechnician) {
+				RTTIType att_type = obj == NULL ? RTTI_NONE : obj->What_Am_I();
+				if (att_type == RTTI_INFANTRY && obj->Techno_Type_Class()->IsCivilian && !((InfantryClass *)obj)->IsTechnician) {
 					House->IsCivEvacuated = true;
 				}
-
+				// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+				if (!had_overflow) {
+					had_overflow = TechnoTypeClass::Heap_Overflow(att_type);
+				}
 				/*
 				**	Transport planes that leave can only be because they carry purchased
 				**	equipment and must be have their cost refunded.
@@ -932,7 +937,12 @@ void AircraftClass::AI(void)
 				delete obj;
 			}
 			Stun();
+			// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+			bool was_overflow = TechnoTypeClass::Heap_Overflow(RTTI_AIRCRAFT);
 			delete this;
+			if (was_overflow || had_overflow) {
+				Map.Column[1].Flag_To_Redraw();
+			}
 			return;
 		}
 	} else {
@@ -1349,7 +1359,7 @@ int AircraftClass::Mission_Unload(void)
 						*/
 						Map.Pick_Up(Coord_Cell(Coord), this);
 
-						if (!Exit_Object(unit)) {
+						if (Exit_Object(unit) != OBJEXIT_SUCCESS) {
 							delete unit;
 						}
 
@@ -1595,10 +1605,10 @@ int AircraftClass::Mission_Retreat(void)
  * HISTORY:                                                                                    *
  *   01/10/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-int AircraftClass::Exit_Object(TechnoClass * unit)
+ObjExitResultType AircraftClass::Exit_Object(TechnoClass * unit)
 {
 #ifdef INCLUDE_FUNCTION_NAMES
-	CCDebugFunc("int AircraftClass::Exit_Object(TechnoClass * unit)");
+	CCDebugFunc("ObjExitResultType AircraftClass::Exit_Object(TechnoClass * unit)");
 #endif
 	Validate();
 	static FacingType _toface[FACING_COUNT] = {FACING_S, FACING_SW, FACING_SE, FACING_NW, FACING_NE, FACING_N, FACING_W, FACING_E};
@@ -1630,9 +1640,9 @@ int AircraftClass::Exit_Object(TechnoClass * unit)
 		// Nyerguds's C&C Patch Project v1.04: look around when exiting.
 		// This fix was taken from the C&C Remaster.
 		unit->Look(false);
-		return(1);
+		return(OBJEXIT_SUCCESS);
 	}
-	return(0);
+	return(OBJEXIT_FAILED);
 }
 
 
@@ -1735,7 +1745,7 @@ ResultType AircraftClass::Take_Damage(int & damage, int distance, WarheadType wa
 	**	with a crew or a sandworm.
 	*/
 	res = FootClass::Take_Damage(damage, distance, warhead, source, house, fromburn);
-
+	bool was_overflow;
 	switch (res) {
 		case RESULT_DESTROYED:
 			if (landed) {
@@ -1747,7 +1757,12 @@ ResultType AircraftClass::Take_Damage(int & damage, int distance, WarheadType wa
 			}
 			Death_Announcement();
 			new AnimClass(ANIM_FBALL1, Target_Coord());
+			// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+			was_overflow = Aircraft.Count() == Aircraft.Length();
 			delete this;
+			if (was_overflow) {
+				Map.Column[1].Flag_To_Redraw();
+			}
 			if (landed) {
 				// Nyerguds's C&C Patch Project v1.04: recheck placement check on object destruction.
 				// If the destroyed object was cloaked, ProximityStealth might need to be changed.
@@ -3618,8 +3633,18 @@ AircraftClass::~AircraftClass(void)
 		/*
 		**	If there are any cargo members, delete them.
 		*/
+		bool has_overflow = Is_Something_Attached();
 		while (Is_Something_Attached()) {
-			delete Detach_Object();
+			FootClass * obj = Detach_Object();
+			if (obj && !has_overflow) {
+				has_overflow = TechnoTypeClass::Heap_Overflow(obj->What_Am_I());
+			}
+			delete obj;
+		}
+		// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+		// This case handles helicopter evacs.
+		if (has_overflow) {
+			Map.Column[1].Flag_To_Redraw();
 		}
 
 		Limbo();

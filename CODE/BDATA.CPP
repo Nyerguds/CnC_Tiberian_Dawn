@@ -5111,25 +5111,32 @@ void BuildingTypeClass::Init(TheaterType theater)
 	for (StructType sindex = STRUCT_FIRST; sindex < STRUCT_COUNT; sindex++) {
 		BuildingTypeClass *classptr = (BuildingTypeClass*)As_Pointer(sindex);
 		classptr->ImageIsTheaterShape = false;
+
+		/*
+		**	Load in the appropriate object shape data.
+		*/
+
+		MixFileClass *mixptr = NULL;
+		void * image_ptr = NULL;
 		if (classptr->IsTheater) {
 			_makepath(fullname, NULL, NULL, classptr->IniName, Theaters[theater].Suffix);
-			MixFileClass *mixptr = NULL;
-			void * image_ptr = NULL;
 			MixFileClass::Offset(fullname, &image_ptr, &mixptr);
-			if (image_ptr && mixptr) {
-				// Not sure why anyone would put building graphics inside the cameos archive,
-				// but those are the two theater specific archives, so check them both.
-				classptr->ImageIsTheaterShape =
-					strcmpi(mixptr->Filename, theatermixname) == 0 ||
-					(hires && strcmpi(mixptr->Filename, cameomixname) == 0);
-			}
-			if (!image_ptr) {
-				_makepath(fullname, NULL, NULL, classptr->IniName, ".SHP");
-				image_ptr = (void *)MixFileClass::Retrieve(fullname);
-				classptr->ImageIsTheaterShape = false;
-			}
-			classptr->ImageData = image_ptr;
 		}
+		// If not theater-specific, or theater-specific load failed, try loading
+		// theater-independent graphics.
+		if (!image_ptr) {
+			_makepath(fullname, NULL, NULL, classptr->IniName, ".SHP");
+			// No checks on failure. If it fails, it fails.
+			image_ptr = (void *)MixFileClass::Retrieve(fullname);
+			classptr->ImageIsTheaterShape = false;
+		} else if (mixptr) {
+			// Not sure why anyone would put building graphics inside the cameos archive,
+			// but those are the two theater specific archives, so check them both.
+			classptr->ImageIsTheaterShape =
+				strcmpi(mixptr->Filename, theatermixname) == 0 ||
+				(hires && strcmpi(mixptr->Filename, cameomixname) == 0);
+		}
+		classptr->ImageData = image_ptr;
 
 		if (hires) {
 			classptr->CameoData = NULL;

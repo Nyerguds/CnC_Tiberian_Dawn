@@ -349,3 +349,5 @@ Changes that reflect internal behavior but which have no gameplay impact are mar
 * Fixed the volume setting scale being logarithmic rather than linear. It now uses the Tiberian Sun logic for this.
 * Reactivated the game's panning audio feature, which plays sound effects from the left or right speaker when they happen outside of the viewport.
 * Fixed the audio fade volume for sound effects that happen outside of the viewport; it was calculated as distance from the top left corner, making sounds that happen on the east or south side of the viewport much too faint.
+* Fixed the sidebar freezing forever when internal object limits are reached. It now greys out and gives an "Unable to build more" EVA voice, and any time an object of the affected type is removed from the game, the sidebar will refresh to show that it unlocked again.
+* When theater-specific graphics for overlay, structure or terrain types are not found, the game now tries to load theater-neutral fallback graphics.

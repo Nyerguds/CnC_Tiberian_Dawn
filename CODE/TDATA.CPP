@@ -860,41 +860,49 @@ void TerrainTypeClass::Init(TheaterType theater)
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("void TerrainTypeClass::Init(TheaterType theater)");
 #endif
-	//if (theater != LastTheater){
 	char fullname[_MAX_FNAME+_MAX_EXT];
+	char cameomixname[_MAX_FNAME+_MAX_EXT];
 	char theatermixname[_MAX_FNAME+_MAX_EXT];
 	sprintf(theatermixname, "%s.MIX", Theaters[theater].Root);
+	bool hires = Get_Resolution_Shift() != 0;
+	if (hires) {
+		sprintf(cameomixname, "%.4sICNH.MIX", Theaters[theater].Root);
+	}
 	for (TerrainType index = TERRAIN_FIRST; index < TERRAIN_COUNT; index++) {
-		TerrainTypeClass * terrain = (TerrainTypeClass*)&As_Reference(index);
+		TerrainTypeClass * classptr = (TerrainTypeClass*)&As_Reference(index);
+		classptr->ImageIsTheaterShape = false;
 
 		/*
-		**	Clear any existing shape pointer. All terrain is theater specific, thus if
-		**	it isn't loaded in this routine, it shouldn't exist at all.
+		**	Load in the appropriate object shape data.
 		*/
-		terrain->ImageData = NULL;
-		terrain->ImageIsTheaterShape = false;
 
-		if (terrain->Theater & (1 << theater)) {
-
-			/*
-			**	Load in the appropriate object shape data.
-			*/
-			_makepath(fullname, NULL, NULL, terrain->IniName, Theaters[theater].Suffix);
-
-			MixFileClass *mixptr = 0;
-			void * image_ptr = NULL;
+		MixFileClass *mixptr = 0;
+		void * image_ptr = NULL;
+		if (classptr->Theater & (1 << theater)) {
+			_makepath(fullname, NULL, NULL, classptr->IniName, Theaters[theater].Suffix);
 			MixFileClass::Offset(fullname, &image_ptr, &mixptr);
-			if (image_ptr && mixptr) {
-				terrain->ImageIsTheaterShape = strcmpi(mixptr->Filename, theatermixname) == 0;
-			}
-			terrain->ImageData = image_ptr;
-			IsTheaterShape = terrain->ImageIsTheaterShape;
-			if (terrain->RadarIcon) delete[] (char *)terrain->RadarIcon;
-			terrain->RadarIcon = Get_Radar_Icon(image_ptr, 0, 1, 3);
-			IsTheaterShape = false;
 		}
+		// If not theater-specific, or theater-specific load failed, try loading
+		// theater-independent graphics.
+		if (!image_ptr) {
+			_makepath(fullname, NULL, NULL, classptr->IniName, ".SHP");
+			// No checks on failure. If it fails, it fails.
+			image_ptr = (void *)MixFileClass::Retrieve(fullname);
+			classptr->ImageIsTheaterShape = false;
+		} else if (mixptr) {
+			// Not sure why anyone would put terrain graphics inside the cameos archive,
+			// but those are the two theater specific archives, so check them both.
+			classptr->ImageIsTheaterShape =
+				strcmpi(mixptr->Filename, theatermixname) == 0 ||
+				(hires && strcmpi(mixptr->Filename, cameomixname) == 0);
+		}
+		classptr->ImageData = image_ptr;
+
+		IsTheaterShape = classptr->ImageIsTheaterShape;
+		if (classptr->RadarIcon) delete[] (char *)classptr->RadarIcon;
+		classptr->RadarIcon = Get_Radar_Icon(image_ptr, 0, 1, 3);
+		IsTheaterShape = false;
 	}
-	//}
 }
 
 

@@ -1965,22 +1965,23 @@ void SidebarClass::StripClass::Draw_It(bool complete)
 					obj = Fetch_Techno_Type(btype, bid);
 					if (obj) {
 						bool isbusy = false;
+						bool overflow = TechnoTypeClass::Heap_Overflow(btype);
 						switch (btype) {
 							case RTTI_INFANTRYTYPE:
-								isbusy = (PlayerPtr->InfantryFactory != -1);
-								break;
-
-							case RTTI_BUILDINGTYPE:
-								isbusy = (PlayerPtr->BuildingFactory != -1);
-								markdef = LastConstruction != STRUCT_NONE && bid == LastConstruction;
+								isbusy = (PlayerPtr->InfantryFactory != -1 || overflow);
 								break;
 
 							case RTTI_UNITTYPE:
-								isbusy = (PlayerPtr->UnitFactory != -1);
+								isbusy = (PlayerPtr->UnitFactory != -1 || overflow);
 								break;
 
 							case RTTI_AIRCRAFTTYPE:
-								isbusy = (PlayerPtr->AircraftFactory != -1);
+								isbusy = (PlayerPtr->AircraftFactory != -1 || overflow);
+								break;
+
+							case RTTI_BUILDINGTYPE:
+								isbusy = (PlayerPtr->BuildingFactory != -1 || overflow);
+								markdef = LastConstruction != STRUCT_NONE && bid == LastConstruction;
 								break;
 						}
 						if (obj->Get_Cameo_Data()) {
@@ -2495,6 +2496,7 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 
 			/*
 			**	Display the help text if the mouse is over the button.
+			**	Nyerguds's C&C Patch Project v1.04: add power balance to build label.
 			*/
 			if (flags & LEFTUP) {
 				bool showpower = false;
@@ -2541,10 +2543,10 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 					}
 
 					if (!factory->Is_Building()) {
-						Speak(VOX_CANCELED);
+						//Speak(VOX_CANCELED);
 						OutList.Add(EventClass(EventClass::ABANDON, otype, -1));
 					} else {
-						Speak(VOX_SUSPENDED);
+						//Speak(VOX_SUSPENDED);
 						OutList.Add(EventClass(EventClass::SUSPEND, otype, -1));
 					}
 				}
@@ -2633,7 +2635,8 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 							**	normally.
 							*/
 							// This actually changes a state, so don't annoy the player with the "need more funds" message here.
-							Speak(VOX_BUILDING);
+							// Build voices are now handled by the HouseClass function.
+							//Speak(VOX_BUILDING);
 							OutList.Add(EventClass(EventClass::PRODUCE, otype, oid));
 						}
 					}
@@ -2647,7 +2650,8 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 //					if (Strip->IsBuilding) {
 //						Speak(VOX_NO_FACTORY);
 //					} else {
-					Speak(VOX_BUILDING);
+					// Build voices are now handled by the HouseClass function.
+					//Speak(VOX_BUILDING);
 					OutList.Add(EventClass(EventClass::PRODUCE, otype, oid));
 					// Nyerguds's C&C Patch Project v1.04: "Build last" key support
 					// IF this is a building, set the "last building the player built" to this.

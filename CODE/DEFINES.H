@@ -337,6 +337,8 @@ typedef enum RTTIType {
 /**********************************************************************
 **	These are the various return conditions that production may
 **	produce.
+**	Unfortunately, since production goes through EventClass, these
+**	results are never really used.
 */
 typedef enum ProdFailType {
 	PROD_OK,						//	Production request successful.
@@ -345,6 +347,17 @@ typedef enum ProdFailType {
 	PROD_CANT,					//	Failed because unable to comply (busy or occupied).
 	PROD_NOCHANGE,				//	Failed because factory is already in requested state.
 } ProdFailType;
+
+
+/**********************************************************************
+**	These are the various return conditions that exiting an object
+**	from something can produce.
+*/
+typedef enum ObjExitResultType {
+	OBJEXIT_FAILED,				//	Object failed to exit.
+	OBJEXIT_SUCCESS,			//	Object succeeded in exiting.
+	OBJEXIT_BLOCKED,		//	Object was temporarily unable to exit; try again later.
+} ObjExitResultType;
 
 
 /**********************************************************************
@@ -603,8 +616,8 @@ typedef enum ActionType {
 	ACTION_AIR_STRIKE,	// That target object should be blasted.
 	ACTION_GUARD_AREA,	// Guard the area/object clicked on.
 	ACTION_ATTACK_NOW,	// Can attack or fire upon it, and is in range to do so. // Nyerguds's C&C Patch Project v1.04
-	ACTION_PLACE,				// Place down a building
-	ACTION_PLACE_REPAIR,// Place down a wall to repair it
+	ACTION_PLACE,				// Place down a building.
+	ACTION_PLACE_REPAIR,// Place down a wall to repair it.  // Nyerguds's C&C Patch Project v1.04
 
 	ACTION_COUNT
 } ActionType;

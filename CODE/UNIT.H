@@ -153,6 +153,7 @@ class UnitClass :	public TarComClass
 		virtual RadioMessageType Receive_Message(RadioClass * from, RadioMessageType message, long & param);
 		virtual void AI(void);
 		virtual void Attach(FootClass * object);
+		virtual void Sell_Back(int control);
 		virtual int Mission_Attack(void);
 		virtual int Mission_Unload(void);
 		virtual int Mission_Guard(void);

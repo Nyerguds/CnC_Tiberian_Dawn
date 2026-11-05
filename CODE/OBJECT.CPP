@@ -718,92 +718,103 @@ COORDINATE ObjectClass::Center_Coord(void) const {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("COORDINATE ObjectClass::Center_Coord(void) const");
 #endif
-return Coord;};
+	return Coord;
+}
 COORDINATE ObjectClass::Render_Coord(void) const {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("COORDINATE ObjectClass::Render_Coord(void) const");
 #endif
-return(Center_Coord());}
+	return(Center_Coord());
+}
 COORDINATE ObjectClass::Docking_Coord(void) const {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("COORDINATE ObjectClass::Docking_Coord(void) const");
 #endif
-return(Center_Coord());}
+	return(Center_Coord());
+}
 COORDINATE ObjectClass::Sort_Y(void) const {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("COORDINATE ObjectClass::Sort_Y(void) const");
 #endif
-return Coord;};
+	return Coord;
+}
 COORDINATE ObjectClass::Fire_Coord(int /*which*/, bool /*forrange*/, COORDINATE /*coords*/) const {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("COORDINATE ObjectClass::Fire_Coord(int /*which*/, bool /*forrange*/, COORDINATE /*coords*/) const");
 #endif
-return Coord;};
+	return Coord;
+}
 void ObjectClass::Record_The_Kill(TechnoClass * /*source*/, HousesType /*house*/, bool /*sold*/) {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("void ObjectClass::Record_The_Kill(TechnoClass * /*source*/, HousesType /*house*/, bool /*sold*/)");
 #endif
-};
+}
 void ObjectClass::Do_Shimmer(void) {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("void ObjectClass::Do_Shimmer(void)");
 #endif
-};
-int ObjectClass::Exit_Object(TechnoClass *) {
+}
+ObjExitResultType ObjectClass::Exit_Object(TechnoClass *) {
 #ifdef INCLUDE_FUNCTION_NAMES
-	CCDebugFunc("int ObjectClass::Exit_Object(TechnoClass *)");
+	CCDebugFunc("ObjExitResultType ObjectClass::Exit_Object(TechnoClass *)");
 #endif
-return 0;};
+	return OBJEXIT_FAILED;
+}
 void ObjectClass::Hidden(void) {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("void ObjectClass::Hidden(void)");
 #endif
-};
+}
 void ObjectClass::Look(bool /*incremental*/) {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("void ObjectClass::Look(bool incremental)");
 #endif
-};
+}
 void ObjectClass::Active_Click_With(ActionType , ObjectClass *) {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("void ObjectClass::Active_Click_With(ActionType , ObjectClass *)");
 #endif
-};
+}
 void ObjectClass::Active_Click_With(ActionType , CELL ) {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("void ObjectClass::Active_Click_With(ActionType , CELL )");
 #endif
-};
+}
 void ObjectClass::Clicked_As_Target(int) {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("void ObjectClass::Clicked_As_Target(int)");
 #endif
-};
+}
 bool ObjectClass::In_Range(COORDINATE , int) const {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("bool ObjectClass::In_Range(COORDINATE , int) const");
 #endif
-return false;};
+	return false;
+}
 int ObjectClass::Weapon_Range(int /*which*/, bool /*withbarrel*/, TARGET /*target*/) const {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("int ObjectClass::Weapon_Range(int /*which*/, bool /*withbarrel*/, TARGET /*target*/) const");
 #endif
-return 0x0000;};
+	return 0x0000;
+}
 TARGET ObjectClass::As_Target(void) const {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("TARGET ObjectClass::As_Target(void) const");
 #endif
-return TARGET_NONE;};
+	return TARGET_NONE;
+}
 bool ObjectClass::Scatter(COORDINATE , bool) {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("bool ObjectClass::Scatter(COORDINATE , bool)");
 #endif
- return(false); };
+	return(false);
+}
 bool ObjectClass::Catch_Fire(TechnoClass * /*source*/, HousesType /*house*/) {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("bool ObjectClass::Catch_Fire(TechnoClass * /*source*/, HousesType /*house*/)");
 #endif
-return false;};
+	return false;
+}
 
 
 /***********************************************************************************************
@@ -928,10 +939,10 @@ void ObjectClass::Repair(int )
  * HISTORY:                                                                                    *
  *   07/19/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-void ObjectClass::Sell_Back(int )
+void ObjectClass::Sell_Back(int /*control*/)
 {
 #ifdef INCLUDE_FUNCTION_NAMES
-	CCDebugFunc("void ObjectClass::Sell_Back(int )");
+	CCDebugFunc("void ObjectClass::Sell_Back(int control)");
 #endif
 }
 

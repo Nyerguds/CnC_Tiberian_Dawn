@@ -1135,16 +1135,17 @@ void HouseClass::AI(void)
 	**	because of outside circumstances. The advanced communications facility
 	**	being destroyed is a good example of this.
 	*/
-	bool hasEye = ActiveBScan & STRUCTF_EYE;
+	bool has_eye = ActiveBScan & STRUCTF_EYE;
+	bool is_player = this == PlayerPtr;
 	if (IonCannon.Is_Present()) {
-		if (!hasEye && !IonCannon.Is_One_Time()) {
+		if (!has_eye && !IonCannon.Is_One_Time()) {
 
 			/*
 			**	Remove the ion cannon when there is no advanced communication facility.
 			**	Note that this will not remove the one time created ion cannon.
 			*/
 			if (IonCannon.Remove()) {
-				if (this == PlayerPtr) {
+				if (is_player) {
 					Map.Column[1].Flag_To_Redraw();
 					if (Map.TargetingMode == SPC_ION_CANNON) {
 						Map.TargetingMode = SPC_NONE;
@@ -1164,8 +1165,10 @@ void HouseClass::AI(void)
 			**	Process the ion cannon AI and if something changed that would affect
 			**	the sidebar, then flag the sidebar to be redrawn.
 			*/
-			if (IonCannon.AI(this == PlayerPtr)) {
-				if (this == PlayerPtr) Map.Column[1].Flag_To_Redraw();
+			if (IonCannon.AI(is_player)) {
+				if (is_player) {
+					Map.Column[1].Flag_To_Redraw();
+				}
 			}
 		}
 
@@ -1184,16 +1187,16 @@ void HouseClass::AI(void)
 		*/
 		// Nyerguds's C&C Patch Project v1.04: Ion Cannon no longer requires GDI.
 		// Ion Cannon no longer requires "ActLike == HOUSE_GOOD"
-		if (hasEye &&
+		if (has_eye &&
 			//(ActLike == HOUSE_GOOD || GameToPlay != GAME_NORMAL) &&
 			(IsHuman || GameToPlay != GAME_NORMAL)) {
 
-			IonCannon.Enable(false, this == PlayerPtr, Power_Fraction() < 0x0100);
+			IonCannon.Enable(false, is_player, Power_Fraction() < 0x0100);
 
 			/*
 			**	Flag the sidebar to be redrawn if necessary.
 			*/
-			if (this == PlayerPtr) {
+			if (is_player) {
 				Map.Add(RTTI_SPECIAL, SPC_ION_CANNON);
 				Map.Column[1].Flag_To_Redraw();
 			}
@@ -1219,7 +1222,7 @@ void HouseClass::AI(void)
 		if (!NukeStrike.Is_One_Time() && (!hasTemple || (IsHuman && !Has_Nuke_Device()))) {
 			if (NukeStrike.Remove()) {
 				IsRecalcNeeded = true;
-				if (this == PlayerPtr) {
+				if (is_player) {
 					Map.Column[1].Flag_To_Redraw();
 					if (Map.TargetingMode == SPC_NUCLEAR_BOMB) {
 						Map.TargetingMode = SPC_NONE;
@@ -1238,8 +1241,10 @@ void HouseClass::AI(void)
 			**	Process the nuke strike AI and if something changed that would affect
 			**	the sidebar, then flag the sidebar to be redrawn.
 			*/
-			if (NukeStrike.AI(this == PlayerPtr)) {
-				if (this == PlayerPtr) Map.Column[1].Flag_To_Redraw();
+			if (NukeStrike.AI(is_player)) {
+				if (is_player) {
+					Map.Column[1].Flag_To_Redraw();
+				}
 			}
 		}
 
@@ -1260,15 +1265,15 @@ void HouseClass::AI(void)
 			// Nyerguds's C&C Patch Project v1.04: Add EVA voice to announce nuke is added.
 			// There is no voice for the nuke "charging", so alert the player that something was added.
 			bool nukelow = GameToPlay == GAME_NORMAL && Power_Fraction() < 0x0100;
-			NukeStrike.Enable(false, this == PlayerPtr, nukelow);
-			if (this == PlayerPtr) {
+			NukeStrike.Enable(false, is_player, nukelow);
+			if (is_player) {
 				Speak(VOX_NEW_CONSTRUCT);
 			}
 
 			/*
 			**	Flag the sidebar to be redrawn if necessary.
 			*/
-			if (this == PlayerPtr) {
+			if (is_player) {
 				Map.Add(RTTI_SPECIAL, SPC_NUCLEAR_BOMB);
 				Map.Column[1].Flag_To_Redraw();
 			}
@@ -1280,8 +1285,10 @@ void HouseClass::AI(void)
 	**	the sidebar, then flag the sidebar to be redrawn.
 	*/
 	if (AirStrike.Is_Present()) {
-		if (AirStrike.AI(this == PlayerPtr)) {
-			if (this == PlayerPtr) Map.Column[1].Flag_To_Redraw();
+		if (AirStrike.AI(is_player)) {
+			if (is_player) {
+				Map.Column[1].Flag_To_Redraw();
+			}
 		}
 
 		/*
@@ -1297,9 +1304,9 @@ void HouseClass::AI(void)
 	*/
 	if (IsAirstrikePending) {
 		IsAirstrikePending = false;
-		if (AirStrike.Enable(false, this == PlayerPtr)) {
-			AirStrike.Forced_Charge(this == PlayerPtr);
-			if (this == PlayerPtr) {
+		if (AirStrike.Enable(false, is_player)) {
+			AirStrike.Forced_Charge(is_player);
+			if (is_player) {
 				Map.Add(RTTI_SPECIAL, SPC_AIR_STRIKE);
 				Map.Column[1].Flag_To_Redraw();
 			}
@@ -2248,9 +2255,9 @@ void HouseClass::Adjust_Threat(int region, int threat)
  *    type specified. This will be reflected in the sidebar as well as the house factory       *
  *    tracking variables.                                                                      *
  *                                                                                             *
- * INPUT:   type  -- The type of object to begin production on.                                *
- *                                                                                             *
- *          id    -- The subtype of object.                                                    *
+ * INPUT:   type     -- The type of object to begin production on.                             *
+ *          id       -- The subtype of object.                                                 *
+ *          announce -- True to let EVA announce the result, if this is the player.            *
  *                                                                                             *
  * OUTPUT:  Returns with the reason why, or why not, production was started.                   *
  *                                                                                             *
@@ -2259,15 +2266,13 @@ void HouseClass::Adjust_Threat(int region, int threat)
  * HISTORY:                                                                                    *
  *   05/08/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-ProdFailType HouseClass::Begin_Production(RTTIType type, int id)
+ProdFailType HouseClass::Begin_Production(RTTIType type, int id, bool announce)
 {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("ProdFailType HouseClass::Begin_Production(RTTIType type, int id)");
 #endif
 	Validate();
 	int * factory = 0;
-	int result = true;
-	bool initial_start = false;
 	FactoryClass * fptr;
 	TechnoTypeClass const * tech = Fetch_Techno_Type(type, id);
 
@@ -2285,8 +2290,12 @@ ProdFailType HouseClass::Begin_Production(RTTIType type, int id)
 	int currenttype = -1;
 	if (*factory != -1) {
 		fptr = Factories.Raw_Ptr(*factory);
-		if (fptr->Is_Building())
+		if (fptr->Is_Building()) {
+			if (this == PlayerPtr && announce) {
+				Speak(VOX_NO_FACTORY);
+			}
 			return(PROD_CANT);
+		}
 		if (fptr->Get_Object()) {
 			currenttype = fptr->Get_Object()->Techno_Type_Class()->Type;
 		}
@@ -2295,25 +2304,31 @@ ProdFailType HouseClass::Begin_Production(RTTIType type, int id)
 		if (!fptr) return(PROD_CANT);
 		*factory = Factories.ID(fptr);
 		//result = (tech) ? fptr->Set(*tech, *this) : fptr->Set((SpecialWeaponType)id, *this);
-		result = fptr->Set(*tech, *this);
-		initial_start = true;
-	}
-
-	if (result) {
-		fptr->Start();
-
-		/*
-		**	Link this factory to the sidebar so that proper graphic feedback
-		**	can take place.
-		*/
-		// Nyerguds's C&C Patch Project v1.04: Don't link factory if object does not match.
-		if (PlayerPtr == this && (currenttype == -1 || currenttype == id)) {
-			Map.Factory_Link(*factory, type, id);
+		bool result = fptr->Set(*tech, *this);
+		if (!result) {
+			// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+			delete fptr;
+			*factory = -1;
+			if (this == PlayerPtr && announce) {
+				Speak(VOX_UNABLE_TO_BUILD);
+			}
+			return(PROD_LIMIT);
 		}
-
-		return(PROD_OK);
 	}
-	return(PROD_CANT);
+	fptr->Start();
+
+	/*
+	**	Link this factory to the sidebar so that proper graphic feedback
+	**	can take place.
+	*/
+	// Nyerguds's C&C Patch Project v1.04: Don't link factory if object does not match.
+	if (PlayerPtr == this && (currenttype == -1 || currenttype == id)) {
+		Map.Factory_Link(*factory, type, id);
+	}
+	if (this == PlayerPtr && announce) {
+		Speak(VOX_BUILDING);
+	}
+	return(PROD_OK);
 }
 
 
@@ -2325,6 +2340,7 @@ ProdFailType HouseClass::Begin_Production(RTTIType type, int id)
  *    as well as in the house control structure.                                               *
  *                                                                                             *
  * INPUT:   type  -- The type of object that production is being suspended for.                *
+ *          announce -- True to let EVA announce the result, if this is the player.            *
  *                                                                                             *
  * OUTPUT:  Returns why, or why not, production was suspended.                                 *
  *                                                                                             *
@@ -2333,7 +2349,7 @@ ProdFailType HouseClass::Begin_Production(RTTIType type, int id)
  * HISTORY:                                                                                    *
  *   05/08/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-ProdFailType HouseClass::Suspend_Production(RTTIType type)
+ProdFailType HouseClass::Suspend_Production(RTTIType type, bool announce)
 {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("ProdFailType HouseClass::Suspend_Production(RTTIType type)");
@@ -2373,6 +2389,9 @@ ProdFailType HouseClass::Suspend_Production(RTTIType type)
 	**	Tell the sidebar that it needs to be redrawn because of this.
 	*/
 	if (PlayerPtr == this) {
+		if (announce) {
+			Speak(VOX_SUSPENDED);
+		}
 		Map.SidebarClass::IsToRedraw = true;
 		Map.SidebarClass::Column[Map.Which_Column(type)].IsToRedraw = true;
 		Map.Flag_To_Redraw(false);
@@ -2390,6 +2409,7 @@ ProdFailType HouseClass::Suspend_Production(RTTIType type)
  *    well as from the house factory record.                                                   *
  *                                                                                             *
  * INPUT:   type  -- The object type that production is being suspended for.                   *
+ *          announce -- True to let EVA announce the result, if this is the player.            *
  *                                                                                             *
  * OUTPUT:  Returns the reason why or why not, production was suspended.                       *
  *                                                                                             *
@@ -2398,7 +2418,7 @@ ProdFailType HouseClass::Suspend_Production(RTTIType type)
  * HISTORY:                                                                                    *
  *   05/08/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-ProdFailType HouseClass::Abandon_Production(RTTIType type)
+ProdFailType HouseClass::Abandon_Production(RTTIType type, bool announce)
 {
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("ProdFailType HouseClass::Abandon_Production(RTTIType type)");
@@ -2426,8 +2446,10 @@ ProdFailType HouseClass::Abandon_Production(RTTIType type)
 	**	Tell the sidebar that it needs to be redrawn because of this.
 	*/
 	if (PlayerPtr == this) {
+		if (announce) {
+			Speak(VOX_CANCELED);
+		}
 		Map.Abandon_Production(type, *factory);
-
 		if (type == RTTI_BUILDINGTYPE || type == RTTI_BUILDING) {
 			Map.PendingObjectPtr = 0;
 			Map.PendingObject = 0;
@@ -2688,7 +2710,7 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 					launchsite->Commence();
 					NukeDest = cell;
 					// Nyerguds's C&C Patch Project v1.04: Don't clear nuke pieces; decrease as int.
-					if (GameToPlay == GAME_NORMAL && !NukeStrike.Is_One_Time() && NukePieces >= 0) {
+					if (IsHuman && GameToPlay == GAME_NORMAL && !NukeStrike.Is_One_Time() && NukePieces >= 0) {
 						NukePieces = MAX(0, NukePieces - RequiredNukePieces);
 					}
 
@@ -2702,7 +2724,7 @@ bool HouseClass::Place_Special_Blast(SpecialWeaponType id, CELL cell)
 						if (this == PlayerPtr) {
 							Map.TargetingMode = SPC_NONE;
 						}
-						 return(false);
+						return(false);
 					}
 
 					/*
@@ -2830,7 +2852,7 @@ bool HouseClass::Place_Object(RTTIType type, CELL cell)
 			return(false);
 		}
 		if (cell == -1) {
-			if (builder->Exit_Object(tech)) {
+			if (builder->Exit_Object(tech) == OBJEXIT_SUCCESS) {
 
 				/*
 				**	Since the object has left the factory under its own power, delete
@@ -2838,7 +2860,7 @@ bool HouseClass::Place_Object(RTTIType type, CELL cell)
 				**	has been completed.
 				*/
 				factory->Completed();
-				Abandon_Production(type);
+				Abandon_Production(type, false);
 			} else {
 
 				/*
@@ -2873,7 +2895,7 @@ bool HouseClass::Place_Object(RTTIType type, CELL cell)
 */
 				if (tech->Unlimbo(Cell_Coord(cell))) {
 					factory->Completed();
-					Abandon_Production(type);
+					Abandon_Production(type, false);
 					if (PlayerPtr == this) {
 						CCDebugString("HouseClass::Place_Object - Placing %s.\n", tech->Techno_Type_Class()->IniName);
 						Sound_Effect(/*isWallRepair ? VOC_MOTOR : */ VOC_SLAM);
@@ -4749,9 +4771,11 @@ void HouseClass::Sell_Wall(CELL cell)
 		if (!optr.IsWall) {
 			return;
 		}
-		// Nyerguds's C&C Patch Project v1.04: Retrieve StructureType for wall to get cost.
-		// The Overlay<->building link for walls is cached in WallStructureType.
-		// This is initialised in OverlayTypeClass::Init()
+		/*
+		**	Nyerguds's C&C Patch Project v1.04: Retrieve StructureType for wall to get cost.
+		**	The Overlay<->building link for walls is cached in WallStructureType.
+		**	This is initialised in OverlayTypeClass::One_Time()
+		*/
 		int refund = 0;
 		if (optr.WallStructureType != STRUCT_NONE) {
 			BuildingTypeClass const * btype = &BuildingTypeClass::As_Reference(optr.WallStructureType);

@@ -722,7 +722,12 @@ void InfantryClass::Per_Cell_Process(bool center)
 		TechnoClass * tech = cellptr->Cell_Techno();
 		if (tech && tech->As_Target() == NavCom) {
 			tech->Captured(House);
+			// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+			bool was_overflow = TechnoTypeClass::Heap_Overflow(RTTI_INFANTRY);
 			delete this;
+			if (was_overflow) {
+				Map.Column[1].Flag_To_Redraw();
+			}
 			return;
 		} else {
 //#ifdef NEVER
@@ -1074,7 +1079,12 @@ void InfantryClass::AI(void)
 	*/
 	if (!Team && Mission == MISSION_GUARD && !Map.In_Radar(Coord_Cell(Coord))) {
 		Stun();
+		// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+		bool was_overflow = TechnoTypeClass::Heap_Overflow(RTTI_INFANTRY);;
 		delete this;
+		if (was_overflow) {
+			Map.Column[1].Flag_To_Redraw();
+		}
 		return;
 	}
 
@@ -1293,8 +1303,12 @@ void InfantryClass::AI(void)
 			case DO_GRENADE_DEATH:
 			case DO_FIRE_DEATH:
 			case DO_PLEAD_DEATH:
+				// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+				bool was_overflow = TechnoTypeClass::Heap_Overflow(RTTI_INFANTRY);
 				delete this;
-
+				if (was_overflow) {
+					Map.Column[1].Flag_To_Redraw();
+				}
 				// Nyerguds's C&C Patch Project v1.04: recheck placement check.
 				// Reset building placement proximity check since something has died.
 				Map.Recheck_Placement();
@@ -3463,6 +3477,39 @@ int InfantryClass::Full_Name(void) const
 		return(TXT_TECHNICIAN);
 	}
 	return(Class->Full_Name());
+}
+
+
+/***********************************************************************************************
+ * InfantryClass::Sell_Back -- Causes this object to be sold back.                             *
+ *                                                                                             *
+ *    When an object is sold back, a certain amount of money is refunded to the owner and then *
+ *    the object is removed from the game system.                                              *
+ *                                                                                             *
+ * INPUT:   control  -- The action to perform. The only supported action is "1", which means   *
+ *                      to sell back.                                                          *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   11/04/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void InfantryClass::Sell_Back(int control)
+{
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int UnitClass::Mission_Attack(void)");
+#endif
+	FootClass::Sell_Back(control);
+	// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+	bool was_overflow = TechnoTypeClass::Heap_Overflow(RTTI_INFANTRY);
+	delete this;
+	if (was_overflow) {
+		Map.Column[1].Flag_To_Redraw();
+	}
+	// Nyerguds's C&C Patch Project v1.04: recheck placement check on object removal.
+	Map.Recheck_Placement();
 }
 
 

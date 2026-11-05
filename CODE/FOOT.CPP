@@ -2207,10 +2207,8 @@ void FootClass::Sell_Back(int control)
 
 		Stun();
 		Limbo();
-		delete this;
-
-		// Nyerguds's C&C Patch Project v1.04: recheck placement check on object removal.
-		Map.Recheck_Placement();
+		// Handled in superclass.
+		//delete this;
 	}
 }
 

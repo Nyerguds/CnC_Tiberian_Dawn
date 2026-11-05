@@ -1100,7 +1100,12 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 		/*
 		**	Finally, delete the vehicle.
 		*/
+		// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+		bool was_overflow = Units.Count() == Units.Length();
 		delete this;
+		if (was_overflow) {
+			Map.Column[1].Flag_To_Redraw();
+		}
 		// Nyerguds's C&C Patch Project v1.04: recheck placement check on object destruction.
 		// If the destroyed object was cloaked, ProximityStealth might need to be changed.
 		Map.Recheck_Placement();
@@ -4455,6 +4460,39 @@ DirType UnitClass::Desired_Load_Dir(ObjectClass * passenger, CELL & moveto) cons
 		return(Facing_Dir(bestdir + FACING_S));
 	}
 	return(DIR_S);
+}
+
+
+/***********************************************************************************************
+ * FootClass::Sell_Back -- Causes this object to be sold back.                                 *
+ *                                                                                             *
+ *    When an object is sold back, a certain amount of money is refunded to the owner and then *
+ *    the object is removed from the game system.                                              *
+ *                                                                                             *
+ * INPUT:   control  -- The action to perform. The only supported action is "1", which means   *
+ *                      to sell back.                                                          *
+ *                                                                                             *
+ * OUTPUT:  none                                                                               *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   11/04/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+void UnitClass::Sell_Back(int control)
+{
+#ifdef INCLUDE_FUNCTION_NAMES
+	CCDebugFunc("int UnitClass::Mission_Attack(void)");
+#endif
+	FootClass::Sell_Back(control);
+	// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+	bool was_overflow = Units.Count() == Units.Length();
+	delete this;
+	if (was_overflow) {
+		Map.Column[1].Flag_To_Redraw();
+	}
+	// Nyerguds's C&C Patch Project v1.04: recheck placement check on object removal.
+	Map.Recheck_Placement();
 }
 
 

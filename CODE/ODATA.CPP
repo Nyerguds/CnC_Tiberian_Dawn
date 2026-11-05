@@ -811,7 +811,7 @@ void OverlayTypeClass::Display(int x, int y, WindowNumberType window, HousesType
 		if (IsTiberium) {
 			frame = 7;
 		}
-		IsTheaterShape = IsTheater;
+		IsTheaterShape = ImageIsTheaterShape;
 		CC_Draw_Shape(Get_Image_Data(), frame, x, y, window, SHAPE_NORMAL|SHAPE_CENTER|SHAPE_WIN_REL);
 		IsTheaterShape =false;
 	}
@@ -925,7 +925,7 @@ void OverlayTypeClass::Draw_It(int x, int y, int data) const
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("void OverlayTypeClass::Draw_It(int x, int y, int data) const");
 #endif
-	IsTheaterShape = IsTheater;
+	IsTheaterShape = ImageIsTheaterShape;
 	CC_Draw_Shape(Get_Image_Data(), data, Map.TacPixelX+x+(CELL_PIXEL_W>>1), Map.TacPixelY+y+(CELL_PIXEL_H>>1), WINDOW_MAIN, SHAPE_CENTER|SHAPE_WIN_REL|SHAPE_GHOST, NULL, Map.UnitShadow);
 	IsTheaterShape = false;
 }
@@ -980,22 +980,48 @@ void OverlayTypeClass::Init(TheaterType theater)
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("void OverlayTypeClass::Init(TheaterType theater)");
 #endif
-	//if (theater != LastTheater){
+
+	char fullname[_MAX_FNAME+_MAX_EXT];
+	char cameomixname[_MAX_FNAME+_MAX_EXT];
+	char theatermixname[_MAX_FNAME+_MAX_EXT];
+	sprintf(theatermixname, "%s.MIX", Theaters[theater].Root);
+	bool hires = Get_Resolution_Shift() != 0;
+	if (hires) {
+		sprintf(cameomixname, "%.4sICNH.MIX", Theaters[theater].Root);
+	}
 	for (OverlayType index = OVERLAY_FIRST; index < OVERLAY_COUNT; index++) {
-		OverlayTypeClass & overlay = (OverlayTypeClass)As_Reference(index);
-		char fullname[_MAX_FNAME+_MAX_EXT];	// Fully constructed iconset name.
+		OverlayTypeClass * classptr = (OverlayTypeClass*)As_Pointer(index);
+		classptr->ImageIsTheaterShape = false;
 
-		if (overlay.IsTheater) {
-			_makepath(fullname, NULL, NULL, overlay.IniName, Theaters[theater].Suffix);
-		} else {
-			_makepath(fullname, NULL, NULL, overlay.IniName, ".SHP");
+		/*
+		**	Load in the appropriate object shape data.
+		*/
+
+		MixFileClass *mixptr = NULL;
+		void * image_ptr = NULL;
+		if (classptr->IsTheater) {
+			_makepath(fullname, NULL, NULL, classptr->IniName, Theaters[theater].Suffix);
+			MixFileClass::Offset(fullname, &image_ptr, &mixptr);
 		}
-		((void const *&)overlay.ImageData) = MixFileClass::Retrieve(fullname);
+		// If not theater-specific, or theater-specific load failed, try loading
+		// theater-independent graphics.
+		if (!image_ptr) {
+			_makepath(fullname, NULL, NULL, classptr->IniName, ".SHP");
+			// No checks on failure. If it fails, it fails.
+			image_ptr = (void *)MixFileClass::Retrieve(fullname);
+			classptr->ImageIsTheaterShape = false;
+		} else if (mixptr) {
+			// Not sure why anyone would put overlay graphics inside the cameos archive,
+			// but those are the two theater specific archives, so check them both.
+			classptr->ImageIsTheaterShape =
+				strcmpi(mixptr->Filename, theatermixname) == 0 ||
+				(hires && strcmpi(mixptr->Filename, cameomixname) == 0);
+		}
+		classptr->ImageData = image_ptr;
 
-		IsTheaterShape = overlay.IsTheater;
-		if (overlay.RadarIcon) delete[] (char *)overlay.RadarIcon;
-		((void const *&)overlay.RadarIcon) = Get_Radar_Icon(overlay.Get_Image_Data(), 0, -1, 3);
+		IsTheaterShape = classptr->ImageIsTheaterShape;
+		if (classptr->RadarIcon) delete[] (char *)classptr->RadarIcon;
+		classptr->RadarIcon = Get_Radar_Icon(image_ptr, 0, -1, 3);
 		IsTheaterShape = false;
 	}
-	//}
 }

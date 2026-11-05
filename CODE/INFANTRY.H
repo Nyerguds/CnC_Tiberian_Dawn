@@ -191,6 +191,7 @@ class InfantryClass : public FootClass
 		**	AI.
 		*/
 		virtual void AI(void);
+		virtual void Sell_Back(int control);
 		virtual TARGET Greatest_Threat(ThreatType threat) const;
 		virtual int Mission_Attack(void);
 

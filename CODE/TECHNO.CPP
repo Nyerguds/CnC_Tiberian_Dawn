@@ -232,7 +232,7 @@ TechnoTypeClass::TechnoTypeClass(
 	IsSpyDetector = Is_spy_detector;
 	IsCivilian = is_civilian;
 	Ownable = ownable;
-	risk = risk; // not actually used.
+	Risk = risk; // not actually used; overwritten by Recalculate_Risk();
 	Reward = reward;
 	Scenario = scenario;
 	SightRange = sightrange;
@@ -254,7 +254,7 @@ TechnoTypeClass::TechnoTypeClass(
  * WARNINGS:   none                                                                            *
  *                                                                                             *
  * HISTORY:                                                                                    *
- *   08/13/1995 JLB : Created.                                                                 *
+ *   02/16/2026 MM  : Split off into new function to allow calling it after weapon is changed. *
  *=============================================================================================*/
 void TechnoTypeClass::Recalculate_Risk(void)
 {
@@ -632,6 +632,42 @@ int TechnoTypeClass::Repair_Step(void) const
 	CCDebugFunc("int TechnoTypeClass::Repair_Step(void) const");
 #endif
 	return(0);
+}
+
+
+/***********************************************************************************************
+ * TechnoTypeClass::Heap_Overflow -- Checks if heap of specified technotype is overflowing.    *
+ *                                                                                             *
+ *    This static routine checks if the heap for a certain construction option is overflowing. *
+ *    This can be used to gray out the construction options in the sidebar.           e        *
+ *                                                                                             *
+ * INPUT:   type  -- The type of object to check the heap for.                                 *
+ *                                                                                             *
+ * OUTPUT:  Returns true if the heap for the specified type is currently fully filled.         *
+ *                                                                                             *
+ * WARNINGS:   none                                                                            *
+ *                                                                                             *
+ * HISTORY:                                                                                    *
+ *   11/04/2026 MM  : Created.                                                                 *
+ *=============================================================================================*/
+bool TechnoTypeClass::Heap_Overflow(RTTIType type) {
+	CCDebugFunc("bool TechnoTypeClass::Heap_Overflow(RTTIType type)");
+	switch (type) {
+		case RTTI_INFANTRY:
+		case RTTI_INFANTRYTYPE:
+			return Infantry.Count() == Infantry.Length();
+		case RTTI_UNIT:
+		case RTTI_UNITTYPE:
+			return Units.Count() == Units.Length();
+		case RTTI_AIRCRAFT:
+		case RTTI_AIRCRAFTTYPE:
+			return Aircraft.Count() == Aircraft.Length();
+		case RTTI_BUILDING:
+		case RTTI_BUILDINGTYPE:
+			return Buildings.Count() == Buildings.Length();
+
+	}
+	return false;
 }
 
 
@@ -3863,12 +3899,21 @@ void TechnoClass::Kill_Cargo(TechnoClass * source, HousesType house)
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("void TechnoClass::Kill_Cargo(TechnoClass * source, HousesType house)");
 #endif
+	bool had_overflow = false;
 	while (Is_Something_Attached()) {
 		FootClass * foot = Detach_Object();
 		if (foot) {
+			if (!had_overflow) {
+				had_overflow = TechnoTypeClass::Heap_Overflow(foot->What_Am_I());
+			}
 			foot->Record_The_Kill(source, house);
 			delete foot;
 		}
+	}
+	// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+	// Heap was in overflow state. This removal will unlock contruction options.
+	if (had_overflow) {
+		Map.Column[1].Flag_To_Redraw();
 	}
 }
 
@@ -3906,68 +3951,88 @@ void TechnoClass::Dump_Cargo(int damage, bool select, TechnoClass * source, Hous
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("void TechnoClass::Dump_Cargo(int damage, bool select, TechnoClass * source, HousesType house)");
 #endif
+	bool had_overflow = false;
 	while (Is_Something_Attached()) {
 		FootClass * foot = Detach_Object();
 		if (!foot) continue; // Not sure how this can happen		
 		bool exited = false;
+		COORDINATE spawncoord = Coord;
+		CELL newcell = 0;
 		if (foot->Is_Infantry()) {
-			InfantryClass * passenger = (InfantryClass *) foot;
 			FacingType toface = FACING_N + Random_Pick(0, 7);
+			CELL curcell = Coord_Cell(Coord);
+			CellClass * cellptr = &Map[curcell];
 			for (FacingType face = FACING_N; face < FACING_COUNT; face++) {
 				FacingType newface = toface + face;
-				CELL newcell = Adjacent_Cell(Coord_Cell(Coord), newface);
-
-				if (passenger->Can_Enter_Cell(newcell) == MOVE_OK) {
-					COORDINATE infcoord = Map[Coord_Cell(Coord)].Closest_Free_Spot(Coord, false);
-					if (infcoord == 0L) {
-						infcoord = Coord;
-					}
-					int strength = passenger->Strength;
-					if (damage >= 256) {
-						strength = 0;
-					} else if (damage > 0) {
-						int randomdamage = Random_Pick(0, damage);
-						int maxstr = passenger->Techno_Type_Class()->MaxStrength;
-						int hurt = Fixed_To_Cardinal(maxstr, randomdamage);
-						// Damage was not 100%, so never deal 100% damage, regardless of rounding.
-						if (hurt >= maxstr) hurt--;
-						strength -= hurt;
-						if (strength > 0) {
-							passenger->Strength = strength;
-						}
-					}
-					ScenarioInit++;
-					passenger->Unlimbo(infcoord, DIR_N);
-					ScenarioInit--;
-					exited = true;
-					if (strength <= 0) {
-						// Visibly kill off the unit, so the player knows why it's gone.
-						int hurt = 1000;
-						// Artificially lower HP first, so it absolutely dies.
-						passenger->Strength = 1;
-						passenger->Take_Damage(hurt, 0, WARHEAD_AP, source);
-					} else {
-						// Nyerguds's C&C Patch Project v1.04: look around when exiting.
-						// This fix was taken from the C&C Remaster.
-						passenger->Look(false);
-						passenger->Assign_Mission(MISSION_MOVE);
-						passenger->Assign_Destination(::As_Target(newcell));
-						if (select) {
-							// Calling function needs to take care of enabling AllowVoice.
-							bool selectok = passenger->Select();
-							if (AllowVoice && selectok) {
-								AllowVoice = false;
-							}
-						}
-					}
+				if (!cellptr->Adjacent_Is_Valid(newface)) {
+					continue;
+				}
+				CELL tmpcell = Adjacent_Cell(curcell, newface);
+				if (foot->Can_Enter_Cell(tmpcell) == MOVE_OK) {
+					newcell = tmpcell;
 					break;
 				}
 			}
+			spawncoord = cellptr->Closest_Free_Spot(Coord, false);
+			if (spawncoord == 0L) {
+				spawncoord = Coord;
+			}
 		}
+		int strength = foot->Strength;
+		if (damage >= 256) {
+			strength = 0;
+		} else if (damage > 0) {
+			int randomdamage = Random_Pick(0, damage);
+			int maxstr = foot->Techno_Type_Class()->MaxStrength;
+			int hurt = Fixed_To_Cardinal(maxstr, randomdamage);
+			// Damage was not 100%, so never deal 100% damage, regardless of rounding.
+			if (hurt >= maxstr) hurt--;
+			strength -= hurt;
+			if (strength > 0) {
+				foot->Strength = strength;
+			}
+		}
+		ScenarioInit++;
+		exited = foot->Unlimbo(spawncoord, DIR_N);
+		ScenarioInit--;
 		if (!exited) {
-			foot -> Record_The_Kill(source, house);
+			foot->Record_The_Kill(source, house);
+			if (!had_overflow) {
+				had_overflow = TechnoTypeClass::Heap_Overflow(foot->What_Am_I());
+			}
 			delete foot;
+			continue;
 		}
+		if (strength <= 0) {
+			// Visibly kill off the unit, so the player knows why it's gone.
+			int hurt = 1000;
+			// Artificially lower HP first, so it absolutely dies.
+			foot->Strength = 1;
+			foot->Take_Damage(hurt, 0, WARHEAD_AP, source);
+		} else {
+			// Nyerguds's C&C Patch Project v1.04: look around when exiting.
+			// This fix was taken from the C&C Remaster.
+			foot->Look(false);
+			if (newcell != 0) {
+				foot->Assign_Mission(MISSION_MOVE);
+				foot->Assign_Destination(::As_Target(newcell));
+			} else {
+				foot->Scatter();
+			}
+			if (select) {
+				// Calling function needs to take care of enabling AllowVoice.
+				bool selectok = foot->Select();
+				if (AllowVoice && selectok) {
+					AllowVoice = false;
+				}
+			}
+		}
+	}
+	// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+	// Something failed to unload and was deleted while its heap was in overflow state.
+	// This removal will unlock contruction options.
+	if (had_overflow) {
+		Map.Column[1].Flag_To_Redraw();
 	}
 }
 
@@ -4037,7 +4102,8 @@ int TechnoClass::Value(void) const
 	**	into the total value. - 8/16/95
 	*/
 	// Nyerguds's C&C Patch Project v1.04: Include all buildlevel 8 logic in Hard mode.
-	if (BuildLevel > 8 || GameToPlay != GAME_NORMAL || Special.IsDifficult) {
+	// Also, disable permanently on Easy mode.
+	if (GameToPlay != GAME_NORMAL || (!Special.IsEasy && (BuildLevel > 8 || Special.IsDifficult))) {
 		if (Is_Something_Attached()) {
 			FootClass * object = Attached_Object();
 
@@ -4680,12 +4746,12 @@ bool TechnoClass::Target_Something_Nearby(ThreatType threat)
  * HISTORY:                                                                                    *
  *   07/24/1995 JLB : Created.                                                                 *
  *=============================================================================================*/
-int TechnoClass::Exit_Object(TechnoClass *)
+ObjExitResultType TechnoClass::Exit_Object(TechnoClass *)
 {
 #ifdef INCLUDE_FUNCTION_NAMES
-	CCDebugFunc("int TechnoClass::Exit_Object(TechnoClass *)");
+	CCDebugFunc("ObjExitResultType TechnoClass::Exit_Object(TechnoClass *)");
 #endif
-	return(0);
+	return(OBJEXIT_FAILED);
 }
 
 

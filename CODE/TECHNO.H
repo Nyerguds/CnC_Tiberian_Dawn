@@ -300,7 +300,7 @@ class TechnoClass :	public RadioClass,
 		virtual void Draw_Pips(int x, int y, WindowNumberType window);
 		virtual void Hidden(void);
 		virtual bool Mark(MarkType mark);
-		virtual int Exit_Object(TechnoClass *);
+		virtual ObjExitResultType Exit_Object(TechnoClass *);
 		virtual void Look(bool incremental=false);
 		virtual void Do_Uncloak(void);
 		virtual void Do_Cloak(void);

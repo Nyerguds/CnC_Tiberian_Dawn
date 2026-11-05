@@ -555,7 +555,7 @@ CCDebugString ("C&C95 - Place packet received\n");
 		*/
 		case PRODUCE:
 CCDebugString ("C&C95 - Produce packet received\n");
-			Houses.Raw_Ptr(ID)->Begin_Production(Data.Specific.Type, Data.Specific.ID);
+			Houses.Raw_Ptr(ID)->Begin_Production(Data.Specific.Type, Data.Specific.ID, true);
 			break;
 
 		/*
@@ -564,7 +564,7 @@ CCDebugString ("C&C95 - Produce packet received\n");
 		*/
 		case SUSPEND:
 CCDebugString ("C&C95 - Suspend packet received\n");
-			Houses.Raw_Ptr(ID)->Suspend_Production(Data.Specific.Type);
+			Houses.Raw_Ptr(ID)->Suspend_Production(Data.Specific.Type, true);
 			break;
 
 		/*
@@ -573,7 +573,7 @@ CCDebugString ("C&C95 - Suspend packet received\n");
 		*/
 		case ABANDON:
 CCDebugString ("C&C95 - Abandon packet received\n");
-			Houses.Raw_Ptr(ID)->Abandon_Production(Data.Specific.Type);
+			Houses.Raw_Ptr(ID)->Abandon_Production(Data.Specific.Type, true);
 			break;
 
 		/*
