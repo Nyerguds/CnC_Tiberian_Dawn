@@ -1888,7 +1888,7 @@ int Play_Sample_Handle(void const *sample, int priority, int volume, signed shor
 		}
 	} while (return_code==DSERR_BUFFERLOST);
 
-	// Nyerguds's C&C Patch Project v1.04: added audio panning.
+	// Nyerguds's C&C Patch Project v1.04: Added audio panning.
 	long ds_pan = ((long)panloc * DSBPAN_RIGHT) / 0x7FFF;
 	st->PlayBuffer->SetPan(ds_pan);
 

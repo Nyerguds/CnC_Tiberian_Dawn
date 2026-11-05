@@ -318,7 +318,7 @@ void UnitClass::Attach(FootClass * object)
 	CCDebugFunc("void UnitClass::Attach(FootClass * object)");
 #endif
 	CargoClass::Attach(object);
-	// Nyerguds's C&C Patch Project v1.04: close door when passenger hold is full.
+	// Nyerguds's C&C Patch Project v1.04: Close door when passenger hold is full.
 	if (How_Many() == Class->Max_Passengers()) {
 		APC_Close_Door();
 	}
@@ -701,7 +701,7 @@ RadioMessageType UnitClass::Receive_Message(RadioClass * from, RadioMessageType 
 		**	entered the transport.
 		*/
 		case RADIO_IM_IN:
-		// Nyerguds's C&C Patch Project v1.04: close door when passenger hold is full.
+		// Nyerguds's C&C Patch Project v1.04: Close door when passenger hold is full.
 		// This does not work: passengers radio in just before they actually attach.
 		// Code was instead migrated to an overridden UnitClass::Attach() function.
 #ifdef NYERPATCH_OBSOLETE
@@ -1106,7 +1106,7 @@ ResultType UnitClass::Take_Damage(int & damage, int distance, WarheadType warhea
 		if (was_overflow) {
 			Map.Column[Map.Which_Column(RTTI_UNIT)].Flag_To_Redraw();
 		}
-		// Nyerguds's C&C Patch Project v1.04: recheck placement check on object destruction.
+		// Nyerguds's C&C Patch Project v1.04: Recheck placement check on object destruction.
 		// If the destroyed object was cloaked, ProximityStealth might need to be changed.
 		Map.Recheck_Placement();
 	} else {
@@ -1827,7 +1827,7 @@ bool UnitClass::Try_To_Deploy(void)
 					*/
 					Stun();
 					delete this;
-					// Nyerguds's C&C Patch Project v1.04: recheck placement on MCV deploy.
+					// Nyerguds's C&C Patch Project v1.04: Recheck placement on MCV deploy.
 					// If the deployed object was cloaked, ProximityStealth might need to be changed.
 					Map.Recheck_Placement();
 					return(true);
@@ -2657,7 +2657,7 @@ int UnitClass::Mission_Unload(void)
 										ScenarioInit++;
 										passenger->Unlimbo(Coord_Move(Coord, newface, 0x0080), newface);
 										ScenarioInit--;
-										// Nyerguds's C&C Patch Project v1.04: look around when exiting.
+										// Nyerguds's C&C Patch Project v1.04: Rook around when exiting.
 										passenger->Look(false);
 										passenger->Assign_Mission(MISSION_MOVE);
 										passenger->Assign_Destination(::As_Target(newcell));
@@ -3373,7 +3373,7 @@ MoveType UnitClass::Can_Enter_Cell(CELL cell, FacingType ) const
 		}
 	}
 
-	// Nyerguds's C&C Patch Project v1.04: unit crushing fixes.
+	// Nyerguds's C&C Patch Project v1.04: Unit crushing fixes.
 	// This pointless check caused vehicle crushing to malfunction.
 
 	// This might need an additional check comparable to the airspace
@@ -4492,7 +4492,7 @@ void UnitClass::Sell_Back(int control)
 		if (was_overflow) {
 			Map.Column[Map.Which_Column(RTTI_UNIT)].Flag_To_Redraw();
 		}
-		// Nyerguds's C&C Patch Project v1.04: recheck placement check on object removal.
+		// Nyerguds's C&C Patch Project v1.04: Recheck placement check on object removal.
 		Map.Recheck_Placement();
 	}
 }
@@ -4731,7 +4731,7 @@ bool UnitClass::No_Other_Crushers(CELL cell) const
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("bool UnitClass::No_Other_Crushers(CELL cell) const");
 #endif
-	// Nyerguds's C&C Patch Project v1.04: unit crushing fixes.
+	// Nyerguds's C&C Patch Project v1.04: Unit crushing fixes.
 	Validate();
 	/*
 	**	Make sure that no other units are heading to the selected location. If they

@@ -297,6 +297,15 @@ class DisplayClass: public MapClass
 
 #ifdef MIDDLE_MOUSE_PANNING
 		/*
+		**	The moment the right mouse button is held down, this flag gets set. If the
+		**	mouse is dragged a sufficient distance while held down, then true panning mode
+		**	can begin. Using a minimum distance prevents accidental panning
+		**	mode from being initiated when a deselect was intended.
+		*/
+		// TODO: implement this, so pan scroll can work on right mouse button.
+		unsigned IsTentativePan:1;
+
+		/*
 		**	If it is currently in pan-drag mode, then this flag will be true. While in such
 		**  a mode, normal input is preempted.
 		*/

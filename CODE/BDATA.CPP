@@ -5004,7 +5004,7 @@ int BuildingTypeClass::Legal_Placement(CELL pos, HousesType house) const
 	**	routine return that it is legal to place.
 	*/
 
-	// Nyerguds's C&C Patch Project v1.04: allow wall repair-replacement.
+	// Nyerguds's C&C Patch Project v1.04: Allow wall repair-replacement.
 	OverlayType ovl = OVERLAY_NONE;
 	if (IsWall) {
 		ovl = OverlayTypeClass::From_Name(IniName);

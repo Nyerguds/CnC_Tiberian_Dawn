@@ -171,12 +171,13 @@ DisplayClass::DisplayClass(void)
 	TargetingMode = SPC_NONE;
 	IsToRedraw = true;
 	IsRubberBand = false;
+	IsTentative = false;
+	IsSellMode = false;
 	LastClickTick = -1;
 #ifdef MIDDLE_MOUSE_PANNING
 	IsPanDrag = false;
+	IsTentativePan = false;
 #endif
-	IsTentative = false;
-	IsSellMode = false;
 }
 
 
@@ -320,11 +321,12 @@ void DisplayClass::Init_Clear(void)
 	IsRepairMode = false;
 	IsRubberBand = false;
 	LastClickTick = -1;
-#ifdef MIDDLE_MOUSE_PANNING
-	IsPanDrag = false;
-#endif
 	IsTentative = false;
 	IsSellMode = false;
+#ifdef MIDDLE_MOUSE_PANNING
+	IsPanDrag = false;
+	IsTentativePan = false;
+#endif
 
 	/*
 	** Empty all the display's layers
@@ -900,7 +902,7 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object)
 		return(true);
 	}
 
-	// Nyerguds's C&C Patch Project v1.04: allow wall repair-replacement.
+	// Nyerguds's C&C Patch Project v1.04: Allow wall repair-replacement.
 	FacingType startf = FACING_N;
 	if (((BuildingTypeClass * )object)->IsWall)
 	{
@@ -920,7 +922,7 @@ bool DisplayClass::Passes_Proximity_Check(ObjectTypeClass const *object)
 		CellClass * mapcell = &Map[cell];
 
 		for (FacingType facing = startf; facing < FACING_COUNT; facing++) {
-			// Nyerguds's C&C Patch Project v1.04: upgrade boundary checks on proximity checks.
+			// Nyerguds's C&C Patch Project v1.04: Upgrade boundary checks on proximity checks.
 			if (!mapcell->Adjacent_Is_Valid(facing)) {
 				continue;
 			}
@@ -987,7 +989,7 @@ bool DisplayClass::Stealth_Proximity_Check(ObjectTypeClass const *object) {
 		return(false);
 	}
 
-	// Nyerguds's C&C Patch Project v1.04: allow wall repair-replacement.
+	// Nyerguds's C&C Patch Project v1.04: Allow wall repair-replacement.
 	CELL	homecell = ZoneCell + ZoneOffset;
 	BuildingTypeClass * btc = (BuildingTypeClass * )object;
 	if (btc->IsWall && Map.In_Radar(homecell))
@@ -1089,7 +1091,7 @@ CELL DisplayClass::Set_Cursor_Pos(CELL pos)
 	int w,h;
 	Get_Occupy_Dimensions(w, h, CursorSize);
 
-	// Nyerguds's C&C Patch Project v1.04: fix placement malfunctioning on lowest cell in nonstandard resolutions.
+	// Nyerguds's C&C Patch Project v1.04: Fix placement malfunctioning on lowest cell in nonstandard resolutions.
 	// This code not only has errors with rounding down everything to cells BEFORE
 	// adding coords and dimensions together, but it also restricts the placement
 	// grid to the visible screen, which is extremely annoying for placing large
@@ -3349,9 +3351,11 @@ int DisplayClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 				OverlayType ovlt = cellobj->Overlay;
 				if (ovlt != OVERLAY_NONE && ovlt < OVERLAY_COUNT && cellobj->Owner == PlayerPtr->Class->House) {
 					OverlayTypeClass otc = OverlayTypeClass::As_Reference(ovlt);
-					// Nyerguds's C&C Patch Project v1.04: Retrieve StructureType for wall to check Unsellable.
-					// The Overlay<->building link for walls is cached in WallStructureType.
-					// This is initialised in OverlayTypeClass::Init()
+					/*
+					**	Nyerguds's C&C Patch Project v1.04: Retrieve StructureType for wall to check Unsellable.
+					**	The Overlay<->building link for walls is cached in WallStructureType.
+					**	This is initialised in OverlayTypeClass::One_Time()
+					*/
 					if (otc.IsWall) {
 						action = ACTION_SELL;
 						if (otc.WallStructureType != STRUCT_NONE) {
@@ -4014,7 +4018,7 @@ void DisplayClass::Mouse_Left_Release(CELL cell, int x, int y, ObjectClass * obj
 
 	}
 	if (action == ACTION_SELL) {
-		// Nyerguds's C&C Patch Project v1.04: fix selling technos from walls.
+		// Nyerguds's C&C Patch Project v1.04: Fix selling technos from walls.
 		// Fix for bug allowing the sale of technos on a wall's sell-cursor.
 		if (!object || (Map[cell].Overlay != OVERLAY_NONE &&
 			OverlayTypeClass::As_Reference(Map[cell].Overlay).IsWall &&

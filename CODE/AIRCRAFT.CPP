@@ -181,7 +181,7 @@ void AircraftClass::Attach(FootClass * object)
 	CCDebugFunc("void AircraftClass::Attach(FootClass * object)");
 #endif
 	CargoClass::Attach(object);
-	// Nyerguds's C&C Patch Project v1.04: close door when passenger hold is full.
+	// Nyerguds's C&C Patch Project v1.04: Close door when passenger hold is full.
 	if (How_Many() == Class->Max_Passengers()) {
 		Close_Door(5, 3);
 	}
@@ -916,16 +916,11 @@ void AircraftClass::AI(void)
 			**	Check to see if there are any civilians aboard. If so, then flag the house
 			**	that the civilian evacuation trigger event has been fulfilled.
 			*/
-			bool had_overflow = false;
 			while (Is_Something_Attached()) {
 				FootClass * obj = Detach_Object();
 				RTTIType att_type = obj == NULL ? RTTI_NONE : obj->What_Am_I();
 				if (att_type == RTTI_INFANTRY && obj->Techno_Type_Class()->IsCivilian && !((InfantryClass *)obj)->IsTechnician) {
 					House->IsCivEvacuated = true;
-				}
-				// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
-				if (!had_overflow) {
-					had_overflow = TechnoTypeClass::Heap_Overflow(att_type);
 				}
 				/*
 				**	Transport planes that leave can only be because they carry purchased
@@ -934,13 +929,18 @@ void AircraftClass::AI(void)
 				if (*this == AIRCRAFT_CARGO) {
 					House->Refund_Money(obj->Class_Of().Cost_Of());
 				}
+				bool obj_overflow = TechnoTypeClass::Heap_Overflow(att_type);
 				delete obj;
+				// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
+				if (obj_overflow) {
+					Map.Column[Map.Which_Column(att_type)].Flag_To_Redraw();
+				}
 			}
 			Stun();
 			// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
 			bool was_overflow = TechnoTypeClass::Heap_Overflow(RTTI_AIRCRAFT);
 			delete this;
-			if (was_overflow || had_overflow) {
+			if (was_overflow) {
 				Map.Column[Map.Which_Column(RTTI_AIRCRAFT)].Flag_To_Redraw();
 			}
 			return;
@@ -1637,7 +1637,7 @@ ObjExitResultType AircraftClass::Exit_Object(TechnoClass * unit)
 		if (Transmit_Message(RADIO_HELLO, unit) == RADIO_ROGER) {
 			Transmit_Message(RADIO_UNLOAD);
 		}
-		// Nyerguds's C&C Patch Project v1.04: look around when exiting.
+		// Nyerguds's C&C Patch Project v1.04: Look around when exiting.
 		// This fix was taken from the C&C Remaster.
 		unit->Look(false);
 		return(OBJEXIT_SUCCESS);
@@ -1750,7 +1750,7 @@ ResultType AircraftClass::Take_Damage(int & damage, int distance, WarheadType wa
 		case RESULT_DESTROYED:
 			if (landed) {
 				Mark(MARK_UP);
-				// 224 = 7/8th
+				// Maximum damage dealt is 224 = 7/8th = 87.5%
 				Dump_Cargo(224, select, source, house);
 			} else {
 				Kill_Cargo(source, house);
@@ -1764,7 +1764,7 @@ ResultType AircraftClass::Take_Damage(int & damage, int distance, WarheadType wa
 				Map.Column[Map.Which_Column(RTTI_AIRCRAFT)].Flag_To_Redraw();
 			}
 			if (landed) {
-				// Nyerguds's C&C Patch Project v1.04: recheck placement check on object destruction.
+				// Nyerguds's C&C Patch Project v1.04: Recheck placement check on object destruction.
 				// If the destroyed object was cloaked, ProximityStealth might need to be changed.
 				Map.Recheck_Placement();
 			}
@@ -2900,7 +2900,7 @@ RadioMessageType AircraftClass::Receive_Message(RadioClass * from, RadioMessageT
 		**	entered the transport.
 		*/
 		case RADIO_IM_IN:
-		// Nyerguds's C&C Patch Project v1.04: close door when passenger hold is full.
+		// Nyerguds's C&C Patch Project v1.04: Close door when passenger hold is full.
 		// This does not work: passengers radio in just before they actually attach.
 		// Code was instead migrated to an overridden AircraftClass::Attach() function.
 #ifdef NYERPATCH_OBSOLETE

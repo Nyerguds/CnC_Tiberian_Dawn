@@ -1566,7 +1566,7 @@ int RadarClass::TacticalClass::Action(unsigned flags, KeyNumType & key)
 					case ACTION_MOVE:
 					case ACTION_NOMOVE:
 					case ACTION_ATTACK:
-					// Nyerguds's C&C Patch Project v1.04: add "in range" cursor
+					// Nyerguds's C&C Patch Project v1.04: Added "in range" cursor
 					case ACTION_ATTACK_NOW:
 					case ACTION_ENTER:
 					case ACTION_CAPTURE:

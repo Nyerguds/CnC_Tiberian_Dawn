@@ -194,7 +194,7 @@ void BaseClass::Read_INI(char *buffer)
 		node.Coord = atol(strtok(NULL,","));
 
 		/*
-		** Nyerguds's C&C Patch Project v1.04: allow explicit owners in Base secion.
+		** Nyerguds's C&C Patch Project v1.04: Allow explicit owners in Base secion.
 		*/
 		node.House = HouseTypeClass::From_Name(strtok(NULL,","));
 		// If there is a default House from the BaseClass itself, fill it in.

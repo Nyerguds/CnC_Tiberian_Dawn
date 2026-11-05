@@ -1309,7 +1309,7 @@ void InfantryClass::AI(void)
 				if (was_overflow) {
 					Map.Column[Map.Which_Column(RTTI_INFANTRY)].Flag_To_Redraw();
 				}
-				// Nyerguds's C&C Patch Project v1.04: recheck placement check.
+				// Nyerguds's C&C Patch Project v1.04: Recheck placement check on object removal.
 				// Reset building placement proximity check since something has died.
 				Map.Recheck_Placement();
 				return;
@@ -3509,7 +3509,7 @@ void InfantryClass::Sell_Back(int control)
 		if (was_overflow) {
 			Map.Column[Map.Which_Column(RTTI_INFANTRY)].Flag_To_Redraw();
 		}
-		// Nyerguds's C&C Patch Project v1.04: recheck placement check on object removal.
+		// Nyerguds's C&C Patch Project v1.04: Recheck placement check on object removal.
 		Map.Recheck_Placement();
 	}
 }

@@ -136,7 +136,7 @@ void MouseClass::Mouse_Small(bool wwsmall)
 }
 
 
-// Nyerguds's C&C Patch Project v1.04: expanded mouse cursor
+// Nyerguds's C&C Patch Project v1.04: Expanded mouse cursor
 // Gets the maximum amount of frames used in the defined mouse cursors.
 int MouseClass::Get_Mouse_Range()
 {
@@ -432,7 +432,7 @@ MouseClass::MouseStruct MouseClass::MouseControl[MOUSE_COUNT] = {
 	{122,	3,		4,		127,	15,	12},	//	MOUSE_DEMOLITIONS
 	{153,	1,		0,		152,	15,	12},	//	MOUSE_AREA_GUARD
 
-// Nyerguds's C&C Patch Project v1.04: added mouse cursors
+// Nyerguds's C&C Patch Project v1.04: Added mouse cursors
 	{28,	1,		0,		28,	15,	12},	//	MOUSE_NONE
 	{9,	1,		0,		27,	15,	12},	//	MOUSE_DENIED
 	{59,	1,		0,		-1,	15,	11},	//	MOUSE_PAN

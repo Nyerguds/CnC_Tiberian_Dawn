@@ -596,7 +596,7 @@ void CCDebugString (char *string, ...)
 #ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("void CCDebugString (char *string, ...)");
 #endif
-	// Nyerguds's C&C Patch Project v1.04: added string formatting args to debug logging.
+	// Nyerguds's C&C Patch Project v1.04: Added string formatting args to debug logging.
 	va_list	va;
 	
 	if (!Special.IsLogging) {

@@ -653,7 +653,9 @@ int TechnoTypeClass::Repair_Step(void) const
  *   11/04/2026 MM  : Created.                                                                 *
  *=============================================================================================*/
 bool TechnoTypeClass::Heap_Overflow(RTTIType type) {
+#ifdef INCLUDE_FUNCTION_NAMES
 	CCDebugFunc("bool TechnoTypeClass::Heap_Overflow(RTTIType type)");
+#endif
 	switch (type) {
 		case RTTI_INFANTRY:
 		case RTTI_INFANTRYTYPE:
@@ -2186,7 +2188,7 @@ void TechnoClass::AI(void)
 					break;
 			}
 			if (oldcloak != Cloak) {
-				// Nyerguds's C&C Patch Project v1.04: recheck placement check on cloak change.
+				// Nyerguds's C&C Patch Project v1.04: Recheck placement check on cloak change.
 				Map.Recheck_Placement();
 			}
 		}
@@ -3238,7 +3240,7 @@ bool TechnoClass::Captured(HouseClass * newowner)
 		/*
 		**	Record this as a kill.
 		*/
-		// Nyerguds's C&C Patch Project v1.04: let Record_The_Kill handle capture recording.
+		// Nyerguds's C&C Patch Project v1.04: Let Record_The_Kill handle capture recording.
 		// Record_The_Kill can now handle Houses without actual source.
 		Record_The_Kill(NULL, *newowner);
 
@@ -3281,7 +3283,7 @@ bool TechnoClass::Captured(HouseClass * newowner)
 		House = newowner;
 		IsOwnedByPlayer = (House == PlayerPtr);
 
-		// Nyerguds's C&C Patch Project v1.04: recheck placement check on capture.
+		// Nyerguds's C&C Patch Project v1.04: Recheck placement check on capture.
 		// Reset building placement proximity check since something has changed ownership.
 		Map.Recheck_Placement();
 
@@ -3632,7 +3634,7 @@ void TechnoClass::Do_Uncloak(void)
 		CloakingDevice.Set_Stage(0);
 		CloakingDevice.Set_Rate(1);
 
-		// Nyerguds's C&C Patch Project v1.04: recheck placement check on object cloak change.
+		// Nyerguds's C&C Patch Project v1.04: Recheck placement check on object cloak change.
 		Map.Recheck_Placement();
 	}
 }
@@ -3664,7 +3666,7 @@ void TechnoClass::Do_Cloak(void)
 		CloakingDevice.Set_Stage(0);
 		CloakingDevice.Set_Rate(1);
 
-		// Nyerguds's C&C Patch Project v1.04: recheck placement check on object cloak change.
+		// Nyerguds's C&C Patch Project v1.04: Recheck placement check on object cloak change.
 		Map.Recheck_Placement();
 	}
 }
@@ -3696,7 +3698,7 @@ void TechnoClass::Do_Shimmer(void)
 		CloakingDevice.Set_Stage(MAX_UNCLOAK_STAGE/2);
 		CloakingDevice.Set_Rate(1);
 
-		// Nyerguds's C&C Patch Project v1.04: recheck placement check on object cloak change.
+		// Nyerguds's C&C Patch Project v1.04: Recheck placement check on object cloak change.
 		Map.Recheck_Placement();
 	}
 }
@@ -4013,7 +4015,7 @@ void TechnoClass::Dump_Cargo(int damage, bool select, TechnoClass * source, Hous
 			foot->Strength = 1;
 			foot->Take_Damage(hurt, 0, WARHEAD_AP, source);
 		} else {
-			// Nyerguds's C&C Patch Project v1.04: look around when exiting.
+			// Nyerguds's C&C Patch Project v1.04: Look around when exiting.
 			// This fix was taken from the C&C Remaster.
 			foot->Look(false);
 			if (newcell != 0) {
@@ -4943,7 +4945,7 @@ void TechnoClass::Draw_Pips(int x, int y, WindowNumberType window)
 	}
 
 	/*
-	**	Nyerguds's C&C Patch Project v1.04: show group numbers.
+	**	Nyerguds's C&C Patch Project v1.04: Show group numbers.
 	**	For player units, show whether they are in a Group.
 	*/
 	if (SmallScoreFontPtr && House == PlayerPtr

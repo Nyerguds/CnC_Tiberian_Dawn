@@ -247,7 +247,7 @@ bool Sound_Effect(VocType voc, COORDINATE coord, int variation)
 	distance  = 0xFF;
 	pan_value = 0;
 	if (coord && !Map.In_View(cell_pos)) {
-		// Nyerguds's C&C Patch Project v1.04: fadeout now depends on distance outside viewport.
+		// Nyerguds's C&C Patch Project v1.04: Fadeout now depends on distance outside viewport.
 		long lepx1 = MAX(0, Coord_X(Map.TacticalCoord));
 		long lepx2 = MIN((long)MAP_CELL_W * CELL_LEPTON_W, (long)lepx1 + Map.TacLeptonWidth);
 		long lepy1 = MAX(0, Coord_Y(Map.TacticalCoord));

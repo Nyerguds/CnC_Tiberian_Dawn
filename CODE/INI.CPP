@@ -1063,7 +1063,7 @@ static void Create_Units(void)
 		{4,	1,UNIT_APC,   2,UNIT_BUGGY},
 		{5,	1,UNIT_JEEP,  1,UNIT_BIKE},
 		{5,	2,UNIT_JEEP,  1,UNIT_FTANK},
-		{6,	1,UNIT_MLRS,  1,UNIT_SSM}, // Nyerguds's C&C Patch Project v1.04: changed SSM to MLRS for GDI
+		{6,	1,UNIT_MLRS,  1,UNIT_SSM}, // Nyerguds's C&C Patch Project v1.04: Changed SSM to MLRS for GDI
 		{7,	1,UNIT_HTANK, 2,UNIT_STANK},
 	};
 	static int num_units[NUM_UNIT_CATEGORIES];		// # of each type of unit to create

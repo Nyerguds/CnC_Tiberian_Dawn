@@ -832,6 +832,7 @@ extern int Load_Interpolated_Palettes(char const *filename, BOOL add=FALSE);
 #define	CELL_BLIT_ONLY	1
 #define	CELL_DRAW_ONLY	2
 
+
 /***********************************************************************************************
  * Distance -- Finds the distance between two arbitrary points.                                *
  *                                                                                             *
@@ -855,7 +856,7 @@ extern int Load_Interpolated_Palettes(char const *filename, BOOL add=FALSE);
  *=============================================================================================*/
 inline int Distance(int x1, int y1, int x2, int y2)
 {
-	// Nyerguds's C&C Patch Project v1.04: migrated RA version of Distance function.
+	// Nyerguds's C&C Patch Project v1.04: Migrated RA version of Distance function.
 	int diff1 = y1 - y2;
 	if (diff1 < 0) diff1 = -diff1;
 	int diff2 = x1 - x2;
@@ -865,6 +866,7 @@ inline int Distance(int x1, int y1, int x2, int y2)
 	}
 	return(diff2 + (diff1/2));
 }
+
 
 /***********************************************************************************************
  * Distance -- Determines the lepton distance between two coordinates.                         *
@@ -912,7 +914,6 @@ inline int Distance(COORDINATE coord1, COORDINATE coord2)
 {
 	return(Distance(Coord_X(coord1), Coord_Y(coord1), Coord_X(coord2), Coord_Y(coord2)));
 }
-
 
 
 /***********************************************************************************************

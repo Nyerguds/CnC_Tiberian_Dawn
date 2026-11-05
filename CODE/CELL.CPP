@@ -551,7 +551,7 @@ bool CellClass::Is_Generally_Clear(bool ignoremobile, bool ignorecloak, HousesTy
 		return(false);
 	}
 	if (Overlay != OVERLAY_NONE && OverlayTypeClass::As_Reference(Overlay).IsWall) {
-		// Nyerguds's C&C Patch Project v1.04: allow wall repair-replacement.
+		// Nyerguds's C&C Patch Project v1.04: Allow wall repair-replacement.
 		// Walls can be put on damaged walls of the same type.
 		if (Overlay == ignoredmgwall && Owner == ignorewallhouse && (OverlayData >> 4) > 0) {
 			return(true);
@@ -1217,7 +1217,7 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 							break;
 
 						/*
-						**	Nyerguds's C&C Patch Project v1.04: map editor preview draws walls as overlay.
+						**	Nyerguds's C&C Patch Project v1.04: Map editor preview draws walls as overlay.
 						**	Draw a building that is a wall.
 						*/
 						case RTTI_BUILDINGTYPE:
@@ -1242,7 +1242,7 @@ void CellClass::Draw_It(int x, int y, int draw_type) const
 						**	Draw a smudge
 						*/
 						case RTTI_SMUDGETYPE:
-							// Nyerguds's C&C Patch Project v1.04: map editor preview draws bibs correctly.
+							// Nyerguds's C&C Patch Project v1.04: Map editor preview draws bibs correctly.
 							sptr = SmudgeTypeClass::As_Pointer(((SmudgeTypeClass *)Map.PendingObject)->Type);
 							if (sptr->Get_Image_Data()) {
 								icon = (Cell_X(cell) - Cell_X(Map.ZoneCell + Map.ZoneOffset)) +
@@ -1884,7 +1884,7 @@ void CellClass::Wall_Update(OverlayType overlay)
 		*/
 
 		/*
-		**	Nyerguds's C&C Patch Project v1.04: use DamageLevels from overlay to determine wall death.
+		**	Nyerguds's C&C Patch Project v1.04: Use DamageLevels from overlay to determine wall death.
 		**	This used to be a big if-else case checking for different types and damage values,
 		**	even though this data was always available in the type class definitions.
 		*/
@@ -2497,7 +2497,7 @@ bool CellClass::Goodie_Check(FootClass * object)
 			}
 			// Nyerguds's TUC Quick Fix Patch v1.02: steelcrate-anim
 			// Play animation regardless of House.
-			// Nyerguds's C&C Patch Project v1.04: show special animation when unlocking the nuke.
+			// Nyerguds's C&C Patch Project v1.04: Show special animation when unlocking the nuke.
 			new AnimClass(addsNuke ? ANIM_CRATE_RAPID : ANIM_CRATE_EMPULSE, Cell_Coord());
 			if (addsNuke) {
 				Sound_Effect(VOC_SONAR);

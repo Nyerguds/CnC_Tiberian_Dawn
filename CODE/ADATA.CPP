@@ -2309,7 +2309,7 @@ static AnimTypeClass const ChemBall(
 	ANIM_NONE								// Follow up animation.
 );
 
-// Nyerguds's C&C Patch Project v1.04: squish mark made usable as animation.
+// Nyerguds's C&C Patch Project v1.04: Squish mark made usable as animation.
 static AnimTypeClass const Squishy(
 	ANIM_SQUISH,							// Animation number.
 	"SQUISH",								// Data name of animation.

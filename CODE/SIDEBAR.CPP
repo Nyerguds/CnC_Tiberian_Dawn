@@ -808,7 +808,7 @@ void SidebarClass::Draw_It(bool complete)
 		}
 
 	}
-	// Nyerguds's C&C Patch Project v1.04: power indicator smear fix.
+	// Nyerguds's C&C Patch Project v1.04: Power indicator smear fix.
 	// Moved PowerClass::Draw_It down here, so power indicator can be drawn over sidebar UI elements.
 	if (IsSidebarActive && (PowerClass::IsToRedraw || complete) && !drewBottom && !Debug_Map) {
 		// Explicitly repaint this if the powerclass needs to repaint; it tends to color outside its lines.
@@ -2496,7 +2496,7 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 
 			/*
 			**	Display the help text if the mouse is over the button.
-			**	Nyerguds's C&C Patch Project v1.04: add power balance to build label.
+			**	Nyerguds's C&C Patch Project v1.04: Add power balance to build label.
 			*/
 			if (flags & LEFTUP) {
 				bool showpower = false;
@@ -2524,7 +2524,7 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 				**	the free pool.
 				*/
 				if (fnumber == -1 && genfactory != NULL) {
-					// Nyerguds's C&C Patch Project v1.04: no scroll needed to hold / cancel.
+					// Nyerguds's C&C Patch Project v1.04: No scroll needed to hold / cancel.
 					// If an item was clicked that was not in production but of a type that
 					// is busy, allow it to execute suspend and cancel orders for its type.
 					factory = genfactory;
@@ -2561,7 +2561,7 @@ int SidebarClass::StripClass::SelectClass::Action(unsigned flags, KeyNumType & k
 				*/
 			
 				if (fnumber == -1 && genfactory != NULL) {
-					// Nyerguds's C&C Patch Project v1.04: no scroll needed to resume / place.
+					// Nyerguds's C&C Patch Project v1.04: No scroll needed to resume / place.
 					// If an item was clicked that was not in production but which is
 					// busy, allow it to execute resume or place orders for its type.
 					if (genfactory->Is_Suspended() && genfactory->Get_Object()) {

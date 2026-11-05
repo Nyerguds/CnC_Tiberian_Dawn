@@ -1074,7 +1074,7 @@ void HouseClass::AI(void)
 		DamageTime.Set(DAMAGE_DELAY);
 	}
 
-	// Nyerguds's C&C Patch Project v1.04: removed because this also prevents selling walls.
+	// Nyerguds's C&C Patch Project v1.04: Removed because this also prevents selling walls.
 #ifdef NYERPATCH_OBSOLETE
 	/*
 	**	If there are no more buildings to sell, then automatically cancel the
@@ -2863,7 +2863,7 @@ bool HouseClass::Place_Object(RTTIType type, CELL cell)
 			if (techtype != RTTI_BUILDING || ((BuildingClass *)tech)->Passes_Proximity_Check(cell)) {
 				builder->Transmit_Message(RADIO_HELLO, tech);
 /*
-				// Nyerguds's C&C Patch Project v1.04: allow wall repair-replacement.
+				// Nyerguds's C&C Patch Project v1.04: Allow wall repair-replacement.
 				bool isWallRepair = false;
 				if (PlayerPtr == this) {
 					if (techtype == RTTI_BUILDING && ((BuildingClass *)tech)->Class->IsWall) {
@@ -3733,7 +3733,7 @@ TechnoTypeClass const * HouseClass::Suggest_New_Object(RTTIType objecttype, bool
 		case RTTI_BUILDING:
 		case RTTI_BUILDINGTYPE:
 			if (CurBuildings < MaxBuilding) {
-				// Nyerguds's C&C Patch Project v1.04: specifically filter for unoccupied node if previous placement failed.
+				// Nyerguds's C&C Patch Project v1.04: Specifically filter for unoccupied node if previous placement failed.
 				OccupiedState checktype = safetype ? OCCUPIED_HOSTILE : OCCUPIED_BLOCKED;
 				// Get the next unbuilt.
 				BaseNodeClass * node = Base.Next_Buildable(*this);

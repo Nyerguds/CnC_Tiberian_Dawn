@@ -2033,28 +2033,28 @@ typedef enum ArmorType {
 **	These are the control flags for Fancy_Text_Print function.
 */
 typedef enum TextPrintType {
-	TPF_LASTPOINT			=0x0000,		// Use previous font point value.
-	TPF_6POINT				=0x0001,		// Use 6 point font.
-	TPF_8POINT				=0x0002,		// Use 8 point font.
-	TPF_3POINT				=0x0003,		// Use 3 point font.
-	TPF_LED						=0x0004,		// Use LED font.
-	TPF_VCR						=0x0005,		// Use VCR font.
-	TPF_6PT_GRAD			=0x0006,		// Use 6 point gradient font.
-	TPF_MAP						=0x0007,		// Use 6 point gradient font.
-	TPF_GREEN12				=0x0008,		// Use green tab font
-	TPF_GREEN12_GRAD	=0x0009,		// Use gradient green tab font
-	TPF_SM_SCORE_GRAD	=0x000A,		// Use small gradient score font.
-	TPF_LASTSHADOW		=0x0000,		// Use previous font palette.
-	TPF_NOSHADOW			=0x0010,		// Don't have any shadow.
-	TPF_DROPSHADOW		=0x0020,		// Use a simple drop shadow.
-	TPF_FULLSHADOW		=0x0040,		// Use a full outline shadow.
-	TPF_LIGHTSHADOW		=0x0080,		// Use engraved drop 'shadow' color.
-	TPF_CENTER				=0x0100,		// Center about the X axis.
-	TPF_RIGHT					=0x0200,		// Right justify text.
-	TPF_FULLFILL			=0x0400,		// Fill all palette entries except 0 with the foreground color.
-	TPF_MEDIUM_COLOR	=0x1000,		// Use medium color for all text gradient
-	TPF_BRIGHT_COLOR	=0x2000,		// Use bright color for all text gradient
-	TPF_USE_GRAD_PAL	=0x4000			// Use a gradient palette based on fore color
+	TPF_LASTPOINT     =0x0000,    // Use previous font point value.
+	TPF_6POINT        =0x0001,    // Use 6 point font.
+	TPF_8POINT        =0x0002,    // Use 8 point font.
+	TPF_3POINT        =0x0003,    // Use 3 point font.
+	TPF_LED           =0x0004,    // Use LED font.
+	TPF_VCR           =0x0005,    // Use VCR font.
+	TPF_6PT_GRAD      =0x0006,    // Use 6 point gradient font.
+	TPF_MAP           =0x0007,    // Use 6 point gradient font.
+	TPF_GREEN12       =0x0008,    // Use green tab font
+	TPF_GREEN12_GRAD  =0x0009,    // Use gradient green tab font
+	TPF_SM_SCORE_GRAD =0x000A,    // Use small gradient score font.
+	TPF_LASTSHADOW    =0x0000,    // Use previous font palette.
+	TPF_NOSHADOW      =0x0010,    // Don't have any shadow.
+	TPF_DROPSHADOW    =0x0020,    // Use a simple drop shadow.
+	TPF_FULLSHADOW    =0x0040,    // Use a full outline shadow.
+	TPF_LIGHTSHADOW   =0x0080,    // Use engraved drop 'shadow' color.
+	TPF_CENTER        =0x0100,    // Center about the X axis.
+	TPF_RIGHT         =0x0200,    // Right justify text.
+	TPF_FULLFILL      =0x0400,    // Fill all palette entries except 0 with the foreground color.
+	TPF_MEDIUM_COLOR  =0x1000,    // Use medium color for all text gradient
+	TPF_BRIGHT_COLOR  =0x2000,    // Use bright color for all text gradient
+	TPF_USE_GRAD_PAL  =0x4000     // Use a gradient palette based on fore color
 } TextPrintType;
 
 inline TextPrintType operator |(TextPrintType, TextPrintType);
@@ -2066,35 +2066,36 @@ inline TextPrintType operator ~(TextPrintType);
 **	These control the maximum number of objects in the game. Make sure that these
 **	maximums never exceed the maximum value for the "ID" element in the
 **	object class.
+**	Nyerguds's C&C Patch Project v1.04: Increased to remaster values.
 */
-#define	AIRCRAFT_MAX			30			// Lasts for minutes.
-#define	ANIM_MAX					50			// Lasts only a few seconds.
-#define	BUILDING_MAX			300		// Lasts for hours.
-#define	BULLET_MAX				40			// Lasts several seconds.
-#define	FACTORY_MAX				20			// Lasts a few minutes.
-#define	HOUSE_MAX				12			// Lasts entire scenario.
-#define	INFANTRY_MAX			300		// Lasts for minutes.
-#define	OVERLAY_MAX				1			// Very transitory.
-#define	REINFORCEMENT_MAX		50			// Maximum number of reinforcements.
-#define	SMUDGE_MAX				1			// Very transitory.
-#define	TEAM_MAX					60			// Lasts forever.
-#define	TEMPLATE_MAX			1			// Very transitory.
-#define	TERRAIN_MAX				300		// Lasts for hours or eternity.
-#define	TRIGGER_MAX				40			// Lasts forever.
-#define	UNIT_MAX					300		// Lasts for minutes.
-#define	TEAMTYPE_MAX			40			// Lasts forever.
+#define  AIRCRAFT_MAX       100      // Lasts for minutes.
+#define  ANIM_MAX           200      // Lasts only a few seconds.
+#define  BUILDING_MAX       500      // Lasts for hours.
+#define  BULLET_MAX          50      // Lasts several seconds.
+#define  FACTORY_MAX         32      // Lasts a few minutes.
+#define  HOUSE_MAX           12      // Lasts entire scenario.
+#define  INFANTRY_MAX       500      // Lasts for minutes.
+#define  OVERLAY_MAX          1      // Very transitory.
+#define  REINFORCEMENT_MAX   50      // Maximum number of reinforcements.
+#define  SMUDGE_MAX           1      // Very transitory.
+#define  TEAM_MAX            60      // Lasts forever.
+#define  TEMPLATE_MAX         1      // Very transitory.
+#define  TERRAIN_MAX        500      // Lasts for hours or eternity.
+#define  TRIGGER_MAX         80      // Lasts forever.
+#define  UNIT_MAX           500      // Lasts for minutes.
+#define  TEAMTYPE_MAX        60      // Lasts forever.
 
 // Save filename description.
-#define	DESCRIP_MAX				44			// 40 chars + CR + LF + CTRL-Z + NULL
+#define  DESCRIP_MAX         44      // 40 chars + CR + LF + CTRL-Z + NULL
 
-#define	MAX_ENTRY_SIZE 		15
+#define  MAX_ENTRY_SIZE      15
 
-#define  OBUTTON_HEIGHT       9			// Is defined in mapedit.h, need for buttons
+#define  OBUTTON_HEIGHT       9      // Is defined in mapedit.h, need for buttons
 
-#define	CONQUER_PATH_MAX		9			// Number of cells to look ahead for movement.
+#define  CONQUER_PATH_MAX     9      // Number of cells to look ahead for movement.
 
-#define	EACH_UNIT_MAX			(UNIT_MAX/4)			// Default maximum any one player can have.
-#define	EACH_BUILDING_MAX		(BUILDING_MAX/4)		// Default maximum any one player can build.
+#define  EACH_UNIT_MAX        (UNIT_MAX/4)      // Default maximum any one player can have.
+#define  EACH_BUILDING_MAX    (BUILDING_MAX/4)  // Default maximum any one player can build.
 
 
 /**********************************************************************

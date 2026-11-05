@@ -725,7 +725,7 @@ bool BulletClass::Unlimbo(COORDINATE coord, DirType dir)
 			/*
 			**	Limit scatter to the weapon range of the firer.
 			*/
-			// Nyerguds's C&C Patch Project v1.04: fix grenade range vs buildings falling short.
+			// Nyerguds's C&C Patch Project v1.04: Fix grenade range vs buildings falling short.
 			// Add actual range as max scatter range, to fix attacks against buildings falling short.
 			if (MaxScatterRange) {
 				int overflow = Distance(tcoord) - MaxScatterRange;

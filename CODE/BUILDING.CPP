@@ -116,7 +116,7 @@ enum SAMState {
 };
 
 
-// Nyerguds's C&C Patch Project v1.04: replaced dimension-based center with calculation.
+// Nyerguds's C&C Patch Project v1.04: Replaced dimension-based center with calculation.
 // This is replaced by the BuildingTypeClass::Valid_Target_Center function.
 #ifdef NYERPATCH_OBSOLETE
 /***************************************************************************
@@ -485,7 +485,7 @@ void BuildingClass::Draw_It(int x, int y, WindowNumberType window)
 	Validate();
 
 
-	// Nyerguds's C&C Patch Project v1.04: map editor preview draws walls as overlay.
+	// Nyerguds's C&C Patch Project v1.04: Map editor preview draws walls as overlay.
 	// Do not render walls as building, ever. They are placed down as overlay.
 	if (Class->IsWall) return;
 
@@ -1189,7 +1189,7 @@ void BuildingClass::AI(void)
 				Map.Column[Map.Which_Column(RTTI_BUILDING)].Flag_To_Redraw();
 			}
 
-			// Nyerguds's C&C Patch Project v1.04: recheck placement check on destruction.
+			// Nyerguds's C&C Patch Project v1.04: Recheck placement check on destruction.
 			// Reset building placement proximity check since something has vanished from the map.
 			// This is already repeated on actual placement, but this updates the visual grid.
 			Map.Recheck_Placement();
@@ -1350,7 +1350,7 @@ void BuildingClass::AI(void)
 				**	production can never complete -- don't bother starting it.
 				*/
 				if (House->IsStarted && House->Available_Money() > 10) {
-					//	Nyerguds's C&C Patch Project v1.04: if factory aborted, ask for a safer thing to build.
+					// Nyerguds's C&C Patch Project v1.04: If factory aborted, ask for a safer thing to build.
 					TechnoTypeClass const * techno = House->Suggest_New_Object(Class->ToBuild, factoryfail);
 
 					/*
@@ -1476,7 +1476,7 @@ bool BuildingClass::Unlimbo(COORDINATE coord, DirType dir)
 			if (otc.IsWall && Can_Enter_Cell(Coord_Cell(coord), FACING_NONE) == MOVE_OK) {
 				CellClass * c = &Map[Coord_Cell(coord)];
 				if (c->Overlay == ovl && c->Owner == *House && (c->OverlayData >> 4) > 0) {
-					// Nyerguds's C&C Patch Project v1.04: allow wall repair-replacement.
+					// Nyerguds's C&C Patch Project v1.04: Allow wall repair-replacement.
 					c->OverlayData = 0;
 					c->Wall_Update(ovl);
 					// This acts as if the wall was sold and then replaced, so you get a refund.
@@ -1720,7 +1720,7 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 					**	Show pieces of fire to indicate that a significant change in
 					**	damage level has occurred.
 					*/
-				// Nyerguds's C&C Patch Project v1.04: no fire on buildings deemed "not flammable".
+				// Nyerguds's C&C Patch Project v1.04: No fire on buildings deemed "not flammable".
 					if (Class->IsFlammable && warhead == WARHEAD_FIRE) {
 						switch (Random_Pick(0, 13)) {
 							case 0:
@@ -1777,7 +1777,7 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 			*/
 			House->Attacked();
 
-			// Nyerguds's C&C Patch Project v1.04: this is now saved in the burn animation.
+			// Nyerguds's C&C Patch Project v1.04: WhoLastHurtMe is now saved in the burn animation.
 #ifdef NYERPATCH_OBSOLETE
 			/*
 			** Save the type of the house that's doing the damage, so if the building burns
@@ -2308,7 +2308,7 @@ ObjExitResultType BuildingClass::Exit_Object(TechnoClass * base)
 				air->Altitude = 0;
 				ScenarioInit++;
 				if (air->Unlimbo(Docking_Coord(), air->Pose_Dir())) {
-					// Nyerguds's C&C Patch Project v1.04: look around when exiting.
+					// Nyerguds's C&C Patch Project v1.04: Look around when exiting.
 					air->Look(false);
 					Transmit_Message(RADIO_HELLO, air);
 					Transmit_Message(RADIO_TETHER);
@@ -2326,7 +2326,7 @@ ObjExitResultType BuildingClass::Exit_Object(TechnoClass * base)
 				}
 				ScenarioInit++;
 				if (air->Unlimbo(Cell_Coord(cell), DIR_N)) {
-					// Nyerguds's C&C Patch Project v1.04: look around when exiting.
+					// Nyerguds's C&C Patch Project v1.04: Look around when exiting.
 					air->Look(false);
 					air->Assign_Destination(::As_Target(Nearby_Location(air)));
 					air->Assign_Mission(MISSION_MOVE);
@@ -2349,7 +2349,7 @@ ObjExitResultType BuildingClass::Exit_Object(TechnoClass * base)
 						ScenarioInit++;
 						if (unit->Unlimbo(Coord_Add(unit->Coord, 0x00550060L), DIR_SW_X2)) {
 							unit->PrimaryFacing = DIR_SW_X2;
-							// Nyerguds's C&C Patch Project v1.04: look around when exiting.
+							// Nyerguds's C&C Patch Project v1.04: Look around when exiting.
 							unit->Look(false);
 							Transmit_Message(RADIO_HELLO, unit);
 							Transmit_Message(RADIO_TETHER);
@@ -2378,7 +2378,7 @@ ObjExitResultType BuildingClass::Exit_Object(TechnoClass * base)
 						base->Mark(MARK_UP);
 						base->Coord = Coord_Add(Coord, Class->ExitPoint);
 						base->Mark(MARK_DOWN);
-						// Nyerguds's C&C Patch Project v1.04: look around when exiting.
+						// Nyerguds's C&C Patch Project v1.04: Look around when exiting.
 						base->Look(false);
 						Transmit_Message(RADIO_HELLO, base);
 						Transmit_Message(RADIO_TETHER);
@@ -2413,7 +2413,7 @@ ObjExitResultType BuildingClass::Exit_Object(TechnoClass * base)
 
 						ScenarioInit++;
 						if (base->Unlimbo(start, dir)) {
-							// Nyerguds's C&C Patch Project v1.04: look around when exiting.
+							// Nyerguds's C&C Patch Project v1.04: Look around when exiting.
 							base->Look(false);
 							base->Assign_Mission(MISSION_MOVE);
 							base->Assign_Destination(::As_Target(cell));
@@ -2459,7 +2459,7 @@ ObjExitResultType BuildingClass::Exit_Object(TechnoClass * base)
 					}
 					ScenarioInit++;
 					if (base->Unlimbo(start, dir)) {
-							// Nyerguds's C&C Patch Project v1.04: look around when exiting.
+							// Nyerguds's C&C Patch Project v1.04: Look around when exiting.
 							base->Look(false);
 							if (cell) {
 								base->Assign_Mission(MISSION_MOVE);
@@ -3157,9 +3157,11 @@ ActionType BuildingClass::What_Action(ObjectClass * object) const
 
 				default:
 					action = ACTION_NONE;
-					// Nyerguds's C&C Patch Project v1.04: allow non-producing primary.
-					// If another building of the same House and the same type exists, allow setting a Leader.
-					// This implies some other game logic does something with non-production buildings marked as IsFactory.
+					// Nyerguds's C&C Patch Project v1.04: Allow assigning a primary to non-producing buildings.
+					// If the building has IsFactory enabled, but has no ToBuild set, allow setting it as Leader
+					// if at least one other building of the same House and the same type exists.
+					// This means some other game logic could do something with non-production buildings marked
+					// as IsFactory. Currently no such functionality exists, but it can be added.
 					for (int index = 0; index < Buildings.Count(); ++index) {
 						BuildingClass * obj = Buildings.Ptr(index);
 						if (obj && !obj->IsInLimbo && obj->House == House && *obj == *this && obj != this) {
@@ -4392,7 +4394,7 @@ int BuildingClass::Mission_Deconstruction(void)
 				if (was_overflow) {
 					Map.Column[Map.Which_Column(RTTI_BUILDING)].Flag_To_Redraw();
 				}
-				// Nyerguds's C&C Patch Project v1.04: recheck placement check on object removal.
+				// Nyerguds's C&C Patch Project v1.04: Recheck placement check on object removal.
 				Map.Recheck_Placement();
 				House->IsRecalcNeeded = true;
 			}
@@ -5798,7 +5800,7 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 		return(true);
 	}
 
-	// Nyerguds's C&C Patch Project v1.04: allow wall repair-replacement.
+	// Nyerguds's C&C Patch Project v1.04: Allow wall repair-replacement.
 	FacingType startf = FACING_N;
 	if (Class->IsWall) {
 		startf = FACING_NONE;
@@ -5816,7 +5818,7 @@ bool BuildingClass::Passes_Proximity_Check(CELL homecell)
 		CellClass * mapcell = &Map[cell];
 
 		for (FacingType facing = startf; facing < FACING_COUNT; facing++) {
-			// Nyerguds's C&C Patch Project v1.04: upgrade boundary checks on proximity checks.
+			// Nyerguds's C&C Patch Project v1.04: Upgrade boundary checks on proximity checks.
 			if (!mapcell->Adjacent_Is_Valid(facing)) {
 				continue;
 			}
