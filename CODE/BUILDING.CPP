@@ -1642,10 +1642,11 @@ ResultType BuildingClass::Take_Damage(int & damage, int distance, WarheadType wa
 						// Nyerguds's C&C Patch Project v1.04: Fix "Unable to build more" logic.
 						// If heap is in overflow state, this removal will fix that.
 						RTTIType otype = obj->What_Am_I();
-						if (TechnoTypeClass::Is_Heap_Full(otype)) {
+						bool has_overflow = TechnoTypeClass::Is_Heap_Full(otype);
+						delete obj;
+						if (has_overflow) {
 							Map.Column[Map.Which_Column(otype)].Flag_To_Redraw();
 						}
-						delete obj;
 					}
 				}
 
